@@ -3,6 +3,7 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-05, PLAN-06  
 **Estimated Scope:** Medium  
+**Status:** Completed & Verified  
 
 ---
 
@@ -64,15 +65,15 @@ Build the interactive Bilateral Family Pact wizard in `apps/web/`, featuring col
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/stores/usePactStore.ts`
-- [ ] `apps/web/src/components/pacts/ClauseSelector.tsx`
-- [ ] `apps/web/src/components/pacts/CurfewSlider.tsx`
-- [ ] `apps/web/src/components/pacts/SignaturePad.tsx`
-- [ ] `apps/web/src/components/devices/EnrollmentModal.tsx`
-- [ ] `apps/web/src/components/devices/CurfewStatusBadge.tsx`
-- [ ] `apps/web/src/app/(dashboard)/pacts/builder/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/pacts/[id]/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/devices/page.tsx`
+- [x] `apps/web/src/stores/usePactStore.ts`
+- [x] `apps/web/src/components/pacts/ClauseSelector.tsx`
+- [x] `apps/web/src/components/pacts/CurfewSlider.tsx`
+- [x] `apps/web/src/components/pacts/SignaturePad.tsx`
+- [x] `apps/web/src/components/devices/EnrollmentModal.tsx`
+- [x] `apps/web/src/components/devices/CurfewStatusBadge.tsx`
+- [x] `apps/web/src/app/(dashboard)/pacts/builder/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/pacts/[id]/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/devices/page.tsx`
 
 ---
 
@@ -101,8 +102,8 @@ Build the interactive Bilateral Family Pact wizard in `apps/web/`, featuring col
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Pact wizard flows smoothly through clauses, signatures, and export.
-- [ ] QR enrollment modal displays clear iOS/Android instructions.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Commits adhere to Conventional Commits (`feat(web): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Pact wizard flows smoothly through clauses, signatures, and export.
+- [x] QR enrollment modal displays clear iOS/Android instructions.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Commits adhere to Conventional Commits (`feat(web): ...`).
