@@ -3,6 +3,7 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-03, PLAN-04  
 **Estimated Scope:** Medium  
+**Status:** Completed & Verified  
 
 ---
 
@@ -58,14 +59,25 @@ Implement the child onboarding experience in `apps/web/` featuring the contextua
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/stores/useReadinessStore.ts`
-- [ ] `apps/web/src/hooks/useChildren.ts`
-- [ ] `apps/web/src/components/children/ChildOnboardingModal.tsx`
-- [ ] `apps/web/src/components/quizzes/ReadinessWizard.tsx`
-- [ ] `apps/web/src/components/quizzes/ReadinessScoreCard.tsx`
-- [ ] `apps/web/src/app/(dashboard)/children/new/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/children/[id]/readiness/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/dashboard/page.tsx`
+- [x] `apps/web/src/stores/useReadinessStore.ts`
+- [x] `apps/web/src/hooks/useChildren.ts`
+- [x] `apps/web/src/components/children/ChildOnboardingModal.tsx`
+- [x] `apps/web/src/components/quizzes/ReadinessWizard.tsx`
+- [x] `apps/web/src/components/quizzes/ReadinessScoreCard.tsx`
+- [x] `apps/web/src/app/(dashboard)/children/new/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/children/[id]/readiness/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/dashboard/page.tsx`
+- [x] Supporting components & tests:
+  - `apps/web/src/components/children/ChildOnboardingFlow.tsx`
+  - `apps/web/src/components/dashboard/ParentDashboardView.tsx`
+  - `apps/web/src/components/dashboard/ParentDashboard.tsx`
+  - `apps/web/src/components/quizzes/ChildReadinessAssessmentView.tsx`
+  - `apps/web/src/components/quizzes/ReadinessWizardClient.tsx`
+  - `apps/web/src/components/ui/Progress.tsx`
+  - `apps/web/src/lib/api/children.ts`
+  - `apps/web/test/childOnboarding.test.ts`
+  - `apps/web/test/readinessStore.test.ts`
+  - `apps/web/src/app/(dashboard)/layout.tsx`
 
 ---
 
@@ -94,8 +106,8 @@ Implement the child onboarding experience in `apps/web/` featuring the contextua
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Child road fork visually clear and intuitive.
-- [ ] Readiness assessment displays multi-dimensional score.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Commits adhere to Conventional Commits (`feat(web): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Child road fork visually clear and intuitive.
+- [x] Readiness assessment displays multi-dimensional score.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Commits adhere to Conventional Commits (`feat(web): ...`).

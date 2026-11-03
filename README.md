@@ -295,7 +295,7 @@ AlongSide is executed across 14 discrete, sequential engineering plans:
 | **02** | [**Authentication, Session Cookies & Parent Account API**](plans/02-auth-and-user-profile.md) | Backend Agent | ✅ **Complete** |
 | **03** | [**Next.js 15 PWA Scaffolding, ParentCalm Design System & Auth UI**](plans/03-frontend-scaffolding-and-auth-ui.md) | Frontend Agent | ✅ **Complete** |
 | **04** | [**Child Profile CRUD, Contextual Road Fork & Readiness API**](plans/04-child-profile-and-road-bifurcation-api.md) | Backend Agent | ✅ **Complete** |
-| **05** | [**Child Onboarding, Road Selection & Assessment Wizard UI**](plans/05-child-profile-and-road-selection-ui.md) | Frontend Agent | 🔄 **In Progress** |
+| **05** | [**Child Onboarding, Road Selection & Assessment Wizard UI**](plans/05-child-profile-and-road-selection-ui.md) | Frontend Agent | ✅ **Complete** |
 | **06** | [**Bilateral Family Pact Engine & Device Profile Compiler API**](plans/06-bilateral-pact-and-profile-compiler-api.md) | Backend Agent | ⏳ Queued |
 | **07** | [**Pact Wizard, Digital Co-Signing & QR Enrollment UI**](plans/07-agreement-builder-and-device-enrollment-ui.md) | Frontend Agent | ⏳ Queued |
 | **08** | [**Parent Intelligence Academy Modules & Youth Culture Digest API**](plans/08-parent-academy-and-culture-digest-api.md) | Backend Agent | ⏳ Queued |
