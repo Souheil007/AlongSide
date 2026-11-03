@@ -65,7 +65,7 @@ graph TD
 | [**`04-child-profile-and-road-bifurcation-api.md`**](04-child-profile-and-road-bifurcation-api.md) | Child Profile CRUD, Road Fork & Readiness API | **Backend Agent** | PLAN-02 | Complete |
 | [**`05-child-profile-and-road-selection-ui.md`**](05-child-profile-and-road-selection-ui.md) | Child Onboarding, Road Selection & Assessment UI | **Frontend Agent** | PLAN-03, PLAN-04 | Complete |
 | [**`06-bilateral-pact-and-profile-compiler-api.md`**](06-bilateral-pact-and-profile-compiler-api.md) | Bilateral Pact Engine & Device Profile Compiler API | **Backend Agent** | PLAN-04 | Complete |
-| [**`07-agreement-builder-and-device-enrollment-ui.md`**](07-agreement-builder-and-device-enrollment-ui.md) | Pact Wizard, Digital Co-Signing & QR Enrollment UI | **Frontend Agent** | PLAN-05, PLAN-06 | Queued |
+| [**`07-agreement-builder-and-device-enrollment-ui.md`**](07-agreement-builder-and-device-enrollment-ui.md) | Pact Wizard, Digital Co-Signing & QR Enrollment UI | **Frontend Agent** | PLAN-05, PLAN-06 | Complete |
 | [**`08-parent-academy-and-culture-digest-api.md`**](08-parent-academy-and-culture-digest-api.md) | Academy Modules & Youth Culture Digest API | **Backend Agent** | PLAN-01 | Queued |
 | [**`09-parent-academy-and-culture-digest-ui.md`**](09-parent-academy-and-culture-digest-ui.md) | Academy Course Player, Sunday Culture Digest & PWA | **Frontend Agent** | PLAN-03, PLAN-08 | Queued |
 | [**`10-ai-child-advisor-and-faq-vault-api.md`**](10-ai-child-advisor-and-faq-vault-api.md) | 24/7 AI Child Advisor & Modern Parenting FAQ API | **Backend Agent** | PLAN-04, PLAN-08 | Queued |
