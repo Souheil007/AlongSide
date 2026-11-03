@@ -3,6 +3,7 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-01  
 **Estimated Scope:** Medium  
+**Status:** Completed & Verified  
 
 ---
 
@@ -59,23 +60,35 @@ Scaffold the `apps/web/` application using Next.js 15 (App Router, React 19), Ta
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/package.json`
-- [ ] `apps/web/tsconfig.json`
-- [ ] `apps/web/next.config.mjs`
-- [ ] `apps/web/tailwind.config.ts`
-- [ ] `apps/web/public/manifest.json`
-- [ ] `apps/web/src/styles/globals.css`
-- [ ] `apps/web/src/components/ui/Button.tsx`
-- [ ] `apps/web/src/components/ui/Input.tsx`
-- [ ] `apps/web/src/components/ui/Card.tsx`
-- [ ] `apps/web/src/components/shared/Header.tsx`
-- [ ] `apps/web/src/lib/api/client.ts`
-- [ ] `apps/web/src/lib/api/auth.ts`
-- [ ] `apps/web/src/hooks/useAuth.ts`
-- [ ] `apps/web/src/app/layout.tsx`
-- [ ] `apps/web/src/app/page.tsx`
-- [ ] `apps/web/src/app/(auth)/login/page.tsx`
-- [ ] `apps/web/src/app/(auth)/register/page.tsx`
+- [x] `apps/web/package.json`
+- [x] `apps/web/tsconfig.json`
+- [x] `apps/web/next.config.mjs`
+- [x] `apps/web/tailwind.config.ts`
+- [x] `apps/web/public/manifest.json`
+- [x] `apps/web/src/styles/globals.css`
+- [x] `apps/web/src/components/ui/Button.tsx`
+- [x] `apps/web/src/components/ui/Input.tsx`
+- [x] `apps/web/src/components/ui/Card.tsx`
+- [x] `apps/web/src/components/ui/Badge.tsx`
+- [x] `apps/web/src/components/ui/Dialog.tsx`
+- [x] `apps/web/src/components/ui/Tabs.tsx`
+- [x] `apps/web/src/components/shared/Header.tsx`
+- [x] `apps/web/src/components/shared/Footer.tsx`
+- [x] `apps/web/src/components/providers/QueryProvider.tsx`
+- [x] `apps/web/src/components/providers/Providers.tsx`
+- [x] `apps/web/src/components/auth/LoginForm.tsx`
+- [x] `apps/web/src/components/auth/RegisterForm.tsx`
+- [x] `apps/web/src/lib/utils.ts`
+- [x] `apps/web/src/lib/api/client.ts`
+- [x] `apps/web/src/lib/api/auth.ts`
+- [x] `apps/web/src/hooks/useAuth.ts`
+- [x] `apps/web/src/app/layout.tsx`
+- [x] `apps/web/src/app/page.tsx`
+- [x] `apps/web/src/app/(auth)/login/page.tsx`
+- [x] `apps/web/src/app/(auth)/register/page.tsx`
+- [x] `apps/web/test/auth.form.test.ts`
+- [x] `apps/web/test/client.test.ts`
+- [x] `apps/web/test/utils.test.ts`
 
 ---
 
@@ -107,8 +120,8 @@ Scaffold the `apps/web/` application using Next.js 15 (App Router, React 19), Ta
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Design follows "Parent Calm" aesthetic with accessible Radix primitives.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] `npm run build` exits with code 0.
-- [ ] All commits follow Conventional Commits (`feat(web): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Design follows "Parent Calm" aesthetic with accessible Radix primitives.
+- [x] `npm run typecheck` exits with code 0.
+- [x] `npm run build` exits with code 0.
+- [x] All commits follow Conventional Commits (`feat(web): ...`).
