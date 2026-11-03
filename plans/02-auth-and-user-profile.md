@@ -77,7 +77,7 @@ Implement secure, production-grade parent authentication using `argon2id` passwo
 - [x] `apps/api/src/modules/auth/auth.routes.ts`
 - [x] `apps/api/src/plugins/auth.plugin.ts`
 - [x] `apps/api/src/app.ts` (Register auth plugin and routes)
-- [x] `apps/api/test/modules/auth/auth.test.ts`
+- [x] `apps/api/test/auth.test.ts`
 
 ---
 
