@@ -163,12 +163,16 @@ export interface AiMessageDTO {
 export interface FaqItemDTO {
   id: string;
   categoryId: string;
+  categorySlug?: string;
+  categoryName?: string;
   targetTier?: DevelopmentalTier | null;
   targetRoad?: RoadType | null;
   question: string;
   answerMarkdown: string;
   deEscalationScript?: string | null;
   isFeatured: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface SlangTermDTO {
@@ -263,4 +267,46 @@ export interface AcademyLessonCompletionResponseDTO {
     isCompleted: boolean;
   };
 }
+
+// ----------------------------------------------------
+// 24/7 AI ADVISOR & FAQ VAULT DTOS
+// ----------------------------------------------------
+
+export interface FaqCategoryDTO {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  sortOrder: number;
+  faqCount?: number;
+}
+
+export interface FaqListResponseDTO {
+  faqs: FaqItemDTO[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export interface AiChatStreamEventDTO {
+  type: 'context' | 'token' | 'done' | 'error';
+  matchedFaqs?: (string | { id: string; question: string; categorySlug?: string; deEscalationScript?: string | null })[];
+  content?: string;
+  conversationId?: string;
+  messageId?: string;
+  tokensUsed?: number;
+  code?: string;
+  message?: string;
+}
+
+export interface AiConversationDTO {
+  id: string;
+  userId: string;
+  childId?: string | null;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  messages?: AiMessageDTO[];
+}
+
 
