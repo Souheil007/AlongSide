@@ -62,7 +62,7 @@ graph TD
 | [**`01-project-setup-and-db.md`**](01-project-setup-and-db.md) | Workspace Scaffolding, Shared Package & Prisma DB | **Backend Agent** | None | Complete |
 | [**`02-auth-and-user-profile.md`**](02-auth-and-user-profile.md) | Authentication, Session Cookies & Parent Account API | **Backend Agent** | PLAN-01 | Complete |
 | [**`03-frontend-scaffolding-and-auth-ui.md`**](03-frontend-scaffolding-and-auth-ui.md) | Next.js 15 PWA, ParentCalm Design System & Auth UI | **Frontend Agent** | PLAN-01 | Queued |
-| [**`04-child-profile-and-road-bifurcation-api.md`**](04-child-profile-and-road-bifurcation-api.md) | Child Profile CRUD, Road Fork & Readiness API | **Backend Agent** | PLAN-02 | Queued |
+| [**`04-child-profile-and-road-bifurcation-api.md`**](04-child-profile-and-road-bifurcation-api.md) | Child Profile CRUD, Road Fork & Readiness API | **Backend Agent** | PLAN-02 | Complete |
 | [**`05-child-profile-and-road-selection-ui.md`**](05-child-profile-and-road-selection-ui.md) | Child Onboarding, Road Selection & Assessment UI | **Frontend Agent** | PLAN-03, PLAN-04 | Queued |
 | [**`06-bilateral-pact-and-profile-compiler-api.md`**](06-bilateral-pact-and-profile-compiler-api.md) | Bilateral Pact Engine & Device Profile Compiler API | **Backend Agent** | PLAN-04 | Queued |
 | [**`07-agreement-builder-and-device-enrollment-ui.md`**](07-agreement-builder-and-device-enrollment-ui.md) | Pact Wizard, Digital Co-Signing & QR Enrollment UI | **Frontend Agent** | PLAN-05, PLAN-06 | Queued |
