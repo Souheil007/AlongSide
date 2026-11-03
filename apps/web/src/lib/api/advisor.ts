@@ -150,7 +150,14 @@ export async function searchFaqs(params?: {
     );
 
     const faqs = res.data?.faqs || res.faqs;
-    if (Array.isArray(faqs)) {
+    const total =
+      res.data && typeof res.data === 'object' && 'total' in res.data
+        ? (res.data as { total?: number }).total
+        : undefined;
+
+    // If backend returned actual seeded items, return them.
+    // If backend database is unseeded (total === 0), fall back to curated vault.
+    if (Array.isArray(faqs) && (total === undefined ? faqs.length > 0 : total > 0)) {
       return { faqs };
     }
   } catch (err) {
