@@ -36,3 +36,9 @@ Machine-enforceable rules automatically discovered and loaded into autonomous ag
 - [**`05-frontend-skill-matrix.md`**](../.agents/rules/05-frontend-skill-matrix.md) — Frontend autonomous skill invocation matrix and design critique gates.
 - [**`06-codebase-design.md`**](../.agents/rules/06-codebase-design.md) — Deep modules, seam catalog, dependency acceptance, and the Deletion Test.
 - [**`07-backend-skill-matrix.md`**](../.agents/rules/07-backend-skill-matrix.md) — Backend autonomous skill invocation matrix, Fastify plugin encapsulation, schema serialization, Node.js v22 runtime patterns, and `.inject()` testing.
+
+### 5. Research & Child Development Knowledge Base (`docs/research/`)
+Authored by the Research Engineer to de-risk engineering and populate the Parent Intelligence Academy and AI Advisor:
+- [**`child-development-research-journey-plan.md`**](research/child-development-research-journey-plan.md) — Comprehensive multi-phase research journey plan, age-tier developmental matrix (Ages 5–18+), primary source taxonomy (AAP, APA, NIH, Pew), real parent voice mining strategy (Reddit, X), youth slang lexicon, and covert device exploit catalog.
+- [**`age-by-age-neurodevelopment-matrix.md`**](research/age-by-age-neurodevelopment-matrix.md) — Deep neurodevelopmental profiles, dopamine reward loops, pubertal circadian phase shifts (+2hr melatonin delay), emotional language decoders, and word-for-word scripts across all 6 age cohorts.
+- [**`PLAN-15: Child Development Research & Knowledge Base`**](../plans/15-child-development-research-and-knowledge-base.md) — Official engineering execution plan for the research journey.
