@@ -1,19 +1,19 @@
-# Alongside — 100+ Modern Parenting FAQs, Clinical Rationales & Crisis Scripts
-**Document Version:** 1.0.0  
+# Alongside — Whole-Child Modern Parenting FAQ Vault, Clinical Rationales & Scripts
+**Document Version:** 2.0.0  
 **Author:** Research Engineer  
 **Status:** Canonical Clinical Knowledge Base  
 **Target Audience:** CTO, Product Team, AI Advisor Prompt Engineers, Academy Creators, RAG Pipeline Engineers  
-**Source Authorities:** American Academy of Pediatrics (AAP), American Psychological Association (APA), NIH ABCD Study, Dr. Lisa Damour, Dr. Jonathan Haidt, Dr. Daniel Siegel, Dr. Becky Kennedy, Adele Faber & Elaine Mazlish  
+**Clinical & Developmental Authorities:** American Academy of Pediatrics (AAP), American Psychological Association (APA), NIH ABCD Study, Dr. Lisa Damour, Dr. Daniel Siegel, Dr. Becky Kennedy, Dr. Mary Carskadon, Adele Faber & Elaine Mazlish  
 **Related Paperclip Issue:** SOU-14  
 
 ---
 
 ## 1. Executive Summary: The Clinical Philosophy of AlongSide Scripts
 
-Children do not process language through logic when their nervous systems are flooded. When a screen is shut down or a peer drama explodes, the emotional amygdala is firing and the prefrontal cortex is offline.
+Children do not process language through adult logic when their nervous systems are flooded. Whether a child is thrashing on the floor at age 6 during a dopamine cliff, crying in their bedroom at age 11 over lunchroom exclusion, or raging at age 13 over a biological bedtime conflict, their emotional amygdala is firing and their prefrontal cortex is offline.
 
 Every scenario in this vault follows AlongSide's **3-Step Connection-First Scripting Architecture**:
-1. **Step 1: Empathy & Biological Validation:** Connect before you correct. Name the emotion and validate the biological reality (dopamine drop, peer pain, exhaustion).
+1. **Step 1: Empathy & Biological Validation:** Connect before you correct. Name the emotion and validate the biological reality (dopamine drop, adrenarche lability, peer exclusion pain, pubertal exhaustion).
 2. **Step 2: Clear, Non-Negotiable Boundary:** State the family boundary with calm neutrality. Never justify with anger, guilt, or long lectures.
 3. **Step 3: Collaborative Next Step / Workaround:** Give the child agency within the boundary. Offer a physical transition, replacement dopamine activity, or a restorative action.
 
@@ -23,408 +23,369 @@ Every scenario in this vault follows AlongSide's **3-Step Connection-First Scrip
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
 │   STEP 1: EMPATHY & CONNECTION          STEP 2: NEUTRAL BOUNDARY       STEP 3: AGENCY & ACTION   │
-│   "I hear how much fun that was /       "And, our family agreement     "Let's put the phone on   │
-│   how hard it feels to be excluded."    is screens rest at 8:30 PM."   the kitchen counter and   │
-│   (Validates nervous system)            (Non-negotiable, calm fact)    make some warm tea."      │
+│   "I hear how much fun that was /       "And, our family agreement     "Let's put the shoes on   │
+│   how hard it feels to be excluded."    is we leave at 8:00 AM."       together and pick a song  │
+│   (Validates nervous system)            (Non-negotiable, calm fact)    for the car ride."        │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Master FAQ Index by Category (100 Scenarios)
+## 2. Master FAQ Index by Category
 
-- **Category 1:** First Device & Hardware Dilemmas (`FAQ-HW-001` to `FAQ-HW-020`)
-- **Category 2:** Social Media, Group Chats & FOMO (`FAQ-SM-001` to `FAQ-SM-020`)
-- **Category 3:** Gaming, Robux & Digital Economies (`FAQ-GM-001` to `FAQ-GM-020`)
-- **Category 4:** Scary Content, Pornography & Safety (`FAQ-SC-001` to `FAQ-SC-020`)
-- **Category 5:** Sleep Hygiene, Bedtime Battles & Resetting (`FAQ-SL-001` to `FAQ-SL-020`)
+- **Category 1: Emotional Regulation, Meltdowns & Comportment** (`FAQ-EM-001` to `FAQ-EM-010`)
+- **Category 2: Hormones, Puberty & Bodily Changes** (`FAQ-PB-001` to `FAQ-PB-010`)
+- **Category 3: Social Life, Peer Pressure & School Transitions** (`FAQ-SO-001` to `FAQ-SO-010`)
+- **Category 4: First Device, Screen Boundaries & Sleep Architecture** (`FAQ-DS-001` to `FAQ-DS-010`)
+- **Category 5: Complex Digital Culture, Safety & Autonomy** (`FAQ-CS-001` to `FAQ-CS-010`)
 
 ---
 
-## 3. Category 1: First Device & Hardware Dilemmas (FAQs 001–020)
+## 3. Category 1: Emotional Regulation, Meltdowns & Comportment
 
-### FAQ-HW-001
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `PRE_DEVICE`
-- **Question:** *"All my friends in 5th grade have iPhones. Why am I the only baby who doesn't have one?"*
-- **Clinical Rationale:** The tween's peer-belonging circuitry (dACC) is hyper-reactive. Ridiculing their desire increases shame and defensiveness.
+### FAQ-EM-001
+- **Tier:** `EARLY_FOUNDATION_AGES_5_7` | **Focus:** Floor Tantrum & Overstimulation
+- **Question:** *"My 6-year-old throws herself on the floor kicking and screaming when it's time to leave the playground. How do I stop this without carrying her out kicking?"*
+- **Clinical Rationale:** The child's nervous system is experiencing a rapid dopamine drop combined with underdeveloped cognitive transition flexibility. Screaming threats amplifies fight-or-flight panic.
 - **Script:**
-  - *Step 1 (Empathy):* "I hear you, and I know it feels really lonely when you see your friends pulling out phones at the bus stop and you don't have one."
-  - *Step 2 (Boundary):* "In our family, we wait for a smartphone until middle school because a brain under 12 isn't ready to fight multi-billion-dollar algorithms."
-  - *Step 3 (Collaboration):* "Let's look at getting you a smartwatch so you can call and text your two best friends anytime, and we'll start our AlongSide Readiness score together."
-- **Pitfall to Avoid:** "I don't care what your friends have. You're 10 years old, stop whining."
+  - *Step 1 (Empathy):* "You love this playground so much, and your body is having a really hard time stopping."
+  - *Step 2 (Boundary):* "And, playtime is done for today. We are heading to the car."
+  - *Step 3 (Collaboration):* "Do you want to stomp to the car like a giant or hop like a kangaroo? You choose."
+- **Pitfall to Avoid:** "If you don't get up right now, we are never coming to this park again!"
 - **Cooldown:** 10 mins
 
-### FAQ-HW-002
-- **Tier:** `TIER_1_AGES_8_9` | **Road:** `PRE_DEVICE`
-- **Question:** *"Should I get my 8-year-old a cellular smartwatch or a basic flip phone for after-school pickup?"*
-- **Clinical Rationale:** Kids at age 8 need physical safety and logistics, not internet browsers or App Stores. Smartwatches with parent-approved whitelists provide connection without doomscrolling.
+### FAQ-EM-002
+- **Tier:** `EARLY_FOUNDATION_AGES_5_7` | **Focus:** Exploratory / Wishful Lying
+- **Question:** *"My 7-year-old spilled milk all over the floor, looked right at me, and said 'The cat did it!' How do I handle obvious lying?"*
+- **Clinical Rationale:** At age 7, lying is driven by wish-fulfillment and fear of parental disappointment, not calculated sociopathy. Cross-examining creates defensiveness.
 - **Script:**
-  - *Step 1 (Empathy):* "You're getting so independent with soccer practice, and we need an easy way to coordinate pickup."
-  - *Step 2 (Boundary):* "You're getting a watch that only calls mom, dad, and grandma. It has no games or internet."
-  - *Step 3 (Collaboration):* "Let's pick out the wristband color together tonight."
-- **Pitfall to Avoid:** Handing down an old unlocked iPhone with SIM card "just for emergencies."
+  - *Step 1 (Empathy):* "You wish that milk hadn't spilled, don't you? It feels scary when an accident happens."
+  - *Step 2 (Boundary):* "In our house, accidents happen and nobody is in trouble for a spill."
+  - *Step 3 (Collaboration):* "Let's grab two towels from the kitchen and clean it up together."
+- **Pitfall to Avoid:** "Look me in the eye and stop lying! I know you did it!"
 - **Cooldown:** 0 mins
 
-### FAQ-HW-003
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `PRE_DEVICE`
-- **Question:** *"How do I know if my 11-year-old is actually ready for their first smartphone?"*
-- **Clinical Rationale:** Readiness is behavioral, not chronological. Evaluate 3 markers: impulse control, honesty when mistakes happen, and ability to wake up on time without a screen.
+### FAQ-EM-003
+- **Tier:** `TIER_1_AGES_8_9` | **Focus:** Homework Frustration & Perfectionism
+- **Question:** *"My 8-year-old rips up his math worksheet and screams 'I'm stupid and I hate my life!' when he makes a mistake. How do I help him?"*
+- **Clinical Rationale:** Concrete operational perfectionism colliding with adrenarche emotional lability. The child equates a cognitive error with a defect of the self.
 - **Script:**
-  - *Step 1 (Empathy):* "I know how eagerly you want a phone for 6th grade."
-  - *Step 2 (Boundary):* "A phone isn't a gift; it's a piece of heavy machinery. We need to see 30 days of consistent morning routines and taking care of your backpack first."
-  - *Step 3 (Collaboration):* "Let's open the AlongSide Readiness Tracker and earn points together."
-- **Pitfall to Avoid:** Buying the phone as a birthday surprise without establishing ground rules first.
-- **Cooldown:** 5 mins
-
-### FAQ-HW-004
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 12-year-old broke their phone screen for the second time in three months. Do I replace it?"*
-- **Clinical Rationale:** Immediate parental replacement shields the child from natural consequences, preventing executive responsibility maturation.
-- **Script:**
-  - *Step 1 (Empathy):* "Bummer, looking at a cracked screen is super frustrating."
-  - *Step 2 (Boundary):* "Our family pact says the family covers the first device, but repairs come out of earned savings or chore work."
-  - *Step 3 (Collaboration):* "Here is the estimate from the repair shop ($85). Let's write out a list of extra weekend chores so you can earn that back."
-- **Pitfall to Avoid:** Screaming, calling them irresponsible, and then buying a brand new replacement iPhone the next afternoon.
+  - *Step 1 (Empathy):* "Your brain worked hard all day at school, and having to erase that problem feels completely overwhelming."
+  - *Step 2 (Boundary):* "We are pausing homework right now. We do not call ourselves names."
+  - *Step 3 (Collaboration):* "Let's go outside and shoot five basketball hoops, eat an orange, and look at it with fresh eyes."
+- **Pitfall to Avoid:** "You're not stupid, stop being dramatic and just do problem number four."
 - **Cooldown:** 15 mins
 
-### FAQ-HW-005
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"Should my child have their phone in their bedroom at night as an alarm clock?"*
-- **Clinical Rationale:** Pediatric sleep consensus (AAP/Carskadon) is absolute: devices in bedrooms cut adolescent sleep by 60–90 minutes due to blue light melatonin suppression and midnight notifications.
+### FAQ-EM-004
+- **Tier:** `TIER_1_AGES_8_9` | **Focus:** Sibling Territorial Warfare
+- **Question:** *"My 8 and 10-year-olds fight constantly over who sits in the front seat or who touched whose toys. How do I stop being a 24/7 referee?"*
+- **Clinical Rationale:** Sibling rivalry is fueled by concrete operational rigid fairness demands and competition for parental bandwidth. Stepping in as a judge encourages chronic tattling.
 - **Script:**
-  - *Step 1 (Empathy):* "I know you want to wake up on your own like an adult."
-  - *Step 2 (Boundary):* "Phones sleep in the kitchen charging dock at 8:30 PM. That rule applies to your phone, my phone, and mom's phone."
-  - *Step 3 (Collaboration):* "Let's go to Target and pick out a dedicated digital alarm clock with sunrise lighting for your nightstand."
-- **Pitfall to Avoid:** Allowing the phone in the bedroom "facedown on silent" (kids check it at 2:00 AM).
+  - *Step 1 (Empathy):* "You both really care about your space, and it's exhausting when things feel unfair."
+  - *Step 2 (Boundary):* "I am stepping out of the referee job. The car doesn't move until you two agree on a plan."
+  - *Step 3 (Collaboration):* "Do you want to alternate odd and even calendar days, or do a coin toss? You two decide and let me know."
+- **Pitfall to Avoid:** Determining who started it and punishing the "guilty" child.
 - **Cooldown:** 5 mins
 
-### FAQ-HW-006
-- **Tier:** `TIER_4_AGES_14_15` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My high schooler says they need their phone in class because the teacher posts assignments on Google Classroom."*
-- **Clinical Rationale:** Cognitive load studies confirm smartphones reduce working memory capacity even when placed face down on a desk.
+### FAQ-EM-005
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Somatic Sunday Night Anxiety
+- **Question:** *"My 10-year-old gets severe stomach aches and nausea every Sunday evening at dinner. The doctor says she's healthy. What do I do?"*
+- **Clinical Rationale:** Somatization of acute school/social anxiety. When tweens cannot articulate fear of hallway crowds or academic demands, the gut-brain axis expresses it physically.
 - **Script:**
-  - *Step 1 (Empathy):* "High school moves fast and teachers expect instant submissions."
-  - *Step 2 (Boundary):* "Classwork gets done on your school laptop. Your personal phone stays in your locker or backpack during class periods."
-  - *Step 3 (Collaboration):* "If a teacher requires a phone submission, show me the syllabus note and we will calibrate our pact together."
-- **Pitfall to Avoid:** Believing that 14-year-olds need constant cell phone connectivity during academic instruction.
-- **Cooldown:** 5 mins
-
-### FAQ-HW-007
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `PRE_DEVICE`
-- **Question:** *"Grandparents gave my 10-year-old an unrestricted iPad for Christmas without asking us. What do we do?"*
-- **Clinical Rationale:** Inconsistent boundaries create triangulation between parents, grandparents, and child.
-- **Script:**
-  - *Step 1 (Empathy):* "Grandma and Grandpa love you so much and wanted to give you an incredible gift."
-  - *Step 2 (Boundary):* "In our house, any screen that connects to the internet operates under our AlongSide Family Pact."
-  - *Step 3 (Collaboration):* "Let's sit down right now, install our family profile, and set up your living room charging station."
-- **Pitfall to Avoid:** Fighting with grandparents in front of the child or silently hiding the iPad in a closet.
-- **Cooldown:** 10 mins
-
-### FAQ-HW-008
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My child insists on having an iPhone instead of Android because green text bubbles make them an outcast."*
-- **Clinical Rationale:** Apple's iMessage color-coding deliberately exploits adolescent status anxiety. While annoying, the social exclusion is real.
-- **Script:**
-  - *Step 1 (Empathy):* "I know Apple makes green bubbles feel annoying and kids joke about it in group chats."
-  - *Step 2 (Boundary):* "Our family phone budget is $250. We don't spend $1,000 on brand-new phones."
-  - *Step 3 (Collaboration):* "If having blue bubbles matters to you, we can get a refurbished iPhone SE or iPhone 12 within our budget."
-- **Pitfall to Avoid:** "That's the stupidest thing I've ever heard. A phone is a phone."
-- **Cooldown:** 5 mins
-
-### FAQ-HW-009
-- **Tier:** `TIER_1_AGES_8_9` | **Road:** `PRE_DEVICE`
-- **Question:** *"Should I give my child my old smartphone when I upgrade?"*
-- **Clinical Rationale:** Hand-me-downs frequently carry old browser histories, saved credit cards, and cached app logins.
-- **Script:**
-  - *Step 1 (Empathy):* "It feels exciting to use Mom's old phone!"
-  - *Step 2 (Boundary):* "Before you touch it, we are wiping the memory completely and installing our AlongSide profile."
-  - *Step 3 (Collaboration):* "You can pick out a new protective case to make it truly yours."
-- **Pitfall to Avoid:** Handing over an un-wiped device without factory resetting it.
-- **Cooldown:** 0 mins
-
-### FAQ-HW-010
-- **Tier:** `TIER_4_AGES_14_15` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"Who should pay the monthly cell phone bill?"*
-- **Clinical Rationale:** Earned financial contribution builds executive function and gratitude.
-- **Script:**
-  - *Step 1 (Empathy):* "You're 14 and ready to take on real adult responsibilities."
-  - *Step 2 (Boundary):* "We provide the family data line, but unlimited high-speed data requires a $15 monthly contribution from your allowance or babysitting."
-  - *Step 3 (Collaboration):* "Let's set up an automated transfer on the 1st of every month."
-- **Pitfall to Avoid:** Expecting a teen to pay without an agreed-upon earning pathway.
-- **Cooldown:** 5 mins
-
-### FAQ-HW-011 to FAQ-HW-020 (Hardware Summary Matrix)
-- `FAQ-HW-011`: *What age is appropriate for noise-canceling headphones?* (Age 10+ with volume caps at 75dB to prevent permanent cochlear hair cell damage).
-- `FAQ-HW-012`: *My child keeps losing their phone charger.* (Assign one labeled charging station in the kitchen; no extra chargers in bedrooms).
-- `FAQ-HW-013`: *Can my 12-year-old bring their phone to summer camp?* (Honor camp unplugged policies; research proves camp is the #1 place children reset dopamine).
-- `FAQ-HW-014`: *Should we put an AirTag in our child's backpack?* (Transparent disclosure: "This helps us find your backpack if you leave it on the bus; it's not a secret tracker").
-- `FAQ-HW-015`: *My teen wants to build their own gaming PC.* (Excellent STEM leverage; require it in an open family area, not a closed bedroom).
-- `FAQ-HW-016`: *Can my 9-year-old have a Kindle Paperwhite in bed?* (YES; e-ink without blue light or browsers supports healthy bedtime reading habits).
-- `FAQ-HW-017`: *How do we handle school-issued Chromebooks?* (Apply AlongSide home router DNS rules; Chromebooks sleep in the living room dock).
-- `FAQ-HW-018`: *My child bought an old phone with their own money from a friend.* (Pact rule: All devices in the house run under family governance regardless of who paid).
-- `FAQ-HW-019`: *Should we use facial recognition (FaceID) or passcodes?* (Parents must know the device unlock code; privacy is earned, not absolute).
-- `FAQ-HW-020`: *When do we transition to a fully unmanaged phone?* (Age 17–18 upon high school graduation as part of the Launch Charter).
-
----
-
-## 4. Category 2: Social Media, Group Chats & FOMO (FAQs 021–040)
-
-### FAQ-SM-021
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"All the girls in 5th grade are on Snapchat. Can I download it so I'm not left out?"*
-- **Clinical Rationale:** Snapchat's ephemeral messaging, Snap Map geolocation, and streak mechanics weaponize early adolescent insecurity and loss aversion. AAP advises against social algorithms before 13–14.
-- **Script:**
-  - *Step 1 (Empathy):* "I know Snapchat is where everyone is hanging out right now, and it feels awful to feel left out of the loop."
-  - *Step 2 (Boundary):* "Snapchat's design is built to make you anxious about streaks and maps, and our family rule is no disappearing message apps before 14."
-  - *Step 3 (Collaboration):* "You can text, FaceTime, or call anyone from that group on regular iMessage anytime."
-- **Pitfall to Avoid:** "Snapchat is trash for shallow people, and you're not having it."
-- **Cooldown:** 10 mins
-
-### FAQ-SM-022
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 12-year-old is having a panic attack because their 150-day Snap streak might break while we are on camping trip."*
-- **Clinical Rationale:** Loss aversion (Kahneman & Tversky) is acutely amplified in adolescents. To a 12-year-old, a broken streak feels like a broken friendship.
-- **Script:**
-  - *Step 1 (Empathy):* "I know how hard you worked to keep that streak alive with Sarah, and it feels like all that effort is getting wiped out."
-  - *Step 2 (Boundary):* "Our camping trip is screen-free, and we aren't driving into town to find cell signal for a streak."
-  - *Step 3 (Collaboration):* "Text Sarah right now: 'Going camping with no service for 2 days! Let's restart our streak on Monday.' True friends understand camping."
-- **Pitfall to Avoid:** Mocking the streak as "meaningless digital nonsense."
+  - *Step 1 (Empathy):* "Your stomach is telling us that your body feels really nervous about tomorrow morning."
+  - *Step 2 (Boundary):* "We don't have to solve all of Monday tonight. School will happen, and you are going to be safe."
+  - *Step 3 (Collaboration):* "Let's make some peppermint tea, put a warm heating pad on your belly, and pack your favorite snack in your backpack."
+- **Pitfall to Avoid:** "You're faking this to get out of school tomorrow."
 - **Cooldown:** 15 mins
 
-### FAQ-SM-023
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"A boy in the class group chat posted a mean meme about my child's appearance. My child is sobbing. How do I respond?"*
-- **Clinical Rationale:** Immediate peer shaming triggers dorsal anterior cingulate cortex pain. Do not react impulsively or text the boy's parents in rage.
+### FAQ-EM-006
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Door Slamming & The Monosyllabic Wall
+- **Question:** *"My 11-year-old slams his bedroom door and yells 'Leave me alone!' whenever I ask him how school was. How do I respond?"*
+- **Clinical Rationale:** Prefrontal fatigue after a day of intense peer performance. The child requires sensory decompression; forcing conversation induces emotional overload.
 - **Script:**
-  - *Step 1 (Empathy):* "Come here. I am so sorry. That was mean, cowardly, and completely wrong. Looking at that hurts so much."
-  - *Step 2 (Boundary):* "We are taking a screenshot for documentation, and then we are muting this chat for the rest of the night."
-  - *Step 3 (Collaboration):* "Let's drink some water, wrap up in a blanket, and decide tomorrow morning whether we contact the school or talk to the teacher."
-- **Pitfall to Avoid:** Immediately sending an angry email to the entire school PTA list.
-- **Cooldown:** 30 mins
-
-### FAQ-SM-024
-- **Tier:** `TIER_4_AGES_14_15` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"How do I talk to my 14-year-old daughter about TikTok algorithms warping her body image?"*
-- **Clinical Rationale:** Direct lectures on "Instagram vs Reality" trigger adolescent defensiveness. Instead, expose how algorithms monetize insecurity.
-- **Script:**
-  - *Step 1 (Empathy):* "It is exhausting seeing hundreds of flawless, filtered people every time you open an app."
-  - *Step 2 (Boundary):* "I want you to know how TikTok works: their engineers literally code the app to show you content that makes you feel insecure because insecure people stay on the app longer."
-  - *Step 3 (Collaboration):* "Let's reset your 'For You' page algorithm together tonight so it shows art, comedy, and travel instead of beauty filters."
-- **Pitfall to Avoid:** "You're beautiful, why do you care what internet strangers look like?"
-- **Cooldown:** 5 mins
-
-### FAQ-SM-025
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 13-year-old was invited to a Discord server with high schoolers they don't know."*
-- **Clinical Rationale:** Discord servers with mixed age groups are prime vectors for sexual solicitation, graphic content, and radicalization.
-- **Script:**
-  - *Step 1 (Empathy):* "It feels cool when older kids invite you into their gaming servers."
-  - *Step 2 (Boundary):* "Our safety rule is that Discord servers are only for kids you know in real life from school or sports."
-  - *Step 3 (Collaboration):* "Let's make a private server just for you and your soccer teammates to voice chat while playing."
-- **Pitfall to Avoid:** Banning Discord entirely (they will just use web browser Discord at school).
-- **Cooldown:** 10 mins
-
-### FAQ-SM-026 to FAQ-SM-040 (Social Media Summary Matrix)
-- `FAQ-SM-026`: *What are 'Finstas' and should I be worried?* (Secondary private accounts; acknowledge their need for privacy while setting guardrails).
-- `FAQ-SM-027`: *My child was kicked out of the main friend group chat.* (Treat with high clinical empathy; social exclusion hurts as much as physical injury).
-- `FAQ-SM-028`: *Should I follow my teen's social media accounts?* (Yes, condition of access: "I won't comment embarrassingly, but I am in the audience").
-- `FAQ-SM-029`: *My child wants to be an influencer and start a public YouTube channel.* (Channel can be created, but videos remain unlisted/private until age 16).
-- `FAQ-SM-030`: *How do we handle anonymous Q&A apps (Sendit/NGL)?* (Strict ban: Zero-tolerance for anonymous messaging tools designed for cyberbullying).
-- `FAQ-SM-031`: *My child spends 2 hours taking selfies before picking one to post.* (Address performance anxiety; limit posting frequency).
-- `FAQ-SM-032`: *Can my 13-year-old use Pinterest?* (Yes, lower risk profile; curate healthy boards together).
-- `FAQ-SM-033`: *My child is being ghosted by their best friend.* (Validate the sting; coach on dignified communication without spamming texts).
-- `FAQ-SM-034`: *What if my child witnesses cyberbullying of another kid?* (Coach them to be an 'upstander'—private DM of support to victim, alert teacher).
-- `FAQ-SM-035`: *My teen is constantly doomscrolling world news and crying.* (Institute a 7-day digital detox; replace with physical volunteer work).
-- `FAQ-SM-036`: *Should I read my 11-year-old's text messages?* (Bilateral transparency: spot-checks done together, never secret snooping).
-- `FAQ-SM-037`: *My teen posted a political opinion that could hurt their college chances.* (Discuss digital permanence and future admissions screening).
-- `FAQ-SM-038`: *Handling peer pressure to share passwords with friends.* ("Never share passwords; true friends respect your security").
-- `FAQ-SM-039`: *My child is addicted to YouTube Shorts autoplay.* (Disable Shorts feed via DNS/browser extensions).
-- `FAQ-SM-040`: *Teen complaining that 'everyone's parents are chill except you.'* ("I will gladly be the bad guy to protect your brain").
-
----
-
-## 5. Category 3: Gaming, Robux & Digital Economies (FAQs 041–060)
-
-### FAQ-GM-041
-- **Tier:** `TIER_1_AGES_8_9` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 8-year-old screams and slams his controller when he loses in Fortnite or Roblox. Is this normal?"*
-- **Clinical Rationale:** Competitive multiplayer games trigger fight-or-flight cortisol spikes. Young prefrontal cortices cannot inhibit rage when frustrated under adrenaline.
-- **Script:**
-  - *Step 1 (Empathy):* "Losing that match when you were so close felt infuriating. Your body is filled with anger right now."
-  - *Step 2 (Boundary):* "In this house, controllers are not thrown. When physical violence starts, the console takes a 24-hour nap."
-  - *Step 3 (Collaboration):* "Let's drop the controller, do 10 jumping jacks together to burn off that adrenaline, and get a cold drink."
-- **Pitfall to Avoid:** Screaming "It's just a game! Stop acting like a psycho!"
-- **Cooldown:** 15 mins
-
-### FAQ-GM-042
-- **Tier:** `TIER_1_AGES_8_9` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"Should I buy my child Robux, or is it a waste of money?"*
-- **Clinical Rationale:** Robux represents social standing on digital playgrounds. Completely banning it causes feelings of poverty among peers; unlimited access feeds gambling dopamine.
-- **Script:**
-  - *Step 1 (Empathy):* "I understand why that dragon pet in Roblox feels so cool and why you want your avatar to look awesome."
-  - *Step 2 (Boundary):* "Robux isn't free; it comes from real dollars that Mom and Dad work for. We don't buy Robux on demand."
-  - *Step 3 (Collaboration):* "Here is your chore chart. Every completed task earns $1 toward your monthly Robux card."
-- **Pitfall to Avoid:** Linking your adult credit card to their iPad with "Ask to Buy" toggled off.
-- **Cooldown:** 5 mins
-
-### FAQ-GM-043
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 10-year-old was scammed out of their favorite virtual pet in Roblox Adopt Me and is heartbroken."*
-- **Clinical Rationale:** Virtual asset scams hurt deeply because children invest hundreds of hours earning them. Use this as an invaluable low-stakes cybersecurity lesson.
-- **Script:**
-  - *Step 1 (Empathy):* "Oh honey, I am so sorry. That feels like someone reached into your backpack and stole your favorite toy. It's completely sickening."
-  - *Step 2 (Boundary):* "We cannot get that pet back, and we are not buying a replacement with real money."
-  - *Step 3 (Collaboration):* "Let's analyze what the scammer said so you can spot their psychological tricks next time. You will never get tricked by this again."
-- **Pitfall to Avoid:** "Well, that's what you get for playing stupid games."
+  - *Step 1 (Empathy):* *[Wait 15 mins for cooldown]* "I saw that was a really heavy day for you."
+  - *Step 2 (Boundary):* "In our family, doors stay unlocked and we treat our house gently. But you are always allowed quiet time."
+  - *Step 3 (Collaboration):* "I left some sliced apples on your desk. I'll be in the kitchen making dinner whenever you feel like coming down."
+- **Pitfall to Avoid:** Kicking the door open immediately and demanding eye contact.
 - **Cooldown:** 20 mins
 
-### FAQ-GM-044
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My teen says: 'I can't pause an online match!' when dinner is ready. How do I handle this?"*
-- **Clinical Rationale:** Online ranked matches (Valorant, Rocket League) do not have pause buttons. Quitting penalizes the entire peer team, creating acute social humiliation.
+### FAQ-EM-007
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Adolescent "Crashout" Explosions
+- **Question:** *"My 13-year-old had a full screaming meltdown because I asked her to empty the dishwasher. Why such an overreaction?"*
+- **Clinical Rationale:** The pubertal amygdala is hyper-reactive. The request was not the cause; it was the final straw on top of gonadarche hormone fluctuations, peer drama, and sleep debt.
 - **Script:**
-  - *Step 1 (Empathy):* "I know online matches can't be paused and leaving early hurts your team rank."
-  - *Step 2 (Boundary):* "Family dinner is at 6:30 PM every night. That is a fixed anchor."
-  - *Step 3 (Collaboration):* "If a match takes 30 minutes, don't start a new game after 6:00 PM. Let's set a 6:00 PM alarm on your desk."
-- **Pitfall to Avoid:** Walking into the room and pulling the power cord out of the wall (causes extreme trauma and retaliation).
-- **Cooldown:** 10 mins
+  - *Step 1 (Empathy):* *[Remain calm and seated]* "I see how overwhelmed you are right now. Your reaction tells me today was way bigger than dishes."
+  - *Step 2 (Boundary):* "I will not be yelled at. We will talk when your body feels calm."
+  - *Step 3 (Collaboration):* "Go take 20 minutes to listen to music. When you're ready, let me know what actually went wrong today."
+- **Pitfall to Avoid:** Screaming back: "How dare you speak to me that way after everything I do for you!"
+- **Cooldown:** 25 mins
 
-### FAQ-GM-045 to FAQ-GM-060 (Gaming Summary Matrix)
-- `FAQ-GM-045`: *Is Minecraft good for kids?* (Creative mode fosters spatial architecture; survival multiplayer requires whitelists).
-- `FAQ-GM-046`: *Handling Loot Boxes.* (Loot boxes are variable-ratio gambling; disable in-game purchases).
-- `FAQ-GM-047`: *Can my 12-year-old play GTA (Grand Theft Auto)?* (No; adult sexual/violent themes are developmentally inappropriate).
-- `FAQ-GM-048`: *Gaming headsets and trash talk.* (Set rules against vulgarity; headphones must remain at safe decibels).
-- `FAQ-GM-049`: *My child only wants to play video games and has no other hobbies.* (Require 1:1 ratio: 1 hour of screen time earned by 1 hour of physical/creative play).
-- `FAQ-GM-050`: *Dealing with in-game predatory trading.* (Turn off trading settings in Roblox account parental controls).
-- `FAQ-GM-051`: *Gaming in bedrooms.* (Consoles stay in family living rooms; zero gaming stations in bedrooms).
-- `FAQ-GM-052`: *Child secretly using Apple ID balance.* (Remove all saved credit cards; use prepaid cards exclusively).
-- `FAQ-GM-053`: *Gaming late into the night.* (Automate console power cutoffs at 8:30 PM via smart plug or router).
-- `FAQ-GM-054`: *Child imitating violent YouTube gamers.* (Block toxic streamers like IShowSpeed; curate educational creators like Mark Rober).
-- `FAQ-GM-055`: *Esports and college scholarships dreams.* (Support enthusiasm while maintaining strict grade requirements).
-- `FAQ-GM-056`: *Mobile gacha games (Genshin Impact).* (High predatory spending design; restrict App Store in-app purchases).
-- `FAQ-GM-057`: *VR Headsets (Meta Quest).* (AAP recommends age 13+ due to pupillary distance and balance development).
-- `FAQ-GM-058`: *Child talking to strangers in game lobbies.* (Mute public voice chat; party chat restricted to real-life friends).
-- `FAQ-GM-059`: *Gaming addiction signs.* (Academic failure, hygiene neglect, sleep deprivation; requires clinical consultation).
-- `FAQ-GM-060`: *Transitioning off screens without rage.* (Give 10-minute and 2-minute visual countdown warnings).
-
----
-
-## 6. Category 4: Scary Content, Pornography & Child Safety (FAQs 061–080)
-
-### FAQ-SC-061
-- **Tier:** `TIER_2_AGES_10_11` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 10-year-old accidentally stumbled upon graphic pornography while searching the web. They look terrified. What do I say?"*
-- **Clinical Rationale:** The child's nervous system is overwhelmed by shame and fear of punishment. Your first 30 seconds dictate whether they will ever confide in you again.
+### FAQ-EM-008
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Defensive Privacy Lying
+- **Question:** *"My 13-year-old lied and said he was studying at the library when he was actually at a skate park. How do I rebuild honesty?"*
+- **Clinical Rationale:** At 13, lying is a clumsy bid for autonomy and privacy. Severe punitive grounding ensures the teen becomes a more covert liar rather than more honest.
 - **Script:**
-  - *Step 1 (Empathy):* "Take a deep breath. You are not in trouble. I am so proud of you for coming to tell me. Looking at that is really shocking and confusing."
-  - *Step 2 (Boundary):* "What you saw was made by adults for adults, and it is not real love, real intimacy, or how bodies work in real life. It's like a bad cartoon."
-  - *Step 3 (Collaboration):* "Let's close the browser together. Do you have any questions about what you saw? I will answer anything honestly."
-- **Pitfall to Avoid:** Gasping, screaming *"What were you doing?! Give me that phone!"* (Guarantees they will hide it next time).
+  - *Step 1 (Empathy):* "I know you want freedom to hang out with your friends without feeling managed by me."
+  - *Step 2 (Boundary):* "And, safety requires that I know your physical location. Lying breaks our safety pact."
+  - *Step 3 (Collaboration):* "For the next two weeks, you check in via photo when you arrive at a spot. Let's agree on what freedom you can earn back once honesty is consistent."
+- **Pitfall to Avoid:** Revoking all social privileges for six months.
 - **Cooldown:** 30 mins
 
-### FAQ-SC-062
-- **Tier:** `TIER_4_AGES_14_15` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 14-year-old son is being blackmailed by an Instagram account demanding $500 or they will send private photos to his school. He is hyperventilating."*
-- **Clinical Rationale:** **CRITICAL SEXTORTION CRISIS.** Organized international syndicates exploit shame. Teenagers have died by suicide within hours of this threat. Immediate unconditional safety is life-or-death.
+### FAQ-EM-009
+- **Tier:** `TIER_4_AGES_14_15` | **Focus:** Calling Out Parent Hypocrisy
+- **Question:** *"When I told my 15-year-old to read a book, she said: 'You spend 4 hours on Instagram every night, you're a hypocrite.' How do I respond?"*
+- **Clinical Rationale:** Formal operational moral reasoning is acute. Defending hypocrisy destroys credibility; acknowledging truth models emotional maturity and repair.
 - **Script:**
-  - *Step 1 (Empathy):* "Look at me. You are completely safe. You did nothing wrong. You were targeted by professional criminals who do this to thousands of boys every single day. I love you, and we are going to fix this together."
-  - *Step 2 (Boundary):* "We are NOT paying them a single dollar because paying them never stops their demands."
-  - *Step 3 (Collaboration):* "Do not reply to them. We are taking screenshots of their account and threats right now, blocking them, reporting it to the FBI at TakeItDown.ncmec.org, and setting your profile to private."
-- **Pitfall to Avoid:** Expressing anger, asking *"Why on earth would you send that?!"* or punishing them.
-- **Cooldown:** Continuous active presence (do not leave child alone).
-
-### FAQ-SC-063
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"How do I talk to my 12-year-old daughter about online grooming without terrifying her?"*
-- **Clinical Rationale:** Children must understand the grooming playbook: isolation, flattery, secrecy, and gifts.
-- **Script:**
-  - *Step 1 (Empathy):* "It feels flattering when someone online tells you you're mature, beautiful, or cool."
-  - *Step 2 (Boundary):* "Here is our family rule: Any adult or older teen online who asks you to keep secrets from mom and dad, asks for photos, or tries to isolate you is not your friend."
-  - *Step 3 (Collaboration):* "If anyone ever says 'Don't tell your parents,' that is your code-red signal to show me. You will never get in trouble for showing me."
-- **Pitfall to Avoid:** Vague warnings like *"Be careful on the internet, there are bad guys."*
+  - *Step 1 (Empathy):* "You're 100% right. I have been exhausted after work and zoning out on my phone, and that's not what I want to model."
+  - *Step 2 (Boundary):* "And, developing our minds through books still matters for both of us."
+  - *Step 3 (Collaboration):* "Let's establish a family reading hour from 8:00 to 9:00 PM tonight where we both put our phones in the kitchen basket."
+- **Pitfall to Avoid:** "I pay the bills in this house and I am the adult, so do not tell me what to do."
 - **Cooldown:** 5 mins
 
-### FAQ-SC-064 to FAQ-SC-080 (Safety & Content Summary Matrix)
-- `FAQ-SC-064`: *Finding gore or violent videos (e.g. cartel or war clips).* (Provide emotional debriefing; explain how algorithms promote shocking content for clicks).
-- `FAQ-SC-065`: *Peer requesting nude photos.* ("Real respect never demands digital collateral; say 'I don't do that'").
-- `FAQ-SC-066`: *Stranger offering free Robux or game skins in exchange for Discord calls.* (Classic phishing and grooming vector; teach immediate reporting).
-- `FAQ-SC-067`: *Child expressing suicidal ideation in text messages.* (Immediate clinical crisis intervention; contact 988 lifeline).
-- `FAQ-SC-068`: *AI Deepfake bullying (fake photos of classmates).* (Legal violation; involve school administration and legal authorities immediately).
-- `FAQ-SC-069`: *Drug dealing on Snapchat (fentanyl-laced counterfeit pills).* (Educate that one pill from social media can be lethal).
-- `FAQ-SC-070`: *Self-harm content on Pinterest/TikTok.* (Block self-harm hashtags; engage adolescent mental health specialist).
-- `FAQ-SC-071`: *Eating disorder algorithmic rabbit holes.* (Audit feeds; remove calorie-counting apps; focus on body neutrality).
-- `FAQ-SC-072`: *Location sharing with strangers.* (Turn off Snap Map and location sharing globally).
-- `FAQ-SC-073`: *Dangerous TikTok viral challenges.* (Discuss physics and biology of viral pranks; deconstruct the danger).
-- `FAQ-SC-074`: *Swatting threats in online gaming.* (VPN and privacy protocols; never share school or city name).
-- `FAQ-SC-075`: *Child asking about dark web.* (Demystify: explain it is full of malware and surveillance, not cool mystery).
-- `FAQ-SC-076`: *Accidental download of malware/ransomware.* (Praise honesty; disconnect Wi-Fi; wipe drive).
-- `FAQ-SC-077`: *Phishing emails targeting homework logins.* (Teach inspection of sender domain headers).
-- `FAQ-SC-078`: *Fake giveaway scams.* (Rule: "If it's free on the internet, you are the product or the mark").
-- `FAQ-SC-079`: *Child receiving racist slurs in multiplayer games.* (Validate the sting; report user; change lobbies).
-- `FAQ-SC-080`: *Setting up emergency SOS calling.* (Teach native iOS/Android 5-click rapid emergency trigger).
-
----
-
-## 7. Category 5: Sleep Hygiene, Bedtime Battles & Habit Resets (FAQs 081–100)
-
-### FAQ-SL-081
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"My 13-year-old screams that they can't sleep without their phone playing white noise or ASMR in their room."*
-- **Clinical Rationale:** The child has conditioned their sleep onset to an active digital screen. While sound is therapeutic, screens in bedrooms invite midnight relapse.
+### FAQ-EM-010
+- **Tier:** `TIER_5_AGES_16_18` | **Focus:** Existential College / Future Paralysis
+- **Question:** *"My 17-year-old is procrastinating on all her college applications and shutting down. How do I help without nagging?"*
+- **Clinical Rationale:** Procrastination is an emotional regulation problem, not a time-management flaw. The teen is terrified of adulthood, failure, and leaving family security.
 - **Script:**
-  - *Step 1 (Empathy):* "I know falling asleep in a quiet room is hard and your brain feels buzzing."
-  - *Step 2 (Boundary):* "Screens do not sleep in bedrooms. That boundary is absolute to protect your sleep."
-  - *Step 3 (Collaboration):* "Let's get a standalone sound machine with 20 white noise sounds, or a Bluetooth speaker that streams from the kitchen."
-- **Pitfall to Avoid:** Giving in and allowing the phone "facedown across the room."
+  - *Step 1 (Empathy):* "Thinking about applications and leaving home feels gigantic and terrifying. It makes total sense that you want to avoid it."
+  - *Step 2 (Boundary):* "We are not going to spend every evening fighting about deadlines."
+  - *Step 3 (Collaboration):* "Let's pick just one Sunday afternoon hour. We'll order your favorite takeout, sit at the table, and just fill out the basic personal info box. That's all for this week."
+- **Pitfall to Avoid:** "If you don't finish these essays, you're going to end up with no future."
 - **Cooldown:** 10 mins
 
-### FAQ-SL-082
-- **Tier:** `TIER_3_AGES_12_13` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"Why does my teenager fight bedtime so violently? Are they just being rebellious?"*
-- **Clinical Rationale:** Pubertal neurobiology shifts the circadian clock forward by **2 hours** (delayed melatonin trigger). Asking a 13-year-old to sleep at 9:00 PM is biologically equivalent to asking an adult to sleep at 7:00 PM.
+---
+
+## 4. Category 2: Hormones, Puberty & Bodily Changes
+
+### FAQ-PB-001
+- **Tier:** `TIER_1_AGES_8_9` | **Focus:** Adrenarche & Early Body Odor
+- **Question:** *"My 8-year-old daughter suddenly has strong underarm sweat odor, but she has no other signs of puberty. Is this normal?"*
+- **Clinical Rationale:** This is **adrenarche**, the activation of the adrenal glands producing DHEA. It occurs around ages 6–8 before gonadal puberty. Shaming the child induces body anxiety.
 - **Script:**
-  - *Step 1 (Empathy):* "I understand that your body doesn't feel tired at 9:00 PM. That is real science—your teenage brain doesn't release melatonin until later."
-  - *Step 2 (Boundary):* "Even if you aren't ready to sleep, your brain needs to be off screens so melatonin can actually build up."
-  - *Step 3 (Collaboration):* "Devices dock at 8:30 PM. You can stay awake in bed reading a book, sketching, or listening to music until 10:30 PM."
-- **Pitfall to Avoid:** Forcing them to lay in total darkness staring at the ceiling (causes acute bedtime insomnia anxiety).
+  - *Step 1 (Empathy):* "Your body is doing something amazing—it's starting to grow into its next chapter!"
+  - *Step 2 (Boundary):* "Part of growing up means our sweat glands change, and washing our underarms daily keeps our skin healthy."
+  - *Step 3 (Collaboration):* "Let's go to the store together this afternoon and let you pick out your very own first deodorant and body wash."
+- **Pitfall to Avoid:** "Phew! You smell terrible, go take a bath right now!"
+- **Cooldown:** 0 mins
+
+### FAQ-PB-002
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Bodily Awkwardness & Hoodie Hiding
+- **Question:** *"My 11-year-old son insists on wearing a heavy black hoodie even in 85-degree summer weather. Why is he hiding his body?"*
+- **Clinical Rationale:** Early gonadarche triggers acute physical self-consciousness (breast budding, fat redistribution, growth awkwardness). The hoodie acts as psychological armor.
+- **Script:**
+  - *Step 1 (Empathy):* "I know your body is changing and feeling exposed or watched can feel really uncomfortable."
+  - *Step 2 (Boundary):* "We need to make sure your body doesn't overheat in this sun."
+  - *Step 3 (Collaboration):* "Let's go find some lightweight, loose-fitting cotton shirts or lightweight unzipped layers that give you coverage without making you dizzy."
+- **Pitfall to Avoid:** Forcibly ripping off the hoodie or mocking them for sweating.
 - **Cooldown:** 5 mins
 
-### FAQ-SL-083
-- **Tier:** `TIER_4_AGES_14_15` | **Road:** `ACTIVE_DEVICE`
-- **Question:** *"How do we reset screen boundaries after summer vacation where rules were totally relaxed?"*
-- **Clinical Rationale:** Sudden abrupt crackdowns after weeks of dopamine freedom trigger acute withdrawal defiance. Use a 7-day graduated taper.
+### FAQ-PB-003
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Puberty Talks Without Cringe
+- **Question:** *"How do I talk to my 10-year-old boy about wet dreams and physical changes without him dying of embarrassment?"*
+- **Clinical Rationale:** Monolithic "big talks" trigger intense anxiety. Information delivered in small, casual, normalized micro-conversations (often side-by-side in a car) prevents shame.
 - **Script:**
-  - *Step 1 (Empathy):* "Summer was amazing, and it felt great having zero alarms and endless gaming with your friends."
-  - *Step 2 (Boundary):* "School starts in 7 days, and our bodies cannot function on 5 hours of sleep."
-  - *Step 3 (Collaboration):* "Starting tonight, we are shifting the AlongSide bedtime curfew back by 30 minutes each evening so we hit our 8:30 PM target smoothly."
-- **Pitfall to Avoid:** Abruptly confiscating all screens at 8:00 PM on Sunday night before the first day of school.
-- **Cooldown:** 5 mins
+  - *Step 1 (Empathy):* "Bodies do strange and surprising things when they start growing fast, and it can feel awkward to talk about."
+  - *Step 2 (Boundary):* "It's my job as your parent to make sure you know what's coming so you never have to be scared."
+  - *Step 3 (Collaboration):* "I got this great graphic novel about how guys' bodies grow [*The Boy's Body Book*]. I'm leaving it on your nightstand. Read whatever chapters you want, and you can ask me anything anytime."
+- **Pitfall to Avoid:** Sitting them down for a formal, graphic PowerPoint-style lecture at the dinner table.
+- **Cooldown:** 0 mins
 
-### FAQ-SL-084 to FAQ-SL-100 (Sleep & Habits Summary Matrix)
-- `FAQ-SL-084`: *Caught child sneaking phone under pillow at 2:00 AM.* (Collect device calmly; enforce kitchen docking with AlongSide hardware curfew).
-- `FAQ-SL-085`: *Morning grogginess and school refusal.* (Address late-night screen smuggling; get 10 minutes of direct morning sunlight).
-- `FAQ-SL-086`: *Screens during breakfast.* (Screen-free breakfast rule: morning dopamine should come from food, movement, and conversation).
-- `FAQ-SL-087`: *Homework distraction with dual screens.* (Use full-screen focus modes; silence smartphone notifications during study hours).
-- `FAQ-SL-088`: *Screen time during car rides.* (Audiobooks and podcasts allowed; restrict video gaming to road trips >2 hours).
-- `FAQ-SL-089`: *Screen-free family dinners.* (Universal rule: All family devices placed in a decorative basket before sitting down).
-- `FAQ-SL-090`: *Weekend vs Weekday limits.* (Bilateral pact sets slightly later curfews on Friday/Saturday while maintaining bedroom exclusion).
-- `FAQ-SL-091`: *Child using smartwatch under blanket.* (Watches dock in kitchen alongside phones).
-- `FAQ-SL-092`: *Blue light blocking glasses—do they work?* (They help marginally, but do not counter algorithmic mental stimulation).
-- `FAQ-SL-093`: *Parenting style clash on bedtime.* (Parents calibrate on a unified AlongSide pact before communicating with child).
-- `FAQ-SL-094`: *Post-illness screen habit reset.* (Gradual 3-day taper back to normal limits).
-- `FAQ-SL-095`: *Screen time as a reward or punishment.* (Never use device curfews as punitive leverage; frame curfew as biological healthcare).
-- `FAQ-SL-096`: *Sleepovers at friends' houses.* (Check host family tech rules beforehand; provide emergency watch).
-- `FAQ-SL-097`: *Bedtime podcasts.* (Allowed via smart speaker without interactive screen).
-- `FAQ-SL-098`: *Teens claiming they need phone for Spotify sleep playlist.* (Use Bluetooth speaker controlled from living room).
-- `FAQ-SL-099`: *Managing screen fatigue during exam weeks.* (Preserve mandatory 1-hour physical movement breaks).
-- `FAQ-SL-100`: *Lifelong digital hygiene launch.* (By senior year, teen manages their own curfew under AlongSide mentorship mode).
+### FAQ-PB-004
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** First Menstruation Panic & Cramps
+- **Question:** *"My 12-year-old daughter got her first period, panicked, and refused to go to school because she's terrified of leaking. How do I support her?"*
+- **Clinical Rationale:** Menarche combined with dACC social fear creates catastrophic panic over public humiliation. She needs physical comfort and practical contingency planning.
+- **Script:**
+  - *Step 1 (Empathy):* "It is completely normal to feel shocked and nervous. Your body just reached a huge, healthy milestone."
+  - *Step 2 (Boundary):* "You are safe, and leaking is something every woman has navigated."
+  - *Step 3 (Collaboration):* "Let's put together a private emergency pouch for your backpack with extra supplies and spare leggings. I will write a note to the school nurse so you have unlimited bathroom passes today."
+- **Pitfall to Avoid:** Dismissing her fear: "It's just a period, half the world has one, get on the bus."
+- **Cooldown:** 15 mins
+
+### FAQ-PB-005
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Refusing to Shower / Hygiene Resistance
+- **Question:** *"My 13-year-old boy smells like gym socks but fights taking a shower every single night. Why the resistance to basic cleanliness?"*
+- **Clinical Rationale:** Executive function fatigue + sensory friction with transitioning + lack of self-awareness of olfactory changes. Nagging causes stubborn dug-in heels.
+- **Script:**
+  - *Step 1 (Empathy):* "I know taking a shower feels like a chore when you're tired and just want to chill in your room."
+  - *Step 2 (Boundary):* "With pubertal sweat, showering before bed is non-negotiable for skin hygiene."
+  - *Step 3 (Collaboration):* "Bring your waterproof Bluetooth speaker into the bathroom and play your favorite playlist while you wash up."
+- **Pitfall to Avoid:** Publicly humiliating him: "You stink so bad nobody is going to want to sit near you."
+- **Cooldown:** 5 mins
 
 ---
 
-## 8. Summary & Handoff to Engineering
+## 5. Category 3: Social Life, Peer Pressure & School Transitions
 
-This 100+ FAQ Vault provides the structured data needed for:
-1. **`PLAN-10` / `PLAN-11` (AI Child Advisor & FAQ Vault API):** Seeded directly into PostgreSQL with `pgvector` embeddings for instant similarity retrieval.
-2. **`PLAN-08` / `PLAN-09` (Parent Intelligence Academy):** Directly populates the lesson curriculum and interactive video simulations.
-3. **`PLAN-12` (Interactive Quiz Suite):** Powers scenario-based fluency and readiness assessments.
+### FAQ-SO-001
+- **Tier:** `EARLY_FOUNDATION_AGES_5_7` | **Focus:** Kindergarten Drop-Off Panic
+- **Question:** *"My 5-year-old sobs and clings to my leg every morning at the kindergarten door. How do I leave without feeling like a monster?"*
+- **Clinical Rationale:** Separation anxiety fueled by unfamiliar sensory environments. Prolonging goodbyes escalates anxiety; brief, confident rituals build security.
+- **Script:**
+  - *Step 1 (Empathy):* "You feel sad when we say goodbye, and it's hard to see me leave."
+  - *Step 2 (Boundary):* "And, now it is time for kindergarten. You are safe with Mrs. Davis."
+  - *Step 3 (Collaboration):* "Let's do our secret double-handshake and butterfly kiss. I will see you right at this door at 3:00 PM!"
+- **Pitfall to Avoid:** Sneaking out while the child isn't looking (destroys trust) or lingering for 20 minutes consoling.
+- **Cooldown:** 5 mins
+
+### FAQ-SO-002
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Lunchroom Table Exclusion
+- **Question:** *"My 11-year-old daughter came home weeping because her friends told her their lunch table was full and she had to sit alone. How do I comfort her?"*
+- **Clinical Rationale:** Peer rejection activates the dACC physical pain circuitry. Telling her to "ignore them" invalidates profound neurobiological suffering.
+- **Script:**
+  - *Step 1 (Empathy):* "Maya, that is so deeply painful. Sitting alone when you expected your friends to welcome you feels like a physical punch in the stomach."
+  - *Step 2 (Boundary):* "We are not going to let this define your worth. Cruel behavior reflects their insecurity, not your value."
+  - *Step 3 (Collaboration):* "Let's brainstorm two other kids from your band class or science lab who might also be looking for a friendly lunch buddy tomorrow."
+- **Pitfall to Avoid:** "Middle school girls are just catty, don't worry about it."
+- **Cooldown:** 20 mins
+
+### FAQ-SO-003
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** Toxic Class Group Chat
+- **Question:** *"My 11-year-old was added to a 30-person class chat that turned nasty, sharing mean memes about a classmate. She's terrified to leave. What do I do?"*
+- **Clinical Rationale:** Tweens fear that exiting a chat makes them the next target for social ostracism. Forcibly snatching the phone makes the parent the enemy.
+- **Script:**
+  - *Step 1 (Empathy):* "I understand why you're scared. Leaving feels like painting a target on your back."
+  - *Step 2 (Boundary):* "Our family values do not permit being an audience to cruelty."
+  - *Step 3 (Collaboration):* "You don't have to announce a dramatic exit. We will simply mute the notifications, and if anyone asks, you can blame me: 'My parents put a strict mute on my phone during school nights.'"
+- **Pitfall to Avoid:** Forwarding the chat to the other parents and triggering an all-out suburban Facebook war.
+- **Cooldown:** 15 mins
+
+### FAQ-SO-004
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Friendship Churn & Betrayal
+- **Question:** *"My 13-year-old son's best friend since 1st grade has suddenly dumped him to hang out with the 'cool athletic group.' He is devastated. How do I help?"*
+- **Clinical Rationale:** Social sorting in early adolescence is brutal. Mourning a childhood friendship breakup is psychologically equivalent to adult divorce grief.
+- **Script:**
+  - *Step 1 (Empathy):* "Losing a friendship that has been your foundation for six years is real heartbreak. It makes sense that you feel angry and lost."
+  - *Step 2 (Boundary):* "You don't have to chase someone who isn't choosing you right now."
+  - *Step 3 (Collaboration):* "Let's take this weekend to do something you love—maybe go to the climbing gym or invite your friend Noah from robotics over."
+- **Pitfall to Avoid:** "He wasn't that great of a friend anyway, forget about him."
+- **Cooldown:** 20 mins
+
+### FAQ-SO-005
+- **Tier:** `TIER_4_AGES_14_15` | **Focus:** First Romantic Heartbreak
+- **Question:** *"My 15-year-old was dumped via text after a three-month relationship. He won't get out of bed or eat. How do I support him?"*
+- **Clinical Rationale:** Pubertal dopaminergic romantic attachment is intense; the brain experiences relationship termination as withdrawal from an addictive neurochemical state.
+- **Script:**
+  - *Step 1 (Empathy):* "First heartbreak is one of the most painful things a human being ever goes through. Your chest literally aches."
+  - *Step 2 (Boundary):* "You don't have to pretend you're fine, but we do need to nourish your body."
+  - *Step 3 (Collaboration):* "I'm going to bring you a bowl of warm soup and sit right on the edge of the bed. You don't have to talk at all."
+- **Pitfall to Avoid:** "You're only 15, you have plenty of fish in the sea."
+- **Cooldown:** 30 mins
+
+---
+
+## 6. Category 4: First Device, Screen Boundaries & Sleep Architecture
+
+### FAQ-DS-001
+- **Tier:** `TIER_1_AGES_8_9` | **Focus:** Smartwatch vs. Smartphone Decision
+- **Question:** *"Should I buy my 8-year-old a cellular smartwatch or a smartphone for after-school pickup?"*
+- **Clinical Rationale:** Children under 10 need logistics and parental contact, not uncurated web browsers, App Stores, or social media algorithms.
+- **Script:**
+  - *Step 1 (Empathy):* "You're becoming so independent with your soccer practices, and we want you to be able to reach us anytime."
+  - *Step 2 (Boundary):* "In our family, smartphones wait until you are older. You are getting a dedicated GPS smartwatch with approved contacts only."
+  - *Step 3 (Collaboration):* "Let's pick out your wristband color and program mom, dad, and grandma into your speed dial."
+- **Pitfall to Avoid:** Handing down an old unlocked iPhone "with the SIM card disabled" (kids connect to school Wi-Fi in minutes).
+- **Cooldown:** 0 mins
+
+### FAQ-DS-002
+- **Tier:** `TIER_2_AGES_10_11` | **Focus:** First Smartphone Readiness Rubric
+- **Question:** *"How do I evaluate if my 10-year-old is actually ready for a personal smartphone?"*
+- **Clinical Rationale:** Smartphone readiness is a developmental milestone, not a birthday gift. It requires 3 behavioral markers: executive responsibility, honesty about mistakes, and emotional regulation.
+- **Script:**
+  - *Step 1 (Empathy):* "I know how much you want a phone for 5th grade, and it's exciting to imagine having one."
+  - *Step 2 (Boundary):* "A smartphone is a piece of high-powered equipment, like a car. We only unlock it when you demonstrate 30 days of consistent morning routines and taking care of your belongings."
+  - *Step 3 (Collaboration):* "Let's look at AlongSide's First-Phone Readiness checklist and track your progress together."
+- **Pitfall to Avoid:** Gifting a phone for Christmas with zero pre-negotiated boundaries or pacts.
+- **Cooldown:** 5 mins
+
+### FAQ-DS-003
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Bedroom Phone Ban vs. Biological Melatonin Delay
+- **Question:** *"My 13-year-old says she biologically can't fall asleep until 11:00 PM, so she needs her phone in bed to pass the time. Is this true?"*
+- **Clinical Rationale:** Pubertal circadian phase delay is biologically real (+2 hour melatonin delay). However, screen blue light suppresses whatever melatonin is left, exacerbating sleep debt.
+- **Script:**
+  - *Step 1 (Empathy):* "You are completely right that your biological clock shifted and you aren't tired at 9:00 PM."
+  - *Step 2 (Boundary):* "And, blue light from screens tricks your brain into thinking it's noon. All phones sleep on the kitchen charging counter at 8:30 PM."
+  - *Step 3 (Collaboration):* "You can stay up reading books, drawing, or listening to audiobooks in your room until your body feels sleepy."
+- **Pitfall to Avoid:** Allowing the phone in bed "facedown on silent" (teens check notifications at 1:30 AM).
+- **Cooldown:** 10 mins
+
+### FAQ-DS-004
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** 8:30 PM Neutral Curfew Enforcement
+- **Question:** *"How do I stop being the screaming bad guy every night at bedtime cutoff?"*
+- **Clinical Rationale:** When parents manually enforce device cutoffs, they become the emotional lightning rod for the child's dopamine withdrawal. Automated OS profiles depersonalize the boundary.
+- **Script:**
+  - *Step 1 (Empathy):* "I know it feels abrupt when the phone locks while you're in the middle of a chat."
+  - *Step 2 (Boundary):* "Our AlongSide Family Profile locks all social apps automatically at 8:30 PM so our brains can rest."
+  - *Step 3 (Collaboration):* "You can always blame the app to your friends: tell them 'My annoying family profile shut down my apps, see you tomorrow!'"
+- **Pitfall to Avoid:** Physically yanking the phone out of the child's hands in anger.
+- **Cooldown:** 5 mins
+
+### FAQ-DS-005
+- **Tier:** `TIER_4_AGES_14_15` | **Focus:** Earned Autonomy Step-Ladder
+- **Question:** *"My 15-year-old argues that high schoolers shouldn't have app curfews. When do we relax rules?"*
+- **Clinical Rationale:** Authoritarian rules trigger deception; earned autonomy step-ladders reward executive competence.
+- **Script:**
+  - *Step 1 (Empathy):* "You are growing into a high schooler, and it makes sense that you want more control over your time."
+  - *Step 2 (Boundary):* "Autonomy is earned through sleep and responsibility. When school mornings are calm and grades stay steady, limits expand."
+  - *Step 3 (Collaboration):* "Let's test an earned 30-day trial where your curfew extends from 8:30 PM to 9:30 PM. If your mornings stay smooth, that becomes our new standard."
+- **Pitfall to Avoid:** "As long as you live under my roof, you have an 8:30 PM bedtime."
+- **Cooldown:** 10 mins
+
+---
+
+## 7. Category 5: Complex Digital Culture, Safety & Autonomy
+
+### FAQ-CS-001
+- **Tier:** `TIER_1_AGES_8_9` | **Focus:** Gaming Currencies (Robux / V-Bucks) Begging
+- **Question:** *"My 8-year-old begs for Robux every weekend. How do I explain digital money without making him feel poor?"*
+- **Clinical Rationale:** In-game avatars represent peer clothing on the digital playground. Ridiculing digital purchases increases shame.
+- **Script:**
+  - *Step 1 (Empathy):* "I know how cool it feels to have those skins and pets when you're playing with your friends."
+  - *Step 2 (Boundary):* "In our family, real money doesn't get spent on game tokens without a clear earned plan."
+  - *Step 3 (Collaboration):* "Here is an earned chore chart. You can earn $5 in Robux this Saturday by washing the family car and raking the leaves."
+- **Pitfall to Avoid:** "Robux is fake scam garbage and I'm not wasting my hard-earned money on it."
+- **Cooldown:** 5 mins
+
+### FAQ-CS-002
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Accidental Adult Content Exposure
+- **Question:** *"My 12-year-old clicked a link on Discord and saw graphic pornography. He was crying in the bathroom. How do I debrief?"*
+- **Clinical Rationale:** The #1 reason children hide predators and pornography is the terror that their devices will be confiscated. Compassionate debriefing preserves the safe harbor.
+- **Script:**
+  - *Step 1 (Empathy):* "I am so proud of you for coming to me. Seeing something like that unexpectedly is shocking and makes your stomach feel weird."
+  - *Step 2 (Boundary):* "You are not in trouble, and your phone will not be taken away."
+  - *Step 3 (Collaboration):* "Let's sit together, drink some hot chocolate, and talk through why online content like that doesn't represent real human love or relationships."
+- **Pitfall to Avoid:** "What were you clicking on?! How could you look at that?!"
+- **Cooldown:** 15 mins
+
+### FAQ-CS-003
+- **Tier:** `TIER_3_AGES_12_13` | **Focus:** Covert "Calculator Vault" Discovery
+- **Question:** *"I found a calculator app on my 13-year-old's phone that asks for a passcode to open hidden photos. How do I address this?"*
+- **Clinical Rationale:** Confronting with rage drives privacy tradecraft deeper underground. Neutral curiosity opens a dialogue about boundaries.
+- **Script:**
+  - *Step 1 (Empathy):* "I saw the calculator vault app. I know having a private space for your thoughts and photos feels really important right now."
+  - *Step 2 (Boundary):* "At the same time, covert vault apps violate our family transparency agreement."
+  - *Step 3 (Collaboration):* "I am not going to snoop through your photos. We are going to delete the app together, and agree on what personal privacy you have that doesn't require secret camouflage."
+- **Pitfall to Avoid:** Reading her private diary or secret photos aloud to punish her.
+- **Cooldown:** 20 mins
+
+### FAQ-CS-004
+- **Tier:** `TIER_4_AGES_14_15` | **Focus:** Sextortion Threat Response
+- **Question:** *"My 14-year-old son received a threat online demanding $500 or they will send private photos to his friends. He is pacing in panic. What is the emergency protocol?"*
+- **Clinical Rationale:** Financial sextortion syndicates target teenage boys. Panic and shame can lead to catastrophic self-harm. Immediate parental protection is vital.
+- **Script:**
+  - *Step 1 (Empathy):* "Look at me: you are safe. You are the victim of a criminal scam, and you are not in trouble."
+  - *Step 2 (Boundary):* "We do not pay extortionists, and we do not negotiate."
+  - *Step 3 (Collaboration):* "I am taking over communication right now. We are going to take screenshots for the FBI IC3 report, block the account, and secure your profile together."
+- **Pitfall to Avoid:** "How could you be so stupid to send a photo to a stranger?!"
+- **Cooldown:** 0 mins (Immediate active crisis support)
+
+### FAQ-CS-005
+- **Tier:** `TIER_4_AGES_14_15` | **Focus:** Life360 Location Tracking Dispute
+- **Question:** *"My 15-year-old claims that tracking his location on Life360 is toxic surveillance and says he's going to leave his phone at school. How do we resolve this?"*
+- **Clinical Rationale:** Adolescents need physical autonomy. Framing location sharing as a mutual safety pact rather than a probation monitor resolves the power struggle.
+- **Script:**
+  - *Step 1 (Empathy):* "I understand why having an app track your movement feels intrusive, like you're being policed."
+  - *Step 2 (Boundary):* "Location sharing is not about checking on your every step; it's about our family emergency safety net."
+  - *Step 3 (Collaboration):* "Let's agree: I will never interrogate you about where you went. We will only look at the map if you are late past curfew or if there's an emergency. And you have access to track my location anytime too."
+- **Pitfall to Avoid:** "You're my child and I will track you until you're 25."
+- **Cooldown:** 10 mins
