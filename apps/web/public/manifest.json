@@ -1,0 +1,24 @@
+{
+  "name": "Alongside — Parent Intelligence & Family OS",
+  "short_name": "Alongside",
+  "description": "Empathetic digital-parenting platform helping parents navigate pre-teen tech, smartphone readiness, and screen agreements.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDFBF7",
+  "theme_color": "#0D9488",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

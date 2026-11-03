@@ -1,0 +1,13 @@
+# Next.js build outputs
+.next/
+out/
+
+# PWA service worker build artifacts
+/public/sw.js*
+/public/workbox-*.js*
+/public/swe-worker-*.js
+
+# Dependencies & caches
+node_modules/
+*.tsbuildinfo
+.turbo

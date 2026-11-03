@@ -10,6 +10,9 @@ build/
 out/
 coverage/
 *.tsbuildinfo
+apps/web/public/sw.js*
+apps/web/public/workbox-*.js*
+apps/web/public/swe-worker-*.js*
 
 # Environment variables
 .env
@@ -44,3 +47,4 @@ playwright-report/
 
 # Paperclip local run context
 .paperclip-task.md
+scratch/
