@@ -91,5 +91,8 @@ To eliminate merge conflicts and ensure thorough code review:
   3. **Verify:** Execute `npm run typecheck`, `npm run lint`.
   4. **Ponytail Audit:** Run `ponytail-review` on working diff (`git diff HEAD`).
   5. **Commit:** Atomic Conventional Commits referencing the issue.
-  6. **Push & PR:** `git push origin <branch-name>` and create a PR targeting `main` with summary and `Fixes SOU-X`.
+  6. **Push & PR:** `git push origin <branch-name>` and create a PR targeting `main` with summary and `Fixes SOU-X`. Ensure the PR title follows Conventional Commits syntax (`<type>(<scope>): <summary>`).
+- **Squash & Merge & Branch Auto-Deletion (MANDATORY):**
+  * Every pull request merged into `main` MUST be **Squashed and Merged**. Standard merge commits and rebase merges are strictly disabled.
+  * The feature branch is **automatically deleted** immediately upon merge to prevent stale branch drift and maintain a clean repository.
 - **Exception:** Only pure repository governance/doc updates authored directly by the CTO or single-agent initial workspace bootstrapping may commit directly to `main`.
