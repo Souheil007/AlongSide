@@ -28,3 +28,26 @@ export type CreateChildInput = z.infer<typeof CreateChildSchema>;
 export const UpdateChildSchema = CreateChildSchema.partial();
 
 export type UpdateChildInput = z.infer<typeof UpdateChildSchema>;
+
+export const ReadinessAnswerInputSchema = z.object({
+  questionId: z.string().min(1, 'Question ID is required'),
+  dimensionKey: z.string().min(1, 'Dimension key is required').optional(),
+  score: z.number().min(0, 'Score cannot be negative').optional(),
+  maxScore: z.number().positive('maxScore must be positive').optional(),
+  selectedOptionId: z.string().optional(),
+});
+
+export type ReadinessAnswerInput = z.infer<typeof ReadinessAnswerInputSchema>;
+
+export const SubmitReadinessAssessmentSchema = z
+  .object({
+    quizId: z.string().optional(),
+    answers: z.array(ReadinessAnswerInputSchema).optional(),
+    responses: z.array(ReadinessAnswerInputSchema).optional(),
+  })
+  .refine(
+    (data) => (data.answers && data.answers.length > 0) || (data.responses && data.responses.length > 0),
+    { message: 'At least one answer or response is required' }
+  );
+
+export type SubmitReadinessAssessmentInput = z.infer<typeof SubmitReadinessAssessmentSchema>;

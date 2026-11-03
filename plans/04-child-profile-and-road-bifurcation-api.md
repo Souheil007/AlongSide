@@ -61,7 +61,7 @@ Implement the child profile management module with immediate contextual road bif
    - Calculates overall score and returns actionable recommendation roadmap (e.g. `ROAD_1_BRIDGE_CHARTER` if < 75).
 
 ### Task 4: Automated Integration Testing
-1. Author Vitest tests in `apps/api/tests/modules/children/children.test.ts`:
+1. Author Vitest tests in `apps/api/test/children.test.ts`:
    - Create child with `roadType: PRE_DEVICE` -> asserts correct developmental tier calculated.
    - List children -> returns only current user's children (tenant isolation check).
    - Attempting to read another parent's child -> returns 404/403.
@@ -77,7 +77,7 @@ Implement the child profile management module with immediate contextual road bif
 - [ ] `apps/api/src/modules/children/children.controller.ts`
 - [ ] `apps/api/src/modules/children/children.routes.ts`
 - [ ] `apps/api/src/app.ts` (Register children routes)
-- [ ] `apps/api/tests/modules/children/children.test.ts`
+- [ ] `apps/api/test/children.test.ts`
 
 ---
 

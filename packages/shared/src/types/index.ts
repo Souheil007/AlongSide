@@ -60,6 +60,8 @@ export interface ChildDTO {
   roadType: RoadType;
   developmentalTier: DevelopmentalTier;
   schoolGrade?: string | null;
+  deviceProfileStatus?: DeviceProfileStatus | null;
+  latestAssessmentScore?: number | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -4,91 +4,16 @@ import {
   DevelopmentalTier,
   RoadType,
 } from '../constants/index.js';
+import { mapAgeToDevelopmentalTier } from './childTier.js';
+import {
+  calculateReadinessScore,
+  type ReadinessAnswer,
+  type ReadinessAssessmentResult,
+} from './readinessScoring.js';
 
-export interface AssessmentAnswer {
-  questionId: string;
-  dimensionKey: string;
-  score: number;
-  maxScore: number;
-}
-
-export interface ReadinessAssessmentResult {
-  overallScore: number; // 0-100
-  dimensionScores: Record<string, number>; // 0-100 per dimension
-  isReadyForPersonalPhone: boolean;
-  recommendation: string;
-  recommendedRoadmapPreset: string;
-}
-
-/**
- * 10-Dimension First-Phone Readiness Index Evaluator
- * Evaluates holistic developmental readiness from responses.
- */
-export function calculateReadinessScore(
-  answers: AssessmentAnswer[]
-): ReadinessAssessmentResult {
-  if (answers.length === 0) {
-    return {
-      overallScore: 0,
-      dimensionScores: {},
-      isReadyForPersonalPhone: false,
-      recommendation: 'No assessment responses provided.',
-      recommendedRoadmapPreset: 'ROAD_1_PRE_DEVICE_FOUNDATION',
-    };
-  }
-
-  const dimensionTotals: Record<string, { totalScore: number; maxTotal: number }> = {};
-  let totalScoreSum = 0;
-  let totalMaxSum = 0;
-
-  for (const answer of answers) {
-    const dim = answer.dimensionKey || 'general';
-    const current = dimensionTotals[dim] ?? { totalScore: 0, maxTotal: 0 };
-    current.totalScore += Math.max(0, answer.score);
-    current.maxTotal += Math.max(1, answer.maxScore);
-    dimensionTotals[dim] = current;
-
-    totalScoreSum += Math.max(0, answer.score);
-    totalMaxSum += Math.max(1, answer.maxScore);
-  }
-
-  const dimensionScores: Record<string, number> = {};
-  for (const [key, val] of Object.entries(dimensionTotals)) {
-    dimensionScores[key] = Math.round((val.totalScore / val.maxTotal) * 100);
-  }
-
-  const overallScore = totalMaxSum > 0 ? Math.round((totalScoreSum / totalMaxSum) * 100) : 0;
-  const isReady = overallScore >= 75;
-
-  let recommendation: string;
-  let preset: string;
-
-  if (overallScore >= 85) {
-    recommendation =
-      'Child demonstrates exceptional self-regulation, online hazard awareness, and boundary respect. Ready for bilateral smartphone onboarding.';
-    preset = 'ROAD_2_AUTONOMY_CHARTER';
-  } else if (overallScore >= 75) {
-    recommendation =
-      'Child exhibits solid foundational readiness with specific areas for co-regulation around nighttime transitions and app management.';
-    preset = 'ROAD_2_SCAFFOLDED_PACT';
-  } else if (overallScore >= 50) {
-    recommendation =
-      'Impulse centers and digital boundaries are still maturing. A pre-device trial period with non-smart or family-shared devices is advised.';
-    preset = 'ROAD_1_BRIDGE_CHARTER';
-  } else {
-    recommendation =
-      'Digital safety instincts and impulse control require structured parent modeling before independent smartphone ownership.';
-    preset = 'ROAD_1_PRE_DEVICE_FOUNDATION';
-  }
-
-  return {
-    overallScore,
-    dimensionScores,
-    isReadyForPersonalPhone: isReady,
-    recommendation,
-    recommendedRoadmapPreset: preset,
-  };
-}
+export type AssessmentAnswer = ReadinessAnswer;
+export type { ReadinessAssessmentResult };
+export { calculateReadinessScore };
 
 export interface PresetClause {
   category: ClauseCategory;
@@ -113,16 +38,18 @@ export function resolveDevelopmentalTier(age: number): {
   tier: DevelopmentalTier;
   recommendedBedtime: string;
 } {
-  if (age <= 9) {
-    return { tier: DevelopmentalTier.TIER_1_AGES_8_9, recommendedBedtime: '20:00' };
+  const tier = mapAgeToDevelopmentalTier(age);
+  let recommendedBedtime: string;
+  if (tier === DevelopmentalTier.TIER_1_AGES_8_9) {
+    recommendedBedtime = '20:00';
+  } else if (tier === DevelopmentalTier.TIER_2_AGES_10_11) {
+    recommendedBedtime = '20:30';
+  } else if (tier === DevelopmentalTier.TIER_3_AGES_12_13) {
+    recommendedBedtime = '21:00';
+  } else {
+    recommendedBedtime = '21:30';
   }
-  if (age <= 11) {
-    return { tier: DevelopmentalTier.TIER_2_AGES_10_11, recommendedBedtime: '20:30' };
-  }
-  if (age <= 13) {
-    return { tier: DevelopmentalTier.TIER_3_AGES_12_13, recommendedBedtime: '21:00' };
-  }
-  return { tier: DevelopmentalTier.TIER_4_AGES_14_PLUS, recommendedBedtime: '21:30' };
+  return { tier, recommendedBedtime };
 }
 
 /**
