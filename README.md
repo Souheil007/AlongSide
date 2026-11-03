@@ -2,10 +2,10 @@
 
 > **The Comprehensive Parent Intelligence Platform & Family Operating System: Educating parents on their child’s developmental psychology, emotional language, and youth culture, engaging them through interactive quizzes and 24/7 AI guidance, while anchoring household peace with transparent, contract-driven device agreements.**
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15_(App_Router)-black.svg)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
-[![Fastify](https://img.shields.io/badge/Fastify-v4_LTS22-black.svg)](https://fastify.dev/)
+[![Fastify](https://img.shields.io/badge/Fastify-v5_LTS22-black.svg)](https://fastify.dev/)
 [![Prisma](https://img.shields.io/badge/Prisma-PostgreSQL_pgvector-green.svg)](https://www.prisma.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v3.4-38bdf8.svg)](https://tailwindcss.com/)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](#)
@@ -30,6 +30,80 @@ In digital parenting, solutions historically die on one of two extremes:
 - **Actionable "Pact-as-Code" OS & Signed Device Profile:** Neutral hardware-level app blackouts at 8:30 PM bedtime curfew via signed Apple Declarative Management (`.mobileconfig`) and Android Enterprise profiles with a **Zero-Spyware Safe Harbor Guarantee**.
 
 For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md) and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
+
+---
+
+## ⚡ Quick Start & Local Development
+
+### 1. Prerequisites
+
+Ensure your local development environment satisfies these requirements:
+
+| Tool | Version | Purpose |
+| :--- | :--- | :--- |
+| **Node.js** | `>= 22.0.0` (LTS 22+) | Server runtime with native TypeScript support |
+| **npm** | `>= 10.0.0` | Monorepo workspace package manager |
+| **Docker & Docker Compose** | Latest | PostgreSQL 16 database with `pgvector` extension |
+| **GNU Make** | Any (Optional) | Single-command developer ergonomics via `Makefile` |
+
+### 2. 1-Minute Setup Guide
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Souheil007/AlongSide.git
+cd AlongSide
+
+# 2. Install monorepo dependencies across all workspaces
+make install
+# (Alternative without make: npm install)
+
+# 3. Create your local environment configuration
+cp .env.example .env
+
+# 4. Start PostgreSQL 16 + pgvector container
+make db-up
+# (Alternative without make: docker compose up -d)
+
+# 5. Generate Prisma Client for the database workspace
+make db-generate
+# (Alternative without make: npm run db:generate)
+
+# 6. Start both Frontend and Backend servers concurrently
+make dev
+# (Alternative without make: npm run dev)
+```
+
+Both development servers will launch concurrently:
+- 📱 **Frontend (Next.js 15 Web PWA):** [http://localhost:3000](http://localhost:3000)
+- 🚀 **Backend (Fastify LTS 22 API):** [http://localhost:4000](http://localhost:4000)
+- 🩺 **Health Check Endpoint:** [http://localhost:4000/api/v1/health](http://localhost:4000/api/v1/health)
+
+Press `Ctrl + C` in your terminal to gracefully shut down both servers simultaneously.
+
+---
+
+## 🧰 Makefile Developer Reference
+
+Alongside includes a root [`Makefile`](Makefile) providing standardized commands across the monorepo:
+
+| Target | Command | Description |
+| :--- | :--- | :--- |
+| **`make help`** | `make help` | Displays the help menu with all available targets |
+| **`make dev`** | `make dev` | **Starts both Frontend (Web) and Backend (API) concurrently** via `scripts/dev.mjs` |
+| **`make dev-frontend`** | `make frontend` / `make web` | Starts the Next.js 15 Web frontend exclusively on port `3000` |
+| **`make dev-backend`** | `make backend` / `make api` | Starts the Fastify LTS 22 API backend exclusively on port `4000` |
+| **`make db-up`** | `make db-up` | Launches the PostgreSQL 16 + `pgvector` Docker container in background |
+| **`make db-down`** | `make db-down` | Stops the PostgreSQL Docker container |
+| **`make db-logs`** | `make db-logs` | Follows real-time logs from the PostgreSQL container |
+| **`make db-generate`** | `make db-generate` | Generates the typed Prisma Client (`packages/database`) |
+| **`make db-validate`** | `make db-validate` | Validates the Prisma schema against database constraints |
+| **`make db-studio`** | `make db-studio` | Opens Prisma Studio visual database browser |
+| **`make test`** | `make test` | Executes all Vitest unit and integration test suites |
+| **`make typecheck`** | `make typecheck` | Runs TypeScript type checking (`tsc --noEmit`) across all workspaces |
+| **`make lint`** | `make lint` | Runs ESLint linters across all packages and apps |
+| **`make build`** | `make build` | Compiles production builds for all workspaces |
+| **`make install`** | `make install` | Installs dependencies across all npm workspaces |
+| **`make clean`** | `make clean` | Cleans build caches (`.next`, `dist`, build artifacts) |
 
 ---
 
@@ -105,6 +179,7 @@ graph TD
 | Area | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Monorepo** | **npm Workspaces** | Clean isolation between `apps/web`, `apps/api`, `packages/shared`, `packages/database` |
+| **Developer Ergonomics** | **Makefile + Node Runner** | Concurrent execution (`make dev`), atomic targets, zero-dependency process manager |
 | **Frontend** | **Next.js 15 (App Router, React 19)** | High performance, Server Components (RSC) for Academy/Digest, PWA offline support |
 | **Styling & UI** | **Tailwind CSS v3.4 + Radix / shadcn/ui** | Empathetic "Parent Calm" design system; accessible, responsive, zero-runtime bloat |
 | **State & Fetching** | **TanStack Query v5 + Zustand** | Optimistic server state caching and multi-step wizard state management |
@@ -118,7 +193,7 @@ graph TD
 | **Device Governance**| **`node-forge` + `plist` + `qrcode`** | PKCS#7 signed Apple `.mobileconfig` and Android Enterprise policies; QR enrollment |
 | **Document Export** | **`@react-pdf/renderer` + Print CSS** | Instant refrigerator-ready printouts and vector PDF downloads |
 | **Monetization** | **Stripe Billing** | 7-day upfront trial, $79/year Annual Hero Pass, $9.99/mo flex pass |
-| **Testing** | **Vitest + Playwright** | Fast unit/integration tests and end-to-end critical journey testing |
+| **Testing** | **Vitest + Fastify Inject + Playwright** | Fast unit/integration tests and end-to-end critical journey testing |
 
 ---
 
@@ -126,22 +201,87 @@ graph TD
 
 ```
 AlongSide/
-├── .github/                      # CI/CD Workflows
-├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules
+├── Makefile                      # Developer command orchestrator (make dev, make test, etc.)
+├── scripts/
+│   └── dev.mjs                   # Pure Node.js concurrent dev server orchestrator
 ├── apps/
-│   ├── web/                      # Next.js 15 Frontend PWA
-│   └── api/                      # Fastify Node.js Backend API
+│   ├── web/                      # Next.js 15 Frontend PWA (App Router, React 19, Tailwind)
+│   │   ├── src/app/              # RSC routes (Landing, Auth, Onboarding, Dashboard)
+│   │   ├── src/components/       # UI components & Parent Calm design system
+│   │   └── src/hooks/            # Custom hooks (useAuth, useChildren, useReadiness)
+│   └── api/                      # Fastify LTS 22 Node.js Backend API
+│       ├── src/modules/auth/     # Argon2id password hashing, JWT cookie session auth
+│       ├── src/modules/children/ # Child profile CRUD, 4 developmental tiers, road forks
+│       ├── src/modules/health/   # Service health check & uptime probe
+│       └── src/plugins/          # Encapsulated Fastify plugins (auth, error handler)
 ├── packages/
-│   ├── shared/                   # Shared TypeScript Schemas, DTOs & Enums
+│   ├── shared/                   # Shared TypeScript Schemas, DTOs, Enums & Quiz Algorithms
+│   │   ├── src/constants/        # Developmental tiers, Road types, Quiz presets
+│   │   ├── src/schemas/          # Zod validation contracts shared between client & server
+│   │   └── src/algorithms/       # Pure scoring math (Readiness 0-100, tween fluency)
 │   └── database/                 # Prisma ORM & Database Layer
+│       ├── prisma/schema.prisma  # PostgreSQL 16 schema with pgvector vector support
+│       └── src/client.ts         # PrismaClient singleton with graceful teardown
 ├── docs/                         # Canonical Specifications & Engineering Standards
+│   ├── system-design-specification.md # Quantitative sizing, capacity estimations & blueprints
+│   ├── system-architecture.md         # Monorepo layout, security boundaries & data flows
+│   ├── codebase-design.md             # Deep modules, seam catalog & test fakes
+│   └── api-specification.md           # Authoritative REST API contract & DTO catalog
 ├── plans/                        # Discrete Agent Execution Plans (Numbered 01–14)
-├── AGENTS.md                     # Engineering boundaries for Frontend and Backend agents
+├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules
+├── AGENTS.md                     # Engineering team protocols, boundaries & ownership
 ├── PROJECT_SCOPE.md              # Canonical Product Scope v2.2.0 (CEO)
-├── README.md                     # Repository Overview
+├── README.md                     # Repository Overview & Developer Guide
+├── docker-compose.yml            # PostgreSQL 16 + pgvector container definition
 ├── package.json                  # Root npm workspace definition
 └── tsconfig.base.json            # Base TypeScript configuration
 ```
+
+---
+
+## 🔌 API Endpoints & Verification
+
+The Fastify API runs on `http://localhost:4000` with versioned `/api/v1` routes:
+
+### Health Probe
+- `GET /api/v1/health` — Service status, environment, uptime, and timestamp.
+
+### Authentication & Sessions (`/api/v1/auth`)
+- `POST /api/v1/auth/register` — Create parent account, starts 7-day trial, sets secure HttpOnly JWT cookie.
+- `POST /api/v1/auth/login` — Authenticate parent credentials with Argon2id verification.
+- `GET /api/v1/auth/me` — Retrieve active authenticated session and parent profile.
+- `POST /api/v1/auth/logout` — Revoke session cookie.
+
+### Children & Contextual Road Fork (`/api/v1/children`)
+- `POST /api/v1/children` — Register child profile, automatically resolves developmental tier (`TIER_1_AGES_8_9`, `TIER_2_AGES_10_11`, `TIER_3_AGES_12_13`, `TIER_4_AGES_14_PLUS`) and road selection (`PRE_DEVICE` vs `ACTIVE_DEVICE`).
+- `GET /api/v1/children` — List all children associated with authenticated parent.
+- `GET /api/v1/children/:id` — Retrieve detailed child profile and road status.
+- `POST /api/v1/children/:id/road` — Transition or update child road fork selection.
+
+---
+
+## 🧪 Testing & Quality Assurance
+
+Alongside enforces high test coverage and zero-regression verification through automated Vitest suites:
+
+```bash
+# Run all monorepo test suites (shared, api, and web)
+make test
+# or: npm test
+
+# Run TypeScript typechecks across all 4 workspaces
+make typecheck
+# or: npm run typecheck
+
+# Run linters across all workspaces
+make lint
+# or: npm run lint
+```
+
+### Testing Strategy:
+- **`packages/shared`:** Exhaustive unit tests for pure scoring algorithms (`calculateReadinessScore`), developmental tier resolution, and Zod schema validations.
+- **`apps/api`:** Fastify integration testing via `.inject()`, testing status codes, cookies, error envelopes, and repository layers without spinning up physical TCP ports.
+- **`apps/web`:** Component, form, and custom hook tests verifying validation logic, accessibility, and client state machines.
 
 ---
 
@@ -149,19 +289,31 @@ AlongSide/
 
 AlongSide is executed across 14 discrete, sequential engineering plans:
 
-1. [**Plan 01: Monorepo Workspace Setup, Shared Package & Prisma Database**](plans/01-project-setup-and-db.md) (`Backend Agent`)
-2. [**Plan 02: Authentication, Session Cookies & Parent Account API**](plans/02-auth-and-user-profile.md) (`Backend Agent`)
-3. [**Plan 03: Next.js 15 PWA Scaffolding, ParentCalm Design System & Auth UI**](plans/03-frontend-scaffolding-and-auth-ui.md) (`Frontend Agent`)
-4. [**Plan 04: Child Profile CRUD, Contextual Road Fork & Readiness API**](plans/04-child-profile-and-road-bifurcation-api.md) (`Backend Agent`)
-5. [**Plan 05: Child Onboarding, Road Selection & Assessment Wizard UI**](plans/05-child-profile-and-road-selection-ui.md) (`Frontend Agent`)
-6. [**Plan 06: Bilateral Family Pact Engine & Device Profile Compiler API**](plans/06-bilateral-pact-and-profile-compiler-api.md) (`Backend Agent`)
-7. [**Plan 07: Pact Wizard, Digital Co-Signing & QR Enrollment UI**](plans/07-agreement-builder-and-device-enrollment-ui.md) (`Frontend Agent`)
-8. [**Plan 08: Parent Intelligence Academy Modules & Youth Culture Digest API**](plans/08-parent-academy-and-culture-digest-api.md) (`Backend Agent`)
-9. [**Plan 09: Academy Course Player, Sunday Culture Digest & Offline PWA**](plans/09-parent-academy-and-culture-digest-ui.md) (`Frontend Agent`)
-10. [**Plan 10: 24/7 AI Child Advisor & Modern Parenting FAQ Vault API**](plans/10-ai-child-advisor-and-faq-vault-api.md) (`Backend Agent`)
-11. [**Plan 11: 24/7 AI Advisor Chat, Living FAQ Explorer & Sparring UI**](plans/11-ai-advisor-and-voice-sparring-ui.md) (`Frontend Agent`)
-12. [**Plan 12: Interactive Assessment Suite & Cultural Fluency Quizzes**](plans/12-interactive-quiz-suite-and-fluency-checks.md) (`Joint FE & BE`)
-13. [**Plan 13: Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync**](plans/13-stripe-billing-and-trial-lifecycle.md) (`Backend Agent`)
-14. [**Plan 14: End-to-End Integration, Playwright Verification & Launch Hardening**](plans/14-e2e-integration-hardening-and-launch.md) (`Joint FE & BE`)
+| # | Plan Title | Owner | Status |
+| :-: | :--- | :--- | :-: |
+| **01** | [**Monorepo Workspace Setup, Shared Package & Prisma Database**](plans/01-project-setup-and-db.md) | Backend Agent | ✅ **Complete** |
+| **02** | [**Authentication, Session Cookies & Parent Account API**](plans/02-auth-and-user-profile.md) | Backend Agent | ✅ **Complete** |
+| **03** | [**Next.js 15 PWA Scaffolding, ParentCalm Design System & Auth UI**](plans/03-frontend-scaffolding-and-auth-ui.md) | Frontend Agent | ✅ **Complete** |
+| **04** | [**Child Profile CRUD, Contextual Road Fork & Readiness API**](plans/04-child-profile-and-road-bifurcation-api.md) | Backend Agent | ✅ **Complete** |
+| **05** | [**Child Onboarding, Road Selection & Assessment Wizard UI**](plans/05-child-profile-and-road-selection-ui.md) | Frontend Agent | 🔄 **In Progress** |
+| **06** | [**Bilateral Family Pact Engine & Device Profile Compiler API**](plans/06-bilateral-pact-and-profile-compiler-api.md) | Backend Agent | ⏳ Queued |
+| **07** | [**Pact Wizard, Digital Co-Signing & QR Enrollment UI**](plans/07-agreement-builder-and-device-enrollment-ui.md) | Frontend Agent | ⏳ Queued |
+| **08** | [**Parent Intelligence Academy Modules & Youth Culture Digest API**](plans/08-parent-academy-and-culture-digest-api.md) | Backend Agent | ⏳ Queued |
+| **09** | [**Academy Course Player, Sunday Culture Digest & Offline PWA**](plans/09-parent-academy-and-culture-digest-ui.md) | Frontend Agent | ⏳ Queued |
+| **10** | [**24/7 AI Child Advisor & Modern Parenting FAQ Vault API**](plans/10-ai-child-advisor-and-faq-vault-api.md) | Backend Agent | ⏳ Queued |
+| **11** | [**24/7 AI Advisor Chat, Living FAQ Explorer & Sparring UI**](plans/11-ai-advisor-and-voice-sparring-ui.md) | Frontend Agent | ⏳ Queued |
+| **12** | [**Interactive Assessment Suite & Cultural Fluency Quizzes**](plans/12-interactive-quiz-suite-and-fluency-checks.md) | Joint FE & BE | ⏳ Queued |
+| **13** | [**Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync**](plans/13-stripe-billing-and-trial-lifecycle.md) | Backend Agent | ⏳ Queued |
+| **14** | [**End-to-End Integration, Playwright Verification & Launch Hardening**](plans/14-e2e-integration-hardening-and-launch.md) | Joint FE & BE | ⏳ Queued |
 
 For complete plan details, see [**`plans/README.md`**](plans/README.md).
+
+---
+
+## 📜 Team Governance & Pull Request Protocol
+
+All contributions adhere to canonical team governance defined in [**`AGENTS.md`**](AGENTS.md):
+- **Conventional Commits (v1.0.0):** Commits follow standard `<type>(<scope>): <imperative summary>`.
+- **The Ponytail Principle:** Solve complete problems with the smallest amount of new code. Zero speculative bloat, zero unnecessary dependencies.
+- **Plain Text (`.txt`) PR Descriptions:** PR descriptions and squash commits must use plain text formatting without Markdown symbols (`##`, `**`, `[]()`) so terminal git logs remain clean.
+- **Squash & Merge Exclusively:** Linear git history enforced via squash-merge onto `main`.
