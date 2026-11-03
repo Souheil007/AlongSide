@@ -3,7 +3,7 @@ import { Shield, Heart } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200/80 bg-slate-50/60 py-12 text-slate-600">
+    <footer className="no-print border-t border-slate-200/80 bg-slate-50/60 py-12 text-slate-600">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="space-y-3 md:col-span-1">

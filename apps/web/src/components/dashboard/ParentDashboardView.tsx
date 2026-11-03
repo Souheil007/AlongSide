@@ -366,17 +366,23 @@ export function ParentDashboardView() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-50 border border-slate-200/70">
-                      <FileCheck2 className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
+                    <Link
+                      href={`/pacts/builder?childId=${activeChild.id}`}
+                      className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-50 hover:bg-emerald-50/60 border border-slate-200/70 hover:border-emerald-300 transition-colors"
+                    >
+                      <FileCheck2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
                       <div>
-                        <span className="font-semibold text-slate-900">
-                          Step 3: Day 1 Pre-Unboxing Charter
-                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-semibold text-slate-900">
+                            Step 3: Day 1 Pre-Unboxing Charter
+                          </span>
+                          <ArrowRight className="h-3 w-3 text-emerald-700" />
+                        </div>
                         <p className="text-slate-600 text-[11px]">
                           Co-negotiate boundaries before the device is ever purchased or unboxed.
                         </p>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -432,10 +438,12 @@ export function ParentDashboardView() {
                   </div>
 
                   <div className="flex items-center gap-2 pt-1">
-                    <Button size="sm" variant="outline" className="text-xs gap-1.5">
-                      <Lock className="h-3.5 w-3.5 text-violet-600" />
-                      Configure Curfew Hours
-                    </Button>
+                    <Link href="/devices">
+                      <Button size="sm" variant="outline" className="text-xs gap-1.5 border-violet-200 text-violet-900 hover:bg-violet-50">
+                        <Lock className="h-3.5 w-3.5 text-violet-600" />
+                        Configure Curfew Hours
+                      </Button>
+                    </Link>
                   </div>
                 </div>
 
@@ -457,9 +465,12 @@ export function ParentDashboardView() {
                       <span className="font-semibold text-slate-800">
                         Status: Digital Reset Draft
                       </span>
-                      <Button size="sm" variant="ghost" className="h-7 text-xs text-teal-700 p-1">
-                        Edit Clauses
-                      </Button>
+                      <Link href={`/pacts/builder?childId=${activeChild.id}`}>
+                        <Button size="sm" variant="ghost" className="h-7 text-xs text-teal-700 hover:bg-teal-50 p-1.5 gap-1">
+                          Edit Clauses & Sign
+                          <ArrowRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
