@@ -192,7 +192,8 @@ To maximize engineering throughput, the Frontend Agent and Backend Agent operate
 4. **Pre-Commit Verification:** Run `npm run typecheck`, `npm run lint`, `npm test`, and execute a **`ponytail-review`** audit on `git diff HEAD` to eliminate bloat, verify callers, and ensure the smallest complete change.
 5. **Atomic Conventional Commits:** Commit messages strictly complying with [`docs/git-commit-standards.md`](docs/git-commit-standards.md): `<type>(<scope>): <imperative description>`.
 6. **Push Branch & Open Pull Request (PR):** Push feature branch (`git push origin <branch>`) and open a Pull Request targeting `main` containing a clear description, test verification output, and issue closure keyword (`Fixes SOU-X`).
-7. **Handoff & Completion:** Document completion in Paperclip task handoff with clickable links to files and the open PR.
+7. **Squash & Merge & Auto-Branch Deletion:** All PRs are merged exclusively via **Squash and Merge** to maintain a linear git history. The feature branch is automatically deleted upon merge.
+8. **Handoff & Completion:** Document completion in Paperclip task handoff with clickable links to files and the open PR.
 
 ---
 
@@ -208,6 +209,6 @@ An agent may mark a plan or Paperclip task complete **only** when all of the fol
 - [ ] Automated tests (unit/integration) pass with 100% success.
 - [ ] **Ponytail Diff Audit Passed (`ponytail-review`):** Working diff audited against over-engineering; smallest complete change verified with zero speculative bloat.
 - [ ] All Git commits strictly adhere to [`docs/git-commit-standards.md`](docs/git-commit-standards.md) (Conventional Commits v1.0.0).
-- [ ] **Pull Request Opened:** Feature branch pushed to origin and PR submitted targeting `main` with linked issue ID (`Fixes SOU-X`).
+- [ ] **Pull Request Opened for Squash Merge:** Feature branch pushed to origin and PR submitted targeting `main` with linked issue ID (`Fixes SOU-X`).
 - [ ] All user-facing strings are clear, empathetic, and aligned with `PROJECT_SCOPE.md` v2.2.0.
 - [ ] No secrets or sensitive test credentials are committed to git.

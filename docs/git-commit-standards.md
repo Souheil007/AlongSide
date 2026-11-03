@@ -274,7 +274,13 @@ In AlongSide's multi-agent development environment, multiple autonomous agents (
    - Test verification output
    - Ponytail review audit confirmation
 
-### 9.3 Permitted Exceptions (Direct Commit to `main`)
+### 9.3 Squash & Merge & Branch Auto-Deletion (MANDATORY)
+To guarantee a linear, audit-ready Git history on `main`:
+1. **Squash and Merge Exclusively:** Every pull request merged into `main` MUST be merged using **Squash and Merge**. Merge commits and rebase merges are disabled repository-wide.
+2. **Squash Commit Header:** The squash commit message title must follow Conventional Commits: `<type>(<scope>): <summary> (#<pr-number>)`.
+3. **Automatic Branch Deletion:** Feature branches are configured to be **automatically deleted** immediately upon merge by GitHub. Agents must not reuse old branches; each task starts fresh from the latest `main`.
+
+### 9.4 Permitted Exceptions (Direct Commit to `main`)
 Direct commits to `main` are restricted exclusively to:
 - Pure repository documentation, architecture specifications, or plans authored directly by the CTO (`docs/*.md`, `plans/*.md`).
 - Initial single-agent project bootstrapping before multi-agent execution begins.
