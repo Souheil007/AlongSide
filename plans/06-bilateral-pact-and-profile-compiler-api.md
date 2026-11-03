@@ -3,6 +3,7 @@
 **Assignee:** Backend Agent  
 **Dependencies:** PLAN-04  
 **Estimated Scope:** Large  
+**Status:** Completed & Verified  
 
 ---
 
@@ -74,18 +75,18 @@ Implement the Bilateral Family Pact engine and the "Pact-as-Code" Device Profile
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/api/src/modules/agreements/agreements.presets.ts`
-- [ ] `apps/api/src/modules/agreements/agreements.service.ts`
-- [ ] `apps/api/src/modules/agreements/agreements.controller.ts`
-- [ ] `apps/api/src/modules/agreements/agreements.routes.ts`
-- [ ] `apps/api/src/modules/agreements/pdf.service.ts`
-- [ ] `apps/api/src/modules/device-profiles/profile.compiler.ts`
-- [ ] `apps/api/src/modules/device-profiles/profile.signer.ts`
-- [ ] `apps/api/src/modules/device-profiles/device-profiles.service.ts`
-- [ ] `apps/api/src/modules/device-profiles/device-profiles.controller.ts`
-- [ ] `apps/api/src/modules/device-profiles/device-profiles.routes.ts`
-- [ ] `apps/api/tests/modules/agreements/agreements.test.ts`
-- [ ] `apps/api/tests/modules/device-profiles/device-profiles.test.ts`
+- [x] `apps/api/src/modules/agreements/agreements.presets.ts`
+- [x] `apps/api/src/modules/agreements/agreements.service.ts`
+- [x] `apps/api/src/modules/agreements/agreements.controller.ts`
+- [x] `apps/api/src/modules/agreements/agreements.routes.ts`
+- [x] `apps/api/src/modules/agreements/pdf.service.ts`
+- [x] `apps/api/src/modules/device-profiles/profile.compiler.ts`
+- [x] `apps/api/src/modules/device-profiles/profile.signer.ts`
+- [x] `apps/api/src/modules/device-profiles/device-profiles.service.ts`
+- [x] `apps/api/src/modules/device-profiles/device-profiles.controller.ts`
+- [x] `apps/api/src/modules/device-profiles/device-profiles.routes.ts`
+- [x] `apps/api/test/agreements.test.ts`
+- [x] `apps/api/test/deviceProfiles.test.ts`
 
 ---
 
@@ -117,10 +118,10 @@ Implement the Bilateral Family Pact engine and the "Pact-as-Code" Device Profile
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Apple `.mobileconfig` compiler produces valid XML plist structure.
-- [ ] PKCS#7 signing service configured with fallbacks for development.
-- [ ] Vector PDF export operational.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] All automated tests pass.
-- [ ] Commits adhere to Conventional Commits (`feat(pact): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Apple `.mobileconfig` compiler produces valid XML plist structure.
+- [x] PKCS#7 signing service configured with fallbacks for development.
+- [x] Vector PDF export operational.
+- [x] `npm run typecheck` exits with code 0.
+- [x] All automated tests pass.
+- [x] Commits adhere to Conventional Commits (`feat(pact): ...`).
