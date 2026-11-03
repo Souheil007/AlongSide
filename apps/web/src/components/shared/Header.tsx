@@ -66,6 +66,11 @@ export function Header() {
         <div className="hidden md:flex items-center gap-3">
           {isAuthenticated && user ? (
             <div className="flex items-center gap-3">
+              <Link href="/dashboard">
+                <Button variant="ghost" size="sm" className="text-teal-700 font-semibold hover:text-teal-800 hover:bg-teal-50">
+                  Dashboard
+                </Button>
+              </Link>
               <span className="text-sm font-medium text-slate-700 flex items-center gap-1.5">
                 <UserIcon className="h-4 w-4 text-teal-600" />
                 {user.fullName}
@@ -130,6 +135,14 @@ export function Header() {
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
             {isAuthenticated && user ? (
               <div className="space-y-3">
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-lg px-3 py-2 text-base font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 flex items-center justify-between"
+                >
+                  <span>Go to Family Dashboard</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
                 <div className="px-3 text-sm font-medium text-slate-700 flex items-center gap-2">
                   <UserIcon className="h-4 w-4 text-teal-600" />
                   {user.fullName} ({user.email})
