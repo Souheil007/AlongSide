@@ -114,10 +114,15 @@ The scope provides immediate architectural context within AlongSide's monorepo. 
    - ❌ `refactor(web): extract modal component to shared UI.`
 4. **Length Restriction:** The complete header (`<type>(<scope>): <subject>`) must not exceed **72 characters** (optimal: 50 characters).
 
-### 5.2 Commit Body
-1. **Explain the "Why" and "What":** The body should articulate the motivation behind the change and summarize what was altered, contrasting the new behavior with the previous behavior.
-2. **Line Wrapping:** Every line in the commit body must be hard-wrapped at **72 characters**.
-3. **Blank Line Separation:** Always leave a blank line between the header and the body, and between paragraphs.
+### 5.2 Commit Body & Squash Description Formatting (Plain Text `.txt` ONLY)
+1. **Plain Text (`.txt`) Format Mandatory — Zero Markdown (`.md`):** Git commit messages and squash commit descriptions live permanently in Git's object database and are viewed in terminal outputs (`git log`, `git show`), git blame, and CLI tools. **Markdown is NEVER rendered in git logs.** Raw Markdown syntax (`##`, `###`, `**bold**`, `[link](url)`, backticks in headers) creates visual noise and looks unrendered and unprofessional in commit histories.
+   - ❌ **NO Markdown Headers:** Never use `## Summary` or `### Deliverables`. Use plain text uppercase labels with a colon (e.g. `SUMMARY:`, `TECHNICAL DELIVERABLES:`, `AUTOMATED VERIFICATION:`) or plain blank-line separated paragraphs.
+   - ❌ **NO Markdown Links:** Never use `[Plan 03](plans/03-plan.md)`. Use plain paths or plain text: `Plan 03 (plans/03-plan.md)`.
+   - ❌ **NO Markdown Bold or Italics:** Never use `**Next.js 15**` or `*text*`. Use clean plain text: `Next.js 15`.
+   - ❌ **NO Markdown Bullets with Bold Headers:** Avoid `- **Topic**: details`. Use simple plain bullets: `- Topic: details`.
+2. **Explain the "Why" and "What":** The body should articulate the motivation behind the change and summarize what was altered, contrasting the new behavior with the previous behavior.
+3. **Line Wrapping:** Every line in the commit body must be hard-wrapped at **72 characters**.
+4. **Blank Line Separation:** Always leave a blank line between the header and the body, and between paragraphs.
 
 ### 5.3 Commit Footer & Issue Linking
 1. **Issue References:** Link Paperclip tasks and GitHub issues in the footer using standard issue keywords:
@@ -268,17 +273,47 @@ In AlongSide's multi-agent development environment, multiple autonomous agents (
    ```bash
    git push origin <type>/<issue-id>-<short-kebab-description>
    ```
-   Open a Pull Request targeting `main`. The PR body must include:
-   - Summary of changes
+   Open a Pull Request targeting `main`.
+   **CRITICAL REQUIREMENT: PR Body MUST Be Plain Text (`.txt`), NEVER Markdown (`.md`).**
+   Because GitHub automatically populates the squash commit description directly from the PR body (`squash_merge_commit_message: PR_BODY`), authoring the PR description with Markdown headers (`##`), bold (`**`), or links (`[]()`) pollutes the permanent Git log with raw markdown syntax.
+   The PR body must be written in clean plain text:
+   - Plain uppercase section labels (`SUMMARY:`, `DELIVERABLES:`, `TEST VERIFICATION:`)
    - Issue reference (`Fixes SOU-X`)
-   - Test verification output
+   - Test verification output and DoD confirmation
    - Ponytail review audit confirmation
 
 ### 9.3 Squash & Merge & Branch Auto-Deletion (MANDATORY)
 To guarantee a linear, audit-ready Git history on `main`:
 1. **Squash and Merge Exclusively:** Every pull request merged into `main` MUST be merged using **Squash and Merge**. Merge commits and rebase merges are disabled repository-wide.
 2. **Squash Commit Header:** The squash commit message title must follow Conventional Commits: `<type>(<scope>): <summary> (#<pr-number>)`.
-3. **Automatic Branch Deletion:** Feature branches are configured to be **automatically deleted** immediately upon merge by GitHub. Agents must not reuse old branches; each task starts fresh from the latest `main`.
+3. **Squash Commit Description MUST Be Plain Text (`.txt`):**
+   - The squash commit description is saved into Git's object database.
+   - When merging via GitHub UI, `gh pr merge --squash --body "..."`, or API, the merging agent / CTO **MUST ensure that the commit description is 100% plain text** without any `#`, `##`, `**`, or `[text](url)` formatting.
+   - Example of clean plain text squash commit description:
+     ```
+     SUMMARY:
+     Scaffolds the apps/web application using Next.js 15 (App Router,
+     React 19), Tailwind CSS v3.4, and accessible primitives configured with
+     the empathetic Parent Calm design system palette according to Plan 03
+     (plans/03-frontend-scaffolding-and-auth-ui.md).
+
+     TECHNICAL DELIVERABLES:
+     - Next.js 15 App Router & PWA Architecture: apps/web/package.json,
+       next.config.mjs, and public/manifest.json.
+     - Parent Calm Design System & Primitives in apps/web/src/components/ui/
+     - API Client & Auth State Management: TanStack Query hook useAuth,
+       RFC 7807 error client, and auth routes.
+
+     AUTOMATED VERIFICATION & DOD:
+     - Unit & Component Tests: 11/11 tests passing.
+     - Monorepo Tests: 36/36 tests passing (100% pass rate).
+     - Next.js Build: Clean build with generated service worker.
+     - Ponytail Review Audit: Clean modular boundaries, zero bloat.
+
+     Fixes SOU-19
+     Co-authored-by: Frontend Engineer <frontend@alongside.internal>
+     ```
+4. **Automatic Branch Deletion:** Feature branches are configured to be **automatically deleted** immediately upon merge by GitHub. Agents must not reuse old branches; each task starts fresh from the latest `main`.
 
 ### 9.4 Permitted Exceptions (Direct Commit to `main`)
 Direct commits to `main` are restricted exclusively to:

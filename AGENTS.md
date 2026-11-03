@@ -191,8 +191,8 @@ To maximize engineering throughput, the Frontend Agent and Backend Agent operate
 3. **Implementation & Local Testing:** Write clean, modular code conforming to [`docs/code-quality-principles.md`](docs/code-quality-principles.md) and [`docs/naming-conventions.md`](docs/naming-conventions.md).
 4. **Pre-Commit Verification:** Run `npm run typecheck`, `npm run lint`, `npm test`, and execute a **`ponytail-review`** audit on `git diff HEAD` to eliminate bloat, verify callers, and ensure the smallest complete change.
 5. **Atomic Conventional Commits:** Commit messages strictly complying with [`docs/git-commit-standards.md`](docs/git-commit-standards.md): `<type>(<scope>): <imperative description>`.
-6. **Push Branch & Open Pull Request (PR):** Push feature branch (`git push origin <branch>`) and open a Pull Request targeting `main` containing a clear description, test verification output, and issue closure keyword (`Fixes SOU-X`).
-7. **Squash & Merge & Auto-Branch Deletion:** All PRs are merged exclusively via **Squash and Merge** to maintain a linear git history. The feature branch is automatically deleted upon merge.
+6. **Push Branch & Open Pull Request (PR):** Push feature branch (`git push origin <branch>`) and open a Pull Request targeting `main`. **The PR description MUST be written as plain text (`.txt`), NEVER Markdown (`.md`).** GitHub populates the squash commit message directly from the PR body; Markdown formatting (`##`, `**`, `[]()`) clutters terminal git logs. Use plain uppercase section labels (`SUMMARY:`, `DELIVERABLES:`, `TEST VERIFICATION:`) and issue closure keywords (`Fixes SOU-X`).
+7. **Squash & Merge & Auto-Branch Deletion:** All PRs are merged exclusively via **Squash and Merge** to maintain a linear git history. The squash commit description on `main` must be verified as plain text (`.txt`). The feature branch is automatically deleted upon merge.
 8. **Handoff & Completion:** Document completion in Paperclip task handoff with clickable links to files and the open PR.
 
 ---
@@ -209,6 +209,6 @@ An agent may mark a plan or Paperclip task complete **only** when all of the fol
 - [ ] Automated tests (unit/integration) pass with 100% success.
 - [ ] **Ponytail Diff Audit Passed (`ponytail-review`):** Working diff audited against over-engineering; smallest complete change verified with zero speculative bloat.
 - [ ] All Git commits strictly adhere to [`docs/git-commit-standards.md`](docs/git-commit-standards.md) (Conventional Commits v1.0.0).
-- [ ] **Pull Request Opened for Squash Merge:** Feature branch pushed to origin and PR submitted targeting `main` with linked issue ID (`Fixes SOU-X`).
+- [ ] **Pull Request Opened for Squash Merge:** Feature branch pushed to origin and PR submitted targeting `main` with plain text (`.txt`) description (no `##`, `**`, or markdown links) and linked issue ID (`Fixes SOU-X`).
 - [ ] All user-facing strings are clear, empathetic, and aligned with `PROJECT_SCOPE.md` v2.2.0.
 - [ ] No secrets or sensitive test credentials are committed to git.

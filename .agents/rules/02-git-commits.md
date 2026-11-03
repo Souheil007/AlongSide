@@ -91,8 +91,14 @@ To eliminate merge conflicts and ensure thorough code review:
   3. **Verify:** Execute `npm run typecheck`, `npm run lint`.
   4. **Ponytail Audit:** Run `ponytail-review` on working diff (`git diff HEAD`).
   5. **Commit:** Atomic Conventional Commits referencing the issue.
-  6. **Push & PR:** `git push origin <branch-name>` and create a PR targeting `main` with summary and `Fixes SOU-X`. Ensure the PR title follows Conventional Commits syntax (`<type>(<scope>): <summary>`).
+  6. **Push & PR:** `git push origin <branch-name>` and create a PR targeting `main`. Ensure the PR title follows Conventional Commits syntax (`<type>(<scope>): <summary>`).
+- **Squash Commit & PR Body Formatting: Plain Text (`.txt`) ONLY (STRICT):**
+  * **Zero Markdown Syntax:** When writing the PR description or squash commit message, write in **clean plain text (`.txt` style)**. NEVER use Markdown (`.md`).
+  * GitHub squash merges copy the PR body directly into the commit message. In git terminal logs (`git log`, `git show`), Markdown is never rendered and raw `##`, `**bold**`, `[link](url)` clutter the history.
+  * **Prohibited:** `## Summary`, `[**Plan**](...)`, `**Title**:`, backtick blocks.
+  * **Required:** Plain uppercase section headers (`SUMMARY:`, `DELIVERABLES:`, `VERIFICATION:`), clean `- ` bullets, plain file paths, and hard line wraps at ~72 characters.
 - **Squash & Merge & Branch Auto-Deletion (MANDATORY):**
   * Every pull request merged into `main` MUST be **Squashed and Merged**. Standard merge commits and rebase merges are strictly disabled.
+  * The squash commit description on `main` must be verified as plain text (`.txt`).
   * The feature branch is **automatically deleted** immediately upon merge to prevent stale branch drift and maintain a clean repository.
 - **Exception:** Only pure repository governance/doc updates authored directly by the CTO or single-agent initial workspace bootstrapping may commit directly to `main`.
