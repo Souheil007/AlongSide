@@ -282,13 +282,17 @@ In AlongSide's multi-agent development environment, multiple autonomous agents (
    - Test verification output and DoD confirmation
    - Ponytail review audit confirmation
 
-### 9.3 Squash & Merge & Branch Auto-Deletion (MANDATORY)
-To guarantee a linear, audit-ready Git history on `main`:
-1. **Squash and Merge Exclusively:** Every pull request merged into `main` MUST be merged using **Squash and Merge**. Merge commits and rebase merges are disabled repository-wide.
-2. **Squash Commit Header:** The squash commit message title must follow Conventional Commits: `<type>(<scope>): <summary> (#<pr-number>)`.
-3. **Squash Commit Description MUST Be Plain Text (`.txt`):**
+### 9.3 Human Approval & Merge Gate (ZERO AUTONOMOUS MERGING)
+To guarantee human oversight, code security, and prevent unreviewed merges:
+1. **ONLY THE HUMAN USER (Souheil) MAY MERGE PULL REQUESTS:**
+   - Autonomous engineering agents (Frontend, Backend, Research) and the CTO are **strictly forbidden** from executing any merge operation (via GitHub API, `gh pr merge`, or git CLI).
+   - Once an agent opens a Pull Request, their job is done.
+   - The CTO audits the PR diff using `ponytail-review`, validates test outputs, posts the review findings, and leaves the PR **OPEN**.
+2. **Squash and Merge Exclusively by Human:** When the human user merges a pull request into `main`, it must be merged using **Squash and Merge**. Merge commits and rebase merges are disabled repository-wide.
+3. **Squash Commit Header:** The squash commit message title must follow Conventional Commits: `<type>(<scope>): <summary> (#<pr-number>)`.
+4. **Squash Commit Description MUST Be Plain Text (`.txt`):**
    - The squash commit description is saved into Git's object database.
-   - When merging via GitHub UI, `gh pr merge --squash --body "..."`, or API, the merging agent / CTO **MUST ensure that the commit description is 100% plain text** without any `#`, `##`, `**`, or `[text](url)` formatting.
+   - When merging via GitHub UI, ensure that the commit description is 100% plain text without any `#`, `##`, `**`, or `[text](url)` formatting.
    - Example of clean plain text squash commit description:
      ```
      SUMMARY:

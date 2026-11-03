@@ -46,7 +46,7 @@ graph TD
     * Delegate Fastify routes, database migrations, and server runtime tasks to the **Backend Agent**.
     * Delegate technical spikes, API capability audits, and compliance investigations to the **Research Engineer**.
     * Delegate skill discovery and installation tasks to the **Skill Finder**.
-  - **PR & Standards Review:** Review pull requests against the **Ponytail Principle** using `ponytail-review`. Enforce minimal diff sizes and zero speculative bloat.
+  - **PR & Standards Review (Zero Autonomous Merging):** Review pull requests against the **Ponytail Principle** using `ponytail-review`. Enforce minimal diff sizes and zero speculative bloat. **The CTO and all agents are strictly forbidden from merging PRs.** The PR must remain open for human review and merge.
 
 ### 2.1 Frontend Agent (Frontend Engineer)
 
@@ -192,7 +192,11 @@ To maximize engineering throughput, the Frontend Agent and Backend Agent operate
 4. **Pre-Commit Verification:** Run `npm run typecheck`, `npm run lint`, `npm test`, and execute a **`ponytail-review`** audit on `git diff HEAD` to eliminate bloat, verify callers, and ensure the smallest complete change.
 5. **Atomic Conventional Commits:** Commit messages strictly complying with [`docs/git-commit-standards.md`](docs/git-commit-standards.md): `<type>(<scope>): <imperative description>`.
 6. **Push Branch & Open Pull Request (PR):** Push feature branch (`git push origin <branch>`) and open a Pull Request targeting `main`. **The PR description MUST be written as plain text (`.txt`), NEVER Markdown (`.md`).** GitHub populates the squash commit message directly from the PR body; Markdown formatting (`##`, `**`, `[]()`) clutters terminal git logs. Use plain uppercase section labels (`SUMMARY:`, `DELIVERABLES:`, `TEST VERIFICATION:`) and issue closure keywords (`Fixes SOU-X`).
-7. **Squash & Merge & Auto-Branch Deletion:** All PRs are merged exclusively via **Squash and Merge** to maintain a linear git history. The squash commit description on `main` must be verified as plain text (`.txt`). The feature branch is automatically deleted upon merge.
+7. **Human Approval & Merge Gate (ZERO AUTONOMOUS MERGING):**
+   * **ONLY THE HUMAN USER (Souheil) MAY MERGE PULL REQUESTS.**
+   * Autonomous agents and the CTO are strictly forbidden from executing merge operations.
+   * Agents submit the PR, run audits, document the review on the Paperclip task, and leave the PR **OPEN**.
+   * The human user reviews and merges the PR on GitHub via **Squash and Merge** (with automatic branch deletion enabled).
 8. **Handoff & Completion:** Document completion in Paperclip task handoff with clickable links to files and the open PR.
 
 ---

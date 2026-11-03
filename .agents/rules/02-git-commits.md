@@ -97,8 +97,13 @@ To eliminate merge conflicts and ensure thorough code review:
   * GitHub squash merges copy the PR body directly into the commit message. In git terminal logs (`git log`, `git show`), Markdown is never rendered and raw `##`, `**bold**`, `[link](url)` clutter the history.
   * **Prohibited:** `## Summary`, `[**Plan**](...)`, `**Title**:`, backtick blocks.
   * **Required:** Plain uppercase section headers (`SUMMARY:`, `DELIVERABLES:`, `VERIFICATION:`), clean `- ` bullets, plain file paths, and hard line wraps at ~72 characters.
+- **Human Approval & Merge Gate (ZERO AUTONOMOUS MERGING):**
+  * **ONLY THE HUMAN USER (Souheil) MAY MERGE PULL REQUESTS.**
+  * Autonomous agents and the CTO are strictly forbidden from executing merge operations.
+  * Agents submit the PR, run audits, document the review on the Paperclip task, and leave the PR **OPEN**.
+  * The human user reviews and merges the PR on GitHub via **Squash and Merge** (with automatic branch deletion enabled).
 - **Squash & Merge & Branch Auto-Deletion (MANDATORY):**
-  * Every pull request merged into `main` MUST be **Squashed and Merged**. Standard merge commits and rebase merges are strictly disabled.
+  * When merged into `main` by the human, every pull request MUST be **Squashed and Merged**. Standard merge commits and rebase merges are strictly disabled.
   * The squash commit description on `main` must be verified as plain text (`.txt`).
   * The feature branch is **automatically deleted** immediately upon merge to prevent stale branch drift and maintain a clean repository.
 - **Exception:** Only pure repository governance/doc updates authored directly by the CTO or single-agent initial workspace bootstrapping may commit directly to `main`.
