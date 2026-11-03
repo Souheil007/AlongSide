@@ -198,3 +198,69 @@ export interface CultureDigestDTO {
   slangTerms: SlangTermDTO[];
   exploitAlerts: ExploitAlertDTO[];
 }
+
+export interface AcademyModuleDTO {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  coverImageUrl?: string | null;
+  developmentalTier: DevelopmentalTier;
+  sortOrder: number;
+  lessonCount: number;
+  completedLessonCount: number;
+  isCompleted: boolean;
+}
+
+export interface AcademyLessonSummaryDTO {
+  id: string;
+  moduleId: string;
+  slug: string;
+  title: string;
+  readingMinutes: number;
+  sortOrder: number;
+  isCompleted: boolean;
+}
+
+export interface AcademyLessonDTO {
+  id: string;
+  moduleId: string;
+  slug: string;
+  title: string;
+  contentMarkdown: string;
+  readingMinutes: number;
+  sortOrder: number;
+  isCompleted: boolean;
+  module?: {
+    id: string;
+    slug: string;
+    title: string;
+    developmentalTier: DevelopmentalTier;
+  };
+}
+
+export interface AcademyModuleDetailDTO extends AcademyModuleDTO {
+  lessons: AcademyLessonSummaryDTO[];
+}
+
+export interface AcademyProgressDTO {
+  id: string;
+  userId: string;
+  lessonId: string;
+  isCompleted: boolean;
+  completedAt: string;
+}
+
+export interface AcademyLessonCompletionResponseDTO {
+  progress: AcademyProgressDTO;
+  module: {
+    id: string;
+    slug: string;
+    title: string;
+    lessonCount: number;
+    completedLessonCount: number;
+    percentComplete: number;
+    isCompleted: boolean;
+  };
+}
+

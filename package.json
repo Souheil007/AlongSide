@@ -16,7 +16,8 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "db:generate": "npm run generate --workspace=@alongside/database",
-    "db:validate": "npm run validate --workspace=@alongside/database"
+    "db:validate": "npm run validate --workspace=@alongside/database",
+    "db:seed": "npm run db:seed --workspace=@alongside/database"
   },
   "devDependencies": {
     "typescript": "^5.7.3",

@@ -39,6 +39,18 @@ import {
   type DeviceProfileCompiler,
   StandardDeviceProfileCompiler,
 } from './modules/device-profiles/profile.compiler.js';
+import { academyRoutes } from './modules/academy/academy.routes.js';
+import {
+  type AcademyRepository,
+  PrismaAcademyRepository,
+} from './modules/academy/academy.repository.js';
+import { AcademyService } from './modules/academy/academy.service.js';
+import { digestRoutes } from './modules/digest/digest.routes.js';
+import {
+  type DigestRepository,
+  PrismaDigestRepository,
+} from './modules/digest/digest.repository.js';
+import { DigestService } from './modules/digest/digest.service.js';
 
 export interface AppOptions extends FastifyServerOptions {
   corsOrigin?: string;
@@ -53,6 +65,10 @@ export interface AppOptions extends FastifyServerOptions {
   deviceProfilesRepository?: DeviceProfilesRepository;
   deviceProfilesService?: DeviceProfilesService;
   profileCompiler?: DeviceProfileCompiler;
+  academyRepository?: AcademyRepository;
+  academyService?: AcademyService;
+  digestRepository?: DigestRepository;
+  digestService?: DigestService;
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
@@ -69,6 +85,10 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     deviceProfilesRepository,
     deviceProfilesService,
     profileCompiler,
+    academyRepository,
+    academyService,
+    digestRepository,
+    digestService,
     ...fastifyOpts
   } = opts;
 
@@ -155,6 +175,16 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
       resolvedProfileCompiler
     );
 
+  const resolvedAcademyRepository =
+    academyRepository ?? new PrismaAcademyRepository();
+  const resolvedAcademyService =
+    academyService ?? new AcademyService(resolvedAcademyRepository);
+
+  const resolvedDigestRepository =
+    digestRepository ?? new PrismaDigestRepository();
+  const resolvedDigestService =
+    digestService ?? new DigestService(resolvedDigestRepository);
+
   // Register domain route plugins with /api/v1 prefixes
   await app.register(healthRoutes, { prefix: '/api/v1/health' });
   await app.register(authRoutes, {
@@ -179,6 +209,16 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     agreementsRepository: resolvedAgreementsRepository,
     deviceProfilesService: resolvedDeviceProfilesService,
     profileCompiler: resolvedProfileCompiler,
+  });
+  await app.register(academyRoutes, {
+    prefix: '/api/v1/academy',
+    academyRepository: resolvedAcademyRepository,
+    academyService: resolvedAcademyService,
+  });
+  await app.register(digestRoutes, {
+    prefix: '/api/v1/digest',
+    digestRepository: resolvedDigestRepository,
+    digestService: resolvedDigestService,
   });
 
   return app;
