@@ -103,14 +103,14 @@ The resulting outputs directly de-risk and populate:
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `docs/research/child-development-research-journey-plan.md` (Canonical Research Journey Plan)
-- [ ] `docs/research/age-by-age-neurodevelopment-matrix.md` (Neurodevelopment & Language Decoder)
-- [ ] `docs/research/modern-parenting-faq-vault-100.md` (100+ Pediatric FAQ Vault)
-- [ ] `docs/research/parent-social-sentiment-and-real-voices.md` (Reddit/X Mining Report)
-- [ ] `docs/research/youth-slang-and-device-exploit-catalog.md` (Slang & Bypass Catalog)
-- [ ] `plans/15-child-development-research-and-knowledge-base.md` (This Engineering Plan)
-- [ ] `plans/README.md` (Updated plan index with PLAN-15)
-- [ ] `docs/README.md` (Updated documentation index with research section)
+- [x] `docs/research/child-development-research-journey-plan.md` (Canonical Research Journey Plan)
+- [x] `docs/research/age-by-age-neurodevelopment-matrix.md` (Neurodevelopment & Language Decoder)
+- [x] `docs/research/modern-parenting-faq-vault-100.md` (100+ Pediatric FAQ Vault)
+- [x] `docs/research/parent-social-sentiment-and-real-voices.md` (Reddit/X Mining Report)
+- [x] `docs/research/youth-slang-and-device-exploit-catalog.md` (Slang & Bypass Catalog)
+- [x] `plans/15-child-development-research-and-knowledge-base.md` (This Engineering Plan)
+- [x] `plans/README.md` (Updated plan index with PLAN-15)
+- [x] `docs/README.md` (Updated documentation index with research section)
 
 ---
 
@@ -149,10 +149,10 @@ npm run lint (if configured) or markdown verification
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] Canonical research journey plan authored at `docs/research/child-development-research-journey-plan.md`.
-- [ ] Plan complies 100% with `docs/plan-standards.md`.
-- [ ] `plans/README.md` updated with `PLAN-15` entry.
-- [ ] `docs/README.md` updated with `docs/research/` section and document links.
-- [ ] Paperclip task SOU-14 updated with research plan deliverable via document API.
-- [ ] Git commit created strictly adhering to `docs/git-commit-standards.md`.
-- [ ] Git branch `docs/SOU-14-child-development-research-plan` ready for pull request.
+- [x] Canonical research journey plan authored at `docs/research/child-development-research-journey-plan.md`.
+- [x] Plan complies 100% with `docs/plan-standards.md`.
+- [x] `plans/README.md` updated with `PLAN-15` entry.
+- [x] `docs/README.md` updated with `docs/research/` section and document links.
+- [x] Paperclip task SOU-14 updated with research plan deliverable via document API.
+- [x] Git commit created strictly adhering to `docs/git-commit-standards.md`.
+- [x] Git branch `docs/SOU-14-child-development-research-plan` ready for pull request.
