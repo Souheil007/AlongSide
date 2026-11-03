@@ -166,6 +166,7 @@ See canonical specification: [`docs/backend-skill-matrix.md`](docs/backend-skill
   - Provide concrete code snippets, comparative matrices, and architectural trade-offs to the CTO and engineers.
 - **Strict Prohibitions:**
   - ❌ **DO NOT** author production application code in `apps/web/` or `apps/api/`.
+  - ❌ **DO NOT** commit directly to `main`; always branch (`docs/<issue-id>-<desc>`) and open a Pull Request targeting `main`.
   - ❌ **DO NOT** cite low-trust secondary blogs or SEO articles when primary source docs are available.
   - ❌ **DO NOT** speculate or guess API behaviors; verify empirically.
 
