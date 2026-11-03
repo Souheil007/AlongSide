@@ -24,9 +24,11 @@ All agents must strictly adhere to the canonical engineering standards:
 
 ```mermaid
 graph TD
-    CTO["Chief Technology Officer (CTO)<br/>Architecture, Standards & Discrete Plans"]
+    CTO["Chief Technology Officer (CTO)<br/>Architecture, Standards & Task Delegation"]
     CTO --> FrontendAgent["Frontend Agent (Engineer)<br/>apps/web & UI/UX"]
     CTO --> BackendAgent["Backend Agent (Engineer)<br/>apps/api & packages/database"]
+    CTO --> ResearchAgent["Research Engineer<br/>Technical Spikes & Primary Source Audits"]
+    CTO --> SkillFinder["Skill Finder<br/>Ecosystem Discovery & Skill Sync"]
     FrontendAgent -. "Contracts & Types" .-> SharedPkg["packages/shared"]
     BackendAgent -. "Contracts & Schemas" .-> SharedPkg
 ```
@@ -34,6 +36,17 @@ graph TD
 ---
 
 ## 2. Agent Roles, Boundaries & Ownership
+
+### 2.0 Chief Technology Officer (CTO) — Engineering Leadership & Delegation
+- **Strict Scope & Mandate:**
+  - Author and maintain architectural specifications, system design, and execution plans in `docs/` and `plans/`.
+  - **Zero Application Code:** The CTO does NOT write application code (`apps/web`, `apps/api`) or build features directly.
+  - **Task Delegation:** The CTO is responsible for translating requirements into atomic plans and delegating them to the appropriate agent:
+    * Delegate UI, Next.js, and client styling tasks to the **Frontend Agent**.
+    * Delegate Fastify routes, database migrations, and server runtime tasks to the **Backend Agent**.
+    * Delegate technical spikes, API capability audits, and compliance investigations to the **Research Engineer**.
+    * Delegate skill discovery and installation tasks to the **Skill Finder**.
+  - **PR & Standards Review:** Review pull requests against the **Ponytail Principle** using `ponytail-review`. Enforce minimal diff sizes and zero speculative bloat.
 
 ### 2.1 Frontend Agent (Frontend Engineer)
 
@@ -139,6 +152,22 @@ See canonical specification: [`docs/backend-skill-matrix.md`](docs/backend-skill
 - Authors pure algorithmic calculation modules (`calculateReadinessScore`, `resolvePactPresetClauses`, `evaluateSlangQuizScore`) with zero network side effects, providing massive leverage across both frontend and backend.
 - Both Frontend and Backend agents may import from `@alongside/shared`.
 - When updating or adding schemas in `packages/shared`, ensure backwards compatibility with `docs/api-specification.md`.
+
+---
+
+### 2.4 Research Engineer (Technical Spikes & Primary Source Audits)
+
+#### Strict Scope of Ownership:
+- **Primary Domain:** Technical spikes, API capability audits, regulatory compliance analysis, and library benchmarking.
+- **Responsibilities:**
+  - Investigate primary source documentation (Apple Developer Docs, Android Enterprise Guides, RFCs, regulatory statutes) using the `research` skill.
+  - De-risk complex technical features (Apple Declarative Device Management, PKCS#7 cryptographic signing, `pgvector` indexing, COPPA Safe Harbor) before coding begins.
+  - Author structured technical spike reports stored in `docs/research/<topic>.md`.
+  - Provide concrete code snippets, comparative matrices, and architectural trade-offs to the CTO and engineers.
+- **Strict Prohibitions:**
+  - ❌ **DO NOT** author production application code in `apps/web/` or `apps/api/`.
+  - ❌ **DO NOT** cite low-trust secondary blogs or SEO articles when primary source docs are available.
+  - ❌ **DO NOT** speculate or guess API behaviors; verify empirically.
 
 ---
 
