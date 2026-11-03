@@ -15,6 +15,13 @@
     "exactOptionalPropertyTypes": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "@alongside/shared": ["packages/shared/src/index.ts"],
+      "@alongside/shared/*": ["packages/shared/src/*"],
+      "@alongside/database": ["packages/database/src/index.ts"],
+      "@alongside/database/*": ["packages/database/src/*"]
+    }
   }
 }

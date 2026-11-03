@@ -160,7 +160,7 @@ See canonical specification: [`docs/backend-skill-matrix.md`](docs/backend-skill
 #### Strict Scope of Ownership:
 - **Primary Domain:** Technical spikes, API capability audits, regulatory compliance analysis, and library benchmarking.
 - **Responsibilities:**
-  - Investigate primary source documentation (Apple Developer Docs, Android Enterprise Guides, RFCs, regulatory statutes) using the `research` skill.
+  - Investigate primary source documentation using the `research` and `firecrawl` skills (live web search, deep page scrape, and section crawling).
   - De-risk complex technical features (Apple Declarative Device Management, PKCS#7 cryptographic signing, `pgvector` indexing, COPPA Safe Harbor) before coding begins.
   - Author structured technical spike reports stored in `docs/research/<topic>.md`.
   - Provide concrete code snippets, comparative matrices, and architectural trade-offs to the CTO and engineers.
