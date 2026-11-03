@@ -3,6 +3,7 @@
 **Assignee:** Backend Agent  
 **Dependencies:** PLAN-01  
 **Estimated Scope:** Medium  
+**Status:** Completed & Verified  
 
 ---
 
@@ -68,17 +69,19 @@ Implement the backend domain services, REST endpoints, and database seed scripts
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `packages/database/prisma/seed/academy.seed.ts`
-- [ ] `packages/database/prisma/seed/digest.seed.ts`
-- [ ] `packages/database/prisma/seed/index.ts`
-- [ ] `apps/api/src/modules/academy/academy.service.ts`
-- [ ] `apps/api/src/modules/academy/academy.controller.ts`
-- [ ] `apps/api/src/modules/academy/academy.routes.ts`
-- [ ] `apps/api/src/modules/digest/digest.service.ts`
-- [ ] `apps/api/src/modules/digest/digest.controller.ts`
-- [ ] `apps/api/src/modules/digest/digest.routes.ts`
-- [ ] `apps/api/tests/modules/academy/academy.test.ts`
-- [ ] `apps/api/tests/modules/digest/digest.test.ts`
+- [x] `packages/database/prisma/seed/academy.seed.ts`
+- [x] `packages/database/prisma/seed/digest.seed.ts`
+- [x] `packages/database/prisma/seed/index.ts`
+- [x] `apps/api/src/modules/academy/academy.repository.ts`
+- [x] `apps/api/src/modules/academy/academy.service.ts`
+- [x] `apps/api/src/modules/academy/academy.controller.ts`
+- [x] `apps/api/src/modules/academy/academy.routes.ts`
+- [x] `apps/api/src/modules/digest/digest.repository.ts`
+- [x] `apps/api/src/modules/digest/digest.service.ts`
+- [x] `apps/api/src/modules/digest/digest.controller.ts`
+- [x] `apps/api/src/modules/digest/digest.routes.ts`
+- [x] `apps/api/test/academy.test.ts`
+- [x] `apps/api/test/digest.test.ts`
 
 ---
 
@@ -113,9 +116,9 @@ Implement the backend domain services, REST endpoints, and database seed scripts
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Seed data accurately covers all 4 neurodevelopmental age tiers.
-- [ ] Slang dictionary and exploit alerts seeded.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] All automated tests pass.
-- [ ] Commits adhere to Conventional Commits (`feat(academy): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Seed data accurately covers all 4 neurodevelopmental age tiers.
+- [x] Slang dictionary and exploit alerts seeded.
+- [x] `npm run typecheck` exits with code 0.
+- [x] All automated tests pass.
+- [x] Commits adhere to Conventional Commits (`feat(academy): ...`).
