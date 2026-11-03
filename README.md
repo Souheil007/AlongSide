@@ -1,6 +1,6 @@
 # Alongside (ParentPath)
 
-> **The Comprehensive Parent Intelligence Platform & Family Operating System: Educating parents on their child’s developmental psychology, emotional language, and youth culture, engaging them through interactive quizzes and 24/7 AI guidance, while anchoring household peace with transparent, contract-driven device agreements.**
+> **The Lifespan Parent Intelligence Platform & Modern Screen-Era Companion (Ages 0–18): Educating parents on their child’s developmental psychology, emotional language, and youth culture across all devices, engaging them through tailored quizzes and 24/7 AI guidance, while anchoring household peace with intentional transition solutions and transparent bilateral device agreements.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15_(App_Router)-black.svg)](https://nextjs.org/)
@@ -14,20 +14,19 @@
 
 ## 🌟 Executive Overview & Product Vision
 
-**Alongside** is a category-defining parent intelligence platform and family operating system designed for parents of children aged 8–14+.
+**Alongside** is a category-defining lifespan parent intelligence platform and family operating system designed for parents raising children in a modern screen-saturated world (Ages 0–18).
 
 In digital parenting, solutions historically die on one of two extremes:
 1. **The "Content in a Trenchcoat" Extreme:** Static parenting blogs, PDF agreements for the refrigerator, and generic advice articles. Parents read them during an acute crisis, tape them to the fridge, and churn within 30 days.
 2. **The "Dumb Utility / Commodity MDM" Extreme:** Impersonal phone-locking toggles or surveillance spyware (Bark, Qustodio). They treat children like suspects, destroy family trust, offer zero emotional education, and trigger endless household warfare.
 
-**Alongside v2.2 unites the Brain (The Mind) and the Muscle (The Hand) into a unified platform:**
-- **Parent Intelligence Academy:** Educates parents on child neurobiology, emotional language, and age-by-age transitions (Ages 8–14+).
-- **Interactive Quizzes & Self-Discovery:** Gamified assessments (*"Do You Speak Tween?"*, Parenting Style Profilers, 10-Dimension First-Phone Readiness Audits).
-- **24/7 AI Child Advisor & Modern Parenting FAQ Vault:** Real-time text/voice guidance for acute dilemmas and interactive AI voice sparring to practice difficult talks before the dinner table.
-- **Contextual Personalization Fork (Two Dedicated Roads):**
-  - **Road 1 (Pre-Device / No Phone Yet):** Brain readiness, delay strategies, bridge device guides (smartwatches, family tablets), and pre-unboxing "Day 1 Charters".
-  - **Road 2 (Active-Device / Already Has Phone):** Restorative Digital Reset treaties, automated bedtime lockouts, and exploit early warnings.
-- **Actionable "Pact-as-Code" OS & Signed Device Profile:** Neutral hardware-level app blackouts at 8:30 PM bedtime curfew via signed Apple Declarative Management (`.mobileconfig`) and Android Enterprise profiles with a **Zero-Spyware Safe Harbor Guarantee**.
+**Alongside v2.3 transcends the binary "Do You Have a Phone?" trap by establishing the complete 0–18 Lifespan Family OS:**
+- **Lifespan Parent Intelligence Academy (Ages 0–18):** Educates parents on child neurobiology, emotional language, and age-by-age transitions across 6 developmental tiers (Infants/Toddlers 0–3, Early Childhood 4–6, Middle Childhood 7–9, Pre-Teens 10–12, Early Adolescence 13–15, Late Adolescence 16–18).
+- **Multi-Device & Modern Screen Ecology:** Pragmatic guidance covering the complete screen ecosystem—sensory TVs, family tablets, gaming consoles (Nintendo Switch, PS5, Xbox, Roblox), school Chromebooks, smartwatches, smartphones, and VR headsets.
+- **Age-Tailored Interactive Quizzes & Assessments:** Gamified micro-assessments (*"Do You Speak Tween/Teen?"* weekly slang quizzes, Developmental Stage Checkups, Parenting Style Profilers, Household Screen Climate Audits).
+- **24/7 AI Child Advisor, Voice Sparring Simulator & FAQ Vault:** Real-time text/voice guidance for acute dilemmas and interactive AI voice sparring to practice difficult talks (toddler tantrums, begging for devices, curfew enforcement) before the dinner table, backed by 150+ clinical scenarios.
+- **Weekly Youth Culture & Sunday Family Intelligence:** Sunday morning slang decoders (*skibidi, crashout, looksmaxing, rizz*), viral exploit warnings (calculator vault apps), and dinner conversation starters.
+- **"Thinking About Buying a Device?" Solution Hub & Bilateral "Pact-as-Code" Engine:** Dedicated transition pipeline when introducing a device (tablet, console, watch, phone): 10-dimension readiness diagnostics (Score 0–100), bilateral co-signed family agreements, native signed configuration profiles (`.mobileconfig` / Android Enterprise), automated 8:30 PM bedtime lockdowns, and a strict **Zero-Spyware Safe Harbor Guarantee**.
 
 For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md) and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
 
@@ -230,7 +229,7 @@ AlongSide/
 ├── plans/                        # Discrete Agent Execution Plans (Numbered 01–14)
 ├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules
 ├── AGENTS.md                     # Engineering team protocols, boundaries & ownership
-├── PROJECT_SCOPE.md              # Canonical Product Scope v2.2.0 (CEO)
+├── PROJECT_SCOPE.md              # Canonical Product Scope v2.3.0 (CEO)
 ├── README.md                     # Repository Overview & Developer Guide
 ├── docker-compose.yml            # PostgreSQL 16 + pgvector container definition
 ├── package.json                  # Root npm workspace definition
