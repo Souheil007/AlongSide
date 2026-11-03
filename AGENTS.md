@@ -214,5 +214,5 @@ An agent may mark a plan or Paperclip task complete **only** when all of the fol
 - [ ] **Ponytail Diff Audit Passed (`ponytail-review`):** Working diff audited against over-engineering; smallest complete change verified with zero speculative bloat.
 - [ ] All Git commits strictly adhere to [`docs/git-commit-standards.md`](docs/git-commit-standards.md) (Conventional Commits v1.0.0).
 - [ ] **Pull Request Opened for Squash Merge:** Feature branch pushed to origin and PR submitted targeting `main` with plain text (`.txt`) description (no `##`, `**`, or markdown links) and linked issue ID (`Fixes SOU-X`).
-- [ ] All user-facing strings are clear, empathetic, and aligned with `PROJECT_SCOPE.md` v2.2.0.
+- [ ] All user-facing strings are clear, empathetic, and aligned with `PROJECT_SCOPE.md` v2.3.0.
 - [ ] No secrets or sensitive test credentials are committed to git.
