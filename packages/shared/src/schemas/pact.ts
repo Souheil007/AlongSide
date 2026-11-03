@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import {
+  AgreementStatus,
   ClauseCategory,
   CommitmentParty,
   DevelopmentalTier,
@@ -42,6 +43,37 @@ export const CreateAgreementSchema = z.object({
 });
 
 export type CreateAgreementInput = z.infer<typeof CreateAgreementSchema>;
+
+export const UpdateAgreementSchema = z.object({
+  title: z.string().trim().min(1, 'Agreement title is required').max(150).optional(),
+  clauses: z.array(AgreementClauseInputSchema).min(1, 'At least one agreement clause is required').optional(),
+  parentSignature: z.string().optional(),
+  childSignature: z.string().optional(),
+  status: z
+    .enum([
+      AgreementStatus.DRAFT,
+      AgreementStatus.SIGNED,
+      AgreementStatus.DEPLOYED_TO_DEVICE,
+      AgreementStatus.ARCHIVED,
+    ])
+    .optional(),
+});
+
+export type UpdateAgreementInput = z.infer<typeof UpdateAgreementSchema>;
+
+export const GetPresetsQuerySchema = z.object({
+  tier: z
+    .enum([
+      DevelopmentalTier.TIER_1_AGES_8_9,
+      DevelopmentalTier.TIER_2_AGES_10_11,
+      DevelopmentalTier.TIER_3_AGES_12_13,
+      DevelopmentalTier.TIER_4_AGES_14_PLUS,
+    ])
+    .optional(),
+  roadType: z.enum([RoadType.PRE_DEVICE, RoadType.ACTIVE_DEVICE]).optional(),
+});
+
+export type GetPresetsQueryInput = z.infer<typeof GetPresetsQuerySchema>;
 
 export const SignAgreementSchema = z.object({
   agreementId: z.string().uuid('Invalid agreement ID format'),

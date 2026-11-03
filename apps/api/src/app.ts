@@ -19,6 +19,26 @@ import {
   PrismaChildrenRepository,
 } from './modules/children/children.repository.js';
 import { ChildrenService } from './modules/children/children.service.js';
+import { agreementsRoutes } from './modules/agreements/agreements.routes.js';
+import {
+  type AgreementsRepository,
+  PrismaAgreementsRepository,
+} from './modules/agreements/agreements.repository.js';
+import { AgreementService } from './modules/agreements/agreements.service.js';
+import {
+  type PdfDocumentRenderer,
+  StandardVectorPdfRenderer,
+} from './modules/agreements/pdf.service.js';
+import { deviceProfilesRoutes } from './modules/device-profiles/device-profiles.routes.js';
+import {
+  type DeviceProfilesRepository,
+  PrismaDeviceProfilesRepository,
+} from './modules/device-profiles/device-profiles.repository.js';
+import { DeviceProfilesService } from './modules/device-profiles/device-profiles.service.js';
+import {
+  type DeviceProfileCompiler,
+  StandardDeviceProfileCompiler,
+} from './modules/device-profiles/profile.compiler.js';
 
 export interface AppOptions extends FastifyServerOptions {
   corsOrigin?: string;
@@ -27,6 +47,12 @@ export interface AppOptions extends FastifyServerOptions {
   authRepository?: AuthRepository;
   childrenRepository?: ChildrenRepository;
   childrenService?: ChildrenService;
+  agreementsRepository?: AgreementsRepository;
+  agreementsService?: AgreementService;
+  pdfRenderer?: PdfDocumentRenderer;
+  deviceProfilesRepository?: DeviceProfilesRepository;
+  deviceProfilesService?: DeviceProfilesService;
+  profileCompiler?: DeviceProfileCompiler;
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
@@ -37,6 +63,12 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     authRepository,
     childrenRepository,
     childrenService,
+    agreementsRepository,
+    agreementsService,
+    pdfRenderer,
+    deviceProfilesRepository,
+    deviceProfilesService,
+    profileCompiler,
     ...fastifyOpts
   } = opts;
 
@@ -104,6 +136,25 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   const resolvedChildrenService =
     childrenService ?? new ChildrenService(resolvedChildrenRepository);
 
+  const resolvedAgreementsRepository =
+    agreementsRepository ?? new PrismaAgreementsRepository();
+  const resolvedPdfRenderer = pdfRenderer ?? new StandardVectorPdfRenderer();
+  const resolvedAgreementsService =
+    agreementsService ??
+    new AgreementService(resolvedAgreementsRepository, resolvedPdfRenderer);
+
+  const resolvedDeviceProfilesRepository =
+    deviceProfilesRepository ?? new PrismaDeviceProfilesRepository();
+  const resolvedProfileCompiler =
+    profileCompiler ?? new StandardDeviceProfileCompiler();
+  const resolvedDeviceProfilesService =
+    deviceProfilesService ??
+    new DeviceProfilesService(
+      resolvedDeviceProfilesRepository,
+      resolvedAgreementsRepository,
+      resolvedProfileCompiler
+    );
+
   // Register domain route plugins with /api/v1 prefixes
   await app.register(healthRoutes, { prefix: '/api/v1/health' });
   await app.register(authRoutes, {
@@ -114,6 +165,20 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     prefix: '/api/v1/children',
     childrenRepository: resolvedChildrenRepository,
     childrenService: resolvedChildrenService,
+  });
+  await app.register(agreementsRoutes, {
+    prefix: '/api/v1/agreements',
+    agreementsRepository: resolvedAgreementsRepository,
+    agreementsService: resolvedAgreementsService,
+    pdfRenderer: resolvedPdfRenderer,
+    deviceProfilesService: resolvedDeviceProfilesService,
+  });
+  await app.register(deviceProfilesRoutes, {
+    prefix: '/api/v1/devices',
+    deviceProfilesRepository: resolvedDeviceProfilesRepository,
+    agreementsRepository: resolvedAgreementsRepository,
+    deviceProfilesService: resolvedDeviceProfilesService,
+    profileCompiler: resolvedProfileCompiler,
   });
 
   return app;
