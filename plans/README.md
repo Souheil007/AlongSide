@@ -25,6 +25,11 @@ graph TD
     P12["12: Interactive Assessment Suite (Joint)"]
     P13["13: Stripe Billing & 7-Day Trial (Backend)"]
     P14["14: E2E Integration & Launch Hardening (Joint)"]
+    P15["15: Whole-Child Development & Knowledge Base (Research)"]
+
+    P15 -. "Feeds Academy Content" .-> P08
+    P15 -. "Feeds FAQ Vault & RAG" .-> P10
+    P15 -. "Feeds Quiz Content" .-> P12
 
     P01 --> P02
     P01 --> P03
@@ -54,8 +59,8 @@ graph TD
 
 | Plan ID | Title | Assignee | Dependencies | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| [**`01-project-setup-and-db.md`**](01-project-setup-and-db.md) | Workspace Scaffolding, Shared Package & Prisma DB | **Backend Agent** | None | Ready for Assignment |
-| [**`02-auth-and-user-profile.md`**](02-auth-and-user-profile.md) | Authentication, Session Cookies & Parent Account API | **Backend Agent** | PLAN-01 | Queued |
+| [**`01-project-setup-and-db.md`**](01-project-setup-and-db.md) | Workspace Scaffolding, Shared Package & Prisma DB | **Backend Agent** | None | Complete |
+| [**`02-auth-and-user-profile.md`**](02-auth-and-user-profile.md) | Authentication, Session Cookies & Parent Account API | **Backend Agent** | PLAN-01 | Complete |
 | [**`03-frontend-scaffolding-and-auth-ui.md`**](03-frontend-scaffolding-and-auth-ui.md) | Next.js 15 PWA, ParentCalm Design System & Auth UI | **Frontend Agent** | PLAN-01 | Queued |
 | [**`04-child-profile-and-road-bifurcation-api.md`**](04-child-profile-and-road-bifurcation-api.md) | Child Profile CRUD, Road Fork & Readiness API | **Backend Agent** | PLAN-02 | Queued |
 | [**`05-child-profile-and-road-selection-ui.md`**](05-child-profile-and-road-selection-ui.md) | Child Onboarding, Road Selection & Assessment UI | **Frontend Agent** | PLAN-03, PLAN-04 | Queued |
@@ -68,6 +73,7 @@ graph TD
 | [**`12-interactive-quiz-suite-and-fluency-checks.md`**](12-interactive-quiz-suite-and-fluency-checks.md) | Interactive Assessment Suite & Cultural Fluency Quizzes | **Joint (FE & BE)** | PLAN-04, PLAN-05 | Queued |
 | [**`13-stripe-billing-and-trial-lifecycle.md`**](13-stripe-billing-and-trial-lifecycle.md) | Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync | **Backend Agent** | PLAN-02 | Queued |
 | [**`14-e2e-integration-hardening-and-launch.md`**](14-e2e-integration-hardening-and-launch.md) | End-to-End Integration, Playwright Verification & Launch | **Joint (FE & BE)** | PLAN-07, 09, 11, 12, 13 | Queued |
+| [**`15-child-development-research-and-knowledge-base.md`**](15-child-development-research-and-knowledge-base.md) | Whole-Child Development Research & Modern Parenting Knowledge Base | **Research Engineer** | None | Active / Approved |
 
 ---
 

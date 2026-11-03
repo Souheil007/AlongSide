@@ -6,15 +6,29 @@ import fastify, {
 import cors from '@fastify/cors';
 import cookie from '@fastify/cookie';
 import sensible from '@fastify/sensible';
+import { authPlugin } from './plugins/auth.plugin.js';
 import { healthRoutes } from './modules/health/health.routes.js';
+import { authRoutes } from './modules/auth/auth.routes.js';
+import {
+  type AuthRepository,
+  PrismaAuthRepository,
+} from './modules/auth/auth.repository.js';
 
 export interface AppOptions extends FastifyServerOptions {
   corsOrigin?: string;
   cookieSecret?: string;
+  jwtSecret?: string;
+  authRepository?: AuthRepository;
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
-  const { corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000', cookieSecret = process.env.COOKIE_SECRET || 'dev_secret_cookie_signing_key_32_chars_min', ...fastifyOpts } = opts;
+  const {
+    corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000',
+    cookieSecret = process.env.COOKIE_SECRET || 'dev_secret_cookie_signing_key_32_chars_min',
+    jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret_must_be_at_least_32_characters_long_for_security',
+    authRepository,
+    ...fastifyOpts
+  } = opts;
 
   const app = fastify({
     logger: true,
@@ -32,6 +46,12 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   await app.register(cookie, {
     secret: cookieSecret,
     hook: 'onRequest',
+  });
+
+  // Authentication Plugin (JWT & session cookie helpers)
+  await app.register(authPlugin, {
+    jwtSecret,
+    cookieSecret,
   });
 
   // Fastify Sensible for standard HTTP errors and utility helpers
@@ -69,8 +89,14 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     });
   });
 
+  const resolvedAuthRepository = authRepository ?? new PrismaAuthRepository();
+
   // Register domain route plugins with /api/v1 prefixes
   await app.register(healthRoutes, { prefix: '/api/v1/health' });
+  await app.register(authRoutes, {
+    prefix: '/api/v1/auth',
+    authRepository: resolvedAuthRepository,
+  });
 
   return app;
 }

@@ -70,13 +70,14 @@ Implement secure, production-grade parent authentication using `argon2id` passwo
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/api/src/modules/auth/auth.security.ts`
-- [ ] `apps/api/src/modules/auth/auth.service.ts`
-- [ ] `apps/api/src/modules/auth/auth.controller.ts`
-- [ ] `apps/api/src/modules/auth/auth.routes.ts`
-- [ ] `apps/api/src/plugins/auth.plugin.ts`
-- [ ] `apps/api/src/app.ts` (Register auth plugin and routes)
-- [ ] `apps/api/tests/modules/auth/auth.test.ts`
+- [x] `apps/api/src/modules/auth/auth.security.ts`
+- [x] `apps/api/src/modules/auth/auth.repository.ts`
+- [x] `apps/api/src/modules/auth/auth.service.ts`
+- [x] `apps/api/src/modules/auth/auth.controller.ts`
+- [x] `apps/api/src/modules/auth/auth.routes.ts`
+- [x] `apps/api/src/plugins/auth.plugin.ts`
+- [x] `apps/api/src/app.ts` (Register auth plugin and routes)
+- [x] `apps/api/test/modules/auth/auth.test.ts`
 
 ---
 
@@ -108,9 +109,9 @@ Implement secure, production-grade parent authentication using `argon2id` passwo
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Passwords hashed with `argon2id`.
-- [ ] Session tokens delivered in HttpOnly secure cookies.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] All Vitest Fastify inject tests pass.
-- [ ] Commits adhere to Conventional Commits (`feat(auth): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Passwords hashed with `argon2id`.
+- [x] Session tokens delivered in HttpOnly secure cookies.
+- [x] `npm run typecheck` exits with code 0.
+- [x] All Vitest Fastify inject tests pass.
+- [x] Commits adhere to Conventional Commits (`feat(auth): ...`).
