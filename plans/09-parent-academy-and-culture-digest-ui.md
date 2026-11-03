@@ -55,14 +55,14 @@ Build the user-facing **Parent Intelligence Academy** course player and reader i
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/components/academy/ModuleCard.tsx`
-- [ ] `apps/web/src/components/academy/LessonReader.tsx`
-- [ ] `apps/web/src/components/digest/SlangCard.tsx`
-- [ ] `apps/web/src/components/digest/ExploitAlertCard.tsx`
-- [ ] `apps/web/src/components/shared/OfflineBanner.tsx`
-- [ ] `apps/web/src/app/(dashboard)/academy/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/academy/[slug]/[lessonSlug]/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/digest/page.tsx`
+- [x] `apps/web/src/components/academy/ModuleCard.tsx`
+- [x] `apps/web/src/components/academy/LessonReader.tsx`
+- [x] `apps/web/src/components/digest/SlangCard.tsx`
+- [x] `apps/web/src/components/digest/ExploitAlertCard.tsx`
+- [x] `apps/web/src/components/shared/OfflineBanner.tsx`
+- [x] `apps/web/src/app/(dashboard)/academy/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/academy/[slug]/[lessonSlug]/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/digest/page.tsx`
 
 ---
 
@@ -91,9 +91,9 @@ Build the user-facing **Parent Intelligence Academy** course player and reader i
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Academy course player displays modules across all 4 tiers.
-- [ ] Sunday Culture Digest renders slang flashcards and exploit alerts.
-- [ ] Offline caching functional via PWA service worker.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Commits adhere to Conventional Commits (`feat(web): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Academy course player displays modules across all 4 tiers.
+- [x] Sunday Culture Digest renders slang flashcards and exploit alerts.
+- [x] Offline caching functional via PWA service worker.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Commits adhere to Conventional Commits (`feat(web): ...`).

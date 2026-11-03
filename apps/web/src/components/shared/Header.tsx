@@ -13,12 +13,20 @@ export function Header() {
   const pathname = usePathname();
   const { user, isAuthenticated, logout, isLoggingOut } = useAuth();
 
-  const navLinks = [
-    { href: '/#roads', label: 'The Two Roads' },
-    { href: '/#features', label: 'Platform Pillars' },
-    { href: '/#academy', label: 'Parent Academy' },
-    { href: '/#pricing', label: 'Pricing' },
-  ];
+  const navLinks = isAuthenticated
+    ? [
+        { href: '/dashboard', label: 'Dashboard' },
+        { href: '/academy', label: 'Parent Academy' },
+        { href: '/digest', label: 'Culture Digest' },
+        { href: '/devices', label: 'Devices' },
+      ]
+    : [
+        { href: '/#roads', label: 'The Two Roads' },
+        { href: '/#features', label: 'Platform Pillars' },
+        { href: '/academy', label: 'Parent Academy' },
+        { href: '/digest', label: 'Culture Digest' },
+        { href: '/#pricing', label: 'Pricing' },
+      ];
 
   const handleLogout = async () => {
     try {

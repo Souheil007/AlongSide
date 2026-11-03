@@ -3,6 +3,7 @@ import './globals.css';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { Header } from '@/components/shared/Header';
 import { Footer } from '@/components/shared/Footer';
+import { OfflineBanner } from '@/components/shared/OfflineBanner';
 
 export const metadata: Metadata = {
   title: 'AlongSide — Parent Intelligence & Family Operating System',
@@ -35,6 +36,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col bg-[#FDFBF7] text-slate-900 font-sans antialiased">
         <QueryProvider>
+          <OfflineBanner />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

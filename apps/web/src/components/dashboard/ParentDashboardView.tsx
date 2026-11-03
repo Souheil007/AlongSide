@@ -501,7 +501,7 @@ export function ParentDashboardView() {
                 ? 'Curated: "How to Say No to the 5th Grade Smartphone Beg"'
                 : 'Curated: "Restoring Bedtime Peace After Screen Addictions"'}
             </p>
-            <Link href="/#academy">
+            <Link href="/academy">
               <Button variant="outline" size="sm" className="w-full text-xs gap-1.5">
                 Explore Academy Lessons
                 <ArrowRight className="h-3 w-3" />
@@ -556,7 +556,7 @@ export function ParentDashboardView() {
             <p className="text-xs text-slate-600 mb-3">
               Stay ahead of hidden calculator vaults and algorithmic trends.
             </p>
-            <Link href="/#digest">
+            <Link href="/digest">
               <Button variant="outline" size="sm" className="w-full text-xs gap-1.5">
                 View Weekly Slang & Alerts
                 <ArrowRight className="h-3 w-3" />

@@ -8,6 +8,13 @@
 import { spawn } from 'node:child_process';
 import process from 'node:process';
 
+// Ensure root .env variables are loaded into the process
+try {
+  process.loadEnvFile?.('.env');
+} catch {
+  // Ignore if already loaded or not present
+}
+
 const isWindows = process.platform === 'win32';
 const npmCmd = isWindows ? 'npm.cmd' : 'npm';
 const npxCmd = isWindows ? 'npx.cmd' : 'npx';
