@@ -58,7 +58,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
   });
 
   describe('GET /api/v1/academy/modules', () => {
-    it('returns all 4 neurodevelopmental modules when no tier filter is provided', async () => {
+    it('returns all 6 lifespan neurodevelopmental modules across ages 0-18 when no tier filter is provided', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/academy/modules',
@@ -68,16 +68,38 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const payload = response.json();
       expect(payload.success).toBe(true);
       expect(Array.isArray(payload.data.modules)).toBe(true);
-      expect(payload.data.modules.length).toBe(4);
+      expect(payload.data.modules.length).toBe(6);
 
       const tiers = payload.data.modules.map((m: any) => m.developmentalTier);
-      expect(tiers).toContain('TIER_1_AGES_8_9');
-      expect(tiers).toContain('TIER_2_AGES_10_11');
-      expect(tiers).toContain('TIER_3_AGES_12_13');
-      expect(tiers).toContain('TIER_4_AGES_14_PLUS');
+      expect(tiers).toContain('TIER_0_INFANCY_TODDLER_0_3');
+      expect(tiers).toContain('TIER_1_EARLY_CHILDHOOD_4_6');
+      expect(tiers).toContain('TIER_2_MIDDLE_CHILDHOOD_7_9');
+      expect(tiers).toContain('TIER_3_PRE_TEEN_10_12');
+      expect(tiers).toContain('TIER_4_EARLY_ADOLESCENCE_13_15');
+      expect(tiers).toContain('TIER_5_LATE_ADOLESCENCE_16_18');
     });
 
-    it('filters modules strictly by developmental tier', async () => {
+    it('filters modules strictly by developmental tier (e.g. TIER_0_INFANCY_TODDLER_0_3)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/modules?tier=TIER_0_INFANCY_TODDLER_0_3',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.modules.length).toBe(1);
+
+      const mod = payload.data.modules[0];
+      expect(mod.slug).toBe('infant-sensory-milestones-and-coregulation');
+      expect(mod.title).toContain('Infant & Toddler');
+      expect(mod.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
+      expect(mod.lessonCount).toBe(3);
+      expect(mod.completedLessonCount).toBe(0);
+      expect(mod.isCompleted).toBe(false);
+    });
+
+    it('supports backward-compatible legacy tier queries (e.g. TIER_2_AGES_10_11)', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/academy/modules?tier=TIER_2_AGES_10_11',
@@ -91,7 +113,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const mod = payload.data.modules[0];
       expect(mod.slug).toBe('tween-neurobiology-and-adrenarche');
       expect(mod.title).toContain('Tween Brain');
-      expect(mod.developmentalTier).toBe('TIER_2_AGES_10_11');
+      expect(mod.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
       expect(mod.lessonCount).toBe(3);
       expect(mod.completedLessonCount).toBe(0);
       expect(mod.isCompleted).toBe(false);
@@ -169,7 +191,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(lesson.contentMarkdown).toContain('Alongside Empathetic Response');
       expect(lesson.module).toBeDefined();
       expect(lesson.module.slug).toBe('tween-neurobiology-and-adrenarche');
-      expect(lesson.module.developmentalTier).toBe('TIER_2_AGES_10_11');
+      expect(lesson.module.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
     });
 
     it('returns 404 NOT_FOUND for non-existent lesson id', async () => {

@@ -15,11 +15,35 @@ export interface ModuleCardProps {
 
 export function getTierBadgeInfo(tier: DevelopmentalTier) {
   switch (tier) {
+    case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
+      return {
+        label: 'Ages 0–3 (Tier 0: Infancy & Toddler)',
+        shortLabel: 'Ages 0–3',
+        className: 'bg-rose-50 text-rose-800 border-rose-200',
+      };
+    case DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6:
+      return {
+        label: 'Ages 4–6 (Tier 1: Early Childhood)',
+        shortLabel: 'Ages 4–6',
+        className: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9:
+      return {
+        label: 'Ages 7–9 (Tier 2: Explorer)',
+        shortLabel: 'Ages 7–9',
+        className: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      };
     case DevelopmentalTier.TIER_1_AGES_8_9:
       return {
         label: 'Ages 8–9 (Tier 1: Explorer)',
         shortLabel: 'Ages 8–9',
         className: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      };
+    case DevelopmentalTier.TIER_3_PRE_TEEN_10_12:
+      return {
+        label: 'Ages 10–12 (Tier 3: Pathfinder)',
+        shortLabel: 'Ages 10–12',
+        className: 'bg-teal-50 text-teal-800 border-teal-200',
       };
     case DevelopmentalTier.TIER_2_AGES_10_11:
       return {
@@ -27,11 +51,23 @@ export function getTierBadgeInfo(tier: DevelopmentalTier) {
         shortLabel: 'Ages 10–11',
         className: 'bg-teal-50 text-teal-800 border-teal-200',
       };
+    case DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15:
+      return {
+        label: 'Ages 13–15 (Tier 4: Navigator)',
+        shortLabel: 'Ages 13–15',
+        className: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+      };
     case DevelopmentalTier.TIER_3_AGES_12_13:
       return {
         label: 'Ages 12–13 (Tier 3: Navigator)',
         shortLabel: 'Ages 12–13',
         className: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+      };
+    case DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18:
+      return {
+        label: 'Ages 16–18 (Tier 5: Pioneer)',
+        shortLabel: 'Ages 16–18',
+        className: 'bg-purple-50 text-purple-800 border-purple-200',
       };
     case DevelopmentalTier.TIER_4_AGES_14_PLUS:
       return {

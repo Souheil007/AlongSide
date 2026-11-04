@@ -44,6 +44,7 @@ graph TD
         P25["25: Streamlined Navigation & Account Menu Decluttering UI (FE)"]
         P26["26: Automatic Child Age Derivation & Domain Sync UI (FE)"]
         P27["27: Holistic Domain Tabs Decluttering & Redundancy Purge UI (FE)"]
+        P28["28: Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -87,6 +88,9 @@ graph TD
     P24 --> P25
     P25 --> P26
     P26 --> P27
+    P27 --> P28
+    P08 --> P28
+    P09 --> P28
 
     P07 --> P14
     P09 --> P14
@@ -96,6 +100,7 @@ graph TD
     P18 --> P14
     P19 --> P14
     P20 --> P14
+    P28 --> P14
 ```
 
 ---
@@ -131,6 +136,7 @@ graph TD
 | [**`25-streamlined-navigation-and-account-menu-decluttering-ui.md`**](25-streamlined-navigation-and-account-menu-decluttering-ui.md) | Streamlined Navigation & Account Menu Decluttering UI | **Frontend Agent** | PLAN-21, PLAN-23, PLAN-24 | Complete (PR #39) |
 | [**`26-automatic-child-age-derivation-and-domain-sync-ui.md`**](26-automatic-child-age-derivation-and-domain-sync-ui.md) | Automatic Child Age Derivation & Domain Sync UI | **Frontend Agent** | PLAN-04, PLAN-05, PLAN-16, PLAN-25 | Complete (PR #38) |
 | [**`27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md`**](27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md) | Holistic Domain Tabs Decluttering & Redundancy Purge UI | **Frontend Agent** | PLAN-18, PLAN-19, PLAN-25, PLAN-26 | Complete (PR #38) |
+| [**`28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md`**](28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md) | Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Ages 0–18) | **Joint (FE & BE)** | PLAN-08, PLAN-09, PLAN-16, PLAN-25 | Complete |
 
 ---
 

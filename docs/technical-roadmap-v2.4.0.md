@@ -210,6 +210,7 @@ graph TD
     P25["Plan 25: Streamlined Navigation & Account Menu Decluttering UI<br/>(Frontend Agent)"]
     P26["Plan 26: Automatic Child Age Derivation & Domain Sync UI<br/>(Frontend Agent)"]
     P27["Plan 27: Holistic Domain Tabs Decluttering & Redundancy Purge UI<br/>(Frontend Agent)"]
+    P28["Plan 28: Parent Intelligence Academy Lifespan Curriculum & Tier Expansion<br/>(Joint FE & BE)"]
 
     P16 --> P17
     P16 --> P18
@@ -297,6 +298,11 @@ graph TD
   * **Plan 25 (Streamlined Navigation & Account Menu Decluttering UI):** Rename "Today" to "Home", purge duplicate domain links from user dropdown, eliminate "More" menu, establish 6-tab balanced navbar, and remove duplicate link card from Home feed.
   * **Plan 26 (Automatic Child Age Derivation & Domain Sync UI):** Author `useChildAge`, eliminate manual age input fields in dosing calculator, auto-calibrate weight, age in months, and contraindications without asking parents.
   * **Plan 27 (Holistic Domain Tabs Decluttering & Redundancy Purge UI):** Declutter Health, Nutrition, Play, Behavior, and Devices tabs. Collapse 5-stage feeding selector to child's current stage, auto-filter play catalog and behavior scripts, and consolidate Sunday Culture Digest into Devices Hub.
+
+### Phase 8: Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Plan 28) — ✅ Completed
+- **Assignee:** Joint (`apps/api`, `packages/database`, `packages/shared`, `apps/web`)
+- **Key Deliverables:**
+  * **Plan 28 (Parent Intelligence Academy Lifespan Curriculum & Tier Expansion):** Expand Parental Intelligence Academy across all 6 canonical lifespan tiers (Ages 0–18), authoring 6 complete neurodevelopmental modules with 18 micro-lessons (Sensory co-regulation, theory of mind, prefrontal impulse control, adrenarche, circadian delay, and autonomy transition), updating validation schemas, bidirectional tier queries, and 6-tier frontend catalog.
 
 ---
 

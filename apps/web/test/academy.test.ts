@@ -10,28 +10,70 @@ import {
 
 describe('Parent Intelligence Academy Component & API Specification', () => {
   describe('Developmental Tier Badge Mapping', () => {
-    it('maps Tier 1 (Ages 8-9) to Explorer with emerald styling', () => {
+    it('maps Tier 0 (Ages 0-3) to Infancy & Toddler with rose styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+      expect(badge.label).toContain('Tier 0: Infancy & Toddler');
+      expect(badge.shortLabel).toBe('Ages 0–3');
+      expect(badge.className).toContain('rose');
+    });
+
+    it('maps Tier 1 (Ages 4-6) to Early Childhood with amber styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+      expect(badge.label).toContain('Tier 1: Early Childhood');
+      expect(badge.shortLabel).toBe('Ages 4–6');
+      expect(badge.className).toContain('amber');
+    });
+
+    it('maps Tier 2 (Ages 7-9) to Explorer with emerald styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9);
+      expect(badge.label).toContain('Tier 2: Explorer');
+      expect(badge.shortLabel).toBe('Ages 7–9');
+      expect(badge.className).toContain('emerald');
+    });
+
+    it('maps Tier 3 (Ages 10-12) to Pathfinder with teal styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_3_PRE_TEEN_10_12);
+      expect(badge.label).toContain('Tier 3: Pathfinder');
+      expect(badge.shortLabel).toBe('Ages 10–12');
+      expect(badge.className).toContain('teal');
+    });
+
+    it('maps Tier 4 (Ages 13-15) to Navigator with indigo styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15);
+      expect(badge.label).toContain('Tier 4: Navigator');
+      expect(badge.shortLabel).toBe('Ages 13–15');
+      expect(badge.className).toContain('indigo');
+    });
+
+    it('maps Tier 5 (Ages 16-18) to Pioneer with purple styling', () => {
+      const badge = getTierBadgeInfo(DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18);
+      expect(badge.label).toContain('Tier 5: Pioneer');
+      expect(badge.shortLabel).toBe('Ages 16–18');
+      expect(badge.className).toContain('purple');
+    });
+
+    it('maps legacy Tier 1 (Ages 8-9) to Explorer with emerald styling', () => {
       const badge = getTierBadgeInfo(DevelopmentalTier.TIER_1_AGES_8_9);
       expect(badge.label).toContain('Tier 1: Explorer');
       expect(badge.shortLabel).toBe('Ages 8–9');
       expect(badge.className).toContain('emerald');
     });
 
-    it('maps Tier 2 (Ages 10-11) to Pathfinder with teal styling', () => {
+    it('maps legacy Tier 2 (Ages 10-11) to Pathfinder with teal styling', () => {
       const badge = getTierBadgeInfo(DevelopmentalTier.TIER_2_AGES_10_11);
       expect(badge.label).toContain('Tier 2: Pathfinder');
       expect(badge.shortLabel).toBe('Ages 10–11');
       expect(badge.className).toContain('teal');
     });
 
-    it('maps Tier 3 (Ages 12-13) to Navigator with indigo styling', () => {
+    it('maps legacy Tier 3 (Ages 12-13) to Navigator with indigo styling', () => {
       const badge = getTierBadgeInfo(DevelopmentalTier.TIER_3_AGES_12_13);
       expect(badge.label).toContain('Tier 3: Navigator');
       expect(badge.shortLabel).toBe('Ages 12–13');
       expect(badge.className).toContain('indigo');
     });
 
-    it('maps Tier 4 (Ages 14+) to Pioneer with amber styling', () => {
+    it('maps legacy Tier 4 (Ages 14+) to Pioneer with amber styling', () => {
       const badge = getTierBadgeInfo(DevelopmentalTier.TIER_4_AGES_14_PLUS);
       expect(badge.label).toContain('Tier 4: Pioneer');
       expect(badge.shortLabel).toBe('Ages 14+');
