@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { create } from 'zustand';
 import type { AiMessageDTO, MessageRole } from '@alongside/shared';
 import {
   streamAiAdvisorChat,
@@ -29,86 +30,130 @@ export interface UseAiAdvisorChatReturn {
   retryLastMessage: () => Promise<void>;
 }
 
+interface AdvisorStoreState {
+  messages: AiMessageDTO[];
+  activeStreamingText: string;
+  activeMatchedFaqs: string[];
+  activeEmergency: SseEmergencyEvent | null;
+  isStreaming: boolean;
+  isLoading: boolean;
+  error: string | null;
+  conversationId: string | null;
+  lastUserMessage: string | null;
+
+  setMessages: (messages: AiMessageDTO[]) => void;
+  addMessage: (message: AiMessageDTO) => void;
+  setActiveStreamingText: (text: string) => void;
+  setActiveMatchedFaqs: (faqs: string[]) => void;
+  setActiveEmergency: (emergency: SseEmergencyEvent | null) => void;
+  setIsStreaming: (streaming: boolean) => void;
+  setIsLoading: (loading: boolean) => void;
+  setError: (err: string | null) => void;
+  setConversationId: (id: string | null) => void;
+  setLastUserMessage: (msg: string | null) => void;
+  resetChat: () => void;
+}
+
+export const useAdvisorStore = create<AdvisorStoreState>((set) => ({
+  messages: [],
+  activeStreamingText: '',
+  activeMatchedFaqs: [],
+  activeEmergency: null,
+  isStreaming: false,
+  isLoading: false,
+  error: null,
+  conversationId: null,
+  lastUserMessage: null,
+
+  setMessages: (messages) => set({ messages }),
+  addMessage: (message) => set((s) => ({ messages: [...s.messages, message] })),
+  setActiveStreamingText: (activeStreamingText) => set({ activeStreamingText }),
+  setActiveMatchedFaqs: (activeMatchedFaqs) => set({ activeMatchedFaqs }),
+  setActiveEmergency: (activeEmergency) => set({ activeEmergency }),
+  setIsStreaming: (isStreaming) => set({ isStreaming }),
+  setIsLoading: (isLoading) => set({ isLoading }),
+  setError: (error) => set({ error }),
+  setConversationId: (conversationId) => set({ conversationId }),
+  setLastUserMessage: (lastUserMessage) => set({ lastUserMessage }),
+  resetChat: () =>
+    set({
+      messages: [],
+      activeStreamingText: '',
+      activeMatchedFaqs: [],
+      activeEmergency: null,
+      isStreaming: false,
+      isLoading: false,
+      error: null,
+      conversationId: null,
+      lastUserMessage: null,
+    }),
+}));
+
+let activeAbortController: AbortController | null = null;
+let activeStreamingTextAcc = '';
+let activeMatchedFaqsAcc: string[] = [];
+
 export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAdvisorChatReturn {
-  const [messages, setMessages] = useState<AiMessageDTO[]>(options.initialMessages || []);
-  const [activeStreamingText, setActiveStreamingText] = useState<string>('');
-  const [activeMatchedFaqs, setActiveMatchedFaqs] = useState<string[]>([]);
-  const [activeEmergency, setActiveEmergency] = useState<SseEmergencyEvent | null>(null);
-  const [isStreaming, setIsStreaming] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [conversationId, setConversationId] = useState<string | null>(
-    options.initialConversationId || null
-  );
+  const store = useAdvisorStore();
 
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const streamingTextRef = useRef<string>('');
-  const matchedFaqsRef = useRef<string[]>([]);
-  const lastUserMessageRef = useRef<string | null>(null);
-
-  // Clean up any ongoing stream on unmount
   useEffect(() => {
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
+    if (options.initialMessages && options.initialMessages.length > 0 && store.messages.length === 0) {
+      store.setMessages(options.initialMessages);
+    }
+    if (options.initialConversationId && !store.conversationId) {
+      store.setConversationId(options.initialConversationId);
+    }
+  }, [options.initialMessages, options.initialConversationId, store]);
 
   const stopStreaming = useCallback(() => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      abortControllerRef.current = null;
+    if (activeAbortController) {
+      activeAbortController.abort();
+      activeAbortController = null;
     }
 
-    if (streamingTextRef.current.trim()) {
-      // Commit partial text as assistant message
+    if (activeStreamingTextAcc.trim()) {
       const partialMessage: AiMessageDTO = {
         id: `msg-${Date.now()}`,
-        conversationId: conversationId || `conv-${Date.now()}`,
+        conversationId: store.conversationId || `conv-${Date.now()}`,
         role: 'ASSISTANT' as MessageRole,
-        content: streamingTextRef.current,
-        matchedFaqIds: [...matchedFaqsRef.current],
+        content: activeStreamingTextAcc,
+        matchedFaqIds: [...activeMatchedFaqsAcc],
         createdAt: new Date().toISOString(),
       };
-      setMessages((prev) => [...prev, partialMessage]);
+      store.addMessage(partialMessage);
     }
 
-    setIsStreaming(false);
-    setIsLoading(false);
-    setActiveStreamingText('');
-    setActiveMatchedFaqs([]);
-    streamingTextRef.current = '';
-    matchedFaqsRef.current = [];
-  }, [conversationId]);
+    activeStreamingTextAcc = '';
+    activeMatchedFaqsAcc = [];
+    store.setIsStreaming(false);
+    store.setIsLoading(false);
+    store.setActiveStreamingText('');
+    store.setActiveMatchedFaqs([]);
+  }, [store]);
 
   const clearConversation = useCallback(() => {
     stopStreaming();
-    setMessages([]);
-    setConversationId(null);
-    setError(null);
-    setActiveEmergency(null);
-    lastUserMessageRef.current = null;
-  }, [stopStreaming]);
+    store.resetChat();
+  }, [stopStreaming, store]);
 
   const sendMessage = useCallback(
     async (messageText: string, sendOptions?: { childId?: string }) => {
       const trimmed = messageText.trim();
-      if (!trimmed || isStreaming) return;
+      if (!trimmed || store.isStreaming) return;
 
-      setError(null);
-      setActiveEmergency(null);
-      setIsLoading(true);
-      setIsStreaming(true);
-      setActiveStreamingText('');
-      setActiveMatchedFaqs([]);
-      streamingTextRef.current = '';
-      matchedFaqsRef.current = [];
-      lastUserMessageRef.current = trimmed;
+      store.setError(null);
+      store.setActiveEmergency(null);
+      store.setIsLoading(true);
+      store.setIsStreaming(true);
+      store.setActiveStreamingText('');
+      store.setActiveMatchedFaqs([]);
+      activeStreamingTextAcc = '';
+      activeMatchedFaqsAcc = [];
+      store.setLastUserMessage(trimmed);
 
-      const currentConvId = conversationId || `conv-${Date.now()}`;
-      if (!conversationId) {
-        setConversationId(currentConvId);
+      const currentConvId = store.conversationId || `conv-${Date.now()}`;
+      if (!store.conversationId) {
+        store.setConversationId(currentConvId);
       }
 
       // Add user message immediately
@@ -119,11 +164,10 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
         content: trimmed,
         createdAt: new Date().toISOString(),
       };
-
-      setMessages((prev) => [...prev, userMessage]);
+      store.addMessage(userMessage);
 
       const controller = new AbortController();
-      abortControllerRef.current = controller;
+      activeAbortController = controller;
 
       try {
         await streamAiAdvisorChat(
@@ -134,21 +178,21 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
           },
           {
             onContext: (context: SseContextEvent) => {
-              matchedFaqsRef.current = context.matchedFaqs;
-              setActiveMatchedFaqs(context.matchedFaqs);
+              activeMatchedFaqsAcc = context.matchedFaqs;
+              store.setActiveMatchedFaqs(context.matchedFaqs);
             },
             onEmergency: (emergencyData: SseEmergencyEvent) => {
-              setIsLoading(false);
-              setActiveEmergency(emergencyData);
+              store.setIsLoading(false);
+              store.setActiveEmergency(emergencyData);
             },
             onToken: (token: string) => {
-              setIsLoading(false);
-              streamingTextRef.current += token;
-              setActiveStreamingText(streamingTextRef.current);
+              store.setIsLoading(false);
+              activeStreamingTextAcc += token;
+              store.setActiveStreamingText(activeStreamingTextAcc);
             },
             onDone: (doneData) => {
-              const fullContent = streamingTextRef.current;
-              const matched = [...matchedFaqsRef.current];
+              const fullContent = activeStreamingTextAcc;
+              const matched = [...activeMatchedFaqsAcc];
 
               const assistantMessage: AiMessageDTO = {
                 id: `ai-${Date.now()}`,
@@ -159,54 +203,53 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
                 createdAt: new Date().toISOString(),
               };
 
-              setMessages((prev) => [...prev, assistantMessage]);
-              setActiveStreamingText('');
-              setActiveMatchedFaqs([]);
-              streamingTextRef.current = '';
-              matchedFaqsRef.current = [];
-              setIsStreaming(false);
-              setIsLoading(false);
-              abortControllerRef.current = null;
+              store.addMessage(assistantMessage);
+              store.setActiveStreamingText('');
+              store.setActiveMatchedFaqs([]);
+              activeStreamingTextAcc = '';
+              activeMatchedFaqsAcc = [];
+              store.setIsStreaming(false);
+              store.setIsLoading(false);
+              activeAbortController = null;
             },
             onError: (streamErr) => {
-              setError(streamErr.message || 'Stream connection interrupted');
-              setIsStreaming(false);
-              setIsLoading(false);
-              abortControllerRef.current = null;
+              store.setError(streamErr.message || 'Stream connection interrupted');
+              store.setIsStreaming(false);
+              store.setIsLoading(false);
+              activeAbortController = null;
             },
           },
           { signal: controller.signal }
         );
       } catch (err: unknown) {
         if (controller.signal.aborted) {
-          // Handled via stopStreaming
           return;
         }
         const msg = err instanceof Error ? err.message : 'Failed to connect to AI Advisor';
-        setError(msg);
-        setIsStreaming(false);
-        setIsLoading(false);
-        abortControllerRef.current = null;
+        store.setError(msg);
+        store.setIsStreaming(false);
+        store.setIsLoading(false);
+        activeAbortController = null;
       }
     },
-    [conversationId, isStreaming, options.defaultChildId]
+    [options.defaultChildId, store]
   );
 
   const retryLastMessage = useCallback(async () => {
-    if (lastUserMessageRef.current && !isStreaming) {
-      await sendMessage(lastUserMessageRef.current);
+    if (store.lastUserMessage && !store.isStreaming) {
+      await sendMessage(store.lastUserMessage);
     }
-  }, [sendMessage, isStreaming]);
+  }, [sendMessage, store.lastUserMessage, store.isStreaming]);
 
   return {
-    messages,
-    activeStreamingText,
-    activeMatchedFaqs,
-    activeEmergency,
-    isStreaming,
-    isLoading,
-    error,
-    conversationId,
+    messages: store.messages,
+    activeStreamingText: store.activeStreamingText,
+    activeMatchedFaqs: store.activeMatchedFaqs,
+    activeEmergency: store.activeEmergency,
+    isStreaming: store.isStreaming,
+    isLoading: store.isLoading,
+    error: store.error,
+    conversationId: store.conversationId,
     sendMessage,
     stopStreaming,
     clearConversation,

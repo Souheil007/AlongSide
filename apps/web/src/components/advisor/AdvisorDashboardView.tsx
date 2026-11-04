@@ -12,6 +12,7 @@ import {
   RotateCcw,
   AlertCircle,
   HelpCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import { useAiAdvisorChat } from '@/hooks/useAiAdvisorChat';
 import { ChatFeed } from '@/components/advisor/ChatFeed';
@@ -72,6 +73,20 @@ export function AdvisorDashboardView() {
 
   return (
     <div className="space-y-6">
+      {/* Navigation Synergy: Return to Overview */}
+      <div className="flex items-center justify-between pb-1">
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-teal-700 transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          <span>Back to Family Dashboard</span>
+        </Link>
+        <span className="text-[11px] text-slate-400 hidden sm:inline">
+          Full Rehearsal Studio &amp; Clinical Vault
+        </span>
+      </div>
+
       {/* Top Header & Rehearsal Hero Banner */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
