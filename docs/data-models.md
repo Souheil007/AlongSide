@@ -1,8 +1,12 @@
 # Alongside — Database Models & Prisma Schema Specification
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved for Engineering Implementation  
-**Version:** 2.2.0 (The Comprehensive Parent Intelligence & Family Operating System)  
+**Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Backend Engineer, Database Administrator, Frontend Engineer  
+**Companion Documents:**  
+- [`docs/system-architecture.md`](system-architecture.md)  
+- [`docs/technical-roadmap-v2.4.0.md`](technical-roadmap-v2.4.0.md)  
+- [`docs/codebase-design.md`](codebase-design.md)  
 
 ---
 
@@ -21,6 +25,11 @@ erDiagram
     Child ||--o{ Agreement : "subject of"
     Child ||--o{ DeviceProfile : "governed by"
     Child ||--o{ QuizAttempt : "evaluated by"
+    Child ||--o{ ChildMilestone : "tracks progress"
+    Child ||--o{ ChildHealthLog : "logs health events"
+    
+    Milestone ||--o{ ChildMilestone : "benchmarks"
+    SymptomProtocol ||--o{ ChildHealthLog : "triaged by"
     
     Agreement ||--o{ AgreementClause : "contains"
     Agreement ||--o1 DeviceProfile : "compiles into"
@@ -74,15 +83,17 @@ enum SubscriptionTier {
 }
 
 enum RoadType {
-  PRE_DEVICE        // Road 1: No personal smartphone yet (Ages 8–11+)
-  ACTIVE_DEVICE     // Road 2: Already owns personal smartphone (Ages 9–14+)
+  PRE_DEVICE        // Road 1: No personal smartphone yet (Ages 0–11)
+  ACTIVE_DEVICE     // Road 2: Already owns personal smartphone (Ages 10–18)
 }
 
 enum DevelopmentalTier {
-  TIER_1_AGES_8_9   // Early Curiosity & Impulse Centers
-  TIER_2_AGES_10_11  // Tween Awakening & Peer Shift
-  TIER_3_AGES_12_13  // Pubertal Shift & Circadian Sleep Delay
-  TIER_4_AGES_14_PLUS// Teens, Autonomy & Self-Regulation
+  TIER_0_INFANCY_TODDLER_0_3   // Ages 0–3: Teething, First Words, Motor, BLW, Puppets
+  TIER_1_EARLY_CHILDHOOD_4_6   // Ages 4–6: Preschool, Theory of Mind, Blocks, Picky Eating
+  TIER_2_MIDDLE_CHILDHOOD_7_9  // Ages 7–9: Elementary, Logic Puzzles, Sports, Sleep
+  TIER_3_PRE_TEEN_10_12        // Ages 10–12: Adrenarche, Device Readiness, Slang, Peers
+  TIER_4_EARLY_ADOLESCENCE_13_15// Ages 13–15: Puberty, Circadian Delay, Pacts, 8:30 Curfew
+  TIER_5_LATE_ADOLESCENCE_16_18// Ages 16–18: Executive Autonomy, Consequence, Self-Regulation
 }
 
 enum AgreementStatus {
@@ -139,6 +150,44 @@ enum ExploitSeverity {
   CRITICAL
 }
 
+// v2.4.0 Clinical & Holistic Enums
+enum TriageZone {
+  RED       // Emergency Room / 911 immediately
+  YELLOW    // Contact pediatrician within 24 hours
+  GREEN     // Supportive home care
+}
+
+enum DietaryStage {
+  MILK_ONLY           // Exclusive breastmilk / formula (0–6m)
+  SOLIDS_INTRODUCED   // Purees & Baby-Led Weaning (6–12m)
+  TODDLER_TABLE       // Self-feeding, division of responsibility (1–5y)
+  BALANCED_SCHOOL     // School lunchboxes, sustained energy (6–12y)
+  PUBERTAL_GROWTH     // High calcium, iron & athletic fuel (13–18y)
+}
+
+enum MilestoneCategory {
+  GROSS_MOTOR
+  FINE_MOTOR
+  SPEECH_LANGUAGE
+  COGNITIVE
+  SOCIAL_EMOTIONAL
+}
+
+enum MilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  ACHIEVED
+}
+
+enum PlayCategory {
+  PUPPET
+  SENSORY
+  CONSTRUCTION
+  LOGIC_PUZZLE
+  MAKER
+  BOREDOM_BUSTER
+}
+
 // ----------------------------------------------------
 // USER & SUBSCRIPTION MODELS
 // ----------------------------------------------------
@@ -180,7 +229,7 @@ model Subscription {
 }
 
 // ----------------------------------------------------
-// CHILD & DEVICE MODELS
+// CHILD, HEALTH & LIFESPAN MODELS
 // ----------------------------------------------------
 
 model Child {
@@ -190,8 +239,12 @@ model Child {
   name              String
   birthYear         Int
   birthMonth        Int
+  birthDate         DateTime?
   roadType          RoadType          @default(PRE_DEVICE)
   developmentalTier DevelopmentalTier
+  dietaryStage      DietaryStage      @default(TODDLER_TABLE)
+  allergies         String[]          @default([])
+  pediatricNotes    String?
   schoolGrade       String?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
@@ -199,10 +252,139 @@ model Child {
   agreements        Agreement[]
   deviceProfiles    DeviceProfile[]
   quizAttempts      QuizAttempt[]
+  milestones        ChildMilestone[]
+  healthLogs        ChildHealthLog[]
 
   @@index([userId])
   @@map("children")
 }
+
+model Milestone {
+  id                String            @id @default(uuid())
+  targetTier        DevelopmentalTier
+  targetAgeMonths   Int
+  category          MilestoneCategory
+  title             String
+  description       String
+  signsToWatch      String
+  clinicalAuthority String            @default("CDC / AAP Bright Futures")
+  sortOrder         Int               @default(0)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  childMilestones   ChildMilestone[]
+
+  @@index([targetTier])
+  @@index([category])
+  @@map("milestones")
+}
+
+model ChildMilestone {
+  id                String            @id @default(uuid())
+  childId           String
+  child             Child             @relation(fields: [childId], references: [id], onDelete: Cascade)
+  milestoneId       String
+  milestone         Milestone         @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+  status            MilestoneStatus   @default(NOT_STARTED)
+  achievedAt        DateTime?
+  parentNotes       String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@unique([childId, milestoneId])
+  @@index([childId])
+  @@map("child_milestones")
+}
+
+model SymptomProtocol {
+  id                String            @id @default(uuid())
+  slug              String            @unique
+  title             String
+  summary           String
+  targetTiers       DevelopmentalTier[]
+  redFlags          String[]          // Immediate ER / 911 triggers
+  yellowFlags       String[]          // Doctor visit within 24h triggers
+  greenHomeCare     String[]          // Supportive comfort measures
+  contraindications String[]          // Medications / foods strictly prohibited
+  clinicalAuthority String            @default("Barton Schmitt Pediatric Telephone Protocols / AAP")
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  healthLogs        ChildHealthLog[]
+
+  @@map("symptom_protocols")
+}
+
+model ChildHealthLog {
+  id                String            @id @default(uuid())
+  childId           String
+  child             Child             @relation(fields: [childId], references: [id], onDelete: Cascade)
+  protocolId        String?
+  protocol          SymptomProtocol?  @relation(fields: [protocolId], references: [id], onDelete: SetNull)
+  symptomTitle      String
+  temperatureF      Float?
+  triageZone        TriageZone
+  clinicalNotes     String?
+  actionTaken       String?
+  loggedAt          DateTime          @default(now())
+
+  @@index([childId])
+  @@map("child_health_logs")
+}
+
+model NutritionGuide {
+  id                String            @id @default(uuid())
+  stage             DietaryStage      @unique
+  title             String
+  ageBracket        String
+  guidelinesMarkdown String
+  safeFoods         String[]
+  chokingHazards    String[]
+  allergenProtocol  String?
+  pickyEatingTips   String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@map("nutrition_guides")
+}
+
+model BrainGameActivity {
+  id                String            @id @default(uuid())
+  targetTier        DevelopmentalTier
+  category          PlayCategory
+  title             String
+  summary           String
+  instructions      String
+  materialsNeeded   String[]          @default([])
+  targetSkills      String[]
+  estimatedMinutes  Int               @default(15)
+  isScreenFree      Boolean           @default(true)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([targetTier])
+  @@index([category])
+  @@map("brain_game_activities")
+}
+
+model BehaviorGuide {
+  id                String            @id @default(uuid())
+  targetTier        DevelopmentalTier
+  slug              String            @unique
+  triggerSituation  String
+  underlyingNeed    String            // Translating behavior into neurological/emotional need
+  coRegulationScript String           // Word-for-word calm dialogue script
+  authoritativeLimit String           // Firm loving boundary
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([targetTier])
+  @@map("behavior_guides")
+}
+
+// ----------------------------------------------------
+// DEVICE & AGREEMENT MODELS
+// ----------------------------------------------------
 
 model DeviceProfile {
   id                String              @id @default(uuid())
@@ -225,10 +407,6 @@ model DeviceProfile {
   @@index([enrollmentToken])
   @@map("device_profiles")
 }
-
-// ----------------------------------------------------
-// BILATERAL FAMILY PACT & AGREEMENT MODELS
-// ----------------------------------------------------
 
 model Agreement {
   id                 String           @id @default(uuid())
@@ -274,7 +452,7 @@ model AgreementClause {
 }
 
 // ----------------------------------------------------
-// INTERACTIVE QUIZZES & ASSESSMENTS
+// QUIZZES, ACADEMY, AI ADVISOR & CULTURE DIGEST
 // ----------------------------------------------------
 
 model Quiz {
@@ -298,7 +476,7 @@ model QuizQuestion {
   quiz               Quiz           @relation(fields: [quizId], references: [id], onDelete: Cascade)
   questionText       String
   explanation        String?
-  dimensionKey       String?        // e.g. "executive_function", "social_awareness"
+  dimensionKey       String?
   sortOrder          Int            @default(0)
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
@@ -334,8 +512,8 @@ model QuizAttempt {
   user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   childId            String?
   child              Child?         @relation(fields: [childId], references: [id], onDelete: SetNull)
-  overallScore       Int            @default(0) // 0-100 score
-  dimensionScores    Json?          // { "executive_function": 85, "online_safety": 70 }
+  overallScore       Int            @default(0)
+  dimensionScores    Json?
   completedAt        DateTime       @default(now())
 
   responses          QuizResponse[]
@@ -357,10 +535,6 @@ model QuizResponse {
   @@index([attemptId])
   @@map("quiz_responses")
 }
-
-// ----------------------------------------------------
-// PARENT INTELLIGENCE ACADEMY
-// ----------------------------------------------------
 
 model AcademyModule {
   id                 String             @id @default(uuid())
@@ -408,10 +582,6 @@ model AcademyProgress {
   @@unique([userId, lessonId])
   @@map("academy_progress")
 }
-
-// ----------------------------------------------------
-// 24/7 AI ADVISOR & FAQ VAULT
-// ----------------------------------------------------
 
 model AiConversation {
   id                 String             @id @default(uuid())
@@ -471,17 +641,13 @@ model FaqItem {
   @@map("faq_items")
 }
 
-// ----------------------------------------------------
-// YOUTH CULTURE DIGEST & PLATFORM DECODERS
-// ----------------------------------------------------
-
 model CultureDigest {
   id                 String             @id @default(uuid())
   issueNumber        Int                @unique
   publishDate        DateTime           @default(now())
   title              String
   summary            String
-  conversationStarter String            // Sunday dinner question
+  conversationStarter String
   createdAt          DateTime           @default(now())
 
   slangTerms         SlangTerm[]
@@ -497,7 +663,7 @@ model SlangTerm {
   term               String             @unique
   definition         String
   exampleSentence    String
-  contextTone        String             // e.g. "Harmless play", "Sarcastic", "Toxic flag"
+  contextTone        String
   createdAt          DateTime           @default(now())
 
   @@map("slang_terms")

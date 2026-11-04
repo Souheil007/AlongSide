@@ -1,8 +1,12 @@
 # Alongside — REST API Specification
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved for Engineering Implementation  
-**Version:** 2.2.0 (The Comprehensive Parent Intelligence & Family Operating System)  
+**Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Frontend Engineer, Backend Engineer, QA  
+**Companion Documents:**  
+- [`docs/system-architecture.md`](system-architecture.md)  
+- [`docs/technical-roadmap-v2.4.0.md`](technical-roadmap-v2.4.0.md)  
+- [`docs/data-models.md`](data-models.md)  
 
 ---
 
@@ -86,7 +90,7 @@
 
 ---
 
-## 3. Children & Contextual Road Fork (`/api/v1/children`)
+## 3. Children & Lifespan Developmental Profiles (`/api/v1/children`)
 
 ### 3.1 Create Child Profile
 - **Endpoint:** `POST /api/v1/children`
@@ -94,10 +98,14 @@
 ```json
 {
   "name": "Leo",
-  "birthYear": 2014,
+  "birthYear": 2024,
   "birthMonth": 6,
-  "roadType": "ACTIVE_DEVICE",
-  "schoolGrade": "5th Grade"
+  "birthDate": "2024-06-15T00:00:00.000Z",
+  "roadType": "PRE_DEVICE",
+  "dietaryStage": "SOLIDS_INTRODUCED",
+  "allergies": ["peanut"],
+  "pediatricNotes": "Mild eczema on ankles",
+  "schoolGrade": "Infant Care"
 }
 ```
 - **Response (201 Created):**
@@ -108,12 +116,15 @@
     "child": {
       "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
       "name": "Leo",
-      "birthYear": 2014,
+      "birthYear": 2024,
       "birthMonth": 6,
-      "age": 12,
-      "roadType": "ACTIVE_DEVICE",
-      "developmentalTier": "TIER_3_AGES_12_13",
-      "schoolGrade": "5th Grade"
+      "ageMonths": 14,
+      "roadType": "PRE_DEVICE",
+      "developmentalTier": "TIER_0_INFANCY_TODDLER_0_3",
+      "dietaryStage": "SOLIDS_INTRODUCED",
+      "allergies": ["peanut"],
+      "pediatricNotes": "Mild eczema on ankles",
+      "schoolGrade": "Infant Care"
     }
   }
 }
@@ -121,7 +132,7 @@
 
 ### 3.2 List Children
 - **Endpoint:** `GET /api/v1/children`
-- **Response (200 OK):** Array of `ChildDTO` objects with their active device profile status and latest assessment scores.
+- **Response (200 OK):** Array of `ChildDTO` objects with their active device profile status, active milestones count, and latest health logs.
 
 ---
 
@@ -371,6 +382,224 @@ data: {"type": "done", "conversationId": "conv-123"}
   "success": true,
   "data": {
     "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_live_..."
+  }
+}
+```
+
+---
+
+## 11. Developmental Milestones & Growth (`/api/v1/milestones`)
+
+### 11.1 List Milestones by Tier & Category
+- **Endpoint:** `GET /api/v1/milestones`
+- **Query Parameters:**
+  * `tier`: e.g. `TIER_0_INFANCY_TODDLER_0_3`
+  * `category`: `GROSS_MOTOR` | `FINE_MOTOR` | `SPEECH_LANGUAGE` | `COGNITIVE` | `SOCIAL_EMOTIONAL`
+  * `ageMonths`: optional integer filter (e.g. `14`)
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "milestones": [
+      {
+        "id": "ms-014-walk",
+        "targetTier": "TIER_0_INFANCY_TODDLER_0_3",
+        "targetAgeMonths": 14,
+        "category": "GROSS_MOTOR",
+        "title": "Independent Walking & Cruising",
+        "description": "Pulls up to stand, cruises along furniture, and takes first independent steps.",
+        "signsToWatch": "Normal walking window extends from 9 to 18 months; asymmetric limping requires review.",
+        "clinicalAuthority": "CDC / AAP Bright Futures"
+      },
+      {
+        "id": "ms-014-words",
+        "targetTier": "TIER_0_INFANCY_TODDLER_0_3",
+        "targetAgeMonths": 14,
+        "category": "SPEECH_LANGUAGE",
+        "title": "First Meaningful Words & Babble Turn-Taking",
+        "description": "Uses 2 to 6 consistent words ('mama', 'dada', 'ball') with intentional pointing.",
+        "signsToWatch": "Receptive understanding precedes speech; responds consistently to own name.",
+        "clinicalAuthority": "CDC / AAP Bright Futures"
+      }
+    ]
+  }
+}
+```
+
+### 11.2 Track Child Milestone Progress
+- **Endpoint:** `POST /api/v1/children/:childId/milestones`
+- **Request Body:**
+```json
+{
+  "milestoneId": "ms-014-walk",
+  "status": "ACHIEVED", // "NOT_STARTED" | "IN_PROGRESS" | "ACHIEVED"
+  "parentNotes": "Took 4 independent steps from the couch to mommy!"
+}
+```
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "childMilestone": {
+      "childId": "f47ac10b-...",
+      "milestoneId": "ms-014-walk",
+      "status": "ACHIEVED",
+      "achievedAt": "2026-11-04T10:00:00.000Z",
+      "parentNotes": "Took 4 independent steps from the couch to mommy!"
+    }
+  }
+}
+```
+
+---
+
+## 12. Pediatric Health & Symptom Triage (`/api/v1/health`)
+
+### 12.1 Symptom Triage Assessment
+- **Endpoint:** `POST /api/v1/health/triage`
+- **Request Body:**
+```json
+{
+  "childId": "f47ac10b-...",
+  "temperatureF": 101.5,
+  "temperatureMethod": "RECTAL", // "RECTAL" | "AXILLARY" | "ORAL" | "TYMPANIC"
+  "symptoms": ["fever", "ear_pulling"],
+  "durationHours": 18,
+  "behaviorNotes": "Fussy, drinking milk well, no vomiting"
+}
+```
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "triageResult": {
+      "zone": "YELLOW",
+      "requiresEmergency911": false,
+      "conditionSuspected": "Suspected Acute Otitis Media / Teething",
+      "clinicalRationale": "Fever 101.5°F in a 14mo child is a normal immune response. Unilateral ear pulling during swallowing suggests middle ear effusion.",
+      "immediateActions": [
+        "Schedule pediatrician evaluation within 24 hours for otoscopic ear exam.",
+        "Administer weight-based acetaminophen if uncomfortable."
+      ],
+      "homeCareMeasures": [
+        "Offer frequent small fluids to maintain hydration.",
+        "Keep child in comfortable, breathable clothing."
+      ],
+      "redFlagWarnings": [
+        "If child develops stridor, chest retractions, or unresponsiveness, call 911 immediately."
+      ],
+      "recommendedDosing": {
+        "medication": "ACETAMINOPHEN",
+        "dosageMg": 160,
+        "frequency": "Every 4 to 6 hours as needed (max 5 doses in 24h)"
+      },
+      "clinicalAuthority": "Barton Schmitt Pediatric Telephone Protocols / AAP"
+    }
+  }
+}
+```
+
+### 12.2 Symptom Protocols Library
+- **Endpoint:** `GET /api/v1/health/protocols`
+- **Response (200 OK):** Returns canonical protocols (Fever, Croup, RSV/Bronchiolitis, Ear Infection, HFMD, Stomach Bug, Rashes) with zone criteria and contraindications.
+
+### 12.3 Child Health Logs
+- **Endpoint:** `GET /api/v1/children/:childId/health-logs`
+- **Response (200 OK):** Historical health logs with exportable Pediatrician Visit Summary.
+
+---
+
+## 13. Pediatric Nutrition & Allergens (`/api/v1/nutrition`)
+
+### 13.1 Nutrition Guidance by Stage
+- **Endpoint:** `GET /api/v1/nutrition/guides`
+- **Query Parameter:** `stage`: `MILK_ONLY` | `SOLIDS_INTRODUCED` | `TODDLER_TABLE` | `BALANCED_SCHOOL` | `PUBERTAL_GROWTH`
+- **Response (200 OK):** Returns feeding guidelines, safe finger food sizing (BLW spears), and division of responsibility rules.
+
+### 13.2 Safe Allergen Introduction Schedule
+- **Endpoint:** `GET /api/v1/nutrition/allergens`
+- **Query Parameter:** `childAgeMonths`: `7`
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "schedule": [
+      {
+        "allergen": "Peanut",
+        "recommendedFormat": "Smooth peanut butter thinned with warm water or breastmilk (2 tsp)",
+        "frequency": "2-3 times per week to maintain immunological tolerance",
+        "safetyWarning": "Never offer whole peanuts or thick sticky spoonfuls (choking hazard)."
+      },
+      {
+        "allergen": "Egg",
+        "recommendedFormat": "Well-cooked scrambled egg or baked egg muffin",
+        "frequency": "Twice weekly"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 14. Brain Games, Sensory Play & Early Toys (`/api/v1/brain-games`)
+
+### 14.1 Daily Purposeful Play Recommendation
+- **Endpoint:** `GET /api/v1/brain-games/daily`
+- **Query Parameter:** `childId`: `f47ac10b-...`
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "activity": {
+      "id": "play-puppet-01",
+      "targetTier": "TIER_0_INFANCY_TODDLER_0_3",
+      "category": "PUPPET",
+      "title": "Animal Puppet Vocal Mirroring & Peek-a-Boo",
+      "summary": "Face-to-face vocal turn-taking using a soft animal puppet to stimulate mirror neurons and reciprocal dialogue.",
+      "instructions": "Place puppet on hand. Make animal sounds ('Woof! Baa!') while maintaining eye contact. Pause for 5 seconds to invite your child to respond.",
+      "materialsNeeded": ["Soft animal hand puppet or sock"],
+      "targetSkills": ["Vocal Turn-Taking", "Theory of Mind Bedrock", "Social Smiling"],
+      "estimatedMinutes": 10,
+      "isScreenFree": true
+    }
+  }
+}
+```
+
+### 14.2 Play Catalog
+- **Endpoint:** `GET /api/v1/brain-games`
+- **Query Parameters:** `tier`, `category` (`PUPPET`, `SENSORY`, `CONSTRUCTION`, `LOGIC_PUZZLE`, `MAKER`, `BOREDOM_BUSTER`)
+- **Response (200 OK):** Array of curated, screen-free developmental play activities.
+
+---
+
+## 15. Behavioral Psychology & De-escalation (`/api/v1/behavior`)
+
+### 15.1 Behavioral Translation Guides
+- **Endpoint:** `GET /api/v1/behavior/guides`
+- **Query Parameter:** `tier`: e.g. `TIER_0_INFANCY_TODDLER_0_3`
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "guides": [
+      {
+        "id": "beh-tantrum-01",
+        "targetTier": "TIER_0_INFANCY_TODDLER_0_3",
+        "slug": "toddler-grocery-meltdown",
+        "triggerSituation": "Toddler screaming and throwing body on floor when denied candy at checkout.",
+        "underlyingNeed": "Nervous system sensory overload + immature prefrontal cortex unable to modulate disappointment.",
+        "coRegulationScript": "I know you wanted those treats. It is hard to hear no. I am right here with you.",
+        "authoritativeLimit": "Hold the boundary calmly without buying the candy or yelling. Stay close until the storm passes ('Time-In')."
+      }
+    ]
   }
 }
 ```

@@ -1,14 +1,14 @@
 # Plan 14: End-to-End Integration, Playwright Verification & Launch Hardening
 **Plan ID:** `PLAN-14`  
 **Assignee:** Joint (FE & BE)  
-**Dependencies:** PLAN-07, PLAN-09, PLAN-11, PLAN-12, PLAN-13  
+**Dependencies:** PLAN-07, PLAN-09, PLAN-11, PLAN-12, PLAN-13, PLAN-16, PLAN-17, PLAN-18, PLAN-19, PLAN-20  
 **Estimated Scope:** Large  
 
 ---
 
 ## 1. Objective & Business Value
 
-Execute complete end-to-end integration and launch hardening across the full AlongSide v2.2.0 platform. Author comprehensive Playwright E2E suites verifying critical user journeys across both Road 1 (Pre-Device) and Road 2 (Active-Device), audit security headers and rate limits, configure GitHub Actions CI/CD pipelines, and guarantee zero regressions.
+Execute complete end-to-end integration and launch hardening across the full AlongSide v2.4.0 Holistic Child Upbringing, Pediatric Health & Lifespan Family OS platform. Author comprehensive Playwright E2E suites verifying critical user journeys across all 7 balanced pillars (Pediatric Health Triage, Nutrition, Milestones, Brain Games, AI Advisor, and Modern World & Device Pacts), audit security headers and rate limits, configure GitHub Actions CI/CD pipelines, and guarantee zero regressions.
 
 ---
 
@@ -46,6 +46,12 @@ Execute complete end-to-end integration and launch hardening across the full Alo
 4. Implement Critical Journey 3: **24/7 AI Child Advisor & Quizzes** in `tests/e2e/ai-and-quizzes.spec.ts`:
    - Asks parenting question in chat -> verifies streaming text arrives and displays script callout.
    - Takes "Do You Speak Tween?" quiz -> verifies slang feedback cards.
+5. Implement Critical Journey 4: **Lifespan Holistic Upbringing, Health Triage & Milestones** in `tests/e2e/holistic-lifespan-os.spec.ts`:
+   - Switches child in `ChildSelector` to infant Mateo (14mo).
+   - Verifies Today's Milestones render walking/speech benchmarks.
+   - Executes 3-zone health triage for fever + ear pulling -> asserts Yellow Zone triage result and medication dosing.
+   - Verifies Nutrition BLW guide and Allergen schedule checklist render accurately.
+   - Views daily puppet game activity card.
 
 ### Task 2: Security & Production Hardening (Backend Agent)
 1. Configure `@fastify/helmet` with strict Content Security Policy (CSP).
@@ -65,6 +71,7 @@ Execute complete end-to-end integration and launch hardening across the full Alo
 - [ ] `tests/e2e/road1-pre-device.spec.ts`
 - [ ] `tests/e2e/road2-active-device.spec.ts`
 - [ ] `tests/e2e/ai-and-quizzes.spec.ts`
+- [ ] `tests/e2e/holistic-lifespan-os.spec.ts`
 - [ ] `apps/api/src/plugins/security.plugin.ts`
 - [ ] `.github/workflows/ci.yml`
 

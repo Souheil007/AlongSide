@@ -11,11 +11,12 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`PAUL_GRAHAM_ROAST.md`**](PAUL_GRAHAM_ROAST.md) — Paul Graham / YC-style brutal startup evaluation, fatal flaw breakdown, and strategic pivot roadmap.
 
 ### 2. Architecture & Technical Decisions
+- [**`technical-roadmap-v2.4.0.md`**](technical-roadmap-v2.4.0.md) — Canonical Technical Roadmap for Version 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS). Authored by the CTO.
 - [**`system-design-specification.md`**](system-design-specification.md) — Comprehensive Expert System Design Specification (100k+ DAU capacity sizing, component blueprints, trade-off matrices, failure resiliency protocols).
 - [**`tech-stack-decision.md`**](tech-stack-decision.md) — Technology stack choices, rationale, and monorepo structure. Authored by the CTO.
-- [**`system-architecture.md`**](system-architecture.md) — System boundaries, data flow diagrams, security posture, and deployment topologies.
-- [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships.
-- [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes.
+- [**`system-architecture.md`**](system-architecture.md) — System boundaries, data flow diagrams, security posture, and deployment topologies (v2.4.0).
+- [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
+- [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
 
 ### 3. Engineering Standards (Human Reference)
 - [**`codebase-design.md`**](codebase-design.md) — Deep module architecture, seam catalog (7 canonical seams), test fake adapters, and leverage principles.
