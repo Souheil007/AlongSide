@@ -9,6 +9,7 @@
 - [`docs/codebase-design.md`](codebase-design.md) (Deep Modules & Seam Architecture v2.4.0)
 - [`docs/data-models.md`](data-models.md) (Prisma Schema & Data Models v2.4.0)
 - [`docs/api-specification.md`](api-specification.md) (REST API Specification v2.4.0)
+- [`docs/holistic-redesign-and-navigation-spec.md`](holistic-redesign-and-navigation-spec.md) (Holistic Redesign & Navigation Spec v2.4.0)
 - [`plans/README.md`](../plans/README.md) (Master Engineering Execution Plans Index)
 
 ---
@@ -193,7 +194,7 @@ Conforming to [`docs/codebase-design.md`](codebase-design.md), the system organi
 
 ## 5. Phased Engineering Execution Roadmap
 
-The engineering transition is structured across 5 rigorous execution plans authored in [`plans/`](../plans/):
+The engineering transition is structured across 8 rigorous execution plans authored in [`plans/`](../plans/):
 
 ```mermaid
 graph TD
@@ -202,6 +203,9 @@ graph TD
     P18["Plan 18: Pediatric Health Triage & Nutrition Hub UI<br/>(Frontend Agent)"]
     P19["Plan 19: Brain Games, Puppets & Behavioral Psychology UI<br/>(Frontend Agent)"]
     P20["Plan 20: Clinical AI Advisor Lifespan RAG & Sparring Upgrade<br/>(Joint FE & BE)"]
+    P21["Plan 21: Unified Navigation Shell & Session Logout Hardening UI<br/>(Frontend Agent)"]
+    P22["Plan 22: Omnipresent Floating AI Advisor Bubble & Drawer UI<br/>(Frontend Agent)"]
+    P23["Plan 23: Holistic Lifespan Family OS Homepage Redesign<br/>(Frontend Agent)"]
 
     P16 --> P17
     P16 --> P18
@@ -210,6 +214,10 @@ graph TD
     P17 --> P18
     P17 --> P19
     P17 --> P20
+    P17 --> P21
+    P20 --> P22
+    P21 --> P22
+    P21 --> P23
 ```
 
 ### Phase 1: Foundation — Database Evolution & Domain API (Plan 16) — ✅ Completed (PR #28)
@@ -266,6 +274,13 @@ graph TD
 - **Key Deliverables:**
   * Backend: Whole-child clinical RAG pipeline ingesting 250+ FAQ scenarios, multi-child memory context injection, and pediatric emergency override filters.
   * Frontend: 5 expanded Voice Sparring scenarios (2:00 AM fever panic, picky eating dinner wars, sibling biting, peer group chat exclusion, bedtime curfew cutoff) with real-time vocal tone analysis.
+
+### Phase 6: UX Unification, Omnipresent AI Advisor & Homepage Redesign (Plans 21–23) — 🚀 Queued
+- **Assignee:** Frontend Agent (`apps/web`)
+- **Key Deliverables:**
+  * **Plan 21 (Unified Navigation & Logout Hardening):** Consolidate dual stacked navbars into one unified Top Application Bar, remove redundant `DashboardNav.tsx`, and harden session logout with deterministic cache purge and login redirect.
+  * **Plan 22 (Omnipresent Floating AI Advisor Bubble):** Implement global floating action button and contextual triage drawer accessible across all views with 1-tap route/child-aware prompts and seamless link to full Voice Sparring studio.
+  * **Plan 23 (Holistic Lifespan Homepage Redesign):** Overhaul the public homepage (`apps/web/src/app/page.tsx`) to reflect the complete 0–18 childhood lifespan, interactive age-bracket previews, 5 balanced pillars, and repositioning device governance into the "Thinking About a Device?" celebratory action hub.
 
 ---
 
