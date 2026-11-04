@@ -110,7 +110,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
             <div className="mt-2.5 flex items-center justify-between border-t border-emerald-500/20 pt-2 text-xs text-emerald-200/90">
               <span className="font-semibold text-white">{currentGuide.stageName}</span>
               <Badge variant="outline" className="text-[10px] bg-emerald-500/20 text-emerald-200 border-emerald-400/40">
-                Calibrated for {childAge.name}
+                Calibrated Stage
               </Badge>
             </div>
           </div>

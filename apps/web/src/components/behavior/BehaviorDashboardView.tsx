@@ -188,7 +188,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
               <h2 className="text-base font-bold text-slate-900">
-                Co-Regulation Guidance for {childAge.name}
+                Co-Regulation Guidance
               </h2>
               <span className="rounded-full bg-teal-100 px-2 py-0.5 text-[11px] font-bold text-teal-900 border border-teal-200">
                 {childAge.ageDisplay}
@@ -203,7 +203,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
               )}
             </div>
             <p className="text-xs text-slate-600">
-              Calibrated for {childAge.developmentalTier.replace(/_/g, ' ')}
+              Calibrated co-regulation tools for this developmental stage
             </p>
           </div>
         </div>
@@ -281,7 +281,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
                   <span className="text-xs font-bold text-teal-950">
                     {isViewingAllAges
                       ? 'Browsing All Age Dilemmas'
-                      : `Calibrated Dilemmas for ${childAge.name} • ${childAge.ageDisplay}`}
+                      : `Calibrated Dilemmas • ${childAge.ageDisplay}`}
                   </span>
                   <Badge
                     variant="outline"
@@ -313,7 +313,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
               }}
               className="text-xs font-semibold h-9 border-teal-300 text-teal-900 hover:bg-teal-100/70 shrink-0 cursor-pointer"
             >
-              {isViewingAllAges ? `Filter for ${childAge.name}` : 'View All Ages'}
+              {isViewingAllAges ? 'Filter by Stage' : 'View All Ages'}
             </Button>
           </div>
 
@@ -371,7 +371,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                  Calibrated Dilemmas for {childAge.name}:
+                  Calibrated Dilemmas:
                 </span>
                 {selectedCategory !== 'all' && (
                   <button

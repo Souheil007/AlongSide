@@ -23,11 +23,41 @@ export interface FaqCardProps {
   className?: string;
 }
 
-export function formatTierBadge(tier?: DevelopmentalTier | null): {
+export function formatTierBadge(tier?: DevelopmentalTier | string | null): {
   label: string;
   badgeClass: string;
 } {
   switch (tier) {
+    case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
+      return {
+        label: 'Ages 0–3 • Infancy & Toddler (Tier 0)',
+        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6:
+      return {
+        label: 'Ages 4–6 • Early Childhood (Tier 1)',
+        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      };
+    case DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9:
+      return {
+        label: 'Ages 7–9 • Middle Childhood (Tier 2)',
+        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+      };
+    case DevelopmentalTier.TIER_3_PRE_TEEN_10_12:
+      return {
+        label: 'Ages 10–12 • Pre-Teen (Tier 3)',
+        badgeClass: 'bg-sky-50 text-sky-800 border-sky-200',
+      };
+    case DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15:
+      return {
+        label: 'Ages 13–15 • Early Teen (Tier 4)',
+        badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
+      };
+    case DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18:
+      return {
+        label: 'Ages 16–18 • Young Adult (Tier 5)',
+        badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+      };
     case DevelopmentalTier.TIER_1_AGES_8_9:
       return {
         label: 'Ages 8-9 • Explorer (Tier 1)',
@@ -61,6 +91,36 @@ export function formatCategoryBadge(categoryId: string): {
   badgeClass: string;
 } {
   switch (categoryId) {
+    case 'pediatric-health-and-sleep':
+    case 'health-and-sleep':
+      return {
+        label: 'Pediatric Health & Sleep',
+        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+      };
+    case 'nutrition-and-feeding':
+    case 'nutrition-feeding':
+      return {
+        label: 'Nutrition & Picky Eating',
+        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      };
+    case 'development-and-milestones':
+    case 'milestones':
+      return {
+        label: 'Developmental Milestones',
+        badgeClass: 'bg-sky-50 text-sky-800 border-sky-200',
+      };
+    case 'behavior-and-discipline':
+    case 'behavior-discipline':
+      return {
+        label: 'Behavior & Co-Regulation',
+        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case 'modern-world-and-devices':
+    case 'tech-and-devices':
+      return {
+        label: 'Tech, Screens & Pacts',
+        badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
+      };
     case 'SCREEN_BATTLES':
       return {
         label: 'Screen Battles & Dopamine',
@@ -93,7 +153,7 @@ export function formatCategoryBadge(categoryId: string): {
       };
     default:
       return {
-        label: categoryId.replace(/_/g, ' '),
+        label: categoryId.replace(/[-_]/g, ' '),
         badgeClass: 'bg-slate-50 text-slate-800 border-slate-200',
       };
   }

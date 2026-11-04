@@ -122,7 +122,7 @@ export function BrainGamesDashboardView({ initialChildId }: BrainGamesDashboardV
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
               <h2 className="text-base font-bold text-slate-900">
-                Play Center for {childAge.name}
+                Play Center
               </h2>
               <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-900 border border-amber-200">
                 {childAge.ageDisplay}
@@ -137,7 +137,7 @@ export function BrainGamesDashboardView({ initialChildId }: BrainGamesDashboardV
               )}
             </div>
             <p className="text-xs text-slate-600">
-              Personalized for {childAge.developmentalTier.replace(/_/g, ' ')}
+              Purposeful screen-free activities for this developmental stage
             </p>
           </div>
         </div>
@@ -171,7 +171,7 @@ export function BrainGamesDashboardView({ initialChildId }: BrainGamesDashboardV
         {[
           {
             id: 'daily' as const,
-            label: `Today's Play for ${childAge.name}`,
+            label: "Today's Play",
             icon: <Sparkles className="h-4 w-4" />,
           },
           {

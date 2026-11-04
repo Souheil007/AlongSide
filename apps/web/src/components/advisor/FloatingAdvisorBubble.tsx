@@ -176,9 +176,7 @@ export function FloatingAdvisorBubble() {
                     </span>
                   </div>
                   <span className="text-[11px] text-slate-500 font-medium truncate">
-                    {activeChild
-                      ? `Advising for ${activeChild.name} (${formatChildAge(activeChild)})`
-                      : 'Grounded in Pediatric Neuroscience'}
+                    Grounded in Pediatric Neuroscience
                   </span>
                 </div>
               </div>

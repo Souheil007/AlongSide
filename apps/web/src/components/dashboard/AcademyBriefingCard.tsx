@@ -126,7 +126,7 @@ export function AcademyBriefingCard({ child, className }: AcademyBriefingCardPro
             <span>Parent Intelligence Academy</span>
           </div>
           <Badge variant="outline" className="text-[11px] font-medium border-teal-200 text-teal-800 bg-teal-50/60">
-            {child ? `For ${childName}` : fallback.tierLabel}
+            {fallback.tierLabel}
           </Badge>
         </div>
 
