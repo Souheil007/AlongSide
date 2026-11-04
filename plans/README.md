@@ -40,6 +40,7 @@ graph TD
         P21["21: Unified Navigation Shell & Logout Hardening UI (FE/BE)"]
         P22["22: Omnipresent Floating AI Advisor Bubble & Drawer UI (FE)"]
         P23["23: Holistic Lifespan Family OS Homepage Redesign (FE)"]
+        P24["24: Account Settings & Child Modal Hardening UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -119,6 +120,7 @@ graph TD
 | [**`21-unified-navigation-and-session-logout-hardening-ui.md`**](21-unified-navigation-and-session-logout-hardening-ui.md) | Unified Navigation Shell & Session Logout Hardening UI | **Frontend Agent** | PLAN-03, PLAN-17 | Complete (PR #33) |
 | [**`22-omnipresent-floating-ai-advisor-bubble-ui.md`**](22-omnipresent-floating-ai-advisor-bubble-ui.md) | Omnipresent Floating AI Advisor Bubble & Drawer UI | **Frontend Agent** | PLAN-03, PLAN-10, PLAN-11, PLAN-21 | Complete (PR #34) |
 | [**`23-holistic-lifespan-homepage-redesign.md`**](23-holistic-lifespan-homepage-redesign.md) | Holistic Lifespan Family OS Homepage Redesign | **Frontend Agent** | PLAN-03, PLAN-16, PLAN-17, PLAN-21 | Complete (PR #35) |
+| [**`24-account-settings-and-child-modal-hardening-ui.md`**](24-account-settings-and-child-modal-hardening-ui.md) | Account Settings & Child Modal Hardening UI | **Frontend Agent** | PLAN-03, PLAN-05, PLAN-21, PLAN-22, PLAN-23 | Complete (PR #36) |
 
 ---
 

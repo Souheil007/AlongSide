@@ -411,7 +411,7 @@ export function Header() {
                       <span>Billing &amp; Hero Pass</span>
                     </Link>
                     <Link
-                      href="/#settings"
+                      href="/settings"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
                       className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
