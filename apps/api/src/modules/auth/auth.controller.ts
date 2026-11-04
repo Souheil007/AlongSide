@@ -1,6 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { LoginUserSchema, RegisterUserSchema } from '@alongside/shared';
 import type { AuthService } from './auth.service.js';
+import { revokeToken, SESSION_COOKIE_NAME } from '../../plugins/auth.plugin.js';
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -69,7 +70,17 @@ export class AuthController {
     });
   }
 
-  async logout(_request: FastifyRequest, reply: FastifyReply): Promise<void> {
+  async logout(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    // Extract token from cookie or Authorization header and add to server revocation registry
+    const cookieToken = request.cookies[SESSION_COOKIE_NAME];
+    const authHeader = request.headers.authorization;
+    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    const token = cookieToken || bearerToken;
+
+    if (token) {
+      revokeToken(token);
+    }
+
     reply.clearSessionCookie();
     return reply.status(200).send({
       success: true,
@@ -80,6 +91,8 @@ export class AuthController {
   }
 
   async me(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    reply.header('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+
     const userId = request.user?.id || request.user?.userId;
     if (!userId) {
       return reply.status(401).send({

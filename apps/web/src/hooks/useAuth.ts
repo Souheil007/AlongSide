@@ -11,6 +11,11 @@ export const AUTH_QUERY_KEY = ['auth', 'me'] as const;
 export function useAuth() {
   const queryClient = useQueryClient();
 
+  // If user just logged out, prevent background re-fetching of user session
+  const isLoggedOutParam =
+    typeof window !== 'undefined' &&
+    window.location.search.includes('logged_out=true');
+
   const {
     data,
     isLoading,
@@ -24,12 +29,16 @@ export function useAuth() {
         const response = await authApi.getMe();
         return response.user;
       } catch (err) {
-        if (err instanceof ApiClientError && err.statusCode === 401) {
+        if (
+          err instanceof ApiClientError &&
+          (err.statusCode === 401 || err.status === 401 || err.code === 'UNAUTHORIZED')
+        ) {
           return null;
         }
         throw err;
       }
     },
+    enabled: !isLoggedOutParam,
     staleTime: 1000 * 60 * 10,
     retry: false,
   });
@@ -60,6 +69,7 @@ export function useAuth() {
     },
     onSuccess: () => {
       queryClient.setQueryData(AUTH_QUERY_KEY, null);
+      queryClient.removeQueries({ queryKey: AUTH_QUERY_KEY });
       queryClient.clear();
       useChildContextStore.getState().reset();
       if (typeof window !== 'undefined') {
@@ -68,6 +78,9 @@ export function useAuth() {
           window.localStorage.removeItem('token');
           window.localStorage.removeItem('auth');
           window.sessionStorage.clear();
+          // Explicit client cookie expiry fallback
+          document.cookie = 'alongside_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax;';
+          document.cookie = 'alongside_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Strict;';
         } catch {
           // Safe fallback for restricted storage environments
         }
@@ -76,9 +89,9 @@ export function useAuth() {
   });
 
   return {
-    user: data ?? null,
-    isLoading,
-    isAuthenticated: Boolean(data),
+    user: isLoggedOutParam ? null : (data ?? null),
+    isLoading: isLoggedOutParam ? false : isLoading,
+    isAuthenticated: isLoggedOutParam ? false : Boolean(data),
     isError,
     error,
     refetchUser: refetch,
