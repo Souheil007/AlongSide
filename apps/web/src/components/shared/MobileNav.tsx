@@ -36,7 +36,7 @@ export interface NavItem {
 }
 
 export const PRIMARY_MOBILE_ITEMS: NavItem[] = [
-  { href: '/dashboard', label: 'Today', icon: Compass },
+  { href: '/dashboard', label: 'Home', icon: Compass },
   { href: '/health', label: 'Health', icon: HeartPulse, badge: 'Triage' },
   { href: '/brain-games', label: 'Play', icon: Puzzle },
   { href: '/devices', label: 'Devices', icon: Smartphone, badge: 'Pacts' },

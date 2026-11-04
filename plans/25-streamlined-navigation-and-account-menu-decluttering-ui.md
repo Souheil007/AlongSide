@@ -3,7 +3,8 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-21, PLAN-23, PLAN-24  
 **Estimated Scope:** Medium  
-**Paperclip Issue:** SOU-58 (or assigned)  
+**Paperclip Issue:** SOU-61 (Subtask of SOU-60)  
+**Status:** Complete (PR #39)  
 
 ---
 
@@ -107,11 +108,11 @@ This plan renames "Today" to **"Home"**, establishes a clean, balanced 6-tab pri
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/components/shared/Header.tsx`: Updated links, "Home" rename, cleaned user dropdown, streamlined nav.
-- [ ] `apps/web/src/components/shared/MobileNav.tsx`: Updated "Home" label and streamlined mobile actions.
-- [ ] `apps/web/src/app/(dashboard)/dashboard/page.tsx`: Updated page title and metadata to "Home".
-- [ ] `apps/web/src/components/dashboard/HolisticHomeFeed.tsx`: Removed redundant Domain Hubs link card.
-- [ ] `apps/web/test/navigationDecluttering.test.ts`: Automated test suite for streamlined navigation.
+- [x] `apps/web/src/components/shared/Header.tsx`: Updated links, "Home" rename, cleaned user dropdown, streamlined nav.
+- [x] `apps/web/src/components/shared/MobileNav.tsx`: Updated "Home" label and streamlined mobile actions.
+- [x] `apps/web/src/app/(dashboard)/dashboard/page.tsx`: Updated page title and metadata to "Home".
+- [x] `apps/web/src/components/dashboard/HolisticHomeFeed.tsx`: Removed redundant Domain Hubs link card.
+- [x] `apps/web/test/navigationDecluttering.test.ts`: Automated test suite for streamlined navigation.
 
 ---
 
@@ -140,8 +141,8 @@ This plan renames "Today" to **"Home"**, establishes a clean, balanced 6-tab pri
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] `npm run typecheck` exits with code 0 across the monorepo.
-- [ ] `vitest` unit tests pass with 100% success.
-- [ ] PR description written in plain text (`.txt`) adhering to Conventional Commits.
-- [ ] Ponytail audit completed: smallest complete change, no speculative bloat.
+- [x] All deliverables created and located in correct directories.
+- [x] `npm run typecheck` exits with code 0 across the monorepo.
+- [x] `vitest` unit tests pass with 100% success.
+- [x] PR description written in plain text (`.txt`) adhering to Conventional Commits.
+- [x] Ponytail audit completed: smallest complete change, no speculative bloat.

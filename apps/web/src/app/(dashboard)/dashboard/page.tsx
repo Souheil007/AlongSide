@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { HolisticHomeFeed } from '@/components/dashboard/HolisticHomeFeed';
 
 export const metadata: Metadata = {
-  title: 'Today & Milestones • AlongSide Family Operating System',
+  title: 'Home • AlongSide Family Operating System',
   description:
     'Daily developmental milestones, purposeful brain play, pediatric health triage, and personalized nutrition for your family.',
 };
