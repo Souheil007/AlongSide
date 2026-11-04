@@ -60,13 +60,17 @@ export function DialogTrigger({
   );
 }
 
+export interface DialogContentProps {
+  children: React.ReactNode;
+  className?: string;
+  showCloseButton?: boolean;
+}
+
 export function DialogContent({
   children,
   className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+  showCloseButton = true,
+}: DialogContentProps) {
   const { open, onOpenChange } = useDialog();
 
   React.useEffect(() => {
@@ -105,14 +109,16 @@ export function DialogContent({
           className
         )}
       >
-        <button
-          type="button"
-          onClick={() => onOpenChange(false)}
-          className="absolute right-4 top-4 rounded-sm p-1 text-slate-400 hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
-          aria-label="Close dialog"
-        >
-          <X className="h-5 w-5" />
-        </button>
+        {showCloseButton && (
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            className="absolute right-4 top-4 rounded-sm p-1 text-slate-400 hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+            aria-label="Close dialog"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
         {children}
       </div>
     </div>
