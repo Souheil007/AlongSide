@@ -296,7 +296,7 @@ export async function getBehaviorGuides(
 
     if (res?.guides && res.guides.length > 0) {
       // Merge with UI attributes from canonical dataset
-      return res.guides.map((g) => {
+      let mapped = res.guides.map((g) => {
         const canonical = CANONICAL_BEHAVIOR_GUIDES.find(
           (c) => c.slug === g.slug || c.id === g.id
         );
@@ -312,6 +312,10 @@ export async function getBehaviorGuides(
             'Nervous system dysregulation under acute emotional stress.',
         };
       });
+      if (category && category !== 'all') {
+        mapped = mapped.filter((g) => g.category === category);
+      }
+      return mapped;
     }
   } catch {
     // Offline / local fallback
@@ -327,7 +331,7 @@ export async function getBehaviorGuides(
     guides = guides.filter((g) => g.category === category);
   }
 
-  return guides.length > 0 ? guides : CANONICAL_BEHAVIOR_GUIDES;
+  return guides;
 }
 
 export async function getBehaviorGuideBySlug(
