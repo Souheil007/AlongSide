@@ -1,6 +1,6 @@
 # Alongside (ParentPath)
 
-> **The Lifespan Parent Intelligence Platform & Modern Screen-Era Companion (Ages 0–18): Educating parents on their child’s developmental psychology, emotional language, and youth culture across all devices, engaging them through tailored quizzes and 24/7 AI guidance, while anchoring household peace with intentional transition solutions and transparent bilateral device agreements.**
+> **The Holistic Child Upbringing, Health & Lifespan Family Operating System (Ages 0–18): Empowering parents to deeply understand and nurture their child’s pediatric health, nutrition, speech and motor milestones, brain play, and behavioral psychology, while providing modern cultural mentorship, 24/7 clinical AI guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15_(App_Router)-black.svg)](https://nextjs.org/)
@@ -14,19 +14,20 @@
 
 ## 🌟 Executive Overview & Product Vision
 
-**Alongside** is a category-defining lifespan parent intelligence platform and family operating system designed for parents raising children in a modern screen-saturated world (Ages 0–18).
+**Alongside** is a category-defining holistic child upbringing, pediatric health, and family operating system designed for parents raising children from birth to adulthood (Ages 0–18).
 
-In digital parenting, solutions historically die on one of two extremes:
-1. **The "Content in a Trenchcoat" Extreme:** Static parenting blogs, PDF agreements for the refrigerator, and generic advice articles. Parents read them during an acute crisis, tape them to the fridge, and churn within 30 days.
-2. **The "Dumb Utility / Commodity MDM" Extreme:** Impersonal phone-locking toggles or surveillance spyware (Bark, Qustodio). They treat children like suspects, destroy family trust, offer zero emotional education, and trigger endless household warfare.
+Historically, parenting technology suffers from two fatal blinders:
+1. **The "Device-Only" Trap:** Narrowing the entire journey of parenting to a battle over screens, smartphones, or parental control locks. Parents only open these apps when feeling anxious or guilty about screen time, ignoring that 95% of childhood revolves around physical health, nutrition, developmental milestones, play, emotional regulation, and family connection.
+2. **The "Baby App Churn Cliff":** Baby trackers (Huckleberry, BabyCenter) capture infant sleep and feeding, but churn 90% of parents at age 2 when diapers and bottles end. No unified platform supports parents through toddler tantrums, picky eating, early childhood brain games, school lunchboxes, pre-teen friendship drama, and adolescent independence.
 
-**Alongside v2.3 transcends the binary "Do You Have a Phone?" trap by establishing the complete 0–18 Lifespan Family OS:**
-- **Lifespan Parent Intelligence Academy (Ages 0–18):** Educates parents on child neurobiology, emotional language, and age-by-age transitions across 6 developmental tiers (Infants/Toddlers 0–3, Early Childhood 4–6, Middle Childhood 7–9, Pre-Teens 10–12, Early Adolescence 13–15, Late Adolescence 16–18).
-- **Multi-Device & Modern Screen Ecology:** Pragmatic guidance covering the complete screen ecosystem—sensory TVs, family tablets, gaming consoles (Nintendo Switch, PS5, Xbox, Roblox), school Chromebooks, smartwatches, smartphones, and VR headsets.
-- **Age-Tailored Interactive Quizzes & Assessments:** Gamified micro-assessments (*"Do You Speak Tween/Teen?"* weekly slang quizzes, Developmental Stage Checkups, Parenting Style Profilers, Household Screen Climate Audits).
-- **24/7 AI Child Advisor, Voice Sparring Simulator & FAQ Vault:** Real-time text/voice guidance for acute dilemmas and interactive AI voice sparring to practice difficult talks (toddler tantrums, begging for devices, curfew enforcement) before the dinner table, backed by 150+ clinical scenarios.
-- **Weekly Youth Culture & Sunday Family Intelligence:** Sunday morning slang decoders (*skibidi, crashout, looksmaxing, rizz*), viral exploit warnings (calculator vault apps), and dinner conversation starters.
-- **"Thinking About Buying a Device?" Solution Hub & Bilateral "Pact-as-Code" Engine:** Dedicated transition pipeline when introducing a device (tablet, console, watch, phone): 10-dimension readiness diagnostics (Score 0–100), bilateral co-signed family agreements, native signed configuration profiles (`.mobileconfig` / Android Enterprise), automated 8:30 PM bedtime lockdowns, and a strict **Zero-Spyware Safe Harbor Guarantee**.
+**Alongside v2.4 establishes the Universal Family Operating System across 7 Balanced Pillars:**
+- **Developmental Milestones & Growth ("When He Moves, When He Talks"):** Guilt-free, pediatrician-backed tracking across gross motor, fine motor, speech acquisition, and cognitive stages (Ages 0–18).
+- **Pediatric Health & Symptom Companion (The Safe Resort):** Evidence-based fever triage, common childhood illness decoders, medication calculators, and emergency room vs. home care protocols to end 2:00 AM panic Googling.
+- **Pediatric Nutrition, Feeding & Dietary Safety:** Step-by-step guidance on infant solids, safe allergen introduction, choking hazard prevention, conquering toddler picky eating, and fueling teenage athletic growth.
+- **Brain Games, Sensory Play & Cognitive Enrichment:** Purposeful, offline developmental play—from early animal puppets and high-contrast sensory cards to symbolic block play, LEGO building, and strategic logic chess.
+- **Behavioral Psychology & The Modern Cultural Advisor:** Translating confusing behaviors (tantrums, biting, defiance, lying) into unmet nervous system needs, fostering authoritative warmth with firm boundaries, and mentoring kids in a complex modern world.
+- **24/7 AI Clinical Child Advisor & Voice Sparring Simulator:** Multi-child contextual AI guidance for acute dilemmas and an interactive voice sparring simulator to practice high-stakes parenting conversations out loud.
+- **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
 
 For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md) and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
 
