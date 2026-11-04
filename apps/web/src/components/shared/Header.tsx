@@ -12,17 +12,11 @@ import {
   LogOut,
   Loader2,
   ChevronDown,
-  Compass,
-  HeartPulse,
-  Utensils,
-  Puzzle,
-  Brain,
-  Smartphone,
   BookOpen,
   Sparkles,
-  Bot,
   CreditCard,
   Settings,
+  HelpCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
@@ -38,12 +32,12 @@ export interface NavLinkItem {
 }
 
 export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
-  { href: '/dashboard', label: 'Today' },
+  { href: '/dashboard', label: 'Home' },
   { href: '/health', label: 'Health' },
   { href: '/nutrition', label: 'Nutrition' },
   { href: '/brain-games', label: 'Play' },
   { href: '/behavior', label: 'Behavior' },
-  { href: '/devices', label: 'Devices & Pacts' },
+  { href: '/devices', label: 'Devices' },
 ];
 
 export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [
@@ -81,14 +75,12 @@ export function getInitials(name?: string): string {
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
-  const [moreMenuOpen, setMoreMenuOpen] = React.useState(false);
 
   const pathname = usePathname();
   const queryClient = useQueryClient();
   const { user, isAuthenticated, logout, isLoggingOut } = useAuth();
 
   const userMenuRef = React.useRef<HTMLDivElement>(null);
-  const moreMenuRef = React.useRef<HTMLDivElement>(null);
 
   // Close menus on click outside or Escape key
   React.useEffect(() => {
@@ -97,15 +89,11 @@ export function Header() {
       if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setUserMenuOpen(false);
       }
-      if (moreMenuRef.current && !moreMenuRef.current.contains(target)) {
-        setMoreMenuOpen(false);
-      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setUserMenuOpen(false);
-        setMoreMenuOpen(false);
         setMobileMenuOpen(false);
       }
     };
@@ -143,10 +131,6 @@ export function Header() {
     if (href === '/dashboard') return pathname === '/dashboard';
     return pathname.startsWith(href);
   };
-
-  const isMoreActive = AUTHENTICATED_SECONDARY_LINKS.some((item) =>
-    pathname.startsWith(item.href)
-  );
 
   return (
     <header className="no-print sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
@@ -203,73 +187,6 @@ export function Header() {
                 </Link>
               );
             })}
-
-            {/* Sleek "More" Dropdown for Secondary Navigation */}
-            <div ref={moreMenuRef} className="relative">
-              <button
-                type="button"
-                onClick={() => setMoreMenuOpen(!moreMenuOpen)}
-                className={cn(
-                  'px-2.5 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1 transition-all duration-150 border-b-2 select-none',
-                  isMoreActive || moreMenuOpen
-                    ? 'bg-teal-50 text-teal-800 border-teal-600 font-bold shadow-2xs'
-                    : 'text-slate-600 hover:text-teal-700 hover:bg-slate-50 border-transparent font-medium'
-                )}
-                aria-expanded={moreMenuOpen}
-                aria-haspopup="menu"
-              >
-                <span>More</span>
-                <ChevronDown
-                  className={cn(
-                    'h-3.5 w-3.5 transition-transform duration-150',
-                    moreMenuOpen && 'rotate-180'
-                  )}
-                />
-              </button>
-
-              {moreMenuOpen && (
-                <div
-                  role="menu"
-                  className="absolute left-0 mt-2 w-64 origin-top-left rounded-2xl border border-slate-200 bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150 z-50"
-                >
-                  <div className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Parent Intelligence
-                  </div>
-                  <div className="space-y-1">
-                    {AUTHENTICATED_SECONDARY_LINKS.map((item) => {
-                      const Icon = item.icon || Sparkles;
-                      const isActive = pathname.startsWith(item.href);
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMoreMenuOpen(false)}
-                          role="menuitem"
-                          className={cn(
-                            'flex items-start gap-2.5 rounded-xl p-2 text-xs transition-colors',
-                            isActive
-                              ? 'bg-teal-50 text-teal-900 font-semibold'
-                              : 'text-slate-700 hover:bg-slate-50 hover:text-teal-800'
-                          )}
-                        >
-                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700 mt-0.5">
-                            <Icon className="h-4 w-4" />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-semibold text-slate-900">
-                              {item.label}
-                            </span>
-                            <span className="text-[10px] text-slate-500 leading-tight">
-                              {item.description}
-                            </span>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
           </nav>
         ) : (
           <nav
@@ -363,43 +280,16 @@ export function Header() {
                     </div>
                   </div>
 
-                  {/* Quick Navigation Items */}
+                  {/* Account Navigation Items */}
                   <div className="py-1 space-y-0.5">
                     <Link
-                      href="/dashboard"
+                      href="/settings"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
                       className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
                     >
-                      <Compass className="h-4 w-4 text-teal-600" />
-                      <span>Family Dashboard</span>
-                    </Link>
-                    <Link
-                      href="/academy"
-                      onClick={() => setUserMenuOpen(false)}
-                      role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
-                    >
-                      <BookOpen className="h-4 w-4 text-teal-600" />
-                      <span>Parent Academy</span>
-                    </Link>
-                    <Link
-                      href="/digest"
-                      onClick={() => setUserMenuOpen(false)}
-                      role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
-                    >
-                      <Sparkles className="h-4 w-4 text-teal-600" />
-                      <span>Sunday Culture Digest</span>
-                    </Link>
-                    <Link
-                      href="/advisor"
-                      onClick={() => setUserMenuOpen(false)}
-                      role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
-                    >
-                      <Bot className="h-4 w-4 text-teal-600" />
-                      <span>24/7 AI Child Advisor</span>
+                      <Settings className="h-4 w-4 text-teal-600" />
+                      <span>Account Settings</span>
                     </Link>
                     <Link
                       href="/#pricing"
@@ -411,13 +301,13 @@ export function Header() {
                       <span>Billing &amp; Hero Pass</span>
                     </Link>
                     <Link
-                      href="/settings"
+                      href="/advisor"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
                       className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
                     >
-                      <Settings className="h-4 w-4 text-teal-600" />
-                      <span>Account Settings</span>
+                      <HelpCircle className="h-4 w-4 text-teal-600" />
+                      <span>Help &amp; Clinical Guidance</span>
                     </Link>
                   </div>
 
@@ -571,7 +461,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="rounded-lg px-3 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 flex items-center justify-between"
                 >
-                  <span>Go to Family Dashboard</span>
+                  <span>Go to Home</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <div className="px-3 text-xs font-medium text-slate-700 flex items-center gap-2">

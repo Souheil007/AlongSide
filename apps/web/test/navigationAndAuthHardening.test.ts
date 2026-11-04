@@ -178,12 +178,12 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       expect(AUTHENTICATED_CORE_LINKS).toHaveLength(6);
 
       const expectedLinks = [
-        { href: '/dashboard', label: 'Today' },
+        { href: '/dashboard', label: 'Home' },
         { href: '/health', label: 'Health' },
         { href: '/nutrition', label: 'Nutrition' },
         { href: '/brain-games', label: 'Play' },
         { href: '/behavior', label: 'Behavior' },
-        { href: '/devices', label: 'Devices & Pacts' },
+        { href: '/devices', label: 'Devices' },
       ];
 
       const coreLinks = AUTHENTICATED_CORE_LINKS.map((l) => ({
@@ -226,7 +226,7 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       }));
 
       expect(hubs).toEqual([
-        { href: '/dashboard', label: 'Today' },
+        { href: '/dashboard', label: 'Home' },
         { href: '/health', label: 'Health' },
         { href: '/brain-games', label: 'Play' },
         { href: '/devices', label: 'Devices' },
