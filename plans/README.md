@@ -12,7 +12,7 @@
 
 ## 1. Overview & Phased Dependency Graph
 
-This directory contains 20 discrete, actionable engineering execution plans designed to be assigned directly as Paperclip issues to our engineering team members: **Frontend Agent**, **Backend Agent**, **Research Engineer**, and **Joint (FE & BE)**.
+This directory contains 23 discrete, actionable engineering execution plans designed to be assigned directly as Paperclip issues to our engineering team members: **Frontend Agent**, **Backend Agent**, **Research Engineer**, and **Joint (FE & BE)**.
 
 ```mermaid
 graph TD
@@ -37,6 +37,9 @@ graph TD
         P18["18: Pediatric Health Triage & Nutrition Hub UI (FE)"]
         P19["19: Brain Games, Puppets & Behavioral Psychology UI (FE)"]
         P20["20: Clinical AI Advisor Lifespan RAG & Sparring Upgrade (Joint)"]
+        P21["21: Unified Navigation Shell & Logout Hardening UI (FE/BE)"]
+        P22["22: Omnipresent Floating AI Advisor Bubble & Drawer UI (FE)"]
+        P23["23: Holistic Lifespan Family OS Homepage Redesign (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -72,6 +75,10 @@ graph TD
     P17 --> P18
     P17 --> P19
     P17 --> P20
+    P17 --> P21
+    P20 --> P22
+    P21 --> P22
+    P21 --> P23
 
     P07 --> P14
     P09 --> P14
@@ -109,6 +116,9 @@ graph TD
 | [**`18-pediatric-health-triage-and-nutrition-ui.md`**](18-pediatric-health-triage-and-nutrition-ui.md) | Pediatric Health Triage & Nutrition Hub UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #27) |
 | [**`19-brain-games-puppets-and-behavior-ui.md`**](19-brain-games-puppets-and-behavior-ui.md) | Brain Games, Puppets & Behavioral Psychology UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #30) |
 | [**`20-ai-clinical-advisor-lifespan-rag-upgrade.md`**](20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Clinical AI Advisor Lifespan RAG & Sparring Upgrade | **Joint (FE & BE)** | PLAN-10, 11, 16, 17, 18, 19 | Complete (PR #31) |
+| [**`21-unified-navigation-and-session-logout-hardening-ui.md`**](21-unified-navigation-and-session-logout-hardening-ui.md) | Unified Navigation Shell & Session Logout Hardening UI | **Frontend Agent** | PLAN-03, PLAN-17 | Queued |
+| [**`22-omnipresent-floating-ai-advisor-bubble-ui.md`**](22-omnipresent-floating-ai-advisor-bubble-ui.md) | Omnipresent Floating AI Advisor Bubble & Drawer UI | **Frontend Agent** | PLAN-03, PLAN-10, PLAN-11, PLAN-21 | Queued |
+| [**`23-holistic-lifespan-homepage-redesign.md`**](23-holistic-lifespan-homepage-redesign.md) | Holistic Lifespan Family OS Homepage Redesign | **Frontend Agent** | PLAN-03, PLAN-16, PLAN-17, PLAN-21 | Queued |
 
 ---
 
