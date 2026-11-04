@@ -96,7 +96,7 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
     this.clearCookie(SESSION_COOKIE_NAME, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       path: '/',
     });
     return this;

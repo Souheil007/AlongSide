@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { LoginUserInput, RegisterUserInput, UserDTO } from '@alongside/shared';
 import { authApi } from '@/lib/api/auth';
 import { ApiClientError } from '@/lib/api/client';
+import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 
 export const AUTH_QUERY_KEY = ['auth', 'me'] as const;
 
@@ -59,6 +60,18 @@ export function useAuth() {
     },
     onSuccess: () => {
       queryClient.setQueryData(AUTH_QUERY_KEY, null);
+      queryClient.clear();
+      useChildContextStore.getState().reset();
+      if (typeof window !== 'undefined') {
+        try {
+          window.localStorage.removeItem(ACTIVE_CHILD_STORAGE_KEY);
+          window.localStorage.removeItem('token');
+          window.localStorage.removeItem('auth');
+          window.sessionStorage.clear();
+        } catch {
+          // Safe fallback for restricted storage environments
+        }
+      }
     },
   });
 
