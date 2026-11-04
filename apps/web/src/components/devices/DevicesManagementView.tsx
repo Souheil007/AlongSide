@@ -109,6 +109,7 @@ export function DevicesManagementView({
   const [slangTerms, setSlangTerms] = React.useState<SlangTermDTO[]>([]);
   const [exploitAlerts, setExploitAlerts] = React.useState<ExploitAlertDTO[]>([]);
   const [digestLoading, setDigestLoading] = React.useState(false);
+  const [conversationStarter, setConversationStarter] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -119,6 +120,9 @@ export function DevicesManagementView({
         if (!isCancelled && res?.digest) {
           setSlangTerms(res.digest.slangTerms || []);
           setExploitAlerts(res.digest.exploitAlerts || []);
+          if (res.digest.conversationStarter) {
+            setConversationStarter(res.digest.conversationStarter);
+          }
         }
       } catch {
         // Fallback demo data
@@ -618,10 +622,10 @@ export function DevicesManagementView({
                   Youth Culture & Slang Radar
                 </Badge>
                 <Link
-                  href="/devices?tab=digest"
+                  href="/digest"
                   className="text-xs font-semibold text-teal-700 hover:text-teal-800 flex items-center gap-1"
                 >
-                  <span>Culture Radar Direct</span>
+                  <span>Open Full Weekly Digest</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>

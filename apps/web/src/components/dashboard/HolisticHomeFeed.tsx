@@ -12,6 +12,7 @@ import { TodayMilestonesWidget } from './TodayMilestonesWidget';
 import { DailyPlayActivityCard } from './DailyPlayActivityCard';
 import { DailyNutritionTipCard } from './DailyNutritionTipCard';
 import { AcademyBriefingCard } from './AcademyBriefingCard';
+import { SundayCultureDigestCard } from './SundayCultureDigestCard';
 import { QuickHealthTriageLauncher } from './QuickHealthTriageLauncher';
 import { AskAdvisorPromptBar } from './AskAdvisorPromptBar';
 import type { ChildDTO } from '@alongside/shared';
@@ -70,10 +71,11 @@ export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
           <DailyPlayActivityCard child={activeChild} />
         </div>
 
-        {/* Right Column (5 cols): Daily Nutrition, Academy Briefing & AI Advisor Prompt Bar */}
+        {/* Right Column (5 cols): Daily Nutrition, Academy Briefing, Sunday Culture Digest & AI Advisor */}
         <div className="lg:col-span-5 space-y-6">
           <DailyNutritionTipCard child={activeChild} />
           <AcademyBriefingCard child={activeChild} />
+          <SundayCultureDigestCard child={activeChild} />
           <AskAdvisorPromptBar child={activeChild} />
         </div>
       </div>

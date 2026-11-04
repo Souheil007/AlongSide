@@ -1,14 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import {
   Puzzle,
   Sparkles,
   Compass,
   Smile,
-  Heart,
-  ArrowRight,
   Layers,
 } from 'lucide-react';
 import { useChildContextStore } from '@/stores/useChildContextStore';
@@ -100,17 +97,6 @@ export function BrainGamesDashboardView({ initialChildId }: BrainGamesDashboardV
             Age-tailored screen-free play grounded in Harvard Center on the Developing Child ("Serve and Return") research and Montessori principles.
           </p>
         </div>
-
-        <Link href="/behavior">
-          <Button
-            variant="outline"
-            className="min-h-[44px] gap-2 text-xs font-semibold border-teal-200 text-teal-800 hover:bg-teal-50 cursor-pointer"
-          >
-            <Heart className="h-4 w-4 text-teal-600" />
-            <span>Go to Behavior Hub (HALT)</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Button>
-        </Link>
       </div>
 
       {/* Active Child Play Banner */}
