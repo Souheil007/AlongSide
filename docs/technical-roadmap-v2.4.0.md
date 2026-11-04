@@ -227,7 +227,7 @@ graph TD
   * Implement Fastify routes: `/api/v1/milestones`, `/api/v1/health/triage`, `/api/v1/nutrition/guides`, `/api/v1/brain-games`, `/api/v1/behavior/guides`.
   * Seed database with Barton Schmitt triage rules, CDC milestones, Solid Starts BLW guidance, and Montessori play matrix.
 
-### Phase 2: Navigation & Dashboard Shift — Unified Family Experience (Plan 17)
+### Phase 2: Navigation & Dashboard Shift — Unified Family Experience (Plan 17) — ✅ Completed (PR #29)
 - **Assignee:** Frontend Agent (`apps/web`)
 - **Key Deliverables:**
   * Global multi-child switcher (`ChildSelector`) persisting active child in Zustand.

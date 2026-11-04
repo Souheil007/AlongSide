@@ -4,7 +4,7 @@
 **Dependencies:** PLAN-03, PLAN-05, PLAN-16  
 **Estimated Scope:** Large  
 **Paperclip Issue:** SOU-41 (To be delegated)  
-**Status:** Queued  
+**Status:** ✅ Complete & Verified (PR #29)  
 
 ---
 
@@ -91,20 +91,20 @@ The Frontend Agent will:
 ## 5. Specific Deliverables (Files to Create / Modify)
 
 ### `apps/web`:
-- [ ] `apps/web/src/stores/useChildContextStore.ts`
-- [ ] `apps/web/src/components/shared/ChildSelector.tsx`
-- [ ] `apps/web/src/components/shared/DashboardNav.tsx`
-- [ ] `apps/web/src/components/shared/MobileNav.tsx`
-- [ ] `apps/web/src/app/(dashboard)/dashboard/page.tsx`
-- [ ] `apps/web/src/components/dashboard/ChildHeroCard.tsx`
-- [ ] `apps/web/src/components/dashboard/TodayMilestonesWidget.tsx`
-- [ ] `apps/web/src/components/dashboard/DailyPlayActivityCard.tsx`
-- [ ] `apps/web/src/components/dashboard/DailyNutritionTipCard.tsx`
-- [ ] `apps/web/src/components/dashboard/QuickHealthTriageLauncher.tsx`
-- [ ] `apps/web/src/components/dashboard/AskAdvisorPromptBar.tsx`
-- [ ] `apps/web/src/app/(dashboard)/devices/page.tsx`
-- [ ] `apps/web/test/childContextStore.test.ts`
-- [ ] `apps/web/test/dashboardFeed.test.ts`
+- [x] `apps/web/src/stores/useChildContextStore.ts`
+- [x] `apps/web/src/components/shared/ChildSelector.tsx`
+- [x] `apps/web/src/components/shared/DashboardNav.tsx`
+- [x] `apps/web/src/components/shared/MobileNav.tsx`
+- [x] `apps/web/src/app/(dashboard)/dashboard/page.tsx`
+- [x] `apps/web/src/components/dashboard/ChildHeroCard.tsx`
+- [x] `apps/web/src/components/dashboard/TodayMilestonesWidget.tsx`
+- [x] `apps/web/src/components/dashboard/DailyPlayActivityCard.tsx`
+- [x] `apps/web/src/components/dashboard/DailyNutritionTipCard.tsx`
+- [x] `apps/web/src/components/dashboard/QuickHealthTriageLauncher.tsx`
+- [x] `apps/web/src/components/dashboard/AskAdvisorPromptBar.tsx`
+- [x] `apps/web/src/app/(dashboard)/devices/page.tsx`
+- [x] `apps/web/test/childContextStore.test.ts`
+- [x] `apps/web/test/dashboardFeed.test.ts`
 
 ---
 
@@ -136,12 +136,12 @@ The Frontend Agent will:
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] `ChildSelector` component fully accessible and connected to `useChildContextStore`.
-- [ ] Navigation shell updated to the 7 canonical domain hubs.
-- [ ] Redesigned `/dashboard` Home Feed renders tailored milestone, play, and nutrition cards.
-- [ ] Modern World & Devices Hub consolidated under `/devices`.
-- [ ] Automated Vitest component tests pass with 100% success rate.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Ponytail Principle diff audit passed.
-- [ ] Feature branch submitted as Pull Request targeting `main` with plain text (`.txt`) description.
+- [x] All deliverables created and located in correct directories.
+- [x] `ChildSelector` component fully accessible and connected to `useChildContextStore`.
+- [x] Navigation shell updated to the 7 canonical domain hubs.
+- [x] Redesigned `/dashboard` Home Feed renders tailored milestone, play, and nutrition cards.
+- [x] Modern World & Devices Hub consolidated under `/devices`.
+- [x] Automated Vitest component tests pass with 100% success rate.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Ponytail Principle diff audit passed.
+- [x] Feature branch submitted as Pull Request targeting `main` with plain text (`.txt`) description (PR #29 merged).
