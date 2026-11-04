@@ -136,7 +136,7 @@ graph TD
 | [**`25-streamlined-navigation-and-account-menu-decluttering-ui.md`**](25-streamlined-navigation-and-account-menu-decluttering-ui.md) | Streamlined Navigation & Account Menu Decluttering UI | **Frontend Agent** | PLAN-21, PLAN-23, PLAN-24 | Complete (PR #39) |
 | [**`26-automatic-child-age-derivation-and-domain-sync-ui.md`**](26-automatic-child-age-derivation-and-domain-sync-ui.md) | Automatic Child Age Derivation & Domain Sync UI | **Frontend Agent** | PLAN-04, PLAN-05, PLAN-16, PLAN-25 | Complete (PR #38) |
 | [**`27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md`**](27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md) | Holistic Domain Tabs Decluttering & Redundancy Purge UI | **Frontend Agent** | PLAN-18, PLAN-19, PLAN-25, PLAN-26 | Complete (PR #38) |
-| [**`28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md`**](28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md) | Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Ages 0–18) | **Joint (FE & BE)** | PLAN-08, PLAN-09, PLAN-16, PLAN-25 | Complete |
+| [**`28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md`**](28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md) | Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Ages 0–18) | **Joint (FE & BE)** | PLAN-08, PLAN-09, PLAN-16, PLAN-25 | Complete (PR #40) |
 
 ---
 
