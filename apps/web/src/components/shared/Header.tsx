@@ -16,6 +16,7 @@ export function Header() {
   const navLinks = isAuthenticated
     ? [
         { href: '/dashboard', label: 'Dashboard' },
+        { href: '/advisor', label: 'AI Advisor' },
         { href: '/academy', label: 'Parent Academy' },
         { href: '/digest', label: 'Culture Digest' },
         { href: '/devices', label: 'Devices' },
@@ -23,6 +24,7 @@ export function Header() {
     : [
         { href: '/#roads', label: 'The Two Roads' },
         { href: '/#features', label: 'Platform Pillars' },
+        { href: '/advisor', label: 'AI Advisor' },
         { href: '/academy', label: 'Parent Academy' },
         { href: '/digest', label: 'Culture Digest' },
         { href: '/#pricing', label: 'Pricing' },

@@ -51,6 +51,20 @@ import {
   PrismaDigestRepository,
 } from './modules/digest/digest.repository.js';
 import { DigestService } from './modules/digest/digest.service.js';
+import { faqsRoutes } from './modules/faqs/faqs.routes.js';
+import {
+  type FaqRepository,
+  PrismaFaqRepository,
+} from './modules/faqs/faqs.repository.js';
+import { FaqsService } from './modules/faqs/faqs.service.js';
+import { aiAdvisorRoutes } from './modules/ai-advisor/ai-advisor.routes.js';
+import {
+  type AiAdvisorRepository,
+  PrismaAiAdvisorRepository,
+} from './modules/ai-advisor/ai-advisor.repository.js';
+import { AiAdvisorService } from './modules/ai-advisor/ai-advisor.service.js';
+import { MultiProviderLlmOrchestrator } from './modules/ai-advisor/adapters/llm-orchestrator.js';
+import { FaqRetrievalService } from './modules/ai-advisor/embedding.service.js';
 
 export interface AppOptions extends FastifyServerOptions {
   corsOrigin?: string;
@@ -69,6 +83,11 @@ export interface AppOptions extends FastifyServerOptions {
   academyService?: AcademyService;
   digestRepository?: DigestRepository;
   digestService?: DigestService;
+  faqsRepository?: FaqRepository;
+  faqsService?: FaqsService;
+  aiAdvisorRepository?: AiAdvisorRepository;
+  aiAdvisorService?: AiAdvisorService;
+  llmOrchestrator?: MultiProviderLlmOrchestrator;
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
@@ -89,6 +108,11 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     academyService,
     digestRepository,
     digestService,
+    faqsRepository,
+    faqsService,
+    aiAdvisorRepository,
+    aiAdvisorService,
+    llmOrchestrator,
     ...fastifyOpts
   } = opts;
 
@@ -185,6 +209,28 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   const resolvedDigestService =
     digestService ?? new DigestService(resolvedDigestRepository);
 
+  const resolvedFaqsRepository =
+    faqsRepository ?? new PrismaFaqRepository();
+  const resolvedFaqsService =
+    faqsService ?? new FaqsService(resolvedFaqsRepository);
+
+  const resolvedAiAdvisorRepository =
+    aiAdvisorRepository ?? new PrismaAiAdvisorRepository();
+  const resolvedLlmOrchestrator =
+    llmOrchestrator ??
+    new MultiProviderLlmOrchestrator({ logger: app.log });
+  const resolvedFaqRetrievalService = new FaqRetrievalService(
+    resolvedFaqsRepository
+  );
+  const resolvedAiAdvisorService =
+    aiAdvisorService ??
+    new AiAdvisorService(
+      resolvedAiAdvisorRepository,
+      resolvedFaqRetrievalService,
+      resolvedLlmOrchestrator,
+      resolvedChildrenRepository
+    );
+
   // Register domain route plugins with /api/v1 prefixes
   await app.register(healthRoutes, { prefix: '/api/v1/health' });
   await app.register(authRoutes, {
@@ -219,6 +265,19 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     prefix: '/api/v1/digest',
     digestRepository: resolvedDigestRepository,
     digestService: resolvedDigestService,
+  });
+  await app.register(faqsRoutes, {
+    prefix: '/api/v1/faqs',
+    faqsRepository: resolvedFaqsRepository,
+    faqsService: resolvedFaqsService,
+  });
+  await app.register(aiAdvisorRoutes, {
+    prefix: '/api/v1/ai-advisor',
+    aiAdvisorRepository: resolvedAiAdvisorRepository,
+    aiAdvisorService: resolvedAiAdvisorService,
+    faqRepository: resolvedFaqsRepository,
+    childrenRepository: resolvedChildrenRepository,
+    llmOrchestrator: resolvedLlmOrchestrator,
   });
 
   return app;
