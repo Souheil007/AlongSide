@@ -6,6 +6,24 @@ import fastifyCookie from '@fastify/cookie';
 export const SESSION_COOKIE_NAME = 'alongside_session';
 export const SESSION_COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 
+// In-memory token revocation registry for revoked/logged-out JWT sessions
+const revokedTokens = new Set<string>();
+
+export function revokeToken(token: string): void {
+  if (token) {
+    revokedTokens.add(token.trim());
+  }
+}
+
+export function isTokenRevoked(token: string): boolean {
+  if (!token) return false;
+  return revokedTokens.has(token.trim());
+}
+
+export function clearRevokedTokens(): void {
+  revokedTokens.clear();
+}
+
 export interface AuthPluginOptions {
   jwtSecret: string;
   cookieSecret?: string;
@@ -62,10 +80,26 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
     }),
   });
 
-  // Centralized authentication preHandler hook
+  // Centralized authentication preHandler hook with revocation verification
   fastify.decorate(
     'authenticate',
     async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
+      // Check for token revocation before proceeding
+      const cookieToken = request.cookies[SESSION_COOKIE_NAME];
+      const authHeader = request.headers.authorization;
+      const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+      const rawToken = cookieToken || bearerToken;
+
+      if (rawToken && isTokenRevoked(rawToken)) {
+        return reply.status(401).send({
+          success: false,
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'Session has been revoked. Please log in again.',
+          },
+        });
+      }
+
       try {
         await request.jwtVerify();
       } catch {
@@ -93,12 +127,25 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
   });
 
   fastify.decorateReply('clearSessionCookie', function (this: FastifyReply) {
-    this.clearCookie(SESSION_COOKIE_NAME, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-    });
+    const isProduction = process.env.NODE_ENV === 'production';
+    const sameSites: ('strict' | 'lax')[] = ['strict', 'lax'];
+    const domains = [undefined, 'localhost', '127.0.0.1'];
+
+    // Emit comprehensive cookie clearance headers matching any potential domain/samesite combination
+    for (const sameSite of sameSites) {
+      for (const domain of domains) {
+        this.clearCookie(SESSION_COOKIE_NAME, {
+          httpOnly: true,
+          secure: isProduction,
+          sameSite,
+          path: '/',
+          ...(domain ? { domain } : {}),
+        });
+      }
+    }
+
+    this.header('Clear-Site-Data', '"cookies", "storage"');
+    this.header('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     return this;
   });
 };
