@@ -15,6 +15,9 @@ import {
   CheckCircle2,
   XCircle,
   ChevronDown,
+  Dumbbell,
+  Activity,
+  Zap,
 } from 'lucide-react';
 import { NutritionStage, type NutritionGuideDTO } from '@alongside/shared';
 import { CANONICAL_NUTRITION_GUIDES } from '@/lib/api/nutrition';
@@ -25,9 +28,27 @@ import { BabyLedWeaningGuide } from './BabyLedWeaningGuide';
 import { AllergenIntroductionTracker } from './AllergenIntroductionTracker';
 import { ChokingHazardsWarningCard } from './ChokingHazardsWarningCard';
 import { PickyEatingSolutions } from './PickyEatingSolutions';
+import { SchoolLunchboxGuide } from './SchoolLunchboxGuide';
+import { AdolescentFuelGuide } from './AdolescentFuelGuide';
 
 interface NutritionDashboardViewProps {
   initialChildId?: string;
+}
+
+function getTailoredHeroSubtitle(stage: NutritionStage): string {
+  switch (stage) {
+    case NutritionStage.MILK_ONLY:
+      return 'Exclusive liquid nourishment, responsive feeding cues, pediatric vitamin D supplementation, and physiological gut maturity.';
+    case NutritionStage.SOLIDS_INTRODUCED:
+      return 'Texture exploration, iron-rich powerfoods, baby-led weaning safety, and early allergen introduction based on the LEAP protocol.';
+    case NutritionStage.TODDLER_TABLE:
+      return 'Conquering developmental neophobia, Ellyn Satter Division of Responsibility (sDOR), tiny manageable portions, and zero mealtime stress.';
+    case NutritionStage.BALANCED_SCHOOL:
+      return 'Executive function fuel, sustained glucose breakfast stability, balanced 4-compartment school lunchboxes, and lifelong body neutrality.';
+    case NutritionStage.PUBERTAL_GROWTH:
+    default:
+      return 'Peak lifetime bone mineral density (calcium 1,300mg), athletic training recovery, iron expansion, and shielding against caffeine and toxic diet culture.';
+  }
 }
 
 export function NutritionDashboardView({ initialChildId }: NutritionDashboardViewProps) {
@@ -44,31 +65,20 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
   // Selected feeding stage defaults to active child's calibrated recommendation
   const [selectedStage, setSelectedStage] = React.useState<NutritionStage>(childAge.feedingStage);
   const [isStageDrawerOpen, setIsStageDrawerOpen] = React.useState(false);
-  const [showInfantTabsForOlderKids, setShowInfantTabsForOlderKids] = React.useState(false);
-  const [activeSubTab, setActiveSubTab] = React.useState<'overview' | 'blw' | 'allergens' | 'choking' | 'picky'>('overview');
+  const [activeSubTab, setActiveSubTab] = React.useState<string>('overview');
 
   // Update selected stage when active child recommendation changes
   React.useEffect(() => {
     setSelectedStage(childAge.feedingStage);
+    setActiveSubTab('overview');
   }, [childAge.feedingStage]);
-
-  // If child is >= 3 years and not inspecting an infant stage, reset active subtab if on infant tools
-  const isOlderChild = childAge.ageYears >= 3;
-  const isInfantStageSelected =
-    selectedStage === NutritionStage.MILK_ONLY ||
-    selectedStage === NutritionStage.SOLIDS_INTRODUCED;
-
-  React.useEffect(() => {
-    if (isOlderChild && !isInfantStageSelected && !showInfantTabsForOlderKids) {
-      if (activeSubTab === 'blw' || activeSubTab === 'allergens') {
-        setActiveSubTab('overview');
-      }
-    }
-  }, [isOlderChild, isInfantStageSelected, showInfantTabsForOlderKids, activeSubTab]);
 
   const currentGuide =
     CANONICAL_NUTRITION_GUIDES.find((g) => g.stage === selectedStage) ||
     CANONICAL_NUTRITION_GUIDES[1]!;
+
+  const isMatchingActiveChild = selectedStage === childAge.feedingStage;
+  const childName = childAge.name || 'Your child';
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-16">
@@ -88,7 +98,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
               Pediatric Nutrition & Healthy Feeding Hub
             </h1>
             <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-              From first sips to pubertal athletics. Baby-led weaning safety, early allergen introduction, zero-stress picky eating, and metabolic nourishment.
+              {getTailoredHeroSubtitle(selectedStage)}
             </p>
           </div>
 
@@ -103,14 +113,14 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                   Child Nutrition Profile
                 </div>
                 <div className="text-base font-bold text-white">
-                  {childAge.name} ({childAge.ageDisplay})
+                  {childName} ({childAge.ageDisplay})
                 </div>
               </div>
             </div>
             <div className="mt-2.5 flex items-center justify-between border-t border-emerald-500/20 pt-2 text-xs text-emerald-200/90">
-              <span className="font-semibold text-white">{currentGuide.stageName}</span>
+              <span className="font-semibold text-white">{currentGuide.stageName.split(':')[0]}</span>
               <Badge variant="outline" className="text-[10px] bg-emerald-500/20 text-emerald-200 border-emerald-400/40">
-                Calibrated Stage
+                {isMatchingActiveChild ? 'Calibrated Stage' : 'Inspecting Stage'}
               </Badge>
             </div>
           </div>
@@ -162,7 +172,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                     <span className="text-[11px] font-medium opacity-80">({g.ageRange})</span>
                     {isMatchingChild && (
                       <span className="ml-1 rounded-full bg-white/25 px-1.5 py-0.2 text-[9px] font-black uppercase">
-                        Calibrated
+                        For {childName}
                       </span>
                     )}
                   </button>
@@ -173,9 +183,10 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
         </div>
       </section>
 
-      {/* Contextual Subtabs Navigation */}
+      {/* Contextual Subtabs Navigation strictly tailored to selectedStage */}
       <div className="border-b border-slate-200">
         <nav className="flex space-x-2 sm:space-x-4 overflow-x-auto pb-px" aria-label="Nutrition Navigation">
+          {/* 1. Overview Tab (Present on all stages) */}
           <button
             type="button"
             onClick={() => setActiveSubTab('overview')}
@@ -189,8 +200,38 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
             <span>Stage Overview & Nutrients</span>
           </button>
 
-          {/* Show BLW & Allergen Tabs only if relevant or explicitly requested */}
-          {(!isOlderChild || isInfantStageSelected || showInfantTabsForOlderKids) && (
+          {/* 2. STAGE 1: MILK ONLY (0–6 Months) */}
+          {selectedStage === NutritionStage.MILK_ONLY && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('readiness')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'readiness'
+                    ? 'border-emerald-600 text-emerald-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Baby className="h-4 w-4" />
+                <span>Solids Readiness Markers</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('hazards')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'hazards'
+                    ? 'border-rose-600 text-rose-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <AlertTriangle className="h-4 w-4" />
+                <span>Strict Infant Safety</span>
+              </button>
+            </>
+          )}
+
+          {/* 3. STAGE 2: SOLIDS INTRODUCED & BLW (6–12 Months) */}
+          {selectedStage === NutritionStage.SOLIDS_INTRODUCED && (
             <>
               <button
                 type="button"
@@ -202,12 +243,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                 }`}
               >
                 <Baby className="h-4 w-4" />
-                <span>Baby-Led Weaning & Safety</span>
-                {!isOlderChild && (
-                  <span className="rounded-full bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
-                    Active
-                  </span>
-                )}
+                <span>Baby-Led Weaning & Slicing</span>
               </button>
 
               <button
@@ -222,53 +258,96 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                 <ShieldCheck className="h-4 w-4" />
                 <span>Top 8 Allergen Tracker</span>
               </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('choking')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'choking'
+                    ? 'border-rose-600 text-rose-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <AlertTriangle className="h-4 w-4" />
+                <span>Choking Hazards</span>
+              </button>
             </>
           )}
 
-          <button
-            type="button"
-            onClick={() => setActiveSubTab('choking')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
-              activeSubTab === 'choking'
-                ? 'border-rose-600 text-rose-900'
-                : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
-            }`}
-          >
-            <AlertTriangle className="h-4 w-4" />
-            <span>Choking Hazards</span>
-          </button>
+          {/* 4. STAGE 3: TODDLER TABLE & PICKY EATING (1–5 Years) */}
+          {selectedStage === NutritionStage.TODDLER_TABLE && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('picky')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'picky'
+                    ? 'border-amber-600 text-amber-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Scale className="h-4 w-4" />
+                <span>Picky Eating & sDOR</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveSubTab('picky')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
-              activeSubTab === 'picky'
-                ? 'border-amber-600 text-amber-900'
-                : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
-            }`}
-          >
-            <Scale className="h-4 w-4" />
-            <span>Picky Eating & sDOR</span>
-          </button>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('choking')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'choking'
+                    ? 'border-rose-600 text-rose-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <AlertTriangle className="h-4 w-4" />
+                <span>Choking Hazards</span>
+              </button>
+            </>
+          )}
 
-          {/* Toggle button for older kids to explore infant guides */}
-          {isOlderChild && !isInfantStageSelected && (
-            <button
-              type="button"
-              onClick={() => setShowInfantTabsForOlderKids(!showInfantTabsForOlderKids)}
-              className="flex items-center gap-1.5 border-b-2 border-transparent px-3 py-3 text-xs font-semibold text-slate-400 hover:text-slate-600 whitespace-nowrap cursor-pointer"
-            >
-              <span>{showInfantTabsForOlderKids ? 'Hide Infant Tools' : '+ Infant Tools (BLW/Allergens)'}</span>
-            </button>
+          {/* 5. STAGE 4: BALANCED SCHOOL & LUNCHBOXES (6–12 Years) */}
+          {selectedStage === NutritionStage.BALANCED_SCHOOL && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('school')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'school'
+                    ? 'border-emerald-600 text-emerald-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Apple className="h-4 w-4" />
+                <span>School Lunchboxes & Brain Fuel</span>
+              </button>
+            </>
+          )}
+
+          {/* 6. STAGE 5: PUBERTAL GROWTH & ATHLETES (13–18 Years) */}
+          {selectedStage === NutritionStage.PUBERTAL_GROWTH && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('adolescent')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'adolescent'
+                    ? 'border-indigo-600 text-indigo-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Dumbbell className="h-4 w-4" />
+                <span>Athletic Fuel & Metabolic Protection</span>
+              </button>
+            </>
           )}
         </nav>
       </div>
 
       {/* Main Tab Content Display */}
       <div className="transition-opacity duration-200">
+        {/* Generic Stage Overview (Dynamic for all stages) */}
         {activeSubTab === 'overview' && (
           <div className="space-y-6">
-            {/* Stage Title and Scientific Summary */}
             <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-5">
               <div className="border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
@@ -331,7 +410,11 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                       <div className="font-bold text-rose-900 flex items-center justify-between">
                         <span>{item.food}</span>
                         <span className="text-[10px] bg-rose-100 px-1.5 py-0.5 rounded font-black text-rose-800">
-                          &lt; {item.strictAgeMonths} mo
+                          {item.strictAgeMonths
+                            ? item.strictAgeMonths < 120
+                              ? `< ${item.strictAgeMonths} mo`
+                              : `< ${Math.round(item.strictAgeMonths / 12)} yrs`
+                            : 'Strict Caution'}
                         </span>
                       </div>
                       <div className="text-[11px] text-slate-600 leading-relaxed">
@@ -356,27 +439,92 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
           </div>
         )}
 
+        {/* Infant Stage 1 Readiness */}
+        {activeSubTab === 'readiness' && (
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Baby className="h-5 w-5 text-emerald-600" />
+                <span>The 4 Physiological Readiness Signs for Solids (Month 6)</span>
+              </h3>
+              <p className="text-xs text-slate-600">
+                The AAP recommends introducing solids strictly around 6 months when all four physiological developmental criteria are met.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              {currentGuide.blwTips.map((tip, idx) => (
+                <div key={idx} className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-4 space-y-1">
+                  <div className="font-bold text-emerald-950">Milestone {idx + 1}</div>
+                  <p className="text-slate-700 leading-relaxed">{tip}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Infant Stage 1 Hazards */}
+        {activeSubTab === 'hazards' && (
+          <div className="rounded-2xl border-2 border-rose-300 bg-rose-50/60 p-6 space-y-4">
+            <h3 className="text-lg font-bold text-rose-950 flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-rose-600" />
+              <span>Strict Prohibitions Before 12 Months</span>
+            </h3>
+            <div className="space-y-3 text-xs">
+              <div className="rounded-xl border border-rose-200 bg-white p-4 space-y-1">
+                <span className="font-bold text-rose-900 text-sm">1. Water & Diluted Juices (&lt; 6 months)</span>
+                <p className="text-slate-600 leading-relaxed">
+                  Infant kidneys cannot excrete excess water rapidly. Extra water causes <strong>hyponatremia</strong> (dilution of serum sodium), leading to cerebral edema and seizures.
+                </p>
+              </div>
+              <div className="rounded-xl border border-rose-200 bg-white p-4 space-y-1">
+                <span className="font-bold text-rose-900 text-sm">2. Honey (&lt; 12 months)</span>
+                <p className="text-slate-600 leading-relaxed">
+                  Infant Botulism: Clostridium botulinum spores germinate in the immature infant gut, producing neurotoxins that cause flaccid paralysis and respiratory arrest. Cooking or baking does NOT inactivate spores.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* BLW Guide */}
         {activeSubTab === 'blw' && (
           <section aria-label="Baby-Led Weaning Guide">
             <BabyLedWeaningGuide />
           </section>
         )}
 
+        {/* Allergen Tracker */}
         {activeSubTab === 'allergens' && (
           <section aria-label="Safe Allergen Introduction Tracker">
             <AllergenIntroductionTracker />
           </section>
         )}
 
+        {/* Choking Hazards */}
         {activeSubTab === 'choking' && (
           <section aria-label="Choking Hazards Warning Card">
             <ChokingHazardsWarningCard />
           </section>
         )}
 
+        {/* Picky Eating */}
         {activeSubTab === 'picky' && (
           <section aria-label="Picky Eating and Division of Responsibility">
             <PickyEatingSolutions />
+          </section>
+        )}
+
+        {/* School Fuel */}
+        {activeSubTab === 'school' && (
+          <section aria-label="School Lunchbox and Brain Fuel Guide">
+            <SchoolLunchboxGuide />
+          </section>
+        )}
+
+        {/* Adolescent Fuel */}
+        {activeSubTab === 'adolescent' && (
+          <section aria-label="Adolescent Athletic Fuel and Pubertal Guide">
+            <AdolescentFuelGuide />
           </section>
         )}
       </div>
