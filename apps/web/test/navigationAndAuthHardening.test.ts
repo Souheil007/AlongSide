@@ -181,8 +181,8 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
         { href: '/dashboard', label: 'Home' },
         { href: '/health', label: 'Health' },
         { href: '/nutrition', label: 'Nutrition' },
-        { href: '/brain-games', label: 'Play' },
         { href: '/behavior', label: 'Behavior' },
+        { href: '/brain-games', label: 'Play' },
         { href: '/devices', label: 'Devices' },
       ];
 
