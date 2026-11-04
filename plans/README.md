@@ -40,6 +40,10 @@ graph TD
         P21["21: Unified Navigation Shell & Logout Hardening UI (FE/BE)"]
         P22["22: Omnipresent Floating AI Advisor Bubble & Drawer UI (FE)"]
         P23["23: Holistic Lifespan Family OS Homepage Redesign (FE)"]
+        P24["24: Account Settings & Child Modal Hardening UI (FE)"]
+        P25["25: Streamlined Navigation & Account Menu Decluttering UI (FE)"]
+        P26["26: Automatic Child Age Derivation & Domain Sync UI (FE)"]
+        P27["27: Holistic Domain Tabs Decluttering & Redundancy Purge UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -79,6 +83,10 @@ graph TD
     P20 --> P22
     P21 --> P22
     P21 --> P23
+    P21 --> P25
+    P24 --> P25
+    P25 --> P26
+    P26 --> P27
 
     P07 --> P14
     P09 --> P14
@@ -119,6 +127,10 @@ graph TD
 | [**`21-unified-navigation-and-session-logout-hardening-ui.md`**](21-unified-navigation-and-session-logout-hardening-ui.md) | Unified Navigation Shell & Session Logout Hardening UI | **Frontend Agent** | PLAN-03, PLAN-17 | Complete (PR #33) |
 | [**`22-omnipresent-floating-ai-advisor-bubble-ui.md`**](22-omnipresent-floating-ai-advisor-bubble-ui.md) | Omnipresent Floating AI Advisor Bubble & Drawer UI | **Frontend Agent** | PLAN-03, PLAN-10, PLAN-11, PLAN-21 | Complete (PR #34) |
 | [**`23-holistic-lifespan-homepage-redesign.md`**](23-holistic-lifespan-homepage-redesign.md) | Holistic Lifespan Family OS Homepage Redesign | **Frontend Agent** | PLAN-03, PLAN-16, PLAN-17, PLAN-21 | Complete (PR #35) |
+| [**`24-account-settings-and-child-modal-hardening-ui.md`**](24-account-settings-and-child-modal-hardening-ui.md) | Account Settings & Child Modal Hardening UI | **Frontend Agent** | PLAN-03, PLAN-05, PLAN-21, PLAN-22, PLAN-23 | Complete (PR #36) |
+| [**`25-streamlined-navigation-and-account-menu-decluttering-ui.md`**](25-streamlined-navigation-and-account-menu-decluttering-ui.md) | Streamlined Navigation & Account Menu Decluttering UI | **Frontend Agent** | PLAN-21, PLAN-23, PLAN-24 | Ready for Assignment |
+| [**`26-automatic-child-age-derivation-and-domain-sync-ui.md`**](26-automatic-child-age-derivation-and-domain-sync-ui.md) | Automatic Child Age Derivation & Domain Sync UI | **Frontend Agent** | PLAN-04, PLAN-05, PLAN-16, PLAN-25 | Queued |
+| [**`27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md`**](27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md) | Holistic Domain Tabs Decluttering & Redundancy Purge UI | **Frontend Agent** | PLAN-18, PLAN-19, PLAN-25, PLAN-26 | Queued |
 
 ---
 

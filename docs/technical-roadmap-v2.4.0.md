@@ -206,6 +206,10 @@ graph TD
     P21["Plan 21: Unified Navigation Shell & Session Logout Hardening UI<br/>(Frontend Agent)"]
     P22["Plan 22: Omnipresent Floating AI Advisor Bubble & Drawer UI<br/>(Frontend Agent)"]
     P23["Plan 23: Holistic Lifespan Family OS Homepage Redesign<br/>(Frontend Agent)"]
+    P24["Plan 24: Account Settings & Child Modal Hardening UI<br/>(Frontend Agent)"]
+    P25["Plan 25: Streamlined Navigation & Account Menu Decluttering UI<br/>(Frontend Agent)"]
+    P26["Plan 26: Automatic Child Age Derivation & Domain Sync UI<br/>(Frontend Agent)"]
+    P27["Plan 27: Holistic Domain Tabs Decluttering & Redundancy Purge UI<br/>(Frontend Agent)"]
 
     P16 --> P17
     P16 --> P18
@@ -218,6 +222,10 @@ graph TD
     P20 --> P22
     P21 --> P22
     P21 --> P23
+    P21 --> P25
+    P24 --> P25
+    P25 --> P26
+    P26 --> P27
 ```
 
 ### Phase 1: Foundation — Database Evolution & Domain API (Plan 16) — ✅ Completed (PR #28)
@@ -275,12 +283,20 @@ graph TD
   * Backend: Whole-child clinical RAG pipeline ingesting 250+ FAQ scenarios, multi-child memory context injection, and pediatric emergency override filters.
   * Frontend: 5 expanded Voice Sparring scenarios (2:00 AM fever panic, picky eating dinner wars, sibling biting, peer group chat exclusion, bedtime curfew cutoff) with real-time vocal tone analysis.
 
-### Phase 6: UX Unification, Omnipresent AI Advisor & Homepage Redesign (Plans 21–23) — 🚀 Queued
+### Phase 6: UX Unification, Omnipresent AI Advisor & Homepage Redesign (Plans 21–24) — ✅ Completed
 - **Assignee:** Frontend Agent (`apps/web`)
 - **Key Deliverables:**
-  * **Plan 21 (Unified Navigation & Logout Hardening):** Consolidate dual stacked navbars into one unified Top Application Bar, remove redundant `DashboardNav.tsx`, and harden session logout with deterministic cache purge and login redirect.
-  * **Plan 22 (Omnipresent Floating AI Advisor Bubble):** Implement global floating action button and contextual triage drawer accessible across all views with 1-tap route/child-aware prompts and seamless link to full Voice Sparring studio.
-  * **Plan 23 (Holistic Lifespan Homepage Redesign):** Overhaul the public homepage (`apps/web/src/app/page.tsx`) to reflect the complete 0–18 childhood lifespan, interactive age-bracket previews, 5 balanced pillars, and repositioning device governance into the "Thinking About a Device?" celebratory action hub.
+  * **Plan 21 (Unified Navigation & Logout Hardening):** Completed in PR #33.
+  * **Plan 22 (Omnipresent Floating AI Advisor Bubble):** Completed in PR #34.
+  * **Plan 23 (Holistic Lifespan Homepage Redesign):** Completed in PR #35.
+  * **Plan 24 (Account Settings & Child Modal Hardening):** Completed in PR #36.
+
+### Phase 7: Streamlined Navigation, Zero-Redundant-Age Architecture & Tab Decluttering (Plans 25–27) — 🚀 Active
+- **Assignee:** Frontend Agent (`apps/web`)
+- **Key Deliverables:**
+  * **Plan 25 (Streamlined Navigation & Account Menu Decluttering UI):** Rename "Today" to "Home", purge duplicate domain links from user dropdown, eliminate "More" menu, establish 6-tab balanced navbar, and remove duplicate link card from Home feed.
+  * **Plan 26 (Automatic Child Age Derivation & Domain Sync UI):** Author `useChildAge`, eliminate manual age input fields in dosing calculator, auto-calibrate weight, age in months, and contraindications without asking parents.
+  * **Plan 27 (Holistic Domain Tabs Decluttering & Redundancy Purge UI):** Declutter Health, Nutrition, Play, Behavior, and Devices tabs. Collapse 5-stage feeding selector to child's current stage, auto-filter play catalog and behavior scripts, and consolidate Sunday Culture Digest into Devices Hub.
 
 ---
 
