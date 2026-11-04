@@ -136,7 +136,10 @@ export async function searchFaqs(params?: {
 }): Promise<FaqSearchResponse> {
   const queryParams: Record<string, string | undefined> = {};
   if (params?.q) queryParams.q = params.q;
-  if (params?.categoryId && params.categoryId !== 'ALL') queryParams.categoryId = params.categoryId;
+  if (params?.categoryId && params.categoryId !== 'ALL') {
+    queryParams.category = params.categoryId;
+    queryParams.categoryId = params.categoryId;
+  }
   if (params?.tier && params.tier !== 'ALL') queryParams.tier = params.tier;
   if (params?.roadType) queryParams.roadType = params.roadType;
 
