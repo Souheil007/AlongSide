@@ -116,9 +116,9 @@ graph TD
 | [**`18-pediatric-health-triage-and-nutrition-ui.md`**](18-pediatric-health-triage-and-nutrition-ui.md) | Pediatric Health Triage & Nutrition Hub UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #27) |
 | [**`19-brain-games-puppets-and-behavior-ui.md`**](19-brain-games-puppets-and-behavior-ui.md) | Brain Games, Puppets & Behavioral Psychology UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #30) |
 | [**`20-ai-clinical-advisor-lifespan-rag-upgrade.md`**](20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Clinical AI Advisor Lifespan RAG & Sparring Upgrade | **Joint (FE & BE)** | PLAN-10, 11, 16, 17, 18, 19 | Complete (PR #31) |
-| [**`21-unified-navigation-and-session-logout-hardening-ui.md`**](21-unified-navigation-and-session-logout-hardening-ui.md) | Unified Navigation Shell & Session Logout Hardening UI | **Frontend Agent** | PLAN-03, PLAN-17 | Queued |
-| [**`22-omnipresent-floating-ai-advisor-bubble-ui.md`**](22-omnipresent-floating-ai-advisor-bubble-ui.md) | Omnipresent Floating AI Advisor Bubble & Drawer UI | **Frontend Agent** | PLAN-03, PLAN-10, PLAN-11, PLAN-21 | Queued |
-| [**`23-holistic-lifespan-homepage-redesign.md`**](23-holistic-lifespan-homepage-redesign.md) | Holistic Lifespan Family OS Homepage Redesign | **Frontend Agent** | PLAN-03, PLAN-16, PLAN-17, PLAN-21 | Queued |
+| [**`21-unified-navigation-and-session-logout-hardening-ui.md`**](21-unified-navigation-and-session-logout-hardening-ui.md) | Unified Navigation Shell & Session Logout Hardening UI | **Frontend Agent** | PLAN-03, PLAN-17 | Complete (PR #33) |
+| [**`22-omnipresent-floating-ai-advisor-bubble-ui.md`**](22-omnipresent-floating-ai-advisor-bubble-ui.md) | Omnipresent Floating AI Advisor Bubble & Drawer UI | **Frontend Agent** | PLAN-03, PLAN-10, PLAN-11, PLAN-21 | Complete (PR #34) |
+| [**`23-holistic-lifespan-homepage-redesign.md`**](23-holistic-lifespan-homepage-redesign.md) | Holistic Lifespan Family OS Homepage Redesign | **Frontend Agent** | PLAN-03, PLAN-16, PLAN-17, PLAN-21 | Complete (PR #35) |
 
 ---
 

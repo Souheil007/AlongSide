@@ -3,8 +3,9 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-03, PLAN-16, PLAN-17, PLAN-21  
 **Estimated Scope:** Large  
-**Paperclip Issue:** SOU-50 (To be delegated)  
-**Status:** Queued  
+**Paperclip Issue:** SOU-54 (Subtask of SOU-53)  
+**Pull Request:** [#35](https://github.com/Souheil007/AlongSide/pull/35)  
+**Status:** Complete (PR #35)  
 
 ---
 
@@ -100,21 +101,21 @@ This plan transforms the landing page into a stunning, empathetic, and comprehen
 ## 5. Specific Deliverables (Files to Create / Modify)
 
 ### `apps/web`:
-- [ ] `apps/web/src/app/page.tsx` (Complete homepage rewrite)
-- [ ] `apps/web/src/components/home/HeroSection.tsx` (Lifespan hero proposition and trust signals)
-- [ ] `apps/web/src/components/home/LifespanStageSelector.tsx` (Interactive 4-stage switcher: Ages 0-3, 4-6, 7-9, 10-18)
-- [ ] `apps/web/src/components/home/PillarsShowcase.tsx` (The 5 balanced pillars grid)
-- [ ] `apps/web/src/components/home/DeviceActionHubSpotlight.tsx` ("Thinking About a Device?" feature spotlight)
-- [ ] `apps/web/src/components/home/ClinicalAuthorityTestimonials.tsx` (Pediatrician and parenting psychologist endorsements)
+- [x] `apps/web/src/app/page.tsx` (Complete homepage rewrite)
+- [x] `apps/web/src/components/home/HeroSection.tsx` (Lifespan hero proposition and trust signals)
+- [x] `apps/web/src/components/home/LifespanStageSelector.tsx` (Interactive 4-stage switcher: Ages 0-3, 4-6, 7-9, 10-18)
+- [x] `apps/web/src/components/home/PillarsShowcase.tsx` (The 5 balanced pillars grid)
+- [x] `apps/web/src/components/home/DeviceActionHubSpotlight.tsx` ("Thinking About a Device?" feature spotlight)
+- [x] `apps/web/src/components/home/ClinicalAuthorityTestimonials.tsx` (Pediatrician and parenting psychologist endorsements)
 
 ---
 
 ## 6. Definition of Done (DoD) & Verification Checklist
 
-- [ ] Homepage hero immediately conveys the 0–18 full childhood scope, removing the narrow phone-only headline.
-- [ ] Interactive Lifespan Stage Selector allows visitors to toggle between Ages 0–3, 4–6, 7–9, and 10–18, displaying relevant preview cards for each stage.
-- [ ] All 5 balanced pillars (Health, Nutrition, Play, Behavior, Devices) are visually showcased with clear value propositions.
-- [ ] Device governance is positioned as an empowering rite-of-passage transition within the modern world pillar.
-- [ ] Page layout is 100% responsive across 360px–1440px viewports with zero horizontal overflow.
-- [ ] `npm run typecheck` passes with zero errors.
-- [ ] Diff audited with `ponytail-review` to ensure clean, lean component structure.
+- [x] Homepage hero immediately conveys the 0–18 full childhood scope, removing the narrow phone-only headline.
+- [x] Interactive Lifespan Stage Selector allows visitors to toggle between Ages 0–3, 4–6, 7–9, and 10–18, displaying relevant preview cards for each stage.
+- [x] All 5 balanced pillars (Health, Nutrition, Play, Behavior, Devices) are visually showcased with clear value propositions.
+- [x] Device governance is positioned as an empowering rite-of-passage transition within the modern world pillar.
+- [x] Page layout is 100% responsive across 360px–1440px viewports with zero horizontal overflow.
+- [x] `npm run typecheck` passes with zero errors.
+- [x] Diff audited with `ponytail-review` to ensure clean, lean component structure.
