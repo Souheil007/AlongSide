@@ -11,6 +11,7 @@ import { ChildHeroCard } from './ChildHeroCard';
 import { TodayMilestonesWidget } from './TodayMilestonesWidget';
 import { DailyPlayActivityCard } from './DailyPlayActivityCard';
 import { DailyNutritionTipCard } from './DailyNutritionTipCard';
+import { AcademyBriefingCard } from './AcademyBriefingCard';
 import { QuickHealthTriageLauncher } from './QuickHealthTriageLauncher';
 import { AskAdvisorPromptBar } from './AskAdvisorPromptBar';
 import type { ChildDTO } from '@alongside/shared';
@@ -61,7 +62,7 @@ export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
       {/* 2. Pediatric 1-Tap Health Triage Launcher */}
       <QuickHealthTriageLauncher child={activeChild} />
 
-      {/* 3. Core Daily Feed Grid: Milestones, Play, Nutrition, Advisor */}
+      {/* 3. Core Daily Feed Grid: Milestones, Play, Nutrition, Academy & Advisor */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column (7 cols): Milestones & Daily Play Activity */}
         <div className="lg:col-span-7 space-y-6">
@@ -69,9 +70,10 @@ export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
           <DailyPlayActivityCard child={activeChild} />
         </div>
 
-        {/* Right Column (5 cols): Daily Nutrition & AI Advisor Prompt Bar */}
+        {/* Right Column (5 cols): Daily Nutrition, Academy Briefing & AI Advisor Prompt Bar */}
         <div className="lg:col-span-5 space-y-6">
           <DailyNutritionTipCard child={activeChild} />
+          <AcademyBriefingCard child={activeChild} />
           <AskAdvisorPromptBar child={activeChild} />
         </div>
       </div>
