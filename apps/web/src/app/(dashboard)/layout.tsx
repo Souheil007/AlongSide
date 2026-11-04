@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { MobileNav } from '@/components/shared/MobileNav';
+import { FloatingAdvisorBubble } from '@/components/advisor/FloatingAdvisorBubble';
 
 export const metadata: Metadata = {
   title: 'Family OS Dashboard — AlongSide',
@@ -17,7 +18,9 @@ export default function DashboardLayout({
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex-1">
         {children}
       </main>
+      <FloatingAdvisorBubble />
       <MobileNav />
     </div>
   );
 }
+

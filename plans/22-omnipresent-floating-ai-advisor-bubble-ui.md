@@ -3,8 +3,8 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-03, PLAN-10, PLAN-11, PLAN-21  
 **Estimated Scope:** Medium  
-**Paperclip Issue:** SOU-49 (To be delegated)  
-**Status:** Queued  
+**Paperclip Issue:** SOU-52 (PR #34)  
+**Status:** Complete (PR #34)  
 
 ---
 
@@ -95,20 +95,22 @@ This plan implements the **Hybrid AI Advisor Architecture**:
 ## 5. Specific Deliverables (Files to Create / Modify)
 
 ### `apps/web`:
-- [ ] `apps/web/src/lib/advisor-context.ts` (Pure contextual prompt generator based on route and active child)
-- [ ] `apps/web/src/components/advisor/FloatingAdvisorBubble.tsx` (Global floating action button & slide-over chat drawer)
-- [ ] `apps/web/src/app/(dashboard)/layout.tsx` (Mount `<FloatingAdvisorBubble />`)
-- [ ] `apps/web/src/components/advisor/AdvisorDashboardView.tsx` (Add quick link back to active dashboard view)
+- [x] `apps/web/src/lib/advisor-context.ts` (Pure contextual prompt generator based on route and active child)
+- [x] `apps/web/src/components/advisor/FloatingAdvisorBubble.tsx` (Global floating action button & slide-over chat drawer)
+- [x] `apps/web/src/app/(dashboard)/layout.tsx` (Mount `<FloatingAdvisorBubble />`)
+- [x] `apps/web/src/components/advisor/AdvisorDashboardView.tsx` (Add quick link back to active dashboard view)
+- [x] `apps/web/src/hooks/useAiAdvisorChat.ts` (Zustand-backed shared conversation state across floating drawer & full studio)
+- [x] `apps/web/test/floatingAdvisorBubble.test.ts` (10 automated unit tests for contextual prompts and chat state)
 
 ---
 
 ## 6. Definition of Done (DoD) & Verification Checklist
 
-- [ ] Floating AI Advisor bubble renders on all dashboard pages (`/dashboard`, `/health`, `/nutrition`, `/brain-games`, `/behavior`, `/devices`).
-- [ ] Clicking the bubble opens the slide-over chat drawer smoothly without page reloads.
-- [ ] Drawer displays contextual quick prompts tailored to the active child's name, age, and currently viewed route.
-- [ ] Streaming SSE responses render smoothly in real time inside the compact drawer.
-- [ ] "Open Full Rehearsal Studio" button navigates cleanly to `/advisor` for voice sparring.
-- [ ] Bubble does not overlap or block interactive elements in `MobileNav` on mobile screens.
-- [ ] `npm run typecheck` passes with zero errors.
-- [ ] Diff audited with `ponytail-review` to ensure zero bloated dependencies.
+- [x] Floating AI Advisor bubble renders on all dashboard pages (`/dashboard`, `/health`, `/nutrition`, `/brain-games`, `/behavior`, `/devices`).
+- [x] Clicking the bubble opens the slide-over chat drawer smoothly without page reloads.
+- [x] Drawer displays contextual quick prompts tailored to the active child's name, age, and currently viewed route.
+- [x] Streaming SSE responses render smoothly in real time inside the compact drawer.
+- [x] "Open Full Rehearsal Studio" button navigates cleanly to `/advisor` for voice sparring.
+- [x] Bubble does not overlap or block interactive elements in `MobileNav` on mobile screens.
+- [x] `npm run typecheck` passes with zero errors.
+- [x] Diff audited with `ponytail-review` to ensure zero bloated dependencies.
