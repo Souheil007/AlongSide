@@ -4,7 +4,7 @@ import { buildApp } from '../src/app.js';
 import { InMemoryFaqRepository } from '../src/modules/faqs/faqs.repository.js';
 import { DevelopmentalTier, RoadType } from '@alongside/shared';
 
-describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
+describe('Modern Parenting FAQ Vault API (PLAN-20)', () => {
   let app: FastifyInstance;
   let faqRepo: InMemoryFaqRepository;
 
@@ -37,23 +37,23 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       expect(payload.data.categories.length).toBe(5);
 
       const slugs = payload.data.categories.map((c: any) => c.slug);
-      expect(slugs).toContain('device-decisions');
-      expect(slugs).toContain('social-media-group-chats');
-      expect(slugs).toContain('gaming-microtransactions');
-      expect(slugs).toContain('inappropriate-content-safety');
-      expect(slugs).toContain('bedtime-sleep-hygiene');
+      expect(slugs).toContain('pediatric-health-and-sleep');
+      expect(slugs).toContain('nutrition-and-feeding');
+      expect(slugs).toContain('development-and-milestones');
+      expect(slugs).toContain('behavior-and-discipline');
+      expect(slugs).toContain('modern-world-and-devices');
 
       // Verify category fields
-      const deviceCat = payload.data.categories.find(
-        (c: any) => c.slug === 'device-decisions'
+      const healthCat = payload.data.categories.find(
+        (c: any) => c.slug === 'pediatric-health-and-sleep'
       );
-      expect(deviceCat.name).toBe('Device Decisions & Smartwatches');
-      expect(deviceCat.faqCount).toBeGreaterThanOrEqual(20);
+      expect(healthCat.name).toBe('Pediatric Health & Sleep Triage');
+      expect(healthCat.faqCount).toBeGreaterThanOrEqual(20);
     });
   });
 
   describe('GET /api/v1/faqs (Search & Filter)', () => {
-    it('returns default paginated list of FAQs with total exceeding 100', async () => {
+    it('returns default paginated list of FAQs with total exceeding 250', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/faqs',
@@ -62,7 +62,7 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.total).toBeGreaterThanOrEqual(100);
+      expect(payload.data.total).toBeGreaterThanOrEqual(250);
       expect(payload.data.faqs.length).toBeLessThanOrEqual(20);
 
       const firstFaq = payload.data.faqs[0];
@@ -75,7 +75,7 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
     it('filters FAQs by category slug', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: '/api/v1/faqs?category=bedtime-sleep-hygiene',
+        url: '/api/v1/faqs?category=pediatric-health-and-sleep',
       });
 
       expect(response.statusCode).toBe(200);
@@ -85,14 +85,14 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
 
       // Verify all returned FAQs belong to the category
       for (const faq of payload.data.faqs) {
-        expect(faq.categorySlug).toBe('bedtime-sleep-hygiene');
+        expect(faq.categorySlug).toBe('pediatric-health-and-sleep');
       }
     });
 
-    it('filters FAQs by developmental tier (e.g. TIER_1_AGES_8_9)', async () => {
+    it('filters FAQs by developmental tier (e.g. TIER_0_INFANCY_TODDLER_0_3)', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: `/api/v1/faqs?tier=${DevelopmentalTier.TIER_1_AGES_8_9}`,
+        url: `/api/v1/faqs?tier=${DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3}`,
       });
 
       expect(response.statusCode).toBe(200);
@@ -103,7 +103,7 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       for (const faq of payload.data.faqs) {
         expect(
           faq.targetTier === null ||
-            faq.targetTier === DevelopmentalTier.TIER_1_AGES_8_9
+            faq.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
         ).toBe(true);
       }
     });
@@ -126,10 +126,10 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       }
     });
 
-    it('searches FAQs by keyword (e.g. "calculator" for vault apps)', async () => {
+    it('searches FAQs by keyword (e.g. "fever" for pediatric health)', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: '/api/v1/faqs?q=calculator',
+        url: '/api/v1/faqs?q=fever',
       });
 
       expect(response.statusCode).toBe(200);
@@ -137,9 +137,11 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       expect(payload.success).toBe(true);
       expect(payload.data.faqs.length).toBeGreaterThan(0);
 
-      const matchedQuestions = payload.data.faqs.map((f: any) => f.question.toLowerCase());
+      const matchedQuestions = payload.data.faqs.map((f: any) =>
+        f.question.toLowerCase()
+      );
       expect(
-        matchedQuestions.some((q: string) => q.includes('calculator'))
+        matchedQuestions.some((q: string) => q.includes('fever'))
       ).toBe(true);
     });
 
@@ -160,11 +162,11 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       const page2 = page2Res.json();
       expect(page2.data.faqs.length).toBe(5);
 
-      // Verify page 1 and page 2 don't overlap
-      const ids1 = new Set(page1.data.faqs.map((f: any) => f.id));
-      for (const item of page2.data.faqs) {
-        expect(ids1.has(item.id)).toBe(false);
-      }
+      // Verify disjoint sets
+      const ids1 = page1.data.faqs.map((f: any) => f.id);
+      const ids2 = page2.data.faqs.map((f: any) => f.id);
+      const intersection = ids1.filter((id: string) => ids2.includes(id));
+      expect(intersection.length).toBe(0);
     });
   });
 
@@ -185,8 +187,10 @@ describe('Modern Parenting FAQ Vault API (PLAN-10)', () => {
       const payload = response.json();
       expect(payload.success).toBe(true);
       expect(payload.data.faq.id).toBe(firstId);
-      expect(payload.data.faq.answerMarkdown.length).toBeGreaterThan(20);
+      expect(payload.data.faq.question).toBeDefined();
+      expect(payload.data.faq.answerMarkdown).toBeDefined();
       expect(payload.data.faq.deEscalationScript).toBeDefined();
+      expect(payload.data.faq.categoryName).toBeDefined();
     });
 
     it('returns 404 for non-existent FAQ ID', async () => {

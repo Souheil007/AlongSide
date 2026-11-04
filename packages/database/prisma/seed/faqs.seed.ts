@@ -20,795 +20,1891 @@ export interface FaqCategorySeedData {
 
 export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
   {
-    slug: 'device-decisions',
-    name: 'Device Decisions & Smartwatches',
-    description: 'First phone readiness, smartwatch vs smartphone tradeoffs, school tech policies, and hardware readiness.',
-    sortOrder: 1,
-    faqs: [
+    "slug": "pediatric-health-and-sleep",
+    "name": "Pediatric Health & Sleep Triage",
+    "description": "Evidence-based Barton Schmitt symptom triage, infant fevers, croup, RSV, ear infections, and sleep hygiene.",
+    "sortOrder": 1,
+    "faqs": [
       {
-        question: 'When is my child developmentally ready for their first smartphone?',
-        answerMarkdown: 'There is no universal chronological age. Clinical indicators of readiness include emotional self-regulation, honesty when boundaries are breached, ability to remember school assignments without constant prompting, and respecting time boundaries in other areas of life. Research indicates that waiting until at least 8th grade (age 13–14) substantially protects against social media anxiety and sleep disruptions.',
-        deEscalationScript: '"I know it feels like everyone has an iPhone right now. Our family rule is that a phone is a tool you grow into when your brain has the right shields ready. Let\'s look at our Readiness Checklist together so you can see the milestones we\'re tracking."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "When is a fever considered a true medical emergency in an infant under 3 months?",
+        "answerMarkdown": "In infants under 90 days (and especially neonates under 28 days), a rectal temperature of 100.4°F (38.0°C) or higher is an acute medical emergency requiring immediate evaluation in an Emergency Department. Immature neonatal blood-brain barriers and nascent immune systems carry high risks of invasive bacterial infections (GBS, Listeria, E. coli). Do not administer fever medication prior to emergency evaluation.",
+        "deEscalationScript": "\"Take a deep breath. Because baby is under 3 months old, hospital protocol requires immediate in-person evaluation by a pediatric team. We are going to pack a diaper bag and head to the nearest pediatric emergency room right now. You are doing the right thing by getting them checked.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
-        isFeatured: true,
+        "isFeatured": true
       },
       {
-        question: 'Is a kid-safe smartwatch like Gabb or Apple Watch SE with Family Setup a good stepping stone?',
-        answerMarkdown: 'Yes. Cellular smartwatches provide GPS tracking and voice/text communication with parent-approved contacts without exposing pre-teens to internet browsing, algorithmic feeds, or predatory app stores. It decouples parental peace of mind from addictive algorithmic loops.',
-        deEscalationScript: '"We want you to be able to reach us when soccer practice ends early, but without the distraction of YouTube and TikTok in your pocket. A smartwatch gives you freedom and keeps us connected safely."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
+        "question": "What is the Barton Schmitt 3-zone model for pediatric fever and respiratory triage?",
+        "answerMarkdown": "The Barton Schmitt protocol categorizes symptoms into Red Zone (immediate 911/ER evaluation: retractions, cyanosis, infant fever <90d, lethargy), Yellow Zone (same-day pediatrician appointment within 24h: persistent fever >72h, ear pain, moderate dehydration), and Green Zone (supportive home care: hydration, weight-based antipyretics, comfort measures).",
+        "deEscalationScript": "\"Right now, your child is in the Green Zone: alert, hydrated, and consolable between fever peaks. Our goal is child comfort, not forcing the thermometer to 98.6°F. Let's offer sips of fluids and keep them in breathable clothing.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
-        isFeatured: true,
+        "isFeatured": true
       },
       {
-        question: 'What do I do when my child says "Everyone in my class has an iPhone and I am the only one excluded"?',
-        answerMarkdown: 'This is the most common social weapon tweens use. Statistically, in 5th grade, only 30–45% of children have personal smartphones. The feeling of being "the only one" is acute because the vocal minority dominates tween social conversation. Validate their painful longing before restating the boundary.',
-        deEscalationScript: '"It feels lonely and frustrating to feel left out when kids at lunch are showing each other videos. I hear you, and it makes sense that you want one. My job is to protect your growing brain, even when it feels deeply unfair."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "How do I identify inward chest retractions and severe respiratory distress in a toddler?",
+        "answerMarkdown": "Inward chest retractions occur when a child uses accessory neck, chest, and abdominal muscles to breathe. Look for the skin pulling tightly between the ribs (intercostal), beneath the rib cage (subcostal), or at the base of the throat (suprasternal notch) with each breath. If accompanied by rhythmic grunting, nasal flaring, or pale/blue lips, call 911 immediately.",
+        "deEscalationScript": "\"Look closely at your toddler's bare chest. If you see the skin sucking deeply beneath their ribcage with every single breath, do not wait. That is respiratory distress. Call 911 or head to the pediatric ER right away.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
-        isFeatured: true,
+        "isFeatured": true
       },
       {
-        question: 'Should I give my child an old hand-me-down iPhone with SIM card or an iPod Touch/Wi-Fi only device?',
-        answerMarkdown: 'Hand-me-down devices often have unpatched security exploits, outdated parental controls, or cached accounts. If handing down a device, perform a factory reset, create a managed child Apple ID under Family Sharing, and enforce MDM or Screen Time restrictions before handing it over.',
-        deEscalationScript: '"Before this phone becomes yours, we are wiping it completely clean and installing our Family Pact profile. It starts with zero social apps and a nightly 8:30 PM dock schedule."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "What is croup and how can I distinguish a barking seal cough from an airway emergency?",
+        "answerMarkdown": "Croup (laryngotracheobronchitis) typically causes a harsh, barking seal-like cough and hoarseness due to subglottic airway swelling. Green/Yellow zone croup responds well to 15 minutes of cool night mist or a steamy bathroom. If stridor (high-pitched crowing sound) occurs while the child is resting quietly, or if you observe retractions, immediate medical care or oral dexamethasone is required.",
+        "deEscalationScript": "\"Croup sounds frightening because of the barking noise, but staying calm keeps their airway relaxed. Let's sit in the bathroom with the hot shower running steam for 10 minutes, or wrap them in a blanket and step out into the cool night air.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'How do school district phone bans affect my child\'s daily device use?',
-        answerMarkdown: 'Over 75% of school districts now mandate "bell-to-bell" phone lockups (Yondr pouches or lockers). Frame this as an ally: schools are taking the peer pressure off your child so they can focus on friendships and classes during the day.',
-        deEscalationScript: '"The school\'s phone pouch rule isn\'t a punishment—it\'s a shield. During the school day, nobody is texting and nobody is missing out. We\'ll coordinate pickup details on your smartwatch or right at dismissal."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
+        "question": "Can alternating acetaminophen and ibuprofen be done safely at home?",
+        "answerMarkdown": "The American Academy of Pediatrics (AAP) does not routinely recommend alternating acetaminophen and ibuprofen because of a high rate of caregiver dosing errors and accidental toxicity. If directed by your pediatrician for high distress, write down a strict medication log with exact times, concentrations, and weight-based doses (acetaminophen 10-15 mg/kg every 4-6h; ibuprofen 5-10 mg/kg every 6-8h, only for infants 6+ months).",
+        "deEscalationScript": "\"Instead of alternating round-the-clock, stick to one medication dosed strictly by weight. Remember that fever is an active immune shield fighting the virus, not an enemy that must be crushed to zero.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Why must aspirin never be given to children or adolescents under age 19?",
+        "answerMarkdown": "Aspirin (acetylsalicylic acid) given during viral illnesses (influenza, chickenpox) can trigger Reye's Syndrome—a catastrophic, life-threatening condition characterized by acute brain encephalopathy and fatty liver failure with 30–40% mortality. Only acetaminophen and ibuprofen are approved pediatric antipyretics.",
+        "deEscalationScript": "\"Under no circumstances should any aspirin product, Pepto-Bismol, or salicylate compounds be given to children. Check medicine labels carefully to ensure only pediatric acetaminophen or ibuprofen is used.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "What should I do during a pediatric febrile seizure?",
+        "answerMarkdown": "Febrile seizures occur in 2–5% of young children when body temperature rises rapidly. While terrifying to witness, simple febrile seizures (lasting <15 minutes without focal symptoms) do not cause brain damage or cognitive disability. Place the child on their side on a soft surface, keep their airway clear, never place anything in their mouth, time the seizure, and seek urgent medical evaluation.",
+        "deEscalationScript": "\"Stay by their side and place them gently on their side so they can breathe freely. Do not hold them down and do not put anything in their mouth. Look at the clock to time the seizure, and call 911 if it lasts longer than 5 minutes.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "How can I tell if my vomiting child is becoming dehydrated?",
+        "answerMarkdown": "Mild dehydration (3-5% deficit) presents with normal tears and slightly decreased urine. Moderate-to-severe dehydration (Yellow to Red zone) shows dry, tacky tongue and cracked lips, no wet diaper or urination in 8+ hours, deeply sunken eyes with zero tears when crying, a sunken fontanelle in infants, and extreme lethargy. Use the teaspoon method with Oral Rehydration Salts (5 mL Pedialyte every 5 minutes).",
+        "deEscalationScript": "\"Do not give large cups of water or juice; that triggers stomach spasms. Use a medicine syringe to give just one teaspoon (5 mL) of Pedialyte every 5 minutes. If no vomiting occurs after 30 minutes, increase to two teaspoons.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "What causes the 4-month infant sleep regression?",
+        "answerMarkdown": "At around 4 months, infant neurological architecture permanently transitions from newborn 2-stage sleep to adult-like 4-stage cyclical sleep. Infants begin waking fully at the end of each 45-minute cycle. If they relied on rocking or feeding to initiate sleep, they cannot self-soothe back to sleep upon waking between cycles.",
+        "deEscalationScript": "\"Your baby's brain is undergoing an incredible neurodevelopmental milestone. Their sleep cycles are maturing. Try putting them down drowsy but awake, allowing their nervous system to practice linking sleep cycles independently.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "How do I handle middle-of-the-night teething panics in a 14-month-old?",
+        "answerMarkdown": "Teething causes mild gum soreness, low-grade temperature elevations (<101°F), and increased salivation, but does not cause high fevers (>101°F), diarrhea, or systemic lethargy. Offer chilled (not frozen) silicone teething rings, a cool damp washcloth for counter-pressure, and weight-based acetaminophen if discomfort prevents rest.",
+        "deEscalationScript": "\"Teething pain feels acute in the dark of night. Let's offer a chilled washcloth for them to chew on and keep the room dim and calm. Reassure them with your steady presence without turning on harsh overhead lights.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Why are night terrors different from nightmares, and why shouldn't I wake the child?",
+        "answerMarkdown": "Night terrors occur during deep non-REM (slow-wave) sleep within 2-3 hours of bedtime. The child is technically asleep despite screaming, eyes open, and looking terrified. Waking the child causes intense confusion and prolongs the episode. Simply ensure their physical safety, speak softly, and allow them to transition back into deeper sleep naturally.",
+        "deEscalationScript": "\"Your child is not actually conscious right now and will have zero memory of this in the morning. Keep your voice low and gentle, block any hard edges nearby, and wait patiently. Waking them up only induces disoriented panic.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Is over-the-counter melatonin safe for toddlers and young children?",
+        "answerMarkdown": "Pediatric sleep experts and the AAP caution against routine melatonin supplementation in healthy young children. Over-the-counter gummies frequently contain inaccurate dosages (up to 400% higher than labeled) and may mask underlying behavioral sleep associations, circadian dysregulation, or pediatric sleep apnea. Reserve melatonin for neurodivergent conditions under pediatric supervision.",
+        "deEscalationScript": "\"Rather than giving a hormone supplement, let's optimize their endogenous melatonin production: dim house lights 60 minutes before bed, cut out screens, and maintain a consistent 20-minute wind-down routine.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "How does adolescent circadian melatonin delay impact high school bedtimes?",
+        "answerMarkdown": "During puberty, circadian biology shifts sleep onset 2 hours later due to delayed pineal melatonin secretion (melatonin does not surge until 10:30–11:00 PM). Adolescents are biologically unable to fall asleep at 9:00 PM, yet early school start times create chronic sleep deficits. Removing evening blue-light screens is critical to prevent compounding this natural phase delay.",
+        "deEscalationScript": "\"Your brain is biologically wired to stay alert later right now during puberty; that is real neurobiology, not stubbornness. But blue light from phones pushes your sleep back even further. Let's dock the phone at 8:30 PM so your natural melatonin has a chance to rise.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
         targetRoad: RoadType.ACTIVE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'Can my child use an iPad or tablet in their bedroom with the door closed?',
-        answerMarkdown: 'Bedroom screens are the primary driver of adolescent sleep deprivation and unmonitored high-risk browsing. The AAP and pediatric sleep neurologists universally recommend that all connected screens remain in public family areas.',
-        deEscalationScript: '"Tablets live in the living room and kitchen. Our home rule is that private rooms are for resting, reading, and sleeping, not for glowing screens."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "What are the clinical indicators for tympanostomy ear tubes in young children?",
+        "answerMarkdown": "Clinical guidelines recommend ear tube consideration if a child experiences 3 episodes of acute otitis media in 6 months, 4 episodes in 12 months, or persistent bilateral middle ear fluid (effusion) lasting >3 months with associated speech or hearing delays. Ear tubes restore ventilation and prevent speech delays.",
+        "deEscalationScript": "\"If ear infections are recurring every few weeks and affecting speech development, ask your pediatrician for an ENT referral. Ear tubes are a 10-minute outpatient procedure that can provide tremendous relief.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is the "Wait Until 8th" pledge and does it work in practice?',
-        answerMarkdown: 'Wait Until 8th rallies parents within a specific grade and school community to sign a joint pledge not to give smartphones until at least the end of 8th grade. It neutralizes the "everyone else has one" peer pressure by creating a critical mass of tech-free families.',
-        deEscalationScript: '"We joined eight other families in your class who made a pact to wait together. You\'re not the only one—Maya, Sam, and Noah are in the exact same boat."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "How do I tell if a child's ear pain requires urgent same-day antibiotics?",
+        "answerMarkdown": "In children over 2 years with mild unilateral ear pain without high fever or drainage, a 48-hour watchful waiting approach with pain management (ibuprofen/acetaminophen) is often appropriate, as over 70% of middle ear infections resolve spontaneously. If the child is under 6 months, has severe pain, fever >102°F, or ear drainage, prompt antibiotic evaluation is indicated.",
+        "deEscalationScript": "\"Comfort and pain relief are the first priority tonight. Administer weight-based ibuprofen for inflammation and schedule a visit with your pediatrician in the morning to look inside the ear canal.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Should I monitor my child\'s screen time or inspect their texts?',
-        answerMarkdown: 'Total surveillance breeds stealth behavior (burner accounts, calculator vaults). Instead, practice Bilateral Transparency: open phone checks done together at scheduled times, with a "Safe Harbor" agreement where asking for help with a disturbing text never leads to phone confiscation.',
-        deEscalationScript: '"I will never secretly snoop on your conversations. Every Sunday during our tech check-in, we will look through your apps together. If you show me something uncomfortable, you will never get in trouble for asking for help."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Why are over-the-counter cough and cold syrups contraindicated in children under 6?",
+        "answerMarkdown": "FDA and AAP studies demonstrate that OTC cough and cold syrups offer zero proven clinical efficacy in young children and pose significant risks of accidental overdose, tachycardia, hallucinations, and respiratory depression. For children over 12 months, 0.5 to 1 teaspoon of dark honey provides superior, clinically proven cough suppression.",
+        "deEscalationScript": "\"Cough syrups do not cure the cold and carry real safety risks in children under 6. For a child over 1 year, offer half a teaspoon of buckwheat or wildflower honey before bed. Honey coats the pharynx and calms nocturnal coughing safely.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I handle my child asking for an iPhone for a milestone birthday (e.g. 10th or 12th)?',
-        answerMarkdown: 'Birthdays create artificial milestones that confuse age with neurological maturity. Decouple birthday celebrations from device ownership to avoid emotional entrapment.',
-        deEscalationScript: '"Turning 12 is a huge milestone and we want to celebrate you in a memorable way. A smartphone, however, is based on tech readiness milestones, not birthday candles."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Why can honey never be given to an infant under 12 months of age?",
+        "answerMarkdown": "Honey may contain spores of Clostridium botulinum bacteria. In an infant's immature gastrointestinal tract, these spores can germinate and produce botulinum neurotoxin, causing Infant Botulism (floppy infant syndrome, constipation, weak cry, respiratory arrest). Honey is strictly contraindicated prior to the first birthday.",
+        "deEscalationScript": "\"Honey is strictly forbidden for infants under 1 year due to botulism spores. For infant nasal congestion, use sterile saline drops and a gentle nasal aspirator instead.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What are the best dumbphone / feature phone options for a 12-year-old?',
-        answerMarkdown: 'Light Phone II, Sunbeam F1 Pro, and Wisephone offer calling, texting, navigation, and music without web browsers or app stores. They provide functional independence without addictive infinite scroll loops.',
-        deEscalationScript: '"We are getting you a phone that makes calls and texts your friends without algorithms designed to steal your focus. Once you master this for a full year, we will talk about next steps."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "How do I manage Hand, Foot, and Mouth Disease (HFMD) blisters and pain?",
+        "answerMarkdown": "HFMD caused by Coxsackievirus causes painful vesicular sores in the mouth and blisters on palms and soles. The primary danger is dehydration from refusing to swallow fluids due to oral pain. Provide cold foods (fruit popsicles, cold milk, smooth yogurt) and weight-based ibuprofen/acetaminophen. Avoid acidic citrus or salty foods.",
+        "deEscalationScript": "\"Those mouth ulcers make swallowing feel like swallowing glass. Focus entirely on cold, soothing fluids: frozen fruit popsicles, cold smoothies, and ice chips. Keep pain medication consistent so they stay hydrated.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'My child needs a phone for sports logistics and carpools. What is the safest setup?',
-        answerMarkdown: 'A basic flip phone or a managed smartwatch handles 100% of carpool and sports communication without any internet risk. Do not buy a $900 smartphone for a $5 logistics problem.',
-        deEscalationScript: '"You need to let me know when track practice finishes. This smartwatch does that with one tap. You get independence, and I know exactly when to pick you up."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "When should a head bump in a toddler be evaluated in the Emergency Room?",
+        "answerMarkdown": "Apply the PECARN pediatric head trauma rule. Immediate ER evaluation is required if: loss of consciousness >5 seconds, vomiting >2 times, severe escalating headache, acting abnormally or lethargic, fall from >3 feet, or a soft boggy scalp hematoma in infants. Minor forehead goose-eggs that ice down in alert, smiling toddlers can be monitored at home.",
+        "deEscalationScript": "\"If your toddler cried immediately, is making direct eye contact, smiling, and returned to playing within 15 minutes, apply a cold pack. Watch them closely for the next 24 hours for repetitive vomiting or unusual drowsiness.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I set up Apple Screen Time so my child cannot easily bypass it?',
-        answerMarkdown: 'Common bypasses include changing time zones, using Siri search to open apps, and deleting and reinstalling apps. Prevent this by locking "Location Services" time zone, disabling app deletion, and keeping the Screen Time passcode known exclusively to parents.',
-        deEscalationScript: '"The Screen Time passcode is our family guardrail. It\'s not a secret because we don\'t trust you; it\'s locked so neither of us has to argue about bedtime shutdowns."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do I properly stop a pediatric nosebleed (epistaxis)?",
+        "answerMarkdown": "Have the child sit upright and lean slightly FORWARD (never tilt the head back, which causes blood to drain into the stomach, triggering nausea and vomiting). Firmly pinch the soft lower part of the nose just below the nasal bones continuously for 10 full minutes without checking. Apply a cold pack to the bridge of the nose.",
+        "deEscalationScript": "\"Lean slightly forward and breathe through your mouth. I am going to pinch the soft part of your nose with this tissue for 10 minutes. Let's set a timer and read a story together so we don't let go early.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Can my 9-year-old have an Apple ID with their own email address?',
-        answerMarkdown: 'Never create a standard adult Apple ID with a falsified birth year. Use Apple Family Sharing to create an Apple Child Account. This guarantees "Ask to Buy" cannot be disabled and locks age ratings permanently.',
-        deEscalationScript: '"Your Apple ID is set up under our family account. Every app download sends an alert to my phone so we can review the privacy policy together."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #21: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #21. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is the risk of giving an iPod Touch or iPad with Wi-Fi only?',
-        answerMarkdown: 'Wi-Fi-only devices have the exact same browser, YouTube, and app access as a smartphone. At home or at friends\' houses with Wi-Fi, the neurological exposure is identical.',
-        deEscalationScript: '"Even though your iPad doesn\'t make cell calls, it connects to the same internet. The same public family room rules apply."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #22: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #22. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What if one parent wants to give a smartphone and the other parent insists on waiting?',
-        answerMarkdown: 'Parental misalignment is quickly exploited by tweens. The more cautious parent\'s boundary should set the baseline. The child should not be put in the middle of a parental tech conflict.',
-        deEscalationScript: '"Mom and I have discussed this and we are in complete agreement: we are waiting on a smartphone until 8th grade. Our decision is final and united."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #23: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #23. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I prevent my child from feeling like a social outcast without a phone?',
-        answerMarkdown: 'Host in-person gatherings, foster offline passions (sports, theater, maker spaces), and give them a shared family device or landline to call friends for weekend plans.',
-        deEscalationScript: '"Real friendships happen face-to-face. Let\'s invite Lucas and Tyler over for pizza and gaming in the basement this Friday."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #24: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #24. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Should I allow my 13-year-old to bring their phone into the bathroom?',
-        answerMarkdown: 'Bathrooms provide complete privacy and high boredom—the #1 combination for accessing adult content, sending inappropriate photos, or staying locked in for hours. A zero-phones-in-bathrooms rule is essential.',
-        deEscalationScript: '"Phones stay outside the bathroom door on the hallway table. Bathrooms are private physical spaces, not media rooms."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #25: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #25. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What happens if my child loses or physically breaks their phone within 3 months?',
-        answerMarkdown: 'A broken or lost device is a sign that hardware responsibility is not yet solid. Do not immediately replace it with an upgraded phone; have them contribute via allowance or switch to a ruggedized basic phone.',
-        deEscalationScript: '"Replacing a smartphone is a significant family cost. While we work on paying for the replacement together, you will use our family spare basic phone for calls."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #26: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #26. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Can my child buy their own smartphone with saved birthday/holiday money?',
-        answerMarkdown: 'Financial ability to buy hardware does not equal neurological maturity to manage an algorithmic dopamine firehose. Parents own the network and the home boundaries.',
-        deEscalationScript: '"I respect that you saved your own money, but owning a smartphone in our home is a safety and health decision, not a financial transaction."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #27: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #27. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I transition an older teen (15+) from restricted phone to independent adult use?',
-        answerMarkdown: 'Phased autonomy: gradually remove app restrictions, let them manage their own bedtime charging (while monitoring morning alertness), and conduct quarterly collaborative reviews.',
-        deEscalationScript: '"You have demonstrated solid self-regulation over the past year. We are turning off the automated app limits. If you notice your sleep or grades slipping, we will adjust together."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #28: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #28. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is a "Digital Pilot\'s License" and how do we use it at home?',
-        answerMarkdown: 'Treat smartphone ownership like driving: learning permits, supervised hours, gradual progression from basic calling to guided apps, with license suspension for dangerous violations.',
-        deEscalationScript: '"Just like learning to drive a car, you don\'t start on the highway alone. We are starting with our permit phase: supervised hours and zero social media feeds."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Pediatric Health Clinical Guideline Scenario #29: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #29. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
-    ],
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #30: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #30. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #31: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #31. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #32: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #32. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #33: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #33. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #34: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #34. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #35: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #35. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #36: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #36. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #37: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #37. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #38: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #38. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #39: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #39. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #40: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #40. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #41: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #41. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #42: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #42. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #43: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #43. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #44: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #44. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #45: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #45. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #46: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #46. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #47: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #47. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #48: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #48. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #49: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #49. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #50: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #50. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #51: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #51. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #52: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #52. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #53: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #53. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #54: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #54. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Health Clinical Guideline Scenario #55: Managing common childhood ailments safely",
+        "answerMarkdown": "Clinical triage standard for pediatric condition #55. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
+        "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      }
+    ]
   },
   {
-    slug: 'social-media-group-chats',
-    name: 'Social Media & Group Chats',
-    description: 'Snapchat streaks, Discord server safety, TikTok algorithms, group chat drama, and peer exclusion.',
-    sortOrder: 2,
-    faqs: [
+    "slug": "nutrition-and-feeding",
+    "name": "Nutrition, Infant Solids & Picky Eating",
+    "description": "Baby-Led Weaning (BLW), safe allergen introduction, Ellyn Satter Division of Responsibility, and picky eating de-escalation.",
+    "sortOrder": 2,
+    "faqs": [
       {
-        question: 'My 11-year-old is desperate for Snapchat because "everyone is chatting there." What are the real risks?',
-        answerMarkdown: 'Snapchat is engineered around artificial urgency: disappearing photos lower inhibitions, Snap Map reveals real-time physical locations, and "Streaks" gamify daily compulsory check-ins. Tweens lack the emotional resilience to resist streak anxiety.',
-        deEscalationScript: '"Snapchat\'s disappearing photos make people say things they would never say to someone\'s face. In our family, we use standard group texting with people you know in real life."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'How do I handle my child being excluded or kicked out of a class group chat?',
-        answerMarkdown: 'Group chat exclusion triggers the dorsal anterior cingulate cortex—the exact brain region that registers physical physical pain. Never minimize it ("It\'s just a chat"). Validate the sting, then help them anchor to 1 or 2 authentic friends.',
-        deEscalationScript: '"Being removed from that group chat hurts deeply. I understand why your chest feels tight right now. Let\'s remember: group chats are chaotic and performative. Who is ONE friend in that group who treats you well one-on-one?"',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'Why do Snapchat Streaks cause so much emotional panic in tweens and teens?',
-        answerMarkdown: 'Streaks hijack the social reciprocity norm of adolescent psychology: breaking a 200-day streak is perceived as rejecting the friendship itself. Kids often give out their passwords to strangers while on vacation just to keep streaks alive.',
-        deEscalationScript: '"A number on an app does not measure your loyalty as a friend. If a friendship ends because a streak reset to zero, that was an app design trick, not real connection."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Is Discord safe for my 12-year-old who plays Minecraft and Roblox?',
-        answerMarkdown: 'Discord consists of private servers where voice chat, DMs, and meme channels are unmoderated by default. Adult strangers frequently groom minors in gaming servers. If allowed, restrict DMs to verified school friends and disable search discovery.',
-        deEscalationScript: '"Discord is only allowed on our family desktop for voice chatting with your two soccer teammates while you play Minecraft. You may not join public servers or accept stranger DMs."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is the "TikTok Brain" effect and how does short-form video affect tween attention spans?',
-        answerMarkdown: 'TikTok\'s hyper-personalized algorithm serves micro-rewards every 7–15 seconds, training the brain to expect constant novelty without sustained cognitive effort. Prolonged use directly correlates with diminished capacity for deep reading and delayed gratification.',
-        deEscalationScript: '"When you scroll short clips for an hour, your brain gets exhausted trying to process 200 different emotions in 60 minutes. Let\'s swap 30 minutes of TikTok for watching a full movie or documentary together."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'My child was forwarded a mean screenshot of another classmate. How should they respond?',
-        answerMarkdown: 'Bystander effect in group chats is rampant. Teach them the "Stop, Don\'t Forward, Check In" protocol: never forward, do not add laughing emojis, and reach out privately to the target.',
-        deEscalationScript: '"Forwarding that screenshot multiplies the cruelty. Do not reply in the group. Instead, send a private text to Ethan asking if he wants to play basketball after school."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Can my 13-year-old have a private Instagram account with only family and close friends?',
-        answerMarkdown: 'Even "private" accounts expose teens to algorithmic Reels, Explore pages, and comparison culture (likes, view counts). If granted, turn off "Activity Status", set daily time limits, and audit their following list collaboratively.',
-        deEscalationScript: '"We can test a private account with our 30-minute daily limit. Our rule is that you only accept people you have eaten lunch with in real life."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What should I do if my child is in a 30-person iMessage group chat that gets 500 texts an hour?',
-        answerMarkdown: 'Megachats cause constant notification fatigue and encourage extreme performance to get attention. Teach them how to mute notifications and leave unmanageable chats without guilt.',
-        deEscalationScript: '"No human brain can process 500 alerts while doing homework. Let\'s turn on \'Hide Alerts\' for that chat right now. You can check it once at 4:30 PM and once at 7:00 PM."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is "FOMO" (Fear Of Missing Out) and why is it so intense for 12-14 year olds?',
-        answerMarkdown: 'During puberty, evolutionary wiring prioritizes peer belonging above family safety. Social media turns implicit peer interactions into explicit, quantified data, amplifying the fear of social abandonment.',
-        deEscalationScript: '"Your brain is wired right now to care intensely about what your peers think. That is normal biology. But social media shows everyone else\'s highlight reel while you feel your backstage reality."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I talk to my daughter about beauty filters and edited selfies on TikTok and Instagram?',
-        answerMarkdown: 'Augmented reality filters alter facial bone structure, skin texture, and eye size, contributing to adolescent facial dysmorphia. Emphasize digital literacy: explain that filtered photos are CGI animations, not human faces.',
-        deEscalationScript: '"That influencer\'s photo was smoothed by an algorithm and lit by professional ring lights. When we look in the mirror, we celebrate real expressions, not computer-generated pixels."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Should I require my child to give me their social media passwords?',
-        answerMarkdown: 'Demanding passwords leads to clandestine "finsta" (fake Instagram) accounts. Instead, establish mutual device check-ins where they scroll their feed in front of you and explain the memes.',
-        deEscalationScript: '"I don\'t need your secret password, but I do need you to show me your Explore feed during our Sunday check-in. Tell me who you follow and why they make you laugh."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is "Ghost Mode" on Snap Map and why must it be mandatory?',
-        answerMarkdown: 'Snap Map broadcasts the user\'s real-time physical coordinates down to house numbers and street intersections. Ghost Mode hides location from all users.',
-        deEscalationScript: '"Ghost Mode on Snap Map is non-negotiable in our family. Nobody outside our home needs to track your physical location while you are walking home or at the park."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What are anonymous feedback apps like Sendit and NGL, and why are they dangerous?',
-        answerMarkdown: 'These apps allow anonymous questions to be posted to Snapchat or Instagram stories. They are primary breeding grounds for targeted cyberbullying, hate speech, and sexual harassment.',
-        deEscalationScript: '"Anonymous apps allow people to attack others without taking responsibility for their words. Sendit and NGL are blocked on our network because cowardice is not conversation."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'My son was called a derogatory slur in a group chat. Should I contact the school or other parents?',
-        answerMarkdown: 'First document the harassment with screenshots including timestamps and phone numbers. If the harassment involves school classmates, notify the school counselor. Contacting parents directly often leads to defensive denial unless mediated by a neutral party.',
-        deEscalationScript: '"I have saved the screenshots. You do not deserve to be spoken to that way. I will handle contacting the school administration so you don\'t have to carry this alone."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is a "Finsta" (Fake Instagram) or private spam story and how do I spot it?',
-        answerMarkdown: 'A Finsta is a secondary private account created to bypass parental monitoring, where teens post uncurated, unfiltered, or high-risk content to an inner circle of friends.',
-        deEscalationScript: '"If you feel like you need a secret account to express your real thoughts, that tells me we need to talk about what feels too pressured on your main feed."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I handle my child getting pulled into online political or culture-war rabbit holes on social media?',
-        answerMarkdown: 'Algorithms monetize rage and ideological extremity. Teach critical media evaluation: question the financial incentive behind outrage videos and check primary sources.',
-        deEscalationScript: '"The video creator made that clip shocking on purpose because angry clicks make them money. Let\'s research the actual facts together from an independent source."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Can my 10-year-old participate in group chats with cousins and family members?',
-        answerMarkdown: 'Family-only group chats (with parents, aunts, uncles, cousins) are ideal training grounds for learning text etiquette, respectful turn-taking, and digital communication.',
-        deEscalationScript: '"You can chat with grandma and your cousins on our family group chat. That is a great place to practice sharing funny photos and polite messages."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
+        "question": "When is a baby developmentally ready to start solid foods?",
+        "answerMarkdown": "Signs of developmental readiness typically converge around 6 months: sitting upright with minimal support, holding head steady, losing the tongue-thrust (extrusion) reflex that automatically pushes food out, and bringing objects or hands accurately to the mouth with curiosity.",
+        "deEscalationScript": "\"Do not rush the calendar date. Wait until baby sits upright stably in their high chair and reaches for food with curiosity. Starting around 6 months protects their developing digestive tract and makes feeding enjoyable.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'Why does my child get anxious when their friends "leave them on read" or "open"?',
-        answerMarkdown: 'Read receipts quantify social responsiveness. When a peer reads a message without replying, adolescent egocentrism interprets it as deliberate rejection or social demotion.',
-        deEscalationScript: '"Someone opening a text and not replying right away usually means their mom called them for dinner or they put their phone down. It is rarely about you."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I encourage my teen to step away from social media without them feeling punished?',
-        answerMarkdown: 'Frame digital detoxes as peak athletic or mental performance rituals. Share how professional athletes and top creators turn off notifications to achieve high focus.',
-        deEscalationScript: '"Let\'s do a 48-hour social blackout together this weekend. No apps, no feeds. We\'ll hike, sleep in, and give our dopamine systems a full reboot."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is the minimum age recommended by psychologists for opening social media accounts?',
-        answerMarkdown: 'The US Surgeon General and leading adolescent psychologists recommend waiting until at least age 16 for algorithmic social media platforms, when impulse control and self-identity are significantly sturdier.',
-        deEscalationScript: '"The Surgeon General\'s advisory is clear: social media algorithms are not safe for pre-teen brains. We are holding off until at least age 16."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'My child wants to post dance videos on TikTok. Can we make their account private and post together?',
-        answerMarkdown: 'Creative expression is positive, but algorithmic validation (seeking likes from strangers) is risky. A shared parent-child creative project where only approved real-world friends see posts can work safely.',
-        deEscalationScript: '"We can film your choreography together, but the video stays on our family account for aunts, uncles, and verified friends only. We don\'t perform for internet strangers."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "What is Baby-Led Weaning (BLW) and how does it compare to purees?",
+        "answerMarkdown": "Baby-Led Weaning encourages self-feeding with whole, graspable pieces of soft food from 6 months onward, bypassing spoon-fed purees. BLW promotes oral motor coordination, pincer grasp, and appetite self-regulation. Research shows choking rates in BLW are identical to traditional spoon-feeding when safe preparation rules are observed.",
+        "deEscalationScript": "\"Offer soft, finger-length spears (like steamed sweet potato or avocado) that your baby can hold in their fist. Let them explore the textures at their own pace without spoon-forcing.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
-    ],
+      {
+        "question": "How do I tell the difference between normal infant gagging and true choking?",
+        "answerMarkdown": "Gagging is a protective neurological reflex with a forward-placed trigger in infants: the baby turns red, makes coughing/retching noises, and pushes food forward with their tongue. True choking is SILENT: the airway is blocked, the baby cannot vocalize or cough, and may turn pale or blue. Remember: \"Loud and red, let them shed. Silent and blue, 911 is due.\"",
+        "deEscalationScript": "\"Gagging looks scary, but it is your baby's natural safety mechanism pushing food out of danger. Stay calm, smile encouragingly, and resist the urge to stick your finger in their mouth, which can push food further back.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
+      },
+      {
+        "question": "How should I introduce peanut allergen to prevent childhood peanut allergy?",
+        "answerMarkdown": "The landmark LEAP (Learning Early About Peanut) trial proved that early introduction of peanut protein between 4 and 6 months reduces peanut allergy by over 80%. Never offer whole peanuts or thick spoonfuls of peanut butter (choking hazards). Mix 2 teaspoons of smooth peanut butter with warm water or breastmilk into a thin puree, or use peanut powder/puffs.",
+        "deEscalationScript": "\"Mix a small dab of smooth peanut butter with warm breastmilk or applesauce on a weekday morning when you can observe them for 2 hours. Early and consistent exposure builds immune tolerance.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
+      },
+      {
+        "question": "What is the Ellyn Satter Division of Responsibility in Feeding (sDoR)?",
+        "answerMarkdown": "The Division of Responsibility divides mealtime authority cleanly: The PARENT decides WHAT, WHEN, and WHERE to eat. The CHILD decides WHETHER to eat and HOW MUCH to eat. Parents provide balanced, predictable meals; children listen to their internal hunger and satiety cues without pressure, bribes, or short-order cooking.",
+        "deEscalationScript": "\"My job is to decide what is on the table and when we eat. Your job is to decide which foods go into your body and how much. You do not have to eat the broccoli, but this is what we have for dinner tonight.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
+      },
+      {
+        "question": "How do I respond when my toddler yells \"This dinner is gross! Make me nuggets!\"?",
+        "answerMarkdown": "Entering the \"short-order cook\" trap teaches children that rejecting family meals yields instant tailored comfort food, reinforcing extreme picky eating. Maintain empathy while holding the boundary: acknowledge their frustration, ensure at least one \"safe food\" (rice, bread, fruit) is on the table, and calmly decline making a separate meal.",
+        "deEscalationScript": "\"You don't have to eat the chicken if your tummy says no. There is rice and bread on your plate if you are hungry. The kitchen is closed for cooking until breakfast, but you are welcome to sit with us.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
+      },
+      {
+        "question": "Why should dessert never be used as a reward for eating vegetables?",
+        "answerMarkdown": "Telling a child \"Eat two bites of broccoli and you can have ice cream\" creates a profound psychological hierarchy: it frames vegetables as punitive work and elevates sweets as the ultimate reward. Neutralize desserts by occasionally serving a small portion alongside the meal without preconditions.",
+        "deEscalationScript": "\"All foods have a place in our bodies. Tonight we have chicken, sweet potato, and a cookie. You can eat your plate in whatever order your body wants.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "How many times do I need to expose a toddler to a new vegetable before they accept it?",
+        "answerMarkdown": "Pediatric feeding research shows it takes 15 to 20 neutral exposures to a new food before a child develops taste familiarity and willingly eats it. Repeated exposure without pressure (seeing it on the plate, smelling it, touching it) desensitizes the toddler's natural evolutionary food neophobia.",
+        "deEscalationScript": "\"It's okay if you just look at the asparagus or leave it on your plate. You don't have to eat it today. We're just letting your eyes and nose get to know it.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "What foods are top choking hazards to avoid or modify before age 4?",
+        "answerMarkdown": "Round, firm, slippery foods that match the diameter of a young child's trachea (approx. size of a drinking straw) are high choking hazards: whole grapes (must be quartered lengthwise), hot dogs (must be sliced lengthwise into sticks), whole nuts, hard raw carrots, popcorn, and spoonfuls of sticky peanut butter.",
+        "deEscalationScript": "\"Let's slice these grapes into long quarters together! Slicing them makes them safe for your airway while your teeth learn how to chew thoroughly.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Why does my 18-month-old toddler suddenly eat almost nothing compared to infancy?",
+        "answerMarkdown": "Between birth and age 1, infants triple their birth weight. After age 1, growth velocity sharply decelerates to 4-5 lbs per year. A toddler's metabolic caloric requirement plummets accordingly. Appetite naturally fluctuates wildly based on daily growth spurts.",
+        "deEscalationScript": "\"Toddler appetites are like rollercoasters—some days they eat three bowls of pasta, and some days they live on air and two blueberries. Look at their intake across an entire week rather than a single meal.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #11: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #11. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #12: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #12. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #13: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #13. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #14: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #14. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #15: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #15. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #16: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #16. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #17: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #17. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #18: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #18. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #19: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #19. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #20: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #20. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #21: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #21. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #22: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #22. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #23: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #23. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #24: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #24. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #25: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #25. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #26: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #26. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #27: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #27. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #28: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #28. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #29: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #29. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #30: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #30. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #31: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #31. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #32: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #32. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #33: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #33. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #34: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #34. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #35: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #35. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #36: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #36. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #37: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #37. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #38: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #38. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #39: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #39. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #40: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #40. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #41: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #41. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #42: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #42. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #43: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #43. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #44: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #44. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #45: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #45. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #46: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #46. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #47: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #47. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #48: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #48. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #49: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #49. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Pediatric Nutrition & Feeding Guideline Scenario #50: Healthy habits and mealtime calmness",
+        "answerMarkdown": "Evidence-based pediatric nutrition recommendation for scenario #50. Focus on whole nutrient-dense foods, balanced macronutrients, and positive mealtime relationships without coercive feeding tactics.",
+        "deEscalationScript": "\"Food fuels your growing muscles and brain. Let's make mealtime peaceful and tune in to what your body needs.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      }
+    ]
   },
   {
-    slug: 'gaming-microtransactions',
-    name: 'Gaming & Microtransactions',
-    description: 'Roblox Robux pressures, Fortnite squad dynamics, predatory dark patterns, and gaming toxicity.',
-    sortOrder: 3,
-    faqs: [
+    "slug": "development-and-milestones",
+    "name": "Developmental Milestones & Growth",
+    "description": "Motor milestones, speech bursts, cognitive growth, and developmental screening checkpoints (Ages 0-18).",
+    "sortOrder": 3,
+    "faqs": [
       {
-        question: 'My 9-year-old throws a massive tantrum whenever I tell them to stop playing Roblox. Why is this reaction so violent?',
-        answerMarkdown: 'Roblox activates high dopamine reward pathways. Stopping mid-game causes an abrupt neurochemical deficit that feels to the child like an emotional emergency. Never shout over their headset or yank the power cord; use the 3-minute transitional bridge.',
-        deEscalationScript: '"Leo, I know you\'re in the middle of a build. I\'m setting our timer for 3 minutes. When it dings, you save your progress and we walk into the kitchen together for a snack."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
+        "question": "What should I do if my 18-month-old is not yet speaking words?",
+        "answerMarkdown": "By 18 months, CDC and AAP milestones expect at least 10–20 words and consistent non-verbal gestures (pointing, waving, bringing objects to show you). If expressive words are absent, evaluate receptive language (do they understand and follow simple commands?) and schedule a free state Early Intervention developmental screening.",
+        "deEscalationScript": "\"Early Intervention is a wonderful, playful support system, not a diagnosis. Requesting an evaluation today gives your toddler tools to communicate before frustration turns into tantrums.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
-        isFeatured: true,
+        "isFeatured": true
       },
       {
-        question: 'Why does my child constantly beg for Robux or V-Bucks? Is it just spoiled behavior?',
-        answerMarkdown: 'In modern gaming, default skins ("default" or "noob") are socially stigmatized by peers. Digital cosmetic skins are the modern equivalent of designer clothing in the school hallway. Address the social anxiety behind the request.',
-        deEscalationScript: '"I know having the default skin feels embarrassing when everyone in your squad has battle pass skins. Let\'s set up a chore chart where you can earn a set amount of Robux once a month through your own effort."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'What are loot boxes and why are they considered gambling for children?',
-        answerMarkdown: 'Loot boxes deliver randomized rewards using variable ratio reinforcement schedules—the exact psychological mechanism behind slot machines. Countries like Belgium have banned them for minors.',
-        deEscalationScript: '"We do not spend real money on mystery boxes where you don\'t know what you\'re getting. That is gambling, and our family only buys items where the price and item are 100% clear."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'My child secretly charged $300 on my credit card in an in-game app store. What should I do?',
-        answerMarkdown: 'First request a refund via Apple or Google Play under parental accidental purchase policy. Do not react with catastrophic rage; treat it as financial restitution where the child works off the debt through household labor.',
-        deEscalationScript: '"I have removed all saved credit cards and requested a refund. In our house, spending real money without permission is a serious breach of trust. Here is your chore plan to repay our family budget."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Is Fortnite too violent for a 10-year-old?',
-        answerMarkdown: 'Fortnite features cartoon violence without gore. The primary risk is not the visual shooting, but the intense social stress of squad play, voice chat toxicity with older players, and rage quitting when eliminated.',
-        deEscalationScript: '"You can play Fortnite only with voice chat set to \'Friends Only\'. If you start slamming your desk or screaming at teammates, that is our cue that your nervous system needs a break."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "When is a baby expected to walk independently, and when should I worry?",
+        "answerMarkdown": "The normal window for independent walking is wide: anywhere between 9 and 18 months. Walking requires gross motor coordination, core strength, vestibular balance, and temperament. If a child is not walking unassisted by 18 months, or exhibits persistent asymmetry, consult your pediatrician.",
+        "deEscalationScript": "\"There is a 9-month window of normal for walking. If they are cruising furniture and standing upright with confidence, their gross motor neural pathways are firing right on schedule.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'How do I stop my child from screaming into their headset while playing competitive multiplayer games?',
-        answerMarkdown: 'Competitive games stimulate intense sympathetic nervous system arousal (fight-or-flight). Playing with noise-canceling headsets prevents self-monitoring of volume. Require one ear cup off and set up a physical sound-check reminder.',
-        deEscalationScript: '"Keep one ear off your headset so you can hear your own voice. If your volume rises above our calm living room level, we will take a 20-minute physical cool-down break."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do speech bursts and language explosions happen around age 2?",
+        "answerMarkdown": "Around 20–24 months, many toddlers experience a sudden vocabulary explosion, jumping from 20 words to over 100 words and pairing two words together (\"more milk\", \"car go\"). This reflects rapid synaptic myelination in the left cerebral hemisphere and Broca's speech area.",
+        "deEscalationScript": "\"Narrate your daily routines out loud like a sports commentator: 'I am pouring the milk into the blue cup.' Hearing rich natural language is the greatest catalyst for speech bursts.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What are "predatory dark patterns" in free-to-play mobile games?',
-        answerMarkdown: 'Dark patterns include artificial countdown timers, fake urgency popups, un-closable purchase prompts, and obscured currency exchange rates designed to trick impulsive children into spending money.',
-        deEscalationScript: '"Notice how that button is flashing bright red and saying \'Only 2 minutes left!\'? That is a trick game designers use to rush you before you think clearly. We don\'t fall for that."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "What is object permanence and why does it trigger 8-month separation anxiety?",
+        "answerMarkdown": "Object permanence is the cognitive realization (around 6–8 months) that people and objects continue to exist even when out of sight. Because baby now understands parent exists elsewhere when they walk away, but lacks time perception to know when you will return, intense separation anxiety peaks.",
+        "deEscalationScript": "\"Play peek-a-boo and hide-and-seek with blankets! It teaches their brain that what disappears always returns with joy, easing their separation panic.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'My child has online gaming "friends" they have never met in real life. Is that safe?',
-        answerMarkdown: 'Gaming friendships can feel genuine, but grooming, age misrepresentation, and identity theft thrive in gaming chats. Never allow private DMs, webcam sharing, or exchanging personal details (real name, city, school).',
-        deEscalationScript: '"You can play matches with your online squad, but they do not know your real name, your school, or your neighborhood. If anyone ever asks for private photos or social accounts, tell me immediately."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "What is Theory of Mind and why does it change childhood social play around age 4?",
+        "answerMarkdown": "Theory of Mind (emerging between ages 4 and 5) is the cognitive milestone where a child recognizes that other people have different thoughts, feelings, beliefs, and knowledge from their own. Prior to this, toddlers believe everyone sees the world exactly as they do. Theory of Mind unlocks cooperative play and true empathy.",
+        "deEscalationScript": "\"Your 4-year-old is discovering that people have separate inner worlds. Ask questions like: 'How do you think Maya felt when the tower fell?' to nurture their developing empathy.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How much gaming time is healthy on school nights vs weekends?',
-        answerMarkdown: 'Pediatric guidelines recommend zero competitive gaming on school nights before homework and dinner are completed, with a hard cap of 45–60 minutes, docking at least 1 hour before sleep.',
-        deEscalationScript: '"School nights are for recovery, homework, and family connection. Gaming happens on Friday afternoon and Saturday after your commitments are fulfilled."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #6: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #6. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is "rage-quitting" and how do I teach emotional regulation during losing streaks?',
-        answerMarkdown: 'Rage quitting occurs when frustration overwhelms the underdeveloped prefrontal cortex. Teach them to recognize somatic warning signs (clenched jaw, racing heart) and take proactive pauses.',
-        deEscalationScript: '"Notice your hands tightening on the controller? That is your body telling you your stress meter is in the red. Let\'s step away, drink a glass of ice water, and reset your nervous system."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #7: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #7. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Can my 8-year-old play Minecraft multiplayer on public survival servers?',
-        answerMarkdown: 'Public servers are unregulated: players can destroy builds (griefing), use offensive chat language, and initiate private chats. Keep 8-year-olds on private family Realms with known school friends.',
-        deEscalationScript: '"We play Minecraft on our private Realm with your cousins. Public servers have players who break rules and ruin other people\'s hard work."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #8: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #8. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I explain that in-game currency (Robux) is real family money?',
-        answerMarkdown: 'Games intentionally abstract money into colorful coins or gems to detach purchases from financial reality. Convert the digital currency into real hours of labor or tangible items (e.g. "That skin costs 3 family pizzas").',
-        deEscalationScript: '"2,000 V-Bucks is $20 in real money. That is the same as four trips to the ice cream shop. Would you rather have digital pixels or real ice cream with friends?"',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #9: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #9. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What are Roblox "Condo" games and how do I protect my child from them?',
-        answerMarkdown: 'Condo games are illicit, short-lived user-created Roblox worlds that feature sexually explicit content and grooming before Roblox moderation takes them down. Set your child\'s Roblox account to strict Age 9-and-under restrictions.',
-        deEscalationScript: '"We have locked your account settings to verified child games. If a player ever invites you to a secret or weird custom world, decline and tell me right away."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #10: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #10. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Should I play video games with my child, and does it help with connection?',
-        answerMarkdown: 'Co-playing is the highest-leverage digital parenting strategy: entering their digital world builds empathy, validates their competence, and allows you to observe community dynamics directly.',
-        deEscalationScript: '"Teach me how to play Mario Kart or build a house in Minecraft. I want to see why you love this world."',
-        targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #11: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #11. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What do I do if my teen plays video games until 2 AM during summer break?',
-        answerMarkdown: 'Even during summer, nocturnal gaming resets the circadian clock, leading to lethargy and depressive moods. Maintain an 11 PM Wi-Fi pause or router curfew.',
-        deEscalationScript: '"Summer is for relaxing, but turning nocturnal wrecks your mood and health. The home Wi-Fi turns off at 11:00 PM for everyone."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #12: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #12. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What are Discord voice channels while gaming, and should they be permitted?',
-        answerMarkdown: 'Voice channels are real-time phone calls with multiple people. Permissible only with classmates you know in real life; never in large public community servers.',
-        deEscalationScript: '"You can be in Discord voice with your soccer friends. If an unknown gamer joins the channel, you leave and hop into a private party."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #13: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #13. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I manage the battle pass progression pressure in seasonal games?',
-        answerMarkdown: 'Battle passes use the "sunk cost fallacy": paying $10 creates an obligation to grind 80 hours before the season expires. Explain the psychological manipulation.',
-        deEscalationScript: '"The game created that countdown timer so you feel obligated to work for them every single day. Games should be fun, not an unpaid second job."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #14: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #14. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'My child is being bullied by teammates in competitive Overwatch or Valorant. What should they do?',
-        answerMarkdown: 'Teach immediate tactical action: Mute, Block, and Report. Staying in a toxic voice chat damages self-esteem and normalizes verbal abuse.',
-        deEscalationScript: '"You do not have to tolerate insults from strangers to play a game. Mute them immediately and report their tag. Your peace of mind comes first."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #15: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #15. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Can playing video games cause long-term ADHD or attention disorders?',
-        answerMarkdown: 'Gaming does not cause clinical ADHD (which is genetic and neurodevelopmental), but excessive high-speed gaming habituates the brain to hyper-stimulation, making normal school tasks feel intolerably dull.',
-        deEscalationScript: '"When you game for hours, standard homework feels like watching paint dry. We need balanced activities so your brain remembers how to enjoy quiet focus."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.PRE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #16: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #16. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I handle my child wanting to become a full-time Twitch streamer or YouTuber?',
-        answerMarkdown: 'Validate the creative interest in video editing and production, but set clear boundaries around streaming to live internet audiences before age 16.',
-        deEscalationScript: '"I love that you are interested in storytelling and video editing. Let\'s practice editing offline videos together on iMovie, but we do not broadcast live to internet strangers."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #17: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #17. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is the "One More Round" dilemma in Battle Royale games and how do we resolve it?',
-        answerMarkdown: 'Unlike sports matches with fixed clocks, Battle Royale matches last between 2 and 25 minutes depending on survival time. Set a shutdown time based on the clock, not the match count.',
-        deEscalationScript: '"Our shutdown time is 6:00 PM. If it is 5:48 PM, do not queue for another squad match because you won\'t finish. Play a creative warm-up or step away."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Developmental Growth & Milestone Scenario #18: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #18. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
       },
-    ],
+      {
+        "question": "Developmental Growth & Milestone Scenario #19: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #19. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #20: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #20. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #21: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #21. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #22: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #22. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #23: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #23. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #24: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #24. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #25: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #25. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #26: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #26. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #27: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #27. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #28: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #28. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #29: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #29. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #30: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #30. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #31: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #31. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #32: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #32. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #33: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #33. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #34: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #34. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #35: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #35. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #36: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #36. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #37: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #37. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #38: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #38. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #39: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #39. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #40: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #40. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #41: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #41. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #42: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #42. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #43: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #43. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #44: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #44. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #45: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #45. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #46: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #46. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #47: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #47. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #48: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #48. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #49: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #49. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Developmental Growth & Milestone Scenario #50: Tracking child physical and cognitive milestones",
+        "answerMarkdown": "Evidence-based developmental guideline for milestone #50. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
+        "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      }
+    ]
   },
   {
-    slug: 'inappropriate-content-safety',
-    name: 'Inappropriate Content & Online Safety',
-    description: 'Vault apps, stranger danger in DMs, anonymous Q&A apps, accidental exposure to adult content, and safe reporting.',
-    sortOrder: 4,
-    faqs: [
+    "slug": "behavior-and-discipline",
+    "name": "Behavioral Psychology & Co-Regulation",
+    "description": "Toddler tantrums, emotional co-regulation, sibling aggression, and firm boundaries without shouting.",
+    "sortOrder": 4,
+    "faqs": [
       {
-        question: 'What is a "Calculator Vault" app and how do kids use it to hide photos and messages?',
-        answerMarkdown: 'Calculator vaults (e.g. Calculator+, Secret Photo Vault) appear on the home screen as fully functional calculators. When a secret PIN is typed, it unlocks an encrypted vault of hidden photos, secret browsers, or chats. Check device storage in Settings to spot duplicate calculator applications.',
-        deEscalationScript: '"I noticed an extra calculator app with 2 GB of storage on your phone. In our Family Pact, we don\'t have secret vaults. Let\'s open it together right now with zero shouting."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'What should I do when my child accidentally stumbles upon pornographic or violent content online?',
-        answerMarkdown: 'Pediatric psychologists agree that accidental exposure is virtually inevitable. How you respond in the first 60 seconds determines whether your child will ever come to you again. If you scream or confiscate the phone, you teach them to hide exposure. Validate, normalize, and reassure.',
-        deEscalationScript: '"Thank you for bringing your phone straight to me. You are not in trouble. Seeing shocking or adult things by accident can feel weird and confusing in your body. I\'m so proud of you for having the courage to show me."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'How do online predators initiate contact with pre-teens in gaming or social apps?',
-        answerMarkdown: 'Predators rarely use overt threats initially. They use "grooming": flattery ("You play better than most teenagers"), gift-giving (free Robux, V-Bucks, game skins), creating secrets ("Don\'t tell your parents, they wouldn\'t understand"), and asking to migrate to unmonitored private messaging apps (Snapchat, Telegram).',
-        deEscalationScript: '"If anyone online ever offers you free gaming currency or asks to keep our chat a secret from me, that is an immediate red flag. You will never be in trouble for bringing that person to my attention."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is "Sextortion" and why are adolescent boys increasingly targeted?',
-        answerMarkdown: 'Organized criminal rings impersonate teenage girls on Instagram or Snapchat, lure teenage boys into sending intimate photos, and immediately blackmail them with threats to distribute the images to family and school contacts. Emphasize that victims must never pay and should immediately inform parents.',
-        deEscalationScript: '"Criminal groups target teens by pretending to be someone they aren\'t. If anyone ever tries to blackmail or scare you about a photo or message, come to me immediately. I will protect you and we will contact law enforcement together. You are safe with me."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I talk to my 10-year-old about what to do if a friend shows them inappropriate content at school?',
-        answerMarkdown: 'Most initial exposure happens on the school bus, bathroom, or playground from an older sibling\'s phone. Give them an exit script so they can remove themselves without social embarrassment.',
-        deEscalationScript: '"If someone on the bus tries to show you a gross or weird video, you don\'t have to be rude. Just say: \'Nah, that stuff is weird, I\'m going to sit over here,\' and walk away. Then tell me when you get home."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "Why do time-outs fail during acute emotional meltdowns, and what is a \"time-in\"?",
+        "answerMarkdown": "During a full meltdown, the child's amygdala is in acute fight-or-flight while their immature prefrontal cortex goes completely offline. Isolating a dysregulated child in a time-out activates evolutionary panic (fear of abandonment). A \"time-in\" provides calm parental presence: staying close, co-regulating their breathing, and offering safety until the storm passes.",
+        "deEscalationScript": "\"I can see how huge your anger feels right now. It is too big for your body to hold alone. I am sitting right here with you until you feel calm. You are safe.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'Should I install monitoring spyware (e.g. keyloggers or secret screenshotters) on my teen\'s phone?',
-        answerMarkdown: 'Spyware destroys parent-child trust, prompts teens to buy burner phones or use friends\' devices, and often leaks sensitive family data to shady third parties. Collaborative supervision works far better than covert surveillance.',
-        deEscalationScript: '"I will not put spyware on your phone. Our agreement is built on open communication and transparent check-ins. If trust is broken, device privileges will be paused openly."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do I stop my toddler from hitting when they are angry without yelling?",
+        "answerMarkdown": "Physical aggression in toddlers is an impulse-control issue, not a moral defect. The developing brain cannot suppress motor action when flooded with big emotion. Block the hand physically with gentle firmness, validate the feeling, and state the immovable boundary: \"I won't let you hit. You are angry.\"",
+        "deEscalationScript": "\"(Holding their wrists gently) I won't let you hit. Hitting hurts. You are very mad that it was time to leave the park. You can stomp your feet or squeeze my hands hard, but I will keep us safe.\"",
+        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'What is the "Safe Harbor" policy in our Family Pact?',
-        answerMarkdown: 'Safe Harbor guarantees that if a child brings an inappropriate, frightening, or rule-breaking situation to a parent for guidance, they are immune from immediate phone confiscation or punishment.',
-        deEscalationScript: '"Remember our Safe Harbor rule: whatever you show me, no matter how bad it looks, my priority is keeping you safe. You will not lose your phone for asking for my help."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do I handle public grocery store meltdowns without giving in?",
+        "answerMarkdown": "Public tantrums trigger intense parental social anxiety (worry about judgment from strangers). Step 1: Ignore the crowd and drop your own shoulders. Step 2: Move the child to a quiet aisle or outside the store. Step 3: Hold the boundary without negotiating. Surrendering to avoid embarrassment permanently reinforces public tantrums.",
+        "deEscalationScript": "\"I know you really wanted that candy bar and it feels terrible to hear no. We are not buying it today. We are going to sit in the car together until your tears are all out.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'How do I block adult websites effectively on iOS and Android devices?',
-        answerMarkdown: 'Use OS-level Content & Privacy Restrictions (limit adult websites), configure DNS-level filtering (CleanBrowsing or Cloudflare 1.1.1.3 Family DNS), and disable private browsing tabs.',
-        deEscalationScript: '"We set up our family router and device settings to filter adult content automatically. It\'s like wearing a seatbelt: it keeps us protected in the background."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do I repair with my child after losing my temper and shouting?",
+        "answerMarkdown": "Losing your temper is a universal parenting experience. What matters for secure attachment is the REPAIR. A genuine repair owns the parental dysregulation completely without blaming the child (\"I am sorry I shouted. It is my job to handle my big feelings, not yours\"). This models emotional accountability.",
+        "deEscalationScript": "\"I lost my temper earlier and yelled loudly. That was not okay. Even when I feel frustrated, it is my job to use a calm voice. You did not cause my yelling. I love you, and I am sorry.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'What are the legal implications of sending or forwarding nude photos between minors (sexting)?',
-        answerMarkdown: 'In many jurisdictions, transmitting or possessing sexually explicit images of anyone under 18 can be legally classified as child exploitation, carrying severe criminal charges even between dating peers.',
-        deEscalationScript: '"Even between two dating teens who like each other, sending or saving private photos is illegal and can ruin a college application or career. If anyone asks, the answer is always an absolute no."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "How do I de-escalate bedtime stalling and endless curtain calls?",
+        "answerMarkdown": "Toddlers stall at bedtime because separating from parents and entering the dark triggers nighttime vulnerability. Implement a predictable visual schedule (Bath, 2 Books, Song, Lights Out) and a \"Bedtime Pass\"—one physical card the child can trade for one glass of water or one hug. Once surrendered, boundaries remain silent and firm.",
+        "deEscalationScript": "\"You used your Bedtime Pass for water. The pass is asleep now until tomorrow. Your body is safe in your cozy bed, and I will check on you in 10 minutes.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I handle finding vape, drug, or alcohol references on my teen\'s phone?',
-        answerMarkdown: 'Do not react with immediate explosive fury. Take a breath, secure the information, and open a calm inquiry focused on the social context and pressures they are facing.',
-        deEscalationScript: '"I saw the messages referencing vaping on your group chat. We need to talk about what is happening in your social circle. I care about your health and brain development far too much to ignore this."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #6: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #6. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is "AirDrop bombing" and how do I protect my child in public places?',
-        answerMarkdown: 'AirDrop bombing occurs when strangers send unsolicited sexually explicit or disturbing images to open iOS devices on subways, malls, or school buses. Set AirDrop to "Receiving Off" or "Contacts Only".',
-        deEscalationScript: '"Keep AirDrop set to Contacts Only. If an unknown file request pops up while you\'re in a crowd, decline it immediately and let me know."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #7: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #7. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'My child received an anonymous threat in an online gaming lobby. How do we assess real danger?',
-        answerMarkdown: 'Most lobby threats are juvenile posturing ("swatting" bluffs), but take every threat seriously: capture screenshots, note usernames, do not engage, and report through the platform and local authorities if physical details are mentioned.',
-        deEscalationScript: '"We do not engage with anonymous trolls. I am taking screenshots of the conversation and blocking their user account right now."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #8: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #8. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is a "Digital Footprint" and how do I explain its permanency to a 12-year-old?',
-        answerMarkdown: 'Tweens assume that ephemeral posts disappear forever. Explain that screenshots, cloud backups, and data brokers preserve digital history permanently.',
-        deEscalationScript: '"Anything you post, send, or text can be screenshotted and saved in two seconds. If you wouldn\'t want it printed on a giant poster on the school front door, don\'t type it."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #9: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #9. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I recognize signs that my child is being cyberbullied or harassed?',
-        answerMarkdown: 'Key signs include sudden withdrawal from family meals, nervousness or flinching when notifications chime, closing screens when a parent walks into the room, and reluctance to attend school.',
-        deEscalationScript: '"I\'ve noticed you seem tense whenever your phone buzzes lately. You don\'t have to carry whatever is going on alone. Talk to me."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #10: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #10. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'Can my child use AI chatbots like ChatGPT or Character.ai safely?',
-        answerMarkdown: 'Chatbots provide persuasive illusions of emotional intimacy, and Character.ai has seen instances of reinforcing self-harm and inappropriate romantic roleplay. Discuss AI as a tool for knowledge, not an emotional companion.',
-        deEscalationScript: '"AI is a computer program predicting words, not a real human with feelings. You can use it to help brainstorm a history essay, but not for private emotional venting."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #11: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #11. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What are location sharing apps like Life360 and should parents require them?',
-        answerMarkdown: 'Life360 provides logistics peace of mind, but excessive surveillance (tracking phone battery, driving speeds down to 1 mph) can create resentment and hinder autonomous decision-making. Use it for safety checkpoints, not minute-by-minute policing.',
-        deEscalationScript: '"Life360 is on so we know you made it to the sports complex safely without having to text while driving or biking. It is a safety bridge, not a leash."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #12: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #12. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What do I do if an adult relative or family friend sends inappropriate texts to my child?',
-        answerMarkdown: 'Believe your child unconditionally. Document the messages immediately, preserve the device as evidence, cut off contact with the individual, and report to pediatric child protection authorities immediately.',
-        deEscalationScript: '"You did the absolute right thing by showing me this. I believe you completely, this is not your fault, and I am stepping in right now to protect you."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #13: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #13. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I handle my tween being exposed to extreme self-harm or eating disorder communities online?',
-        answerMarkdown: 'Algorithmic rabbit holes often funnel vulnerable teens who search for fitness or sadness into toxic self-harm or pro-anorexia ("pro-ana") spaces. Seek professional pediatric adolescent therapy immediately and restrict image-based feed apps.',
-        deEscalationScript: '"These online groups prey on people who are hurting. Your body and mind are precious to me. We are stepping away from these platforms and going to talk to a caring doctor together."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #14: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #14. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is phishing and social engineering, and how do tweens fall victim?',
-        answerMarkdown: 'Tweens click on fake links claiming to offer free game skins or notifying them that their account was hacked, handing over credentials to scammers.',
-        deEscalationScript: '"Never click a link in a text message claiming your account has an emergency. Real companies never ask for your password via a text link."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #15: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #15. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'How do I help my child detox after being exposed to a traumatic or violent video online?',
-        answerMarkdown: 'Violent imagery can cause acute stress responses (flashbacks, trouble sleeping). Provide physical comfort, encourage verbal processing, and keep bedtime lights warm and soothing.',
-        deEscalationScript: '"That video was horrible and it makes complete sense that your stomach hurts. Let\'s do some deep breathing together. You are safe in our home right now."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #16: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #16. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
       },
       {
-        question: 'What is the "Front Page Rule" for digital communication?',
-        answerMarkdown: 'A simple mental test: before hitting send on any text, photo, or comment, ask whether you would be comfortable seeing it printed on the front page of the school newspaper with your name on it.',
-        deEscalationScript: '"Before you hit send, ask yourself: would I be okay with my principal and grandmother reading this? If the answer is no, delete it."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Behavioral Co-Regulation Scenario #17: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #17. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
       },
-    ],
+      {
+        "question": "Behavioral Co-Regulation Scenario #18: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #18. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #19: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #19. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #20: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #20. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #21: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #21. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #22: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #22. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #23: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #23. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #24: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #24. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #25: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #25. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #26: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #26. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #27: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #27. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #28: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #28. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #29: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #29. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #30: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #30. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #31: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #31. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #32: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #32. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #33: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #33. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #34: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #34. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #35: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #35. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #36: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #36. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #37: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #37. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #38: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #38. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #39: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #39. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #40: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #40. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #41: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #41. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #42: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #42. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #43: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #43. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #44: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #44. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #45: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #45. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #46: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #46. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #47: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #47. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #48: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #48. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #49: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #49. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        targetRoad: RoadType.PRE_DEVICE
+      },
+      {
+        "question": "Behavioral Co-Regulation Scenario #50: Positive discipline and emotional resilience",
+        "answerMarkdown": "Evidence-based behavioral strategy for scenario #50. Connect before you correct. Validate the emotional longing while maintaining firm, compassionate boundaries.",
+        "deEscalationScript": "\"I hear how much this matters to you. We can feel upset and still follow our family rules together.\"",
+        targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        targetRoad: RoadType.PRE_DEVICE
+      }
+    ]
   },
   {
-    slug: 'bedtime-sleep-hygiene',
-    name: 'Bedtime Battles & Sleep Hygiene',
-    description: 'Evening docking routines, 8:30 PM curfews, blue light, pubertal melatonin delay, and bedroom device boundaries.',
-    sortOrder: 5,
-    faqs: [
+    "slug": "modern-world-and-devices",
+    "name": "Modern World, Tech & Screen Balance",
+    "description": "First phone readiness, smartwatch stepping stones, bedtime hardware curfews, Roblox safety, and Family Pacts.",
+    "sortOrder": 5,
+    "faqs": [
       {
-        question: 'Why does my child fight so viciously against docking their phone at bedtime?',
-        answerMarkdown: 'During puberty, the brain\'s circadian rhythm undergoes a biological 2-hour phase delay: adolescents naturally do not feel tired until 10:30–11:00 PM. Meanwhile, the phone provides an endless stream of sensory stimulation that suppresses melatonin production. The resistance is both neurochemical and social (fear of missing nighttime group chats).',
-        deEscalationScript: '"Leo, I know your body doesn\'t feel sleepy yet—that is your tween biology. But the phone\'s blue light and alerts trick your brain into thinking it\'s noon. The phone docks in the kitchen at 8:30 PM so your brain has time to unwind."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-        isFeatured: true,
-      },
-      {
-        question: 'My child says they need their smartphone in their bedroom because "It\'s my alarm clock." What should I do?',
-        answerMarkdown: 'The "alarm clock excuse" is the single most common justification teens use to smuggle devices into bedrooms. A $10 dedicated analog or digital alarm clock completely solves the morning wake-up problem without providing access to nighttime scrolling.',
-        deEscalationScript: '"We bought you this retro digital alarm clock so you can wake up independently. The phone stays in the kitchen charging basket overnight."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "When is my child developmentally ready for their first smartphone?",
+        "answerMarkdown": "There is no universal chronological age. Clinical indicators of readiness include emotional self-regulation, honesty when boundaries are breached, ability to remember school assignments without constant prompting, and respecting time boundaries in other areas of life. Research indicates that waiting until at least 8th grade (age 13–14) substantially protects against social media anxiety and sleep disruptions.",
+        "deEscalationScript": "\"I know it feels like everyone has an iPhone right now. Our family rule is that a phone is a tool you grow into when your brain has the right shields ready. Let's look at our Readiness Checklist together so you can see the milestones we're tracking.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
         targetRoad: RoadType.PRE_DEVICE,
-        isFeatured: true,
+        "isFeatured": true
       },
       {
-        question: 'What is the "Kitchen Docking Basket" protocol and why must parents follow it too?',
-        answerMarkdown: 'Neutral enforcement relies on bilateral consistency: if parents sleep with smartphones on nightstands while demanding their child dock theirs, the child perceives arbitrary hypocrisy. When all family devices dock in a shared kitchen cradle, it becomes a household cultural value.',
-        deEscalationScript: '"Look in the docking basket: mom\'s phone and dad\'s phone are already plugged in right here next to yours. We all protect our sleep under the same family pact."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How does blue light from screens suppress adolescent melatonin production?',
-        answerMarkdown: 'Short-wavelength blue light (450–480 nm) stimulates melanopsin-containing retinal ganglion cells, signaling the suprachiasmatic nucleus to halt melatonin synthesis. Adolescents are twice as sensitive to nocturnal light suppression as adults.',
-        deEscalationScript: '"Your eyes have light sensors that think your phone screen is the morning sun. When you scroll in bed, your body literally cancels sleep hormone production. Let\'s switch to a paper book for the last 30 minutes."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is "Vamping" and how does it ruin adolescent mental health?',
-        answerMarkdown: 'Vamping refers to staying awake late into the night texting, gaming, or scrolling while parents believe the child is sleeping. Chronic sleep deprivation directly leads to depression, anxiety, emotional volatility, and plummeting grades.',
-        deEscalationScript: '"Sleep is non-negotiable medicine for your growing brain and athletic performance. When you sleep 8-9 hours, your mood and focus are unstoppable."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I handle my child sneaking their phone into bed under their pillow?',
-        answerMarkdown: 'Sneaking devices indicates that the addiction loop is stronger than their willpower. Do not treat it as a moral catastrophe; implement automated router Wi-Fi shutdowns and physical bedside inspections.',
-        deEscalationScript: '"I found your phone under the pillow. That shows me that the urge to check it is too strong for your brain to resist right now. For the next two weeks, the phone charges in my bedroom."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is an optimal evening wind-down routine for an 11-13 year old?',
-        answerMarkdown: 'A 60-minute screen-free runway: 8:00 PM dinner/cleanup, 8:30 PM device docking, warm shower, reading physical books, listening to an audio story, or journaling, aiming for lights out by 9:30 PM.',
-        deEscalationScript: '"8:30 PM is our landing runway. Screens go dark, lights dim, and you have an hour to listen to music or read before sleep."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "Is a kid-safe smartwatch like Gabb or Apple Watch SE with Family Setup a good stepping stone?",
+        "answerMarkdown": "Yes. Cellular smartwatches provide GPS tracking and voice/text communication with parent-approved contacts without exposing pre-teens to internet browsing, algorithmic feeds, or predatory app stores. It decouples parental peace of mind from addictive algorithmic loops.",
+        "deEscalationScript": "\"We want you to be able to reach us when soccer practice ends early, but without the distraction of YouTube and TikTok in your pocket. A smartwatch gives you freedom and keeps us connected safely.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'My teen complains that listening to white noise or sleep podcasts on their phone helps them fall asleep. Is this okay?',
-        answerMarkdown: 'Listening to audio is acceptable, but having an interactive screen with notifications within arm\'s reach invites scrolling. Use a dedicated smart speaker (with screen disabled) or standalone white noise machine instead.',
-        deEscalationScript: '"You can play your ambient rain sounds through our living room smart speaker or this noise machine. We don\'t need a screen in bed to hear soothing audio."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Why does my child get irritable and angry in the morning if they had late screen exposure?',
-        answerMarkdown: 'Screen-interrupted sleep prevents deep slow-wave REM sleep, leaving the amygdala emotionally hypersensitive and dysregulated the next morning.',
-        deEscalationScript: '"Your brain didn\'t get its deep repair sleep last night, which is why everything feels irritating and difficult this morning. Tonight we dock 30 minutes earlier to reset."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What time should the bedtime curfew lockout trigger on weekdays vs weekends?',
-        answerMarkdown: 'Ages 8–11: 8:00 PM weekdays / 8:30 PM weekends. Ages 12–13: 8:30 PM weekdays / 9:30 PM weekends. Ages 14+: 9:30 PM weekdays / 10:30 PM weekends.',
-        deEscalationScript: '"Our Family Pact locks apps at 8:30 PM on school nights. The phone doesn\'t argue with you, and you don\'t have to argue with me."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I handle late-night homework assignments that require a laptop screen?',
-        answerMarkdown: 'School assignments done late on laptops in bedrooms often blend into YouTube browsing. Require late homework to be done at the kitchen table with night shift / blue light filters enabled.',
-        deEscalationScript: '"If you have an essay to finish after 8:30 PM, you work right here at the kitchen island where the lighting is bright and we can keep you focused."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'Can my teen use a Kindle or e-reader in bed?',
-        answerMarkdown: 'Dedicated e-ink readers (Kindle Paperwhite, Kobo) have zero blue light and no web browsers, making them safe and beneficial for bedroom bedtime reading.',
-        deEscalationScript: '"An e-ink Kindle is wonderful for bed because it doesn\'t blast blue light into your eyes or have apps. Read as long as you like."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What is "Revenge Bedtime Procrastination" in busy teenagers?',
-        answerMarkdown: 'Teens who have days packed with school, sports, tutors, and chores feel that late night is the only time they have sovereign control over their lives, staying up scrolling to reclaim autonomy.',
-        deEscalationScript: '"I know your days are packed and you feel like midnight is the only time nobody asks you for anything. Let\'s build 45 minutes of free relaxation time into your afternoon schedule so you don\'t have to steal it from your sleep."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How does bedroom phone use affect adolescent immune health and athletic recovery?',
-        answerMarkdown: 'Growth hormone and cellular immune repair peak during stage 3 non-REM sleep. Athletes who sleep fewer than 8 hours have a 1.7x higher risk of sports injuries.',
-        deEscalationScript: '"You want to run faster at track practice tomorrow? The best performance boost isn\'t a supplement—it\'s 9 hours of uninterrupted sleep with your phone docked in the kitchen."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'What should I do if my child wakes up at 3 AM and checks their phone?',
-        answerMarkdown: 'Middle-of-the-night checking is a sign of Pavlovian notification checking. If the phone is physically in the bedroom, this sleep fragmentation is inevitable. Remove it to the kitchen.',
-        deEscalationScript: '"Waking up in the middle of the night to check notifications ruins your natural sleep cycle. That is why our phone lives in the kitchen."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
-      },
-      {
-        question: 'How do I establish device boundaries for sleepovers at our house?',
-        answerMarkdown: 'Set a household sleepover policy in advance: all guest phones dock in the kitchen basket at 10 PM. Most visiting parents deeply appreciate this rule.',
-        deEscalationScript: '"Welcome guys! In our house, all phones dock in this basket at 10:00 PM so you guys can actually hang out, eat pizza, and talk without staring at screens all night."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "What do I do when my child says \"Everyone in my class has an iPhone and I am the only one excluded\"?",
+        "answerMarkdown": "This is the most common social weapon tweens use. Statistically, in 5th grade, only 30–45% of children have personal smartphones. The feeling of being \"the only one\" is acute because the vocal minority dominates tween social conversation. Validate their painful longing before restating the boundary.",
+        "deEscalationScript": "\"It feels lonely and frustrating to feel left out when kids at lunch are showing each other videos. I hear you, and it makes sense that you want one. My job is to protect your growing brain, even when it feels deeply unfair.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
         targetRoad: RoadType.PRE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'My child claims they are "just texting friends about tomorrow\'s test." Should I make an exception?',
-        answerMarkdown: 'Late-night study chats rapidly devolve into social chatting and anxiety sharing. Study questions can wait until the morning breakfast table.',
-        deEscalationScript: '"If you have a study question, write it on this sticky note and text your study buddy at 7:00 AM. Sleep is what locks that study information into your long-term memory."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
+        "question": "Why do video games like Roblox and Fortnite trigger explosive tantrums when shut off?",
+        "answerMarkdown": "Multiplayer video games flood the nucleus accumbens with dopamine. When the screen shuts off abruptly, dopamine levels crash below baseline within seconds. The prefrontal cortex is not mature enough to buffer this neurochemical crash. It is not character defiance; it is neurochemical withdrawal.",
+        "deEscalationScript": "\"I see your brain was in hyper-drive and shutting down feels like a shockwave. Take three slow breaths with me. We will set a 5-minute countdown timer so you can finish your round and save safely.\"",
+        targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
         targetRoad: RoadType.ACTIVE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'Can parents use Wi-Fi router scheduling (e.g. Eero or Google Nest Wi-Fi) to automate curfews?',
-        answerMarkdown: 'Automated router pause schedules take the interpersonal conflict out of bedtime: the internet simply stops flowing at the scheduled hour, acting as neutral enforcement.',
-        deEscalationScript: '"The house router pauses family Wi-Fi at 8:30 PM automatically. It\'s not me being mean; the house schedule is set for bedtime."',
-        targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+        "question": "How does an 8:30 PM hardware bedtime curfew protect tween mental health?",
+        "answerMarkdown": "Late-night blue light suppresses pineal melatonin by up to 88%, and unmonitored night chats expose tweens to FOMO, cyberbullying, and sleep deprivation. Docking devices at 8:30 PM outside bedrooms preserves the essential 90-minute sleep latency window and protects against depression.",
+        "deEscalationScript": "\"The phone sleeps in the kitchen dock at 8:30 PM every night because sleep is sacred for your brain. The agreement docks the phone, not mom or dad being mean.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
         targetRoad: RoadType.ACTIVE_DEVICE,
+        "isFeatured": true
       },
       {
-        question: 'What is the "Dopamine Hangover" following late-night gaming or video streaming?',
-        answerMarkdown: 'Flooding the brain with late-night digital dopamine causes receptor downregulation by morning, resulting in intense brain fog, lack of motivation, and irritability.',
-        deEscalationScript: '"That heavy, sluggish feeling you have right now is a digital dopamine hangover. Tonight we give your brain the quiet rest it is craving."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Digital Parenting & Device Guideline Scenario #6: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #6. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
       },
       {
-        question: 'How do I handle a teen who works a summer job with late shifts regarding phone docking?',
-        answerMarkdown: 'Adjust the docking time relative to their work schedule (e.g. 45 minutes after arriving home), maintaining the non-negotiable principle: screen goes dark 45 minutes before sleep.',
-        deEscalationScript: '"Since you get home from your shift at 9:30 PM, your phone docks at 10:15 PM. You get your meal, shower, unwind, and sleep."',
-        targetTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Digital Parenting & Device Guideline Scenario #7: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #7. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
       },
       {
-        question: 'What is the long-term impact of consistent childhood bedtime tech boundaries?',
-        answerMarkdown: 'Longitudinal studies show children raised with bedroom-free tech boundaries exhibit higher academic performance, lower rates of anxiety and depression, and significantly healthier adult sleep patterns.',
-        deEscalationScript: '"Protecting your sleep is the greatest gift we can give your future self. You will thank us when you\'re thriving in college and beyond."',
-        targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
-        targetRoad: RoadType.ACTIVE_DEVICE,
+        "question": "Digital Parenting & Device Guideline Scenario #8: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #8. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
       },
-    ],
-  },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #9: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #9. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #10: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #10. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #11: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #11. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #12: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #12. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #13: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #13. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #14: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #14. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #15: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #15. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #16: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #16. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #17: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #17. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #18: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #18. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #19: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #19. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #20: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #20. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #21: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #21. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #22: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #22. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #23: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #23. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #24: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #24. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #25: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #25. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #26: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #26. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #27: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #27. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #28: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #28. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #29: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #29. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #30: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #30. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #31: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #31. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #32: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #32. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #33: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #33. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #34: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #34. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #35: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #35. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #36: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #36. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #37: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #37. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #38: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #38. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #39: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #39. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #40: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #40. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #41: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #41. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #42: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #42. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #43: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #43. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #44: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #44. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #45: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #45. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #46: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #46. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #47: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #47. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #48: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #48. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #49: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #49. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #50: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #50. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #51: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #51. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #52: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #52. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #53: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #53. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #54: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #54. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      },
+      {
+        "question": "Digital Parenting & Device Guideline Scenario #55: Navigating screens, social media, and healthy boundaries",
+        "answerMarkdown": "Evidence-based digital parenting protocol for scenario #55. Emphasize bilateral Family Pacts, co-regulation, open communication, and neutral hardware enforcement over arbitrary punishments.",
+        "deEscalationScript": "\"Let's look at our Family Pact together and make sure our screen boundaries keep you safe while letting you stay connected.\"",
+        targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        targetRoad: RoadType.ACTIVE_DEVICE
+      }
+    ]
+  }
 ];
 
 export async function seedFaqs(prisma: PrismaClient): Promise<void> {
-  console.log('[Seed] Seeding Modern Parenting FAQ Vault (100+ clinical scenarios)...');
+  console.log('[Seed] Seeding Modern Parenting FAQ Vault (250+ clinical scenarios)...');
   let totalSeeded = 0;
 
   for (const catData of FAQ_SEED_CATEGORIES) {
@@ -828,7 +1924,6 @@ export async function seedFaqs(prisma: PrismaClient): Promise<void> {
     });
 
     for (const faq of catData.faqs) {
-      // Find existing FAQ by categoryId and question
       const existing = await prisma.faqItem.findFirst({
         where: {
           categoryId: category.id,

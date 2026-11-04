@@ -9,6 +9,12 @@ import type {
 } from '@alongside/shared';
 
 export interface ChildRecord {
+  dietaryStage?: string | null;
+  allergies?: string[] | null;
+  recentHealthLogs?: string[] | null;
+  pediatricNotes?: string | null;
+  ageMonths?: number | null;
+  birthDate?: Date | null;
   id: string;
   userId: string;
   name: string;
@@ -27,6 +33,11 @@ export interface ChildRecord {
 export type ChildWithMetaRecord = ChildRecord;
 
 export interface CreateChildRecordData {
+  dietaryStage?: string | null;
+  allergies?: string[] | null;
+  pediatricNotes?: string | null;
+  recentHealthLogs?: string[] | null;
+  ageMonths?: number | null;
   userId: string;
   name: string;
   birthYear: number;
@@ -399,6 +410,10 @@ export class PrismaChildrenRepository implements ChildrenRepository {
     const latestAttempt = raw.quizAttempts?.[0];
 
     return {
+      dietaryStage: raw.dietaryStage ?? null,
+      allergies: raw.allergies ?? [],
+      pediatricNotes: raw.pediatricNotes ?? null,
+      recentHealthLogs: Array.isArray(raw.healthLogs) ? raw.healthLogs.map((h: any) => h.symptom || h.title || h.notes).filter(Boolean) : [],
       id: raw.id,
       userId: raw.userId,
       name: raw.name,
@@ -455,6 +470,11 @@ export class InMemoryChildrenRepository implements ChildrenRepository {
     const now = new Date();
     const record: ChildRecord = {
       id,
+      dietaryStage: dataToCreate.dietaryStage ?? null,
+      allergies: dataToCreate.allergies ?? [],
+      pediatricNotes: dataToCreate.pediatricNotes ?? null,
+      recentHealthLogs: dataToCreate.recentHealthLogs ?? [],
+      ageMonths: dataToCreate.ageMonths ?? null,
       userId: dataToCreate.userId,
       name: dataToCreate.name.trim(),
       birthYear: dataToCreate.birthYear,

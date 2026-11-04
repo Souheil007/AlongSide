@@ -352,4 +352,105 @@ describe('24/7 AI Child Advisor & Multi-LLM Fallback Engine API (PLAN-10)', () =
       expect(payload.error.message).toContain('All configured AI providers failed');
     });
   });
+
+  describe('Clinical Safe Harbor Emergency Overrides & Whole-Child Grounding (PLAN-20)', () => {
+    it('halts LLM streaming and emits EMERGENCY_RED_FLAG for acute infant fever and respiratory distress', async () => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/ai-advisor/chat',
+        headers: {
+          cookie: userACookie,
+        },
+        payload: {
+          message: 'My 2-month-old has a 101 fever and struggling to breathe',
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.headers['content-type']).toContain('text/event-stream');
+
+      const events = parseSseEvents(response.body);
+      const emergencyEvent = events.find((e) => e.type === 'EMERGENCY_RED_FLAG');
+      expect(emergencyEvent).toBeDefined();
+      expect(emergencyEvent!.isEmergency).toBe(true);
+      expect(emergencyEvent!.phoneDial).toBe('911');
+      expect(emergencyEvent!.directive).toContain('911');
+      expect(emergencyEvent!.directive).toContain('Pediatric Emergency Department');
+
+      // Verify speculative LLM streaming was completely halted (zero calls to LLM orchestrator)
+      expect(fakeOpenAi.callCount).toBe(0);
+
+      // Verify done event was emitted cleanly
+      const doneEvent = events.find((e) => e.type === 'done');
+      expect(doneEvent).toBeDefined();
+    });
+
+    it('triggers EMERGENCY_RED_FLAG for button battery ingestion', async () => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/ai-advisor/chat',
+        headers: {
+          cookie: userACookie,
+        },
+        payload: {
+          message: 'Help, my toddler swallowed a button battery!',
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+      const events = parseSseEvents(response.body);
+      const emergencyEvent = events.find((e) => e.type === 'EMERGENCY_RED_FLAG');
+      expect(emergencyEvent).toBeDefined();
+      expect(emergencyEvent!.category).toBe('TOXIC_INGESTION');
+      expect(emergencyEvent!.directive).toContain('Poison Control');
+      expect(fakeOpenAi.callCount).toBe(0);
+    });
+
+    it('injects rich whole-child contextual memory (dietaryStage, allergies, recentHealthLogs) into advisor prompt', async () => {
+      const childRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: {
+          cookie: userACookie,
+        },
+        payload: {
+          name: 'Maya',
+          birthYear: 2023,
+          birthMonth: 8,
+          roadType: RoadType.PRE_DEVICE,
+        },
+      });
+      expect(childRes.statusCode).toBe(201);
+      const childId = childRes.json().data.child.id;
+
+      // Update in-memory child record with rich whole-child fields
+      const childRecord = (inMemoryChildrenRepo as any).children.get(childId);
+      if (childRecord) {
+        childRecord.dietaryStage = 'SOLIDS_INTRODUCED';
+        childRecord.allergies = ['Peanut', 'Egg'];
+        childRecord.recentHealthLogs = ['Mild teething fever (99.8F) on Monday'];
+      }
+
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/ai-advisor/chat',
+        headers: {
+          cookie: userACookie,
+        },
+        payload: {
+          childId,
+          message: 'Can I offer Maya steamed sweet potato sticks for lunch?',
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+      const events = parseSseEvents(response.body);
+      const contextEvent = events.find((e) => e.type === 'context');
+      expect(contextEvent).toBeDefined();
+      expect(contextEvent!.childContext).toBeDefined();
+      expect(contextEvent!.childContext.name).toBe('Maya');
+      expect(contextEvent!.childContext.dietaryStage).toBe('SOLIDS_INTRODUCED');
+      expect(contextEvent!.childContext.allergies).toEqual(['Peanut', 'Egg']);
+    });
+  });
 });

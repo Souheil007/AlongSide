@@ -9,6 +9,8 @@ import {
   BookOpen,
   Sparkles,
   Loader2,
+  AlertTriangle,
+  PhoneCall,
 } from 'lucide-react';
 import type { AiMessageDTO } from '@alongside/shared';
 import { cn } from '@/lib/utils';
@@ -111,6 +113,46 @@ export function ChatFeed({
  */
 function MessageBubble({ message }: { message: AiMessageDTO }) {
   const isParent = message.role === 'USER';
+  const isEmergency =
+    !isParent &&
+    (message.content.includes('EMERGENCY MEDICAL DIRECTIVE') ||
+      message.content.includes('🚨'));
+
+  if (isEmergency) {
+    return (
+      <div className="flex items-start gap-3 justify-start w-full my-2">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-600 text-white shadow-md">
+          <AlertTriangle className="h-5 w-5" />
+        </div>
+        <div className="max-w-[90%] sm:max-w-[85%] rounded-2xl rounded-tl-sm border-2 border-rose-300 bg-rose-50/95 p-5 shadow-md text-slate-900">
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider shadow-sm">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              Clinical Safe Harbor Emergency Override
+            </span>
+            <span className="text-[10px] text-rose-800 font-semibold">
+              {formatMessageTime(message.createdAt)}
+            </span>
+          </div>
+          <div className="mt-3 text-sm text-slate-900 leading-relaxed whitespace-pre-wrap font-medium">
+            {message.content}
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3 pt-3 border-t border-rose-200">
+            <a
+              href="tel:911"
+              className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-bold text-white shadow hover:bg-rose-700 transition-colors"
+            >
+              <PhoneCall className="h-4 w-4" />
+              Call 911 Immediately
+            </a>
+            <span className="text-xs text-rose-900 font-medium">
+              Immediate in-person pediatric evaluation required. Do not administer oral medications.
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
