@@ -30,12 +30,7 @@ export type AgreementClauseInput = z.infer<typeof AgreementClauseInputSchema>;
 export const CreateAgreementSchema = z.object({
   childId: z.string().uuid('Invalid child ID format'),
   title: z.string().trim().min(1, 'Agreement title is required').max(150),
-  developmentalTier: z.enum([
-    DevelopmentalTier.TIER_1_AGES_8_9,
-    DevelopmentalTier.TIER_2_AGES_10_11,
-    DevelopmentalTier.TIER_3_AGES_12_13,
-    DevelopmentalTier.TIER_4_AGES_14_PLUS,
-  ]),
+  developmentalTier: z.nativeEnum(DevelopmentalTier),
   roadType: z.enum([RoadType.PRE_DEVICE, RoadType.ACTIVE_DEVICE]),
   clauses: z.array(AgreementClauseInputSchema).min(1, 'At least one agreement clause is required'),
   parentSignature: z.string().optional(),
@@ -62,14 +57,7 @@ export const UpdateAgreementSchema = z.object({
 export type UpdateAgreementInput = z.infer<typeof UpdateAgreementSchema>;
 
 export const GetPresetsQuerySchema = z.object({
-  tier: z
-    .enum([
-      DevelopmentalTier.TIER_1_AGES_8_9,
-      DevelopmentalTier.TIER_2_AGES_10_11,
-      DevelopmentalTier.TIER_3_AGES_12_13,
-      DevelopmentalTier.TIER_4_AGES_14_PLUS,
-    ])
-    .optional(),
+  tier: z.nativeEnum(DevelopmentalTier).optional(),
   roadType: z.enum([RoadType.PRE_DEVICE, RoadType.ACTIVE_DEVICE]).optional(),
 });
 

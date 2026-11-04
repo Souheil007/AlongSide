@@ -16,6 +16,9 @@ import type {
   Role,
   SubscriptionTier,
   TriageZone,
+  TemperatureMethod,
+  NutritionStage,
+  AntipyreticMedication,
 } from '../constants/index.js';
 
 export interface ApiResponse<T> {
@@ -63,10 +66,12 @@ export interface ChildDTO {
   birthMonth: number;
   birthDate?: string | null;
   age: number;
+  ageMonths?: number | null;
   roadType: RoadType;
   developmentalTier: DevelopmentalTier;
-  dietaryStage?: DietaryStage;
-  allergies?: string[];
+  dietaryStage?: DietaryStage | string | null;
+  allergies?: string[] | null;
+  recentHealthLogs?: string[] | null;
   pediatricNotes?: string | null;
   schoolGrade?: string | null;
   deviceProfileStatus?: DeviceProfileStatus | null;
@@ -298,7 +303,7 @@ export interface FaqListResponseDTO {
 }
 
 export interface AiChatStreamEventDTO {
-  type: 'context' | 'token' | 'done' | 'error';
+  type: 'context' | 'token' | 'done' | 'error' | 'EMERGENCY_RED_FLAG';
   matchedFaqs?: (string | { id: string; question: string; categorySlug?: string; deEscalationScript?: string | null })[];
   content?: string;
   conversationId?: string;
@@ -306,6 +311,13 @@ export interface AiChatStreamEventDTO {
   tokensUsed?: number;
   code?: string;
   message?: string;
+  category?: string;
+  title?: string;
+  directive?: string;
+  immediateActions?: string[];
+  callNumber?: string;
+  rationale?: string;
+  clinicalAuthority?: string;
 }
 
 export interface AiConversationDTO {
@@ -350,15 +362,23 @@ export interface ChildMilestoneDTO {
 
 export interface SymptomProtocolDTO {
   id: string;
-  slug: string;
+  slug?: string;
+  symptomKey?: string;
   title: string;
+  category?: 'FEVER' | 'RESPIRATORY' | 'GASTROINTESTINAL' | 'SKIN' | 'NEUROLOGICAL' | 'ENT' | string;
   summary: string;
-  targetTiers: DevelopmentalTier[];
-  redFlags: string[];
-  yellowFlags: string[];
-  greenHomeCare: string[];
-  contraindications: string[];
-  clinicalAuthority: string;
+  targetTiers?: DevelopmentalTier[];
+  redFlags?: string[];
+  yellowFlags?: string[];
+  greenHomeCare?: string[];
+  contraindications?: string[];
+  clinicalAuthority?: string;
+  feverThresholdF?: number;
+  redZoneCriteria?: string[];
+  yellowZoneCriteria?: string[];
+  greenZoneHomeCare?: string[];
+  immediateActionRed?: string;
+  primarySources?: string[];
 }
 
 export interface ChildHealthLogDTO {
@@ -374,13 +394,31 @@ export interface ChildHealthLogDTO {
 }
 
 export interface NutritionGuideDTO {
-  id: string;
-  stage: DietaryStage;
+  id?: string;
+  stage: NutritionStage;
+  stageName: string;
+  ageBracket?: string;
+  ageRange: string;
   title: string;
-  ageBracket: string;
-  guidelinesMarkdown: string;
-  safeFoods: string[];
-  chokingHazards: string[];
+  summary: string;
+  keyNutrients: string[];
+  recommendedFoods: string[];
+  foodsToAvoid: {
+    food: string;
+    hazardType: string;
+    mechanism: string;
+    strictAgeMonths?: number;
+    exceptionAllowed?: string | boolean;
+  }[];
+  blwTips: string[];
+  dorPrinciples: {
+    parentDecides: string[];
+    childDecides: string[];
+    goldenRule: string;
+  };
+  guidelinesMarkdown?: string;
+  safeFoods?: string[];
+  chokingHazards?: string[];
   allergenProtocol?: string | null;
   pickyEatingTips?: string | null;
 }
@@ -408,15 +446,46 @@ export interface BehaviorGuideDTO {
   authoritativeLimit: string;
 }
 
-export interface TriageAssessmentResultDTO {
+// ----------------------------------------------------
+// PEDIATRIC HEALTH & SYMPTOM TRIAGE DTOS
+// ----------------------------------------------------
+
+export interface TriageAssessmentRequestDTO {
+  childId?: string;
+  childAgeMonths?: number;
+  temperatureF?: number;
+  temperatureMethod?: TemperatureMethod;
+  symptoms: string[];
+  durationHours?: number;
+  behaviorNotes?: string;
+}
+
+export interface AntipyreticDosingResultDTO {
+  medication: AntipyreticMedication;
+  isContraindicated: boolean;
+  contraindicationReason?: string;
+  weightLbs: number;
+  weightKg: number;
+  childAgeMonths: number;
+  recommendedDoseMg: number;
+  recommendedDoseMl: number;
+  liquidConcentration: string;
+  frequencyHours: number;
+  frequencyDescription: string;
+  maxDosesPer24h: number;
+  maxDailyMg: number;
+  clinicalSafetyNotes: string[];
+}
+
+export interface TriageResultDTO {
   zone: TriageZone;
   requiresEmergency911: boolean;
   conditionSuspected: string;
-  clinicalRationale: string;
+  clinicalRationale?: string;
   immediateActions: string[];
   homeCareMeasures: string[];
   redFlagWarnings: string[];
-  recommendedDosing?: {
+  recommendedDosing?: AntipyreticDosingResultDTO | {
     medication: string;
     dosageMg: number;
     frequency: string;
@@ -425,5 +494,26 @@ export interface TriageAssessmentResultDTO {
   clinicalAuthority: string;
 }
 
+export type TriageAssessmentResultDTO = TriageResultDTO;
 
+export interface AllergenScheduleItemDTO {
+  id: string;
+  allergen: string;
+  recommendedStartMonth: number;
+  priority: number;
+  evidenceTrial: string;
+  recommendedFormat: string;
+  preparationInstructions: string;
+  safetyWarning: string;
+  frequencyMaintenance: string;
+  status?: 'NOT_STARTED' | 'INTRODUCED_TOLERATED' | 'REACTION_OBSERVED';
+  introducedDate?: string;
+}
 
+export interface ChokingHazardDTO {
+  foodItem: string;
+  riskLevel: 'CRITICAL' | 'HIGH' | 'MODERATE';
+  mechanism: string;
+  safeModification: string;
+  avoidUntilAgeYears: number;
+}

@@ -144,3 +144,26 @@ export const ExploitSeverity = {
   CRITICAL: 'CRITICAL',
 } as const;
 export type ExploitSeverity = (typeof ExploitSeverity)[keyof typeof ExploitSeverity];
+
+export const TemperatureMethod = {
+  RECTAL: 'RECTAL',
+  AXILLARY: 'AXILLARY',
+  ORAL: 'ORAL',
+  TYMPANIC: 'TYMPANIC',
+} as const;
+export type TemperatureMethod = (typeof TemperatureMethod)[keyof typeof TemperatureMethod];
+
+export const NutritionStage = {
+  MILK_ONLY: 'MILK_ONLY',
+  SOLIDS_INTRODUCED: 'SOLIDS_INTRODUCED',
+  TODDLER_TABLE: 'TODDLER_TABLE',
+  BALANCED_SCHOOL: 'BALANCED_SCHOOL',
+  PUBERTAL_GROWTH: 'PUBERTAL_GROWTH',
+} as const;
+export type NutritionStage = (typeof NutritionStage)[keyof typeof NutritionStage];
+
+export const AntipyreticMedication = {
+  ACETAMINOPHEN: 'ACETAMINOPHEN',
+  IBUPROFEN: 'IBUPROFEN',
+} as const;
+export type AntipyreticMedication = (typeof AntipyreticMedication)[keyof typeof AntipyreticMedication];
