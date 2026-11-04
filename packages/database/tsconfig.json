@@ -1,8 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@alongside/shared": ["../shared/src/index.ts"],
+      "@alongside/shared/*": ["../shared/src/*"]
+    }
   },
   "include": ["src/**/*", "prisma/seed/**/*"]
 }

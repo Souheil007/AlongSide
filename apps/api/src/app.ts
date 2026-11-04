@@ -65,6 +65,43 @@ import {
 import { AiAdvisorService } from './modules/ai-advisor/ai-advisor.service.js';
 import { MultiProviderLlmOrchestrator } from './modules/ai-advisor/adapters/llm-orchestrator.js';
 import { FaqRetrievalService } from './modules/ai-advisor/embedding.service.js';
+import {
+  type HealthRepository,
+  PrismaHealthRepository,
+} from './modules/health/health.repository.js';
+import {
+  type PediatricTriageEngine,
+  BartonSchmittTriageAdapter,
+} from './modules/health/triage.engine.js';
+import { HealthService } from './modules/health/health.service.js';
+import { milestonesRoutes } from './modules/milestones/milestones.routes.js';
+import {
+  type MilestonesRepository,
+  PrismaMilestonesRepository,
+} from './modules/milestones/milestones.repository.js';
+import { MilestonesService } from './modules/milestones/milestones.service.js';
+import { nutritionRoutes } from './modules/nutrition/nutrition.routes.js';
+import {
+  type NutritionRepository,
+  PrismaNutritionRepository,
+} from './modules/nutrition/nutrition.repository.js';
+import { NutritionService } from './modules/nutrition/nutrition.service.js';
+import { brainGamesRoutes } from './modules/brain-games/brain-games.routes.js';
+import {
+  type BrainGamesRepository,
+  PrismaBrainGamesRepository,
+} from './modules/brain-games/brain-games.repository.js';
+import { BrainGamesService } from './modules/brain-games/brain-games.service.js';
+import {
+  type PlayActivityRecommender,
+  DevelopmentalPlayAdapter,
+} from './modules/brain-games/play.recommender.js';
+import { behaviorRoutes } from './modules/behavior/behavior.routes.js';
+import {
+  type BehaviorRepository,
+  PrismaBehaviorRepository,
+} from './modules/behavior/behavior.repository.js';
+import { BehaviorService } from './modules/behavior/behavior.service.js';
 
 export interface AppOptions extends FastifyServerOptions {
   corsOrigin?: string;
@@ -88,6 +125,18 @@ export interface AppOptions extends FastifyServerOptions {
   aiAdvisorRepository?: AiAdvisorRepository;
   aiAdvisorService?: AiAdvisorService;
   llmOrchestrator?: MultiProviderLlmOrchestrator;
+  milestonesRepository?: MilestonesRepository;
+  milestonesService?: MilestonesService;
+  healthRepository?: HealthRepository;
+  healthService?: HealthService;
+  triageEngine?: PediatricTriageEngine;
+  nutritionRepository?: NutritionRepository;
+  nutritionService?: NutritionService;
+  brainGamesRepository?: BrainGamesRepository;
+  brainGamesService?: BrainGamesService;
+  playRecommender?: PlayActivityRecommender;
+  behaviorRepository?: BehaviorRepository;
+  behaviorService?: BehaviorService;
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
@@ -231,8 +280,56 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
       resolvedChildrenRepository
     );
 
+  const resolvedMilestonesRepository =
+    opts.milestonesRepository ?? new PrismaMilestonesRepository();
+  const resolvedMilestonesService =
+    opts.milestonesService ??
+    new MilestonesService(resolvedMilestonesRepository);
+
+  const resolvedTriageEngine =
+    opts.triageEngine ?? new BartonSchmittTriageAdapter();
+  const resolvedHealthRepository =
+    opts.healthRepository ?? new PrismaHealthRepository();
+  const resolvedHealthService =
+    opts.healthService ??
+    new HealthService(
+      resolvedHealthRepository,
+      resolvedTriageEngine,
+      resolvedChildrenRepository
+    );
+
+  const resolvedNutritionRepository =
+    opts.nutritionRepository ?? new PrismaNutritionRepository();
+  const resolvedNutritionService =
+    opts.nutritionService ??
+    new NutritionService(resolvedNutritionRepository);
+
+  const resolvedBrainGamesRepository =
+    opts.brainGamesRepository ?? new PrismaBrainGamesRepository();
+  const resolvedPlayRecommender =
+    opts.playRecommender ??
+    new DevelopmentalPlayAdapter(resolvedBrainGamesRepository);
+  const resolvedBrainGamesService =
+    opts.brainGamesService ??
+    new BrainGamesService(
+      resolvedPlayRecommender,
+      resolvedChildrenRepository
+    );
+
+  const resolvedBehaviorRepository =
+    opts.behaviorRepository ?? new PrismaBehaviorRepository();
+  const resolvedBehaviorService =
+    opts.behaviorService ??
+    new BehaviorService(resolvedBehaviorRepository);
+
   // Register domain route plugins with /api/v1 prefixes
-  await app.register(healthRoutes, { prefix: '/api/v1/health' });
+  await app.register(healthRoutes, {
+    prefix: '/api/v1/health',
+    healthRepository: resolvedHealthRepository,
+    healthService: resolvedHealthService,
+    triageEngine: resolvedTriageEngine,
+    childrenRepository: resolvedChildrenRepository,
+  });
   await app.register(authRoutes, {
     prefix: '/api/v1/auth',
     authRepository: resolvedAuthRepository,
@@ -241,6 +338,8 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     prefix: '/api/v1/children',
     childrenRepository: resolvedChildrenRepository,
     childrenService: resolvedChildrenService,
+    milestonesService: resolvedMilestonesService,
+    healthService: resolvedHealthService,
   });
   await app.register(agreementsRoutes, {
     prefix: '/api/v1/agreements',
@@ -278,6 +377,28 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     faqRepository: resolvedFaqsRepository,
     childrenRepository: resolvedChildrenRepository,
     llmOrchestrator: resolvedLlmOrchestrator,
+  });
+  await app.register(milestonesRoutes, {
+    prefix: '/api/v1/milestones',
+    milestonesRepository: resolvedMilestonesRepository,
+    milestonesService: resolvedMilestonesService,
+  });
+  await app.register(nutritionRoutes, {
+    prefix: '/api/v1/nutrition',
+    nutritionRepository: resolvedNutritionRepository,
+    nutritionService: resolvedNutritionService,
+  });
+  await app.register(brainGamesRoutes, {
+    prefix: '/api/v1/brain-games',
+    brainGamesRepository: resolvedBrainGamesRepository,
+    brainGamesService: resolvedBrainGamesService,
+    playRecommender: resolvedPlayRecommender,
+    childrenRepository: resolvedChildrenRepository,
+  });
+  await app.register(behaviorRoutes, {
+    prefix: '/api/v1/behavior',
+    behaviorRepository: resolvedBehaviorRepository,
+    behaviorService: resolvedBehaviorService,
   });
 
   return app;

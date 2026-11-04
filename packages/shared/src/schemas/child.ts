@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { RoadType } from '../constants/index.js';
+import { DevelopmentalTier, DietaryStage, RoadType } from '../constants/index.js';
 
 export const CreateChildSchema = z.object({
   name: z
@@ -17,9 +17,20 @@ export const CreateChildSchema = z.object({
     .int('Birth month must be an integer')
     .min(1, 'Birth month must be between 1 and 12')
     .max(12, 'Birth month must be between 1 and 12'),
+  birthDate: z.string().datetime().or(z.string()).optional(),
   roadType: z.enum([RoadType.PRE_DEVICE, RoadType.ACTIVE_DEVICE], {
     errorMap: () => ({ message: 'roadType must be either PRE_DEVICE or ACTIVE_DEVICE' }),
   }),
+  developmentalTier: z.string().optional(),
+  dietaryStage: z.enum([
+    DietaryStage.MILK_ONLY,
+    DietaryStage.SOLIDS_INTRODUCED,
+    DietaryStage.TODDLER_TABLE,
+    DietaryStage.BALANCED_SCHOOL,
+    DietaryStage.PUBERTAL_GROWTH,
+  ]).optional(),
+  allergies: z.array(z.string()).optional(),
+  pediatricNotes: z.string().trim().max(1000).optional(),
   schoolGrade: z.string().trim().max(50).optional(),
 });
 

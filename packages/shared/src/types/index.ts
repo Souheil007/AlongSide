@@ -5,12 +5,17 @@ import type {
   DevelopmentalTier,
   DevicePlatform,
   DeviceProfileStatus,
+  DietaryStage,
   ExploitSeverity,
   MessageRole,
+  MilestoneCategory,
+  MilestoneStatus,
+  PlayCategory,
   QuizType,
   RoadType,
   Role,
   SubscriptionTier,
+  TriageZone,
 } from '../constants/index.js';
 
 export interface ApiResponse<T> {
@@ -56,9 +61,13 @@ export interface ChildDTO {
   name: string;
   birthYear: number;
   birthMonth: number;
+  birthDate?: string | null;
   age: number;
   roadType: RoadType;
   developmentalTier: DevelopmentalTier;
+  dietaryStage?: DietaryStage;
+  allergies?: string[];
+  pediatricNotes?: string | null;
   schoolGrade?: string | null;
   deviceProfileStatus?: DeviceProfileStatus | null;
   latestAssessmentScore?: number | null;
@@ -308,5 +317,113 @@ export interface AiConversationDTO {
   updatedAt: string;
   messages?: AiMessageDTO[];
 }
+
+// ----------------------------------------------------
+// HOLISTIC CHILD UPBRINGING & PEDIATRIC HEALTH DTOS (v2.4.0)
+// ----------------------------------------------------
+
+export interface MilestoneDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  targetAgeMonths: number;
+  category: MilestoneCategory;
+  title: string;
+  description: string;
+  signsToWatch: string;
+  clinicalAuthority: string;
+  sortOrder: number;
+  status?: MilestoneStatus;
+  achievedAt?: string | null;
+  parentNotes?: string | null;
+}
+
+export interface ChildMilestoneDTO {
+  id: string;
+  childId: string;
+  milestoneId: string;
+  status: MilestoneStatus;
+  achievedAt?: string | null;
+  parentNotes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SymptomProtocolDTO {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  targetTiers: DevelopmentalTier[];
+  redFlags: string[];
+  yellowFlags: string[];
+  greenHomeCare: string[];
+  contraindications: string[];
+  clinicalAuthority: string;
+}
+
+export interface ChildHealthLogDTO {
+  id: string;
+  childId: string;
+  protocolId?: string | null;
+  symptomTitle: string;
+  temperatureF?: number | null;
+  triageZone: TriageZone;
+  clinicalNotes?: string | null;
+  actionTaken?: string | null;
+  loggedAt: string;
+}
+
+export interface NutritionGuideDTO {
+  id: string;
+  stage: DietaryStage;
+  title: string;
+  ageBracket: string;
+  guidelinesMarkdown: string;
+  safeFoods: string[];
+  chokingHazards: string[];
+  allergenProtocol?: string | null;
+  pickyEatingTips?: string | null;
+}
+
+export interface BrainGameActivityDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  category: PlayCategory;
+  title: string;
+  summary: string;
+  instructions: string;
+  materialsNeeded: string[];
+  targetSkills: string[];
+  estimatedMinutes: number;
+  isScreenFree: boolean;
+}
+
+export interface BehaviorGuideDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  slug: string;
+  triggerSituation: string;
+  underlyingNeed: string;
+  coRegulationScript: string;
+  authoritativeLimit: string;
+}
+
+export interface TriageAssessmentResultDTO {
+  zone: TriageZone;
+  requiresEmergency911: boolean;
+  conditionSuspected: string;
+  clinicalRationale: string;
+  immediateActions: string[];
+  homeCareMeasures: string[];
+  redFlagWarnings: string[];
+  recommendedDosing?: {
+    medication: string;
+    dosageMg: number;
+    frequency: string;
+    notes?: string;
+  } | null;
+  clinicalAuthority: string;
+}
+
 
 
