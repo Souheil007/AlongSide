@@ -200,18 +200,22 @@ describe('24/7 AI Advisor, Living FAQ Explorer & Voice Sparring Specification (P
   });
 
   describe('Interactive Voice Sparring Simulator Scenarios & Coaching', () => {
-    it('defines the 3 canonical high-heat conflict scenarios', () => {
-      expect(SPARRING_SCENARIOS).toHaveLength(3);
+    it('defines the 5 canonical high-heat conflict scenarios across the lifespan', () => {
+      expect(SPARRING_SCENARIOS).toHaveLength(5);
 
       const keys = SPARRING_SCENARIOS.map((s) => s.key);
-      expect(keys).toContain('A');
-      expect(keys).toContain('B');
-      expect(keys).toContain('C');
+      expect(keys).toContain('1');
+      expect(keys).toContain('2');
+      expect(keys).toContain('3');
+      expect(keys).toContain('4');
+      expect(keys).toContain('5');
 
       const titles = SPARRING_SCENARIOS.map((s) => s.title);
-      expect(titles).toContain('The Phone Plea');
-      expect(titles).toContain('The Curfew Explosion');
-      expect(titles).toContain('The Trust Accusation');
+      expect(titles).toContain('2:00 AM Teething & Fever Panic');
+      expect(titles).toContain('Dinner Plate Resistance ("This dinner is gross!")');
+      expect(titles).toContain('Biting / Hitting Sibling Confrontation');
+      expect(titles).toContain('Middle School Peer Exclusion');
+      expect(titles).toContain('Bedtime Device Cutoff Resistance');
     });
 
     it('provides realistic child objection dialogues and duration timings for audio simulation', () => {

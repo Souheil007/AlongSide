@@ -2,7 +2,11 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import type { AiMessageDTO, MessageRole } from '@alongside/shared';
-import { streamAiAdvisorChat, type SseContextEvent } from '@/lib/api/advisor';
+import {
+  streamAiAdvisorChat,
+  type SseContextEvent,
+  type SseEmergencyEvent,
+} from '@/lib/api/advisor';
 
 export interface UseAiAdvisorChatOptions {
   initialConversationId?: string;
@@ -14,6 +18,7 @@ export interface UseAiAdvisorChatReturn {
   messages: AiMessageDTO[];
   activeStreamingText: string;
   activeMatchedFaqs: string[];
+  activeEmergency: SseEmergencyEvent | null;
   isStreaming: boolean;
   isLoading: boolean;
   error: string | null;
@@ -28,6 +33,7 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
   const [messages, setMessages] = useState<AiMessageDTO[]>(options.initialMessages || []);
   const [activeStreamingText, setActiveStreamingText] = useState<string>('');
   const [activeMatchedFaqs, setActiveMatchedFaqs] = useState<string[]>([]);
+  const [activeEmergency, setActiveEmergency] = useState<SseEmergencyEvent | null>(null);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -81,6 +87,7 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
     setMessages([]);
     setConversationId(null);
     setError(null);
+    setActiveEmergency(null);
     lastUserMessageRef.current = null;
   }, [stopStreaming]);
 
@@ -90,6 +97,7 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
       if (!trimmed || isStreaming) return;
 
       setError(null);
+      setActiveEmergency(null);
       setIsLoading(true);
       setIsStreaming(true);
       setActiveStreamingText('');
@@ -128,6 +136,10 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
             onContext: (context: SseContextEvent) => {
               matchedFaqsRef.current = context.matchedFaqs;
               setActiveMatchedFaqs(context.matchedFaqs);
+            },
+            onEmergency: (emergencyData: SseEmergencyEvent) => {
+              setIsLoading(false);
+              setActiveEmergency(emergencyData);
             },
             onToken: (token: string) => {
               setIsLoading(false);
@@ -190,6 +202,7 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
     messages,
     activeStreamingText,
     activeMatchedFaqs,
+    activeEmergency,
     isStreaming,
     isLoading,
     error,

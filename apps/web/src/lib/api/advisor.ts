@@ -21,10 +21,22 @@ export interface SseDoneEvent {
   conversationId: string;
 }
 
-export type SseEvent = SseContextEvent | SseTokenEvent | SseDoneEvent;
+export interface SseEmergencyEvent {
+  type: 'EMERGENCY_RED_FLAG';
+  isEmergency: boolean;
+  category: string;
+  headline: string;
+  directive: string;
+  phoneDial: string;
+  nearestFacilityGuidance: string;
+  matchedTriggers: string[];
+}
+
+export type SseEvent = SseContextEvent | SseTokenEvent | SseDoneEvent | SseEmergencyEvent;
 
 export interface StreamChatHandlers {
   onContext?: (data: SseContextEvent) => void;
+  onEmergency?: (data: SseEmergencyEvent) => void;
   onToken?: (token: string) => void;
   onDone?: (data: SseDoneEvent) => void;
   onError?: (error: Error) => void;
@@ -344,6 +356,8 @@ export async function streamAiAdvisorChat(
               const eventData: SseEvent = JSON.parse(jsonStr);
               if (eventData.type === 'context') {
                 handlers.onContext?.(eventData);
+              } else if (eventData.type === 'EMERGENCY_RED_FLAG') {
+                handlers.onEmergency?.(eventData);
               } else if (eventData.type === 'token') {
                 handlers.onToken?.(eventData.content);
               } else if (eventData.type === 'done') {

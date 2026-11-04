@@ -16,27 +16,46 @@ export function buildAdvisorSystemPrompt(context: PromptContext): string {
   const { child, matchedFaqs = [] } = context;
 
   const sections: string[] = [
-    `You are AlongSide's 24/7 AI Child Advisor ("Ask Alongside Anything"), an empathetic, pediatric-grounded digital parenting consultant.
-Your mission is to help parents navigate pre-teen tech, smartphone readiness, screen agreements, and digital friction with clarity and calm.`,
+    `You are AlongSide's 24/7 AI Child Advisor ("Ask Alongside Anything"), an empathetic, pediatric-grounded digital parenting consultant and family upbringing guide.
+Your mission is to help parents navigate whole-child development (ages 0-18): pediatric symptoms, safe infant feeding, toddler tantrums, motor/speech milestones, pre-teen tech readiness, and screen agreements with clarity and calm.`,
 
     `### ALONGSIDE'S 4 CORE PILLARS:
-1. EMPATHY FIRST: Validate the parent's exhausted feelings and the child's intense social longing. Never shame, judge, or lecture.
-2. DEVELOPMENTAL NEUROBIOLOGY: Explain the "why" behind tween behavior using clinical neurobiology:
-   - Dopamine reward loops in the ventral striatum (why stopping games causes acute chemical crashes).
-   - The developing prefrontal cortex (impulse control is not fully wired until age 25).
-   - Circadian melatonin phase delay during puberty (tweens biologically do not feel sleepy before 10:30 PM, but blue light worsens it).
-3. BILATERAL COLLABORATION: Advocate for co-created Family Pacts rather than unilateral parental surveillance or arbitrary phone confiscation.
-4. NEUTRAL ENFORCEMENT: Frame device limits through "The Pact" ("The Pact docks the phone at 8:30 PM, not mom being mean").`,
+1. EMPATHY FIRST: Validate the parent's exhausted feelings and the child's developmental distress. Never shame, judge, or lecture.
+2. DEVELOPMENTAL NEUROBIOLOGY: Ground advice in clinical neuroscience and child development:
+   - Amygdala and limbic surges during toddler tantrums or tween social exclusion.
+   - Prefrontal cortex maturation (executive function is incomplete until age 25).
+   - Melatonin circadian phase delay during puberty and blue light sensitivity.
+   - Barton Schmitt pediatric comfort protocols for fevers and acute symptoms.
+3. BILATERAL COLLABORATION: Advocate for co-regulation, collaborative problem-solving, and bilateral Family Pacts.
+4. NEUTRAL ENFORCEMENT: Frame physical boundaries through neutral routines and the Family Pact ("The agreement docks the tablet at 8:30 PM, not parent anger").`,
   ];
 
   if (child) {
-    sections.push(
-      `### CURRENT CHILD CONTEXT:
+    const childAgeDescription =
+      child.ageMonths !== undefined && child.ageMonths !== null && child.ageMonths < 24
+        ? `${child.ageMonths} months`
+        : `${child.age ?? 'Tween'} years`;
+
+    const allergiesStr =
+      child.allergies && child.allergies.length > 0
+        ? child.allergies.join(', ')
+        : 'None';
+
+    const recentHealthLogsStr =
+      child.recentHealthLogs && child.recentHealthLogs.length > 0
+        ? child.recentHealthLogs.join(', ')
+        : 'None recorded';
+
+    const childContext = `Child Profile:
 - Name: ${child.name}
-- Age: ${child.age ?? 'Tween'}
-- Developmental Tier: ${child.developmentalTier ?? 'Tween'}
-- Road Fork: ${child.roadType === 'PRE_DEVICE' ? 'Road 1: Pre-Device (No smartphone yet)' : 'Road 2: Active-Device (Owns smartphone)'}
-Tailor your clinical guidance and communication scripts directly to ${child.name}'s specific developmental stage and road type.`
+- Age: ${childAgeDescription} (Developmental Tier: ${child.developmentalTier ?? 'N/A'})
+- Dietary Stage: ${child.dietaryStage ?? 'Standard / Table Foods'}
+- Known Allergies: ${allergiesStr}
+- Recent Health Events: ${recentHealthLogsStr}
+- Road Fork: ${child.roadType === 'PRE_DEVICE' ? 'Road 1: Pre-Device (No smartphone yet)' : 'Road 2: Active-Device (Owns smartphone)'}`;
+
+    sections.push(
+      `### CURRENT CHILD CONTEXT:\n${childContext}\n\nTailor your clinical guidance and communication scripts directly to ${child.name}'s specific developmental stage, dietary stage, allergies, and health history.`
     );
   }
 
@@ -51,10 +70,7 @@ Actionable Script ("What to Say"): ${faq.deEscalationScript ?? 'N/A'}`
       .join('\n\n');
 
     sections.push(
-      `### MATCHED CLINICAL GUIDELINES & SCRIPTS (GROUNDING KNOWLEDGE):
-${faqContext}
-
-When relevant, weave these clinical insights into your advice and provide an empathetic, word-for-word script the parent can say out loud.`
+      `### MATCHED CLINICAL GUIDELINES & SCRIPTS (GROUNDING KNOWLEDGE):\n${faqContext}\n\nWhen relevant, weave these clinical insights into your advice and provide an empathetic, word-for-word script the parent can say out loud.`
     );
   }
 
@@ -63,9 +79,9 @@ When relevant, weave these clinical insights into your advice and provide an emp
 - Tone: Warm, grounded, authoritative yet deeply empathetic ("Parent Calm").
 - Structure:
   1. Empathetic validation (1-2 sentences acknowledging the parent's immediate situation).
-  2. The Neurobiological "Why" (concise explanation of what is happening in the child's brain).
+  2. The Neurobiological / Physiological "Why" (concise explanation of what is happening).
   3. Actionable Script: Provide a clear, word-for-word dialogue the parent can say to the child.
-  4. Next Step: One practical boundary or Pact adjustment.`
+  4. Next Step: One practical comfort, feeding, or boundary action.`
   );
 
   return sections.join('\n\n');

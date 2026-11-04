@@ -31,6 +31,54 @@ export class AiAdvisorController {
         message,
       });
 
+      // Clinical Safe Harbor Emergency Override: Halt LLM generation immediately
+      if (session.isEmergency && session.emergencyAlert) {
+        reply.hijack();
+        const rawRes = reply.raw;
+
+        rawRes.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+        rawRes.setHeader('Cache-Control', 'no-cache, no-transform');
+        rawRes.setHeader('Connection', 'keep-alive');
+        rawRes.setHeader('X-Accel-Buffering', 'no');
+        rawRes.flushHeaders?.();
+
+        // 1. Emit Context Event
+        const contextEvent = {
+          type: 'context',
+          matchedFaqs: [],
+          childContext: session.childContext,
+        };
+        rawRes.write(`data: ${JSON.stringify(contextEvent)}\n\n`);
+
+        // 2. Emit High-Priority Emergency Red Flag Event
+        const emergencyEvent = {
+          type: 'EMERGENCY_RED_FLAG',
+          ...session.emergencyAlert,
+        };
+        rawRes.write(`data: ${JSON.stringify(emergencyEvent)}\n\n`);
+
+        // 3. Emit Emergency Directive Text Token for Client Rendering
+        const emergencyContent = `🚨 **EMERGENCY MEDICAL DIRECTIVE (${session.emergencyAlert.category})**\n\n**${session.emergencyAlert.headline}**\n\n${session.emergencyAlert.directive}\n\n📞 **Immediate Action:** Call ${session.emergencyAlert.phoneDial} or proceed immediately to the nearest Pediatric Emergency Department.\n\n${session.emergencyAlert.nearestFacilityGuidance}`;
+        rawRes.write(
+          `data: ${JSON.stringify({ type: 'token', content: emergencyContent })}\n\n`
+        );
+
+        // 4. Persist and Emit Done Event
+        const savedMessage = await session.saveAssistantResponse(
+          emergencyContent,
+          25
+        );
+        const doneEvent = {
+          type: 'done',
+          conversationId: session.conversationId,
+          messageId: savedMessage.id,
+          tokensUsed: 25,
+        };
+        rawRes.write(`data: ${JSON.stringify(doneEvent)}\n\n`);
+        rawRes.end();
+        return;
+      }
+
       // Verify stream starts before hijacking/sending SSE headers
       const iterator = session.tokenStream[Symbol.asyncIterator]();
       const first = await iterator.next();
