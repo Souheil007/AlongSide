@@ -212,7 +212,7 @@ graph TD
     P17 --> P20
 ```
 
-### Phase 1: Foundation — Database Evolution & Domain API (Plan 16)
+### Phase 1: Foundation — Database Evolution & Domain API (Plan 16) — ✅ Completed (PR #28)
 - **Assignee:** Backend Agent (`apps/api` & `packages/database`)
 - **Key Deliverables:**
   * Evolve `DevelopmentalTier` to 6 canonical tiers:
@@ -238,7 +238,7 @@ graph TD
     - Daily Nutrition & Healthy Feeding tip.
     - Quick 24/7 AI Clinical Advisor prompt launcher.
 
-### Phase 3: Clinical Health & Nutrition Hubs (Plan 18)
+### Phase 3: Clinical Health & Nutrition Hubs (Plan 18) — ✅ Completed (PR #27)
 - **Assignee:** Frontend Agent (`apps/web`)
 - **Key Deliverables:**
   * Pediatric Health & Symptom Companion (`/health`):

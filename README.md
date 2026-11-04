@@ -287,7 +287,7 @@ make lint
 
 ## 🚀 Phased Engineering Roadmap
 
-AlongSide is executed across 14 discrete, sequential engineering plans:
+AlongSide is executed across discrete, sequential engineering plans:
 
 | # | Plan Title | Owner | Status |
 | :-: | :--- | :--- | :-: |
@@ -305,6 +305,12 @@ AlongSide is executed across 14 discrete, sequential engineering plans:
 | **12** | [**Interactive Assessment Suite & Cultural Fluency Quizzes**](plans/12-interactive-quiz-suite-and-fluency-checks.md) | Joint FE & BE | ⏳ Queued |
 | **13** | [**Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync**](plans/13-stripe-billing-and-trial-lifecycle.md) | Backend Agent | ⏳ Queued |
 | **14** | [**End-to-End Integration, Playwright Verification & Launch Hardening**](plans/14-e2e-integration-hardening-and-launch.md) | Joint FE & BE | ⏳ Queued |
+| **15** | [**Whole-Child Development Research & Knowledge Base**](plans/15-child-development-research-and-knowledge-base.md) | Research Engineer | ✅ **Complete** (PR #25) |
+| **16** | [**Holistic Domain Schema, Health Triage & Milestone API**](plans/16-holistic-domain-schema-and-seeding-api.md) | Backend Agent | ✅ **Complete** (PR #28) |
+| **17** | [**Holistic Family Dashboard & Unified Navigation UI**](plans/17-holistic-family-dashboard-and-navigation-ui.md) | Frontend Agent | ⏳ Queued |
+| **18** | [**Pediatric Health Triage & Nutrition Hub UI**](plans/18-pediatric-health-triage-and-nutrition-ui.md) | Frontend Agent | ✅ **Complete** (PR #27) |
+| **19** | [**Brain Games, Puppets & Behavioral Psychology UI**](plans/19-brain-games-puppets-and-behavior-ui.md) | Frontend Agent | ⏳ Queued |
+| **20** | [**Clinical AI Advisor Lifespan RAG & Sparring Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ⏳ Queued |
 
 For complete plan details, see [**`plans/README.md`**](plans/README.md).
 
