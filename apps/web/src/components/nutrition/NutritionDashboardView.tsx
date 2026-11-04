@@ -14,10 +14,13 @@ import {
   Scale,
   CheckCircle2,
   XCircle,
+  ChevronDown,
 } from 'lucide-react';
 import { NutritionStage, type NutritionGuideDTO } from '@alongside/shared';
 import { CANONICAL_NUTRITION_GUIDES } from '@/lib/api/nutrition';
-import { useChildContextStore, selectActiveChild, formatChildAge } from '@/stores/useChildContextStore';
+import { useChildContextStore } from '@/stores/useChildContextStore';
+import { useChildAge } from '@/hooks/useChildAge';
+import { Badge } from '@/components/ui/Badge';
 import { BabyLedWeaningGuide } from './BabyLedWeaningGuide';
 import { AllergenIntroductionTracker } from './AllergenIntroductionTracker';
 import { ChokingHazardsWarningCard } from './ChokingHazardsWarningCard';
@@ -28,48 +31,44 @@ interface NutritionDashboardViewProps {
 }
 
 export function NutritionDashboardView({ initialChildId }: NutritionDashboardViewProps) {
-  const { children, activeChildId, setActiveChild } = useChildContextStore();
-  const activeChild = selectActiveChild({ children, activeChildId });
+  const { activeChildId, setActiveChild } = useChildContextStore();
+  const childAge = useChildAge();
 
-  // Sync initial child ID
+  // Sync initial child ID if passed via props
   React.useEffect(() => {
     if (initialChildId && initialChildId !== activeChildId) {
       setActiveChild(initialChildId);
     }
   }, [initialChildId, activeChildId, setActiveChild]);
 
-  // Determine recommended stage based on child age
-  const recommendedStage = React.useMemo<NutritionStage>(() => {
-    if (!activeChild) return NutritionStage.SOLIDS_INTRODUCED;
-    const age = activeChild.age;
-    if (age === 0) {
-      if (activeChild.birthYear && activeChild.birthMonth) {
-        const months =
-          (new Date().getFullYear() - activeChild.birthYear) * 12 +
-          (new Date().getMonth() + 1 - activeChild.birthMonth);
-        if (months < 6) return NutritionStage.MILK_ONLY;
-        return NutritionStage.SOLIDS_INTRODUCED;
-      }
-      return NutritionStage.SOLIDS_INTRODUCED;
-    }
-    if (age >= 1 && age <= 5) return NutritionStage.TODDLER_TABLE;
-    if (age >= 6 && age <= 12) return NutritionStage.BALANCED_SCHOOL;
-    return NutritionStage.PUBERTAL_GROWTH;
-  }, [activeChild]);
-
-  const [selectedStage, setSelectedStage] = React.useState<NutritionStage>(recommendedStage);
+  // Selected feeding stage defaults to active child's calibrated recommendation
+  const [selectedStage, setSelectedStage] = React.useState<NutritionStage>(childAge.feedingStage);
+  const [isStageDrawerOpen, setIsStageDrawerOpen] = React.useState(false);
+  const [showInfantTabsForOlderKids, setShowInfantTabsForOlderKids] = React.useState(false);
   const [activeSubTab, setActiveSubTab] = React.useState<'overview' | 'blw' | 'allergens' | 'choking' | 'picky'>('overview');
 
-  // Update stage when active child changes
+  // Update selected stage when active child recommendation changes
   React.useEffect(() => {
-    setSelectedStage(recommendedStage);
-  }, [recommendedStage]);
+    setSelectedStage(childAge.feedingStage);
+  }, [childAge.feedingStage]);
+
+  // If child is >= 3 years and not inspecting an infant stage, reset active subtab if on infant tools
+  const isOlderChild = childAge.ageYears >= 3;
+  const isInfantStageSelected =
+    selectedStage === NutritionStage.MILK_ONLY ||
+    selectedStage === NutritionStage.SOLIDS_INTRODUCED;
+
+  React.useEffect(() => {
+    if (isOlderChild && !isInfantStageSelected && !showInfantTabsForOlderKids) {
+      if (activeSubTab === 'blw' || activeSubTab === 'allergens') {
+        setActiveSubTab('overview');
+      }
+    }
+  }, [isOlderChild, isInfantStageSelected, showInfantTabsForOlderKids, activeSubTab]);
 
   const currentGuide =
     CANONICAL_NUTRITION_GUIDES.find((g) => g.stage === selectedStage) ||
     CANONICAL_NUTRITION_GUIDES[1]!;
-
-  const childAgeDisplay = activeChild ? formatChildAge(activeChild) : '14 mo';
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-16">
@@ -93,7 +92,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
             </p>
           </div>
 
-          {/* Active Child Badge */}
+          {/* Active Child Calm Stage Badge */}
           <div className="shrink-0 rounded-2xl border border-emerald-400/20 bg-white/10 p-4 backdrop-blur-md min-w-[240px]">
             <div className="flex items-center gap-2.5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
@@ -104,62 +103,83 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
                   Child Nutrition Profile
                 </div>
                 <div className="text-base font-bold text-white">
-                  {activeChild?.name || 'Child'} ({childAgeDisplay})
+                  {childAge.name} ({childAge.ageDisplay})
                 </div>
               </div>
             </div>
-            <div className="mt-2.5 text-xs text-emerald-200/90 font-medium">
-              Recommended: <span className="font-bold text-white">{currentGuide.stageName}</span>
+            <div className="mt-2.5 flex items-center justify-between border-t border-emerald-500/20 pt-2 text-xs text-emerald-200/90">
+              <span className="font-semibold text-white">{currentGuide.stageName}</span>
+              <Badge variant="outline" className="text-[10px] bg-emerald-500/20 text-emerald-200 border-emerald-400/40">
+                Calibrated for {childAge.name}
+              </Badge>
             </div>
           </div>
         </div>
 
-        {/* Feeding Stage Selector Tabs */}
-        <div className="relative z-10 mt-6 pt-5 border-t border-emerald-800/60">
-          <div className="text-xs font-semibold uppercase tracking-wider text-emerald-200/80 mb-2.5">
-            5 Lifespan Developmental Feeding Stages (Ages 0–18):
+        {/* Collapsible Developmental Stage Selector */}
+        <div className="relative z-10 mt-6 pt-4 border-t border-emerald-800/60">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-200/80">
+                Active Stage:
+              </span>
+              <span className="text-xs font-bold text-white">{currentGuide.stageName}</span>
+              <span className="text-[11px] text-emerald-300/80">({currentGuide.ageRange})</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsStageDrawerOpen(!isStageDrawerOpen)}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-300 hover:text-white transition-colors self-start sm:self-auto cursor-pointer"
+            >
+              <span>{isStageDrawerOpen ? 'Hide other stages' : 'Explore other developmental stages (0–18)'}</span>
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isStageDrawerOpen ? 'rotate-180' : ''}`} />
+            </button>
           </div>
-          <div className="flex flex-wrap gap-2" role="tablist">
-            {CANONICAL_NUTRITION_GUIDES.map((g) => {
-              const isSelected = selectedStage === g.stage;
-              const isMatchingChild = recommendedStage === g.stage;
-              return (
-                <button
-                  key={g.stage}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => {
-                    setSelectedStage(g.stage);
-                    setActiveSubTab('overview');
-                  }}
-                  className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all ${
-                    isSelected
-                      ? 'bg-emerald-500 text-white shadow-xs ring-2 ring-emerald-300'
-                      : 'border border-emerald-400/20 bg-white/10 text-emerald-100 hover:bg-white/20 hover:text-white'
-                  }`}
-                >
-                  <span>{g.stageName.split(':')[0]}</span>
-                  <span className="text-[11px] font-medium opacity-80">({g.ageRange})</span>
-                  {isMatchingChild && (
-                    <span className="ml-1 rounded-full bg-white/25 px-1.5 py-0.2 text-[9px] font-black uppercase">
-                      Current
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+
+          {isStageDrawerOpen && (
+            <div className="mt-3 flex flex-wrap gap-2 pt-2 animate-in fade-in" role="tablist">
+              {CANONICAL_NUTRITION_GUIDES.map((g) => {
+                const isSelected = selectedStage === g.stage;
+                const isMatchingChild = childAge.feedingStage === g.stage;
+                return (
+                  <button
+                    key={g.stage}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      setSelectedStage(g.stage);
+                      setActiveSubTab('overview');
+                    }}
+                    className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-emerald-500 text-white shadow-xs ring-2 ring-emerald-300'
+                        : 'border border-emerald-400/20 bg-white/10 text-emerald-100 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    <span>{g.stageName.split(':')[0]}</span>
+                    <span className="text-[11px] font-medium opacity-80">({g.ageRange})</span>
+                    {isMatchingChild && (
+                      <span className="ml-1 rounded-full bg-white/25 px-1.5 py-0.2 text-[9px] font-black uppercase">
+                        Calibrated
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Domain Navigation Tabs */}
+      {/* Contextual Subtabs Navigation */}
       <div className="border-b border-slate-200">
         <nav className="flex space-x-2 sm:space-x-4 overflow-x-auto pb-px" aria-label="Nutrition Navigation">
           <button
             type="button"
             onClick={() => setActiveSubTab('overview')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeSubTab === 'overview'
                 ? 'border-emerald-600 text-emerald-900'
                 : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
@@ -169,57 +189,78 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
             <span>Stage Overview & Nutrients</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveSubTab('blw')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
-              activeSubTab === 'blw'
-                ? 'border-emerald-600 text-emerald-900'
-                : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
-            }`}
-          >
-            <Baby className="h-4 w-4" />
-            <span>Baby-Led Weaning & Safety</span>
-          </button>
+          {/* Show BLW & Allergen Tabs only if relevant or explicitly requested */}
+          {(!isOlderChild || isInfantStageSelected || showInfantTabsForOlderKids) && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('blw')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'blw'
+                    ? 'border-emerald-600 text-emerald-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Baby className="h-4 w-4" />
+                <span>Baby-Led Weaning & Safety</span>
+                {!isOlderChild && (
+                  <span className="rounded-full bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
+                    Active
+                  </span>
+                )}
+              </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveSubTab('allergens')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
-              activeSubTab === 'allergens'
-                ? 'border-teal-600 text-teal-900'
-                : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
-            }`}
-          >
-            <ShieldCheck className="h-4 w-4" />
-            <span>Top 8 Allergen Tracker</span>
-          </button>
+              <button
+                type="button"
+                onClick={() => setActiveSubTab('allergens')}
+                className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  activeSubTab === 'allergens'
+                    ? 'border-teal-600 text-teal-900'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span>Top 8 Allergen Tracker</span>
+              </button>
+            </>
+          )}
 
           <button
             type="button"
             onClick={() => setActiveSubTab('choking')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeSubTab === 'choking'
                 ? 'border-rose-600 text-rose-900'
                 : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
             }`}
           >
             <AlertTriangle className="h-4 w-4" />
-            <span>Choking Hazards Warning Card</span>
+            <span>Choking Hazards</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveSubTab('picky')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeSubTab === 'picky'
                 ? 'border-amber-600 text-amber-900'
                 : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
             }`}
           >
             <Scale className="h-4 w-4" />
-            <span>Picky Eating & Division of Responsibility</span>
+            <span>Picky Eating & sDOR</span>
           </button>
+
+          {/* Toggle button for older kids to explore infant guides */}
+          {isOlderChild && !isInfantStageSelected && (
+            <button
+              type="button"
+              onClick={() => setShowInfantTabsForOlderKids(!showInfantTabsForOlderKids)}
+              className="flex items-center gap-1.5 border-b-2 border-transparent px-3 py-3 text-xs font-semibold text-slate-400 hover:text-slate-600 whitespace-nowrap cursor-pointer"
+            >
+              <span>{showInfantTabsForOlderKids ? 'Hide Infant Tools' : '+ Infant Tools (BLW/Allergens)'}</span>
+            </button>
+          )}
         </nav>
       </div>
 

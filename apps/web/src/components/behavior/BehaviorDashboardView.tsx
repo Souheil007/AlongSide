@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {
   Brain,
   Search,
-  Sparkles,
   Heart,
   Shield,
   MessageSquare,
@@ -13,14 +12,12 @@ import {
   Smile,
   BookOpen,
   Filter,
-  CheckCircle2,
-  ChevronRight,
-  HelpCircle,
+  ChevronDown,
 } from 'lucide-react';
-import { useChildContextStore, selectActiveChild, formatChildAge } from '@/stores/useChildContextStore';
+import { useChildContextStore } from '@/stores/useChildContextStore';
+import { useChildAge } from '@/hooks/useChildAge';
 import {
   CANONICAL_BEHAVIOR_GUIDES,
-  getBehaviorGuides,
   type BehaviorGuideUI,
 } from '@/lib/api/behavior';
 import { HaltDiagnosticModal } from './HaltDiagnosticModal';
@@ -31,14 +28,24 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { Card } from '@/components/ui/Card';
 
-const SITUATION_BUTTONS = [
-  { id: 'all', label: 'All Behavioral Dilemmas' },
+const ALL_SITUATIONS = [
+  { id: 'all', label: 'All Dilemmas' },
   { id: 'tantrums', label: 'Tantrums & Meltdowns' },
   { id: 'defiance', label: 'Defiance & "No!"' },
   { id: 'aggression', label: 'Hitting & Biting' },
-  { id: 'sibling', label: 'Sibling Fighting' },
+  { id: 'sibling', label: 'Sibling Fighting & Peer Drama' },
   { id: 'lying', label: 'Lying & Secrecy' },
   { id: 'bedtime', label: 'Bedtime Stalls' },
+];
+
+const TIER_OPTIONS = [
+  { id: 'all', label: 'All Ages' },
+  { id: 'TIER_0_INFANCY_TODDLER_0_3', label: '0–3 yrs (Toddler)' },
+  { id: 'TIER_1_EARLY_CHILDHOOD_4_6', label: '4–6 yrs (Preschool)' },
+  { id: 'TIER_2_MIDDLE_CHILDHOOD_7_9', label: '7–9 yrs (Childhood)' },
+  { id: 'TIER_3_PRE_TEEN_10_12', label: '10–12 yrs (Pre-Teen)' },
+  { id: 'TIER_4_EARLY_ADOLESCENCE_13_15', label: '13–15 yrs (Teens)' },
+  { id: 'TIER_5_LATE_ADOLESCENCE_16_18', label: '16–18 yrs (Older Teen)' },
 ];
 
 interface BehaviorDashboardViewProps {
@@ -47,26 +54,54 @@ interface BehaviorDashboardViewProps {
 
 export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewProps) {
   const { children, activeChildId, setActiveChild } = useChildContextStore();
-  const activeChild = selectActiveChild({ children, activeChildId });
+  const childAge = useChildAge();
+
   const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
-  const [selectedTier, setSelectedTier] = React.useState<string>('all');
+  const [selectedTier, setSelectedTier] = React.useState<string>(childAge.developmentalTier);
+  const [isViewingAllAges, setIsViewingAllAges] = React.useState<boolean>(false);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [isHaltModalOpen, setIsHaltModalOpen] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState<'scripts' | 'halt' | 'guide'>('scripts');
 
   // Sync initial child ID if passed via query
   React.useEffect(() => {
-    if (initialChildId && activeChild?.id !== initialChildId) {
+    if (initialChildId && activeChildId !== initialChildId) {
       setActiveChild(initialChildId);
     }
-  }, [initialChildId, activeChild?.id, setActiveChild]);
+  }, [initialChildId, activeChildId, setActiveChild]);
 
-  // If child selected, default tier filter
+  // Sync tier filter when child changes unless in explicit "View All Ages" mode
   React.useEffect(() => {
-    if (activeChild?.developmentalTier) {
-      setSelectedTier(activeChild.developmentalTier);
+    if (!isViewingAllAges) {
+      setSelectedTier(childAge.developmentalTier);
     }
-  }, [activeChild?.id, activeChild?.developmentalTier]);
+  }, [childAge.developmentalTier, isViewingAllAges]);
+
+  // Surface top 3-4 dilemmas calibrated for child's age
+  const prioritizedDilemmas = React.useMemo(() => {
+    if (childAge.ageYears <= 6) {
+      // Toddler / Preschool
+      return [
+        { id: 'tantrums', label: 'Tantrums & Meltdowns' },
+        { id: 'defiance', label: 'Defiance & "No!"' },
+        { id: 'aggression', label: 'Hitting & Biting' },
+      ];
+    }
+    if (childAge.ageYears <= 9) {
+      // Elementary
+      return [
+        { id: 'sibling', label: 'Sibling Fighting' },
+        { id: 'lying', label: 'Lying & Secrecy' },
+        { id: 'bedtime', label: 'Bedtime Stalls' },
+      ];
+    }
+    // Pre-Teen / Teen
+    return [
+      { id: 'defiance', label: 'Digital Defiance & Autonomy' },
+      { id: 'sibling', label: 'Peer & Group Chat Drama' },
+      { id: 'lying', label: 'Secrecy & Privacy Boundaries' },
+    ];
+  }, [childAge.ageYears]);
 
   const filteredGuides = React.useMemo(() => {
     return CANONICAL_BEHAVIOR_GUIDES.filter((guide) => {
@@ -97,11 +132,8 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
     });
   }, [selectedCategory, selectedTier, searchQuery]);
 
-  const childName = activeChild ? activeChild.name : 'your child';
-  const childAgeLabel = activeChild ? formatChildAge(activeChild) : '';
-
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-6 sm:space-y-8 pb-16">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
         <div>
@@ -119,25 +151,26 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
             Behavioral Psychology & De-escalation
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
             Translating tantrums into underlying needs (HALT diagnostic), word-for-word calming co-regulation scripts, and authoritative "Time-Ins".
           </p>
         </div>
 
+        {/* 1-Tap Emergency HALT Diagnostic Button */}
         <div className="flex items-center gap-2 flex-wrap">
           <Button
             type="button"
             onClick={() => setIsHaltModalOpen(true)}
-            className="min-h-[44px] gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-xs text-xs"
+            className="min-h-[44px] gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-xs text-xs cursor-pointer"
           >
             <AlertTriangle className="h-4 w-4" />
-            <span>Emergency HALT Diagnostic</span>
+            <span>1-Tap HALT Diagnostic</span>
           </Button>
 
           <Link href="/advisor">
             <Button
               variant="outline"
-              className="min-h-[44px] gap-2 text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-50"
+              className="min-h-[44px] gap-2 text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer"
             >
               <MessageSquare className="h-4 w-4 text-teal-600" />
               <span>Ask AI Advisor</span>
@@ -150,21 +183,27 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
       <div className="rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/70 via-white to-emerald-50/30 p-4 sm:p-5 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-white font-bold text-lg shadow-xs">
-            {childName.charAt(0).toUpperCase()}
+            {childAge.name.charAt(0).toUpperCase()}
           </div>
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
               <h2 className="text-base font-bold text-slate-900">
-                Co-Regulation Guidance for {childName}
+                Co-Regulation Guidance for {childAge.name}
               </h2>
-              {childAgeLabel && (
-                <span className="rounded-full bg-teal-100 px-2 py-0.5 text-[11px] font-bold text-teal-900 border border-teal-200">
-                  {childAgeLabel}
-                </span>
+              <span className="rounded-full bg-teal-100 px-2 py-0.5 text-[11px] font-bold text-teal-900 border border-teal-200">
+                {childAge.ageDisplay}
+              </span>
+              {childAge.isAutoCalibrated && (
+                <Badge
+                  variant="outline"
+                  className="text-[10px] bg-white text-teal-800 border-teal-300 font-bold"
+                >
+                  Auto-Calibrated
+                </Badge>
               )}
             </div>
             <p className="text-xs text-slate-600">
-              Calibrated for {activeChild?.developmentalTier?.replace(/_/g, ' ') || 'their developmental age stage'}
+              Calibrated for {childAge.developmentalTier.replace(/_/g, ' ')}
             </p>
           </div>
         </div>
@@ -180,8 +219,8 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
                 key={child.id}
                 type="button"
                 onClick={() => setActiveChild(child.id)}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all min-h-[32px] ${
-                  child.id === activeChild?.id
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all min-h-[32px] cursor-pointer ${
+                  child.id === activeChildId
                     ? 'bg-teal-700 text-white font-bold shadow-2xs'
                     : 'bg-white hover:bg-teal-50 text-slate-700 border border-slate-200'
                 }`}
@@ -208,7 +247,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
           },
           {
             id: 'guide' as const,
-            label: 'Authoritative "Time-Ins" & Breathing',
+            label: 'Authoritative "Time-Ins" & Limits',
             icon: <Shield className="h-4 w-4" />,
           },
         ].map((tab) => (
@@ -216,7 +255,7 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all min-h-[44px] ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all min-h-[44px] cursor-pointer ${
               activeTab === tab.id
                 ? 'bg-teal-700 text-white shadow-xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -231,88 +270,165 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
       {/* TAB 1: SCRIPTS VAULT */}
       {activeTab === 'scripts' && (
         <div className="space-y-6">
-          {/* Search & Situation Buttons */}
-          <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs">
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-              <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <Input
-                  type="text"
-                  placeholder="Search dilemma (e.g. 'grocery tantrum', 'hitting', 'bedtime refusal', 'screen time')..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 min-h-[44px] bg-slate-50 border-slate-200 text-xs sm:text-sm"
-                />
+          {/* Active Age Calibration Status Chip & View All Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/80 via-white to-teal-50/40 p-4 shadow-xs">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600/20 text-teal-800">
+                <Smile className="h-4 w-4" />
               </div>
-
-              {activeChild && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setSelectedTier(activeChild.developmentalTier)}
-                  className={`min-h-[44px] gap-2 text-xs font-semibold shrink-0 ${
-                    selectedTier === activeChild.developmentalTier
-                      ? 'border-teal-400 bg-teal-50 text-teal-900'
-                      : 'border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <Smile className="h-3.5 w-3.5 text-teal-600" />
-                  <span>Filter for {activeChild.name}</span>
-                </Button>
-              )}
-            </div>
-
-            {/* Quick Situation Buttons */}
-            <div className="space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Quick Behavioral Situation:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {SITUATION_BUTTONS.map((sit) => (
-                  <button
-                    key={sit.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(sit.id)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] ${
-                      selectedCategory === sit.id
-                        ? 'bg-teal-700 text-white shadow-2xs'
-                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                    }`}
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-teal-950">
+                    {isViewingAllAges
+                      ? 'Browsing All Age Dilemmas'
+                      : `Calibrated Dilemmas for ${childAge.name} • ${childAge.ageDisplay}`}
+                  </span>
+                  <Badge
+                    variant="outline"
+                    className="text-[10px] bg-white text-teal-800 border-teal-300 font-bold"
                   >
-                    {sit.label}
-                  </button>
-                ))}
+                    {isViewingAllAges ? 'All Ages' : 'Auto-Filtered'}
+                  </Badge>
+                </div>
+                <p className="text-[11px] text-teal-800/80 mt-0.5">
+                  {isViewingAllAges
+                    ? 'Displaying behavioral scenarios across infancy to late teens.'
+                    : `Focusing on ${childAge.developmentalTier.replace(/_/g, ' ')}`}
+                </p>
               </div>
             </div>
 
-            {/* Tier Filters */}
-            <div className="space-y-2 pt-1 border-t border-slate-100">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Age Stage:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  { id: 'all', label: 'All Ages' },
-                  { id: 'TIER_0_INFANCY_TODDLER_0_3', label: '0–3 yrs (Toddler)' },
-                  { id: 'TIER_1_EARLY_CHILDHOOD_4_6', label: '4–6 yrs (Preschool)' },
-                  { id: 'TIER_2_MIDDLE_CHILDHOOD_7_9', label: '7–9 yrs (Childhood)' },
-                  { id: 'TIER_3_PRE_TEEN_10_12', label: '10–12 yrs (Pre-Teen)' },
-                  { id: 'TIER_4_EARLY_ADOLESCENCE_13_15', label: '13–15 yrs (Teens)' },
-                  { id: 'TIER_5_LATE_ADOLESCENCE_16_18', label: '16–18 yrs (Older Teen)' },
-                ].map((tier) => (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (isViewingAllAges) {
+                  setIsViewingAllAges(false);
+                  setSelectedTier(childAge.developmentalTier);
+                } else {
+                  setIsViewingAllAges(true);
+                  setSelectedTier('all');
+                }
+              }}
+              className="text-xs font-semibold h-9 border-teal-300 text-teal-900 hover:bg-teal-100/70 shrink-0 cursor-pointer"
+            >
+              {isViewingAllAges ? `Filter for ${childAge.name}` : 'View All Ages'}
+            </Button>
+          </div>
+
+          {/* Expanded Tier Options when "View All Ages" is selected */}
+          {isViewingAllAges && (
+            <div className="space-y-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 animate-in fade-in">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700">
+                  Select Age Stage:
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsViewingAllAges(false);
+                    setSelectedTier(childAge.developmentalTier);
+                  }}
+                  className="text-xs text-teal-700 hover:text-teal-900 font-bold cursor-pointer"
+                >
+                  Reset to {childAge.name} ({childAge.ageDisplay})
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {TIER_OPTIONS.map((tier) => (
                   <button
                     key={tier.id}
                     type="button"
                     onClick={() => setSelectedTier(tier.id)}
-                    className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                       selectedTier === tier.id
-                        ? 'bg-slate-900 text-white font-bold'
-                        : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/60'
+                        ? 'bg-teal-700 text-white shadow-2xs font-bold'
+                        : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     {tier.label}
                   </button>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* Search & Age-Prioritized Dilemmas Toolbar */}
+          <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs">
+            <div className="relative">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input
+                type="text"
+                placeholder="Search dilemma (e.g. 'grocery tantrum', 'hitting', 'bedtime refusal', 'screen time')..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 min-h-[44px] bg-slate-50 border-slate-200 text-xs sm:text-sm"
+              />
+            </div>
+
+            {/* Age-Prioritized Dilemma Pills & Browse All Dropdown */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
+                  Calibrated Dilemmas for {childAge.name}:
+                </span>
+                {selectedCategory !== 'all' && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory('all')}
+                    className="text-xs text-teal-700 hover:underline font-semibold cursor-pointer"
+                  >
+                    Clear Filter
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory('all')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] cursor-pointer ${
+                    selectedCategory === 'all'
+                      ? 'bg-teal-700 text-white shadow-2xs'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                  }`}
+                >
+                  All Dilemmas
+                </button>
+
+                {/* Surface top 3-4 age-prioritized dilemmas */}
+                {prioritizedDilemmas.map((sit) => (
+                  <button
+                    key={sit.id}
+                    type="button"
+                    onClick={() => setSelectedCategory(sit.id)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] cursor-pointer ${
+                      selectedCategory === sit.id
+                        ? 'bg-teal-700 text-white shadow-2xs'
+                        : 'bg-teal-50/80 hover:bg-teal-100/80 text-teal-900 border border-teal-200/60'
+                    }`}
+                  >
+                    {sit.label}
+                  </button>
+                ))}
+
+                {/* Clean dropdown selector for all dilemmas */}
+                <div className="relative inline-block ml-auto sm:ml-2">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    aria-label="Browse all dilemmas"
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 focus:border-teal-600 focus:outline-none cursor-pointer"
+                  >
+                    <option value="all">Browse all dilemmas (7)...</option>
+                    {ALL_SITUATIONS.filter((s) => s.id !== 'all').map((sit) => (
+                      <option key={sit.id} value={sit.id}>
+                        {sit.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -328,11 +444,12 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
                 onClick={() => {
                   setSelectedCategory('all');
                   setSelectedTier('all');
+                  setIsViewingAllAges(true);
                   setSearchQuery('');
                 }}
-                className="text-teal-700 hover:underline font-semibold"
+                className="text-teal-700 hover:underline font-semibold cursor-pointer"
               >
-                Reset Filters
+                Reset All Filters
               </button>
             )}
           </div>
@@ -349,20 +466,24 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
               </p>
               <Button
                 variant="outline"
+                size="sm"
                 onClick={() => {
                   setSelectedCategory('all');
                   setSelectedTier('all');
+                  setIsViewingAllAges(true);
                   setSearchQuery('');
                 }}
-                className="text-xs font-semibold"
               >
-                View All Scripts
+                Clear Filters
               </Button>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredGuides.map((guide) => (
-                <DeEscalationScriptCard key={guide.id} guide={guide} />
+                <DeEscalationScriptCard
+                  key={guide.id}
+                  guide={guide}
+                />
               ))}
             </div>
           )}
@@ -372,88 +493,39 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
       {/* TAB 2: HALT DIAGNOSTIC */}
       {activeTab === 'halt' && (
         <div className="space-y-6">
-          <Card className="border-teal-200 bg-gradient-to-r from-teal-50/50 via-white to-emerald-50/30 p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-teal-800">
-                  Interactive Clinical Protocol
-                </span>
-                <h3 className="text-xl font-extrabold text-slate-900">
-                  Interactive HALT Diagnostic Tool
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 max-w-xl">
-                  Check symptoms across Hungry, Angry/Anxious, Lonely, or Tired to decode acute emotional storms and obtain immediate regulation steps.
-                </p>
+          <Card className="border-teal-200/90 bg-gradient-to-br from-teal-50/60 to-emerald-50/40 p-6 sm:p-8 space-y-4">
+            <div className="max-w-2xl space-y-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-teal-300 bg-white/80 px-3 py-1 text-xs font-bold text-teal-800">
+                <AlertTriangle className="h-3.5 w-3.5 text-rose-600" />
+                <span>The Core Pediatric Co-Regulation Protocol</span>
               </div>
-
-              <Button
-                type="button"
-                onClick={() => setIsHaltModalOpen(true)}
-                className="min-h-[44px] gap-2 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs shrink-0"
-              >
-                <AlertTriangle className="h-4 w-4" />
-                <span>Launch Interactive Modal</span>
-              </Button>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+                The HALT Emergency Diagnostic Framework
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                Before reacting to defiance, rudeness, or explosive tears, run the clinical HALT triage. 92% of acute behavioral breakdowns are neurobiological vulnerabilities, not deliberate defiance.
+              </p>
             </div>
+
+            <Button
+              onClick={() => setIsHaltModalOpen(true)}
+              className="gap-2 bg-teal-700 hover:bg-teal-800 text-white font-bold shadow-xs cursor-pointer"
+            >
+              <AlertTriangle className="h-4 w-4" />
+              <span>Launch 60-Second HALT Assessment</span>
+            </Button>
           </Card>
-
-          {/* Embedded HALT Walkthrough */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              {
-                letter: 'H',
-                title: 'Hungry (Blood Sugar Crash)',
-                mechanism: 'Hypoglycemia triggers adrenaline surge. Executive control collapses.',
-                firstAid: 'Offer protein / complex carbs (cheese, fruit, milk) with zero commentary.',
-              },
-              {
-                letter: 'A',
-                title: 'Angry / Anxious (Amygdala Hijack)',
-                mechanism: 'Fight-or-flight triggered by perceived autonomy loss or transition.',
-                firstAid: 'Eye-level contact, open hands, decrease words by 80%.',
-              },
-              {
-                letter: 'L',
-                title: 'Lonely (Attachment Disconnection)',
-                mechanism: 'After-school sensory overload or parental device distraction triggers panic.',
-                firstAid: '5 minutes of focused physical snuggle, back rub, or rough-and-tumble play.',
-              },
-              {
-                letter: 'T',
-                title: 'Tired (Sensory Overstimulation)',
-                mechanism: 'Adenosine sleep pressure impairs self-regulation; tiny triggers cause meltdowns.',
-                firstAid: 'Dim lights, kill screens and audio, transition directly to sleep.',
-              },
-            ].map((item) => (
-              <Card key={item.letter} className="p-5 border-slate-200 space-y-3 bg-white shadow-2xs">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-100 text-teal-900 font-black text-lg shrink-0">
-                    {item.letter}
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">{item.title}</h4>
-                    <p className="text-[11px] text-slate-500">{item.mechanism}</p>
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-teal-200/80 bg-teal-50/50 p-3 space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-teal-800 block">
-                    Immediate First Aid:
-                  </span>
-                  <p className="text-xs text-slate-800 font-semibold leading-relaxed">
-                    {item.firstAid}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </div>
         </div>
       )}
 
-      {/* TAB 3: AUTHORITATIVE "TIME-INS" & BREATHING */}
-      {activeTab === 'guide' && <AuthoritativeParentingGuide />}
+      {/* TAB 3: AUTHORITATIVE LIMITS */}
+      {activeTab === 'guide' && (
+        <div className="space-y-6">
+          <AuthoritativeParentingGuide />
+        </div>
+      )}
 
-      {/* Standalone HALT Diagnostic Modal */}
+      {/* HALT Diagnostic Modal */}
       <HaltDiagnosticModal
         open={isHaltModalOpen}
         onOpenChange={setIsHaltModalOpen}

@@ -3,7 +3,8 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-18, PLAN-19, PLAN-25, PLAN-26  
 **Estimated Scope:** Large  
-**Paperclip Issue:** SOU-60 (or assigned)  
+**Paperclip Issue:** SOU-59 (Subtask of SOU-58)  
+**Status:** Complete (PR #38)  
 
 ---
 
@@ -107,12 +108,12 @@ This plan declutters each domain tab to deliver an effortless, calm, and tailore
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/components/nutrition/NutritionDashboardView.tsx`: Stage auto-selection, collapsed 5-stage selector, contextual subtabs.
-- [ ] `apps/web/src/components/brain-games/PlayActivityCatalog.tsx`: Auto-tier filtering, decluttered filter chips.
-- [ ] `apps/web/src/components/behavior/BehaviorDashboardView.tsx`: Age-calibrated dilemma prioritization, auto-tier filter.
-- [ ] `apps/web/src/components/devices/DevicesManagementView.tsx`: Consolidated Youth Culture & Slang Radar, auto-curfew calibration.
-- [ ] `apps/web/src/components/health/HealthDashboardView.tsx`: Streamlined hero copy and unified triage tabs.
-- [ ] `apps/web/test/tabDecluttering.test.ts`: Automated test suite verifying decluttered behavior across all 5 domain tabs.
+- [x] `apps/web/src/components/nutrition/NutritionDashboardView.tsx`: Stage auto-selection, collapsed 5-stage selector, contextual subtabs.
+- [x] `apps/web/src/components/brain-games/PlayActivityCatalog.tsx`: Auto-tier filtering, decluttered filter chips.
+- [x] `apps/web/src/components/behavior/BehaviorDashboardView.tsx`: Age-calibrated dilemma prioritization, auto-tier filter.
+- [x] `apps/web/src/components/devices/DevicesManagementView.tsx`: Consolidated Youth Culture & Slang Radar, auto-curfew calibration.
+- [x] `apps/web/src/components/health/HealthDashboardView.tsx`: Streamlined hero copy and unified triage tabs.
+- [x] `apps/web/test/tabDecluttering.test.ts`: Automated test suite verifying decluttered behavior across all 5 domain tabs.
 
 ---
 
@@ -141,8 +142,8 @@ This plan declutters each domain tab to deliver an effortless, calm, and tailore
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] `npm run typecheck` exits with code 0 across the monorepo.
-- [ ] `vitest` unit tests pass with 100% success.
-- [ ] PR description written in plain text (`.txt`) adhering to Conventional Commits.
-- [ ] Ponytail audit completed: smallest complete change, no speculative bloat.
+- [x] All deliverables created and located in correct directories.
+- [x] `npm run typecheck` exits with code 0 across the monorepo.
+- [x] `vitest` unit tests pass with 100% success.
+- [x] PR description written in plain text (`.txt`) adhering to Conventional Commits.
+- [x] Ponytail audit completed: smallest complete change, no speculative bloat.
