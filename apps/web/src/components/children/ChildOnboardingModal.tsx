@@ -4,6 +4,7 @@ import * as React from 'react';
 import type { ChildDTO } from '@alongside/shared';
 import { Dialog, DialogContent } from '@/components/ui/Dialog';
 import { ChildOnboardingFlow } from './ChildOnboardingFlow';
+import { useChildContextStore } from '@/stores/useChildContextStore';
 
 export interface ChildOnboardingModalProps {
   open: boolean;
@@ -17,6 +18,14 @@ export function ChildOnboardingModal({
   onSuccess,
 }: ChildOnboardingModalProps) {
   const handleSuccess = (child: ChildDTO) => {
+    // Synchronize store and select active child
+    const store = useChildContextStore.getState();
+    const existing = store.children;
+    if (!existing.some((c) => c.id === child.id)) {
+      store.setChildren([...existing, child]);
+    }
+    store.setActiveChild(child.id);
+
     if (onSuccess) {
       onSuccess(child);
     }
@@ -24,8 +33,12 @@ export function ChildOnboardingModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 border-0 bg-transparent shadow-2xl">
+      <DialogContent
+        showCloseButton={false}
+        className="max-w-2xl p-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
+      >
         <ChildOnboardingFlow
+          isModal
           onSuccess={handleSuccess}
           onCancel={() => onOpenChange(false)}
         />
