@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginUserSchema, type LoginUserInput } from "@alongside/shared";
@@ -11,10 +11,12 @@ import { Input } from "@/components/ui/Input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
 import { useAuth } from "@/hooks/useAuth";
 import { ApiClientError } from "@/lib/api/client";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isLoggedOut = searchParams?.get("logged_out") === "true";
   const { login, isLoggingIn } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
 
@@ -34,7 +36,7 @@ export function LoginForm() {
     setServerError(null);
     try {
       await login(data);
-      router.push("/");
+      router.push("/dashboard");
     } catch (err) {
       if (err instanceof ApiClientError) {
         setServerError(err.message);
@@ -60,6 +62,16 @@ export function LoginForm() {
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <CardContent className="space-y-4">
+          {isLoggedOut && !serverError && (
+            <div
+              role="status"
+              className="flex items-start gap-2.5 rounded-lg border border-teal-200 bg-teal-50 p-3 text-sm text-teal-800"
+            >
+              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-teal-600" />
+              <span>You have been successfully logged out of your AlongSide account.</span>
+            </div>
+          )}
+
           {serverError && (
             <div
               role="alert"

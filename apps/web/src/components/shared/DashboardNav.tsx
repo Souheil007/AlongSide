@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @deprecated Deprecated in PLAN-21. Primary navigation is now consolidated into the single
+ * unified Header application bar (`apps/web/src/components/shared/Header.tsx`).
+ * Retained for secondary sub-view domain breadcrumbs and test suite compatibility (`DOMAIN_HUBS`).
+ * Do NOT mount directly underneath <Header /> in top-level dashboard layouts.
+ */
+
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
