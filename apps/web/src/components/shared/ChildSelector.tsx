@@ -39,18 +39,26 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
     }
   }, [queryChildren, queryLoading]);
 
-  // Click outside listener to close dropdown
+  // Click outside listener and Escape key to close dropdown
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen]);
 
@@ -73,11 +81,76 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
         <button
           type="button"
           onClick={() => setOnboardingOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-teal-200 bg-teal-50/80 px-2.5 py-1.5 text-xs font-semibold text-teal-800 transition-colors hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-600"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50/80 px-3 py-2 text-xs font-semibold text-teal-800 transition-colors hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-600"
+          aria-label="Add child profile"
         >
-          <Plus className="h-3.5 w-3.5 text-teal-600" />
+          <Plus className="h-4 w-4 text-teal-600" />
           <span>Add Child</span>
         </button>
+        <ChildOnboardingModal
+          open={onboardingOpen}
+          onOpenChange={setOnboardingOpen}
+          onSuccess={handleAddChildSuccess}
+        />
+      </div>
+    );
+  }
+
+  // Expanded Variant: Rendered as a full interactive segmented list / bar
+  if (variant === 'expanded') {
+    return (
+      <div className={cn('flex flex-wrap items-center gap-2', className)}>
+        <div className="flex flex-wrap items-center gap-1.5 rounded-2xl bg-slate-100/80 p-1.5 border border-slate-200/80">
+          {children.map((child) => {
+            const isSelected = child.id === activeChild?.id;
+            const horizon = getChildDevelopmentalHorizon(child.developmentalTier || child.age);
+            return (
+              <button
+                key={child.id}
+                type="button"
+                onClick={() => handleSelectChild(child.id)}
+                className={cn(
+                  'flex min-h-[44px] items-center gap-2.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all',
+                  isSelected
+                    ? 'bg-white text-slate-900 shadow-xs ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                )}
+                aria-pressed={isSelected}
+              >
+                <div
+                  className={cn(
+                    'flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold text-white shadow-2xs',
+                    isSelected ? 'bg-teal-600' : 'bg-slate-400'
+                  )}
+                >
+                  {child.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span>{child.name}</span>
+                    <span className="text-[10px] text-slate-500 font-normal">
+                      • {formatChildAge(child)}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-medium">
+                    {horizon.tierLabel.split(':')[1]?.trim() || horizon.stage}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setOnboardingOpen(true)}
+          className="flex min-h-[44px] items-center gap-1.5 rounded-xl border border-dashed border-teal-300 bg-teal-50/60 px-3.5 py-2 text-xs font-semibold text-teal-800 transition-colors hover:bg-teal-100/80"
+          aria-label="Add another child"
+        >
+          <Plus className="h-4 w-4 text-teal-600" />
+          <span className="hidden sm:inline">Add Child</span>
+        </button>
+
         <ChildOnboardingModal
           open={onboardingOpen}
           onOpenChange={setOnboardingOpen}
@@ -98,15 +171,20 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-label={`Active child: ${activeChild?.name || 'Select Child'}`}
         className={cn(
-          'group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white/95 px-3 py-1.5 text-left text-xs font-medium text-slate-800 shadow-2xs transition-all hover:border-teal-300 hover:bg-slate-50/90 focus:outline-none focus:ring-2 focus:ring-teal-600/30',
-          variant === 'compact' && 'px-2 py-1 text-xs',
+          'group inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-slate-200 bg-white/95 px-3 py-1.5 text-left text-xs font-medium text-slate-800 shadow-2xs transition-all hover:border-teal-300 hover:bg-slate-50/90 focus:outline-none focus:ring-2 focus:ring-teal-600/30',
+          variant === 'compact' && 'min-h-[38px] px-2 py-1 text-xs',
           isOpen && 'border-teal-500 ring-2 ring-teal-500/20'
         )}
       >
         {/* Child Avatar with Initial */}
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-[11px] font-bold text-white shadow-2xs group-hover:scale-105 transition-transform">
-          {activeChild?.name ? activeChild.name.charAt(0).toUpperCase() : <User className="h-3.5 w-3.5" />}
+          {activeChild?.name ? (
+            activeChild.name.charAt(0).toUpperCase()
+          ) : (
+            <User className="h-3.5 w-3.5" />
+          )}
         </div>
 
         {/* Child Info */}
@@ -140,6 +218,7 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
       {isOpen && (
         <div
           role="listbox"
+          aria-label="Family Children list"
           className="absolute right-0 sm:left-0 sm:right-auto z-50 mt-2 w-72 origin-top-left rounded-2xl border border-slate-200/90 bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150"
         >
           <div className="px-2.5 py-2 border-b border-slate-100 flex items-center justify-between">
@@ -163,7 +242,7 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
                   aria-selected={isSelected}
                   onClick={() => handleSelectChild(child.id)}
                   className={cn(
-                    'w-full flex items-center justify-between gap-3 rounded-xl px-2.5 py-2 text-left text-xs transition-colors',
+                    'w-full flex items-center justify-between gap-3 rounded-xl px-2.5 py-2 text-left text-xs transition-colors min-h-[44px]',
                     isSelected
                       ? 'bg-teal-50/90 text-teal-900 font-medium'
                       : 'hover:bg-slate-50 text-slate-700'
@@ -210,7 +289,7 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
                 setIsOpen(false);
                 setOnboardingOpen(true);
               }}
-              className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-dashed border-teal-300 bg-teal-50/50 py-2 text-xs font-semibold text-teal-800 transition-colors hover:bg-teal-100/70"
+              className="w-full flex min-h-[40px] items-center justify-center gap-1.5 rounded-xl border border-dashed border-teal-300 bg-teal-50/50 py-2 text-xs font-semibold text-teal-800 transition-colors hover:bg-teal-100/70"
             >
               <Plus className="h-3.5 w-3.5 text-teal-700" />
               <span>Add Another Child Profile</span>
