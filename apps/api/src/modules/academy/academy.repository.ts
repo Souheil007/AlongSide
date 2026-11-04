@@ -32,6 +32,25 @@ export interface AcademyRepository {
   ): Promise<AcademyLessonCompletionResponseDTO>;
 }
 
+export function getEquivalentTiers(tier: string): string[] {
+  switch (tier) {
+    case 'TIER_1_AGES_8_9':
+    case 'TIER_2_MIDDLE_CHILDHOOD_7_9':
+      return ['TIER_1_AGES_8_9', 'TIER_2_MIDDLE_CHILDHOOD_7_9'];
+    case 'TIER_2_AGES_10_11':
+    case 'TIER_3_PRE_TEEN_10_12':
+      return ['TIER_2_AGES_10_11', 'TIER_3_PRE_TEEN_10_12'];
+    case 'TIER_3_AGES_12_13':
+    case 'TIER_4_EARLY_ADOLESCENCE_13_15':
+      return ['TIER_3_AGES_12_13', 'TIER_4_EARLY_ADOLESCENCE_13_15'];
+    case 'TIER_4_AGES_14_PLUS':
+    case 'TIER_5_LATE_ADOLESCENCE_16_18':
+      return ['TIER_4_AGES_14_PLUS', 'TIER_5_LATE_ADOLESCENCE_16_18'];
+    default:
+      return [tier];
+  }
+}
+
 export class PrismaAcademyRepository implements AcademyRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
 
@@ -39,9 +58,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
     tier?: DevelopmentalTier;
     userId?: string;
   }): Promise<AcademyModuleDTO[]> {
-    const where: { developmentalTier?: DevelopmentalTier } = {};
+    const where: any = {};
     if (options?.tier) {
-      where.developmentalTier = options.tier;
+      const equivalents = getEquivalentTiers(options.tier);
+      where.developmentalTier = equivalents.length === 1 ? equivalents[0] : { in: equivalents };
     }
 
     const modules = await this.prisma.academyModule.findMany({
@@ -356,7 +376,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     );
 
     if (options?.tier) {
-      moduleList = moduleList.filter((m) => m.developmentalTier === options.tier);
+      const equivalents = new Set(getEquivalentTiers(options.tier));
+      moduleList = moduleList.filter((m) => equivalents.has(m.developmentalTier));
     }
 
     const allLessons = Array.from(this.lessons.values());

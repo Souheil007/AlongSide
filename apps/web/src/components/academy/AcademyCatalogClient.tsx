@@ -13,31 +13,58 @@ import { cn } from '@/lib/utils';
 
 type TierTabFilter = 'ALL' | DevelopmentalTier;
 
+function normalizeChildTier(tier: DevelopmentalTier): DevelopmentalTier {
+  switch (tier) {
+    case DevelopmentalTier.TIER_1_AGES_8_9:
+      return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
+    case DevelopmentalTier.TIER_2_AGES_10_11:
+      return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
+    case DevelopmentalTier.TIER_3_AGES_12_13:
+      return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
+    case DevelopmentalTier.TIER_4_AGES_14_PLUS:
+      return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
+    default:
+      return tier;
+  }
+}
+
 const TIER_TABS: Array<{ key: TierTabFilter; label: string; shortLabel: string; ageRange: string }> = [
-  { key: 'ALL', label: 'All Modules', shortLabel: 'All', ageRange: 'Ages 8–18' },
+  { key: 'ALL', label: 'All Modules', shortLabel: 'All', ageRange: 'Ages 0–18' },
   {
-    key: DevelopmentalTier.TIER_1_AGES_8_9,
-    label: 'Tier 1: Explorer',
-    shortLabel: 'Explorer',
-    ageRange: 'Ages 8–9',
+    key: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    label: 'Tier 0: Infancy & Toddler',
+    shortLabel: '0–3 yrs',
+    ageRange: 'Ages 0–3',
   },
   {
-    key: DevelopmentalTier.TIER_2_AGES_10_11,
-    label: 'Tier 2: Pathfinder',
-    shortLabel: 'Pathfinder',
-    ageRange: 'Ages 10–11',
+    key: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+    label: 'Tier 1: Early Childhood',
+    shortLabel: '4–6 yrs',
+    ageRange: 'Ages 4–6',
   },
   {
-    key: DevelopmentalTier.TIER_3_AGES_12_13,
-    label: 'Tier 3: Navigator',
-    shortLabel: 'Navigator',
-    ageRange: 'Ages 12–13',
+    key: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+    label: 'Tier 2: Explorer',
+    shortLabel: '7–9 yrs',
+    ageRange: 'Ages 7–9',
   },
   {
-    key: DevelopmentalTier.TIER_4_AGES_14_PLUS,
-    label: 'Tier 4: Pioneer',
-    shortLabel: 'Pioneer',
-    ageRange: 'Ages 14+',
+    key: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+    label: 'Tier 3: Pathfinder',
+    shortLabel: '10–12 yrs',
+    ageRange: 'Ages 10–12',
+  },
+  {
+    key: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+    label: 'Tier 4: Navigator',
+    shortLabel: '13–15 yrs',
+    ageRange: 'Ages 13–15',
+  },
+  {
+    key: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
+    label: 'Tier 5: Pioneer',
+    shortLabel: '16–18 yrs',
+    ageRange: 'Ages 16–18',
   },
 ];
 
@@ -51,7 +78,7 @@ export function AcademyCatalogClient() {
     if (!hasInitializedChildTier && children.length > 0) {
       const firstChild = children[0];
       if (firstChild?.developmentalTier) {
-        setSelectedTier(firstChild.developmentalTier);
+        setSelectedTier(normalizeChildTier(firstChild.developmentalTier));
       }
       setHasInitializedChildTier(true);
     }

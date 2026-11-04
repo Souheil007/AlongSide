@@ -50,6 +50,12 @@ const academyModuleDtoSchema = {
     developmentalTier: {
       type: 'string',
       enum: [
+        'TIER_0_INFANCY_TODDLER_0_3',
+        'TIER_1_EARLY_CHILDHOOD_4_6',
+        'TIER_2_MIDDLE_CHILDHOOD_7_9',
+        'TIER_3_PRE_TEEN_10_12',
+        'TIER_4_EARLY_ADOLESCENCE_13_15',
+        'TIER_5_LATE_ADOLESCENCE_16_18',
         'TIER_1_AGES_8_9',
         'TIER_2_AGES_10_11',
         'TIER_3_AGES_12_13',
@@ -216,6 +222,12 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
             tier: {
               type: 'string',
               enum: [
+                'TIER_0_INFANCY_TODDLER_0_3',
+                'TIER_1_EARLY_CHILDHOOD_4_6',
+                'TIER_2_MIDDLE_CHILDHOOD_7_9',
+                'TIER_3_PRE_TEEN_10_12',
+                'TIER_4_EARLY_ADOLESCENCE_13_15',
+                'TIER_5_LATE_ADOLESCENCE_16_18',
                 'TIER_1_AGES_8_9',
                 'TIER_2_AGES_10_11',
                 'TIER_3_AGES_12_13',

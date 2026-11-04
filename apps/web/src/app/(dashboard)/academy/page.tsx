@@ -25,7 +25,7 @@ export default function AcademyPage() {
         </h1>
 
         <p className="text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
-          Bite-sized, clinically backed lessons explaining why tween brains react intensely to digital stimuli, paired with actionable conversation scripts for every developmental leap.
+          Bite-sized, clinically backed lessons covering child neurobiology, sensory co-regulation, purposeful play, and digital transitions across all developmental stages from birth to adulthood (Ages 0–18).
         </p>
       </header>
 
