@@ -270,52 +270,6 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
       {/* TAB 1: SCRIPTS VAULT */}
       {activeTab === 'scripts' && (
         <div className="space-y-6">
-          {/* Active Age Calibration Status Chip & View All Toggle */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/80 via-white to-teal-50/40 p-4 shadow-xs">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600/20 text-teal-800">
-                <Smile className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-teal-950">
-                    {isViewingAllAges
-                      ? 'Browsing All Age Dilemmas'
-                      : `Calibrated Dilemmas • ${childAge.ageDisplay}`}
-                  </span>
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] bg-white text-teal-800 border-teal-300 font-bold"
-                  >
-                    {isViewingAllAges ? 'All Ages' : 'Auto-Filtered'}
-                  </Badge>
-                </div>
-                <p className="text-[11px] text-teal-800/80 mt-0.5">
-                  {isViewingAllAges
-                    ? 'Displaying behavioral scenarios across infancy to late teens.'
-                    : `Focusing on ${childAge.developmentalTier.replace(/_/g, ' ')}`}
-                </p>
-              </div>
-            </div>
-
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                if (isViewingAllAges) {
-                  setIsViewingAllAges(false);
-                  setSelectedTier(childAge.developmentalTier);
-                } else {
-                  setIsViewingAllAges(true);
-                  setSelectedTier('all');
-                }
-              }}
-              className="text-xs font-semibold h-9 border-teal-300 text-teal-900 hover:bg-teal-100/70 shrink-0 cursor-pointer"
-            >
-              {isViewingAllAges ? 'Filter by Stage' : 'View All Ages'}
-            </Button>
-          </div>
 
           {/* Expanded Tier Options when "View All Ages" is selected */}
           {isViewingAllAges && (
@@ -370,9 +324,26 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
             {/* Age-Prioritized Dilemma Pills & Browse All Dropdown */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                  Calibrated Dilemmas:
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
+                    {isViewingAllAges ? 'All Age Dilemmas:' : 'Calibrated Dilemmas:'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (isViewingAllAges) {
+                        setIsViewingAllAges(false);
+                        setSelectedTier(childAge.developmentalTier);
+                      } else {
+                        setIsViewingAllAges(true);
+                        setSelectedTier('all');
+                      }
+                    }}
+                    className="text-[11px] font-semibold text-teal-700 hover:text-teal-900 hover:underline cursor-pointer"
+                  >
+                    {isViewingAllAges ? 'Filter to ' + childAge.name : 'View All Ages'}
+                  </button>
+                </div>
                 {selectedCategory !== 'all' && (
                   <button
                     type="button"

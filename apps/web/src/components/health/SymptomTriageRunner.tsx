@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { calculateEstimatedWeightLbs } from '@/hooks/useChildAge';
 import {
   Thermometer,
   AlertTriangle,
@@ -92,7 +93,7 @@ export function SymptomTriageRunner() {
         ? Math.max(1, (new Date().getFullYear() - activeChild.birthYear) * 12 + (new Date().getMonth() + 1 - activeChild.birthMonth))
         : Math.max(1, activeChild.age * 12);
       setChildAgeMonths(computedMonths);
-      setWeightLbs(computedMonths <= 6 ? 14 : computedMonths <= 12 ? 21 : computedMonths <= 24 ? 26 : Math.round(computedMonths * 2.2));
+      setWeightLbs(calculateEstimatedWeightLbs(computedMonths, Math.floor(computedMonths / 12)));
     }
   }, [activeChild]);
 
@@ -194,8 +195,25 @@ export function SymptomTriageRunner() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-xs font-semibold text-slate-600">
-              <span>Weight: {weightLbs} lbs (~{(weightLbs * 0.453592).toFixed(1)} kg)</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <label htmlFor="triage-weight-input" className="text-slate-600 font-medium">Weight:</label>
+              <div className="flex items-center gap-1.5 bg-white border border-teal-200 rounded-lg px-2 py-1 shadow-2xs">
+                <input
+                  id="triage-weight-input"
+                  type="number"
+                  min="4"
+                  max="300"
+                  step="1"
+                  value={weightLbs}
+                  onChange={(e) => setWeightLbs(Math.max(4, Number(e.target.value) || 0))}
+                  aria-label="Child Weight in pounds"
+                  className="w-14 text-xs font-bold text-slate-800 bg-transparent focus:outline-none"
+                />
+                <span className="text-[11px] text-slate-500 font-medium">lbs</span>
+                <span className="text-[10px] text-slate-400">
+                  (~{(weightLbs * 0.453592).toFixed(1)} kg)
+                </span>
+              </div>
             </div>
           </div>
 
