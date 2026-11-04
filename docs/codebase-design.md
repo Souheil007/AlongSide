@@ -1,10 +1,11 @@
 # Alongside — Codebase Design Specification: Deep Modules & Seam Architecture
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved Engineering Standards  
-**Version:** 1.0.0  
+**Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Frontend Engineer, Backend Engineer, Technical Architects, Code Reviewers  
 **Companion Documents:**  
 - [**System Architecture Specification**](system-architecture.md)  
+- [**Technical Roadmap v2.4.0**](technical-roadmap-v2.4.0.md)  
 - [**Code Quality, Security & Testing Principles**](code-quality-principles.md)  
 - [**Naming Conventions & Code Style Guide**](naming-conventions.md)  
 - Active Rule: [`.agents/rules/06-codebase-design.md`](../.agents/rules/06-codebase-design.md)
@@ -207,18 +208,21 @@ If a module requires 15 test setup fixtures just to invoke a single method, the 
 
 ## 5. The Alongside Canonical Seam Catalog
 
-To guarantee velocity and eliminate merge conflicts, Alongside defines **7 canonical seams**. Every seam represents a critical architectural boundary with a small public interface, a production adapter, and an in-memory test fake adapter.
+To guarantee velocity and eliminate merge conflicts across our holistic platform, Alongside defines **10 canonical seams**. Every seam represents a critical architectural boundary with a small public interface, a production adapter, and an in-memory test fake adapter.
 
 ```mermaid
 graph TD
-    subgraph MonorepoSeams ["Canonical AlongSide Architectural Seams"]
+    subgraph MonorepoSeams ["Canonical AlongSide Architectural Seams (v2.4.0)"]
         Seam1["Seam 1: Device Profile Compiler & Cryptographic Signer"]
-        Seam2["Seam 2: 24/7 AI Child Advisor & Vector Search Engine"]
+        Seam2["Seam 2: 24/7 Clinical AI Advisor & Vector Search Engine"]
         Seam3["Seam 3: Refrigerator-Ready Vector PDF Engine"]
         Seam4["Seam 4: Stripe Billing & Subscription Lifecycle"]
         Seam5["Seam 5: Encrypted Document & Media Storage"]
-        Seam6["Seam 6: Shared Algorithmic & Scoring Engines (@alongside/shared)"]
-        Seam7["Seam 7: Frontend State & Offline Synchronization (apps/web)"]
+        Seam6["Seam 6: Pediatric Health & Symptom Triage Engine"]
+        Seam7["Seam 7: Milestone & Developmental Evaluation Engine (@alongside/shared)"]
+        Seam8["Seam 8: Nutrition & Allergen Schedule Engine (@alongside/shared)"]
+        Seam9["Seam 9: Purposeful Play & Brain Game Selector Engine"]
+        Seam10["Seam 10: Frontend Multi-Child State & Offline Sync (apps/web)"]
     end
 ```
 
@@ -252,10 +256,10 @@ graph TD
 
 ---
 
-### Seam 2: 24/7 AI Child Advisor & Vector FAQ Retrieval
+### Seam 2: 24/7 Clinical AI Advisor & Vector FAQ Retrieval
 
 - **Location:** `apps/api/src/modules/ai-advisor/`
-- **Responsibility:** Ingests parent queries, executes semantic vector retrieval against the 100+ Modern Parenting FAQ repository in `pgvector`, and streams empathy-first, developmentally grounded guidance.
+- **Responsibility:** Ingests parent queries, executes semantic vector retrieval against the 250+ Clinical Parenting FAQ repository in `pgvector`, and streams empathy-first, developmentally grounded guidance with strict medical emergency overrides.
 - **Interface:**
   ```typescript
   export interface AiAdvisorEngine {
@@ -268,9 +272,13 @@ graph TD
   export interface VectorSearchAdapter {
     findSimilarFaqs(embedding: number[], topK: number, minSimilarity: number): Promise<FaqSearchResult[]>;
   }
+
+  export interface ClinicalSafeHarborFilter {
+    evaluateEmergencyTriage(queryText: string): ClinicalEmergencyCheckResult;
+  }
   ```
 - **Adapters:**
-  1. `OpenAiStreamingAdapter` (Production): Streams SSE tokens via `gpt-4o` with prompt guardrails enforcing "Parent Calm" principles.
+  1. `MultiLlmCascadeAdapter` (Production): Streams SSE tokens via OpenAI (`gpt-4o-mini`/`gpt-4o`) with automatic failover to Gemini and Mistral (`open-mistral-7b`).
   2. `PgVectorCosineAdapter` (Production): Executes SQL vector similarity queries `1 - (embedding <=> target_vector)`.
   3. `DeterministicAiAdvisorFake` (Test Adapter): Returns canned token streams (e.g. "Take a deep breath...") immediately, preventing expensive LLM API calls in CI.
   4. `InMemoryVectorSearchFake` (Test Adapter): In-memory array cosine calculator for fast Vitest suites.
@@ -329,31 +337,93 @@ graph TD
 
 ---
 
-### Seam 6: Shared Algorithmic & Scoring Engines (`packages/shared`)
+### Seam 6: Pediatric Health & Symptom Triage Engine
 
-- **Location:** `packages/shared/src/algorithms/`
-- **Responsibility:** Pure, deterministic domain calculation shared symmetrically across Next.js frontend and Fastify backend.
+- **Location:** `apps/api/src/modules/health/`
+- **Responsibility:** Evaluates pediatric symptoms (fever, rashes, breathing, earaches) against Barton Schmitt Pediatric Telephone Protocols and AAP guidelines, producing calibrated Red, Yellow, or Green zone directives.
 - **Interface:**
   ```typescript
-  // 10-Dimension First-Phone Readiness Index (0-100 score + tier assignment)
-  export function calculateReadinessScore(answers: AssessmentAnswer[]): ReadinessAssessmentResult;
+  export interface PediatricTriageEngine {
+    triageSymptom(input: SymptomTriageInput): SymptomTriageResult;
+    calculateAntipyreticDosage(childWeightLbs: number, medication: 'ACETAMINOPHEN' | 'IBUPROFEN', ageMonths: number): DosageResult;
+  }
 
-  // Bilateral Pact Clause Rule Resolver (computes default bedtime by age tier)
-  export function resolvePactPresetClauses(childAge: number, roadType: RoadType): PresetClauseGroup[];
-
-  // Tween Slang Cultural Fluency Evaluator
-  export function evaluateSlangQuizScore(answers: QuizAnswer[]): SlangFluencyScoreResult;
+  export interface SymptomTriageResult {
+    zone: 'RED' | 'YELLOW' | 'GREEN';
+    requiresEmergency911: boolean;
+    conditionSuspected: string;
+    clinicalRationale: string;
+    immediateActions: string[];
+    homeCareMeasures?: string[];
+    pediatricianQuestions?: string[];
+    primaryClinicalSource: string;
+  }
   ```
-- **Seam Property:** Pure functional modules. Zero side effects, zero network calls, 100% test coverage in Vitest. Maximum leverage: authored once in `packages/shared`, utilized across both web clients and backend controllers.
+- **Adapters:**
+  1. `BartonSchmittTriageAdapter` (Production): Deterministic rule engine encoding age-stratified fever cutoffs and respiratory retraction flags.
+  2. `FakePediatricTriageAdapter` (Test Adapter): Configurable test fake returning canned triage outcomes for Fastify integration tests.
 
 ---
 
-### Seam 7: Frontend State & Offline Synchronization (`apps/web`)
+### Seam 7: Milestone & Developmental Evaluation Engine (`@alongside/shared`)
 
-- **Location:** `apps/web/src/stores/` & `apps/web/src/hooks/`
-- **Responsibility:** Encapsulates multi-step negotiation state (Pact Wizard), quiz execution, and offline Service Worker caching.
+- **Location:** `packages/shared/src/algorithms/milestones.ts`
+- **Responsibility:** Pure algorithmic computation assessing child gross motor, fine motor, speech & language bursts, and cognitive milestones from CDC and Bright Futures benchmarks (Ages 0 to 18).
 - **Interface:**
   ```typescript
+  export function calculateDevelopmentalTier(birthYear: number, birthMonth: number, currentMonthYear?: Date): DevelopmentalTier;
+  export function evaluateMilestoneProgress(childAgeMonths: number, achievedMilestoneIds: string[]): MilestoneEvaluationResult;
+  export function getMilestoneCatalogByTier(tier: DevelopmentalTier, category?: 'GROSS_MOTOR' | 'FINE_MOTOR' | 'SPEECH' | 'COGNITIVE'): MilestoneDefinition[];
+  ```
+- **Seam Property:** Pure functional module in `@alongside/shared`. Zero network side effects, 100% unit test coverage in Vitest.
+
+---
+
+### Seam 8: Nutrition & Allergen Schedule Engine (`@alongside/shared`)
+
+- **Location:** `packages/shared/src/algorithms/nutrition.ts`
+- **Responsibility:** Pure mathematical and rule-based scheduling for infant feeding transitions (milk/puree/BLW), safe early allergen introduction timelines (4–11 months), and choking hazard screening.
+- **Interface:**
+  ```typescript
+  export function resolveFeedingStage(ageMonths: number): FeedingStageRecommendation;
+  export function generateAllergenIntroductionSchedule(childAgeMonths: number, knownAllergies: string[]): AllergenScheduleItem[];
+  export function screenChokingHazards(foodDescription: string, childAgeMonths: number): ChokingHazardAssessment;
+  ```
+- **Seam Property:** Pure functional module in `@alongside/shared`. Shared symmetrically between client UI forms and backend validators.
+
+---
+
+### Seam 9: Purposeful Play & Brain Game Selector Engine
+
+- **Location:** `apps/api/src/modules/brain-games/`
+- **Responsibility:** Recommends age-tailored developmental play activities, puppets, sensory bins, and logic puzzles grounded in Harvard Center on the Developing Child ("Serve and Return") research.
+- **Interface:**
+  ```typescript
+  export interface PlayActivityRecommender {
+    recommendDailyPlay(childTier: DevelopmentalTier, currentInterests?: string[]): Promise<BrainGameActivityDTO>;
+    getPlayCatalog(childTier: DevelopmentalTier, category?: PlayCategory): Promise<BrainGameActivityDTO[]>;
+  }
+  ```
+- **Adapters:**
+  1. `DevelopmentalPlayAdapter` (Production): Pulls curated Montessori and sensory activities weighted by developmental tier and season.
+  2. `FakePlayRecommender` (Test Adapter): Returns deterministic daily activities for test isolation.
+
+---
+
+### Seam 10: Frontend Multi-Child State & Offline Synchronization (`apps/web`)
+
+- **Location:** `apps/web/src/stores/` & `apps/web/src/hooks/`
+- **Responsibility:** Encapsulates global multi-child selection, multi-step pact negotiation, and offline Service Worker caching for symptom guides and slang dictionaries.
+- **Interface:**
+  ```typescript
+  export interface ChildContextStore {
+    children: ChildSummaryDTO[];
+    activeChildId: string | null;
+    activeChild: ChildSummaryDTO | null;
+    setActiveChild: (childId: string) => void;
+    setChildren: (children: ChildSummaryDTO[]) => void;
+  }
+
   export interface PactWizardStore {
     currentStep: PactWizardStep;
     selectedClauses: Set<string>;
@@ -362,16 +432,12 @@ graph TD
     childSignature: string | null;
     toggleClause: (clauseId: string) => void;
     setCoSignature: (role: 'parent' | 'child', signatureDataUrl: string) => void;
-    canFinalize: () => boolean;
-    serializeForSubmission: () => CreateAgreementInput;
   }
   ```
 - **Adapters:**
-  1. `ZustandPactStore` (Production): Reactive client-side store with `sessionStorage` hydration.
-  2. `SerwistPwaAdapter` (Production): Service Worker caching for offline script decoders and slang catalogs.
-  3. `MockPactWizardStore` (Test Adapter): Pre-populated Zustand fixture for Storybook and Playwright UI tests.
-
----
+  1. `ZustandChildContextStore` (Production): Client-side reactive store persisted in `localStorage`.
+  2. `SerwistPwaAdapter` (Production): Service Worker caching for offline symptom guides, de-escalation scripts, and slang dictionaries.
+  3. `MockStores` (Test Adapter): Pre-populated Zustand fixtures for Playwright E2E and Vitest component testing.
 
 ## 6. "Design It Twice" Protocol
 

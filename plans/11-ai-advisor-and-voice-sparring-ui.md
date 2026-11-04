@@ -3,6 +3,8 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-03, PLAN-10  
 **Estimated Scope:** Medium  
+**Status:** Complete (Verified & Merged in PR #22)  
+**Paperclip Issue:** SOU-35 (SOU-36)  
 
 ---
 
@@ -59,13 +61,13 @@ Build the real-time **24/7 AI Child Advisor** conversational chat interface in `
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/hooks/useAiAdvisorChat.ts`
-- [ ] `apps/web/src/components/advisor/ChatFeed.tsx`
-- [ ] `apps/web/src/components/advisor/QuickPrompts.tsx`
-- [ ] `apps/web/src/components/advisor/FaqSearchCard.tsx`
-- [ ] `apps/web/src/components/advisor/VoiceSparringModal.tsx`
-- [ ] `apps/web/src/app/(dashboard)/advisor/page.tsx`
-- [ ] `apps/web/src/app/(dashboard)/advisor/faqs/page.tsx`
+- [x] `apps/web/src/hooks/useAiAdvisorChat.ts`
+- [x] `apps/web/src/components/advisor/ChatFeed.tsx`
+- [x] `apps/web/src/components/advisor/QuickPrompts.tsx`
+- [x] `apps/web/src/components/advisor/FaqSearchCard.tsx`
+- [x] `apps/web/src/components/advisor/VoiceSparringModal.tsx`
+- [x] `apps/web/src/app/(dashboard)/advisor/page.tsx`
+- [x] `apps/web/src/app/(dashboard)/advisor/faqs/page.tsx`
 
 ---
 
@@ -94,9 +96,9 @@ Build the real-time **24/7 AI Child Advisor** conversational chat interface in `
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] Real-time SSE streaming rendered smoothly.
-- [ ] Living FAQ Explorer searchable by keyword and category.
-- [ ] Voice Sparring UI modal functional with scenario selection.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Commits adhere to Conventional Commits (`feat(web): ...`).
+- [x] All deliverables created and located in correct directories.
+- [x] Real-time SSE streaming rendered smoothly.
+- [x] Living FAQ Explorer searchable by keyword and category.
+- [x] Voice Sparring UI modal functional with scenario selection.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Commits adhere to Conventional Commits (`feat(web): ...`).

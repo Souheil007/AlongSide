@@ -1,69 +1,90 @@
 # Alongside — System Architecture Specification
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved for Engineering Implementation  
-**Version:** 2.2.0 (The Comprehensive Parent Intelligence & Family Operating System)  
+**Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Frontend Engineer, Backend Engineer, DevOps, Stakeholders  
 **Companion Deep-Dive:** [**Expert System Design Specification**](system-design-specification.md) (Capacity estimations, trade-off matrices, resilience protocols)  
-**Deep Module & Seam Architecture:** [**Codebase Design Specification**](codebase-design.md) (Module depth, 7 canonical seams, test fake adapters, and Deletion Test)
+**Deep Module & Seam Architecture:** [**Codebase Design Specification**](codebase-design.md) (Module depth, 10 canonical seams, test fake adapters, and Deletion Test)  
+**Technical Roadmap:** [**Technical Roadmap v2.4.0**](technical-roadmap-v2.4.0.md)
 
 ---
 
 ## 1. High-Level Architecture Overview
 
-AlongSide is engineered as a type-safe, decoupled monorepo separating the user-facing web/PWA presentation layer from the core domain API service. It unites **Parent Education & Awareness (The Mind)** with **Signed Device Governance (The Hand)**. For full quantitative capacity sizing (QPS, storage, bandwidth), trade-off analyses, and failure mitigation strategies, see the companion [**System Design Specification**](system-design-specification.md).
+Alongside is engineered as a type-safe, decoupled monorepo separating the user-facing web/PWA presentation layer from the core domain API service. Transcending narrow screen-time utilities, Alongside v2.4.0 establishes **The Universal Family Operating System (Ages 0–18)**, uniting:
+1. **Developmental Milestones & Growth ("When He Moves, When He Talks")**
+2. **Pediatric Health & Symptom Guidance ("The Safe Resort")**
+3. **Pediatric Nutrition, Feeding & Dietary Safety ("What to Eat")**
+4. **Brain Games, Sensory Play & Early Toys ("Puppets & Brain Games")**
+5. **Behavioral Psychology, Emotional Decoding & Cultural Mentorship**
+6. **24/7 Clinical AI Advisor & Voice Sparring Simulator**
+7. **Modern Culture, Multi-Device Ecology & "Thinking About a Device?" Hub**
 
 ```mermaid
 graph TD
-    subgraph ClientLayer ["Client Layer (apps/web - Next.js 15 PWA)"]
+    subgraph ClientLayer ["Client Layer (apps/web - Next.js 15 App Router & React 19)"]
         Browser["Parent Mobile Browser / Mobile PWA"]
         ServiceWorker["Service Worker (Serwist Offline Cache)"]
-        AcademyPlayer["Academy Course & Lesson Player"]
-        QuizRunner["Interactive Quiz & Assessment Runner"]
-        AdvisorChat["24/7 AI Child Advisor & Sparring UI"]
-        PactWizard["Bilateral Family Pact Wizard (Zustand)"]
-        DeviceEnrollmentUI["One-Tap QR Code Enrollment Screen"]
+        ChildSwitcher["Global Multi-Child Switcher (Zustand Context)"]
+        DashboardHub["Today & Milestones Home Feed"]
+        HealthHub["Pediatric Health & 3-Zone Symptom Triage UI"]
+        NutritionHub["Nutrition, BLW & Allergen Scheduler UI"]
+        PlayHub["Brain Games, Sensory Toys & Puppets Hub"]
+        BehaviorHub["Behavioral Translation & Co-Regulation UI"]
+        AdvisorChat["24/7 Clinical AI Advisor & Sparring Simulator"]
+        DevicesHub["Modern Culture & Device Governance Hub"]
         TanStackCache["TanStack Query Cache (v5)"]
     end
 
     subgraph SharedLayer ["Shared Contract Layer (packages/shared)"]
         ZodSchemas["Zod Request / Response Schemas"]
-        DomainEnums["Domain Enums (RoadType, 4 Tiers, QuizTypes)"]
-        ScoringEngines["Shared Assessment Scoring Algorithms"]
+        DomainEnums["Domain Enums (6 Tiers, Triage Zones, Feeding Stages)"]
+        ClinicalAlgorithms["Clinical Triage & Milestone Evaluators"]
         DTOs["TypeScript DTO Interfaces & Contracts"]
     end
 
     subgraph ServiceLayer ["API Service Layer (apps/api - Fastify LTS 22)"]
         FastifyServer["Fastify HTTP Server (TypeScript)"]
         AuthModule["Auth & Session Guard (Argon2id + JWT Cookie)"]
-        ChildrenModule["Child Profiles & Road Fork Controller"]
+        ChildrenModule["Child Profiles & Developmental Tier Engine"]
+        MilestonesModule["Milestone Catalog & Achievement Service"]
+        HealthModule["Pediatric Health & Barton Schmitt Triage Engine"]
+        NutritionModule["Nutrition Guides, BLW & Allergen Service"]
+        BrainGamesModule["Purposeful Play & Toy Catalog Service"]
+        BehaviorModule["Behavioral Translation & Script Service"]
         AcademyModule["Parent Intelligence Academy Controller"]
-        QuizModule["Interactive Quiz & Scoring Controller"]
-        AiAdvisorModule["24/7 AI Advisor & Streaming RAG Engine"]
+        QuizModule["Interactive Assessment & Scoring Controller"]
+        AiAdvisorModule["24/7 Clinical AI Advisor & Streaming RAG Engine"]
         AgreementModule["Bilateral Family Pact Controller"]
-        DeviceProfileModule["Pact-as-Code Compiler & Cryptographic Signer"]
+        DeviceProfileModule["Pact-as-Code Compiler & PKCS#7 Signer"]
         DigestModule["Weekly Slang & Exploit Alert Controller"]
         BillingModule["Stripe Billing & 7-Day Trial Controller"]
     end
 
     subgraph DataLayer ["Data & Persistence Layer"]
-        PostgresDB[("PostgreSQL 16 + pgvector (Relational & Embeddings)")]
+        PostgresDB[("PostgreSQL 16 + pgvector (Relational & Clinical Embeddings)")]
         RedisCache[("Redis (Session Revocation & BullMQ Queue)")]
         AppleSigningCert[("Apple WWDR & Dev Signing Certificates")]
         ObjectStorage[("Encrypted Storage (PDF Agreements & Profiles)")]
     end
 
     Browser --> ServiceWorker
-    Browser --> AcademyPlayer
-    Browser --> QuizRunner
-    Browser --> AdvisorChat
-    Browser --> PactWizard
-    Browser --> DeviceEnrollmentUI
-    
-    AcademyPlayer --> TanStackCache
-    QuizRunner --> TanStackCache
+    Browser --> ChildSwitcher
+    ChildSwitcher --> DashboardHub
+    ChildSwitcher --> HealthHub
+    ChildSwitcher --> NutritionHub
+    ChildSwitcher --> PlayHub
+    ChildSwitcher --> BehaviorHub
+    ChildSwitcher --> AdvisorChat
+    ChildSwitcher --> DevicesHub
+
+    DashboardHub --> TanStackCache
+    HealthHub --> TanStackCache
+    NutritionHub --> TanStackCache
+    PlayHub --> TanStackCache
+    BehaviorHub --> TanStackCache
     AdvisorChat -- "Server-Sent Events (SSE)" --> AiAdvisorModule
-    PactWizard --> TanStackCache
-    DeviceEnrollmentUI --> TanStackCache
+    DevicesHub --> TanStackCache
 
     TanStackCache -- "HTTPS / JSON API" --> FastifyServer
 
@@ -72,6 +93,11 @@ graph TD
 
     FastifyServer --> AuthModule
     AuthModule --> ChildrenModule
+    AuthModule --> MilestonesModule
+    AuthModule --> HealthModule
+    AuthModule --> NutritionModule
+    AuthModule --> BrainGamesModule
+    AuthModule --> BehaviorModule
     AuthModule --> AcademyModule
     AuthModule --> QuizModule
     AuthModule --> AiAdvisorModule
@@ -81,6 +107,11 @@ graph TD
     AuthModule --> BillingModule
 
     ChildrenModule --> PostgresDB
+    MilestonesModule --> PostgresDB
+    HealthModule --> PostgresDB
+    NutritionModule --> PostgresDB
+    BrainGamesModule --> PostgresDB
+    BehaviorModule --> PostgresDB
     AcademyModule --> PostgresDB
     QuizModule --> PostgresDB
     AiAdvisorModule -- "Vector Similarity (Cosine)" --> PostgresDB
@@ -98,45 +129,46 @@ graph TD
 
 ## 2. Monorepo Directory Structure
 
-The repository is structured as standard npm workspaces. Each package maintains clear ownership boundaries.
+The repository is structured as standard npm workspaces with rigid architectural boundaries:
 
 ```
 AlongSide/
 ├── .github/                      # CI/CD Workflows (Lint, Typecheck, Test, Build)
 ├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules
-│   └── rules/                    # High-priority rules for autonomous agents
+│   └── rules/                    # Canonical engineering rules
 ├── apps/
-│   ├── web/                      # Frontend Application (Next.js 15, Tailwind, shadcn/ui)
+│   ├── web/                      # Frontend Application (Next.js 15, React 19, Tailwind v3.4)
 │   │   ├── public/               # Static assets, PWA icons, manifest.json
 │   │   ├── src/
 │   │   │   ├── app/              # Next.js App Router (pages and layouts)
 │   │   │   │   ├── (auth)/       # Authentication (login, register, forgot-password)
-│   │   │   │   ├── (dashboard)/  # Authenticated parent application routes
-│   │   │   │   │   ├── dashboard/    # Primary parent hub & contextual road view
-│   │   │   │   │   ├── children/     # Child onboarding, road selection & profiles
-│   │   │   │   │   ├── academy/      # Parent Intelligence Academy (lessons by tier)
-│   │   │   │   │   ├── quizzes/      # Interactive assessment suite (Tween slang, style)
-│   │   │   │   │   ├── advisor/      # 24/7 AI Child Advisor chat & voice sparring
-│   │   │   │   │   ├── pacts/        # Bilateral Family Pact builder & signatures
-│   │   │   │   │   ├── devices/      # Signed profile enrollment, QR code & 8:30 PM lock
+│   │   │   │   ├── (dashboard)/  # Authenticated holistic parent application
+│   │   │   │   │   ├── dashboard/    # Today & Milestones (Home Feed with Child Switcher)
+│   │   │   │   │   ├── health/       # Pediatric Health & 3-Zone Symptom Triage ("Safe Resort")
+│   │   │   │   │   ├── nutrition/    # Nutrition, Solids, BLW & Allergen Hub
+│   │   │   │   │   ├── brain-games/  # Brain Games, Sensory Play & Early Toys (Puppets)
+│   │   │   │   │   ├── behavior/     # Behavioral Translation & Emotional Co-Regulation
+│   │   │   │   │   ├── advisor/      # 24/7 Clinical AI Advisor & Voice Sparring Simulator
+│   │   │   │   │   ├── devices/      # Modern Culture, Device Readiness & Family Pacts
+│   │   │   │   │   ├── academy/      # Parent Intelligence Academy (neurobiology lessons)
+│   │   │   │   │   ├── quizzes/      # Interactive assessments (Readiness, Style, Slang)
 │   │   │   │   │   ├── digest/       # Sunday youth culture & exploit early warnings
-│   │   │   │   │   ├── library/      # Scripts, platform decoders & offline reference
 │   │   │   │   │   └── settings/     # Account, billing, trial status & co-parents
-│   │   │   │   ├── api/          # Minimal frontend route proxies (if needed)
-│   │   │   │   ├── layout.tsx    # Root layout with providers & fonts
-│   │   │   │   └── page.tsx      # Landing page / marketing hero & road overview
+│   │   │   │   ├── layout.tsx    # Root layout with providers, fonts & PWA service worker
+│   │   │   │   └── page.tsx      # Landing page / marketing hero
 │   │   │   ├── components/       # Reusable UI components
 │   │   │   │   ├── ui/           # Radix / shadcn/ui primitives (button, dialog, tabs)
-│   │   │   │   ├── academy/      # Course cards, lesson reader, progress tracker
-│   │   │   │   ├── quizzes/      # Quiz card, multi-choice question, score summary
-│   │   │   │   ├── advisor/      # Chat feed, streaming bubble, quick-prompts, sparring
-│   │   │   │   ├── pacts/        # Clause checklist, trade-off sliders, co-signature pad
-│   │   │   │   ├── devices/      # QR enrollment card, curfew countdown, lock status
-│   │   │   │   ├── digest/       # Weekly briefing card, slang tags, exploit alert badges
-│   │   │   │   └── shared/       # ParentCalm header, navigation, modals, error boundaries
-│   │   │   ├── hooks/            # Custom hooks (useAuth, useQuizRunner, useAiChat)
-│   │   │   ├── lib/              # API client (Ky/fetch), PDF export, local storage
-│   │   │   ├── stores/           # Zustand stores (pact builder draft, quiz runner state)
+│   │   │   │   ├── dashboard/    # Today feed cards, milestone tracker widgets
+│   │   │   │   ├── health/       # Triage runner, red-flag banners, dosing calculator
+│   │   │   │   ├── nutrition/    # Feeding stage tabs, allergen checklist, BLW safety cards
+│   │   │   │   ├── brain-games/  # Toy matrix cards, puppet game guides, boredom busters
+│   │   │   │   ├── behavior/     # Tantrum decoder cards, script dialogs, HALT diagnostic
+│   │   │   │   ├── advisor/      # Streaming chat feed, quick-prompts, sparring simulator
+│   │   │   │   ├── devices/      # QR enrollment card, pact wizard, curfew status
+│   │   │   │   └── shared/       # ChildSelector, ParentCalm header, navigation
+│   │   │   ├── hooks/            # Custom hooks (useChildContext, useAiChat, useTriage)
+│   │   │   ├── lib/              # API client, PDF export, local storage
+│   │   │   ├── stores/           # Zustand stores (child context, pact wizard, quiz runner)
 │   │   │   └── styles/           # Tailwind config & ParentCalm design tokens
 │   │   ├── package.json
 │   │   └── tsconfig.json
@@ -145,18 +177,21 @@ AlongSide/
 │       ├── src/
 │       │   ├── config/           # Environment variables, logger, cert paths
 │       │   ├── plugins/          # Fastify plugins (JWT, CORS, SSE, Database, Swagger)
-│       │   ├── modules/          # Domain feature modules
-│       │   │   ├── auth/         # Register, login, refresh, password reset
-│       │   │   ├── users/        # Parent profile, subscription state
-│       │   │   ├── children/     # Child CRUD, Road 1 vs Road 2 bifurcation
-│       │   │   ├── academy/      # Age-by-age developmental modules & lessons
-│       │   │   ├── quizzes/      # Assessment runner, multi-dimensional scoring
-│       │   │   ├── ai-advisor/   # 24/7 AI chat, streaming SSE, vector similarity RAG
-│       │   │   ├── faqs/         # 100+ Modern Parenting FAQ repository & search
+│       │   ├── modules/          # Deep domain feature modules
+│       │   │   ├── auth/         # Register, login, session refresh
+│       │   │   ├── children/     # Child CRUD & 6-tier developmental calculation
+│       │   │   ├── milestones/   # Milestone catalog & achievement tracking
+│       │   │   ├── health/       # Pediatric health & Barton Schmitt triage engine
+│       │   │   ├── nutrition/    # Nutrition guides, BLW protocols & allergen schedules
+│       │   │   ├── brain-games/  # Purposeful play activities & toy matrix
+│       │   │   ├── behavior/     # Behavioral translation guides & de-escalation scripts
+│       │   │   ├── academy/      # Neurodevelopmental modules & lessons
+│       │   │   ├── quizzes/      # Assessment runner & scoring engine
+│       │   │   ├── ai-advisor/   # 24/7 Clinical AI chat, streaming SSE, vector RAG
+│       │   │   ├── faqs/         # 250+ Clinical Parenting FAQ repository & search
 │       │   │   ├── agreements/   # Bilateral Family Pact generator & PDF export
-│       │   │   ├── device-profiles/# Apple .mobileconfig & Android Enterprise compiler & PKCS#7 signer
+│       │   │   ├── device-profiles/# Apple .mobileconfig & Android compiler + PKCS#7 signer
 │       │   │   ├── digest/       # Sunday culture briefing, slang decoders, exploit alerts
-│       │   │   ├── scripts/      # Situation-specific de-escalation conversation scripts
 │       │   │   └── billing/      # Stripe Checkout, 7-day trials, webhooks
 │       │   ├── common/           # HTTP responses, domain errors, pagination
 │       │   ├── index.ts          # Server entry point
@@ -165,12 +200,12 @@ AlongSide/
 │       └── tsconfig.json
 │
 ├── packages/
-│   ├── shared/                   # Shared TypeScript contracts and validation
+│   ├── shared/                   # Shared TypeScript contracts and pure algorithmic engines
 │   │   ├── src/
-│   │   │   ├── schemas/          # Zod validation schemas (auth, child, pact, quiz, ai)
+│   │   │   ├── schemas/          # Zod validation schemas across all domain entities
 │   │   │   ├── types/            # Domain interfaces and DTOs
-│   │   │   ├── constants/        # Enums (RoadType, DevelopmentalTier, QuizType, Curfew)
-│   │   │   ├── algorithms/       # Quiz scoring math & readiness index calculator
+│   │   │   ├── constants/        # Enums (6 Developmental tiers, Triage zones, Feeding stages)
+│   │   │   ├── algorithms/       # Triage logic, milestone checks, allergen timing, readiness
 │   │   │   └── index.ts
 │   │   ├── package.json
 │   │   └── tsconfig.json
@@ -179,7 +214,7 @@ AlongSide/
 │       ├── prisma/
 │       │   ├── schema.prisma     # Canonical database schema (with pgvector)
 │       │   ├── migrations/       # SQL migration history
-│       │   └── seed/             # Seed scripts (Academy modules, 100+ FAQs, slang catalog)
+│       │   └── seed/             # Seed scripts (AAP triage, CDC milestones, Solid Starts BLW, FAQs)
 │       ├── src/
 │       │   ├── client.ts         # Singleton Prisma client export
 │       │   └── index.ts
@@ -189,7 +224,7 @@ AlongSide/
 ├── docs/                         # Canonical Architecture, Standards & Specifications (CTO)
 ├── plans/                        # Discrete Agent Execution Plans (CTO)
 ├── AGENTS.md                     # Engineering team responsibilities and boundaries
-├── PROJECT_SCOPE.md              # Canonical Product Scope v2.2.0 (CEO)
+├── PROJECT_SCOPE.md              # Canonical Product Scope v2.4.0 (CEO)
 ├── README.md                     # Monorepo Executive Overview & Architecture
 ├── package.json                  # Root npm workspace definition
 └── tsconfig.base.json            # Base TypeScript configuration
@@ -197,139 +232,115 @@ AlongSide/
 
 ---
 
-## 3. Core System Data Flows
+## 3. The 6 Canonical Developmental Tiers
 
-### 3.1 Contextual Road Fork & Child Onboarding Flow
+AlongSide v2.4.0 maps childhood development across 6 distinct neurodevelopmental and physical phases:
+
+| Tier | Enum Identifier | Age Bracket | Neurobiological & Developmental Focus | Primary Features & Concerns |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tier 0** | `TIER_0_INFANCY_TODDLER_0_3` | **Ages 0–3** | High-contrast visual stim, sensory somatosensory integration, mirror neurons, speech bursts (50 words at 24mo), gross motor (tummy time -> walking). | Pediatric fever triage, BLW solids & allergen intro, animal puppets, sleep regressions, tantrum co-regulation. |
+| **Tier 1** | `TIER_1_EARLY_CHILDHOOD_4_6` | **Ages 4–6** | Rapid language expansion, Theory of Mind emergence, cooperative play, fine motor dexterity (scissors, drawing). | Picky eating solutions, wooden block building, dramatic roleplay, bedtime rituals, co-viewing screen rules. |
+| **Tier 2** | `TIER_2_MIDDLE_CHILDHOOD_7_9` | **Ages 7–9** | Concrete operational thought, peer friendship navigation, rule comprehension, reading fluency, physical sports. | School lunchbox nutrition, logic puzzles, chess, boredom busters, shared family tablet limits. |
+| **Tier 3** | `TIER_3_PRE_TEEN_10_12` | **Ages 10–12** | Adrenarche onset, prepubertal growth, heightened peer sensitivity, early abstract reasoning, dopamine novelty seeking. | "Thinking About a Device?" diagnostic, smartwatch bridge, slang decoders, group chat exclusion coaching. |
+| **Tier 4** | `TIER_4_EARLY_ADOLESCENCE_13_15` | **Ages 13–15** | Peak pubertal transformation, circadian sleep delay (melatonin shifted ~2 hours), identity exploration, social comparison. | Bilateral Family Pact, automated 8:30 PM bedtime lock, body image nutrition, teen voice sparring simulator. |
+| **Tier 5** | `TIER_5_LATE_ADOLESCENCE_16_18` | **Ages 16–18** | Prefrontal cortex maturation, impulse control calibration, executive autonomy, long-term consequences, future orientation. | Autonomy upgrade ceremonies, athletic nutrition, college/career stress navigation, independent self-regulation. |
+
+---
+
+## 4. Core System Data Flows
+
+### 4.1 Holistic Multi-Child Onboarding & Development Flow
 ```mermaid
 sequenceDiagram
     autonumber
     actor Parent as Parent User
     participant Web as Next.js Web/PWA
-    participant API as Fastify API
+    participant API as Fastify API (ChildrenModule)
     participant DB as PostgreSQL
 
-    Parent->>Web: Input Child Name, Birthdate & Device Status
-    alt No Personal Smartphone Yet
-        Web->>Web: Set roadType = PRE_DEVICE
-    else Already Has Smartphone
-        Web->>Web: Set roadType = ACTIVE_DEVICE
-    end
-
+    Parent->>Web: Register / Login
+    Parent->>Web: Add Child (Name: "Mateo", Birthdate: "2025-09-15")
     Web->>API: POST /api/v1/children
-    API->>DB: Create Child record with assigned DevelopmentalTier & RoadType
-    API-->>Web: Return ChildDTO
+    API->>API: Calculate Age Months (14mo) -> Assign TIER_0_INFANCY_TODDLER_0_3
+    API->>DB: Persist Child record
+    API-->>Web: Return ChildDTO (tier, dietaryStage: SOLIDS_INTRODUCED)
 
-    alt PRE_DEVICE (Road 1)
-        Web->>API: GET /api/v1/quizzes/first-phone-readiness
-        API-->>Web: Return 10-dimension assessment questions
-        Parent->>Web: Completes readiness assessment
-        Web->>API: POST /api/v1/quizzes/attempts
-        API-->>Web: Return Readiness Score (0-100) & Pre-Unboxing Day 1 Charter preset
-    else ACTIVE_DEVICE (Road 2)
-        Web->>API: GET /api/v1/agreements/presets?roadType=ACTIVE_DEVICE
-        API-->>Web: Return Restorative Digital Reset template (curfew: 8:30 PM)
-    end
+    Web->>Web: Update useChildContextStore (Active Child: Mateo)
+    Web->>API: GET /api/v1/milestones?tier=TIER_0_INFANCY_TODDLER_0_3&ageMonths=14
+    API-->>Web: Return Milestone Catalog (Gross Motor: cruising/walking, Speech: 2-6 words)
+    Web->>API: GET /api/v1/brain-games/daily?childId=mateo-id
+    API-->>Web: Return Daily Play (Animal Puppet Vocal Mirroring Game)
+    Web->>Parent: Render Tailored Today & Milestones Feed
 ```
 
-### 3.2 Pact-to-Profile Compilation & QR Device Enrollment Flow
+### 4.2 Pediatric Health Triage & Clinical Safe Harbor Flow
 ```mermaid
 sequenceDiagram
     autonumber
     actor Parent as Parent User
-    actor Child as Child User
     participant Web as Next.js Web/PWA
-    participant API as Fastify API
-    participant Signer as PKCS#7 Signing Service
-    participant ChildDevice as Child's Smartphone (iOS / Android)
+    participant API as Fastify API (HealthModule)
+    participant TriageEngine as PediatricTriageEngine (Seam 6)
 
-    Parent->>Web: Open Bilateral Family Pact Wizard
-    Parent->>Child: Co-negotiate bedtime curfew (8:30 PM), app categories & study hours
-    Parent->>Web: Both parties sign digitally on canvas
-    Web->>API: POST /api/v1/agreements
-    API-->>Web: Return AgreementDetailDTO (status: SIGNED)
-
-    Parent->>Web: Click "Deploy to Device"
-    Web->>API: POST /api/v1/agreements/{id}/compile-profile
-    API->>API: Generate XML .mobileconfig / Android Enterprise Policy payload
-    API->>Signer: Sign payload with Apple Developer / WWDR Certificate
-    Signer-->>API: Cryptographically signed .mobileconfig payload
-    API-->>Web: Return EnrollmentToken & QR Code URL
-
-    Web->>Web: Display Single-Scan Enrollment QR Code
-    Child->>ChildDevice: Scan QR Code with Camera
-    ChildDevice->>API: GET /api/v1/devices/enroll/{token}
-    API-->>ChildDevice: Deliver signed .mobileconfig profile (Content-Type: application/x-apple-aspen-config)
-    ChildDevice->>ChildDevice: System Settings prompts "Profile Downloaded" -> One-tap install
-    ChildDevice-->>API: Webhook confirmation (Status: ACTIVE)
-    Note over ChildDevice: At 8:30 PM, the OS automatically locks non-exempt apps.
+    Parent->>Web: Open Health Companion -> Enters: Child 14mo, Temp 101.5°F, Pulling Ear
+    Web->>API: POST /api/v1/health/triage
+    API->>TriageEngine: triageSymptom({ childAgeMonths: 14, temperatureF: 101.5, symptoms: ['ear_pulling'] })
+    
+    alt Red-Flag Triggered (e.g. Infant <90d with fever, respiratory retractions, lethargy)
+        TriageEngine-->>API: Return TriageResult (zone: RED, requiresEmergency911: true)
+        API-->>Web: Emergency Payload
+        Web->>Parent: Display High-Contrast Red Zone UI + One-Tap Emergency Dialer
+    else Yellow Zone (Pediatrician Visit Required within 24h)
+        TriageEngine-->>API: Return TriageResult (zone: YELLOW, condition: "Otitis Media Suspected")
+        API-->>Web: Yellow Zone Payload with Pediatrician Summary Checklist
+        Web->>Parent: Display Comfort Guidelines + "Export Pediatrician Visit Summary"
+    else Green Zone (Supportive Home Care)
+        TriageEngine-->>API: Return TriageResult (zone: GREEN, condition: "Mild Teething / Viral")
+        API-->>Web: Green Zone Payload with Safe Antipyretic Dosing
+        Web->>Parent: Display Weight-Based Acetaminophen Dosing & Hydration Protocol
+    end
 ```
 
-### 3.3 24/7 AI Child Advisor Streaming RAG Flow
+### 4.3 24/7 Clinical AI Advisor Whole-Child Streaming RAG Flow
 ```mermaid
 sequenceDiagram
     autonumber
     actor Parent as Parent User
     participant Web as Next.js Web/PWA
     participant API as Fastify API (AiAdvisorModule)
+    participant SafetyFilter as ClinicalSafeHarborFilter
     participant VectorDB as PostgreSQL (pgvector)
-    participant LLM as OpenAI (GPT-4o)
+    participant LLM as Multi-LLM Cascade (OpenAI / Gemini / Mistral)
 
-    Parent->>Web: Ask acute question ("Why is my 11yo secretive with phone?")
+    Parent->>Web: Ask acute dilemma: "My 3yo threw dinner and screamed 'no yucky trees!'"
     Web->>API: POST /api/v1/ai-advisor/chat (SSE Stream)
-    API->>API: Compute query vector embedding (text-embedding-3-small)
-    API->>VectorDB: Cosine similarity search on FaqItems & Clinical Guidance (Child Tier: TIER_2_AGES_10_11)
-    VectorDB-->>API: Top 3 matched clinical guidance documents & de-escalation scripts
+    API->>SafetyFilter: Scan for acute life-threat keywords (poisoning, breathing, sepsis)
+    Note over SafetyFilter: Safety filter passes (no emergency detected).
     
-    API->>LLM: Stream prompt with Child Context + Pediatric Guidelines + User Question
+    API->>API: Fetch Multi-Child Context (Age: 3yo, Tier: TIER_0, Dietary: TODDLER_TABLE)
+    API->>VectorDB: Query 250+ FAQ Vault for "picky eating toddler dinner tantrum"
+    VectorDB-->>API: Return Ellyn Satter Division of Responsibility & Food Chaining guidelines
+    
+    API->>LLM: Stream prompt (Child Context + Pediatric Guidance + User Query)
     LLM-->>API: Stream tokens chunk-by-chunk
-    API-->>Web: Server-Sent Events (SSE) data stream
-    Web->>Parent: Real-time rendered empathetic coaching & word-for-word scripts
+    API-->>Web: Deliver Server-Sent Events (SSE) data stream
+    Web->>Parent: Real-time empathetic coaching with word-for-word calming dialogue script
 ```
 
 ---
 
-## 4. Privacy, Security & Zero-Spyware Safe Harbor Architecture
+## 5. Privacy, Security & Clinical Safe Harbor Architecture
 
-Minor privacy and family safety are core architectural invariants:
-
-1. **The Zero-Spyware Safe Harbor Guarantee:**
-   - AlongSide **never** collects, logs, or transmits keystrokes, personal messages, browsing histories, camera feeds, or stealth GPS locations.
-   - Enforced policies operate exclusively at the **operating system perimeter**: scheduled curfews (8:30 PM bedtime app lock), App Store category age gating, and family dinner pauses.
-   - **Emergency Exemption:** Emergency phone calls (911/112), incoming/outgoing parent phone calls, and trusted medical/help hotlines are strictly whitelisted and never locked out.
-2. **Child Data Minimization:**
-   - Only child first name (or nickname), birth month/year, and device platform are persisted.
-   - No phone numbers, serial numbers, or IMEIs are required for enrollment.
-3. **Cryptographic Integrity:**
+1. **The Clinical Safe Harbor Guarantee:**
+   - Alongside is an empowering educational companion and clinical decision-support system, **NOT a direct replacement for emergency medical care**.
+   - **Zero Speculative Diagnosis:** Alongside never asserts absolute diagnoses; it categorizes symptom severity, explains physiological mechanisms, and provides clear triage directives.
+   - **Pediatric Contraindication Shield:** Programmatic validation strictly prohibits contraindicated recommendations (e.g., Aspirin under age 19, Ibuprofen under 6 months, OTC cough medicines under 4–6 years).
+2. **Zero-Spyware Guarantee:**
+   - Alongside **never** logs keystrokes, personal chats, camera feeds, or stealth GPS tracks.
+   - Device governance operates strictly at the OS perimeter (bedtime curfews, App Store age gating).
+   - **Emergency Exemption:** 911 emergency calls and parent communications are never locked.
+3. **Data Protection & Encryption:**
+   - Minor data is strictly minimized (first name, birth month/year).
    - Passwords hashed using `argon2id`.
    - Apple `.mobileconfig` profiles signed via PKCS#7 using strict SHA-256 certificate chains.
-   - Session tokens delivered exclusively in `HttpOnly`, `Secure`, `SameSite=Strict` cookies.
-4. **Tenant Isolation:**
-   - Multi-tenant data segregation enforced at the ORM layer: all queries for children, agreements, and quiz attempts require `where: { userId: currentParentId }`.
-
----
-
-## 5. Deployment & Runtime Infrastructure
-
-```mermaid
-graph LR
-    subgraph CDN ["Edge & CDN"]
-        Cloudflare["Cloudflare CDN (WAF, SSL, DDoS Mitigation)"]
-    end
-
-    subgraph Compute ["Compute Services"]
-        WebPWA["Next.js 15 PWA (Vercel / Cloud Run Container)"]
-        ApiServer["Fastify Node.js 22 LTS (Railway / ECS Container)"]
-    end
-
-    subgraph ManagedData ["Managed Cloud Data"]
-        Postgres["Neon / Supabase PostgreSQL 16 (pgvector enabled)"]
-        RedisQueue["Upstash Redis (BullMQ queue & sessions)"]
-        S3Bucket["Cloudflare R2 / AWS S3 (PDF Agreements & Profiles)"]
-    end
-
-    Cloudflare --> WebPWA
-    Cloudflare --> ApiServer
-    ApiServer --> Postgres
-    ApiServer --> RedisQueue
-    ApiServer --> S3Bucket
-```
+   - Multi-tenant data segregation enforced at the ORM layer (`where: { userId: currentParentId }`).
