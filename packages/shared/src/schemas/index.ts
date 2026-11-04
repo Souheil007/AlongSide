@@ -5,4 +5,5 @@ export * from './quiz.js';
 export * from './ai.js';
 export * from './academy.js';
 export * from './digest.js';
+export * from './faq.js';
 
