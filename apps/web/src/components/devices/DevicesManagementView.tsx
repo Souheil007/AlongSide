@@ -93,6 +93,7 @@ export function DevicesManagementView({
       setActiveTab(initialTab === 'digest' ? 'culture' : initialTab);
     }
   }, [initialTab]);
+
   const { children, activeChildId, setActiveChild } = useChildContextStore();
   const { children: queryChildren, isLoading } = useChildren();
   const pactStore = usePactStore();
@@ -132,6 +133,17 @@ export function DevicesManagementView({
   }, []);
 
   const activeChild = selectActiveChild({ children, activeChildId });
+
+  // Automatically tailor default tab based on active child's road type when no custom tab was requested
+  React.useEffect(() => {
+    if (activeChild?.roadType && initialTab === 'curfews') {
+      if (activeChild.roadType === RoadType.PRE_DEVICE) {
+        setActiveTab('readiness');
+      } else if (activeChild.roadType === RoadType.ACTIVE_DEVICE) {
+        setActiveTab('curfews');
+      }
+    }
+  }, [activeChild?.id, activeChild?.roadType, initialTab]);
 
   const handleOpenEnrollment = (childId: string, childName: string, curfew = '20:30') => {
     setSelectedChild({
@@ -229,6 +241,23 @@ export function DevicesManagementView({
             </CardHeader>
 
             <CardContent className="p-5 sm:p-6 space-y-6">
+              {/* Early Childhood Stage Screen Guidance for ages 0-6 */}
+              {activeChild && activeChild.age <= 6 && (
+                <div className="rounded-2xl border border-teal-200/90 bg-teal-50/60 p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shrink-0 shadow-2xs">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-bold text-teal-950">
+                      Preschool &amp; Early Childhood Screen Balance (Ages 0–6)
+                    </h4>
+                    <p className="text-xs text-teal-900 leading-relaxed max-w-3xl">
+                      Pediatric guidelines (AAP) recommend zero solo screen time under 2 years, and high-quality co-viewing limited to 1 hour daily for ages 2–5. Personal smartphones and social media are not developmentally recommended at this stage.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Readiness Score Status */}
               {activeChild && hasAssessment ? (
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl border border-emerald-200 bg-white p-5 shadow-xs">
@@ -273,7 +302,7 @@ export function DevicesManagementView({
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-emerald-950">
-                        Readiness Assessment Pending for {activeChild?.name || 'Child'}
+                        Readiness Assessment Pending
                       </h4>
                       <p className="text-xs text-emerald-800 mt-1 max-w-xl leading-relaxed">
                         Take the 10-dimension assessment (3 minutes) to evaluate impulse control, screen transitions, and social trustworthiness.

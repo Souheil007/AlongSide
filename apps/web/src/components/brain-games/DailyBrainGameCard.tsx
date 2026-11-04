@@ -105,10 +105,6 @@ export function DailyBrainGameCard({
         <CardDescription className="text-xs sm:text-sm text-slate-600 mt-1">
           {activity.summary}
         </CardDescription>
-
-        <p className="text-xs font-medium text-amber-800/90 pt-1">
-          Tailored for <span className="font-bold underline decoration-amber-300">{childName}</span>
-        </p>
       </CardHeader>
 
       <CardContent className="p-5 sm:p-6 pt-2 space-y-4">
@@ -126,7 +122,7 @@ export function DailyBrainGameCard({
                 Play Session Completed! 🎉
               </h4>
               <p className="text-[11px] sm:text-xs text-emerald-800 leading-relaxed">
-                You just activated reciprocal mirror neurons and gave {childName} healthy, screen-free sensory grounding!
+                You just activated reciprocal mirror neurons and gave your child healthy, screen-free sensory grounding!
               </p>
             </div>
           </div>

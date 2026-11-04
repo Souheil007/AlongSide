@@ -27,6 +27,7 @@ import {
 } from '@alongside/shared';
 import { useAuth } from '@/hooks/useAuth';
 import { useChildren } from '@/hooks/useChildren';
+import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -35,18 +36,14 @@ import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal
 
 export function ParentDashboardView() {
   const { user } = useAuth();
-  const { children, isLoading } = useChildren();
-  const [selectedChildId, setSelectedChildId] = React.useState<string | null>(null);
+  const { children: storeChildren, activeChildId, setActiveChild } = useChildContextStore();
+  const { children: queryChildren, isLoading } = useChildren();
+  const children = storeChildren.length > 0 ? storeChildren : queryChildren;
+  const activeChild = selectActiveChild({ children, activeChildId });
   const [onboardingOpen, setOnboardingOpen] = React.useState(false);
 
-  // Automatically select the first child if none is selected
-  React.useEffect(() => {
-    if (children.length > 0 && !selectedChildId) {
-      setSelectedChildId(children[0]!.id);
-    }
-  }, [children, selectedChildId]);
-
-  const activeChild = children.find((c) => c.id === selectedChildId) || children[0] || null;
+  const selectedChildId = activeChild?.id ?? null;
+  const setSelectedChildId = (id: string) => setActiveChild(id);
 
   if (isLoading) {
     return (

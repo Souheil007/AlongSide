@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 
@@ -20,7 +21,7 @@ export function useDialog(): DialogContextType {
 export interface DialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function Dialog({
@@ -61,7 +62,7 @@ export function DialogTrigger({
 }
 
 export interface DialogContentProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   showCloseButton?: boolean;
 }
@@ -72,6 +73,11 @@ export function DialogContent({
   showCloseButton = true,
 }: DialogContentProps) {
   const { open, onOpenChange } = useDialog();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -89,11 +95,11 @@ export function DialogContent({
     };
   }, [open, onOpenChange]);
 
-  if (!open) return null;
+  if (!open || !mounted || typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[100] flex min-h-full items-center justify-center p-4 sm:p-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
     >
@@ -104,7 +110,7 @@ export function DialogContent({
       />
       <div
         className={cn(
-          'relative z-50 w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-xl',
+          'relative z-[101] w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-xl my-auto',
           'animate-in fade-in-0 zoom-in-95 duration-200',
           className
         )}
@@ -121,7 +127,8 @@ export function DialogContent({
         )}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

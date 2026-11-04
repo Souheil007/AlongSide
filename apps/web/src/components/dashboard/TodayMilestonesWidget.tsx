@@ -162,7 +162,7 @@ export function TodayMilestonesWidget({ child, className }: TodayMilestonesWidge
               </CardTitle>
             </div>
             <CardDescription className="text-xs text-slate-500">
-              {child ? `${child.name}'s active developmental targets` : 'Developmental milestones'} • Tap to mark achieved
+              Active developmental targets • Tap to mark achieved
             </CardDescription>
           </div>
 

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BookOpen, Sparkles, Filter, AlertCircle } from 'lucide-react';
 import { DevelopmentalTier, type AcademyModuleDTO } from '@alongside/shared';
 import { useChildren } from '@/hooks/useChildren';
+import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
 import { getModulesByTier } from '@/lib/api/academy';
 import { ModuleCard } from '@/components/academy/ModuleCard';
 import { Badge } from '@/components/ui/Badge';
@@ -69,22 +70,17 @@ const TIER_TABS: Array<{ key: TierTabFilter; label: string; shortLabel: string; 
 ];
 
 export function AcademyCatalogClient() {
-  const { children, isLoading: isChildrenLoading } = useChildren();
+  const { children: storeChildren, activeChildId } = useChildContextStore();
+  const { children: queryChildren, isLoading: isChildrenLoading } = useChildren();
+  const children = storeChildren.length > 0 ? storeChildren : queryChildren;
+  const activeChild = selectActiveChild({ children, activeChildId });
   const [selectedTier, setSelectedTier] = React.useState<TierTabFilter>('ALL');
-  const [hasInitializedChildTier, setHasInitializedChildTier] = React.useState(false);
-
-  // Pre-select active child's developmental tier once loaded
+  // Reactively synchronize selected tier with active child profile
   React.useEffect(() => {
-    if (!hasInitializedChildTier && children.length > 0) {
-      const firstChild = children[0];
-      if (firstChild?.developmentalTier) {
-        setSelectedTier(normalizeChildTier(firstChild.developmentalTier));
-      }
-      setHasInitializedChildTier(true);
+    if (activeChild?.developmentalTier) {
+      setSelectedTier(normalizeChildTier(activeChild.developmentalTier));
     }
-  }, [children, hasInitializedChildTier]);
-
-  const activeChild = children[0] || null;
+  }, [activeChild?.id, activeChild?.developmentalTier]);
 
   const {
     data,
@@ -111,10 +107,10 @@ export function AcademyCatalogClient() {
             </div>
             <div>
               <p className="text-sm font-bold text-slate-900">
-                Personalized for {activeChild.name} (Age {activeChild.age})
+                Masterclass Curriculum
               </p>
               <p className="text-xs text-slate-600">
-                Curriculum tailored for {activeChild.developmentalTier.replace(/_/g, ' ')}.
+                Evidence-based neurobiology and actionable parent dialogue scripts.
               </p>
             </div>
           </div>

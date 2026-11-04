@@ -107,7 +107,7 @@ export function PlayActivityCatalog() {
               <span className="text-xs font-bold text-amber-950">
                 {isViewingAllAges
                   ? 'Browsing All Ages (0–18)'
-                  : `Showing purposeful play for ${childAge.name} • ${childAge.ageDisplay}`}
+                  : `Purposeful Play • ${childAge.ageDisplay}`}
               </span>
               <Badge
                 variant="outline"
@@ -139,7 +139,7 @@ export function PlayActivityCatalog() {
           }}
           className="text-xs font-semibold h-9 border-amber-300 text-amber-900 hover:bg-amber-100/70 shrink-0 cursor-pointer"
         >
-          {isViewingAllAges ? `Filter for ${childAge.name}` : 'View All Ages'}
+          {isViewingAllAges ? 'Filter by Stage' : 'View All Ages'}
         </Button>
       </div>
 

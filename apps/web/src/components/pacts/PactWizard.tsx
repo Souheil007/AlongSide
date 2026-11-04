@@ -376,7 +376,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
                   <Sparkles className="h-5 w-5 text-teal-600 shrink-0 mt-0.5" />
                   <div className="space-y-1 text-xs">
                     <span className="font-bold text-slate-900 block">
-                      Contextual Roadmap Strategy for {activeChild.name}
+                      Contextual Roadmap Strategy
                     </span>
                     <p className="text-slate-600 leading-relaxed">
                       {activeChild.roadType === RoadType.PRE_DEVICE

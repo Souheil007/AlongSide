@@ -107,7 +107,7 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder={`Ask anything about ${child?.name || 'your child'}'s behavior, sleep, or digital limits...`}
+              placeholder="Ask anything about behavior, sleep, health, or limits..."
               className="w-full min-h-[44px] rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 shadow-2xs focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
             />
           </div>
@@ -124,7 +124,7 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
         {/* Suggested Contextual Prompt Chips */}
         <div className="space-y-1.5 pt-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-            Suggested for {child?.name || 'this age'}:
+            Suggested Questions:
           </span>
           <div className="flex flex-wrap items-center gap-1.5">
             {chips.map((chip) => (

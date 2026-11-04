@@ -14,13 +14,20 @@ import {
 } from 'lucide-react';
 import type { FaqItemDTO } from '@alongside/shared';
 import { DevelopmentalTier } from '@alongside/shared';
+import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
 import { searchFaqs, CURATED_FAQS } from '@/lib/api/advisor';
 import { FaqCard } from '@/components/advisor/FaqCard';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 
 export const FAQ_CATEGORIES = [
   { id: 'ALL', label: 'All Categories' },
+  { id: 'pediatric-health-and-sleep', label: 'Pediatric Health & Sleep' },
+  { id: 'nutrition-and-feeding', label: 'Nutrition, Solids & Picky Eating' },
+  { id: 'development-and-milestones', label: 'Developmental Milestones & Growth' },
+  { id: 'behavior-and-discipline', label: 'Behavioral Psychology & Co-Regulation' },
+  { id: 'modern-world-and-devices', label: 'Modern World, Screens & Curfews' },
   { id: 'SCREEN_BATTLES', label: 'Screen Battles & Dopamine' },
   { id: 'PEER_PRESSURE', label: 'Peer Pressure & First Phone' },
   { id: 'BEDTIME_SLEEP', label: 'Bedtime & Melatonin' },
@@ -30,14 +37,29 @@ export const FAQ_CATEGORIES = [
 ];
 
 export const TIER_TABS = [
-  { id: 'ALL', label: 'All Ages' },
-  { id: DevelopmentalTier.TIER_1_AGES_8_9, label: 'Ages 8-9 (Tier 1)' },
-  { id: DevelopmentalTier.TIER_2_AGES_10_11, label: 'Ages 10-11 (Tier 2)' },
-  { id: DevelopmentalTier.TIER_3_AGES_12_13, label: 'Ages 12-13 (Tier 3)' },
-  { id: DevelopmentalTier.TIER_4_AGES_14_PLUS, label: 'Ages 14+ (Tier 4)' },
+  { id: 'ALL', label: 'All Ages (0–18)' },
+  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: 'Ages 0–3 (Tier 0: Infancy & Toddler)' },
+  { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: 'Ages 4–6 (Tier 1: Early Childhood)' },
+  { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: 'Ages 7–9 (Tier 2: Middle Childhood)' },
+  { id: DevelopmentalTier.TIER_3_PRE_TEEN_10_12, label: 'Ages 10–12 (Tier 3: Pre-Teen)' },
+  { id: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15, label: 'Ages 13–15 (Tier 4: Early Teen)' },
+  { id: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18, label: 'Ages 16–18 (Tier 5: Young Adult)' },
 ];
 
+function resolveLifespanTier(tier?: string | null): string | null {
+  if (!tier) return null;
+  if (tier === DevelopmentalTier.TIER_1_AGES_8_9) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
+  if (tier === DevelopmentalTier.TIER_2_AGES_10_11) return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
+  if (tier === DevelopmentalTier.TIER_3_AGES_12_13) return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
+  if (tier === DevelopmentalTier.TIER_4_AGES_14_PLUS) return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
+  return tier;
+}
+
 export function FaqExplorerView() {
+  const { children, activeChildId } = useChildContextStore();
+  const activeChild = selectActiveChild({ children, activeChildId });
+  const activeChildLifespanTier = resolveLifespanTier(activeChild?.developmentalTier);
+
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const initialCategory = searchParams.get('category') || 'ALL';
@@ -184,25 +206,54 @@ export function FaqExplorerView() {
 
         {/* Developmental Tier Tabs */}
         <div className="space-y-1.5 pt-2 border-t border-slate-100">
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            <Layers className="h-3.5 w-3.5 text-teal-600" />
-            <span>Developmental Tier (Age Group)</span>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {TIER_TABS.map((tier) => (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <Layers className="h-3.5 w-3.5 text-teal-600" />
+              <span>Developmental Tier (Age Group)</span>
+            </div>
+            {activeChildLifespanTier && (
               <button
-                key={tier.id}
                 type="button"
-                onClick={() => setSelectedTier(tier.id)}
-                className={`rounded-xl px-3 py-1.5 text-xs font-medium transition-all min-h-[38px] ${
-                  selectedTier === tier.id
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'border border-slate-200 bg-slate-50/60 text-slate-700 hover:bg-slate-100'
+                onClick={() => setSelectedTier(activeChildLifespanTier)}
+                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
+                  selectedTier === activeChildLifespanTier
+                    ? 'border-teal-500 bg-teal-50 text-teal-900 font-bold'
+                    : 'border-slate-200 text-slate-600 hover:text-teal-700 hover:border-teal-300'
                 }`}
               >
-                {tier.label}
+                ★ Filter by Selected Stage
               </button>
-            ))}
+            )}
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {TIER_TABS.map((tier) => {
+              const isActiveChildTier = tier.id === activeChildLifespanTier;
+              return (
+                <button
+                  key={tier.id}
+                  type="button"
+                  onClick={() => setSelectedTier(tier.id)}
+                  className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-all min-h-[38px] cursor-pointer ${
+                    selectedTier === tier.id
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'border border-slate-200 bg-slate-50/60 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  <span>{tier.label}</span>
+                  {isActiveChildTier && (
+                    <span
+                      className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${
+                        selectedTier === tier.id
+                          ? 'bg-white/20 text-white'
+                          : 'bg-teal-100 text-teal-800'
+                      }`}
+                    >
+                      Selected Stage
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

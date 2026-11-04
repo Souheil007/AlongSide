@@ -50,10 +50,125 @@ export interface FaqSearchResponse {
  * Curated Clinical Parenting FAQ Vault (Used as fallback when API is offline or initial seed)
  */
 export const CURATED_FAQS: FaqItemDTO[] = [
+  // --- TIER 0: INFANCY & TODDLER (AGES 0–3) ---
+  {
+    id: 'faq-infant-fever-red-flag',
+    categoryId: 'pediatric-health-and-sleep',
+    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'When is a fever considered a true emergency in an infant under 3 months?',
+    answerMarkdown:
+      'In infants under 90 days (and especially neonates under 28 days), a rectal temperature of 100.4°F (38.0°C) or higher is an acute medical emergency requiring immediate evaluation in an Emergency Department. Nascent neonatal immune systems carry high risks of invasive bacterial infections. Do not administer fever reducers prior to clinical evaluation.',
+    deEscalationScript:
+      '"Take a slow breath. Because baby is under 90 days old, hospital protocol requires immediate in-person evaluation by a pediatric team. We are going to pack a diaper bag and head to the nearest pediatric emergency room right now."',
+    isFeatured: true,
+  },
+  {
+    id: 'faq-blw-choking-vs-gagging',
+    categoryId: 'nutrition-and-feeding',
+    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'How do I know if my baby is gagging or truly choking during baby-led weaning?',
+    answerMarkdown:
+      'Gagging is a loud, red-faced, protective tongue reflex that pushes unchewed food forward from the sensitive middle of the tongue. True choking is completely silent, pale or blue-lipped, with total airway obstruction. Loud and red, let them be; silent and blue, immediate CPR/back blows are required.',
+    deEscalationScript:
+      '"Gagging looks dramatic, but coughing and sputtering mean the airway is completely open and working. Stay calm, maintain steady eye contact, and let their reflex clear the food without sticking fingers into their mouth."',
+    isFeatured: true,
+  },
+  {
+    id: 'faq-toddler-tantrum-halt',
+    categoryId: 'behavior-and-discipline',
+    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'My 2-year-old throws screaming floor tantrums when told "No". How do I co-regulate?',
+    answerMarkdown:
+      'The toddler prefrontal cortex has almost zero synaptic inhibitory control. An amygdala surge floods their developing nervous system with adrenaline and cortisol. Reasoning or punishing during an acute meltdown escalates panic. Co-regulation means being the calm anchor who regulates their emotional storm.',
+    deEscalationScript:
+      '"I am right here with you. It is okay to feel big mad that we had to leave the park. I will keep your body safe while the big feelings pass."',
+    isFeatured: true,
+  },
+  {
+    id: 'faq-infant-screens-zero',
+    categoryId: 'modern-world-and-devices',
+    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'Can my 18-month-old watch educational cartoons, or should screens be zero?',
+    answerMarkdown:
+      'The American Academy of Pediatrics (AAP) strongly recommends zero solo screen time under age 2 (except video chatting with family). Rapid cuts, hyper-saturated colors, and flashing pixels overstimulate developing mirror neurons without providing language comprehension or 3D spatial motor feedback.',
+    deEscalationScript:
+      '"Young brains build neural pathways through 3D sensory touch and real reciprocal human eye contact, not flat pixels. Let\'s trade the screen for sensory wooden blocks or kitchen pots and pans."',
+    isFeatured: false,
+  },
+
+  // --- TIER 1: EARLY CHILDHOOD (AGES 4–6) ---
+  {
+    id: 'faq-picky-eating-division',
+    categoryId: 'nutrition-and-feeding',
+    targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'My 4-year-old refuses everything except chicken nuggets and plain noodles. How do I break the cycle?',
+    answerMarkdown:
+      'Food neophobia (fear of new textures and tastes) peaks between ages 2 and 5. Under Ellyn Satter\'s Division of Responsibility, parents decide What, When, and Where; the child decides Whether and How Much. Bargaining ("Eat two bites of broccoli for dessert") elevates sugar value and reinforces vegetable aversion.',
+    deEscalationScript:
+      '"You do not have to eat the broccoli tonight; it can just sit on your learning plate so your eyes can meet it. We have bread and noodles here so your belly will feel satisfied."',
+    isFeatured: true,
+  },
+  {
+    id: 'faq-preschool-tablet-transitions',
+    categoryId: 'SCREEN_BATTLES',
+    targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'How do I transition my 5-year-old off the iPad without a screaming meltdown?',
+    answerMarkdown:
+      'Preschool dopamine circuits experience an acute drop when screens shut off abruptly. Young children do not understand abstract clock time ("5 minutes"). Anchoring transitions with visual countdown timers (Time Timer) and bridging activities (e.g. building train tracks) prevents sensory shock.',
+    deEscalationScript:
+      '"The visual timer is showing 5 minutes left. When the red section disappears, the bell will chime and we are going to build the wooden train track together in the living room."',
+    isFeatured: false,
+  },
+  {
+    id: 'faq-bedtime-monsters-nightlight',
+    categoryId: 'pediatric-health-and-sleep',
+    targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'My 5-year-old is suddenly terrified of shadows and monsters in the dark at bedtime.',
+    answerMarkdown:
+      'Theory of mind and imaginative storytelling blossom at ages 4–5, often outpacing early reality-testing circuits. Mocking or dismissing the fear ("Monsters aren\'t real") signals that their anxiety is invalid. Affirm safety, inspect the room together, and introduce warm-spectrum amber nightlights (below 3000K).',
+    deEscalationScript:
+      '"The shadows feel scary when the room gets dark, but I inspected every corner and our room is 100% safe. Let\'s turn on your amber nightlight and do our three slow belly breaths together."',
+    isFeatured: false,
+  },
+
+  // --- TIER 2: MIDDLE CHILDHOOD (AGES 7–9) ---
+  {
+    id: 'faq-roblox-spending',
+    categoryId: 'SCREEN_BATTLES',
+    targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'Child begged relentlessly for Roblox and Robux, and spent money without permission.',
+    answerMarkdown:
+      'Modern free-to-play games like Roblox use dark patterns (variable ratio reward schedules, artificial scarcity, and social avatar shaming) designed by behavioral economists. Children under 10 have not developed abstract financial comprehension; in-game gems do not register as real household money.',
+    deEscalationScript:
+      '"Games like Roblox are designed to trick our brains into feeling like digital skins define who we are. Spending real family money without asking crosses our family safety boundary. Together, we will turn on App Store purchase passwords right now, and you can earn Robux through weekend chores if you choose."',
+    isFeatured: false,
+  },
+  {
+    id: 'faq-elementary-lying-homework',
+    categoryId: 'behavior-and-discipline',
+    targetTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+    targetRoad: RoadType.PRE_DEVICE,
+    question: 'My 8-year-old lied to my face about finishing their homework. How should I handle dishonesty?',
+    answerMarkdown:
+      'Elementary school lying is almost always driven by fear of parental disappointment or executive function overwhelm, not malicious character flaws. Harsh interrogations push lying underground. Respond with curiosity and prioritize honesty over the missed task.',
+    deEscalationScript:
+      '"I care much more about your honesty than about unfinished worksheets. When you tell me the truth, we can team up to solve any hurdle. Let\'s sit down right now and finish the last three math problems side by side."',
+    isFeatured: true,
+  },
+
+  // --- TIER 3: PRE-TEEN (AGES 10–12) ---
   {
     id: 'faq-screen-transitions',
     categoryId: 'SCREEN_BATTLES',
-    targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+    targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'Why does my child explode or slam doors when told screen time is over?',
     answerMarkdown:
@@ -65,7 +180,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
   {
     id: 'faq-first-phone-plea',
     categoryId: 'PEER_PRESSURE',
-    targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+    targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
     targetRoad: RoadType.PRE_DEVICE,
     question: 'My 10-year-old says "Everyone else has Snapchat and you\'re ruining my life!" How do I respond?',
     answerMarkdown:
@@ -75,9 +190,23 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     isFeatured: true,
   },
   {
+    id: 'faq-groupchat-anxiety',
+    categoryId: 'SOCIAL_MEDIA',
+    targetTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+    targetRoad: RoadType.ACTIVE_DEVICE,
+    question: 'My tween obsessively checks group chats and panics over "Left on Read".',
+    answerMarkdown:
+      'Read receipts and typing bubbles create asynchronous social pressure. Tweens misinterpret delays as rejection due to underdeveloped cognitive perspective taking (theory of mind). Help them establish digital boundaries and turn off read receipts.',
+    deEscalationScript:
+      '"When someone doesn\'t reply immediately, our imagination usually invents the worst story. Most often, they just sat down for dinner or their phone battery died. Let\'s turn off read receipts together so you aren\'t under constant pressure to reply instantaneously."',
+    isFeatured: false,
+  },
+
+  // --- TIER 4: EARLY ADOLESCENCE (AGES 13–15) ---
+  {
     id: 'faq-curfew-explosion',
     categoryId: 'BEDTIME_SLEEP',
-    targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
+    targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'Caught my child on their phone in bed at 11:00 PM. How do I address this without a screaming match?',
     answerMarkdown:
@@ -89,7 +218,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
   {
     id: 'faq-calculator-vault',
     categoryId: 'SECRET_APPS',
-    targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
+    targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'Found a hidden calculator vault app on my child\'s phone. Does this mean they are doing something illegal?',
     answerMarkdown:
@@ -101,7 +230,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
   {
     id: 'faq-discord-bullying',
     categoryId: 'ONLINE_SAFETY',
-    targetTier: DevelopmentalTier.TIER_3_AGES_12_13,
+    targetTier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'My 13yo is being excluded or roasted in a school Discord server. What should we do?',
     answerMarkdown:
@@ -110,28 +239,30 @@ export const CURATED_FAQS: FaqItemDTO[] = [
       '"Thank you for having the courage to tell me. First promise: I am not going to confiscate your phone or ban you from talking to your friends. You do not have to carry this alone. Let\'s screenshot the thread together, mute notifications for that channel tonight, and brainstorm your options."',
     isFeatured: true,
   },
+
+  // --- TIER 5: LATE ADOLESCENCE (AGES 16–18) ---
   {
-    id: 'faq-roblox-spending',
-    categoryId: 'SCREEN_BATTLES',
-    targetTier: DevelopmentalTier.TIER_1_AGES_8_9,
-    targetRoad: RoadType.PRE_DEVICE,
-    question: 'Child begged relentlessly for Roblox and Robux, and spent money without permission.',
+    id: 'faq-teen-driving-focus',
+    categoryId: 'modern-world-and-devices',
+    targetTier: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
+    targetRoad: RoadType.ACTIVE_DEVICE,
+    question: 'How do I enforce a zero-phone rule while my 16-year-old is driving?',
     answerMarkdown:
-      'Modern free-to-play games like Roblox use dark patterns (variable ratio reward schedules, artificial scarcity, and social avatar shaming) designed by behavioral economists. Children under 12 have not developed abstract financial comprehension; in-game gems do not register as real household money.',
+      'Texting or checking notifications while driving increases fatal accident risk by over 2300%. Invasive spyware apps trigger resentment and spoofing. Bilateral "Zero-Phone Cockpit" pacts—pairing Apple Driving Focus or Android Driving Mode with parental trust treaties—establish adult executive autonomy.',
     deEscalationScript:
-      '"Games like Roblox are designed to trick our brains into feeling like digital skins define who we are. Spending real family money without asking crosses our family safety boundary. Together, we will turn on App Store purchase passwords right now, and you can earn Robux through weekend chores if you choose."',
-    isFeatured: false,
+      '"Driving is the greatest privilege and greatest responsibility you have. Our agreement is unconditional: driving focus goes on before the car leaves the driveway. If you ever feel in danger or need guidance, call me immediately with zero penalties."',
+    isFeatured: true,
   },
   {
-    id: 'faq-groupchat-anxiety',
-    categoryId: 'SOCIAL_MEDIA',
-    targetTier: DevelopmentalTier.TIER_2_AGES_10_11,
+    id: 'faq-late-teen-burnout-doomscroll',
+    categoryId: 'behavior-and-discipline',
+    targetTier: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
     targetRoad: RoadType.ACTIVE_DEVICE,
-    question: 'My tween obsessively checks group chats and panics over "Left on Read".',
+    question: 'My 17-year-old is paralyzed by college pressure and doom-scrolls until 2:00 AM.',
     answerMarkdown:
-      'Read receipts and typing bubbles create asynchronous social pressure. Tweens misinterpret delays as rejection due to underdeveloped cognitive perspective taking (theory of mind). Help them establish digital boundaries and turn off read receipts.',
+      'Late adolescent doom-scrolling is rarely about hedonism; it functions as an emotional anesthetic to numb overwhelming existential performance pressure. Criticizing their work ethic increases paralysis. Partner with them to create a bedtime sensory decompression zone.',
     deEscalationScript:
-      '"When someone doesn\'t reply immediately, our imagination usually invents the worst story. Most often, they just sat down for dinner or their phone battery died. Let\'s turn off read receipts together so you aren\'t under constant pressure to reply instantaneously."',
+      '"I see how intensely you are pushing yourself with applications and exams. You are not defined by an admissions letter. Tonight, let\'s shut down the laptop, put our phones in the dock, and get a solid 8 hours of sleep. Tomorrow we will tackle one single step."',
     isFeatured: false,
   },
 ];
@@ -195,7 +326,29 @@ export async function searchFaqs(params?: {
     filtered = filtered.filter((f) => f.categoryId === params.categoryId);
   }
   if (params?.tier && params.tier !== 'ALL') {
-    filtered = filtered.filter((f) => !f.targetTier || f.targetTier === params.tier);
+    const reqTier = params.tier;
+    filtered = filtered.filter((f) => {
+      if (!f.targetTier) return true;
+      if (f.targetTier === reqTier) return true;
+      // Equivalent mappings between canonical 6 tiers and legacy tiers
+      if (
+        (reqTier === DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9 && f.targetTier === DevelopmentalTier.TIER_1_AGES_8_9) ||
+        (reqTier === DevelopmentalTier.TIER_1_AGES_8_9 && f.targetTier === DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9)
+      ) return true;
+      if (
+        (reqTier === DevelopmentalTier.TIER_3_PRE_TEEN_10_12 && f.targetTier === DevelopmentalTier.TIER_2_AGES_10_11) ||
+        (reqTier === DevelopmentalTier.TIER_2_AGES_10_11 && f.targetTier === DevelopmentalTier.TIER_3_PRE_TEEN_10_12)
+      ) return true;
+      if (
+        (reqTier === DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15 && f.targetTier === DevelopmentalTier.TIER_3_AGES_12_13) ||
+        (reqTier === DevelopmentalTier.TIER_3_AGES_12_13 && f.targetTier === DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15)
+      ) return true;
+      if (
+        (reqTier === DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18 && f.targetTier === DevelopmentalTier.TIER_4_AGES_14_PLUS) ||
+        (reqTier === DevelopmentalTier.TIER_4_AGES_14_PLUS && f.targetTier === DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18)
+      ) return true;
+      return false;
+    });
   }
   if (params?.roadType) {
     filtered = filtered.filter((f) => !f.targetRoad || f.targetRoad === params.roadType);
