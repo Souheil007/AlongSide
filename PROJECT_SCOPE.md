@@ -145,6 +145,12 @@ Modern parenting culture is broken. Parents oscillate between hyper-permissive p
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
+1. **Education transforms frustration into empathy:** When parents understand that a 3-year-old’s tantrum over an iPad is a physiological dopamine drop, or that a 12-year-old’s late-night wakefulness is a pubertal circadian delay, anger turns into calm authority.
+2. **Awareness bridges the cultural chasm:** When parents understand Roblox economies, Discord servers, and trending slang, they communicate with relevance rather than paranoia.
+3. **Multi-device clarity ends the guesswork:** Parents learn how to introduce screens gradually—starting with co-viewing in early childhood, structured gaming in elementary school, smartwatches as bridge devices, and personal phones with clear ground rules.
+4. **Bilateral agreements build intrinsic ownership:** When children co-design their boundaries, they are partners in their digital health rather than rebellious subjects.
+5. **Neutral OS enforcement preserves the parent-child bond:** The parent remains the loving mentor; the smartphone or tablet operating system neutrally enforces the bedtime curfew.
+
 ---
 
 ## 3. The 7 Core Pillars of Alongside v2.4
