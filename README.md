@@ -29,7 +29,7 @@ Historically, parenting technology suffers from two fatal blinders:
 - **24/7 AI Clinical Child Advisor & Voice Sparring Simulator:** Multi-child contextual AI guidance for acute dilemmas and an interactive voice sparring simulator to practice high-stakes parenting conversations out loud.
 - **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
 
-For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md) and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
+For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md), the exhaustive [**Competitive Analysis & Strategic Differentiation Specification**](docs/COMPETITIVE_ANALYSIS.md), and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
 
 ---
 

@@ -8,6 +8,7 @@ This directory contains the canonical product, architecture, standards, and eval
 
 ### 1. Product & Strategy
 - [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md) — Product vision, customer personas, problem framing, MVP scope, and business model. Authored by the CEO.
+- [**`COMPETITIVE_ANALYSIS.md`**](COMPETITIVE_ANALYSIS.md) — Comprehensive competitive intelligence, 6-silo landscape audit, quantitative comparison matrix, where competitors win vs. where we win, and strategic differentiation. Authored by the CEO.
 - [**`PAUL_GRAHAM_ROAST.md`**](PAUL_GRAHAM_ROAST.md) — Paul Graham / YC-style brutal startup evaluation, fatal flaw breakdown, and strategic pivot roadmap.
 
 ### 2. Architecture & Technical Decisions
