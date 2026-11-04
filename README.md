@@ -309,8 +309,8 @@ AlongSide is executed across discrete, sequential engineering plans:
 | **16** | [**Holistic Domain Schema, Health Triage & Milestone API**](plans/16-holistic-domain-schema-and-seeding-api.md) | Backend Agent | ✅ **Complete** (PR #28) |
 | **17** | [**Holistic Family Dashboard & Unified Navigation UI**](plans/17-holistic-family-dashboard-and-navigation-ui.md) | Frontend Agent | ✅ **Complete** (PR #29) |
 | **18** | [**Pediatric Health Triage & Nutrition Hub UI**](plans/18-pediatric-health-triage-and-nutrition-ui.md) | Frontend Agent | ✅ **Complete** (PR #27) |
-| **19** | [**Brain Games, Puppets & Behavioral Psychology UI**](plans/19-brain-games-puppets-and-behavior-ui.md) | Frontend Agent | ⏳ Queued |
-| **20** | [**Clinical AI Advisor Lifespan RAG & Sparring Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ⏳ Queued |
+| **19** | [**Brain Games, Puppets & Behavioral Psychology UI**](plans/19-brain-games-puppets-and-behavior-ui.md) | Frontend Agent | ✅ **Complete** (PR #30) |
+| **20** | [**Clinical AI Advisor Lifespan RAG & Sparring Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ✅ **Complete** (PR #31) |
 
 For complete plan details, see [**`plans/README.md`**](plans/README.md).
 

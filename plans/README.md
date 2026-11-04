@@ -107,8 +107,8 @@ graph TD
 | [**`16-holistic-domain-schema-and-seeding-api.md`**](16-holistic-domain-schema-and-seeding-api.md) | Holistic Domain Schema, Health Triage & Milestone API | **Backend Agent** | PLAN-01, PLAN-04, PLAN-08 | Complete (PR #28) |
 | [**`17-holistic-family-dashboard-and-navigation-ui.md`**](17-holistic-family-dashboard-and-navigation-ui.md) | Holistic Family Dashboard & Unified Navigation UI | **Frontend Agent** | PLAN-03, PLAN-05, PLAN-16 | Complete (PR #29) |
 | [**`18-pediatric-health-triage-and-nutrition-ui.md`**](18-pediatric-health-triage-and-nutrition-ui.md) | Pediatric Health Triage & Nutrition Hub UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #27) |
-| [**`19-brain-games-puppets-and-behavior-ui.md`**](19-brain-games-puppets-and-behavior-ui.md) | Brain Games, Puppets & Behavioral Psychology UI | **Frontend Agent** | PLAN-16, PLAN-17 | Queued (Active SOU-43) |
-| [**`20-ai-clinical-advisor-lifespan-rag-upgrade.md`**](20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Clinical AI Advisor Lifespan RAG & Sparring Upgrade | **Joint (FE & BE)** | PLAN-10, 11, 16, 17, 18, 19 | Complete |
+| [**`19-brain-games-puppets-and-behavior-ui.md`**](19-brain-games-puppets-and-behavior-ui.md) | Brain Games, Puppets & Behavioral Psychology UI | **Frontend Agent** | PLAN-16, PLAN-17 | Complete (PR #30) |
+| [**`20-ai-clinical-advisor-lifespan-rag-upgrade.md`**](20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Clinical AI Advisor Lifespan RAG & Sparring Upgrade | **Joint (FE & BE)** | PLAN-10, 11, 16, 17, 18, 19 | Complete (PR #31) |
 
 ---
 

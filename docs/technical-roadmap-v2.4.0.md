@@ -250,7 +250,7 @@ graph TD
     - Safe early allergen introduction tracker.
     - Interactive Ellyn Satter Division of Responsibility guide for picky eating.
 
-### Phase 4: Purposeful Play & Behavioral Psychology (Plan 19)
+### Phase 4: Purposeful Play & Behavioral Psychology (Plan 19) — ✅ Completed (PR #30)
 - **Assignee:** Frontend Agent (`apps/web`)
 - **Key Deliverables:**
   * Brain Games, Sensory Play & Early Toys UI (`/brain-games`):
@@ -261,7 +261,7 @@ graph TD
     - Word-for-word emotional de-escalation scripts.
     - Authoritative parenting coaching (warmth + firm boundaries, time-ins).
 
-### Phase 5: Clinical AI Advisor & Voice Sparring Lifespan Upgrade (Plan 20)
+### Phase 5: Clinical AI Advisor & Voice Sparring Lifespan Upgrade (Plan 20) — ✅ Completed (PR #31)
 - **Assignee:** Joint (Backend Agent & Frontend Agent)
 - **Key Deliverables:**
   * Backend: Whole-child clinical RAG pipeline ingesting 250+ FAQ scenarios, multi-child memory context injection, and pediatric emergency override filters.
