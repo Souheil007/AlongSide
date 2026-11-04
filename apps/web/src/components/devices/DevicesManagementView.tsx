@@ -20,6 +20,7 @@ import {
   Layers,
   Flame,
   Search,
+  MessageSquare,
 } from 'lucide-react';
 import {
   RoadType,
@@ -49,9 +50,49 @@ export interface DevicesManagementViewProps {
   initialTab?: string;
 }
 
+/**
+ * Auto-calibrates curfew recommendations based on child age:
+ * - Kids under 9: 8:00 PM (20:00)
+ * - Kids 9–12: 8:30 PM (20:30)
+ * - Teens 13+: 9:30 PM (21:30)
+ */
+export function getRecommendedCurfew(age: number): {
+  time24: string;
+  time12: string;
+  rationale: string;
+} {
+  if (age < 9) {
+    return {
+      time24: '20:00',
+      time12: '8:00 PM',
+      rationale: 'Elementary sleep protection (8:00 PM lock, 9-11 hours required)',
+    };
+  }
+  if (age <= 12) {
+    return {
+      time24: '20:30',
+      time12: '8:30 PM',
+      rationale: 'Pre-teen melatonin release & un-docked bedroom protection (8:30 PM lock)',
+    };
+  }
+  return {
+    time24: '21:30',
+    time12: '9:30 PM',
+    rationale: 'Adolescent circadian rhythm & autonomous wind-down (9:30 PM lock)',
+  };
+}
+
 export function DevicesManagementView({
   initialTab = 'curfews',
 }: DevicesManagementViewProps) {
+  const normalizedInitialTab = initialTab === 'digest' ? 'culture' : initialTab;
+  const [activeTab, setActiveTab] = React.useState(normalizedInitialTab);
+
+  React.useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab === 'digest' ? 'culture' : initialTab);
+    }
+  }, [initialTab]);
   const { children, activeChildId, setActiveChild } = useChildContextStore();
   const { children: queryChildren, isLoading } = useChildren();
   const pactStore = usePactStore();
@@ -135,7 +176,7 @@ export function DevicesManagementView({
       </div>
 
       {/* 4 Canonical Hub Tabs */}
-      <Tabs defaultValue={initialTab} className="space-y-6">
+      <Tabs defaultValue={normalizedInitialTab} value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="w-full justify-start overflow-x-auto no-scrollbar h-auto p-1.5 bg-slate-100 rounded-2xl gap-1">
           <TabsTrigger
             value="readiness"
@@ -163,7 +204,7 @@ export function DevicesManagementView({
             className="min-h-[40px] px-4 py-2 text-xs font-semibold gap-1.5 rounded-xl shrink-0"
           >
             <Flame className="h-3.5 w-3.5 text-amber-600" />
-            <span>4. Sunday Slang & Exploit Intel</span>
+            <span>4. Youth Culture & Slang Radar</span>
           </TabsTrigger>
         </TabsList>
 
@@ -453,7 +494,8 @@ export function DevicesManagementView({
               <div className="grid grid-cols-1 gap-4">
                 {children.map((child) => {
                   const isRoad1 = child.roadType === RoadType.PRE_DEVICE;
-                  const curfew = pactStore.curfewTime || '20:30';
+                  const recommendedCurfew = getRecommendedCurfew(child.age);
+                  const effectiveCurfew = pactStore.curfewTime || recommendedCurfew.time24;
 
                   return (
                     <Card
@@ -478,13 +520,16 @@ export function DevicesManagementView({
                               </span>
                             </div>
 
-                            <div className="pt-1">
+                            <div className="flex flex-wrap items-center gap-2 pt-1">
                               <CurfewStatusBadge
                                 status={DeviceProfileStatus.ACTIVE}
-                                bedtimeCurfewTime={curfew}
+                                bedtimeCurfewTime={effectiveCurfew}
                                 platform={DevicePlatform.APPLE_IOS}
                                 tamperDetected={false}
                               />
+                              <span className="text-[10px] font-bold text-violet-800 bg-violet-50 px-2 py-0.5 rounded-full border border-violet-200">
+                                Calibrated ({recommendedCurfew.time12})
+                              </span>
                             </div>
                           </div>
 
@@ -492,7 +537,7 @@ export function DevicesManagementView({
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleOpenEnrollment(child.id, child.name, curfew)}
+                              onClick={() => handleOpenEnrollment(child.id, child.name, effectiveCurfew)}
                               className="min-h-[44px] w-full sm:w-auto gap-1.5 text-xs border-violet-200 text-violet-900 hover:bg-violet-50 font-semibold"
                             >
                               <QrCode className="h-4 w-4 text-violet-700" />
@@ -534,20 +579,20 @@ export function DevicesManagementView({
         </TabsContent>
 
         {/* ========================================================================= */}
-        {/* TAB 4: SUNDAY SLANG & EXPLOIT INTEL                                      */}
+        {/* TAB 4: YOUTH CULTURE & SLANG RADAR                                       */}
         {/* ========================================================================= */}
         <TabsContent value="culture" className="space-y-6">
           <Card className="border-amber-200/90 bg-gradient-to-r from-amber-50/40 via-white to-transparent shadow-xs">
             <CardHeader className="pb-3 border-b border-amber-100">
               <div className="flex items-center justify-between">
                 <Badge variant="accent" className="text-[10px] font-bold uppercase">
-                  Sunday Youth Culture Digest
+                  Youth Culture & Slang Radar
                 </Badge>
                 <Link
-                  href="/digest"
+                  href="/devices?tab=digest"
                   className="text-xs font-semibold text-teal-700 hover:text-teal-800 flex items-center gap-1"
                 >
-                  <span>Open Full Sunday Digest</span>
+                  <span>Culture Radar Direct</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -560,6 +605,19 @@ export function DevicesManagementView({
             </CardHeader>
 
             <CardContent className="p-5 sm:p-6 space-y-6">
+              {/* Sunday Dinner Table Conversation Starter */}
+              <div className="rounded-2xl border border-teal-200 bg-teal-50/60 p-5 space-y-2">
+                <div className="flex items-center gap-2 font-bold text-teal-950 text-xs sm:text-sm">
+                  <MessageSquare className="h-4 w-4 text-teal-700" />
+                  <span>Sunday Dinner Table Conversation Starter</span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed pl-6">
+                  &ldquo;If an app has a secret calculator code, does that count as healthy personal privacy or covert secrecy? What is the difference between keeping a personal diary vs. hiding an encrypted vault?&rdquo;
+                </p>
+                <p className="text-[11px] text-teal-800/80 pl-6 font-medium">
+                  Tip: Ask with genuine curiosity during Sunday dinner without accusatory questioning or confiscating devices.
+                </p>
+              </div>
               {/* Exploit Alerts Row */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">

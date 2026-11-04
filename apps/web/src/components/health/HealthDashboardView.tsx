@@ -3,31 +3,25 @@
 import * as React from 'react';
 import {
   HeartPulse,
-  Thermometer,
   ShieldCheck,
   Pill,
   Moon,
-  AlertTriangle,
   Stethoscope,
-  Activity,
-  PhoneCall,
-  Clock,
-  Sparkles,
 } from 'lucide-react';
-import { useChildContextStore, selectActiveChild, formatChildAge } from '@/stores/useChildContextStore';
+import { useChildContextStore } from '@/stores/useChildContextStore';
+import { useChildAge } from '@/hooks/useChildAge';
 import { EmergencyRedFlagBanner } from './EmergencyRedFlagBanner';
 import { SymptomTriageRunner } from './SymptomTriageRunner';
 import { AntipyreticDosingCalculator } from './AntipyreticDosingCalculator';
 import { SleepRegressionCompanion } from './SleepRegressionCompanion';
-import { Button } from '@/components/ui/Button';
 
 interface HealthDashboardViewProps {
   initialChildId?: string;
 }
 
 export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps) {
-  const { children, activeChildId, setActiveChild } = useChildContextStore();
-  const activeChild = selectActiveChild({ children, activeChildId });
+  const { activeChildId, setActiveChild } = useChildContextStore();
+  const childAge = useChildAge();
 
   // Sync initialChildId if provided and differs
   React.useEffect(() => {
@@ -38,40 +32,6 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
 
   // Active tab state
   const [activeTab, setActiveTab] = React.useState<'triage' | 'dosing' | 'sleep'>('triage');
-
-  // Quick symptom shortcut trigger ref
-  const triageSectionRef = React.useRef<HTMLDivElement>(null);
-
-  const scrollToTriage = () => {
-    setActiveTab('triage');
-    if (triageSectionRef.current) {
-      triageSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const quickSymptoms = [
-    { label: 'Fever Check', icon: '🌡️', id: 'fever' },
-    { label: 'Breathing / Cough', icon: '🫁', id: 'cough' },
-    { label: 'Ear Pulling', icon: '👂', id: 'ear' },
-    { label: 'Rash / Spots', icon: '🔍', id: 'rash' },
-    { label: 'Vomiting / Tummy', icon: '🥣', id: 'gi' },
-    { label: 'Teething Discomfort', icon: '🦷', id: 'teething' },
-  ];
-
-  const childAgeDisplay = activeChild ? formatChildAge(activeChild) : '14 mo';
-  const childWeightEstimate = activeChild
-    ? activeChild.age === 0
-      ? 16
-      : activeChild.age === 1
-      ? 24
-      : Math.round(20 + activeChild.age * 5)
-    : 24;
-
-  const childMonthsEstimate = activeChild
-    ? activeChild.birthYear && activeChild.birthMonth
-      ? Math.max(1, (new Date().getFullYear() - activeChild.birthYear) * 12 + (new Date().getMonth() + 1 - activeChild.birthMonth))
-      : Math.max(1, activeChild.age * 12)
-    : 14;
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-16">
@@ -102,44 +62,29 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
                 <HeartPulse className="h-5 w-5" />
               </div>
               <div>
-                <div className="text-xs font-semibold text-teal-200 uppercase tracking-wider">
-                  Active Patient Profile
+                <div className="text-xs font-semibold text-teal-200 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Active Patient</span>
+                  {childAge.isAutoCalibrated && (
+                    <span className="rounded-full bg-teal-500/30 px-1.5 py-0.2 text-[9px] font-bold text-teal-200 border border-teal-400/40">
+                      Auto-Calibrated
+                    </span>
+                  )}
                 </div>
                 <div className="text-base font-bold text-white">
-                  {activeChild?.name || 'Child'} ({childAgeDisplay})
+                  {childAge.name} ({childAge.ageDisplay})
                 </div>
               </div>
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-teal-500/20 pt-2.5 text-xs text-teal-200/80">
-              <span>Est. Weight: ~{childWeightEstimate} lbs</span>
+              <span>Est. Weight: ~{childAge.estimatedWeightLbs} lbs</span>
               <button
                 type="button"
-                onClick={scrollToTriage}
+                onClick={() => setActiveTab('triage')}
                 className="font-bold text-teal-300 hover:text-white underline underline-offset-2 transition-colors"
               >
                 Start Triage →
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* Quick Symptom Chips */}
-        <div className="relative z-10 mt-6 pt-5 border-t border-teal-800/60">
-          <div className="text-xs font-semibold uppercase tracking-wider text-teal-200/80 mb-2.5">
-            Quick-Select Common Symptoms:
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {quickSymptoms.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={scrollToTriage}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-teal-400/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-teal-100 backdrop-blur-xs transition-all hover:bg-white/20 hover:text-white active:scale-95"
-              >
-                <span>{s.icon}</span>
-                <span>{s.label}</span>
-              </button>
-            ))}
           </div>
         </div>
       </section>
@@ -148,7 +93,7 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
       <EmergencyRedFlagBanner />
 
       {/* Navigation Tabs for Health Modules */}
-      <div className="border-b border-slate-200" ref={triageSectionRef}>
+      <div className="border-b border-slate-200">
         <nav className="flex space-x-2 sm:space-x-4 overflow-x-auto pb-px" aria-label="Health Navigation">
           <button
             type="button"
@@ -202,8 +147,8 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
         {activeTab === 'dosing' && (
           <section aria-label="Antipyretic Dosing Calculator">
             <AntipyreticDosingCalculator
-              initialWeightLbs={childWeightEstimate}
-              initialAgeMonths={childMonthsEstimate}
+              initialWeightLbs={childAge.estimatedWeightLbs}
+              initialAgeMonths={childAge.ageMonths}
             />
           </section>
         )}

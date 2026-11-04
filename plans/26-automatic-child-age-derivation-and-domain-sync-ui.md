@@ -3,7 +3,8 @@
 **Assignee:** Frontend Agent  
 **Dependencies:** PLAN-04, PLAN-05, PLAN-16, PLAN-25  
 **Estimated Scope:** Medium  
-**Paperclip Issue:** SOU-59 (or assigned)  
+**Paperclip Issue:** SOU-59 (Subtask of SOU-58)  
+**Status:** In Progress (Assigned to Frontend Agent)  
 
 ---
 
@@ -95,10 +96,10 @@ This breaks the intelligent parenting OS experience. This plan introduces a cent
 
 ## 5. Specific Deliverables (Files to Create / Modify)
 
-- [ ] `apps/web/src/hooks/useChildAge.ts`: Centralized, reactive child age derivation hook.
-- [ ] `apps/web/src/components/health/AntipyreticDosingCalculator.tsx`: Removed manual age input, added auto-calibration badge.
-- [ ] `apps/web/src/components/health/HealthDashboardView.tsx`: Refactored to consume `useChildAge`.
-- [ ] `apps/web/test/childAgeDerivation.test.ts`: Automated test suite for age derivation & pediatric formulas.
+- [x] `apps/web/src/hooks/useChildAge.ts`: Centralized, reactive child age derivation hook.
+- [x] `apps/web/src/components/health/AntipyreticDosingCalculator.tsx`: Removed manual age input, added auto-calibration badge.
+- [x] `apps/web/src/components/health/HealthDashboardView.tsx`: Refactored to consume `useChildAge`.
+- [x] `apps/web/test/childAgeDerivation.test.ts`: Automated test suite for age derivation & pediatric formulas.
 
 ---
 
@@ -126,8 +127,8 @@ This breaks the intelligent parenting OS experience. This plan introduces a cent
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct directories.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] `vitest` unit tests pass with 100% success.
-- [ ] PR description written in plain text (`.txt`) adhering to Conventional Commits.
-- [ ] Ponytail audit completed: smallest complete change, no speculative bloat.
+- [x] All deliverables created and located in correct directories.
+- [x] `npm run typecheck` exits with code 0.
+- [x] `vitest` unit tests pass with 100% success.
+- [x] PR description written in plain text (`.txt`) adhering to Conventional Commits.
+- [x] Ponytail audit completed: smallest complete change, no speculative bloat.
