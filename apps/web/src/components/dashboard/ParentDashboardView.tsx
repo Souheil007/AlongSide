@@ -140,6 +140,12 @@ export function ParentDashboardView() {
   const isRoad2 = activeChild?.roadType === RoadType.ACTIVE_DEVICE;
 
   const tierNameMap: Record<DevelopmentalTier, string> = {
+    [DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3]: 'Tier 0: Ages 0–3 (Sensory & Motor)',
+    [DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6]: 'Tier 1: Ages 4–6 (Imagination & Play)',
+    [DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9]: 'Tier 2: Ages 7–9 (Early Concrete Operations)',
+    [DevelopmentalTier.TIER_3_PRE_TEEN_10_12]: 'Tier 3: Ages 10–12 (Peer Social & Pubertal)',
+    [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15]: 'Tier 4: Ages 13–15 (Circadian & Identity)',
+    [DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18]: 'Tier 5: Ages 16–18 (High Autonomy & Digital Agency)',
     [DevelopmentalTier.TIER_1_AGES_8_9]: 'Tier 1: Ages 8–9 (Impulse Centers)',
     [DevelopmentalTier.TIER_2_AGES_10_11]: 'Tier 2: Ages 10–11 (Peer Shift)',
     [DevelopmentalTier.TIER_3_AGES_12_13]: 'Tier 3: Ages 12–13 (Circadian Shift)',

@@ -5,8 +5,12 @@ import type {
   DevelopmentalTier,
   DevicePlatform,
   DeviceProfileStatus,
+  DietaryStage,
   ExploitSeverity,
   MessageRole,
+  MilestoneCategory,
+  MilestoneStatus,
+  PlayCategory,
   QuizType,
   RoadType,
   Role,
@@ -60,11 +64,12 @@ export interface ChildDTO {
   name: string;
   birthYear: number;
   birthMonth: number;
+  birthDate?: string | null;
   age: number;
   ageMonths?: number | null;
   roadType: RoadType;
   developmentalTier: DevelopmentalTier;
-  dietaryStage?: string | null;
+  dietaryStage?: DietaryStage | string | null;
   allergies?: string[] | null;
   recentHealthLogs?: string[] | null;
   pediatricNotes?: string | null;
@@ -326,6 +331,122 @@ export interface AiConversationDTO {
 }
 
 // ----------------------------------------------------
+// HOLISTIC CHILD UPBRINGING & PEDIATRIC HEALTH DTOS (v2.4.0)
+// ----------------------------------------------------
+
+export interface MilestoneDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  targetAgeMonths: number;
+  category: MilestoneCategory;
+  title: string;
+  description: string;
+  signsToWatch: string;
+  clinicalAuthority: string;
+  sortOrder: number;
+  status?: MilestoneStatus;
+  achievedAt?: string | null;
+  parentNotes?: string | null;
+}
+
+export interface ChildMilestoneDTO {
+  id: string;
+  childId: string;
+  milestoneId: string;
+  status: MilestoneStatus;
+  achievedAt?: string | null;
+  parentNotes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SymptomProtocolDTO {
+  id: string;
+  slug?: string;
+  symptomKey?: string;
+  title: string;
+  category?: 'FEVER' | 'RESPIRATORY' | 'GASTROINTESTINAL' | 'SKIN' | 'NEUROLOGICAL' | 'ENT' | string;
+  summary: string;
+  targetTiers?: DevelopmentalTier[];
+  redFlags?: string[];
+  yellowFlags?: string[];
+  greenHomeCare?: string[];
+  contraindications?: string[];
+  clinicalAuthority?: string;
+  feverThresholdF?: number;
+  redZoneCriteria?: string[];
+  yellowZoneCriteria?: string[];
+  greenZoneHomeCare?: string[];
+  immediateActionRed?: string;
+  primarySources?: string[];
+}
+
+export interface ChildHealthLogDTO {
+  id: string;
+  childId: string;
+  protocolId?: string | null;
+  symptomTitle: string;
+  temperatureF?: number | null;
+  triageZone: TriageZone;
+  clinicalNotes?: string | null;
+  actionTaken?: string | null;
+  loggedAt: string;
+}
+
+export interface NutritionGuideDTO {
+  id?: string;
+  stage: NutritionStage;
+  stageName: string;
+  ageBracket?: string;
+  ageRange: string;
+  title: string;
+  summary: string;
+  keyNutrients: string[];
+  recommendedFoods: string[];
+  foodsToAvoid: {
+    food: string;
+    hazardType: string;
+    mechanism: string;
+    strictAgeMonths?: number;
+    exceptionAllowed?: string | boolean;
+  }[];
+  blwTips: string[];
+  dorPrinciples: {
+    parentDecides: string[];
+    childDecides: string[];
+    goldenRule: string;
+  };
+  guidelinesMarkdown?: string;
+  safeFoods?: string[];
+  chokingHazards?: string[];
+  allergenProtocol?: string | null;
+  pickyEatingTips?: string | null;
+}
+
+export interface BrainGameActivityDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  category: PlayCategory;
+  title: string;
+  summary: string;
+  instructions: string;
+  materialsNeeded: string[];
+  targetSkills: string[];
+  estimatedMinutes: number;
+  isScreenFree: boolean;
+}
+
+export interface BehaviorGuideDTO {
+  id: string;
+  targetTier: DevelopmentalTier;
+  slug: string;
+  triggerSituation: string;
+  underlyingNeed: string;
+  coRegulationScript: string;
+  authoritativeLimit: string;
+}
+
+// ----------------------------------------------------
 // PEDIATRIC HEALTH & SYMPTOM TRIAGE DTOS
 // ----------------------------------------------------
 
@@ -360,54 +481,20 @@ export interface TriageResultDTO {
   zone: TriageZone;
   requiresEmergency911: boolean;
   conditionSuspected: string;
-  clinicalRationale: string;
+  clinicalRationale?: string;
   immediateActions: string[];
   homeCareMeasures: string[];
   redFlagWarnings: string[];
-  recommendedDosing?: AntipyreticDosingResultDTO | null;
+  recommendedDosing?: AntipyreticDosingResultDTO | {
+    medication: string;
+    dosageMg: number;
+    frequency: string;
+    notes?: string;
+  } | null;
   clinicalAuthority: string;
 }
 
-export interface SymptomProtocolDTO {
-  id: string;
-  symptomKey: string;
-  title: string;
-  category: 'FEVER' | 'RESPIRATORY' | 'GASTROINTESTINAL' | 'SKIN' | 'NEUROLOGICAL' | 'ENT';
-  summary: string;
-  feverThresholdF?: number;
-  redZoneCriteria: string[];
-  yellowZoneCriteria: string[];
-  greenZoneHomeCare: string[];
-  immediateActionRed: string;
-  primarySources: string[];
-}
-
-// ----------------------------------------------------
-// PEDIATRIC NUTRITION & FEEDING SCIENCE DTOS
-// ----------------------------------------------------
-
-export interface NutritionGuideDTO {
-  stage: NutritionStage;
-  stageName: string;
-  ageRange: string;
-  title: string;
-  summary: string;
-  keyNutrients: string[];
-  recommendedFoods: string[];
-  foodsToAvoid: {
-    food: string;
-    hazardType: string;
-    mechanism: string;
-    strictAgeMonths?: number;
-    exceptionAllowed?: string | boolean;
-  }[];
-  blwTips: string[];
-  dorPrinciples: {
-    parentDecides: string[];
-    childDecides: string[];
-    goldenRule: string;
-  };
-}
+export type TriageAssessmentResultDTO = TriageResultDTO;
 
 export interface AllergenScheduleItemDTO {
   id: string;
@@ -430,6 +517,3 @@ export interface ChokingHazardDTO {
   safeModification: string;
   avoidUntilAgeYears: number;
 }
-
-
-
