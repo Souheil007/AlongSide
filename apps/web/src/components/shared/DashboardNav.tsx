@@ -11,10 +11,8 @@ import {
   Brain,
   Bot,
   Smartphone,
-  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/Badge';
 
 export interface DomainHubItem {
   href: string;
@@ -110,11 +108,12 @@ export function DashboardNav({ className }: DashboardNavProps) {
                 key={hub.href}
                 href={hub.href}
                 className={cn(
-                  'group flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold whitespace-nowrap transition-all duration-150 shrink-0 select-none',
+                  'group flex min-h-[44px] items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all duration-150 shrink-0 select-none',
                   isActive
                     ? 'bg-teal-700 text-white shadow-sm ring-1 ring-teal-800'
                     : 'text-slate-600 hover:bg-teal-50 hover:text-teal-900 border border-transparent hover:border-teal-200/60'
                 )}
+                aria-current={isActive ? 'page' : undefined}
               >
                 <Icon
                   className={cn(

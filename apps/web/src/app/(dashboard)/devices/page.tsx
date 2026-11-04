@@ -2,15 +2,21 @@ import type { Metadata } from 'next';
 import { DevicesManagementView } from '@/components/devices/DevicesManagementView';
 
 export const metadata: Metadata = {
-  title: 'Device Profiles & Curfew Governance — AlongSide Parent OS',
+  title: 'Modern World & Devices Hub — AlongSide Family Operating System',
   description:
-    'Monitor enrolled family smartphones, configure bedtime app lock schedules, and deploy OTA Apple and Android Enterprise profiles.',
+    'Readiness diagnostic scoring, bilateral family pacts, automated 8:30 PM curfews, and Sunday youth culture digest.',
 };
 
-export default function DevicesPage() {
+interface PageProps {
+  searchParams?: Promise<{ tab?: string; childId?: string }>;
+}
+
+export default async function DevicesPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+
   return (
     <div className="py-6 sm:py-8">
-      <DevicesManagementView />
+      <DevicesManagementView initialTab={resolvedSearchParams?.tab || 'curfews'} />
     </div>
   );
 }
