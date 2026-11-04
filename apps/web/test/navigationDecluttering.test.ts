@@ -18,7 +18,7 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
     it('asserts AUTHENTICATED_CORE_LINKS contains exactly the 6 canonical domain tabs', () => {
       expect(AUTHENTICATED_CORE_LINKS).toHaveLength(6);
       const labels = AUTHENTICATED_CORE_LINKS.map((link) => link.label);
-      expect(labels).toEqual(['Home', 'Health', 'Nutrition', 'Play', 'Behavior', 'Devices']);
+      expect(labels).toEqual(['Home', 'Health', 'Nutrition', 'Behavior', 'Play', 'Devices']);
     });
 
     it('asserts "Devices & Pacts" is simplified to "Devices" in primary navigation', () => {

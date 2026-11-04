@@ -35,8 +35,8 @@ export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
   { href: '/dashboard', label: 'Home' },
   { href: '/health', label: 'Health' },
   { href: '/nutrition', label: 'Nutrition' },
-  { href: '/brain-games', label: 'Play' },
   { href: '/behavior', label: 'Behavior' },
+  { href: '/brain-games', label: 'Play' },
   { href: '/devices', label: 'Devices' },
 ];
 
