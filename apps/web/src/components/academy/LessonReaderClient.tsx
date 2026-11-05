@@ -4,8 +4,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
-import { getModuleBySlug, getLesson } from '@/lib/api/academy';
-import { LessonReader } from '@/components/academy/LessonReader';
+import { getAcademyModuleBySlug, getLesson } from '@/lib/api/academy';
+import { LessonReaderView } from '@/components/academy/LessonReaderView';
 import { Button } from '@/components/ui/Button';
 
 export interface LessonReaderClientProps {
@@ -19,19 +19,18 @@ export function LessonReaderClient({
 }: LessonReaderClientProps) {
   const queryClient = useQueryClient();
 
-  // 1. Fetch module to get metadata and list of lessons
+  // 1. Fetch module to get metadata and list of prioritized lessons/chapters
   const {
-    data: moduleData,
+    data: module,
     isLoading: isModuleLoading,
     isError: isModuleError,
     error: moduleError,
   } = useQuery({
     queryKey: ['academy-module-detail', moduleSlug],
-    queryFn: () => getModuleBySlug(moduleSlug),
+    queryFn: () => getAcademyModuleBySlug(moduleSlug),
   });
 
-  const module = moduleData?.module;
-  const currentLessonSummary = module?.lessons.find(
+  const currentLessonSummary = module?.lessons?.find(
     (l) => l.slug === lessonSlug
   );
 
@@ -79,12 +78,12 @@ export function LessonReaderClient({
         <p className="text-sm text-slate-600">
           {moduleError instanceof Error
             ? moduleError.message
-            : "The requested module could not be loaded."}
+            : 'The requested module could not be loaded.'}
         </p>
         <Link href="/academy">
           <Button variant="outline" size="sm" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
-            Back to Academy
+            Back to Academy Curriculum
           </Button>
         </Link>
       </div>
@@ -102,7 +101,7 @@ export function LessonReaderClient({
         <Link href={`/academy/${moduleSlug}`}>
           <Button variant="outline" size="sm" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
-            Back to Module
+            Back to Course Roadmap
           </Button>
         </Link>
       </div>
@@ -117,7 +116,7 @@ export function LessonReaderClient({
         <p className="text-sm text-slate-600">
           {lessonError instanceof Error
             ? lessonError.message
-            : "Could not load the lesson content."}
+            : 'Could not load the lesson content.'}
         </p>
         <Button
           variant="outline"
@@ -140,7 +139,7 @@ export function LessonReaderClient({
       : null;
 
   return (
-    <LessonReader
+    <LessonReaderView
       lesson={lesson}
       moduleSlug={moduleSlug}
       moduleTitle={module.title}

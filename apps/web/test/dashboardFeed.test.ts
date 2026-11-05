@@ -132,7 +132,7 @@ describe('Holistic Family Dashboard & Unified Navigation UI Specification (PLAN-
         'child-julian',
         DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15
       );
-      expect(teenGame.title).toMatch(/Dilemma Sparring|Stop-Motion|Claymation|Sudoku|Logic/i);
+      expect(teenGame.title).toMatch(/Dilemma Sparring|Stop-Motion|Claymation|Sudoku|Nonogram|Logic Battle/i);
     });
 
     it('allows catalog queries filtered by play category', async () => {

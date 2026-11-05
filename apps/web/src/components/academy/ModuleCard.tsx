@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { BookOpen, Clock, CheckCircle2, ArrowRight } from 'lucide-react';
-import { DevelopmentalTier, type AcademyModuleDTO } from '@alongside/shared';
+import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers } from 'lucide-react';
+import { DevelopmentalTier, AcademyCategory, type AcademyModuleDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Progress } from '@/components/ui/Progress';
@@ -84,34 +84,83 @@ export function getTierBadgeInfo(tier: DevelopmentalTier) {
   }
 }
 
+export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
+  switch (category) {
+    case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
+      return {
+        label: 'Behavior & Emotions',
+        className: 'bg-rose-50 text-rose-800 border-rose-200',
+      };
+    case AcademyCategory.HEALTH_AND_WELLNESS:
+      return {
+        label: 'Pediatric Health & Sleep',
+        className: 'bg-teal-50 text-teal-800 border-teal-200',
+      };
+    case AcademyCategory.NUTRITION_AND_FEEDING:
+      return {
+        label: 'Nutrition & Feeding',
+        className: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case AcademyCategory.DEVELOPMENT_AND_PLAY:
+      return {
+        label: 'Development & Play',
+        className: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+      };
+    case AcademyCategory.DIGITAL_AND_DEVICES:
+      return {
+        label: 'Modern Digital World',
+        className: 'bg-cyan-50 text-cyan-800 border-cyan-200',
+      };
+    default:
+      return {
+        label: 'Parent Intelligence',
+        className: 'bg-slate-50 text-slate-800 border-slate-200',
+      };
+  }
+}
+
 export function ModuleCard({ module, className }: ModuleCardProps) {
   const percentComplete =
     module.lessonCount > 0
       ? Math.round((module.completedLessonCount / module.lessonCount) * 100)
       : 0;
 
-  const estimatedMinutes = module.lessonCount * 5;
+  const estimatedMinutes = module.lessonCount * 4;
   const tierInfo = getTierBadgeInfo(module.developmentalTier);
+  const categoryInfo = getCategoryBadgeInfo(module.category);
+
+  // Approximate prioritized chapters count (canonical structure is 3 prioritized chapters)
+  const estimatedChapterCount = 3;
 
   return (
     <Card
       className={cn(
-        'group flex flex-col justify-between border-slate-200/80 bg-white shadow-sm transition-all duration-200 hover:border-teal-300 hover:shadow-md',
+        'group flex flex-col justify-between border-slate-200/80 bg-white shadow-xs transition-all duration-200 hover:border-teal-300 hover:shadow-md',
         module.isCompleted && 'border-emerald-200 bg-emerald-50/10',
         className
       )}
     >
       <div>
         <CardHeader className="space-y-3 pb-3">
-          <div className="flex items-center justify-between gap-2">
-            <span
-              className={cn(
-                'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide',
-                tierInfo.className
-              )}
-            >
-              {tierInfo.shortLabel}
-            </span>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span
+                className={cn(
+                  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-wide',
+                  categoryInfo.className
+                )}
+              >
+                {categoryInfo.label}
+              </span>
+              <span
+                className={cn(
+                  'inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium',
+                  tierInfo.className
+                )}
+              >
+                {tierInfo.shortLabel}
+              </span>
+            </div>
 
             {module.isCompleted && (
               <Badge variant="outline" className="border-emerald-300 bg-emerald-50 text-emerald-800 text-[11px] gap-1">
@@ -133,6 +182,10 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
         <CardContent className="space-y-4 pt-1">
           {/* Metadata chips */}
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
+            <span className="flex items-center gap-1 text-slate-700 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">
+              <Layers className="h-3 w-3 text-slate-500" />
+              {estimatedChapterCount} Prioritized Chapters
+            </span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="h-3.5 w-3.5 text-slate-400" />
               {module.lessonCount} {module.lessonCount === 1 ? 'lesson' : 'lessons'}
@@ -140,14 +193,14 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
             <span className="text-slate-300">•</span>
             <span className="flex items-center gap-1.5">
               <Clock className="h-3.5 w-3.5 text-slate-400" />
-              ~{estimatedMinutes} min read
+              ~{estimatedMinutes} min
             </span>
           </div>
 
           {/* Progress bar */}
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-600">Progress</span>
+              <span className="font-medium text-slate-600">Course Progress</span>
               <span className="font-semibold text-slate-900">{percentComplete}%</span>
             </div>
             <Progress value={percentComplete} className="h-2" />
@@ -166,10 +219,10 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
           >
             <span>
               {module.isCompleted
-                ? 'Review Lessons'
+                ? 'Review Chapters'
                 : module.completedLessonCount > 0
-                ? 'Continue Module'
-                : 'Start Module'}
+                ? 'Continue Roadmap'
+                : 'Explore Chapters'}
             </span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>

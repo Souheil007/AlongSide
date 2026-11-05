@@ -79,23 +79,23 @@ It transforms the experience from a generic video course catalog into an interac
 ---
 
 ## 5. Specific Deliverables (Files to Create / Modify)
-- [ ] `apps/web/src/lib/api/academy.ts` (Category and chapter API client methods)
-- [ ] `apps/web/src/components/academy/CategoryPills.tsx` (5-category filter pills)
-- [ ] `apps/web/src/components/academy/ChapterRoadmapView.tsx` (Prioritized chapter cards)
-- [ ] `apps/web/src/components/academy/LessonReaderView.tsx` (Rich clinical insights and dialogue reader)
-- [ ] `apps/web/src/app/(dashboard)/academy/page.tsx` (Main catalog page with category selector)
-- [ ] `apps/web/src/app/(dashboard)/academy/[slug]/page.tsx` (Course roadmap with prioritized chapters)
-- [ ] `apps/web/test/academyPrioritizedCurriculum.test.tsx` (Vitest test suite)
+- [x] `apps/web/src/lib/api/academy.ts` (Category and chapter API client methods)
+- [x] `apps/web/src/components/academy/CategoryPills.tsx` (5-category filter pills)
+- [x] `apps/web/src/components/academy/ChapterRoadmapView.tsx` (Prioritized chapter cards)
+- [x] `apps/web/src/components/academy/LessonReaderView.tsx` (Rich clinical insights and dialogue reader)
+- [x] `apps/web/src/app/(dashboard)/academy/page.tsx` (Main catalog page with category selector)
+- [x] `apps/web/src/app/(dashboard)/academy/[slug]/page.tsx` (Course roadmap with prioritized chapters)
+- [x] `apps/web/test/academyPrioritizedCurriculum.test.tsx` (Vitest test suite)
 
 ---
 
 ## 6. Acceptance Criteria & Verification Plan
-- [ ] Category selector lets parents filter across all 5 canonical categories.
-- [ ] Active child age calibration badge is visible and automatically tailors course listings.
-- [ ] Courses display chapters ordered strictly by Priority 1, 2, and 3.
-- [ ] Micro-lesson reader renders clinical insights and dialogue scripts cleanly without raw markdown symbols (`**`, `>`).
-- [ ] Progress is recorded and persisted to backend API.
-- [ ] `npm run typecheck` and `npm run test` exit with code 0.
+- [x] Category selector lets parents filter across all 5 canonical categories.
+- [x] Active child age calibration badge is visible and automatically tailors course listings.
+- [x] Courses display chapters ordered strictly by Priority 1, 2, and 3.
+- [x] Micro-lesson reader renders clinical insights and dialogue scripts cleanly without raw markdown symbols (`**`, `>`).
+- [x] Progress is recorded and persisted to backend API.
+- [x] `npm run typecheck` and `npm run test` exit with code 0.
 
 ---
 
@@ -107,7 +107,7 @@ It transforms the experience from a generic video course catalog into an interac
 ---
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
-- [ ] All UI components created, accessible, and responsive across mobile and desktop.
-- [ ] Passes `ponytail-review` audit for clean, minimal diff.
-- [ ] Conventional commit created.
-- [ ] Pull request submitted with plain text (`.txt`) description.
+- [x] All UI components created, accessible, and responsive across mobile and desktop.
+- [x] Passes `ponytail-review` audit for clean, minimal diff.
+- [x] Conventional commit created.
+- [x] Pull request submitted with plain text (`.txt`) description.
