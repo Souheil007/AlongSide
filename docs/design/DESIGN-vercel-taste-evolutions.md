@@ -1,124 +1,211 @@
-# Vercel + Brand Taste Evolutions — Phase 1 Design Analysis
+# Vercel + Brand Taste Evolutions — Complete Phase 1 Exploration (15 Variations)
 **Product:** AlongSide (The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow, Ages 0–18)  
 **Status:** Phase 1 Design Exploration & Isolated Previews  
 **Methodology:** [`design-taste-frontend`](file:///C:/Users/souhe/.gemini/antigravity-cli/skills/design-taste-frontend--5b0315d236/SKILL.md) & Vercel Geist Architecture Infusion  
 
 ---
 
-## 1. Executive Context & The "Anti-Copy" Mandate
+## 1. Executive Context & The Calibrated Preference Orbit
 
-During Phase 1 exploration across 14 design system benchmarks, the user identified **Vercel** (`DESIGN-vercel.md`) as having the strongest foundational appeal:
-- World-class structural discipline and high-craft typography
-- Tightly tracked display headlines (`-0.04em` / `-2px`)
-- Clean hairline boundaries (`1px solid var(--hairline)`)
-- Modular cards, balanced whitespace, and high signal-to-noise ratio
-- Ambient radiant mesh hero glow
+During initial Phase 1 evaluations, the user identified that **Vercel** (`DESIGN-vercel.md`) provides the most compelling, disciplined layout foundation. However, copying Vercel 1:1 risks presenting AlongSide as a developer/cloud deployment tool.
 
-**The Core Problem:**  
-A 1:1 direct copy of Vercel makes AlongSide look like a developer platform (cloud deployment, CI/CD, hosting, tech-bro infrastructure) rather than a **Parent Advisory Sanctuary** helping families navigate infant clinical triage, childhood tantrums, tween screen anxiety, and bilateral family pacts.
-
-**The Solution via `/design-taste-frontend`:**  
-Keep Vercel's precision framework, responsive grid, and typography scale, but infuse **our brand's authentic "taste" and touch**—measured, subtle shifts that give AlongSide its own distinct, memorable emotional identity.
-
----
-
-## 2. Detailed Breakdown of the 5 Vercel Taste Evolutions
+When reviewing the initial 5 taste evolutions:
+* **The Preferred Cluster:**
+  - **Original Vercel:** Stark, razor-sharp monochrome precision, hairline borders (`1px solid #ebebeb`), tight tracking (`-0.04em`), and ambient radiant mesh aura.
+  - **Taste 1: Warm Sanctuary Linen:** Organic oat/linen canvas softening (`#fcfbf9`), Morning Hearth sage & amber radiant aura, and bilateral shelter mark.
+  - **Taste 2: Editorial Pediatric Almanac:** High-contrast archival ink foundation, refined *Newsreader Serif* italic accents in headlines, and clinical publishing prestige.
+* **Rejected Directions (Tastes 3, 4, 5):**
+  - Taste 3 (Biophilic Forest), Taste 4 (Clinical Blueprint), and Taste 5 (Terracotta Sunset) were discarded as too saturated, overly specialized, or noisy.
+* **The Mandate:**
+  - Generate **10 new distinct variations (Tastes 6 through 15)** that strictly orbit around the sweet spot of **Original Vercel, Taste 1 (Warm Linen), and Taste 2 (Editorial Almanac/Serif)**, giving the user a rich spectrum of nuanced, highly tasteful directions to choose wisely.
 
 ```mermaid
-graph LR
-    VercelBase["Vercel Precision Baseline<br/>(Geist Scale, 1px Hairlines, Pill CTAs, Radiant Mesh)"]
-    VercelBase --> T1["Taste 1: Warm Sanctuary Linen<br/>Oat Canvas + Morning Hearth Aura"]
-    VercelBase --> T2["Taste 2: Editorial Almanac<br/>Newsreader Serif Italic + Archival Wash"]
-    VercelBase --> T3["Taste 3: Biophilic Forest Core<br/>Living Chlorophyll + Deep Pine Obsidian"]
-    VercelBase --> T4["Taste 4: Clinical Blueprint<br/>Cadet Navy + Pediatric Cyan Telemetry"]
-    VercelBase --> T5["Taste 5: Terracotta Sunset Hearth<br/>Tuscan Terracotta + Sunset Dusk Glow"]
+graph TD
+    VercelCore["Vercel Precision Foundation<br/>(Geist Scale, 1px Hairlines, Pill CTAs, Radiant Mesh)"]
+    
+    subgraph PreferredCluster["Top Preferred Cluster"]
+        T_Orig["Original Vercel<br/>#fafafa Stark Tech"]
+        T1["Taste 1: Warm Sanctuary Linen<br/>#fcfbf9 Oat & Morning Hearth"]
+        T2["Taste 2: Editorial Almanac<br/>#fbfbf9 Newsreader Serif Italic"]
+    end
+    
+    VercelCore --> PreferredCluster
+    
+    subgraph NewVariations["10 New Calibrated Variations (Tastes 6–15)"]
+        T6["Taste 6: Ivory Minimalist<br/>Monastic Alabaster (#faf9f5)"]
+        T7["Taste 7: Paris Atelier<br/>Instrument Serif & Sepia Halo (#f9f8f4)"]
+        T8["Taste 8: Porcelain & Cedar<br/>Japanese Ensō Zen (#f8f9fa)"]
+        T9["Taste 9: Fraunces Antiqua<br/>Soft-Serif & Muted Spruce (#faf8f4)"]
+        T10["Taste 10: Swiss Chrono<br/>Dieter Rams 100% Signal (#ffffff)"]
+        T11["Taste 11: Nordic Dune<br/>Coastal Alabaster & Pale Camel (#faf7f2)"]
+        T12["Taste 12: Cormorant Academy<br/>Oxford Bone & Crimson Seal (#faf9f6)"]
+        T13["Taste 13: Smoked Pearl<br/>Ethereal Silver Mist (#f6f7f8)"]
+        T14["Taste 14: Hearthstone & Olive<br/>Kinfolk Earth Almanac (#fbf9f5)"]
+        T15["Taste 15: Geist Family Twin<br/>1% Parental Warmth Twin (#fafafa)"]
+    end
+    
+    PreferredCluster -.-> NewVariations
 ```
 
 ---
 
-### Taste 1: Warm Sanctuary Linen & Morning Hearth
-* **Standalone Prototype:** [`preview-vercel-taste-1-warm-sanctuary.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-1-warm-sanctuary.html)
-* **Design Philosophy:** Organic Scandinavian sanctuary. Replaces cold tech grey with soft warm linen (`#fcfbf9`), softened obsidian typography (`#191c1b`), and transforms Vercel's cold cyan/blue mesh into a soothing **Morning Hearth** radiant aura (deep sage `#28543e`, warm amber `#c87a3e`, and sunlit meadow `#86efac`).
+## 2. Directory of the 10 New Variations (Tastes 6–15)
+
+### Taste 6: Ivory Minimalist (Pure Monastic Warmth & Geist Precision)
+* **Standalone Prototype:** [`preview-vercel-taste-6-ivory-minimalist.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-6-ivory-minimalist.html)
+* **Design Philosophy:** Takes Vercel's stark `#fafafa` and gently warms it to an organic Alabaster Ivory (`#faf9f5`), paired with Carbon Slate (`#141413`) text, pure `#ffffff` cards, and a champagne radial bloom. Pure monastic focus.
 * **Tokens:**
-  - `canvas`: `#fcfbf9` | `canvas-subtle`: `#f5f3ee` | `elevated`: `#ffffff`
-  - `ink`: `#191c1b` | `body`: `#505652` | `mute`: `#828a84`
-  - `accent-sage`: `#28543e` | `accent-amber`: `#c87a3e` | `hairline`: `#e7e4dc`
-* **Typography:** Plus Jakarta Sans (Display Weight 800, tracking `-2.2px`) + Inter + JetBrains Mono.
-* **Brand Signature:** AlongSide Sanctuary Double Arched Shelter mark (shelter over child).
-* **Psychological Impact:** Instant nervous system regulation for parents stressed at 2:00 AM. Warm, inviting, and human without sacrificing Vercel's razor-sharp craft.
+  - `canvas`: `#faf9f5` | `canvas-subtle`: `#f3f1ea` | `elevated`: `#ffffff`
+  - `ink`: `#141413` | `body`: `#4c4c47` | `mute`: `#82827a`
+  - `accent-primary`: `#141413` | `accent-highlight`: `#c7b99c` | `hairline`: `#eae7e0`
+* **Typography:** Inter (Display Weight 700, tracking `-2.2px`) + JetBrains Mono.
+* **Brand Mark:** Minimalist Double Pillar Shelter (two vertical hairlines with a 45° resting roof beam).
+* **Psychological Impact:** Absolute serenity and focus. Zero visual noise or tech coldness; feels like an exclusive architectural studio.
 
 ---
 
-### Taste 2: Editorial Pediatric Almanac
-* **Standalone Prototype:** [`preview-vercel-taste-2-editorial-journal.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-2-editorial-journal.html)
-* **Design Philosophy:** Clinical prestige meets modern publishing. Preserves Vercel's stark monochrome `#ffffff` / `#111413` frame, but introduces a refined **editorial serif italic accent** (*Newsreader Serif*, 54px italic moments in display headlines) and an **Archival Ink & Deep Spruce** radial wash.
+### Taste 7: The Paris Atelier (Instrument Serif Italic & Archival Bone)
+* **Standalone Prototype:** [`preview-vercel-taste-7-paris-atelier.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-7-paris-atelier.html)
+* **Design Philosophy:** The literary salon meets Vercel. Dark obsidian (`#101010`) ink on Archival Bone (`#f9f8f4`), paired with calligraphic *Instrument Serif* italic accents in headlines and an antique sepia & brass halo.
 * **Tokens:**
-  - `canvas`: `#fbfbf9` | `canvas-subtle`: `#f4f4f0` | `elevated`: `#ffffff`
-  - `ink`: `#111413` | `body`: `#494f4c` | `mute`: `#858c88`
-  - `accent-forest`: `#143d2b` | `accent-amber`: `#b45309` | `hairline`: `#e3e3dc`
-* **Typography:** Inter (Bold 700) + Newsreader (Italic Serif display accents) + JetBrains Mono.
-* **Brand Signature:** Almanac Open Folio / Cross mark; technical eyebrow badges styled as publication stamps (`VOL. XXIV // CLINICAL`).
-* **Psychological Impact:** Commands immense institutional credibility. Feels like an authoritative medical journal published by Harvard / AAP Pediatricians built with Vercel's precision.
+  - `canvas`: `#f9f8f4` | `canvas-subtle`: `#f1efe8` | `elevated`: `#ffffff`
+  - `ink`: `#101010` | `body`: `#444340` | `mute`: `#7e7c75`
+  - `accent-primary`: `#101010` | `accent-brass`: `#9b7a44` | `hairline`: `#e4e0d6`
+* **Typography:** Inter (Weight 700) + Instrument Serif (Italic moments) + JetBrains Mono.
+* **Brand Mark:** Calligraphic Folio & Quill Monogram Seal.
+* **Psychological Impact:** Commands immense intellectual prestige; reads like a timeless European publication built on Vercel's interaction speed.
 
 ---
 
-### Taste 3: Biophilic Evergreen Core
-* **Standalone Prototype:** [`preview-vercel-taste-3-biophilic-forest.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-3-biophilic-forest.html)
-* **Design Philosophy:** Restorative nature & living child development. Replaces developer cyan/violet with **Living Chlorophyll (`#059669`) and Dew Mint (`#6ee7b7`)**, backed by **Deep Pine Obsidian controls (`#064e3b` / `#022c22`)**.
+### Taste 8: Porcelain & Muted Cedar (Japanese Architectural Tranquility)
+* **Standalone Prototype:** [`preview-vercel-taste-8-porcelain-cedar.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-8-porcelain-cedar.html)
+* **Design Philosophy:** Muji and Kenya Hara's white space philosophy meets Vercel structure. Cool Porcelain White (`#f8f9fa`) with subtle Smoked Cedar Black (`#1b1c1d`) and whispering cedar ash radiant glow.
 * **Tokens:**
-  - `canvas`: `#f7faf8` | `canvas-subtle`: `#edf4f0` | `elevated`: `#ffffff`
-  - `ink`: `#07271e` | `body`: `#405950` | `mute`: `#7c948b`
-  - `accent-pine`: `#064e3b` | `accent-emerald`: `#059669` | `accent-mint`: `#10b981` | `hairline`: `#dbe7e1`
-* **Typography:** Outfit (Display Weight 800, tracking `-2px`) + Inter + JetBrains Mono.
-* **Brand Signature:** Biophilic Sprout Node (geometric Vercel triangle fused with an unfurling organic leaf).
-* **Psychological Impact:** Symbolizes healthy developmental growth and screen detox. Deep evergreen tones scientifically lower heart rates and parental stress.
+  - `canvas`: `#f8f9fa` | `canvas-subtle`: `#f1f3f4` | `elevated`: `#ffffff`
+  - `ink`: `#1b1c1d` | `body`: `#4b4e52` | `mute`: `#848990`
+  - `accent-primary`: `#1b1c1d` | `accent-cedar`: `#735e51` | `hairline`: `#e5e7eb`
+* **Typography:** Plus Jakarta Sans (Weight 700, tracking `-1.8px`) + Inter + JetBrains Mono.
+* **Brand Mark:** Balanced Ensō Zen Stones (two minimalist balancing stone silhouettes).
+* **Psychological Impact:** Soothing on eye fatigue; balanced whitespace eliminates cognitive overload for distracted parents.
 
 ---
 
-### Taste 4: Precision Pediatric Blueprint
-* **Standalone Prototype:** [`preview-vercel-taste-4-clinical-blueprint.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-4-clinical-blueprint.html)
-* **Design Philosophy:** Family systems architecture & pediatric diagnostics. Leans into Vercel's engineering DNA, but pivots it toward **Cadet Navy (`#0f172a`) and Clinical Pediatric Cyan (`#0284c7` / `#0ea5e9`)** with crisp telemetry metrics, Barton Schmitt protocol verification stamps, and architectural shield geometry.
+### Taste 9: Fraunces Modern Antiqua (Warm Soft-Serif & Muted Spruce)
+* **Standalone Prototype:** [`preview-vercel-taste-9-fraunces-antiqua.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-9-fraunces-antiqua.html)
+* **Design Philosophy:** Contemporary warm publishing (Stripe Press / Substack Reader). Warm Vellum (`#faf8f4`) canvas, Espresso Slate (`#161514`) typography, and Fraunces soft-serif display headlines.
 * **Tokens:**
-  - `canvas`: `#f8fafc` | `canvas-subtle`: `#f1f5f9` | `elevated`: `#ffffff`
-  - `ink`: `#0f172a` | `body`: `#334155` | `mute`: `#64748b`
-  - `accent-navy`: `#0f172a` | `accent-cyan`: `#0284c7` | `accent-cyan-bright`: `#0ea5e9` | `hairline`: `#e2e8f0`
-* **Typography:** Plus Jakarta Sans (Display Weight 800, tracking `-2.2px`) + Inter + JetBrains Mono (tabular numerals).
-* **Brand Signature:** Dual-Axis Family Safety Shield.
-* **Psychological Impact:** Unflinching reliability and structure. Analytical parents feel confident that automated MDM curfews and emergency triage protocols are bulletproof.
+  - `canvas`: `#faf8f4` | `canvas-subtle`: `#f2eee6` | `elevated`: `#ffffff`
+  - `ink`: `#161514` | `body`: `#4a4843` | `mute`: `#817e76`
+  - `accent-primary`: `#161514` | `accent-spruce`: `#1e3a2f` | `hairline`: `#e8e4da`
+* **Typography:** Fraunces (Variable Soft-Serif 600/700, optical size 144) + Inter + JetBrains Mono.
+* **Brand Mark:** Botanical Sprout Serif Monogram.
+* **Psychological Impact:** Deeply human, warm, and sophisticated without feeling antiquated; bridges tech craft and literary warmth.
 
 ---
 
-### Taste 5: Human Hearth & Terracotta Sunset
-* **Standalone Prototype:** [`preview-vercel-taste-5-human-terracotta.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-5-human-terracotta.html)
-* **Design Philosophy:** Human empathy, warm earth, and twilight family transitions. Infuses Vercel's frame with **Tuscan Terracotta (`#c2410c`), Clay Rose (`#ea580c`), and Sunset Dusk Violet (`#6366f1`)**, representing the family dinner hour and peaceful evening screen curfews.
+### Taste 10: Swiss Chrono (Pure Vercel Engineering with Micro Warmth)
+* **Standalone Prototype:** [`preview-vercel-taste-10-swiss-chrono.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-10-swiss-chrono.html)
+* **Design Philosophy:** Dieter Rams 10 Principles + Vercel pure black/white + Swiss watch precision. Stark Clean White (`#ffffff`) canvas, Pitch Black (`#0a0a0a`) text, and a single warm ochre micro-status indicator (`#d97706`).
 * **Tokens:**
-  - `canvas`: `#faf9f7` | `canvas-subtle`: `#f3f0ec` | `elevated`: `#ffffff`
-  - `ink`: `#1c1917` | `body`: `#44403c` | `mute`: `#78716c`
-  - `accent-terracotta`: `#c2410c` | `accent-bright`: `#ea580c` | `accent-sunset`: `#6366f1` | `hairline`: `#e7e5e4`
-* **Typography:** Plus Jakarta Sans (Display Weight 800, tracking `-2.2px`) + Inter + JetBrains Mono.
-* **Brand Signature:** Double Hearth Arches (Parent + Child arches side-by-side).
-* **Psychological Impact:** Deeply comforting, emotionally resonant, and relational. Directly relieves feelings of guilt and parental conflict during bedtime routines.
+  - `canvas`: `#ffffff` | `canvas-subtle`: `#f7f7f8` | `elevated`: `#ffffff`
+  - `ink`: `#0a0a0a` | `body`: `#454545` | `mute`: `#858585`
+  - `accent-primary`: `#0a0a0a` | `accent-ochre`: `#d97706` | `hairline`: `#e5e5e5`
+* **Typography:** Inter (Display Weight 800/900, tight tracking `-2.4px`) + JetBrains Mono.
+* **Brand Mark:** Precision Dual-Axis Chrono Compass.
+* **Psychological Impact:** Ultimate clarity and speed; parents who value engineering efficiency and zero clutter love this.
 
 ---
 
-## 3. Comparison Matrix Across the 5 Tastes
+### Taste 11: Nordic Dune & Soft Sand (Gentle Organic Alabaster & Pale Camel)
+* **Standalone Prototype:** [`preview-vercel-taste-11-nordic-dune.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-11-nordic-dune.html)
+* **Design Philosophy:** Ferm Living & Scandinavian coastal interior design meets Vercel. Warm Dune Sand canvas (`#faf7f2`), Dark Roast Espresso (`#1f1d1a`), and Pale Camel accents (`#b4783c`).
+* **Tokens:**
+  - `canvas`: `#faf7f2` | `canvas-subtle`: `#f3eee6` | `elevated`: `#ffffff`
+  - `ink`: `#1f1d1a` | `body`: `#524e47` | `mute`: `#888278`
+  - `accent-primary`: `#1f1d1a` | `accent-camel`: `#b4783c` | `hairline`: `#e9e4dc`
+* **Typography:** Plus Jakarta Sans (Weight 800, tracking `-2.0px`) + Inter + JetBrains Mono.
+* **Brand Mark:** Coastal Dune Contour & Sun Arc.
+* **Psychological Impact:** Gentle, natural, and welcoming; feels like a sunlit Scandinavian nursery.
 
-| Evaluation Dimension | Taste 1: Warm Sanctuary Linen | Taste 2: Editorial Almanac | Taste 3: Biophilic Forest | Taste 4: Clinical Blueprint | Taste 5: Terracotta Sunset |
+---
+
+### Taste 12: Cormorant Academy (Classical Academic Excellence & Harvard Pediatric Prestige)
+* **Standalone Prototype:** [`preview-vercel-taste-12-cormorant-academy.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-12-cormorant-academy.html)
+* **Design Philosophy:** Ivy League / Oxford University Press academic journals meets Vercel infrastructure. Oxford Bone (`#faf9f6`) canvas, Deep Navy-Charcoal ink (`#0f141c`), Cormorant Garamond serif headers, and crimson seal touch (`#991b1b`).
+* **Tokens:**
+  - `canvas`: `#faf9f6` | `canvas-subtle`: `#f1f2f5` | `elevated`: `#ffffff`
+  - `ink`: `#0f141c` | `body`: `#3c4452` | `mute`: `#737c8e`
+  - `accent-primary`: `#0f141c` | `accent-crimson`: `#991b1b` | `hairline`: `#e2e4e8`
+* **Typography:** Cormorant Garamond (Weight 700) + Inter + JetBrains Mono.
+* **Brand Mark:** Academic Shield & Laurel Branch.
+* **Psychological Impact:** Maximum medical authority and clinical trustworthiness; feels like an endowed pediatric medical research center.
+
+---
+
+### Taste 13: Smoked Pearl & Silver Mist (Ethereal Neutral Calm)
+* **Standalone Prototype:** [`preview-vercel-taste-13-smoked-pearl.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-13-smoked-pearl.html)
+* **Design Philosophy:** High-end architectural photography, Apple Pro packaging, muted luxury. Smoked Pearl (`#f6f7f8`) canvas, Carbon Graphite ink (`#121316`), and diffused silver mist aura.
+* **Tokens:**
+  - `canvas`: `#f6f7f8` | `canvas-subtle`: `#eeeff1` | `elevated`: `#ffffff`
+  - `ink`: `#121316` | `body`: `#464850` | `mute`: `#7c7f8a`
+  - `accent-primary`: `#121316` | `accent-silver`: `#64748b` | `hairline`: `#e3e5e8`
+* **Typography:** Inter (Display Weight 700/800, tracking `-2.2px`) + JetBrains Mono.
+* **Brand Mark:** Minimalist Silver Dual Orbit.
+* **Psychological Impact:** Featherweight visual presence; cool, modern, and high-tech without any harshness.
+
+---
+
+### Taste 14: Hearthstone & Olive Leaf (The Refined Earth Almanac)
+* **Standalone Prototype:** [`preview-vercel-taste-14-hearthstone-olive.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-14-hearthstone-olive.html)
+* **Design Philosophy:** Modern homesteading and organic culinary journals (Kinfolk, Cereal Magazine) meets Vercel card architecture. Hearthstone Chalk (`#fbf9f5`) canvas, Muted Cast-Iron ink (`#181916`), and Muted Olive Leaf (`#3f4f38`).
+* **Tokens:**
+  - `canvas`: `#fbf9f5` | `canvas-subtle`: `#f4f0e8` | `elevated`: `#ffffff`
+  - `ink`: `#181916` | `body`: `#494a45` | `mute`: `#7f817a`
+  - `accent-primary`: `#181916` | `accent-olive`: `#3f4f38` | `hairline`: `#e7e4db`
+* **Typography:** Newsreader Serif + Plus Jakarta Sans + JetBrains Mono.
+* **Brand Mark:** Hearthstone & Olive Sprig.
+* **Psychological Impact:** Generational family warmth, wholesome, deeply human, grounded, and mature.
+
+---
+
+### Taste 15: Geist Pure Vercel — Refined for Families
+* **Standalone Prototype:** [`preview-vercel-taste-15-geist-family.html`](file:///C:/GithubProjects/paper_clip/previews/preview-vercel-taste-15-geist-family.html)
+* **Design Philosophy:** The direct Vercel twin with 1% parental warmth. True Vercel `#fafafa` canvas, `#171717` ink, 6px buttons, and iconic multi-stop radiant mesh hero aura refined into a soft **Dawn Horizon** (soft amber, violet pearl, whisper emerald at 20% opacity).
+* **Tokens:**
+  - `canvas`: `#fafafa` | `canvas-subtle`: `#f4f4f4` | `elevated`: `#ffffff`
+  - `ink`: `#171717` | `body`: `#4d4d4d` | `mute`: `#8f8f8f`
+  - `accent-primary`: `#171717` | `accent-amber`: `#f59e0b` | `hairline`: `#eaeaea`
+* **Typography:** Inter (Display 700/800, tight tracking `-2.4px`) + JetBrains Mono.
+* **Brand Mark:** Vercel Apex Sanctuary Roof (triangle with an open arched portal at the apex).
+* **Psychological Impact:** Exactly Vercel's world-class feel, but perfectly attuned for modern family software.
+
+---
+
+## 3. Comprehensive Comparison Matrix: The Core Cluster & 10 New Variations
+
+| System | Canvas | Primary Ink | Key Accent | Typography Display | Visual Character & Vibe |
 |---|---|---|---|---|---|
-| **Parent Calm (2:00 AM Relief)** | ⭐⭐⭐⭐⭐ (Highest) | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Clinical Credibility** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ (Highest) | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **Modern Tech Polish (Vercel DNA)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ (Highest) | ⭐⭐⭐⭐⭐ |
-| **Emotional Warmth / Empathy** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ (Highest) |
-| **Visual Uniqueness (Anti-Slop)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **WCAG AA Contrast Ratio** | 8.8:1 (AAA) | 12.4:1 (AAA) | 9.2:1 (AAA) | 10.6:1 (AAA) | 9.0:1 (AAA) |
-| **Lifespan 0–18 Neutrality** | Excellent | Superb (Authoritative) | Excellent (Growth) | Excellent (Systems) | Great |
+| **Original Vercel** | `#fafafa` | `#171717` | `#0070f3` | Inter / Geist Sans | Crisp monochrome developer flagship |
+| **Taste 1: Warm Sanctuary** | `#fcfbf9` | `#191c1b` | `#28543e` (Sage) | Plus Jakarta Sans | Organic Scandinavian sanctuary & hearth |
+| **Taste 2: Editorial Almanac** | `#fbfbf9` | `#111413` | `#143d2b` (Spruce) | Newsreader Serif Italic | Harvard/AAP clinical publication prestige |
+| **Taste 6: Ivory Minimalist** | `#faf9f5` | `#141413` | `#c7b99c` (Champagne) | Inter Display 700 | Monastic minimalism & architectural calm |
+| **Taste 7: Paris Atelier** | `#f9f8f4` | `#101010` | `#9b7a44` (Brass) | Instrument Serif Italic | Literary review prestige & high culture |
+| **Taste 8: Porcelain & Cedar** | `#f8f9fa` | `#1b1c1d` | `#735e51` (Cedar) | Plus Jakarta Sans | Japanese Ensō Zen & tranquil space |
+| **Taste 9: Fraunces Antiqua** | `#faf8f4` | `#161514` | `#1e3a2f` (Spruce) | Fraunces Soft-Serif | Contemporary publishing & gentle craft |
+| **Taste 10: Swiss Chrono** | `#ffffff` | `#0a0a0a` | `#d97706` (Ochre) | Inter Tight 900 | Dieter Rams pure signal & chronometer |
+| **Taste 11: Nordic Dune** | `#faf7f2` | `#1f1d1a` | `#b4783c` (Camel) | Plus Jakarta Sans | Coastal Scandinavian warmth & sunlit dune |
+| **Taste 12: Cormorant Academy**| `#faf9f6` | `#0f141c` | `#991b1b` (Crimson) | Cormorant Garamond | Endowed medical research & academic seal |
+| **Taste 13: Smoked Pearl** | `#f6f7f8` | `#121316` | `#64748b` (Silver) | Inter Display 700 | Apple Pro packaging & featherweight cool |
+| **Taste 14: Hearthstone Olive** | `#fbf9f5` | `#181916` | `#3f4f38` (Olive) | Newsreader + Jakarta | Kinfolk organic homestead & mature warmth |
+| **Taste 15: Geist Family** | `#fafafa` | `#171717` | `#f59e0b` (Dawn) | Inter Display 800 | 1% Warmth Vercel twin with sanctuary roof |
 
 ---
 
-## 4. Master Switcher Integration
+## 4. Master Switcher Hub Access
 
-All 5 new prototypes have been wired directly into the [**Master Switcher Hub**](file:///C:/GithubProjects/paper_clip/previews/index.html):
-- Featured top row with active taste highlighting
-- Live responsive iframe viewports (Desktop 100%, Laptop 1024px, Tablet 768px, Mobile 390px)
-- Dynamic design token, typography, and suitability inspector panel
-- Standalone external tab links for isolated browser viewing
+All 15 variations are fully wired into the interactive [**Master Switcher Hub**](file:///C:/GithubProjects/paper_clip/previews/index.html):
+* **Row 1:** ⭐️ **Top Cluster (Preferred):** Original Vercel, Taste 1 (Warm Sanctuary), Taste 2 (Editorial Almanac).
+* **Row 2:** ✨ **10 New Variations (Tastes 6 to 15):** Direct switching between all 10 new variations.
+* **Row 3:** **Archive / Benchmarks:** Tastes 3–5 and original benchmarks.
+* **Viewport Controls:** Live switching between Desktop (100%), Laptop (1024px), Tablet (768px), and Mobile (390px).
+* **Live Inspector:** Instant inspection of color swatches, typography stack, border radii, brand marks, and suitability analysis.
