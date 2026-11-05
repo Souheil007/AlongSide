@@ -330,26 +330,26 @@ export function DevicesManagementView({
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E3E3DC] pb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-violet-600 text-white shadow-xs">
+            <span className="flex h-6 w-6 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] shadow-xs">
               <Smartphone className="h-3.5 w-3.5" />
             </span>
-            <Badge variant="roadActive" className="text-[10px]">
+            <Badge variant="roadActive" className="text-[10px] font-mono uppercase tracking-wider rounded-full">
               Modern World & Devices Hub
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+          <h1 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#111413]">
             Devices, Pacts & Youth Culture
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+          <p className="text-xs sm:text-sm text-[#494F4C] mt-1">
             Readiness diagnostic scoring, bilateral family media treaties, automated 8:30 PM curfews, and Sunday culture intel.
           </p>
         </div>
 
         <Link href="/pacts/builder">
-          <Button className="min-h-[44px] gap-2 text-xs bg-violet-600 hover:bg-violet-700 shadow-sm self-start sm:self-auto font-semibold">
+          <Button className="min-h-[44px] gap-2 text-xs bg-[#111413] hover:bg-[#143D2B] text-white rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] self-start sm:self-auto font-medium transition-colors">
             <FileCheck2 className="h-4 w-4" />
             Launch Pact Wizard
           </Button>
@@ -358,33 +358,33 @@ export function DevicesManagementView({
 
       {/* 4 Canonical Hub Tabs */}
       <Tabs defaultValue={normalizedInitialTab} value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="w-full justify-start overflow-x-auto no-scrollbar h-auto p-1.5 bg-slate-100 rounded-2xl gap-1">
+        <TabsList className="w-full justify-start overflow-x-auto no-scrollbar h-auto p-1.5 bg-[#F4F4F0] border border-[#E3E3DC] rounded-[8px] gap-1 font-mono">
           <TabsTrigger
             value="readiness"
-            className="min-h-[40px] px-4 py-2 text-xs font-semibold gap-1.5 rounded-xl shrink-0"
+            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
           >
-            <Compass className="h-3.5 w-3.5 text-emerald-600" />
+            <Compass className="h-3.5 w-3.5 text-[#143D2B]" />
             <span>1. Thinking About a Device?</span>
           </TabsTrigger>
           <TabsTrigger
             value="pacts"
-            className="min-h-[40px] px-4 py-2 text-xs font-semibold gap-1.5 rounded-xl shrink-0"
+            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
           >
-            <FileCheck2 className="h-3.5 w-3.5 text-teal-600" />
+            <FileCheck2 className="h-3.5 w-3.5 text-[#143D2B]" />
             <span>2. Bilateral Family Pact</span>
           </TabsTrigger>
           <TabsTrigger
             value="curfews"
-            className="min-h-[40px] px-4 py-2 text-xs font-semibold gap-1.5 rounded-xl shrink-0"
+            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
           >
-            <Lock className="h-3.5 w-3.5 text-violet-600" />
+            <Lock className="h-3.5 w-3.5 text-[#143D2B]" />
             <span>3. Active Device Curfews</span>
           </TabsTrigger>
           <TabsTrigger
             value="culture"
-            className="min-h-[40px] px-4 py-2 text-xs font-semibold gap-1.5 rounded-xl shrink-0"
+            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
           >
-            <Flame className="h-3.5 w-3.5 text-amber-600" />
+            <Flame className="h-3.5 w-3.5 text-[#B45309]" />
             <span>4. Youth Culture & Slang Radar</span>
           </TabsTrigger>
         </TabsList>
@@ -393,18 +393,18 @@ export function DevicesManagementView({
         {/* TAB 1: THINKING ABOUT A DEVICE? (READINESS DIAGNOSTIC & BRIDGE DEVICES)  */}
         {/* ========================================================================= */}
         <TabsContent value="readiness" className="space-y-6">
-          <Card className="border-emerald-200/90 bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 shadow-sm overflow-hidden">
-            <CardHeader className="pb-3 border-b border-emerald-100">
+          <Card className="border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden">
+            <CardHeader className="pb-3 border-b border-[#E3E3DC]">
               <div className="flex items-center justify-between">
-                <Badge variant="roadPre" className="text-xs">
+                <Badge variant="roadPre" className="text-xs font-mono uppercase tracking-wider rounded-full">
                   Pre-Unboxing Protocol
                 </Badge>
-                <span className="text-xs text-emerald-800 font-semibold">10 Clinical Dimensions</span>
+                <span className="text-xs text-[#143D2B] font-mono font-medium">10 Clinical Dimensions</span>
               </div>
-              <CardTitle className="text-xl font-bold text-slate-900">
+              <CardTitle className="font-serif text-xl font-semibold text-[#111413]">
                 First-Phone Readiness Pathway: Not &ldquo;No&rdquo;, but &ldquo;When&rdquo;
               </CardTitle>
-              <CardDescription className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+              <CardDescription className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
                 Before purchasing or handing over a personal smartphone, objectively evaluate impulse control, bedtime habits, and online safety awareness without conflict.
               </CardDescription>
             </CardHeader>
@@ -412,15 +412,15 @@ export function DevicesManagementView({
             <CardContent className="p-5 sm:p-6 space-y-6">
               {/* Early Childhood Stage Screen Guidance for ages 0-6 */}
               {activeChild && activeChild.age <= 6 && (
-                <div className="rounded-2xl border border-teal-200/90 bg-teal-50/60 p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shrink-0 shadow-2xs">
+                <div className="rounded-[8px] border border-[#E3E3DC] bg-[#EAF3EE] p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-[5px] bg-[#143D2B] text-white shrink-0 shadow-2xs">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-bold text-teal-950">
+                    <h4 className="font-serif text-sm font-semibold text-[#111413]">
                       Preschool &amp; Early Childhood Screen Balance (Ages 0–6)
                     </h4>
-                    <p className="text-xs text-teal-900 leading-relaxed max-w-3xl">
+                    <p className="text-xs text-[#494F4C] leading-relaxed max-w-3xl">
                       Pediatric guidelines (AAP) recommend zero solo screen time under 2 years, and high-quality co-viewing limited to 1 hour daily for ages 2–5. Personal smartphones and social media are not developmentally recommended at this stage.
                     </p>
                   </div>
@@ -429,26 +429,26 @@ export function DevicesManagementView({
 
               {/* Readiness Score Status */}
               {activeChild && hasAssessment ? (
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl border border-emerald-200 bg-white p-5 shadow-xs">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-[8px] border border-[#E3E3DC] bg-[#F4F4F0] p-5 shadow-xs">
                   <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-900 text-2xl font-black shrink-0">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-[8px] bg-[#EAF3EE] text-[#143D2B] font-serif text-2xl font-bold shrink-0">
                       {activeChild.latestAssessmentScore}
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-base font-bold text-slate-900">
+                        <span className="font-serif text-base font-semibold text-[#111413]">
                           {activeChild.name}&apos;s Readiness Score: {activeChild.latestAssessmentScore}/100
                         </span>
                         <Badge
                           variant={activeChild.latestAssessmentScore! >= 75 ? 'success' : 'accent'}
-                          className="text-[10px]"
+                          className="text-[10px] font-mono rounded-full"
                         >
                           {activeChild.latestAssessmentScore! >= 75
                             ? 'Ready for Bilateral Phone'
                             : 'Scaffolding Recommended'}
                         </Badge>
                       </div>
-                      <p className="text-xs text-slate-500 max-w-lg leading-relaxed">
+                      <p className="text-xs text-[#494F4C] max-w-lg leading-relaxed">
                         {activeChild.latestAssessmentScore! >= 75
                           ? `${activeChild.name} demonstrates solid executive function and safe habits for a supervised smartphone.`
                           : 'Specific dimensions (bedtime docking, homework transitions) need pre-device scaffolding.'}
@@ -457,7 +457,7 @@ export function DevicesManagementView({
                   </div>
 
                   <Link href={`/children/${activeChild.id}/readiness`}>
-                    <Button className="min-h-[44px] bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs gap-1.5 shadow-2xs">
+                    <Button className="min-h-[44px] bg-[#111413] hover:bg-[#143D2B] text-white font-medium text-xs gap-1.5 rounded-[5px] transition-colors shadow-2xs">
                       <span>View 10-Dimension Report</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Button>

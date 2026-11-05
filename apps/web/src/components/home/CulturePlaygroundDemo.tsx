@@ -111,27 +111,26 @@ export function CulturePlaygroundDemo() {
 
   return (
     <section id="digest" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
-      <div className="rounded-3xl border border-purple-200/90 bg-gradient-to-br from-purple-50/40 via-white to-purple-50/20 p-6 sm:p-10 shadow-sm">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-purple-100">
-          <div className="space-y-2 max-w-2xl">
-            <Badge
-              variant="outline"
-              className="text-xs font-bold text-purple-900 bg-purple-50 border-purple-200"
-            >
-              <Sparkles className="h-3.5 w-3.5 mr-1 text-purple-700" />
-              Live Culture Playground
-            </Badge>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-              Interactive Sunday Culture Radar & Dinner Starters
+      <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-6 sm:p-10 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-[#E3E3DC]">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9] px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
+              <span className="font-mono text-[11px] uppercase tracking-wider">
+                VOL. XXIV // LIVING RADAR
+              </span>
+            </div>
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
+              Interactive Sunday Culture Radar &amp; <em className="italic font-normal text-[#143D2B]">Dinner Starters</em>
             </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
+            <p className="text-sm text-[#494F4C] leading-relaxed">
               Never feel out of the loop again. Test out real youth culture slang terms, gauge their cringe rating, and draw Sunday dinner conversation starters.
             </p>
           </div>
 
           <Link href="/digest" className="shrink-0">
             <Button
-              className="min-h-[44px] gap-2 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs px-5 shadow-xs"
+              variant="forest"
+              className="min-h-[44px] gap-2 font-bold text-xs px-5 shadow-xs"
             >
               <span>Explore Full Culture Digest</span>
               <ArrowRight className="h-4 w-4" />
@@ -144,11 +143,11 @@ export function CulturePlaygroundDemo() {
           {/* Left Column (7 cols): Slang Radar & Cringe Meter */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-bold text-purple-950 uppercase tracking-wider flex items-center gap-1.5">
-                <Flame className="h-4 w-4 text-amber-500" />
-                Select or Search a Modern Slang Term:
+              <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider flex items-center gap-1.5">
+                <Flame className="h-4 w-4 text-[#B45309]" />
+                Select a Modern Slang Term:
               </span>
-              <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+              <span className="font-mono text-[11px] text-[#858C88] font-medium hidden sm:inline">
                 Click any word below
               </span>
             </div>
@@ -162,10 +161,10 @@ export function CulturePlaygroundDemo() {
                     key={item.term}
                     onClick={() => setSelectedTerm(item)}
                     className={cn(
-                      'px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer min-h-[40px]',
+                      'px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[38px] border',
                       isSelected
-                        ? 'bg-purple-700 text-white shadow-xs ring-2 ring-purple-600 ring-offset-1'
-                        : 'bg-white border border-slate-200/90 text-slate-700 hover:bg-purple-50 hover:border-purple-200'
+                        ? 'bg-[#111413] text-white border-[#111413] shadow-xs'
+                        : 'bg-[#F4F4F0] border-[#E3E3DC] text-[#494F4C] hover:border-[#111413] hover:text-[#111413]'
                     )}
                   >
                     &ldquo;{item.term}&rdquo;
@@ -175,20 +174,20 @@ export function CulturePlaygroundDemo() {
             </div>
 
             {/* Selected Word Detail Card with Cringe Meter */}
-            <div className="rounded-2xl border border-purple-200 bg-white p-5 space-y-3 shadow-xs">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-purple-50 pb-3">
+            <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-5 space-y-3 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E3E3DC] pb-3">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-black text-purple-950">
+                  <h3 className="font-serif text-2xl font-bold text-[#111413]">
                     &ldquo;{selectedTerm.term}&rdquo;
                   </h3>
-                  <span className="text-xs text-purple-700 font-mono bg-purple-50 px-2 py-0.5 rounded border border-purple-200/60">
+                  <span className="text-xs text-[#143D2B] font-mono bg-[#EAF3EE] px-2 py-0.5 rounded border border-[#143D2B]/20">
                     {selectedTerm.phonetic}
                   </span>
                 </div>
 
                 {/* Cringe Meter */}
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-slate-500">Cringe Meter:</span>
+                  <span className="font-mono text-xs font-semibold text-[#858C88]">Cringe Meter:</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((lvl) => (
                       <span
@@ -196,36 +195,36 @@ export function CulturePlaygroundDemo() {
                         className={cn(
                           'h-2.5 w-2.5 rounded-full transition-all',
                           lvl <= selectedTerm.cringeLevel
-                            ? 'bg-amber-500 ring-2 ring-amber-200'
-                            : 'bg-slate-200'
+                            ? 'bg-[#B45309] ring-2 ring-[#B45309]/30'
+                            : 'bg-[#E3E3DC]'
                         )}
                       />
                     ))}
                   </div>
-                  <span className="text-xs font-black text-amber-700 ml-1">
+                  <span className="font-mono text-xs font-bold text-[#B45309] ml-1">
                     {selectedTerm.cringeLevel} / 5
                   </span>
                 </div>
               </div>
 
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#858C88] block">
                   Literal Definition:
                 </span>
-                <p className="text-sm font-semibold text-slate-800 mt-0.5">
+                <p className="text-sm font-semibold text-[#111413] mt-0.5">
                   {selectedTerm.definition}
                 </p>
               </div>
 
-              <div className="rounded-xl bg-purple-50/50 border border-purple-100 p-3 text-xs text-slate-700 italic">
-                <span className="font-bold text-purple-900 not-italic block text-[11px] mb-0.5">
+              <div className="rounded-[5px] bg-white border border-[#E3E3DC] p-3 text-xs text-[#494F4C] italic">
+                <span className="font-bold text-[#111413] not-italic block text-[11px] mb-0.5 font-mono uppercase tracking-wider">
                   How Tweens Use It:
                 </span>
                 {selectedTerm.exampleSentence}
               </div>
 
-              <div className="rounded-xl bg-slate-50 border border-slate-200/80 p-3 text-xs text-slate-700">
-                <span className="font-bold text-slate-900 block text-[11px] mb-0.5">
+              <div className="rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 p-3 text-xs text-[#143D2B]">
+                <span className="font-bold text-[#143D2B] block text-[11px] mb-0.5 font-mono uppercase tracking-wider">
                   Parent Psychological Translation:
                 </span>
                 {selectedTerm.parentContext}
@@ -235,25 +234,25 @@ export function CulturePlaygroundDemo() {
 
           {/* Right Column (5 cols): Sunday Dinner Conversation Starters */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold text-purple-950 uppercase tracking-wider flex items-center gap-1.5">
-              <MessageSquare className="h-4 w-4 text-purple-700" />
+            <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider flex items-center gap-1.5">
+              <MessageSquare className="h-4 w-4 text-[#143D2B]" />
               Sunday Dinner Table Starter:
             </span>
 
-            <div className="rounded-2xl border border-purple-200 bg-white p-5 space-y-4 shadow-xs flex flex-col justify-between min-h-[300px]">
+            <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-5 space-y-4 shadow-xs flex flex-col justify-between min-h-[300px]">
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded border border-[#143D2B]/20">
                     Card #{starterIndex + 1}
                   </span>
                   <button
                     onClick={handleCopyStarter}
-                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-700 hover:text-purple-950 bg-slate-50 hover:bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200 transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[#111413] hover:text-[#143D2B] bg-white hover:bg-[#F4F4F0] px-2.5 py-1 rounded-[4px] border border-[#E3E3DC] transition-colors cursor-pointer"
                   >
                     {copied ? (
                       <>
-                        <Check className="h-3.5 w-3.5 text-emerald-600" />
-                        <span className="text-emerald-700 font-bold">Copied!</span>
+                        <Check className="h-3.5 w-3.5 text-[#143D2B]" />
+                        <span className="text-[#143D2B] font-bold">Copied!</span>
                       </>
                     ) : (
                       <>
@@ -264,14 +263,14 @@ export function CulturePlaygroundDemo() {
                   </button>
                 </div>
 
-                <div className="rounded-xl bg-purple-50/70 border border-purple-100 p-4">
-                  <p className="text-sm font-bold text-slate-900 leading-relaxed italic">
+                <div className="rounded-[5px] bg-white border border-[#E3E3DC] p-4">
+                  <p className="font-serif text-sm font-medium text-[#111413] leading-relaxed italic">
                     {currentStarter}
                   </p>
                 </div>
 
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  💡 <span className="font-semibold text-slate-700">Tip:</span> Ask this neutrally without lecturing. Let your child be the expert explaining their world to you.
+                <p className="text-xs text-[#858C88] leading-relaxed">
+                  💡 <span className="font-semibold text-[#494F4C]">Tip:</span> Ask this neutrally without lecturing. Let your child be the expert explaining their world to you.
                 </p>
               </div>
 
@@ -279,7 +278,7 @@ export function CulturePlaygroundDemo() {
                 <Button
                   onClick={handleShuffleStarter}
                   variant="outline"
-                  className="w-full min-h-[44px] gap-2 text-xs font-bold border-purple-300 text-purple-900 hover:bg-purple-50"
+                  className="w-full min-h-[44px] gap-2 text-xs font-bold border-[#E3E3DC] text-[#111413] hover:bg-white hover:border-[#111413] rounded-[5px]"
                 >
                   <Shuffle className="h-4 w-4" />
                   <span>Draw Another Dinner Conversation Starter</span>

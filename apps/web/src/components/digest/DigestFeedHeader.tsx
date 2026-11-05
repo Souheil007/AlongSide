@@ -44,31 +44,31 @@ export function DigestFeedHeader({
 
   return (
     <header className={cn('space-y-4 max-w-7xl mx-auto', className)}>
-      <div className="flex flex-wrap items-center gap-2.5">
+      <div className="flex flex-wrap items-center gap-2.5 font-mono">
         {/* Edition Pill */}
         <span
           data-testid="edition-pill"
-          className="inline-flex items-center gap-1.5 rounded-full border border-purple-200 bg-purple-50/90 px-3 py-1 text-xs font-semibold text-purple-900 shadow-2xs"
+          className="inline-flex items-center gap-1.5 rounded-full border border-[#E3E3DC] bg-[#EAF3EE] px-3 py-1 text-xs font-medium text-[#143D2B]"
         >
-          <Calendar className="h-3.5 w-3.5 text-purple-700" aria-hidden="true" />
+          <Calendar className="h-3.5 w-3.5 text-[#143D2B]" aria-hidden="true" />
           <span>Volume {issueNumber} · Released Sunday 8:00 AM</span>
         </span>
 
         {/* Active Child Calibration Badge */}
         <span
           data-testid="child-calibration-badge"
-          className="inline-flex items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50/90 px-3 py-1 text-xs font-semibold text-teal-900 shadow-2xs"
+          className="inline-flex items-center gap-1.5 rounded-full border border-[#E3E3DC] bg-[#F4F4F0] px-3 py-1 text-xs font-medium text-[#494F4C]"
         >
-          <UserCheck className="h-3.5 w-3.5 text-teal-700" aria-hidden="true" />
+          <UserCheck className="h-3.5 w-3.5 text-[#143D2B]" aria-hidden="true" />
           <span>{calibrationText}</span>
         </span>
       </div>
 
       <div className="space-y-2">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+        <h1 className="font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-[#111413]">
           Sunday Youth Culture Digest — The Living Feed to Keep Up With Your Child
         </h1>
-        <p className="text-slate-600 text-sm sm:text-base max-w-3xl leading-relaxed">
+        <p className="text-[#494F4C] text-sm sm:text-base max-w-3xl leading-relaxed">
           Stay fluently ahead of adolescent slang, algorithmic viral trends, and covert device exploits without becoming the family police officer.
         </p>
       </div>

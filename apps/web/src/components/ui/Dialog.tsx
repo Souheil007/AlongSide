@@ -104,13 +104,13 @@ export function DialogContent({
       aria-modal="true"
     >
       <div
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#111413]/60 backdrop-blur-sm transition-opacity"
         onClick={() => onOpenChange(false)}
         aria-hidden="true"
       />
       <div
         className={cn(
-          'relative z-[101] w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-xl my-auto',
+          'relative z-[101] w-full max-w-lg rounded-[16px] border border-[#E3E3DC] bg-white p-6 shadow-[0_24px_48px_rgba(17,20,19,0.12)] my-auto',
           'animate-in fade-in-0 zoom-in-95 duration-200',
           className
         )}

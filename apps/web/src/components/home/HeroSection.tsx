@@ -40,33 +40,38 @@ export const HERO_TRUST_SIGNALS = [
 export function HeroSection() {
   return (
     <section className="relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-      {/* Background Decorative Soft Blurs */}
+      {/* Editorial Archival Mesh Hero Aura */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-gradient-to-tr from-teal-100/40 via-amber-50/40 to-purple-50/30 rounded-full blur-3xl pointer-events-none -z-10"
+        className="absolute top-8 left-1/2 -translate-x-1/2 w-[720px] h-[400px] pointer-events-none -z-10 blur-3xl opacity-80"
+        style={{
+          background:
+            'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.16), transparent 60%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.12), transparent 55%), radial-gradient(circle at 50% 80%, rgba(17, 20, 19, 0.08), transparent 60%)',
+        }}
         aria-hidden="true"
       />
 
       <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
-        {/* Advisory Sanctuary Positioning Badge */}
-        <Badge
-          variant="default"
-          className="gap-2 py-1.5 px-4 text-xs font-semibold bg-teal-50/90 border-teal-200 text-teal-800 shadow-sm"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-          <span>Clinical Pediatric Science • Prioritized Parent Academy • Weekly Youth Culture Digest • Zero-Spyware Pacts</span>
-        </Badge>
+        {/* Editorial Publication Eyebrow Pill */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1.5 text-xs font-medium text-[#494F4C] shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
+          <span className="rounded-[4px] bg-[#EAF3EE] px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
+            VOL. XXIV // CLINICAL
+          </span>
+          <span className="font-medium text-[#494F4C]">
+            Barton Schmitt Protocols • Lifespan Pediatric Authority
+          </span>
+        </div>
 
-        {/* Advisory Sanctuary Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12]">
-          The Parent Advisory Sanctuary:{' '}
-          <span className="text-teal-700 underline decoration-teal-300 underline-offset-8">
+        {/* Editorial Sanctuary Headline */}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#111413] leading-[1.12]">
+          The Parent Advisory Sanctuary: <br className="hidden sm:inline" />
+          <span className="font-serif italic font-normal text-[#143D2B] tracking-normal">
             Keep Up With Your Child
           </span>{' '}
           As They Grow.
         </h1>
 
-        {/* Empathetic Subheadline */}
-        <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl">
+        {/* Empathetic Editorial Subheadline */}
+        <p className="text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
           Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science,
           prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
         </p>
@@ -74,7 +79,11 @@ export function HeroSection() {
         {/* Dual Primary CTAs */}
         <div className="flex flex-col sm:flex-row items-center gap-4 pt-3 w-full sm:w-auto">
           <Link href="/register" className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto gap-2 text-base px-8 py-6 shadow-md bg-teal-700 hover:bg-teal-800 text-white font-bold">
+            <Button
+              variant="pill"
+              size="lg"
+              className="w-full sm:w-auto gap-2 text-base px-8 py-6 font-bold shadow-md"
+            >
               Start 7-Day Risk-Free Trial
               <ArrowRight className="h-5 w-5" />
             </Button>
@@ -83,9 +92,9 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto text-base px-7 py-6 border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold"
+              className="w-full sm:w-auto text-base px-7 py-6 border-[#E3E3DC] text-[#111413] hover:border-[#111413] font-semibold"
             >
-              Explore Advisory Curriculum (0–18)
+              Explore 6-Stage Curriculum
             </Button>
           </a>
         </div>
@@ -95,11 +104,14 @@ export function HeroSection() {
           {HERO_TRUST_SIGNALS.map((badge, idx) => {
             const Icon = badge.icon;
             return (
-              <div key={idx} className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/80 border border-slate-200/80 shadow-xs">
-                <Icon className="h-4 w-4 text-teal-700 shrink-0" />
+              <div
+                key={idx}
+                className="flex items-center gap-2.5 p-3 rounded-[5px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] transition-colors hover:border-[#111413]"
+              >
+                <Icon className="h-4 w-4 text-[#143D2B] shrink-0" />
                 <div className="text-xs">
-                  <span className="font-bold text-slate-800 block">{badge.title}</span>
-                  <span className="text-slate-500 text-[11px]">{badge.subtitle}</span>
+                  <span className="font-bold text-[#111413] block">{badge.title}</span>
+                  <span className="text-[#858C88] text-[11px] font-mono">{badge.subtitle}</span>
                 </div>
               </div>
             );
@@ -107,15 +119,15 @@ export function HeroSection() {
         </div>
 
         {/* Reassurance Micro-Copy */}
-        <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 pt-2 text-xs text-slate-500">
+        <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 pt-2 text-xs text-[#858C88]">
           <span className="flex items-center gap-1.5 font-medium">
-            <Brain className="h-3.5 w-3.5 text-teal-600" /> Evidence-Backed Developmental Neurobiology
+            <Brain className="h-3.5 w-3.5 text-[#143D2B]" /> Prioritized Parent Academy (Neurobiology)
           </span>
           <span className="flex items-center gap-1.5 font-medium">
-            <Compass className="h-3.5 w-3.5 text-emerald-600" /> Prioritized Chapters by Acute Necessity
+            <Sparkles className="h-3.5 w-3.5 text-[#143D2B]" /> Weekly Youth Culture Digest & Slang
           </span>
           <span className="flex items-center gap-1.5 font-medium">
-            <CheckCircle2 className="h-3.5 w-3.5 text-teal-600" /> All Ages Supported Under One Family Pass
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B]" /> All Ages Supported Under One Family Pass
           </span>
         </div>
       </div>

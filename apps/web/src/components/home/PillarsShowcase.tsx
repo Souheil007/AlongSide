@@ -202,16 +202,15 @@ export function PillarsShowcase() {
       <span id="features" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <span id="academy" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <Badge
-          variant="outline"
-          className="text-xs font-bold text-teal-800 bg-teal-50 border-teal-200"
-        >
-          The AlongSide Architecture
-        </Badge>
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-          The 3 Pillars of Parent Calm & Child Understanding
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
+          <span className="font-mono text-[11px] uppercase tracking-wider">
+            VOL. XXIV // THREE PILLARS
+          </span>
+        </div>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[#111413]">
+          The 3 Pillars of <em className="italic font-normal text-[#143D2B]">Parent Calm</em> &amp; Child Understanding
         </h2>
-        <p className="text-base text-slate-600 leading-relaxed">
+        <p className="text-base text-[#494F4C] leading-relaxed">
           AlongSide converges prioritized clinical education, weekly youth culture intelligence, and bilateral screen contracts into one unified sanctuary.
         </p>
       </div>
@@ -223,36 +222,36 @@ export function PillarsShowcase() {
           return (
             <Card
               key={pillar.number}
-              className="border-slate-200/90 bg-white hover:border-teal-300 transition-all shadow-xs flex flex-col justify-between"
+              className="border-[#E3E3DC] bg-white hover:border-[#111413] transition-all shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-[0_4px_12px_rgba(17,20,19,0.06)] flex flex-col justify-between rounded-[10px]"
             >
               <CardHeader className="p-6 space-y-3">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-2xl font-black text-slate-200 font-mono">
+                  <span className="text-2xl font-black text-[#858C88] font-mono">
                     {pillar.number}
                   </span>
                   <Badge
                     variant="outline"
-                    className={`text-[10px] font-bold border ${pillar.badgeClass}`}
+                    className={`font-mono text-[10px] font-bold border ${pillar.badgeClass}`}
                   >
                     {pillar.badge}
                   </Badge>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white font-bold">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#143D2B] text-white font-bold">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#858C88] block">
                       {pillar.categoryTag}
                     </span>
-                    <CardTitle className="text-xl font-bold text-slate-900 leading-snug">
+                    <CardTitle className="font-serif text-xl font-bold text-[#111413] leading-snug">
                       {pillar.title}
                     </CardTitle>
                   </div>
                 </div>
 
-                <CardDescription className="text-xs text-slate-600 leading-relaxed pt-1">
+                <CardDescription className="text-xs text-[#494F4C] leading-relaxed pt-1">
                   {pillar.description}
                 </CardDescription>
               </CardHeader>
@@ -262,9 +261,9 @@ export function PillarsShowcase() {
                   {pillar.highlights.map((item, idx) => (
                     <li
                       key={idx}
-                      className="text-xs text-slate-700 flex items-start gap-2 leading-relaxed"
+                      className="text-xs text-[#494F4C] flex items-start gap-2 leading-relaxed"
                     >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -274,7 +273,7 @@ export function PillarsShowcase() {
                   <Link href={pillar.href} className="block w-full">
                     <Button
                       variant="outline"
-                      className="w-full min-h-[44px] gap-2 text-xs font-bold border-slate-300 text-slate-800 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-950"
+                      className="w-full min-h-[44px] gap-2 text-xs font-bold border-[#E3E3DC] text-[#111413] hover:border-[#111413] hover:bg-[#F4F4F0]"
                     >
                       <span>{pillar.ctaText}</span>
                       <ArrowRight className="h-3.5 w-3.5" />

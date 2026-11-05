@@ -115,49 +115,49 @@ export function AcademyBriefingCard({ child, className }: AcademyBriefingCardPro
   return (
     <Card
       className={cn(
-        'border-slate-200/80 bg-white hover:border-teal-300 transition-colors shadow-xs',
+        'border-[#E3E3DC] bg-[#FFFFFF] hover:border-[#143D2B]/30 transition-all shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px]',
         className
       )}
     >
       <CardHeader className="pb-3 space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-teal-800">
-            <BookOpen className="h-4 w-4 text-teal-700" />
+          <div className="flex items-center gap-1.5 text-xs font-mono font-medium text-[#143D2B] uppercase tracking-wider">
+            <BookOpen className="h-3.5 w-3.5 text-[#143D2B]" />
             <span>Parent Intelligence Academy</span>
           </div>
-          <Badge variant="outline" className="text-[11px] font-medium border-teal-200 text-teal-800 bg-teal-50/60">
+          <Badge variant="outline" className="text-[11px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE]">
             {fallback.tierLabel}
           </Badge>
         </div>
 
         <div>
-          <CardTitle className="text-base font-bold text-slate-900 leading-snug line-clamp-2">
+          <CardTitle className="font-serif text-base sm:text-lg font-semibold text-[#111413] leading-snug line-clamp-2">
             {title}
           </CardTitle>
-          <CardDescription className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+          <CardDescription className="text-xs text-[#494F4C] mt-1 line-clamp-2 leading-relaxed">
             {summary}
           </CardDescription>
         </div>
       </CardHeader>
 
       <CardContent className="pt-0 space-y-3">
-        <div className="flex items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-100">
+        <div className="flex items-center justify-between text-xs text-[#858C88] pt-2 border-t border-[#E3E3DC] font-mono">
           <div className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-slate-400" />
+            <Clock className="h-3.5 w-3.5 text-[#858C88]" />
             <span>{fallback.readingMinutes} min read • 3 lessons</span>
           </div>
           <Link
             href="/academy"
-            className="text-teal-700 hover:text-teal-900 font-medium hover:underline text-[11px]"
+            className="text-[#143D2B] hover:text-[#111413] font-mono font-medium hover:underline text-[11px]"
           >
             All 6 Tiers →
           </Link>
         </div>
 
         <Link href={`/academy/${slug}`} className="block w-full">
-          <Button variant="outline" size="sm" className="w-full gap-1.5 text-xs font-semibold hover:bg-teal-50 hover:text-teal-900 hover:border-teal-300">
-            Start Masterclass
-            <ArrowRight className="h-3.5 w-3.5 text-teal-700" />
+          <Button variant="outline" size="sm" className="w-full gap-1.5 text-xs font-medium border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-[5px]">
+            <span>Start Masterclass</span>
+            <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
           </Button>
         </Link>
       </CardContent>

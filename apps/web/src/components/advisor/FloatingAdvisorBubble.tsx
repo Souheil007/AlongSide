@@ -115,7 +115,7 @@ export function FloatingAdvisorBubble() {
           aria-expanded={false}
           aria-label="Open 24/7 AI Child Advisor"
           className={cn(
-            'fixed z-40 flex items-center gap-2.5 rounded-full bg-teal-700 text-white shadow-xl hover:bg-teal-800 hover:shadow-2xl active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-teal-500/30 no-print',
+            'fixed z-40 flex items-center gap-2.5 rounded-full bg-[#143D2B] text-white shadow-xl hover:bg-[#0E2B1E] hover:shadow-2xl active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#143D2B]/30 no-print',
             // Mobile: positioned at bottom-20 (80px from bottom) to sit cleanly above MobileNav (h-14 / bottom-0)
             'bottom-20 right-4 p-3.5',
             // Desktop: bottom-6 right-6
@@ -131,7 +131,7 @@ export function FloatingAdvisorBubble() {
           </div>
           <div className="hidden sm:flex flex-col text-left">
             <span className="text-xs font-bold leading-tight">Ask Advisor</span>
-            <span className="text-[10px] text-teal-100 font-medium leading-tight">
+            <span className="text-[10px] text-emerald-200 font-medium leading-tight font-mono">
               24/7 Clinical AI
             </span>
           </div>
@@ -153,29 +153,29 @@ export function FloatingAdvisorBubble() {
             aria-modal="true"
             aria-label="24/7 AI Child Advisor Chat"
             className={cn(
-              'fixed z-50 flex flex-col bg-white shadow-2xl border border-slate-200/90 overflow-hidden no-print animate-in fade-in-0 duration-200',
+              'fixed z-50 flex flex-col bg-white shadow-2xl border border-[#E3E3DC] overflow-hidden no-print animate-in fade-in-0 duration-200',
               // Mobile: slide up bottom sheet
-              'inset-x-0 bottom-0 top-14 rounded-t-3xl sm:top-auto sm:inset-x-auto',
+              'inset-x-0 bottom-0 top-14 rounded-t-[16px] sm:top-auto sm:inset-x-auto',
               // Desktop: anchored bottom-right card
-              'sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[640px] sm:max-h-[88vh] sm:rounded-3xl sm:slide-in-from-bottom-5'
+              'sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[640px] sm:max-h-[88vh] sm:rounded-[16px] sm:slide-in-from-bottom-5'
             )}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/90 px-4 py-3 shrink-0">
+            <div className="flex items-center justify-between border-b border-[#E3E3DC] bg-[#FBFBF9] px-4 py-3 shrink-0">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-700 text-white shadow-xs">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] bg-[#143D2B] text-white shadow-xs">
                   <Bot className="h-5 w-5" />
                 </div>
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-slate-900 text-sm leading-tight truncate">
+                    <span className="font-serif font-bold text-[#111413] text-sm leading-tight truncate">
                       24/7 AI Child Advisor
                     </span>
-                    <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 text-[10px] font-semibold text-emerald-800 shrink-0">
+                    <span className="inline-flex items-center rounded-full bg-[#EAF3EE] border border-[#143D2B]/20 px-1.5 py-0.2 text-[10px] font-mono font-semibold text-[#143D2B] shrink-0">
                       Live
                     </span>
                   </div>
-                  <span className="text-[11px] text-slate-500 font-medium truncate">
+                  <span className="text-[11px] text-[#858C88] font-medium truncate">
                     Grounded in Pediatric Neuroscience
                   </span>
                 </div>
@@ -186,18 +186,18 @@ export function FloatingAdvisorBubble() {
                 <Link
                   href="/advisor"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-1 text-[11px] font-bold text-teal-800 hover:text-teal-950 bg-teal-50 hover:bg-teal-100/90 border border-teal-200/70 rounded-lg px-2.5 py-1.5 transition-colors"
+                  className="flex items-center gap-1 text-[11px] font-semibold text-[#143D2B] hover:text-[#0E2B1E] bg-[#EAF3EE] hover:bg-[#D1E7DD] border border-[#143D2B]/20 rounded-[5px] px-2.5 py-1.5 transition-colors font-mono"
                   title="Open Full Voice Sparring Rehearsal Studio"
                 >
-                  <Radio className="h-3 w-3 text-teal-600 animate-pulse" />
+                  <Radio className="h-3 w-3 text-[#143D2B] animate-pulse" />
                   <span className="hidden xs:inline">Full Studio</span>
-                  <ExternalLink className="h-3 w-3 text-teal-600" />
+                  <ExternalLink className="h-3 w-3 text-[#143D2B]" />
                 </Link>
 
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-200/70 hover:text-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="flex h-8 w-8 items-center justify-center rounded-[5px] text-[#858C88] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
                   aria-label="Minimize Advisor Chat"
                 >
                   <Minimize2 className="h-4 w-4" />
@@ -205,7 +205,7 @@ export function FloatingAdvisorBubble() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-200/70 hover:text-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="flex h-8 w-8 items-center justify-center rounded-[5px] text-[#858C88] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
                   aria-label="Close Advisor Chat"
                 >
                   <X className="h-4 w-4" />
@@ -241,9 +241,9 @@ export function FloatingAdvisorBubble() {
             )}
 
             {/* Contextual Quick Prompts Carousel Bar */}
-            <div className="border-b border-slate-100 bg-slate-50/50 px-3 py-2 shrink-0">
-              <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                <Sparkles className="h-3 w-3 text-teal-600" />
+            <div className="border-b border-[#E3E3DC] bg-[#F4F4F0] px-3 py-2 shrink-0">
+              <div className="flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#858C88] mb-1.5">
+                <Sparkles className="h-3 w-3 text-[#143D2B]" />
                 <span>Contextual Quick Questions (Tap to Ask)</span>
               </div>
               <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
@@ -253,7 +253,7 @@ export function FloatingAdvisorBubble() {
                     type="button"
                     disabled={isStreaming}
                     onClick={() => handlePromptClick(cp)}
-                    className="shrink-0 rounded-full border border-slate-200/90 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 shadow-2xs hover:border-teal-400 hover:bg-teal-50 hover:text-teal-900 transition-all active:scale-95 disabled:opacity-50"
+                    className="shrink-0 rounded-full border border-[#E3E3DC] bg-white px-2.5 py-1 text-[11px] font-medium text-[#494F4C] shadow-2xs hover:border-[#143D2B] hover:bg-[#EAF3EE] hover:text-[#143D2B] transition-all active:scale-95 disabled:opacity-50"
                   >
                     {cp.label}
                   </button>
@@ -262,17 +262,17 @@ export function FloatingAdvisorBubble() {
             </div>
 
             {/* Chat Messages Feed */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#FCFBF8]/40">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#FBFBF9]">
               {messages.length === 0 && !isStreaming && (
                 <div className="my-auto flex flex-col items-center justify-center text-center p-6 space-y-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-inner">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#EAF3EE] text-[#143D2B] shadow-inner">
                     <Bot className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">
+                    <h3 className="font-serif text-sm font-bold text-[#111413]">
                       How can I help right now?
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500 max-w-xs leading-relaxed">
+                    <p className="mt-1 text-xs text-[#858C88] max-w-xs leading-relaxed">
                       Instant, empathetic advice for acute tantrums, illness symptoms,
                       picky eating, or phone boundaries.
                     </p>
@@ -292,10 +292,10 @@ export function FloatingAdvisorBubble() {
                   >
                     <div
                       className={cn(
-                        'max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-2xs',
+                        'max-w-[85%] rounded-[10px] px-3.5 py-2.5 text-xs leading-relaxed shadow-2xs',
                         isUser
-                          ? 'bg-teal-700 text-white rounded-br-xs'
-                          : 'bg-white border border-slate-200 text-slate-900 rounded-bl-xs'
+                          ? 'bg-[#111413] text-white rounded-br-xs'
+                          : 'bg-white border border-[#E3E3DC] text-[#111413] rounded-bl-xs'
                       )}
                     >
                       <p className="whitespace-pre-wrap">{m.content}</p>
@@ -308,7 +308,7 @@ export function FloatingAdvisorBubble() {
                             key={faqId}
                             href={`/advisor/faqs?q=${encodeURIComponent(faqId.replace(/^faq-/, ''))}`}
                             onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center gap-1 rounded-md bg-teal-50 px-1.5 py-0.5 text-[10px] font-medium text-teal-800 hover:bg-teal-100"
+                            className="inline-flex items-center gap-1 rounded-[4px] bg-[#EAF3EE] px-1.5 py-0.5 text-[10px] font-mono font-medium text-[#143D2B] hover:bg-[#D1E7DD]"
                           >
                             <span>Clinical FAQ reference</span>
                             <ExternalLink className="h-2.5 w-2.5" />

@@ -23,7 +23,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-xs font-medium text-slate-700"
+            className="block text-xs font-semibold text-[#111413]"
           >
             {label}
           </label>
@@ -37,23 +37,23 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             errorMessage ? errorId : helperText ? helperId : undefined
           }
           className={cn(
-            "flex h-11 min-h-[44px] w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-base sm:text-sm text-slate-900 shadow-sm transition-colors",
-            "placeholder:text-slate-400",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent",
-            "disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 disabled:opacity-50",
+            "flex h-11 min-h-[44px] w-full rounded-[5px] border border-[#E3E3DC] bg-white px-3.5 py-2 text-base sm:text-sm text-[#111413] shadow-[0_1px_2px_rgba(17,20,19,0.04)] transition-colors",
+            "placeholder:text-[#858C88]",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:border-transparent",
+            "disabled:cursor-not-allowed disabled:bg-[#F4F4F0] disabled:text-[#858C88] disabled:opacity-50",
             hasError &&
-              "border-red-500 text-red-900 focus-visible:ring-red-500 focus-visible:border-red-500",
+              "border-[#DC2626] text-[#DC2626] focus-visible:ring-[#DC2626] focus-visible:border-[#DC2626]",
             className
           )}
           {...props}
         />
         {helperText && !hasError && (
-          <p id={helperId} className="text-xs text-slate-500">
+          <p id={helperId} className="text-xs text-[#858C88]">
             {helperText}
           </p>
         )}
         {errorMessage && (
-          <p id={errorId} className="text-xs font-medium text-red-600" role="alert">
+          <p id={errorId} className="text-xs font-semibold text-[#DC2626]" role="alert">
             {errorMessage}
           </p>
         )}

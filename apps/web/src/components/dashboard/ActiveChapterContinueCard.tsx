@@ -193,32 +193,32 @@ export function ActiveChapterContinueCard({
   return (
     <Card
       className={cn(
-        'border-amber-200/90 bg-gradient-to-br from-white via-amber-50/20 to-white shadow-sm overflow-hidden transition-all hover:border-amber-300',
+        'border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden transition-all hover:border-[#143D2B]/30',
         className
       )}
     >
       <CardHeader className="p-5 pb-3 space-y-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 text-amber-900 font-bold">
+            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
               <BookOpen className="h-4 w-4" />
             </span>
-            <span className="text-xs font-bold text-amber-950 uppercase tracking-wider">
+            <span className="text-xs font-mono font-medium text-[#143D2B] uppercase tracking-wider">
               Parent Intelligence Academy
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 font-mono">
             <Badge
               variant="outline"
-              className={cn('text-[11px] font-bold border px-2.5 py-0.5', theme.badgeStyle)}
+              className={cn('text-[11px] font-mono border px-2.5 py-0.5 rounded-full', theme.badgeStyle)}
             >
               <PriorityIcon className="h-3 w-3 mr-1 shrink-0" />
               {theme.shortBadge}
             </Badge>
             <Badge
               variant="outline"
-              className="text-[10px] font-semibold border-slate-200 bg-white text-slate-700"
+              className="text-[10px] font-mono border-[#E3E3DC] bg-[#F4F4F0] text-[#494F4C] rounded-full"
             >
               {categoryLabel}
             </Badge>
@@ -226,13 +226,13 @@ export function ActiveChapterContinueCard({
         </div>
 
         <div>
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-            Continue Active Course:
+          <span className="text-[10px] font-mono font-medium text-[#858C88] uppercase tracking-wider block">
+            Continue Active Course
           </span>
-          <CardTitle className="text-lg sm:text-xl font-bold text-slate-900 leading-snug mt-0.5">
+          <CardTitle className="font-serif text-lg sm:text-xl font-semibold text-[#111413] leading-snug mt-0.5">
             {courseTitle}
           </CardTitle>
-          <CardDescription className="text-xs text-slate-600 mt-1 leading-relaxed line-clamp-2">
+          <CardDescription className="text-xs text-[#494F4C] mt-1 leading-relaxed line-clamp-2">
             {chapterTitle} — {summary}
           </CardDescription>
         </div>
@@ -240,10 +240,10 @@ export function ActiveChapterContinueCard({
 
       <CardContent className="p-5 pt-0 space-y-4">
         {/* Progress Bar & Est. Reading Time */}
-        <div className="space-y-1.5 rounded-xl bg-slate-50 border border-slate-200/70 p-3">
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+        <div className="space-y-1.5 rounded-[8px] bg-[#F4F4F0] border border-[#E3E3DC] p-3 font-mono">
+          <div className="flex items-center justify-between text-xs text-[#494F4C]">
             <div className="flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5 text-slate-500" />
+              <Clock className="h-3.5 w-3.5 text-[#858C88]" />
               <span>{readingMinutes} min micro-lesson</span>
             </div>
             <span>
@@ -251,9 +251,9 @@ export function ActiveChapterContinueCard({
             </span>
           </div>
 
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-[#E3E3DC]">
             <div
-              className={cn('h-full transition-all duration-500 rounded-full', theme.accentBar)}
+              className="h-full bg-[#143D2B] transition-all duration-500 rounded-full"
               style={{ width: `${Math.max(10, progressPercent)}%` }}
             />
           </div>
@@ -266,7 +266,7 @@ export function ActiveChapterContinueCard({
             className="w-full sm:w-auto flex-1"
           >
             <Button
-              className="w-full min-h-[44px] gap-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold shadow-xs"
+              className="w-full min-h-[44px] gap-2 bg-[#111413] hover:bg-[#143D2B] text-white text-xs font-medium rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] transition-colors"
             >
               <span>Resume Micro-Lesson ({readingMinutes} min)</span>
               <ArrowRight className="h-4 w-4" />
@@ -276,7 +276,7 @@ export function ActiveChapterContinueCard({
           <Link href="/academy" className="w-full sm:w-auto">
             <Button
               variant="outline"
-              className="w-full min-h-[44px] text-xs font-semibold border-slate-300 text-slate-700 hover:bg-slate-100"
+              className="w-full min-h-[44px] text-xs font-medium border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-[5px]"
             >
               Browse All 5 Categories
             </Button>

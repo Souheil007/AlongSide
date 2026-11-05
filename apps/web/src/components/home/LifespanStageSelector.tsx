@@ -585,22 +585,21 @@ export function LifespanStageSelector() {
   return (
     <section id="stages" className="pt-6 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <Badge
-          variant="outline"
-          className="text-xs font-bold text-teal-800 bg-teal-50 border-teal-200"
-        >
-          Continuous 0–18 Lifespan Advisory
-        </Badge>
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-          Tailored Advisory for Every Developmental Horizon
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3 py-1 text-xs font-semibold text-[#143D2B]">
+          <span className="font-mono text-[11px] uppercase tracking-wider">
+            VOL. XXIV // CONTINUOUS LIFESPAN (0–18)
+          </span>
+        </div>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[#111413]">
+          Tailored Advisory for Every <em className="italic font-normal text-[#143D2B]">Developmental Horizon</em>
         </h2>
-        <p className="text-base text-slate-600 leading-relaxed">
+        <p className="text-base text-[#494F4C] leading-relaxed">
           Your child’s brain and social world change drastically every few years. Select an age band below to preview AlongSide&apos;s active leap indicators, prioritized academy chapters, and word-for-word scripts.
         </p>
       </div>
 
       {/* Responsive Horizontal Age Stage Tabs (6 Stages) */}
-      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 pb-4 mb-8 no-scrollbar">
+      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 pb-4 mb-8 no-scrollbar bg-[#F4F4F0] border border-[#E3E3DC] p-1.5 rounded-[6px]">
         {CANONICAL_6_LIFESPAN_STAGES.map((stage) => {
           const isActive = stage.id === activeStageId;
           const StageIcon = stage.icon;
@@ -608,17 +607,17 @@ export function LifespanStageSelector() {
             <button
               key={stage.id}
               onClick={() => setActiveStageId(stage.id)}
-              className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer min-h-[44px] ${
+              className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[5px] text-xs font-bold shrink-0 transition-all cursor-pointer min-h-[44px] ${
                 isActive
-                  ? 'bg-slate-900 text-white shadow-md ring-2 ring-slate-900 ring-offset-2'
-                  : 'bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-50'
+                  ? 'bg-white text-[#111413] shadow-[0_1px_3px_rgba(0,0,0,0.06)] border border-[#E3E3DC]'
+                  : 'bg-transparent text-[#494F4C] hover:text-[#111413] hover:bg-white/60'
               }`}
             >
-              <StageIcon className={`h-4 w-4 ${isActive ? 'text-teal-400' : 'text-slate-500'}`} />
+              <StageIcon className={`h-4 w-4 ${isActive ? 'text-[#143D2B]' : 'text-[#858C88]'}`} />
               <span>{stage.tabLabel}</span>
               <span
-                className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                  isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                  isActive ? 'bg-[#EAF3EE] text-[#143D2B] font-semibold' : 'bg-[#E3E3DC]/60 text-[#494F4C]'
                 }`}
               >
                 {stage.ageLabel}
@@ -631,25 +630,26 @@ export function LifespanStageSelector() {
       {/* Active Stage Hero & 4 Concrete Preview Cards Grid */}
       <div className="space-y-6">
         {/* Stage Header Banner */}
-        <div className="rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+        <div className="rounded-[10px] border border-[#E3E3DC] bg-white text-[#111413] p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-400">
-                Developmental Horizon • {activeStage.ageLabel}
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-[#143D2B]/20">
+                HORIZON // {activeStage.ageLabel}
               </span>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
               {activeStage.title}
             </h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-[#494F4C] leading-relaxed">
               {activeStage.subtitle}
             </p>
           </div>
 
           <Link href="/register" className="shrink-0">
             <Button
+              variant="forest"
               size="lg"
-              className="gap-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold min-h-[44px] shadow-sm"
+              className="gap-2 font-bold min-h-[44px] shadow-sm"
             >
               <span>Explore {activeStage.tabLabel} Curriculum</span>
               <ArrowRight className="h-4 w-4" />
@@ -660,113 +660,113 @@ export function LifespanStageSelector() {
         {/* 4 Concrete Advisory Preview Cards Grid (Plan 33 Task 8) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Neurodevelopmental Leap */}
-          <div className="rounded-2xl border border-teal-200/90 bg-gradient-to-br from-teal-50/40 via-white to-white p-5 space-y-3 shadow-2xs">
+          <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-5 space-y-3 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-100 text-teal-800 font-bold">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
                 <Brain className="h-4 w-4" />
               </div>
-              <span className="text-xs font-bold text-teal-950 uppercase tracking-wider">
+              <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider">
                 1. Active Leap
               </span>
             </div>
-            <h4 className="text-sm font-black text-slate-900 leading-snug">
+            <h4 className="text-sm font-bold text-[#111413] leading-snug">
               {activeStage.leap.title}
             </h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-[#494F4C] leading-relaxed">
               {activeStage.leap.description}
             </p>
           </div>
 
           {/* Card 2: Prioritized Academy Chapter */}
-          <div className="rounded-2xl border border-amber-200/90 bg-gradient-to-br from-amber-50/40 via-white to-white p-5 space-y-3 shadow-2xs">
+          <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-5 space-y-3 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
             <div className="flex items-center justify-between gap-1">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-900 font-bold">
+                <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#FEF3C7] text-[#B45309] font-bold">
                   <Compass className="h-4 w-4" />
                 </div>
-                <span className="text-xs font-bold text-amber-950 uppercase tracking-wider">
+                <span className="font-mono text-xs font-bold text-[#B45309] uppercase tracking-wider">
                   2. Priority Chapter
                 </span>
               </div>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${activeStage.academyChapter.priorityStyle}`}>
+              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded border bg-amber-50 text-[#B45309] border-amber-200">
                 {activeStage.academyChapter.priorityBadge}
               </span>
             </div>
             <div>
-              <span className="text-[10px] text-slate-500 font-bold uppercase block">
+              <span className="font-mono text-[10px] text-[#858C88] font-bold uppercase block">
                 {activeStage.academyChapter.course}
               </span>
-              <h4 className="text-sm font-black text-slate-900 leading-snug mt-0.5">
+              <h4 className="text-sm font-bold text-[#111413] leading-snug mt-0.5">
                 {activeStage.academyChapter.chapter}
               </h4>
             </div>
-            <p className="text-xs text-slate-600 flex items-center gap-1.5 font-medium">
-              <Clock className="h-3.5 w-3.5 text-slate-400" />
+            <p className="text-xs text-[#494F4C] flex items-center gap-1.5 font-medium">
+              <Clock className="h-3.5 w-3.5 text-[#858C88]" />
               <span>{activeStage.academyChapter.readingMinutes} min micro-lesson with clinical dialogue</span>
             </p>
           </div>
 
           {/* Card 3: Youth Culture & Slang */}
-          <div className="rounded-2xl border border-purple-200/90 bg-gradient-to-br from-purple-50/40 via-white to-white p-5 space-y-3 shadow-2xs">
+          <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-5 space-y-3 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
             <div className="flex items-center justify-between gap-1">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100 text-purple-900 font-bold">
-                  <Flame className="h-4 w-4 text-purple-700" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#F4F4F0] text-[#111413] font-bold">
+                  <Flame className="h-4 w-4 text-[#B45309]" />
                 </div>
-                <span className="text-xs font-bold text-purple-950 uppercase tracking-wider">
+                <span className="font-mono text-xs font-bold text-[#111413] uppercase tracking-wider">
                   3. Youth Culture
                 </span>
               </div>
               {activeStage.cultureReality.cringeScore && (
-                <span className="text-[10px] font-bold text-purple-800 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded">
+                <span className="font-mono text-[10px] font-bold text-[#494F4C] bg-[#F4F4F0] border border-[#E3E3DC] px-2 py-0.5 rounded">
                   Cringe: {activeStage.cultureReality.cringeScore}
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-[#494F4C] leading-relaxed">
               {activeStage.cultureReality.tagline}
             </p>
-            <div className="rounded-lg bg-purple-50/70 border border-purple-100 p-2 text-xs font-mono font-bold text-purple-950">
+            <div className="rounded-[5px] bg-[#F4F4F0] border border-[#E3E3DC] p-2 text-xs font-mono font-bold text-[#111413]">
               {activeStage.cultureReality.slangSample}
             </div>
           </div>
 
           {/* Card 4: Actionable Dialogue ("What to Say") */}
-          <div className="rounded-2xl border border-emerald-300 bg-gradient-to-br from-emerald-50/50 via-white to-white p-5 space-y-3 shadow-2xs">
+          <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-5 space-y-3 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 text-emerald-900 font-bold">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
                 <MessageSquare className="h-4 w-4" />
               </div>
-              <span className="text-xs font-bold text-emerald-950 uppercase tracking-wider">
+              <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider">
                 4. What to Say
               </span>
             </div>
             <div>
-              <span className="text-[10px] text-emerald-800 font-bold uppercase block">
+              <span className="font-mono text-[10px] text-[#143D2B] font-bold uppercase block">
                 Scenario: {activeStage.dialogueScript.scenario}
               </span>
-              <p className="text-xs font-bold text-slate-900 italic leading-relaxed mt-1">
+              <p className="text-xs font-medium text-[#111413] italic font-serif leading-relaxed mt-1">
                 {activeStage.dialogueScript.whatToSay}
               </p>
             </div>
-            <div className="text-[11px] text-emerald-800 font-medium">
+            <div className="text-[11px] text-[#143D2B] font-semibold font-mono">
               ✅ Empathetic boundary with zero shame
             </div>
           </div>
         </div>
 
         {/* Realistic Interactive Simulation Card */}
-        <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-4">
+        <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-6 sm:p-7 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-4 mb-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white font-bold text-sm">
+              <span className="flex h-10 w-10 items-center justify-center rounded-[5px] bg-[#111413] text-white font-mono font-bold text-sm">
                 OS
               </span>
               <div>
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                <span className="font-mono text-[11px] font-bold text-[#858C88] uppercase tracking-wider block">
                   {activeStage.previewWidget.category}
                 </span>
-                <span className="text-base font-bold text-slate-900">
+                <span className="text-base font-bold text-[#111413]">
                   {activeStage.previewWidget.title}
                 </span>
               </div>
@@ -774,7 +774,7 @@ export function LifespanStageSelector() {
 
             <Badge
               variant="outline"
-              className={`text-xs font-bold px-3 py-1 ${activeStage.previewWidget.statusColor}`}
+              className="text-xs font-semibold px-3 py-1 font-mono bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/20"
             >
               <CheckCircle2 className="h-3.5 w-3.5 mr-1" />
               {activeStage.previewWidget.statusBadge}

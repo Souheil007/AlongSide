@@ -86,7 +86,7 @@ export function MobileNav({ className }: MobileNavProps) {
       <nav
         aria-label="Mobile Navigation"
         className={cn(
-          'md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200/90 bg-white/95 backdrop-blur-md px-2 py-1 shadow-lg no-print',
+          'md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E3E3DC] bg-[#FBFBF9]/95 backdrop-blur-md px-2 py-1 shadow-lg no-print',
           className
         )}
       >
@@ -104,10 +104,10 @@ export function MobileNav({ className }: MobileNavProps) {
                 href={item.href}
                 onClick={() => setMoreDrawerOpen(false)}
                 className={cn(
-                  'flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-[10px] font-semibold transition-colors',
+                  'flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-[5px] text-[10px] font-semibold transition-colors',
                   isActive
-                    ? 'text-teal-700 bg-teal-50/90 font-bold'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#143D2B] bg-[#EAF3EE] font-bold'
+                    : 'text-[#858C88] hover:text-[#111413] hover:bg-[#F4F4F0]'
                 )}
                 aria-current={isActive ? 'page' : undefined}
               >
@@ -115,14 +115,14 @@ export function MobileNav({ className }: MobileNavProps) {
                   <Icon
                     className={cn(
                       'h-5 w-5',
-                      isActive ? 'text-teal-700' : 'text-slate-500'
+                      isActive ? 'text-[#143D2B]' : 'text-[#858C88]'
                     )}
                   />
                   {item.badge && !isActive && (
-                    <span className="absolute -top-1 -right-2 h-2 w-2 rounded-full bg-teal-600" />
+                    <span className="absolute -top-1 -right-2 h-2 w-2 rounded-full bg-[#143D2B]" />
                   )}
                 </div>
-                <span className="mt-0.5 tracking-tight">{item.label}</span>
+                <span className="mt-0.5 tracking-tight font-medium">{item.label}</span>
               </Link>
             );
           })}
@@ -132,10 +132,10 @@ export function MobileNav({ className }: MobileNavProps) {
             type="button"
             onClick={() => setMoreDrawerOpen(!moreDrawerOpen)}
             className={cn(
-              'flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-xl text-[10px] font-semibold transition-colors',
+              'flex flex-col items-center justify-center min-w-[56px] min-h-[48px] py-1 px-1 rounded-[5px] text-[10px] font-semibold transition-colors',
               isMoreActive || moreDrawerOpen
-                ? 'text-teal-700 bg-teal-50/90 font-bold'
-                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                ? 'text-[#143D2B] bg-[#EAF3EE] font-bold'
+                : 'text-[#858C88] hover:text-[#111413] hover:bg-[#F4F4F0]'
             )}
             aria-expanded={moreDrawerOpen}
             aria-label="More domain hubs and account settings"
@@ -143,10 +143,10 @@ export function MobileNav({ className }: MobileNavProps) {
             <MoreHorizontal
               className={cn(
                 'h-5 w-5',
-                isMoreActive || moreDrawerOpen ? 'text-teal-700' : 'text-slate-500'
+                isMoreActive || moreDrawerOpen ? 'text-[#143D2B]' : 'text-[#858C88]'
               )}
             />
-            <span className="mt-0.5 tracking-tight">More</span>
+            <span className="mt-0.5 tracking-tight font-medium">More</span>
           </button>
         </div>
       </nav>
@@ -160,21 +160,21 @@ export function MobileNav({ className }: MobileNavProps) {
             aria-hidden="true"
           />
 
-          <div className="relative z-10 rounded-t-3xl border-t border-slate-200 bg-white p-5 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
+          <div className="relative z-10 rounded-t-[16px] border-t border-[#E3E3DC] bg-white p-5 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between border-b border-[#E3E3DC] pb-3">
               <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-600 text-white shadow-2xs">
+                <div className="flex h-7 w-7 items-center justify-center rounded-[4px] bg-[#143D2B] text-white shadow-2xs">
                   <Shield className="h-4 w-4" />
                 </div>
-                <h3 className="font-bold text-slate-900 text-sm">
-                  All Family OS Hubs &amp; Tools
+                <h3 className="font-serif font-bold text-[#111413] text-sm">
+                  AlongSide Almanac Hubs
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setMoreDrawerOpen(false)}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                className="flex h-10 w-10 items-center justify-center rounded-[5px] bg-[#F4F4F0] text-[#858C88] hover:bg-[#E3E3DC] focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
                 aria-label="Close menu"
               >
                 <X className="h-5 w-5" />

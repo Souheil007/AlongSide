@@ -78,24 +78,24 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
   };
 
   return (
-    <Card className={cn('border-teal-200/90 bg-gradient-to-br from-white via-cream-50/40 to-teal-50/30 shadow-xs', className)}>
+    <Card className={cn('border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px]', className)}>
       <CardContent className="p-4 sm:p-5 space-y-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-teal-600 text-white shadow-2xs">
+            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B]">
               <Bot className="h-4 w-4" />
             </span>
             <div>
-              <h3 className="font-bold text-slate-900 text-sm">
+              <h3 className="font-serif font-semibold text-[#111413] text-sm">
                 24/7 AI Clinical Advisor
               </h3>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-[#494F4C]">
                 Calibrated to {child ? `${child.name} (${child.age} yrs)` : 'your child'} • 250+ scenario clinical vault
               </p>
             </div>
           </div>
 
-          <span className="text-[10px] text-teal-800 font-semibold bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200/70 self-start sm:self-auto">
+          <span className="text-[10px] font-mono text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-[#E3E3DC] self-start sm:self-auto">
             Instant Co-Regulation Scripts
           </span>
         </div>
@@ -108,22 +108,22 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="Ask anything about behavior, sleep, health, or limits..."
-              className="w-full min-h-[44px] rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 shadow-2xs focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
+              className="w-full min-h-[44px] rounded-[5px] border border-[#E3E3DC] bg-[#FBFBF9] px-4 py-2 text-xs sm:text-sm text-[#111413] placeholder-[#858C88] shadow-2xs focus:border-[#143D2B] focus:outline-none focus:ring-1 focus:ring-[#143D2B]"
             />
           </div>
 
           <Button
             type="submit"
-            className="min-h-[44px] gap-1.5 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs px-4 sm:px-5 shrink-0 shadow-2xs"
+            className="min-h-[44px] gap-1.5 bg-[#111413] hover:bg-[#143D2B] text-white font-medium text-xs px-4 sm:px-5 shrink-0 rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] transition-colors"
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-3.5 w-3.5 text-[#EAF3EE]" />
             <span>Ask AI</span>
           </Button>
         </form>
 
         {/* Suggested Contextual Prompt Chips */}
         <div className="space-y-1.5 pt-1">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#858C88]">
             Suggested Questions:
           </span>
           <div className="flex flex-wrap items-center gap-1.5">
@@ -132,9 +132,9 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
                 key={chip}
                 type="button"
                 onClick={() => handleSelectChip(chip)}
-                className="inline-flex min-h-[34px] items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1 text-[11px] font-medium text-slate-700 transition-colors hover:border-teal-300 hover:bg-teal-50/60 hover:text-teal-900 text-left"
+                className="inline-flex min-h-[34px] items-center gap-1.5 rounded-[5px] border border-[#E3E3DC] bg-[#F4F4F0] px-2.5 py-1 text-[11px] font-mono text-[#494F4C] transition-colors hover:border-[#143D2B] hover:bg-[#FFFFFF] hover:text-[#111413] text-left"
               >
-                <HelpCircle className="h-3 w-3 text-teal-600 shrink-0" />
+                <HelpCircle className="h-3 w-3 text-[#143D2B] shrink-0" />
                 <span className="line-clamp-1">{chip}</span>
               </button>
             ))}
