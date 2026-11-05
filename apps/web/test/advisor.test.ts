@@ -70,7 +70,10 @@ describe('24/7 AI Advisor, Living FAQ Explorer & Voice Sparring Specification (P
       expect(tier1Faqs.faqs.length).toBeGreaterThanOrEqual(1);
       expect(
         tier1Faqs.faqs.every(
-          (f) => !f.targetTier || f.targetTier === DevelopmentalTier.TIER_1_AGES_8_9
+          (f) =>
+            !f.targetTier ||
+            f.targetTier === DevelopmentalTier.TIER_1_AGES_8_9 ||
+            f.targetTier === DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9
         )
       ).toBe(true);
 

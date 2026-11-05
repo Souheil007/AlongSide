@@ -2,12 +2,13 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { HealthDashboardView } from '@/components/health/HealthDashboardView';
+import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Pediatric Health Companion & Triage — AlongSide',
+  title: 'Pediatric Health Sanctuary & Clinical Advisory — AlongSide',
   description:
-    'Calibrated 3-zone pediatric symptom triage, Barton Schmitt clinical protocols, antipyretic dosing calculator, and sleep regression timelines.',
+    'Calibrated 3-zone pediatric symptom triage, Barton Schmitt clinical protocols, and sleep regression timelines. Elevated into the Parent Intelligence Academy.',
 };
 
 interface HealthPageProps {
@@ -29,7 +30,15 @@ export default async function HealthPage({ searchParams }: HealthPageProps) {
   const resolvedParams = searchParams ? await searchParams : undefined;
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
+      <AdvisoryDomainBanner
+        category="HEALTH_AND_WELLNESS"
+        categoryLabel="Pediatric Health & Sleep Foundations"
+        title="This domain has been elevated into the Parent Intelligence Academy"
+        description="Access structured, prioritized pediatric chapters, sleep architecture protocols, and actionable clinical scripts."
+        actionText="Explore Health & Sleep Courses →"
+        href="/academy?category=HEALTH_AND_WELLNESS"
+      />
       <Suspense fallback={<HealthLoadingFallback />}>
         <HealthDashboardView initialChildId={resolvedParams?.childId} />
       </Suspense>

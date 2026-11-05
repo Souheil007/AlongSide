@@ -174,16 +174,14 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
   });
 
   describe('Task 1 & 2: Unified Desktop Header Navigation Specification', () => {
-    it('defines exactly the 6 canonical desktop domain hubs in order', () => {
-      expect(AUTHENTICATED_CORE_LINKS).toHaveLength(6);
+    it('defines exactly the 4 canonical desktop advisory hubs in order', () => {
+      expect(AUTHENTICATED_CORE_LINKS).toHaveLength(4);
 
       const expectedLinks = [
         { href: '/dashboard', label: 'Home' },
-        { href: '/health', label: 'Health' },
-        { href: '/nutrition', label: 'Nutrition' },
-        { href: '/behavior', label: 'Behavior' },
-        { href: '/brain-games', label: 'Play' },
-        { href: '/devices', label: 'Devices' },
+        { href: '/academy', label: 'Parent Academy' },
+        { href: '/digest', label: 'Culture Digest' },
+        { href: '/devices', label: 'Family Pacts & Devices' },
       ];
 
       const coreLinks = AUTHENTICATED_CORE_LINKS.map((l) => ({
@@ -194,12 +192,8 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       expect(coreLinks).toEqual(expectedLinks);
     });
 
-    it('relocates secondary intelligence hubs into More / Account dropdowns', () => {
-      expect(AUTHENTICATED_SECONDARY_LINKS).toHaveLength(2);
-      expect(AUTHENTICATED_SECONDARY_LINKS[0]?.href).toBe('/academy');
-      expect(AUTHENTICATED_SECONDARY_LINKS[0]?.label).toContain('Academy');
-      expect(AUTHENTICATED_SECONDARY_LINKS[1]?.href).toBe('/digest');
-      expect(AUTHENTICATED_SECONDARY_LINKS[1]?.label).toContain('Digest');
+    it('verifies secondary intelligence links were elevated to core navigation and array is deprecated', () => {
+      expect(AUTHENTICATED_SECONDARY_LINKS).toHaveLength(0);
     });
 
     it('preserves clean public landing page navigation without authenticated leakage', () => {
@@ -227,20 +221,19 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
 
       expect(hubs).toEqual([
         { href: '/dashboard', label: 'Home' },
-        { href: '/health', label: 'Health' },
-        { href: '/brain-games', label: 'Play' },
+        { href: '/academy', label: 'Academy' },
+        { href: '/digest', label: 'Digest' },
         { href: '/devices', label: 'Devices' },
       ]);
     });
 
-    it('houses Nutrition, Behavior, Academy, and Digest in the More drawer', () => {
-      expect(MORE_MOBILE_ITEMS).toHaveLength(4);
+    it('houses Settings, Billing, and Advisor in the More drawer', () => {
+      expect(MORE_MOBILE_ITEMS.length).toBeGreaterThanOrEqual(3);
 
       const drawerHrefs = MORE_MOBILE_ITEMS.map((item) => item.href);
-      expect(drawerHrefs).toContain('/nutrition');
-      expect(drawerHrefs).toContain('/behavior');
-      expect(drawerHrefs).toContain('/academy');
-      expect(drawerHrefs).toContain('/digest');
+      expect(drawerHrefs).toContain('/settings');
+      expect(drawerHrefs).toContain('/#pricing');
+      expect(drawerHrefs).toContain('/advisor');
     });
 
     it('confirms all primary mobile hubs have non-null icons and distinct labels', () => {

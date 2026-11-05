@@ -33,27 +33,15 @@ export interface NavLinkItem {
 
 export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
   { href: '/dashboard', label: 'Home' },
-  { href: '/health', label: 'Health' },
-  { href: '/nutrition', label: 'Nutrition' },
-  { href: '/behavior', label: 'Behavior' },
-  { href: '/brain-games', label: 'Play' },
-  { href: '/devices', label: 'Devices' },
+  { href: '/academy', label: 'Parent Academy', icon: BookOpen },
+  { href: '/digest', label: 'Culture Digest', icon: Sparkles },
+  { href: '/devices', label: 'Family Pacts & Devices', icon: Shield },
 ];
 
-export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [
-  {
-    href: '/academy',
-    label: 'Parent Intelligence Academy',
-    icon: BookOpen,
-    description: 'Clinical neurobiology & masterclasses',
-  },
-  {
-    href: '/digest',
-    label: 'Sunday Culture Digest',
-    icon: Sparkles,
-    description: 'Slang decoder & youth culture radar',
-  },
-];
+/**
+ * @deprecated Redundant secondary links removed in AlongSide v2.5.0; Academy and Digest are now core navigation links.
+ */
+export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [];
 
 export const PUBLIC_NAV_LINKS: NavLinkItem[] = [
   { href: '/#features', label: 'Platform Pillars' },
@@ -167,23 +155,32 @@ export function Header() {
         {isAuthenticated ? (
           <nav
             aria-label="Domain Hub Navigation"
-            className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs font-semibold"
+            className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold"
           >
             {AUTHENTICATED_CORE_LINKS.map((link) => {
               const isActive = isLinkActive(link.href);
+              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 border-b-2 whitespace-nowrap',
+                    'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 border-b-2 whitespace-nowrap',
                     isActive
                       ? 'bg-teal-50 text-teal-800 border-teal-600 font-bold shadow-2xs'
                       : 'text-slate-600 hover:text-teal-700 hover:bg-slate-50 border-transparent font-medium'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  {link.label}
+                  {Icon && (
+                    <Icon
+                      className={cn(
+                        'h-3.5 w-3.5 shrink-0',
+                        isActive ? 'text-teal-700' : 'text-slate-400'
+                      )}
+                    />
+                  )}
+                  <span>{link.label}</span>
                 </Link>
               );
             })}
@@ -386,44 +383,32 @@ export function Header() {
             {isAuthenticated ? (
               <>
                 <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Domain Hubs
+                  Navigation
                 </div>
                 {AUTHENTICATED_CORE_LINKS.map((link) => {
                   const isActive = isLinkActive(link.href);
+                  const Icon = link.icon;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        'rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
+                        'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold transition-colors min-h-[44px]',
                         isActive
                           ? 'bg-teal-50 text-teal-800'
                           : 'text-slate-700 hover:bg-slate-50 hover:text-teal-800'
                       )}
                     >
-                      {link.label}
-                    </Link>
-                  );
-                })}
-                <div className="pt-2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Parent Intelligence
-                </div>
-                {AUTHENTICATED_SECONDARY_LINKS.map((link) => {
-                  const isActive = pathname.startsWith(link.href);
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={cn(
-                        'rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
-                        isActive
-                          ? 'bg-teal-50 text-teal-800'
-                          : 'text-slate-700 hover:bg-slate-50 hover:text-teal-800'
+                      {Icon && (
+                        <Icon
+                          className={cn(
+                            'h-4 w-4 shrink-0',
+                            isActive ? 'text-teal-700' : 'text-slate-400'
+                          )}
+                        />
                       )}
-                    >
-                      {link.label}
+                      <span>{link.label}</span>
                     </Link>
                   );
                 })}

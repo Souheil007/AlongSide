@@ -2,12 +2,13 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { BrainGamesDashboardView } from '@/components/brain-games/BrainGamesDashboardView';
+import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Brain Games, Sensory Play & Early Toys — AlongSide Family OS',
   description:
-    'Age-indexed purposeful play grounded in Harvard Center on the Developing Child ("Serve and Return") research, puppet emotional sparring, sensory bins, and Boredom Buster generator.',
+    'Age-indexed purposeful play grounded in Harvard Center on the Developing Child research, puppet emotional sparring, and cognitive leaps. Elevated into the Parent Intelligence Academy.',
 };
 
 interface BrainGamesPageProps {
@@ -29,7 +30,15 @@ export default async function BrainGamesPage({ searchParams }: BrainGamesPagePro
   const resolvedParams = searchParams ? await searchParams : undefined;
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
+      <AdvisoryDomainBanner
+        category="DEVELOPMENT_AND_PLAY"
+        categoryLabel="Cognitive Development & Purposeful Play"
+        title="This domain has been elevated into the Parent Intelligence Academy"
+        description="Access structured, prioritized developmental chapters, Harvard Serve-and-Return play frameworks, and cognitive leap guides."
+        actionText="Explore Development & Play Courses →"
+        href="/academy?category=DEVELOPMENT_AND_PLAY"
+      />
       <Suspense fallback={<BrainGamesLoadingFallback />}>
         <BrainGamesDashboardView initialChildId={resolvedParams?.childId} />
       </Suspense>
