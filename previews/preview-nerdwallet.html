@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — NerdWallet Design System Preview (The Parent Advisory Sanctuary)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --nw-primary: #008254;
+      --nw-primary-deep: #006642;
+      --nw-forest: #00482f;
+      --nw-lime-hero: #9ae600;
+      --nw-lime-panel: #e8fdac;
+      --nw-lime-accent: #ddfa88;
+      --nw-canvas: #ffffff;
+      --nw-canvas-soft: #f7f7f7;
+      --nw-mint-50: #effcf8;
+      --nw-mint-100: #e3faf2;
+      --nw-mint-200: #b7ecda;
+      --nw-hairline: #ebebec;
+      --nw-hairline-strong: #d8d9da;
+      --nw-ink: #000000;
+      --nw-body: #3d4045;
+      --nw-muted: #64666a;
+      --nw-link: #005fb9;
+      --nw-radius-sm: 3px;
+      --nw-radius-pill: 500px;
+      --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--nw-canvas);
+      color: var(--nw-body);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Preview Banner */
+    .preview-banner {
+      background: #00482f;
+      color: #effcf8;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--nw-lime-hero);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .preview-banner a { color: var(--nw-lime-hero); text-decoration: none; font-weight: 700; }
+    .preview-banner .badge { background: var(--nw-lime-hero); color: #00482f; padding: 2px 8px; border-radius: var(--nw-radius-sm); font-weight: 800; margin-right: 8px; font-size: 11px; }
+
+    /* Header Nav */
+    header.site-header {
+      background: var(--nw-canvas);
+      border-bottom: 1px solid var(--nw-hairline);
+      position: sticky;
+      top: 41px;
+      z-index: 900;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--nw-ink);
+    }
+    .brand-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--nw-primary);
+      color: #fff;
+      border-radius: var(--nw-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--nw-primary);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--nw-body);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .nav-links a:hover { color: var(--nw-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 22px;
+      border-radius: var(--nw-radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--nw-primary);
+      color: #ffffff;
+    }
+    .btn-primary:hover { background: var(--nw-primary-deep); }
+    .btn-outline {
+      background: #ffffff;
+      border-color: var(--nw-hairline-strong);
+      color: var(--nw-ink);
+    }
+    .btn-outline:hover { background: var(--nw-canvas-soft); }
+
+    /* Editorial Hero Band */
+    .hero-editorial-band {
+      background: linear-gradient(180deg, var(--nw-forest) 0%, var(--nw-primary-deep) 100%);
+      color: #ffffff;
+      padding: 56px 0 64px 0;
+      position: relative;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--nw-lime-accent);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+      border-radius: var(--nw-radius-sm);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      max-width: 860px;
+    }
+    .hero-title span.lime {
+      color: var(--nw-lime-hero);
+    }
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #e3faf2;
+      max-width: 760px;
+      margin-bottom: 32px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .btn-lime {
+      background: var(--nw-lime-hero);
+      color: var(--nw-forest);
+      font-weight: 800;
+    }
+    .btn-lime:hover { background: #abff05; }
+    .btn-ghost-white {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+    }
+    .btn-ghost-white:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Trust Cards Grid Overlapping Hero */
+    .trust-panel {
+      margin-top: -30px;
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 50px;
+    }
+    .trust-box {
+      background: var(--nw-canvas);
+      border: 1px solid var(--nw-hairline-strong);
+      border-radius: var(--nw-radius-sm);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .trust-badge-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--nw-mint-100);
+      color: var(--nw-primary);
+      border-radius: var(--nw-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .trust-box strong { display: block; font-size: 14px; color: var(--nw-ink); font-family: var(--font-display); }
+    .trust-box span { font-size: 12px; color: var(--nw-muted); }
+
+    /* Editorial Section Headers */
+    .section-editorial-header {
+      border-bottom: 2px solid var(--nw-forest);
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .section-editorial-header h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--nw-forest);
+      letter-spacing: -0.4px;
+    }
+    .section-editorial-header p {
+      font-size: 14px;
+      color: var(--nw-muted);
+      margin-top: 4px;
+    }
+
+    /* Comparison Table / Stage Selector (NerdWallet Style) */
+    .nw-stage-selector {
+      display: flex;
+      gap: 4px;
+      background: var(--nw-canvas-soft);
+      padding: 6px;
+      border: 1px solid var(--nw-hairline);
+      border-radius: var(--nw-radius-sm);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .nw-stage-btn {
+      flex: 1;
+      padding: 10px 14px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      background: transparent;
+      border: none;
+      color: var(--nw-body);
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+      border-radius: var(--nw-radius-sm);
+    }
+    .nw-stage-btn.active {
+      background: var(--nw-primary);
+      color: #ffffff;
+    }
+
+    .nw-comparison-card {
+      border: 1px solid var(--nw-hairline-strong);
+      border-radius: var(--nw-radius-sm);
+      background: var(--nw-canvas);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .nw-card-banner {
+      background: var(--nw-mint-50);
+      border-bottom: 1px solid var(--nw-mint-200);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nw-ribbon-tag {
+      background: var(--nw-lime-hero);
+      color: var(--nw-forest);
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--nw-radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nw-card-body {
+      padding: 28px 24px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 32px;
+    }
+    .nw-metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+      padding: 14px;
+      background: var(--nw-canvas-soft);
+      border-radius: var(--nw-radius-sm);
+      border: 1px solid var(--nw-hairline);
+    }
+    .nw-metric-box span { font-size: 11px; color: var(--nw-muted); display: block; text-transform: uppercase; font-weight: 600; }
+    .nw-metric-box strong { font-size: 16px; font-weight: 800; color: var(--nw-forest); font-family: var(--font-display); }
+
+    /* 3 Pillars Table Grid */
+    .pillar-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--nw-hairline-strong);
+      margin-bottom: 50px;
+    }
+    .pillar-table th {
+      background: var(--nw-forest);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      padding: 14px 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pillar-table td {
+      padding: 20px;
+      border-bottom: 1px solid var(--nw-hairline);
+      vertical-align: top;
+      background: #fff;
+    }
+    .pillar-table tr:nth-child(even) td {
+      background: var(--nw-canvas-soft);
+    }
+
+    /* Pricing Section */
+    .pricing-table-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .pricing-box {
+      border: 2px solid var(--nw-hairline-strong);
+      border-radius: var(--nw-radius-sm);
+      padding: 36px 30px;
+      background: #fff;
+      position: relative;
+    }
+    .pricing-box.recommended {
+      border-color: var(--nw-primary);
+      background: var(--nw-mint-50);
+    }
+    .pricing-box-badge {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--nw-primary);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: var(--nw-radius-sm);
+      text-transform: uppercase;
+    }
+    .price-num {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--nw-forest);
+      margin: 12px 0;
+    }
+    .price-num span { font-size: 15px; color: var(--nw-muted); font-weight: 500; }
+
+    footer.site-footer {
+      background: var(--nw-forest);
+      color: #effcf8;
+      padding: 50px 0 60px 0;
+      margin-top: 60px;
+      font-size: 13px;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    .footer-content a { color: var(--nw-lime-hero); text-decoration: none; }
+
+    @media (max-width: 860px) {
+      .hero-title { font-size: 32px; }
+      .nw-card-body { grid-template-columns: 1fr; }
+      .pricing-table-wrap { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Preview Switcher Bar -->
+  <div class="preview-banner">
+    <div>
+      <span class="badge">NERDWALLET SYSTEM</span>
+      <span>Direction 2 of 8: Deep forest green, pale mint washes, sharp 2-3px corners, authoritative editorial financial tables.</span>
+    </div>
+    <div>
+      <a href="preview-mydealz.html">← Prev: MyDealz</a> &nbsp;|&nbsp;
+      <a href="index.html">Master Switcher</a> &nbsp;|&nbsp;
+      <a href="preview-revolut.html">Next: Revolut →</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-wrap">
+        <div class="brand-logo-icon">A</div>
+        <div class="brand-title">AlongSide</div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#curriculum">Lifespan Curriculum (0–18)</a></li>
+        <li><a href="#pillars">3 Pillars Comparison</a></li>
+        <li><a href="#slang">Youth Slang Catalog</a></li>
+        <li><a href="#rates">Family Plans</a></li>
+        <li><a href="#clinical">Clinical Evidence</a></li>
+      </ul>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="#login" class="btn btn-outline">Sign In</a>
+        <a href="#trial" class="btn btn-primary">Start 7-Day Free Trial</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Editorial Hero Band -->
+  <section class="hero-editorial-band">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span>★ 5.0 Pediatric Clinical Rating</span> &nbsp;|&nbsp; Barton Schmitt Standard Verified
+      </div>
+
+      <h1 class="hero-title">
+        The Parent Advisory Sanctuary: <br>
+        <span class="lime">Keep Up With Your Child</span> As They Grow.
+      </h1>
+
+      <p class="hero-sub">
+        Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science,
+        prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
+      </p>
+
+      <div class="hero-actions">
+        <a href="#trial" class="btn btn-lime btn-lg">Start 7-Day Risk-Free Trial →</a>
+        <a href="#curriculum" class="btn btn-ghost-white btn-lg">Explore 6-Stage Curriculum</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- Overlapping Trust Box Panel -->
+    <div class="trust-panel">
+      <div class="trust-box">
+        <div class="trust-badge-icon">🩺</div>
+        <div>
+          <strong>Barton Schmitt Protocols</strong>
+          <span>Emergency pediatric triage</span>
+        </div>
+      </div>
+      <div class="trust-box">
+        <div class="trust-badge-icon">📚</div>
+        <div>
+          <strong>CDC & AAP Guidelines</strong>
+          <span>Lifespan milestones 0–18</span>
+        </div>
+      </div>
+      <div class="trust-box">
+        <div class="trust-badge-icon">🔒</div>
+        <div>
+          <strong>Zero-Spyware Guarantee</strong>
+          <span>No creepy keyloggers</span>
+        </div>
+      </div>
+      <div class="trust-box">
+        <div class="trust-badge-icon">✓</div>
+        <div>
+          <strong>1-Click Cancellation</strong>
+          <span>Zero risk trial policy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. LIFESPAN ADVISORY EXPLORER -->
+    <section id="curriculum">
+      <div class="section-editorial-header">
+        <div>
+          <h2>Lifespan Advisory Tier Comparison (Ages 0–18)</h2>
+          <p>Scientific benchmarks and immediate parental priorities mapped across developmental leaps.</p>
+        </div>
+        <span style="font-size: 13px; font-weight: 700; color: var(--nw-primary);">Methodology: AAP & CDC Developmental Neurobiology</span>
+      </div>
+
+      <!-- Stage Selector Tabs -->
+      <div class="nw-stage-selector">
+        <button class="nw-stage-btn">0–3: Infants & Toddlers</button>
+        <button class="nw-stage-btn">4–6: Early Childhood</button>
+        <button class="nw-stage-btn">7–9: Elementary</button>
+        <button class="nw-stage-btn active">10–12: Pre-Teens & Tweens</button>
+        <button class="nw-stage-btn">13–15: High School</button>
+        <button class="nw-stage-btn">16–18: Young Adults</button>
+      </div>
+
+      <!-- Comparison Card -->
+      <div class="nw-comparison-card">
+        <div class="nw-card-banner">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="nw-ribbon-tag">Editor's Milestone Pick</span>
+            <strong style="color: var(--nw-forest); font-family: var(--font-display);">Tier: Pre-Teens & Tweens (Ages 10–12)</strong>
+          </div>
+          <span style="font-size: 12px; color: var(--nw-muted); font-weight: 600;">Road 1: Pre-Device Transition</span>
+        </div>
+
+        <div class="nw-card-body">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 800; color: var(--nw-forest); font-family: var(--font-display); margin-bottom: 8px;">
+              Adrenarche, Social Dopamine Shift & Peer Group Alignment
+            </h3>
+            <p style="font-size: 14px; color: var(--nw-body); margin-bottom: 16px;">
+              At age 10–12, children experience adrenarche—the brain's chemical rewiring toward peer acceptance. When your child insists <em>“All my friends have phones except me!”</em>, they are reporting biological terror of social exclusion, not simple entitlement.
+            </p>
+
+            <div class="nw-metric-strip">
+              <div class="nw-metric-box">
+                <span>First-Phone Score</span>
+                <strong>68 / 100</strong>
+              </div>
+              <div class="nw-metric-box">
+                <span>Reading Time</span>
+                <strong>4 Minutes</strong>
+              </div>
+              <div class="nw-metric-box">
+                <span>Clinical Rating</span>
+                <strong>A+ Evidence</strong>
+              </div>
+            </div>
+
+            <div style="background: var(--nw-canvas-soft); padding: 16px; border-left: 3px solid var(--nw-primary); margin-top: 14px;">
+              <strong style="font-size: 13px; color: var(--nw-forest); display: block; margin-bottom: 4px;">Recommended Dialogue Script:</strong>
+              <p style="font-size: 13px; color: var(--nw-body);">
+                <em>“I hear how lonely it feels when friends talk about a chat you can’t see. We protect your sleep and mental health because we love you. Let’s review our First-Phone Readiness checklist together.”</em>
+              </p>
+            </div>
+          </div>
+
+          <div style="background: var(--nw-mint-50); border: 1px solid var(--nw-mint-200); border-radius: var(--nw-radius-sm); padding: 20px;">
+            <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--nw-forest); margin-bottom: 10px;">
+              Parent Academy Chapter 1
+            </h4>
+            <p style="font-size: 13px; color: var(--nw-body); margin-bottom: 14px;">
+              Course: <strong>Tween Adrenarche & Emotional Volatility</strong>. Learn the 3 neurochemical levers that de-escalate device arguments before bedtime.
+            </p>
+            <a href="#trial" class="btn btn-primary" style="width: 100%; text-align: center;">Unlock Chapter →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THE 3 PILLARS COMPARISON TABLE -->
+    <section id="pillars">
+      <div class="section-editorial-header">
+        <div>
+          <h2>Alongside 3 Pillars Architectural Matrix</h2>
+          <p>Comprehensive overview of platform capabilities and clinical safeguards.</p>
+        </div>
+      </div>
+
+      <table class="pillar-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Core Pillar</th>
+            <th style="width: 45%;">Clinical Function & Scope</th>
+            <th style="width: 30%;">Editorial Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong style="color: var(--nw-forest); font-family: var(--font-display);">1. Parent Intelligence Academy</strong>
+            </td>
+            <td>
+              120+ prioritized 5-minute micro-lessons covering ages 0–18. Backed by pediatric neurobiology, Barton Schmitt triage, and developmental science.
+            </td>
+            <td>
+              <span class="nw-ribbon-tag">Best for Clinical Calm</span>
+              <p style="font-size: 12px; color: var(--nw-muted); margin-top: 4px;">Replaces middle-of-the-night panic searches.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color: var(--nw-forest); font-family: var(--font-display);">2. Sunday Youth Culture Digest</strong>
+            </td>
+            <td>
+              Weekly intelligence briefing decoding viral slang, dangerous TikTok challenges, and hidden calculator vault bypass apps.
+            </td>
+            <td>
+              <span class="nw-ribbon-tag" style="background: var(--nw-mint-200);">Best for Conversation</span>
+              <p style="font-size: 12px; color: var(--nw-muted); margin-top: 4px;">Provides weekly Sunday dinner starters.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong style="color: var(--nw-forest); font-family: var(--font-display);">3. Bilateral Pacts & Curfews</strong>
+            </td>
+            <td>
+              Signed digital agreements with neutral automated 8:30 PM device lockouts via Apple & Android MDM profiles. Zero keylogging.
+            </td>
+            <td>
+              <span class="nw-ribbon-tag" style="background: var(--nw-lime-hero);">Best for Neutrality</span>
+              <p style="font-size: 12px; color: var(--nw-muted); margin-top: 4px;">Eliminates parent-as-police friction.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 4. PRICING SECTION -->
+    <section id="rates">
+      <div class="section-editorial-header" style="text-align: center; justify-content: center; border-bottom: none;">
+        <div>
+          <h2>Annual Pass vs. Monthly Flex Comparison</h2>
+          <p>No hidden fees, no surveillance upsells. 100% money-back guarantee.</p>
+        </div>
+      </div>
+
+      <div class="pricing-table-wrap">
+        <div class="pricing-box recommended">
+          <div class="pricing-box-badge">Best Overall Value</div>
+          <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--nw-forest);">Annual Hero Pass</h3>
+          <p style="font-size: 14px; color: var(--nw-muted);">Covers all children in family across lifespan 0–18.</p>
+          <div class="price-num">
+            $79 <span>/ year ($6.58/month)</span>
+          </div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 20px 0; font-size: 14px;">
+            <li>✓ <strong>7-Day Risk-Free Trial</strong></li>
+            <li>✓ Unlimited Children (0–18)</li>
+            <li>✓ Full 120+ Micro-Lesson Academy</li>
+            <li>✓ Weekly Youth Culture Digest</li>
+            <li>✓ Bilateral Pacts with MDM Curfew Profiles</li>
+          </ul>
+          <a href="#trial" class="btn btn-primary" style="width: 100%; text-align: center;">Start 7-Day Free Trial →</a>
+        </div>
+
+        <div class="pricing-box">
+          <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--nw-forest);">Monthly Flex Pass</h3>
+          <p style="font-size: 14px; color: var(--nw-muted);">Cancel anytime without penalty.</p>
+          <div class="price-num">
+            $9.99 <span>/ month</span>
+          </div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 20px 0; font-size: 14px;">
+            <li>✓ Month-to-month flexibility</li>
+            <li>✓ Complete Lifespan 0–18 Access</li>
+            <li>✓ Weekly Slang Decoders</li>
+            <li>✓ Device Agreement Generator</li>
+          </ul>
+          <a href="#trial" class="btn btn-outline" style="width: 100%; text-align: center;">Choose Monthly</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong style="font-size: 16px; font-family: var(--font-display);">AlongSide Editorial Sanctuary</strong>
+        <p style="margin-top: 6px; max-width: 340px; color: #b7ecda;">Clinical pediatric advisory platform helping parents navigate tech and development from newborn to adulthood.</p>
+      </div>
+      <div>
+        <strong>Pediatric Protocols</strong>
+        <p style="margin-top: 6px;">Barton Schmitt Protocols<br>AAP Digital Health Framework<br>CDC Milestone Guidelines</p>
+      </div>
+      <div>
+        <strong>Legal & Security</strong>
+        <p style="margin-top: 6px;">Zero-Spyware Pledge<br>COPPA & FERPA Compliance<br>1-Click Cancel Terms</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

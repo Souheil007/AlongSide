@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Phase 1 Visual Identity Master Switcher (14 Prototyped Directions from docs/design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --panel: #131b2e;
+      --panel-border: #232f48;
+      --accent: #38bdf8;
+      --accent-green: #30a83c;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-ui: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Master Bar */
+    header.switcher-bar {
+      background: var(--panel);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    .brand-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* System Switcher Tabs */
+    .system-nav-scroll {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding: 4px 0;
+    }
+    .system-tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .system-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+    .system-tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+    .system-tab-btn .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Viewport Size Controls */
+    .controls-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .viewport-group {
+      display: flex;
+      background: rgba(0,0,0,0.3);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--panel-border);
+    }
+    .viewport-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .viewport-btn:hover { color: var(--text); }
+    .viewport-btn.active {
+      background: var(--panel-border);
+      color: #ffffff;
+    }
+    .open-external-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--panel-border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .open-external-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Main Workspace */
+    .workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Iframe Stage */
+    .stage-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: #06090e;
+      padding: 16px;
+      overflow-y: auto;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .preview-frame-wrap {
+      width: 100%;
+      height: calc(100vh - 120px);
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--panel-border);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .preview-frame-wrap.laptop { width: 1024px; }
+    .preview-frame-wrap.tablet { width: 768px; }
+    .preview-frame-wrap.mobile { width: 390px; }
+
+    iframe#preview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Inspector Sidebar */
+    aside.inspector-panel {
+      width: 380px;
+      background: var(--panel);
+      border-left: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      height: calc(100vh - 65px);
+      transition: transform 0.25s ease;
+    }
+    .inspector-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .inspector-header h3 {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+    }
+    .inspector-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .spec-card {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .spec-card h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .spec-card p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+    .color-swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .color-swatch-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .color-swatch-box .color-preview {
+      height: 28px;
+      width: 100%;
+    }
+    .color-swatch-box .color-hex {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 4px 2px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1024px) {
+      aside.inspector-panel { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Switcher Header -->
+  <header class="switcher-bar">
+    <div class="brand-title-wrap">
+      <div class="brand-badge">PHASE 1 VISUAL LAB</div>
+      <div>
+        <div class="brand-title">AlongSide — 14 Design Direction Prototypes</div>
+        <div class="brand-sub">Logged-Out Landing: "The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow"</div>
+      </div>
+    </div>
+
+    <!-- 14 Design Systems Switcher -->
+    <div class="system-nav-scroll">
+      <button class="system-tab-btn active" onclick="loadPreview('preview-mydealz.html', 'mydealz', this)">
+        <span class="swatch" style="background: #30a83c;"></span>
+        1. MyDealz
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-nerdwallet.html', 'nerdwallet', this)">
+        <span class="swatch" style="background: #008254;"></span>
+        2. NerdWallet
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-revolut.html', 'revolut', this)">
+        <span class="swatch" style="background: #494fdf;"></span>
+        3. Revolut
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-sanity.html', 'sanity', this)">
+        <span class="swatch" style="background: #f36458;"></span>
+        4. Sanity
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-spacex.html', 'spacex', this)">
+        <span class="swatch" style="background: #ffffff;"></span>
+        5. SpaceX
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-vercel.html', 'vercel', this)">
+        <span class="swatch" style="background: #171717; border: 1px solid #fff;"></span>
+        6. Vercel
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-warp.html', 'warp', this)">
+        <span class="swatch" style="background: #e28a52;"></span>
+        7. Warp
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-wise.html', 'wise', this)">
+        <span class="swatch" style="background: #9fe870;"></span>
+        8. Wise
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-alloy.html', 'alloy', this)">
+        <span class="swatch" style="background: #5865e8;"></span>
+        9. Alloy Planning
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-artboard.html', 'artboard', this)">
+        <span class="swatch" style="background: #6b55e8;"></span>
+        10. Artboard Studio
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-flyio.html', 'flyio', this)">
+        <span class="swatch" style="background: #f28a4b;"></span>
+        11. Fly.io
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-pirsch.html', 'pirsch', this)">
+        <span class="swatch" style="background: #3d6fe8;"></span>
+        12. Pirsch Analytics
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-streamtime.html', 'streamtime', this)">
+        <span class="swatch" style="background: #f2c94c;"></span>
+        13. Streamtime
+      </button>
+      <button class="system-tab-btn" onclick="loadPreview('preview-subframe.html', 'subframe', this)">
+        <span class="swatch" style="background: #242424; border: 1px solid #737373;"></span>
+        14. Subframe
+      </button>
+    </div>
+
+    <!-- Viewport & External Controls -->
+    <div class="controls-wrap">
+      <div class="viewport-group">
+        <button class="viewport-btn active" onclick="setViewport('desktop', this)">Desktop</button>
+        <button class="viewport-btn" onclick="setViewport('laptop', this)">1024px</button>
+        <button class="viewport-btn" onclick="setViewport('tablet', this)">768px</button>
+        <button class="viewport-btn" onclick="setViewport('mobile', this)">390px</button>
+      </div>
+
+      <a id="external-link" href="preview-mydealz.html" target="_blank" class="open-external-btn">
+        <span>Open Tab ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <div class="workspace">
+    <!-- Iframe Container -->
+    <div class="stage-container">
+      <div id="frame-wrap" class="preview-frame-wrap desktop">
+        <iframe id="preview-frame" src="preview-mydealz.html" title="AlongSide Visual Identity Preview"></iframe>
+      </div>
+    </div>
+
+    <!-- Dynamic Design Token Inspector Sidebar -->
+    <aside class="inspector-panel">
+      <div class="inspector-header">
+        <h3 id="inspector-title">MyDealz Design System</h3>
+        <span id="inspector-source" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">docs/design/DESIGN-mydealz.md</span>
+      </div>
+
+      <div class="inspector-body">
+        <div class="spec-card">
+          <h4>Core Philosophy</h4>
+          <p id="inspector-desc">
+            High-density German deals-community system built on a confident brand green, stacked white cards with signature hot/cold temperature vote meters, and 540px pill buttons.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <h4>Palette Tokens</h4>
+          <div id="inspector-palette" class="color-swatches-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <h4>Typography Stack</h4>
+          <p id="inspector-typography">
+            <strong>Display / Heading:</strong> Averta CY / Inter (Weight: 700)<br>
+            <strong>Body:</strong> Averta CY / Inter (Weight: 500, 15px)<br>
+            <strong>Eyebrows & Code:</strong> JetBrains Mono
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <h4>Geometry & Elevation</h4>
+          <p id="inspector-geometry">
+            <strong>Border Radii:</strong> 540px Pills (Buttons & Meters), 10px Cards<br>
+            <strong>Elevation:</strong> Minimal, subtle hairline borders (#dfe1e4)<br>
+            <strong>Key UI Tell:</strong> Hot/Cold temperature meters (+842°)
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <h4>Suitability for AlongSide Sanctuary</h4>
+          <p id="inspector-suitability">
+            <strong>Strengths:</strong> Extremely high information density, clear scannable milestones, engaging community verification feel.<br>
+            <strong>Trade-offs:</strong> Needs careful calibration so the clinical advisory doesn't feel like an e-commerce coupon forum.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const DESIGN_METADATA = {
+      mydealz: {
+        title: "MyDealz Design System",
+        source: "docs/design/DESIGN-mydealz.md",
+        desc: "High-density German deals-community system built on a confident brand green (#30a83c), stacked white cards, signature hot/cold temperature vote meters, and 540px pill buttons.",
+        typography: "<strong>Display / Headings:</strong> Averta CY / Inter (Weight 700)<br><strong>Body:</strong> Inter / Averta CY (Weight 500, 15px)<br><strong>Status:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 540px Pills (Buttons & Meters), 10px Cards<br><strong>Elevation:</strong> Hairline borders (#dfe1e4) over #f3f5f7 canvas<br><strong>Signature:</strong> Temperature badges (+842°)",
+        suitability: "<strong>Strengths:</strong> Ultra-scannable milestone feed, high information density, playful and engaging.<br><strong>Trade-offs:</strong> Risk of feeling like a coupon forum if temperature votes are overused.",
+        palette: [
+          { name: "Primary", hex: "#30a83c" },
+          { name: "Hot", hex: "#ce1736" },
+          { name: "Canvas", hex: "#f3f5f7" },
+          { name: "Cold", hex: "#034eb1" }
+        ]
+      },
+      nerdwallet: {
+        title: "NerdWallet Design System",
+        source: "docs/design/DESIGN-nerdwallet.md",
+        desc: "Authoritative editorial financial platform built on deep forest green (#008254), lime hero ribbons (#9ae600), pale mint washes (#effcf8), and nearly square 2-3px corners.",
+        typography: "<strong>Display / Headings:</strong> Gotham / Montserrat (Bold 800)<br><strong>Body:</strong> Inter / Arial (15px, 1.6 leading)<br><strong>Metadata:</strong> Uppercase Gotham tracking 0.5px",
+        geometry: "<strong>Border Radii:</strong> Sharp 2-3px corners<br><strong>Elevation:</strong> Zero drop shadows; pure color fills and hairlines (#ebebec)<br><strong>Signature:</strong> Editor's Pick lime ribbons & comparison tables",
+        suitability: "<strong>Strengths:</strong> Exceptionally high institutional credibility; feels like an authoritative medical journal with clear comparison tables.<br><strong>Trade-offs:</strong> Very serious and sober aesthetic.",
+        palette: [
+          { name: "Forest", hex: "#00482f" },
+          { name: "Primary", hex: "#008254" },
+          { name: "Lime Hero", hex: "#9ae600" },
+          { name: "Mint 50", hex: "#effcf8" }
+        ]
+      },
+      revolut: {
+        title: "Revolut Design System",
+        source: "docs/design/DESIGN-revolut.md",
+        desc: "Dark-first fintech-meets-luxury-brochure. Pure pitch black (#000000), cobalt-violet (#494fdf) glow, glassmorphism hairline borders, and Aeonik Pro oversized display typography.",
+        typography: "<strong>Display / Headings:</strong> Aeonik Pro / Plus Jakarta Sans (Weight 900, tight tracking -1.4px)<br><strong>Body:</strong> Inter (15px, translucent on-dark)<br><strong>Badges:</strong> High-saturation uppercase pills",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills (Buttons), 20px Cards<br><strong>Elevation:</strong> Radial gradient glows & translucent glass borders rgba(255,255,255,0.12)<br><strong>Signature:</strong> Dark luxury aesthetic",
+        suitability: "<strong>Strengths:</strong> Unmatched visual prestige and modern tech feel; parents feel they are using a cutting-edge next-generation OS.<br><strong>Trade-offs:</strong> Heavy dark mode can feel intense in broad daylight.",
+        palette: [
+          { name: "Pitch Black", hex: "#000000" },
+          { name: "Cobalt", hex: "#494fdf" },
+          { name: "Accent Teal", hex: "#00a87e" },
+          { name: "Elevated", hex: "#16181a" }
+        ]
+      },
+      sanity: {
+        title: "Sanity Design System",
+        source: "docs/design/DESIGN-sanity.md",
+        desc: "Dark-first software trade journal pairing waldenburgNormal display sans with IBM Plex Mono technical eyebrows, signature coral-red (#f36458) CTAs, and a crisp paper-white commercial inversion.",
+        typography: "<strong>Display:</strong> Space Grotesk / Waldenburg (Weight 700)<br><strong>Eyebrows:</strong> IBM Plex Mono (uppercase, tracking 0.15em)<br><strong>Body:</strong> Inter (14px, #b9b9b9)",
+        geometry: "<strong>Border Radii:</strong> Sharp 4px corners alongside pill buttons<br><strong>Elevation:</strong> Soft hairlines (#353535) over #0b0b0b canvas<br><strong>Signature:</strong> Paper-white commercial band inversion",
+        suitability: "<strong>Strengths:</strong> Feels intellectually rigorous and clinical; perfect for parents who demand scientific neurobiology evidence.<br><strong>Trade-offs:</strong> Technical vibe may be intimidating to non-technical parents.",
+        palette: [
+          { name: "Canvas", hex: "#0b0b0b" },
+          { name: "Coral Brand", hex: "#f36458" },
+          { name: "Paper Invert", hex: "#ededed" },
+          { name: "Slate", hex: "#3c4758" }
+        ]
+      },
+      spacex: {
+        title: "SpaceX Design System",
+        source: "docs/design/DESIGN-spacex.md",
+        desc: "Mission-oriented aerospace brand built on pure pitch black (#000000), D-DIN bold uppercase display typography, ghost outlined pill buttons, and austere minimalist UI chrome.",
+        typography: "<strong>Display / Headings:</strong> D-DIN / Oswald (Uppercase, tracking 2px, tight leading 1.0)<br><strong>Body:</strong> Inter (14px, muted white)<br><strong>Eyebrows:</strong> All-caps mission-brief microtext",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills (Ghost buttons)<br><strong>Elevation:</strong> Zero elevation; stark monochrome contrast and 1px white lines<br><strong>Signature:</strong> Ghost outline buttons & uppercase typography",
+        suitability: "<strong>Strengths:</strong> Uncompromising authority and mission-critical precision.<br><strong>Trade-offs:</strong> Lacks warm clinical empathy; feels like a space launch terminal.",
+        palette: [
+          { name: "Night", hex: "#000000" },
+          { name: "Pure White", hex: "#ffffff" },
+          { name: "Hairline", hex: "#3a3a3f" },
+          { name: "Mute", hex: "#8e8e93" }
+        ]
+      },
+      vercel: {
+        title: "Vercel Design System",
+        source: "docs/design/DESIGN-vercel.md",
+        desc: "Geist developer platform aesthetic: stark black monochrome ink (#171717) on #fafafa canvas, multi-stop radiant mesh hero gradient (cyan/violet/amber), and clean 6px radii.",
+        typography: "<strong>Display / Headings:</strong> Geist / Inter (Weight 700, tight tracking -2.4px)<br><strong>Code & Tags:</strong> Geist Mono / JetBrains Mono<br><strong>Body:</strong> Inter (15px, #4d4d4d)",
+        geometry: "<strong>Border Radii:</strong> 6px App Buttons, 9999px Pill CTAs, 10px Cards<br><strong>Elevation:</strong> Crisp hairline borders (#ebebeb) with subtle lift<br><strong>Signature:</strong> Multi-stop radiant mesh gradient behind hero",
+        suitability: "<strong>Strengths:</strong> World-class digital polish, ultra-clean readability, timeless developer-grade elegance.<br><strong>Trade-offs:</strong> Can read as a SaaS developer tool rather than a family sanctuary.",
+        palette: [
+          { name: "Ink", hex: "#171717" },
+          { name: "Canvas", hex: "#fafafa" },
+          { name: "Cyan Stop", hex: "#50e3c2" },
+          { name: "Violet Stop", hex: "#7928ca" }
+        ]
+      },
+      warp: {
+        title: "Warp Design System",
+        source: "docs/design/DESIGN-warp.md",
+        desc: "Warm roasted-charcoal canvas (#2b2622 / #383330), parchment typography (#f7f5f0), elegant Instrument Serif italic moments, and understated terminal precision.",
+        typography: "<strong>Display:</strong> Inter (Weight 500) paired with Instrument Serif italics<br><strong>Terminal:</strong> JetBrains Mono ($ command lines)<br><strong>Body:</strong> Inter (15px, warm linen #c9c0ad)",
+        geometry: "<strong>Border Radii:</strong> Tight 6px corners<br><strong>Elevation:</strong> Roasted espresso hairlines (#3f3a36)<br><strong>Signature:</strong> Italic serif emotional accents in headlines",
+        suitability: "<strong>Strengths:</strong> Beautifully warm, comforting, and sophisticated; feels like an exclusive private library or calm retreat at night.<br><strong>Trade-offs:</strong> Roasted warm palette requires high screen brightness in direct sun.",
+        palette: [
+          { name: "Espresso", hex: "#2b2622" },
+          { name: "Parchment", hex: "#f7f5f0" },
+          { name: "Warm Amber", hex: "#e28a52" },
+          { name: "Hairline", hex: "#3f3a36" }
+        ]
+      },
+      wise: {
+        title: "Wise Design System",
+        source: "docs/design/DESIGN-wise.md",
+        desc: "Scandinavian fintech magazine aesthetic: electric lime green (#9fe870), ultra-bold 900 display typography, sage-tinted neutral canvas (#e8ebe6), and rounded 24px cards.",
+        typography: "<strong>Display / Headings:</strong> Wise Sans / Plus Jakarta Sans (Ultra-bold 900)<br><strong>Body:</strong> Inter (15px, #454745)<br><strong>Action:</strong> Ultra-heavy button labels",
+        geometry: "<strong>Border Radii:</strong> Generous 24px rounded cards, 9999px pill buttons<br><strong>Elevation:</strong> Flat soft sage surfaces (#e8ebe6)<br><strong>Signature:</strong> High-impact ultra-bold headlines with electric lime",
+        suitability: "<strong>Strengths:</strong> Highly consumer-friendly, energetic, optimistic, and visually memorable; appeals broadly to young modern parents.<br><strong>Trade-offs:</strong> Bold green punch may feel loud if not balanced with calm whitespace.",
+        palette: [
+          { name: "Lime Primary", hex: "#9fe870" },
+          { name: "Sage Canvas", hex: "#e8ebe6" },
+          { name: "Near-Black", hex: "#0e0f0c" },
+          { name: "Active Lime", hex: "#cdffad" }
+        ]
+      },
+      alloy: {
+        title: "Alloy Planning Design System",
+        source: "docs/design/DESIGN-alloy-planning.md",
+        desc: "Structured, collaborative product-native workspace combining clean neutral surfaces (#FAFAFC), primary indigo/periwinkle (#5865E8), roadmap/board multi-view toggles, and Linear sync telemetry.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 46px/42px)<br><strong>Body:</strong> Inter (14px, #5E6270)<br><strong>Tags & Code:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 6px Buttons, 10px Cards, 14px Feature Panels, 9999px Pills<br><strong>Elevation:</strong> Hairline borders (#E5E6EC), subtle drag shadow<br><strong>Signature:</strong> View switcher (Roadmap / Board / Table / Feed)",
+        suitability: "<strong>Strengths:</strong> Superb structured planning feeling; parents can switch between roadmap and daily task feed effortlessly.<br><strong>Trade-offs:</strong> Can feel like a B2B project tool if emoji cues are not empathetic.",
+        palette: [
+          { name: "Primary", hex: "#5865e8" },
+          { name: "Canvas", hex: "#ffffff" },
+          { name: "Surface", hex: "#fafafc" },
+          { name: "Success", hex: "#3b9b78" }
+        ]
+      },
+      artboard: {
+        title: "Artboard Studio Design System",
+        source: "docs/design/DESIGN-artboard-studio.md",
+        desc: "Visual creation workspace and studio mockup storefront, combining saturated violet (#6B55E8), artboard staging areas (#E8E8EF), realistic device mockups, and category-led browsing tiles.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 52px)<br><strong>Body:</strong> Inter (14.5px, #5E5D68)<br><strong>Metadata:</strong> JetBrains Mono (11px)",
+        geometry: "<strong>Border Radii:</strong> 6px Buttons, 10px Thumbnails, 16px Panels, 22px Showcase Surfaces<br><strong>Elevation:</strong> Soft studio drop shadows & hairline borders (#E3E3EA)<br><strong>Signature:</strong> Artboard canvas with 100% scale viewport",
+        suitability: "<strong>Strengths:</strong> Visually dazzling and artistic; showcases device screens and agreements as premium design artifacts.<br><strong>Trade-offs:</strong> Heavy reliance on visual assets; requires high-contrast typography.",
+        palette: [
+          { name: "Primary", hex: "#6b55e8" },
+          { name: "Canvas", hex: "#ffffff" },
+          { name: "Editor Canvas", hex: "#e8e8ef" },
+          { name: "Dark Panel", hex: "#22222b" }
+        ]
+      },
+      flyio: {
+        title: "Fly.io Design System",
+        source: "docs/design/DESIGN-flyio.md",
+        desc: "Dark developer-first infrastructure platform built on charcoal canvas (#17191F), warm energetic orange (#F28A4B), CLI command panels, and low-latency machine status telemetry.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, tight tracking -2px)<br><strong>Terminal & Telemetry:</strong> JetBrains Mono / Menlo<br><strong>Body:</strong> Inter (14.5px, #B7BBC5)",
+        geometry: "<strong>Border Radii:</strong> 4px Code Blocks, 6px Buttons, 10px Panels, 9999px Status Badges<br><strong>Elevation:</strong> High-contrast dark panels with #343A46 hairline dividers<br><strong>Signature:</strong> CLI terminal block & node machine status",
+        suitability: "<strong>Strengths:</strong> Extreme technical speed and zero-bullshit reliability; parents trust the zero-spyware MDM guarantees.<br><strong>Trade-offs:</strong> Dark developer motif lacks softness for emotional bedtime meltdowns.",
+        palette: [
+          { name: "Primary", hex: "#f28a4b" },
+          { name: "Night Canvas", hex: "#17191f" },
+          { name: "Surface Soft", hex: "#222630" },
+          { name: "Healthy", hex: "#35a879" }
+        ]
+      },
+      pirsch: {
+        title: "Pirsch Analytics Design System",
+        source: "docs/design/DESIGN-pirsch.md",
+        desc: "Privacy-first, cookie-free data intelligence built on clean European blue (#3D6FE8), KPI cards with positive trend indicators, German privacy trust badges, and tabular numerals.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 48px/42px)<br><strong>Metrics:</strong> Tabular numerals (30px KPI values)<br><strong>Body:</strong> Inter (14px, #596170)",
+        geometry: "<strong>Border Radii:</strong> 6px Buttons/Inputs, 10px Chart Cards, 14px Feature Panels, 9999px Pills<br><strong>Elevation:</strong> Flat white canvas (#FFFFFF) with neutral hairlines (#E4E7ED)<br><strong>Signature:</strong> KPI row with positive trend badges (+18.4%)",
+        suitability: "<strong>Strengths:</strong> Outstanding credibility for data privacy; parents love knowing their children's data is never sold or tracked.<br><strong>Trade-offs:</strong> Data-heavy aesthetic can feel clinical if emotional scripts are secondary.",
+        palette: [
+          { name: "Primary", hex: "#3d6fe8" },
+          { name: "Canvas", hex: "#ffffff" },
+          { name: "Surface", hex: "#f8f9fb" },
+          { name: "Positive", hex: "#23865b" }
+        ]
+      },
+      streamtime: {
+        title: "Streamtime Design System",
+        source: "docs/design/DESIGN-streamtime.md",
+        desc: "Warm optimistic creative studio aesthetic built on warm linen canvas (#FBFAF6), signature sunshine yellow (#F2C94C), family wellbeing check-in cards, and conversational tone.",
+        typography: "<strong>Display / Headings:</strong> DM Sans (Weight 600, friendly sentence case)<br><strong>Body:</strong> DM Sans / Inter (15px, #55534F)<br><strong>Accent:</strong> Yellow highlight markers",
+        geometry: "<strong>Border Radii:</strong> 6px Inputs, 10px Cards, 16px Feature Panels, 9999px Pill Buttons<br><strong>Elevation:</strong> Soft warm hairline borders (#E6E2D8)<br><strong>Signature:</strong> Family wellbeing check-in card (Mood: Calm & Connected)",
+        suitability: "<strong>Strengths:</strong> The most empathetic and emotionally soothing system; immediately relieves 2:00 AM parental guilt and anxiety.<br><strong>Trade-offs:</strong> Yellow accent needs careful contrast against pure white cards.",
+        palette: [
+          { name: "Sunshine Yellow", hex: "#f2c94c" },
+          { name: "Warm Linen", hex: "#fbfaf6" },
+          { name: "Ink", hex: "#242424" },
+          { name: "Healthy", hex: "#39866a" }
+        ]
+      },
+      subframe: {
+        title: "Subframe Design System",
+        source: "docs/design/DESIGN-Subframe.md",
+        desc: "Minimal engineering-forward design-to-code identity built on a near-monochrome light canvas (#FAFAFA), oversized tightly tracked Inter headlines (-0.05em), and dark product preview frames.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 60px, tight tracking -0.05em)<br><strong>Inspect Tags:</strong> JetBrains Mono code snippets<br><strong>Body:</strong> Inter (15px, #5C5C5C)",
+        geometry: "<strong>Border Radii:</strong> 8px Inputs, 12px Buttons, 16px Cards, 24px Dark Preview Frames<br><strong>Elevation:</strong> Flat surfaces with crisp 1px hairline borders (#E5E5E5)<br><strong>Signature:</strong> Dark product preview showcase inside light canvas",
+        suitability: "<strong>Strengths:</strong> World-class aesthetic restraint, immense visual focus, elegant developer craftsmanship; highly professional.<br><strong>Trade-offs:</strong> Near-monochrome palette relies purely on layout contrast and typography.",
+        palette: [
+          { name: "Ink Soft", hex: "#242424" },
+          { name: "Canvas", hex: "#fafafa" },
+          { name: "Surface", hex: "#ffffff" },
+          { name: "Focus Blue", hex: "#3e63dd" }
+        ]
+      }
+    };
+
+    function loadPreview(url, key, btn) {
+      document.getElementById('preview-frame').src = url;
+      document.getElementById('external-link').href = url;
+
+      // Update active tab
+      document.querySelectorAll('.system-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update Inspector Sidebar
+      const meta = DESIGN_METADATA[key];
+      if (meta) {
+        document.getElementById('inspector-title').innerText = meta.title;
+        document.getElementById('inspector-source').innerText = meta.source;
+        document.getElementById('inspector-desc').innerText = meta.desc;
+        document.getElementById('inspector-typography').innerHTML = meta.typography;
+        document.getElementById('inspector-geometry').innerHTML = meta.geometry;
+        document.getElementById('inspector-suitability').innerHTML = meta.suitability;
+
+        const paletteContainer = document.getElementById('inspector-palette');
+        paletteContainer.innerHTML = '';
+        meta.palette.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'color-swatch-box';
+          div.innerHTML = `
+            <div class="color-preview" style="background: ${c.hex};"></div>
+            <div class="color-hex">${c.hex}</div>
+          `;
+          paletteContainer.appendChild(div);
+        });
+      }
+    }
+
+    function setViewport(size, btn) {
+      const wrap = document.getElementById('frame-wrap');
+      wrap.className = 'preview-frame-wrap ' + size;
+      document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Initialize with MyDealz
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPreview('preview-mydealz.html', 'mydealz', document.querySelector('.system-tab-btn'));
+    });
+  </script>
+</body>
+</html>

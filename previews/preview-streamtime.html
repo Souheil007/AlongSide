@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Streamtime Design System Preview (The Parent Advisory Sanctuary)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --stream-canvas: #fbfaf6;
+      --stream-surface: #ffffff;
+      --stream-surface-soft: #f3f1ea;
+      --stream-hairline: #e6e2d8;
+      --stream-ink: #242424;
+      --stream-body: #55534f;
+      --stream-mute: #85827c;
+      --stream-primary: #f2c94c;
+      --stream-primary-hover: #e5bc3b;
+      --stream-on-primary: #252525;
+      --stream-success: #39866a;
+      --stream-warning: #d99532;
+      --stream-danger: #c95c52;
+      --stream-info: #547eaa;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --radius-pill: 9999px;
+      
+      --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--stream-canvas);
+      color: var(--stream-ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Preview Switcher Bar */
+    .preview-banner {
+      background: #252320;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--stream-primary);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .preview-banner a { color: var(--stream-primary); text-decoration: none; font-weight: 600; }
+    .preview-banner .badge {
+      background: var(--stream-primary);
+      color: var(--stream-on-primary);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      margin-right: 8px;
+      font-size: 11px;
+    }
+
+    /* Site Header */
+    header.site-header {
+      background: var(--stream-surface);
+      border-bottom: 1px solid var(--stream-hairline);
+      position: sticky;
+      top: 41px;
+      z-index: 900;
+    }
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--stream-ink);
+    }
+    .brand-sun-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--stream-primary);
+      color: var(--stream-on-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 17px;
+      box-shadow: 0 2px 8px rgba(242, 201, 76, 0.4);
+    }
+    .brand-title {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .brand-tag {
+      font-size: 11.5px;
+      background: var(--stream-surface-soft);
+      border: 1px solid var(--stream-hairline);
+      color: var(--stream-body);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--stream-body);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14.5px;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: var(--stream-ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--stream-primary);
+      color: var(--stream-on-primary);
+    }
+    .btn-primary:hover {
+      background: var(--stream-primary-hover);
+      box-shadow: 0 4px 12px rgba(242, 201, 76, 0.35);
+    }
+    .btn-secondary {
+      background: var(--stream-surface);
+      border-color: var(--stream-hairline);
+      color: var(--stream-ink);
+    }
+    .btn-secondary:hover {
+      background: var(--stream-surface-soft);
+    }
+    .btn-lg {
+      padding: 13px 26px;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 60px 0 50px 0;
+      text-align: center;
+    }
+    .hero-warm-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      color: var(--stream-body);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .hero-warm-chip strong { color: var(--stream-success); }
+
+    .hero-title {
+      font-size: 52px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -1.2px;
+      color: var(--stream-ink);
+      margin-bottom: 18px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-title span.yellow-marker {
+      background: linear-gradient(120deg, rgba(242, 201, 76, 0.4) 0%, rgba(242, 201, 76, 0.7) 100%);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .hero-lead {
+      font-size: 17.5px;
+      color: var(--stream-body);
+      line-height: 1.6;
+      max-width: 780px;
+      margin: 0 auto 32px auto;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    /* Streamtime Wellbeing Check-in Card (Signature Tell) */
+    .wellbeing-card {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      max-width: 860px;
+      margin: 0 auto 50px auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: left;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .wellbeing-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mood-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(242, 201, 76, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .wellbeing-stats {
+      display: flex;
+      gap: 20px;
+    }
+    .stat-pill {
+      background: var(--stream-surface-soft);
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--stream-body);
+    }
+    .stat-pill strong { color: var(--stream-ink); }
+
+    /* Trust Strip */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 50px;
+      text-align: left;
+    }
+    .trust-item {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .trust-item strong {
+      display: block;
+      font-size: 14px;
+      color: var(--stream-ink);
+      margin-bottom: 2px;
+    }
+    .trust-item span { font-size: 12px; color: var(--stream-mute); }
+
+    /* Section Headings */
+    .section-head {
+      margin: 60px 0 24px 0;
+      text-align: left;
+    }
+    .section-head h2 {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.6px;
+      color: var(--stream-ink);
+    }
+    .section-head p {
+      font-size: 15px;
+      color: var(--stream-body);
+      margin-top: 4px;
+    }
+
+    /* 2. LIFESPAN WEEKLY PLANNER */
+    .planner-card-panel {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 56px;
+      text-align: left;
+    }
+    .planner-stage-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+    }
+    .planner-tab-btn {
+      padding: 8px 16px;
+      background: var(--stream-surface-soft);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--stream-body);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .planner-tab-btn.active {
+      background: var(--stream-primary);
+      color: var(--stream-on-primary);
+      border-color: var(--stream-primary);
+    }
+
+    .planner-body-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 32px;
+    }
+    .script-warm-card {
+      background: var(--stream-canvas);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    /* 3. CORE PILLARS SHOWCASE */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .pillar-box {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .pillar-box:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+      border-color: #d8d3c5;
+    }
+    .pillar-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--stream-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    /* 4. SLANG EXPLOIT DECODER */
+    .slang-box {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .slang-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+    .slang-chip {
+      background: var(--stream-canvas);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--stream-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .slang-chip.active {
+      background: var(--stream-primary);
+      color: var(--stream-on-primary);
+      border-color: var(--stream-primary);
+    }
+
+    /* 5. PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .pricing-box {
+      background: var(--stream-surface);
+      border: 1px solid var(--stream-hairline);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      position: relative;
+    }
+    .pricing-box.featured {
+      border: 2px solid var(--stream-primary);
+      box-shadow: 0 8px 24px rgba(242, 201, 76, 0.2);
+    }
+    .pricing-cost {
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--stream-ink);
+      margin: 12px 0 6px 0;
+    }
+    .pricing-cost span { font-size: 14.5px; color: var(--stream-mute); font-weight: 400; }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--stream-hairline);
+      padding: 48px 0;
+      font-size: 13.5px;
+      color: var(--stream-body);
+      background: var(--stream-surface);
+      text-align: left;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-title { font-size: 36px; }
+      .planner-body-grid { grid-template-columns: 1fr; }
+      .wellbeing-card { flex-direction: column; align-items: flex-start; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Preview Switcher Bar -->
+  <div class="preview-banner">
+    <div>
+      <span class="badge">STREAMTIME SYSTEM</span>
+      <span>Direction 13 of 14: Warm creative studio aesthetic, warm linen canvas (#FBFAF6), sunshine yellow highlight (#F2C94C), wellbeing check-in cards.</span>
+    </div>
+    <div>
+      <a href="preview-pirsch.html">← Prev: Pirsch</a> &nbsp;|&nbsp;
+      <a href="index.html">Master Switcher</a> &nbsp;|&nbsp;
+      <a href="preview-subframe.html">Next: Subframe →</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-wrap">
+        <div class="brand-sun-icon">☀️</div>
+        <div>
+          <div class="brand-title">AlongSide</div>
+        </div>
+        <span class="brand-tag">Calm Parenting Studio</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#curriculum">Weekly Planner</a></li>
+        <li><a href="#pillars">3 Pillars</a></li>
+        <li><a href="#slang">Culture Digest</a></li>
+        <li><a href="#pricing">Family Passes</a></li>
+      </ul>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="#login" class="btn btn-secondary">Sign In</a>
+        <a href="#trial" class="btn btn-primary">Start Free Trial →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-warm-chip">
+        <span>✨ Balancing operational calm with human family wellbeing</span>
+        <span>•</span>
+        <strong>Barton Schmitt Clinical Standards</strong>
+      </div>
+
+      <h1 class="hero-title">
+        The Parent Advisory Sanctuary: <br>
+        <span class="yellow-marker">Keep Up With Your Child</span> As They Grow.
+      </h1>
+
+      <p class="hero-lead">
+        Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science,
+        prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
+      </p>
+
+      <div class="hero-actions">
+        <a href="#trial" class="btn btn-primary btn-lg">Start 7-Day Free Trial →</a>
+        <a href="#curriculum" class="btn btn-secondary btn-lg">View Weekly Schedule</a>
+      </div>
+
+      <!-- Wellbeing & Happiness Check-in Card (Signature Streamtime Tell) -->
+      <div class="wellbeing-card">
+        <div class="wellbeing-badge">
+          <div class="mood-avatar">😊</div>
+          <div>
+            <strong style="display: block; font-size: 15px; color: var(--stream-ink);">Family Wellbeing Index: Calm & Connected</strong>
+            <span style="font-size: 13px; color: var(--stream-body);">Sarah M. & Maya (11y) • Road 1 Pre-Device Active</span>
+          </div>
+        </div>
+        <div class="wellbeing-stats">
+          <div class="stat-pill">Weekly Advisory: <strong>12 min spent</strong></div>
+          <div class="stat-pill">Curfew Health: <strong>100% on-time 8:30 PM lock</strong></div>
+        </div>
+      </div>
+
+      <!-- Trust Strip -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <strong>Barton Schmitt Clinical</strong>
+          <span>Emergency medical triage guidelines</span>
+        </div>
+        <div class="trust-item">
+          <strong>CDC & AAP Verified</strong>
+          <span>Lifespan developmental milestones (0–18)</span>
+        </div>
+        <div class="trust-item">
+          <strong>Zero-Spyware MDM</strong>
+          <span>Bilateral transparent phone agreements</span>
+        </div>
+        <div class="trust-item">
+          <strong>1-Click Cancel</strong>
+          <span>7-Day upfront free trial</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LIFESPAN WEEKLY PLANNER -->
+    <section id="curriculum">
+      <div class="section-head">
+        <h2>Lifespan Developmental Explorer (0–18)</h2>
+        <p>Scientific benchmarks and immediate parental priorities mapped across developmental leaps.</p>
+      </div>
+
+      <div class="planner-card-panel">
+        <div class="planner-stage-tabs">
+          <button class="planner-tab-btn">👶 Infants (0–3)</button>
+          <button class="planner-tab-btn">🧸 Early Childhood (4–6)</button>
+          <button class="planner-tab-btn">🎒 Elementary (7–9)</button>
+          <button class="planner-tab-btn active">⚡ Pre-Teens (10–12)</button>
+          <button class="planner-tab-btn">📱 High School (13–15)</button>
+          <button class="planner-tab-btn">🎓 Young Adults (16–18)</button>
+        </div>
+
+        <div class="planner-body-grid">
+          <div>
+            <span style="font-size: 11.5px; font-weight: 700; color: var(--stream-warning); text-transform: uppercase;">DEVELOPMENTAL HORIZON // AGE 10–12</span>
+            <h3 style="font-size: 22px; font-weight: 600; margin: 8px 0; color: var(--stream-ink);">
+              Adrenarche, Social Dopamine Shift & Peer Group Alignment
+            </h3>
+            <p style="color: var(--stream-body); font-size: 14px; margin-bottom: 16px;">
+              At age 10–12, adrenarche triggers neurodevelopmental restructuring around peer belonging. When your child says <em>“All my friends have phones except me!”</em>, they are expressing an acute peer exclusion fear.
+            </p>
+
+            <div class="script-warm-card">
+              <strong style="font-size: 13px; color: var(--stream-ink); display: block; margin-bottom: 6px;">Daily Advisory Script:</strong>
+              <p style="color: var(--stream-mute); font-size: 13px; margin-bottom: 6px;">
+                <strong>Avoid:</strong> <em>“You don’t need what everyone else has. You’re too young.”</em>
+              </p>
+              <p style="color: var(--stream-ink); font-size: 13.5px; font-weight: 600;">
+                <strong>Say Instead:</strong> <em>“I hear how lonely it feels when friends talk about a chat you can’t see. We protect your sleep and mental health because we love you. Let’s review our First-Phone Readiness checklist together.”</em>
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: var(--stream-canvas); border: 1px solid var(--stream-hairline); border-radius: var(--radius-md); padding: 20px;">
+              <span style="font-size: 12px; color: var(--stream-mute); font-weight: 500;">FIRST-PHONE READINESS SCORE</span>
+              <div style="font-size: 34px; font-weight: 700; color: var(--stream-ink); margin-top: 4px;">68 / 100</div>
+              <p style="font-size: 12.5px; color: var(--stream-body); margin-top: 2px;">4 of 6 readiness criteria completed this week.</p>
+            </div>
+
+            <div style="background: var(--stream-canvas); border: 1px solid var(--stream-hairline); border-radius: var(--radius-md); padding: 20px;">
+              <span style="font-size: 12px; color: var(--stream-mute); font-weight: 500;">WEEKLY RECOMMENDED READING</span>
+              <strong style="display: block; font-size: 14.5px; color: var(--stream-ink); margin: 4px 0;">Tween Adrenarche & Volatility</strong>
+              <span style="font-size: 12.5px; color: #b48500; font-weight: 600;">4 min read • Chapter 1 →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CORE PILLARS SHOWCASE -->
+    <section id="pillars">
+      <div class="section-head">
+        <h2>The 3 Pillars Architecture</h2>
+        <p>Three core modules designed to keep creative and modern families grounded.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-box">
+          <div>
+            <span class="pillar-tag">Pillar 01</span>
+            <h3 style="font-size: 19px; font-weight: 600; margin-bottom: 8px;">Parent Intelligence Academy</h3>
+            <p style="color: var(--stream-body); font-size: 14px;">120+ prioritized 5-minute micro-lessons covering newborn clinical triage through teenage screen addiction.</p>
+          </div>
+          <div style="margin-top: 20px; font-size: 13px; font-weight: 600; color: var(--stream-ink);">
+            120+ Micro-Lessons Available →
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div>
+            <span class="pillar-tag">Pillar 02</span>
+            <h3 style="font-size: 19px; font-weight: 600; margin-bottom: 8px;">Sunday Youth Culture Digest</h3>
+            <p style="color: var(--stream-body); font-size: 14px;">Weekly intelligence briefing explaining teen slang, TikTok algorithms, covert calculator vault apps, and Sunday dinner scripts.</p>
+          </div>
+          <div style="margin-top: 20px; font-size: 13px; font-weight: 600; color: #b48500;">
+            Weekly Drop Every Sunday →
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div>
+            <span class="pillar-tag">Pillar 03</span>
+            <h3 style="font-size: 19px; font-weight: 600; margin-bottom: 8px;">Bilateral Pacts & MDM Curfews</h3>
+            <p style="color: var(--stream-body); font-size: 14px;">Signed digital agreements with neutral automated 8:30 PM device lockouts via Apple & Android MDM profiles.</p>
+          </div>
+          <div style="margin-top: 20px; font-size: 13px; font-weight: 600; color: var(--stream-ink);">
+            Zero-Spyware MDM →
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SLANG EXPLOIT DECODER -->
+    <section id="slang">
+      <div class="slang-box">
+        <h3 style="font-size: 22px; font-weight: 600; color: var(--stream-ink);">Live Youth Culture & Slang Decoder</h3>
+        <p style="color: var(--stream-body); font-size: 14px; margin-top: 4px;">Stay ahead of covert teen code words and bypass techniques before Sunday dinner.</p>
+
+        <div class="slang-chips">
+          <div class="slang-chip active">
+            <span>Crashout</span>
+            <span style="font-size: 11px;">🔥 Trending</span>
+          </div>
+          <div class="slang-chip">
+            <span>Calculator Vault Bypass</span>
+            <span style="font-size: 11px; color: var(--stream-danger);">⚠️ Exploit</span>
+          </div>
+          <div class="slang-chip">
+            <span>Rizz</span>
+            <span style="font-size: 11px; color: var(--stream-mute);">Social</span>
+          </div>
+          <div class="slang-chip">
+            <span>Bussin</span>
+            <span style="font-size: 11px; color: var(--stream-mute);">Vibe</span>
+          </div>
+          <div class="slang-chip">
+            <span>Sigma</span>
+            <span style="font-size: 11px; color: var(--stream-mute);">Archetype</span>
+          </div>
+        </div>
+
+        <div style="background: var(--stream-canvas); border: 1px solid var(--stream-hairline); border-radius: var(--radius-md); padding: 20px;">
+          <h4 style="font-size: 16px; font-weight: 600; color: var(--stream-ink); margin-bottom: 6px;">Term: "Crashout" (Verb / Noun)</h4>
+          <p style="color: var(--stream-body); font-size: 14px; margin-bottom: 12px;">
+            <strong>Literal Definition:</strong> To explosively lose control of your emotions and lash out aggressively over a minor trigger, regardless of consequences.
+          </p>
+          <div style="background: var(--stream-surface); border: 1px solid var(--stream-hairline); border-radius: var(--radius-sm); padding: 14px;">
+            <strong style="font-size: 12.5px; color: #b48500; display: block; margin-bottom: 4px;">Sunday Dinner Conversation Script:</strong>
+            <p style="font-size: 13.5px; color: var(--stream-ink);"><em>“I saw a video where someone totally crashed out over a game. What's the funniest or most relatable crashout you've seen at school this week?”</em></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PRICING SECTION -->
+    <section id="pricing">
+      <div class="section-head" style="text-align: center;">
+        <h2>Simple, Transparent Family Pricing</h2>
+        <p>Full lifespan coverage across all 3 pillars with zero hidden fees.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-box featured">
+          <span style="background: var(--stream-primary); color: var(--stream-on-primary); font-size: 11.5px; font-weight: 700; padding: 4px 12px; border-radius: var(--radius-pill); display: inline-block;">RECOMMENDED</span>
+          <h3 style="font-size: 24px; font-weight: 600; margin-top: 10px;">Annual Hero Pass</h3>
+          <p style="color: var(--stream-mute); font-size: 14px;">7-Day Upfront Free Trial Included</p>
+          <div class="pricing-cost">$79 <span>/ year ($6.58/mo billed annually)</span></div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 20px 0; font-size: 14px; color: var(--stream-body);">
+            <li>✓ <strong>7-Day Risk-Free Trial</strong></li>
+            <li>✓ Unlimited Children (Ages 0–18)</li>
+            <li>✓ 120+ Micro-Lessons in Academy</li>
+            <li>✓ Weekly Youth Culture Digest</li>
+            <li>✓ Bilateral Pacts with MDM Curfews</li>
+          </ul>
+          <a href="#trial" class="btn btn-primary btn-lg" style="width: 100%;">Start 7-Day Free Trial →</a>
+        </div>
+
+        <div class="pricing-box">
+          <h3 style="font-size: 24px; font-weight: 600; margin-top: 10px;">Monthly Flex Pass</h3>
+          <p style="color: var(--stream-mute); font-size: 14px;">Month-to-month flexibility</p>
+          <div class="pricing-cost">$9.99 <span>/ month</span></div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 20px 0; font-size: 14px; color: var(--stream-body);">
+            <li>✓ All 6 Lifespan Tiers (0–18)</li>
+            <li>✓ Full Academy Library</li>
+            <li>✓ Weekly Slang Digest</li>
+            <li>✓ 1-Click Cancel Anytime</li>
+          </ul>
+          <a href="#trial" class="btn btn-secondary btn-lg" style="width: 100%; margin-top: 32px;">Choose Monthly</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong style="color: var(--stream-ink); font-size: 15px;">AlongSide Sanctuary</strong>
+        <p style="margin-top: 6px; max-width: 320px;">The evidence-based digital parenting operating system for lifespan ages 0–18.</p>
+      </div>
+      <div>
+        <strong style="color: var(--stream-ink);">Clinical Protocols</strong>
+        <p style="margin-top: 6px;">Barton Schmitt Protocols<br>AAP Digital Health Framework<br>CDC Milestone Guidelines</p>
+      </div>
+      <div>
+        <strong style="color: var(--stream-ink);">Privacy Architecture</strong>
+        <p style="margin-top: 6px;">Zero-Spyware Pledge<br>COPPA & FERPA Compliance<br>Encrypted Family Data</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
