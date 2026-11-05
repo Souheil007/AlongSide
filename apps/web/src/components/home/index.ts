@@ -1,8 +1,10 @@
 export { HeroSection, HERO_TRUST_SIGNALS } from './HeroSection';
 export { LifespanStageSelector, LIFESPAN_STAGES } from './LifespanStageSelector';
 export type { StageData } from './LifespanStageSelector';
-export { PillarsShowcase, FIVE_BALANCED_PILLARS } from './PillarsShowcase';
-export type { PillarData } from './PillarsShowcase';
+export { PillarsShowcase, FIVE_BALANCED_PILLARS, THREE_CORE_PILLARS } from './PillarsShowcase';
+export type { PillarData, CoreAdvisoryPillar } from './PillarsShowcase';
+export { CulturePlaygroundDemo, DEMO_SLANG_TERMS, DEMO_DINNER_STARTERS } from './CulturePlaygroundDemo';
+export type { SlangDemoItem } from './CulturePlaygroundDemo';
 export { DeviceActionHubSpotlight, DEVICE_HUB_STEPS } from './DeviceActionHubSpotlight';
 export type { HubStep } from './DeviceActionHubSpotlight';
 export { ClinicalAuthorityTestimonials, CLINICAL_TESTIMONIALS } from './ClinicalAuthorityTestimonials';

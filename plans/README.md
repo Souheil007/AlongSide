@@ -159,7 +159,7 @@ graph TD
 | [**`30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md`**](30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md) | Academy Categories & Prioritized Chapters API | **Backend Agent** | PLAN-01, PLAN-08, PLAN-16, PLAN-28 | Complete (PR #49) |
 | [**`31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md`**](31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md) | Academy Curriculum Explorer & Chapter Reader UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29, PLAN-30 | Complete (PR #51) |
 | [**`32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md`**](32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md) | Sunday Culture Digest Living Feed & Dinner Starters UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29 | Complete (PR #50) |
-| [**`33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md`**](33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md) | Advisory Homepage & Child Cockpit Redesign UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32 | Queued (SOU-71) |
+| [**`33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md`**](33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md) | Advisory Homepage & Child Cockpit Redesign UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32 | Complete (PR #53) |
 
 ---
 

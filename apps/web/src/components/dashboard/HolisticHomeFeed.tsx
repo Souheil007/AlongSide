@@ -8,12 +8,10 @@ import {
 import { useChildren } from '@/hooks/useChildren';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import { ChildHeroCard } from './ChildHeroCard';
-import { TodayMilestonesWidget } from './TodayMilestonesWidget';
-import { DailyPlayActivityCard } from './DailyPlayActivityCard';
-import { DailyNutritionTipCard } from './DailyNutritionTipCard';
-import { AcademyBriefingCard } from './AcademyBriefingCard';
+import { ActiveChapterContinueCard } from './ActiveChapterContinueCard';
+import { DailyAdvisoryScriptCard } from './DailyAdvisoryScriptCard';
 import { SundayCultureDigestCard } from './SundayCultureDigestCard';
-import { QuickHealthTriageLauncher } from './QuickHealthTriageLauncher';
+import { BilateralPactStatusCard } from './BilateralPactStatusCard';
 import { AskAdvisorPromptBar } from './AskAdvisorPromptBar';
 import type { ChildDTO } from '@alongside/shared';
 
@@ -54,28 +52,24 @@ export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      {/* 1. Child Hero Banner & Horizon */}
+      {/* 1. Child Advisory Horizon & Current Neurodevelopmental Leap Hero Banner */}
       <ChildHeroCard
         child={activeChild}
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 
-      {/* 2. Pediatric 1-Tap Health Triage Launcher */}
-      <QuickHealthTriageLauncher child={activeChild} />
-
-      {/* 3. Core Daily Feed Grid: Milestones, Play, Nutrition, Academy & Advisor */}
+      {/* 2. Core Advisory Feed Grid: Academy Chapters, Dialogue Scripts, Culture Pulse & Family Pacts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column (7 cols): Milestones & Daily Play Activity */}
+        {/* Left Column (7 cols): Priority 1-3 Academy Micro-Lesson & Daily Advisory Empathy Dialogue */}
         <div className="lg:col-span-7 space-y-6">
-          <TodayMilestonesWidget child={activeChild} />
-          <DailyPlayActivityCard child={activeChild} />
+          <ActiveChapterContinueCard child={activeChild} />
+          <DailyAdvisoryScriptCard child={activeChild} />
         </div>
 
-        {/* Right Column (5 cols): Daily Nutrition, Academy Briefing, Sunday Culture Digest & AI Advisor */}
+        {/* Right Column (5 cols): Sunday Culture Digest, Bilateral Pact / Curfew Dock & 24/7 AI Advisor */}
         <div className="lg:col-span-5 space-y-6">
-          <DailyNutritionTipCard child={activeChild} />
-          <AcademyBriefingCard child={activeChild} />
           <SundayCultureDigestCard child={activeChild} />
+          <BilateralPactStatusCard child={activeChild} />
           <AskAdvisorPromptBar child={activeChild} />
         </div>
       </div>
