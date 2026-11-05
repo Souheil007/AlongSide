@@ -11,9 +11,11 @@ import {
   Clock,
   PlayCircle,
   AlertCircle,
+  Layers,
 } from 'lucide-react';
-import { getModuleBySlug } from '@/lib/api/academy';
-import { getTierBadgeInfo } from '@/components/academy/ModuleCard';
+import { getAcademyModuleBySlug } from '@/lib/api/academy';
+import { getTierBadgeInfo, getCategoryBadgeInfo } from '@/components/academy/ModuleCard';
+import { ChapterRoadmapView } from '@/components/academy/ChapterRoadmapView';
 import { Button } from '@/components/ui/Button';
 import { Progress } from '@/components/ui/Progress';
 import { Badge } from '@/components/ui/Badge';
@@ -24,19 +26,17 @@ export interface ModuleDetailClientProps {
 }
 
 export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { data: module, isLoading, isError, error } = useQuery({
     queryKey: ['academy-module-detail', slug],
-    queryFn: () => getModuleBySlug(slug),
+    queryFn: () => getAcademyModuleBySlug(slug),
   });
-
-  const module = data?.module;
 
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 py-6 animate-pulse">
         <div className="h-5 w-32 bg-slate-200 rounded" />
-        <div className="h-48 rounded-2xl bg-white border border-slate-200 p-8 space-y-4" />
-        <div className="h-64 rounded-2xl bg-white border border-slate-200 p-8 space-y-3" />
+        <div className="h-56 rounded-2xl bg-white border border-slate-200 p-8 space-y-4" />
+        <div className="h-72 rounded-2xl bg-white border border-slate-200 p-8 space-y-3" />
       </div>
     );
   }
@@ -60,15 +60,19 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
   }
 
   const tierInfo = getTierBadgeInfo(module.developmentalTier);
+  const categoryInfo = getCategoryBadgeInfo(module.category);
   const percentComplete =
     module.lessonCount > 0
       ? Math.round((module.completedLessonCount / module.lessonCount) * 100)
       : 0;
 
-  const totalReadingMinutes = module.lessons.reduce((acc, l) => acc + l.readingMinutes, 0);
+  const totalReadingMinutes = (module.lessons || []).reduce(
+    (acc, l) => acc + (l.readingMinutes || 4),
+    0
+  );
 
   // Find the first uncompleted lesson, or the first lesson if all or none completed
-  const nextLesson = module.lessons.find((l) => !l.isCompleted) || module.lessons[0];
+  const nextLesson = (module.lessons || []).find((l) => !l.isCompleted) || module.lessons?.[0];
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 py-2">
@@ -79,21 +83,31 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
           className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-600 hover:text-teal-700 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to All Modules</span>
+          <span>Back to Academy Curriculum</span>
         </Link>
       </nav>
 
       {/* Module Overview Hero */}
-      <header className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm space-y-6">
+      <header className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <span
-            className={cn(
-              'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide',
-              tierInfo.className
-            )}
-          >
-            {tierInfo.label}
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span
+              className={cn(
+                'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide',
+                categoryInfo.className
+              )}
+            >
+              {categoryInfo.label}
+            </span>
+            <span
+              className={cn(
+                'inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium',
+                tierInfo.className
+              )}
+            >
+              {tierInfo.label}
+            </span>
+          </div>
 
           {module.isCompleted && (
             <Badge variant="outline" className="border-emerald-300 bg-emerald-50 text-emerald-800 text-xs gap-1.5 py-1 px-3">
@@ -112,9 +126,13 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
           </p>
         </div>
 
-        {/* Stats & Progress */}
+        {/* Stats & Launch Action */}
         <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-5 text-xs sm:text-sm text-slate-600 font-medium">
+          <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-600 font-medium">
+            <span className="flex items-center gap-1.5 text-slate-700 font-semibold bg-slate-100 px-2.5 py-1 rounded-md">
+              <Layers className="h-3.5 w-3.5 text-slate-500" />
+              {(module.chapters || []).length || 3} Prioritized Chapters
+            </span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="h-4 w-4 text-teal-600" />
               {module.lessonCount} {module.lessonCount === 1 ? 'lesson' : 'lessons'}
@@ -128,11 +146,11 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
 
           {nextLesson && (
             <Link href={`/academy/${module.slug}/${nextLesson.slug}`}>
-              <Button size="default" className="gap-2 font-semibold shadow-sm w-full sm:w-auto">
+              <Button size="default" className="gap-2 font-semibold shadow-xs w-full sm:w-auto">
                 <PlayCircle className="h-4 w-4" />
                 <span>
                   {module.completedLessonCount === 0
-                    ? 'Start Lesson 1'
+                    ? 'Start Priority 1'
                     : module.isCompleted
                     ? 'Review Lesson 1'
                     : `Continue: Lesson ${nextLesson.sortOrder}`}
@@ -146,7 +164,7 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
         {/* Progress bar */}
         <div className="space-y-1.5 pt-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium text-slate-600">Module Completion</span>
+            <span className="font-medium text-slate-600">Course Completion</span>
             <span className="font-semibold text-slate-900">{percentComplete}%</span>
           </div>
           <Progress value={percentComplete} className="h-2" />
@@ -156,61 +174,8 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
         </div>
       </header>
 
-      {/* Lesson Index List */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-900">
-            Course Lessons ({module.lessons.length})
-          </h2>
-          <span className="text-xs text-slate-500 font-medium">
-            Self-paced micro-learning
-          </span>
-        </div>
-
-        <div className="divide-y divide-slate-100 rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden">
-          {module.lessons.map((lesson) => (
-            <Link
-              key={lesson.id}
-              href={`/academy/${module.slug}/${lesson.slug}`}
-              className="flex items-center justify-between gap-4 p-4 sm:p-5 hover:bg-slate-50/80 transition-colors group"
-            >
-              <div className="flex items-start gap-4">
-                <div
-                  className={cn(
-                    'flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold shrink-0 mt-0.5',
-                    lesson.isCompleted
-                      ? 'bg-emerald-100 text-emerald-800'
-                      : 'bg-slate-100 text-slate-600 group-hover:bg-teal-100 group-hover:text-teal-800'
-                  )}
-                >
-                  {lesson.isCompleted ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  ) : (
-                    <span>{lesson.sortOrder}</span>
-                  )}
-                </div>
-
-                <div className="space-y-1">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-teal-800 transition-colors">
-                    {lesson.title}
-                  </h3>
-                  <div className="flex items-center gap-3 text-xs text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {lesson.readingMinutes} min read
-                    </span>
-                    {lesson.isCompleted && (
-                      <span className="text-emerald-700 font-medium">Completed</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-teal-600 transition-transform group-hover:translate-x-1 shrink-0" />
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Prioritized Chapter Roadmap Component */}
+      <ChapterRoadmapView module={module} />
     </div>
   );
 }

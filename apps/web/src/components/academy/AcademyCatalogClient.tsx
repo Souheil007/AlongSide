@@ -1,18 +1,20 @@
 'use client';
 
 import * as React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { BookOpen, Sparkles, Filter, AlertCircle } from 'lucide-react';
-import { DevelopmentalTier, type AcademyModuleDTO } from '@alongside/shared';
+import {
+  DevelopmentalTier,
+  AcademyCategory,
+  type AcademyCategoryStatsDTO,
+  type AcademyModuleDTO,
+} from '@alongside/shared';
 import { useChildren } from '@/hooks/useChildren';
 import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
-import { getModulesByTier } from '@/lib/api/academy';
-import { ModuleCard } from '@/components/academy/ModuleCard';
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
-import { cn } from '@/lib/utils';
-
-type TierTabFilter = 'ALL' | DevelopmentalTier;
+import { getAcademyCategories, getAcademyModules } from '@/lib/api/academy';
+import { CategoryPills, type CategoryFilter } from '@/components/academy/CategoryPills';
+import { ActiveChildCalibrationBanner } from '@/components/academy/ActiveChildCalibrationBanner';
+import { CourseCardGrid } from '@/components/academy/CourseCardGrid';
 
 function normalizeChildTier(tier: DevelopmentalTier): DevelopmentalTier {
   switch (tier) {
@@ -29,197 +31,97 @@ function normalizeChildTier(tier: DevelopmentalTier): DevelopmentalTier {
   }
 }
 
-const TIER_TABS: Array<{ key: TierTabFilter; label: string; shortLabel: string; ageRange: string }> = [
-  { key: 'ALL', label: 'All Modules', shortLabel: 'All', ageRange: 'Ages 0–18' },
-  {
-    key: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
-    label: 'Tier 0: Infancy & Toddler',
-    shortLabel: '0–3 yrs',
-    ageRange: 'Ages 0–3',
-  },
-  {
-    key: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
-    label: 'Tier 1: Early Childhood',
-    shortLabel: '4–6 yrs',
-    ageRange: 'Ages 4–6',
-  },
-  {
-    key: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
-    label: 'Tier 2: Explorer',
-    shortLabel: '7–9 yrs',
-    ageRange: 'Ages 7–9',
-  },
-  {
-    key: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
-    label: 'Tier 3: Pathfinder',
-    shortLabel: '10–12 yrs',
-    ageRange: 'Ages 10–12',
-  },
-  {
-    key: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
-    label: 'Tier 4: Navigator',
-    shortLabel: '13–15 yrs',
-    ageRange: 'Ages 13–15',
-  },
-  {
-    key: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
-    label: 'Tier 5: Pioneer',
-    shortLabel: '16–18 yrs',
-    ageRange: 'Ages 16–18',
-  },
-];
-
 export function AcademyCatalogClient() {
+  const searchParams = useSearchParams();
+  const urlCategory = searchParams?.get('category') as AcademyCategory | null;
+
+  // Active child context from store and queries
   const { children: storeChildren, activeChildId } = useChildContextStore();
-  const { children: queryChildren, isLoading: isChildrenLoading } = useChildren();
+  const { children: queryChildren } = useChildren();
   const children = storeChildren.length > 0 ? storeChildren : queryChildren;
   const activeChild = selectActiveChild({ children, activeChildId });
-  const [selectedTier, setSelectedTier] = React.useState<TierTabFilter>('ALL');
-  // Reactively synchronize selected tier with active child profile
+
+  // Category filter state (default to URL param or ALL)
+  const [selectedCategory, setSelectedCategory] = React.useState<CategoryFilter>(
+    urlCategory && Object.values(AcademyCategory).includes(urlCategory)
+      ? urlCategory
+      : 'ALL'
+  );
+
+  // Sync state if URL search params change
+  React.useEffect(() => {
+    if (urlCategory && Object.values(AcademyCategory).includes(urlCategory)) {
+      setSelectedCategory(urlCategory);
+    } else if (!urlCategory) {
+      setSelectedCategory('ALL');
+    }
+  }, [urlCategory]);
+
+  // Developmental tier filter state (default to active child tier or ALL)
+  const [selectedTier, setSelectedTier] = React.useState<'ALL' | DevelopmentalTier>('ALL');
+
   React.useEffect(() => {
     if (activeChild?.developmentalTier) {
       setSelectedTier(normalizeChildTier(activeChild.developmentalTier));
     }
   }, [activeChild?.id, activeChild?.developmentalTier]);
 
+  // Query category stats
+  const { data: categoryStats = [] } = useQuery<AcademyCategoryStatsDTO[]>({
+    queryKey: ['academy-categories'],
+    queryFn: getAcademyCategories,
+    staleTime: 10 * 60 * 1000,
+  });
+
+  // Query modules filtered by category and tier
   const {
-    data,
+    data: modules = [],
     isLoading: isModulesLoading,
     isError,
     error,
     refetch,
-  } = useQuery({
-    queryKey: ['academy-modules', selectedTier],
-    queryFn: () => getModulesByTier(selectedTier === 'ALL' ? undefined : selectedTier),
+  } = useQuery<AcademyModuleDTO[]>({
+    queryKey: ['academy-modules', selectedCategory, selectedTier],
+    queryFn: () =>
+      getAcademyModules({
+        category: selectedCategory === 'ALL' ? undefined : selectedCategory,
+        tier: selectedTier === 'ALL' ? undefined : selectedTier,
+      }),
     staleTime: 5 * 60 * 1000,
   });
 
-  const modules: AcademyModuleDTO[] = data?.modules ?? [];
+  const handleResetFilters = () => {
+    setSelectedCategory('ALL');
+    setSelectedTier('ALL');
+  };
 
   return (
     <div className="space-y-8">
-      {/* Active Child Context Callout */}
-      {activeChild && (
-        <div className="rounded-2xl border border-teal-200/80 bg-teal-50/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white font-bold text-sm shrink-0">
-              {activeChild.name.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <p className="text-sm font-bold text-slate-900">
-                Masterclass Curriculum
-              </p>
-              <p className="text-xs text-slate-600">
-                Evidence-based neurobiology and actionable parent dialogue scripts.
-              </p>
-            </div>
-          </div>
+      {/* Active Child Context Calibration Banner */}
+      <ActiveChildCalibrationBanner
+        childName={activeChild?.name}
+        childAge={activeChild?.age}
+        childTier={activeChild?.developmentalTier}
+        selectedTier={selectedTier}
+        onSelectTier={setSelectedTier}
+      />
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-medium">Currently viewing:</span>
-            <Badge variant="outline" className="border-teal-300 bg-white text-teal-800 text-xs font-semibold">
-              {TIER_TABS.find((t) => t.key === selectedTier)?.label || selectedTier}
-            </Badge>
-          </div>
-        </div>
-      )}
+      {/* 5-Category Horizontal Selector Pills */}
+      <CategoryPills
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        categoryStats={categoryStats}
+      />
 
-      {/* Developmental Tier Tabs */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-          Filter by Developmental Stage
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {TIER_TABS.map((tab) => {
-            const isSelected = selectedTier === tab.key;
-            return (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => setSelectedTier(tab.key)}
-                className={cn(
-                  'flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 border',
-                  isSelected
-                    ? 'border-teal-600 bg-teal-600 text-white shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                )}
-                aria-pressed={isSelected}
-              >
-                <span>{tab.label}</span>
-                <span
-                  className={cn(
-                    'text-[11px] font-normal px-1.5 py-0.5 rounded-full',
-                    isSelected ? 'bg-teal-700 text-teal-100' : 'bg-slate-100 text-slate-500'
-                  )}
-                >
-                  {tab.ageRange}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Modules Grid */}
-      {isModulesLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((skeletonIdx) => (
-            <div
-              key={skeletonIdx}
-              className="h-72 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse space-y-4"
-            >
-              <div className="h-4 w-24 bg-slate-200 rounded" />
-              <div className="h-6 w-3/4 bg-slate-200 rounded" />
-              <div className="h-16 w-full bg-slate-100 rounded" />
-              <div className="h-3 w-1/2 bg-slate-200 rounded" />
-              <div className="h-10 w-full bg-slate-200 rounded-lg pt-4" />
-            </div>
-          ))}
-        </div>
-      ) : isError ? (
-        <div className="rounded-2xl border border-rose-200 bg-rose-50/50 p-8 text-center space-y-3">
-          <AlertCircle className="h-8 w-8 text-rose-500 mx-auto" />
-          <h3 className="text-base font-bold text-rose-900">
-            Failed to Load Academy Modules
-          </h3>
-          <p className="text-xs sm:text-sm text-rose-700 max-w-md mx-auto">
-            {error instanceof Error ? error.message : 'Please check your connection.'}
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => refetch()}
-            className="border-rose-300 text-rose-900 hover:bg-rose-100"
-          >
-            Retry Loading
-          </Button>
-        </div>
-      ) : modules.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center space-y-4">
-          <BookOpen className="h-10 w-10 text-slate-300 mx-auto" />
-          <div className="space-y-1">
-            <h3 className="text-base font-bold text-slate-900">
-              No Modules Found
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
-              There are currently no academy modules for this specific developmental tier.
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setSelectedTier('ALL')}
-          >
-            View All Developmental Tiers
-          </Button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((mod) => (
-            <ModuleCard key={mod.id} module={mod} />
-          ))}
-        </div>
-      )}
+      {/* Responsive Course Card Grid */}
+      <CourseCardGrid
+        modules={modules}
+        isLoading={isModulesLoading}
+        isError={isError}
+        error={error}
+        onRetry={() => refetch()}
+        onResetFilters={handleResetFilters}
+      />
     </div>
   );
 }

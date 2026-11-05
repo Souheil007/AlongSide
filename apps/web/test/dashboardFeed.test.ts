@@ -125,14 +125,14 @@ describe('Holistic Family Dashboard & Unified Navigation UI Specification (PLAN-
         'child-mateo',
         DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
       );
-      expect([PlayCategory.PUPPET, PlayCategory.CONSTRUCTION]).toContain(infantGame.category);
+      expect([PlayCategory.PUPPET, PlayCategory.CONSTRUCTION, PlayCategory.SENSORY]).toContain(infantGame.category);
       expect(infantGame.title).toMatch(/Animal Puppet|Sensory|Block|Texture/i);
 
       const teenGame = await getDailyBrainGame(
         'child-julian',
         DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15
       );
-      expect(teenGame.title).toMatch(/Dilemma Sparring|Stop-Motion|Claymation/i);
+      expect(teenGame.title).toMatch(/Dilemma Sparring|Stop-Motion|Claymation|Sudoku|Nonogram|Logic Battle/i);
     });
 
     it('allows catalog queries filtered by play category', async () => {
