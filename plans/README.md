@@ -53,6 +53,7 @@ graph TD
         P31["31: Academy Curriculum Explorer & Chapter Reader UI (FE)"]
         P32["32: Sunday Culture Digest Living Feed & Dinner Starters UI (FE)"]
         P33["33: Advisory Homepage & Child Cockpit Redesign UI (FE)"]
+        P35["35: Streamlined Developmental Horizon Courses UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -116,6 +117,8 @@ graph TD
     P29 --> P32
     P31 --> P33
     P32 --> P33
+    P33 --> P35
+    P35 --> P14
     P33 --> P14
     P31 --> P14
     P32 --> P14
@@ -161,6 +164,7 @@ graph TD
 | [**`32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md`**](32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md) | Sunday Culture Digest Living Feed & Dinner Starters UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29 | Complete (PR #50) |
 | [**`33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md`**](33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md) | Advisory Homepage & Child Cockpit Redesign UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32 | Complete (PR #53) |
 | [**`34-universal-cross-tab-reactive-child-tailoring-ui.md`**](34-universal-cross-tab-reactive-child-tailoring-ui.md) | Universal Cross-Tab Reactive Child Context Synchronization & Multi-Child Tailoring UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32, PLAN-33 | Complete (PR #55) |
+| [**`35-streamlined-developmental-horizon-courses-ui.md`**](35-streamlined-developmental-horizon-courses-ui.md) | Streamlined Developmental Horizon Courses & Category Advisory UI | **Frontend Agent** | PLAN-30, PLAN-33 | In Progress |
 
 ---
 

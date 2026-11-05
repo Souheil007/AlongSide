@@ -63,66 +63,66 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
       expect(ageLabels).toContain('Ages 10–18');
     });
 
-    it('Stage 1 (Infants & Toddlers 0–3) provides pediatric triage, safe allergens & CDC milestones', () => {
+    it('Stage 1 (Infants & Toddlers 0–3) provides 5 tailored courses across core categories', () => {
       const stage1 = LIFESPAN_STAGES.find((s) => s.id === 'infants-toddlers');
       expect(stage1).toBeDefined();
       expect(stage1?.title).toContain('Physical Health, Milestones & Safe Feeding');
+      expect(stage1?.courses).toHaveLength(5);
 
-      const highlightTitles = stage1?.highlights.map((h) => h.title);
-      expect(highlightTitles?.some((t) => t.includes('Pediatric Fever Triage') || t.includes('Safe Resort'))).toBe(true);
-      expect(stage1?.highlights.some((h) => h.description.includes('Barton Schmitt'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Allergen'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('CDC Milestones'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Puppet'))).toBe(true);
+      const courseSlugs = stage1?.courses.map((c) => c.slug);
+      expect(courseSlugs).toContain('behavior-infant-coregulation');
+      expect(courseSlugs).toContain('health-infant-sleep-foundations');
+      expect(courseSlugs).toContain('nutrition-infant-first-foods');
+      expect(courseSlugs).toContain('play-infant-sensory-language');
+      expect(courseSlugs).toContain('digital-infant-zero-screens');
 
-      // Realistic preview widget
-      expect(stage1?.previewWidget.statusBadge).toContain('Safe at Home');
-      expect(stage1?.previewWidget.items.some((it) => it.label.includes('Fever Assessment'))).toBe(true);
-      expect(stage1?.previewWidget.items.some((it) => it.label.includes('Allergen Exposure'))).toBe(true);
+      // Verifies all courses have lesson count and duration
+      for (const course of stage1!.courses) {
+        expect(course.lessonCount).toBe(3);
+        expect(course.durationMinutes).toBeGreaterThanOrEqual(12);
+      }
     });
 
-    it('Stage 2 (Early Childhood 4–6) provides HALT diagnostic, Ellyn Satter feeding & bedtime co-regulation', () => {
+    it('Stage 2 (Early Childhood 4–6) provides 5 tailored courses across core categories', () => {
       const stage2 = LIFESPAN_STAGES.find((s) => s.id === 'early-childhood');
       expect(stage2).toBeDefined();
       expect(stage2?.title).toContain('Emotional Regulation, Picky Eating & Symbolic Play');
+      expect(stage2?.courses).toHaveLength(5);
 
-      const highlightTitles = stage2?.highlights.map((h) => h.title);
-      expect(highlightTitles?.some((t) => t.includes('HALT Tantrum Diagnostic'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Division of Responsibility'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Building Blocks'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Bedtime Routine'))).toBe(true);
-
-      expect(stage2?.previewWidget.title).toContain('Maya — Age 5');
-      expect(stage2?.previewWidget.items.some((it) => it.label.includes('Grocery Store Meltdown'))).toBe(true);
+      const courseSlugs = stage2?.courses.map((c) => c.slug);
+      expect(courseSlugs).toContain('behavior-preschool-feelings');
+      expect(courseSlugs).toContain('health-preschool-immunity');
+      expect(courseSlugs).toContain('nutrition-preschool-picky-eating');
+      expect(courseSlugs).toContain('play-preschool-executive-function');
+      expect(courseSlugs).toContain('digital-preschool-media-curation');
     });
 
-    it('Stage 3 (Middle Childhood 7–9) provides logic puzzles, boredom buster & peer friendship coaching', () => {
+    it('Stage 3 (Middle Childhood 7–9) provides 5 tailored courses across core categories', () => {
       const stage3 = LIFESPAN_STAGES.find((s) => s.id === 'middle-childhood');
       expect(stage3).toBeDefined();
       expect(stage3?.title).toContain('Cognitive Brain Games & Social Foundations');
+      expect(stage3?.courses).toHaveLength(5);
 
-      const highlightTitles = stage3?.highlights.map((h) => h.title);
-      expect(highlightTitles?.some((t) => t.includes('Chess'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Boredom Buster'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Friendship'))).toBe(true);
-
-      expect(stage3?.previewWidget.title).toContain('Julian — Age 8');
-      expect(stage3?.previewWidget.items.some((it) => it.detail.includes('100% Screen-Free'))).toBe(true);
+      const courseSlugs = stage3?.courses.map((c) => c.slug);
+      expect(courseSlugs).toContain('behavior-elementary-impulses');
+      expect(courseSlugs).toContain('health-elementary-wellness');
+      expect(courseSlugs).toContain('nutrition-elementary-fuel');
+      expect(courseSlugs).toContain('play-elementary-logic-maker');
+      expect(courseSlugs).toContain('digital-elementary-first-gaming');
     });
 
-    it('Stage 4 (Pre-Teens & Teens 10–18) provides readiness diagnostic, bilateral pact & neutral curfews', () => {
+    it('Stage 4 (Pre-Teens & Teens 10–18) provides 5 tailored courses across core categories', () => {
       const stage4 = LIFESPAN_STAGES.find((s) => s.id === 'preteens-adolescents');
       expect(stage4).toBeDefined();
       expect(stage4?.title).toContain('Autonomy, Modern Tech & Youth Culture');
+      expect(stage4?.courses).toHaveLength(5);
 
-      const highlightTitles = stage4?.highlights.map((h) => h.title);
-      expect(highlightTitles?.some((t) => t.includes('Readiness Assessment (Score 0–100)'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Pact-as-Code'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('8:30 PM'))).toBe(true);
-      expect(highlightTitles?.some((t) => t.includes('Slang Intelligence'))).toBe(true);
-
-      expect(stage4?.previewWidget.title).toContain('Sofia — Age 12');
-      expect(stage4?.previewWidget.statusBadge).toContain('Curfew Enforced');
+      const courseSlugs = stage4?.courses.map((c) => c.slug);
+      expect(courseSlugs).toContain('behavior-tween-adrenarche');
+      expect(courseSlugs).toContain('health-tween-circadian-leaps');
+      expect(courseSlugs).toContain('nutrition-tween-growth-spurts');
+      expect(courseSlugs).toContain('play-tween-flow-hobbies');
+      expect(courseSlugs).toContain('digital-tween-smartphone-pacts');
     });
   });
 
