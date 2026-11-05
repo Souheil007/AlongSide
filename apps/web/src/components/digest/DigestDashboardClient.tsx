@@ -70,11 +70,13 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
       {/* 3. Searchable Slang Radar & Decoder */}
       <SlangDecoderView
         apiSlangTerms={apiSlangTerms}
+        child={activeChild}
       />
 
       {/* 4. Exploit & Dark Pattern Early Warnings */}
       <ExploitAlertsView
         apiAlerts={apiExploitAlerts}
+        child={activeChild}
       />
     </div>
   );

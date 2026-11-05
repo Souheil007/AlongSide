@@ -33,6 +33,8 @@ import {
 import {
   useChildContextStore,
   selectActiveChild,
+  resolveChildDevicesDefaultTab,
+  resolveChildSlangTier,
 } from '@/stores/useChildContextStore';
 import { useChildren } from '@/hooks/useChildren';
 import { usePactStore, formatCurfew12Hour } from '@/stores/usePactStore';
@@ -45,6 +47,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { SlangCard } from '@/components/digest/SlangCard';
 import { ExploitAlertCard } from '@/components/digest/ExploitAlertCard';
 import { getLatestDigest } from '@/lib/api/digest';
+import { cn } from '@/lib/utils';
 
 export interface DevicesManagementViewProps {
   initialTab?: string;
@@ -138,16 +141,178 @@ export function DevicesManagementView({
 
   const activeChild = selectActiveChild({ children, activeChildId });
 
-  // Automatically tailor default tab based on active child's road type when no custom tab was requested
+  // Automatically tailor default tab based on active child reactively upon child switch
   React.useEffect(() => {
-    if (activeChild?.roadType && initialTab === 'curfews') {
-      if (activeChild.roadType === RoadType.PRE_DEVICE) {
-        setActiveTab('readiness');
-      } else if (activeChild.roadType === RoadType.ACTIVE_DEVICE) {
-        setActiveTab('curfews');
-      }
+    if (activeChild) {
+      const defaultTab = resolveChildDevicesDefaultTab(activeChild);
+      setActiveTab(defaultTab);
     }
-  }, [activeChild?.id, activeChild?.roadType, initialTab]);
+  }, [activeChild?.id, activeChild?.roadType, activeChild?.age]);
+
+  // Sort children so active child appears first in device curfew cards
+  const sortedChildren = React.useMemo(() => {
+    if (!activeChild?.id) return children;
+    return [...children].sort((a, b) => {
+      if (a.id === activeChild.id) return -1;
+      if (b.id === activeChild.id) return 1;
+      return 0;
+    });
+  }, [children, activeChild?.id]);
+
+  // Tailored Bilateral Family Pact commitments
+  const childCommitments = React.useMemo(() => {
+    const age = activeChild?.age ?? 8;
+    if (age <= 6) {
+      return [
+        'Docks family tablet or smart speaker in the living room; zero bedroom screens.',
+        'Stops screen play calmly when timer rings after 30-45 minutes of co-viewing.',
+        'Shares screen games with parents, practicing turn-taking and emotional sparring.',
+      ];
+    }
+    if (age <= 12) {
+      return [
+        'Docks device at the central family station by 8:30 PM nightly.',
+        'Completes schoolwork and household contributions before recreational screen time.',
+        'Maintains zero disguised vault apps, private browsing bypasses, or secret accounts.',
+      ];
+    }
+    return [
+      'Docks personal smartphone at the hallway station by 9:30 PM for restorative circadian sleep.',
+      'Practices autonomous executive focus blocks (Pomodoro) during high school study sessions.',
+      'Maintains transparent communication with parents regarding uncomfortable group chat dynamics.',
+    ];
+  }, [activeChild]);
+
+  const parentCommitments = React.useMemo(() => {
+    const age = activeChild?.age ?? 8;
+    if (age <= 6) {
+      return [
+        'Active co-viewing: watches and explores high-quality interactive media alongside child.',
+        'Puts away personal work devices during meals, outdoor play, and bedtime routines.',
+        'Maintains calm, empathetic boundaries when child protests screen transitions.',
+      ];
+    }
+    return [
+      'Zero stealth spyware reading personal text messages or secret surveillance.',
+      'Device-free dinner table: parents put away work laptops and phones too.',
+      'Safe Harbor Guarantee: No punitive confiscation when child reports troubling online encounters.',
+    ];
+  }, [activeChild]);
+
+  // Tailored Sunday dinner conversation starter prompt
+  const dinnerStarterPrompt = React.useMemo(() => {
+    const age = activeChild?.age ?? 8;
+    if (age <= 6) {
+      return {
+        prompt:
+          'How do we balance imaginative physical play with screen limits? What was your favorite pretend game or story we created together this week?',
+        tip: 'Tip: Ask while drawing or playing together; early childhood thrives on playful co-imagination rather than abstract logic.',
+      };
+    }
+    if (age <= 12) {
+      return {
+        prompt:
+          'If someone in your favorite online game asks to trade items for real money or gifts, how do you know if it’s safe? Have you noticed prize spin wheels in Roblox or Fortnite?',
+        tip: 'Tip: Ask with curiosity over Sunday pizza without accusing them of gambling or banning the game.',
+      };
+    }
+    return {
+      prompt:
+        'If an app has a secret calculator code, does that count as healthy personal privacy or covert secrecy? What is the difference between keeping a personal diary vs. hiding an encrypted vault?',
+      tip: 'Tip: Ask with genuine philosophical curiosity during Sunday dinner without accusatory questioning or device confiscation.',
+    };
+  }, [activeChild]);
+
+  // Tailored trending slang terms
+  const tailoredSlangTerms = React.useMemo(() => {
+    const slangTier = resolveChildSlangTier(activeChild);
+    if (slangTier === 'EARLY_CHILDHOOD' || slangTier === 'ALL') {
+      return [
+        {
+          term: 'Skibidi',
+          badge: 'Playful Meme',
+          desc: 'Absurdist YouTube meme humor used as silly conversational filler.',
+          example: 'What the skibidi are you doing?',
+        },
+        {
+          term: 'Fanum Tax',
+          badge: 'Playful Meme',
+          desc: 'Playfully stealing a bite of food from a friend or sibling’s plate.',
+          example: 'Give me a fry, that’s the fanum tax.',
+        },
+        {
+          term: 'Rizz',
+          badge: 'Harmless',
+          desc: 'Short for charisma; the effortless ability to charm and be friendly.',
+          example: 'He has unspoken rizz.',
+        },
+      ];
+    }
+    if (slangTier === 'ELEMENTARY') {
+      return [
+        {
+          term: 'Skibidi',
+          badge: 'Playful Meme',
+          desc: 'Absurdist YouTube meme humor used as silly conversational filler.',
+          example: 'What the skibidi are you doing?',
+        },
+        {
+          term: 'Fanum Tax',
+          badge: 'Playful Meme',
+          desc: 'Playfully stealing a bite of food from a friend or sibling’s plate.',
+          example: 'Give me a fry, that’s the fanum tax.',
+        },
+        {
+          term: 'Sus',
+          badge: 'Harmless',
+          desc: 'Short for suspicious; playful question regarding weird moves in games.',
+          example: 'Why are you hiding your screen? Sus.',
+        },
+      ];
+    }
+    if (slangTier === 'TWEEN') {
+      return [
+        {
+          term: 'Rizz',
+          badge: 'Harmless',
+          desc: 'Short for charisma; the effortless ability to charm or be friendly.',
+          example: 'He’s got unspoken rizz.',
+        },
+        {
+          term: 'Crashout',
+          badge: 'Watch Context',
+          desc: 'An explosive emotional meltdown over a gaming loss or minor frustration.',
+          example: 'Bro had a crashout after the match.',
+        },
+        {
+          term: 'Cap / No Cap',
+          badge: 'Harmless',
+          desc: 'Cap means lie or exaggeration; No Cap signifies absolute truth.',
+          example: 'Hardest math test ever, no cap.',
+        },
+      ];
+    }
+    return [
+      {
+        term: 'Bet',
+        badge: 'Harmless',
+        desc: 'Affirmative agreement meaning "Yes", "Sounds good", or "Deal".',
+        example: 'Parent: "Dinner in 10." Teen: "Bet."',
+      },
+      {
+        term: 'Cooked',
+        badge: 'Distress / Caution',
+        desc: 'Doomed, exhausted, or completely unprepared for an upcoming test.',
+        example: 'I have 3 tests tomorrow, I am cooked.',
+      },
+      {
+        term: 'Mid',
+        badge: 'Harmless',
+        desc: 'Mediocre, underwhelming, or uninspired quality in movies, food, or music.',
+        example: 'That movie was completely mid.',
+      },
+    ];
+  }, [activeChild]);
 
   const handleOpenEnrollment = (childId: string, childName: string, curfew = '20:30') => {
     setSelectedChild({
@@ -414,18 +579,12 @@ export function DevicesManagementView({
                     {activeChild?.name || 'Child'}&apos;s Commitments
                   </span>
                   <ul className="space-y-2 text-xs text-slate-700">
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>Docks phone at family charging station by 8:30 PM nightly.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>Finishes homework and household chores before recreational screen time.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>Zero disguised vault apps or secret accounts.</span>
-                    </li>
+                    {childCommitments.map((commitment, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
+                        <span>{commitment}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -436,18 +595,12 @@ export function DevicesManagementView({
                     Parent&apos;s Commitments
                   </span>
                   <ul className="space-y-2 text-xs text-slate-700">
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>Zero stealth spyware reading personal text messages.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>Device-free dinner table: parents put away work phones too.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                      <span>No punitive confiscation when child reports troubling online encounters.</span>
-                    </li>
+                    {parentCommitments.map((commitment, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
+                        <span>{commitment}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -525,15 +678,20 @@ export function DevicesManagementView({
               </Card>
             ) : (
               <div className="grid grid-cols-1 gap-4">
-                {children.map((child) => {
+                {sortedChildren.map((child) => {
                   const isRoad1 = child.roadType === RoadType.PRE_DEVICE;
+                  const isActiveSelected = child.id === activeChild?.id;
                   const recommendedCurfew = getRecommendedCurfew(child.age);
                   const effectiveCurfew = pactStore.curfewTime || recommendedCurfew.time24;
 
                   return (
                     <Card
                       key={child.id}
-                      className="border-slate-200/90 hover:border-slate-300 transition-all shadow-xs"
+                      data-testid={`device-card-${child.id}`}
+                      className={cn(
+                        'border-slate-200/90 hover:border-slate-300 transition-all shadow-xs',
+                        isActiveSelected && 'ring-2 ring-teal-500 bg-teal-50/20 border-teal-300'
+                      )}
                     >
                       <CardContent className="p-5 sm:p-6">
                         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
@@ -542,6 +700,14 @@ export function DevicesManagementView({
                               <h3 className="text-lg font-bold text-slate-900">
                                 {child.name}&apos;s Device Profile
                               </h3>
+                              {isActiveSelected && (
+                                <Badge
+                                  data-testid="active-child-profile-badge"
+                                  className="border-teal-300 bg-teal-50 text-teal-800 text-[10px] font-bold"
+                                >
+                                  Active Child Profile
+                                </Badge>
+                              )}
                               <Badge
                                 variant={isRoad1 ? 'roadPre' : 'roadActive'}
                                 className="text-[10px]"
@@ -643,12 +809,17 @@ export function DevicesManagementView({
                 <div className="flex items-center gap-2 font-bold text-teal-950 text-xs sm:text-sm">
                   <MessageSquare className="h-4 w-4 text-teal-700" />
                   <span>Sunday Dinner Table Conversation Starter</span>
+                  {activeChild && (
+                    <Badge variant="outline" className="text-[10px] bg-white text-teal-800 border-teal-200 ml-auto">
+                      Calibrated for {activeChild.name}
+                    </Badge>
+                  )}
                 </div>
                 <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed pl-6">
-                  &ldquo;If an app has a secret calculator code, does that count as healthy personal privacy or covert secrecy? What is the difference between keeping a personal diary vs. hiding an encrypted vault?&rdquo;
+                  &ldquo;{dinnerStarterPrompt.prompt}&rdquo;
                 </p>
                 <p className="text-[11px] text-teal-800/80 pl-6 font-medium">
-                  Tip: Ask with genuine curiosity during Sunday dinner without accusatory questioning or confiscating devices.
+                  {dinnerStarterPrompt.tip}
                 </p>
               </div>
               {/* Exploit Alerts Row */}
@@ -699,50 +870,22 @@ export function DevicesManagementView({
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-black text-slate-900">&ldquo;Rizz&rdquo;</h4>
-                      <Badge variant="outline" className="text-[9px] bg-emerald-50 text-emerald-800 border-emerald-200">
-                        Harmless
-                      </Badge>
+                  {tailoredSlangTerms.map((item, idx) => (
+                    <div key={idx} className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-2xs">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-black text-slate-900">&ldquo;{item.term}&rdquo;</h4>
+                        <Badge variant="outline" className="text-[9px] bg-emerald-50 text-emerald-800 border-emerald-200">
+                          {item.badge}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        {item.desc}
+                      </p>
+                      <span className="text-[10px] text-slate-400 block pt-1 italic">
+                        Example: {item.example}
+                      </span>
                     </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Short for charisma. Ability to charm or flirt effortlessly.
-                    </p>
-                    <span className="text-[10px] text-slate-400 block pt-1 italic">
-                      Example: &ldquo;He&apos;s got unspoken rizz.&rdquo;
-                    </span>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-black text-slate-900">&ldquo;Sigma&rdquo;</h4>
-                      <Badge variant="outline" className="text-[9px] bg-amber-50 text-amber-800 border-amber-200">
-                        Watch Context
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      A self-reliant, cool lone wolf. Often used ironically, but can sometimes echo &ldquo;alpha male&rdquo; internet subcultures.
-                    </p>
-                    <span className="text-[10px] text-slate-400 block pt-1 italic">
-                      Example: &ldquo;He is a total sigma grindset.&rdquo;
-                    </span>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-black text-slate-900">&ldquo;Fanum Tax&rdquo;</h4>
-                      <Badge variant="outline" className="text-[9px] bg-emerald-50 text-emerald-800 border-emerald-200">
-                        Playful Meme
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Stealing a bite of a friend&apos;s food. Originates from streamer Fanum who humorously &ldquo;taxed&rdquo; Kai Cenat&apos;s snacks.
-                    </p>
-                    <span className="text-[10px] text-slate-400 block pt-1 italic">
-                      Example: &ldquo;Give me a french fry, that&apos;s the fanum tax.&rdquo;
-                    </span>
-                  </div>
+                  ))}
                 </div>
               </div>
             </CardContent>

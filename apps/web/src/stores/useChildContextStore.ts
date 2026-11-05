@@ -160,6 +160,39 @@ export function selectActiveTier(state: {
 }
 
 /**
+ * Pure selector helper to resolve a child's appropriate slang tier:
+ * - age <= 6: 'EARLY_CHILDHOOD' (screen-free window)
+ * - age 7–9: 'ELEMENTARY'
+ * - age 10–12: 'TWEEN'
+ * - age 13+: 'TEEN'
+ * - null/undefined: 'ALL'
+ */
+export function resolveChildSlangTier(
+  child: ChildDTO | null | undefined
+): 'ALL' | 'ELEMENTARY' | 'TWEEN' | 'TEEN' | 'EARLY_CHILDHOOD' {
+  if (!child || child.age === undefined || child.age === null) return 'ALL';
+  if (child.age <= 6) return 'EARLY_CHILDHOOD';
+  if (child.age <= 9) return 'ELEMENTARY';
+  if (child.age <= 12) return 'TWEEN';
+  return 'TEEN';
+}
+
+/**
+ * Pure selector helper to resolve the default Devices Hub tab:
+ * - RoadType.PRE_DEVICE -> 'readiness' ("1. Thinking About a Device?")
+ * - RoadType.ACTIVE_DEVICE -> 'curfews' ("3. Active Device Curfews")
+ * - Fallback based on age: age <= 9 -> 'readiness', else 'curfews'
+ */
+export function resolveChildDevicesDefaultTab(
+  child: ChildDTO | null | undefined
+): 'readiness' | 'curfews' {
+  if (!child) return 'readiness';
+  if (child.roadType === RoadType.PRE_DEVICE) return 'readiness';
+  if (child.roadType === RoadType.ACTIVE_DEVICE) return 'curfews';
+  return (child.age ?? 8) <= 9 ? 'readiness' : 'curfews';
+}
+
+/**
  * Fallback demo children providing immediate interactive utility across 0-18 spectrum
  */
 export const DEMO_FAMILY_CHILDREN: ChildDTO[] = [
@@ -238,6 +271,10 @@ export const useChildContextStore = create<ChildContextState>((set, get) => ({
           url.searchParams.set('childId', childId);
           window.history.replaceState({}, '', url.toString());
         }
+        // Dispatch custom event for cross-island / decoupled listeners
+        window.dispatchEvent(
+          new CustomEvent('alongside:child-change', { detail: { childId } })
+        );
       } catch {
         // Safe SSR / storage fallback
       }

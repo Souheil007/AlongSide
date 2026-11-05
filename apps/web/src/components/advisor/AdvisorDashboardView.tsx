@@ -15,6 +15,11 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { useAiAdvisorChat } from '@/hooks/useAiAdvisorChat';
+import {
+  useChildContextStore,
+  selectActiveChild,
+  getChildDevelopmentalHorizon,
+} from '@/stores/useChildContextStore';
 import { ChatFeed } from '@/components/advisor/ChatFeed';
 import { QuickPrompts } from '@/components/advisor/QuickPrompts';
 import { VoiceSparringModal } from '@/components/advisor/VoiceSparringModal';
@@ -24,6 +29,12 @@ import Link from 'next/link';
 export function AdvisorDashboardView() {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt') || '';
+
+  const { children, activeChildId } = useChildContextStore();
+  const activeChild = selectActiveChild({ children, activeChildId });
+  const activeHorizon = activeChild
+    ? getChildDevelopmentalHorizon(activeChild.developmentalTier || activeChild.age)
+    : null;
 
   const {
     messages,
@@ -36,7 +47,7 @@ export function AdvisorDashboardView() {
     stopStreaming,
     clearConversation,
     retryLastMessage,
-  } = useAiAdvisorChat();
+  } = useAiAdvisorChat({ defaultChildId: activeChild?.id });
 
   const [inputMessage, setInputMessage] = React.useState('');
   const [isSparringOpen, setIsSparringOpen] = React.useState(false);
@@ -47,16 +58,16 @@ export function AdvisorDashboardView() {
   React.useEffect(() => {
     if (initialPrompt && !autoSentRef.current && messages.length === 0) {
       autoSentRef.current = true;
-      sendMessage(initialPrompt);
+      sendMessage(initialPrompt, { childId: activeChild?.id });
     }
-  }, [initialPrompt, messages.length, sendMessage]);
+  }, [initialPrompt, messages.length, sendMessage, activeChild?.id]);
 
   const handleSend = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!inputMessage.trim() || isStreaming) return;
     const msg = inputMessage;
     setInputMessage('');
-    await sendMessage(msg);
+    await sendMessage(msg, { childId: activeChild?.id });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -68,7 +79,7 @@ export function AdvisorDashboardView() {
 
   const handleSelectQuickPrompt = (prompt: string) => {
     setInputMessage(prompt);
-    sendMessage(prompt);
+    sendMessage(prompt, { childId: activeChild?.id });
   };
 
   return (
@@ -179,6 +190,25 @@ export function AdvisorDashboardView() {
           )}
         </div>
 
+        {/* Active Child Consultation Banner */}
+        {activeChild && (
+          <div
+            data-testid="active-child-consultation-banner"
+            className="border-b border-teal-200/80 bg-gradient-to-r from-teal-50/90 via-emerald-50/50 to-white px-4 py-2.5 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-teal-950 font-medium"
+          >
+            <span className="flex items-center gap-1.5 font-bold">
+              <Sparkles className="h-3.5 w-3.5 text-teal-600 shrink-0" />
+              <span>
+                Active Consultation: Calibrated for {activeChild.name} (Age {activeChild.age} ·{' '}
+                {activeHorizon?.stage || activeHorizon?.tierLabel})
+              </span>
+            </span>
+            <span className="text-[11px] text-teal-700 font-normal">
+              Responses grounded in this developmental neurobiology window
+            </span>
+          </div>
+        )}
+
         {/* Chat Feed */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#FCFBF8]/40">
           <ChatFeed
@@ -225,7 +255,11 @@ export function AdvisorDashboardView() {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               disabled={isStreaming}
-              placeholder="Ask anything... (e.g. 'My 11yo screamed at me when I told him screen time was over')"
+              placeholder={
+                activeChild
+                  ? `Ask about ${activeChild.name}... (e.g. tantrums, bedtime stalls, phone boundaries)`
+                  : "Ask anything... (e.g. 'My 11yo screamed at me when I told him screen time was over')"
+              }
               className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/50 p-3 pr-24 text-sm text-slate-800 placeholder:text-slate-400 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20 disabled:opacity-60"
             />
 

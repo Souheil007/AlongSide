@@ -16,6 +16,9 @@ import {
 import { getAcademyModuleBySlug } from '@/lib/api/academy';
 import { getTierBadgeInfo, getCategoryBadgeInfo } from '@/components/academy/ModuleCard';
 import { ChapterRoadmapView } from '@/components/academy/ChapterRoadmapView';
+import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
+import { normalizeChildTier } from '@/components/academy/AcademyCatalogClient';
+import { getTierStageName } from '@/components/academy/ActiveChildCalibrationBanner';
 import { Button } from '@/components/ui/Button';
 import { Progress } from '@/components/ui/Progress';
 import { Badge } from '@/components/ui/Badge';
@@ -71,6 +74,15 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
     0
   );
 
+  // Active Child Context for stage match calibration
+  const { children, activeChildId } = useChildContextStore();
+  const activeChild = selectActiveChild({ children, activeChildId });
+  const activeChildTier = activeChild
+    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
+    : null;
+  const moduleNormalizedTier = normalizeChildTier(module.developmentalTier);
+  const isTierMatch = Boolean(activeChild && activeChildTier === moduleNormalizedTier);
+
   // Find the first uncompleted lesson, or the first lesson if all or none completed
   const nextLesson = (module.lessons || []).find((l) => !l.isCompleted) || module.lessons?.[0];
 
@@ -116,6 +128,46 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
             </Badge>
           )}
         </div>
+
+        {/* Active Child Stage Match Indicator */}
+        {activeChild && (
+          <div data-testid="active-child-stage-match">
+            {isTierMatch ? (
+              <div
+                data-testid="stage-match-calibrated"
+                className="flex items-center gap-2 rounded-xl bg-teal-50/90 border border-teal-200/90 px-3.5 py-2 text-xs text-teal-900 font-medium shadow-2xs"
+              >
+                <CheckCircle2 className="h-4 w-4 text-teal-600 shrink-0" />
+                <span>
+                  <strong>✓ Calibrated for {activeChild.name}</strong> (Age {activeChild.age})
+                </span>
+              </div>
+            ) : (
+              <div
+                data-testid="stage-match-mismatch"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-xl bg-amber-50/90 border border-amber-200/90 px-3.5 py-2.5 text-xs text-amber-900 shadow-2xs"
+              >
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
+                  <span>
+                    <strong>Stage Note:</strong> This course covers {tierInfo.label}. Active child{' '}
+                    <strong>{activeChild.name}</strong> is in{' '}
+                    {getTierStageName(activeChild.developmentalTier)}.
+                  </span>
+                </div>
+                <Link href="/academy">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 text-[11px] font-semibold border-amber-300 text-amber-900 hover:bg-amber-100/70"
+                  >
+                    View Courses for {activeChild.name}
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="space-y-3">
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-snug">

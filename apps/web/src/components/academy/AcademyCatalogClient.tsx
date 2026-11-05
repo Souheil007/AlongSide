@@ -16,19 +16,32 @@ import { CategoryPills, type CategoryFilter } from '@/components/academy/Categor
 import { ActiveChildCalibrationBanner } from '@/components/academy/ActiveChildCalibrationBanner';
 import { CourseCardGrid } from '@/components/academy/CourseCardGrid';
 
-function normalizeChildTier(tier: DevelopmentalTier): DevelopmentalTier {
-  switch (tier) {
-    case DevelopmentalTier.TIER_1_AGES_8_9:
+export function normalizeChildTier(
+  tier?: DevelopmentalTier | string | null,
+  age?: number
+): DevelopmentalTier {
+  if (tier) {
+    const s = String(tier);
+    if (s.includes('TIER_0') || s.includes('0_3')) return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+    if (s.includes('TIER_1_EARLY') || s.includes('4_6')) return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
+    if (s.includes('TIER_2_MIDDLE') || s.includes('7_9') || s === DevelopmentalTier.TIER_1_AGES_8_9)
       return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
-    case DevelopmentalTier.TIER_2_AGES_10_11:
+    if (s.includes('TIER_3_PRE_TEEN') || s.includes('10_12') || s === DevelopmentalTier.TIER_2_AGES_10_11)
       return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
-    case DevelopmentalTier.TIER_3_AGES_12_13:
+    if (s.includes('TIER_4_EARLY_ADOLESCENCE') || s.includes('13_15') || s === DevelopmentalTier.TIER_3_AGES_12_13)
       return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
-    case DevelopmentalTier.TIER_4_AGES_14_PLUS:
+    if (s.includes('TIER_5_LATE') || s.includes('16_18') || s === DevelopmentalTier.TIER_4_AGES_14_PLUS)
       return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
-    default:
-      return tier;
   }
+  if (age !== undefined && age !== null) {
+    if (age <= 3) return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+    if (age <= 6) return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
+    if (age <= 9) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
+    if (age <= 12) return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
+    if (age <= 15) return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
+    return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
+  }
+  return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
 }
 
 export function AcademyCatalogClient() {
@@ -61,10 +74,10 @@ export function AcademyCatalogClient() {
   const [selectedTier, setSelectedTier] = React.useState<'ALL' | DevelopmentalTier>('ALL');
 
   React.useEffect(() => {
-    if (activeChild?.developmentalTier) {
-      setSelectedTier(normalizeChildTier(activeChild.developmentalTier));
+    if (activeChild) {
+      setSelectedTier(normalizeChildTier(activeChild.developmentalTier, activeChild.age));
     }
-  }, [activeChild?.id, activeChild?.developmentalTier]);
+  }, [activeChild?.id, activeChild?.developmentalTier, activeChild?.age]);
 
   // Query category stats
   const { data: categoryStats = [] } = useQuery<AcademyCategoryStatsDTO[]>({

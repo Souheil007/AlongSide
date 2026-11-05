@@ -72,6 +72,13 @@ export function FaqExplorerView() {
   const [faqs, setFaqs] = React.useState<FaqItemDTO[]>(CURATED_FAQS);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  // Automatically update selectedTier to activeChildLifespanTier whenever activeChild changes
+  React.useEffect(() => {
+    if (activeChildLifespanTier) {
+      setSelectedTier(activeChildLifespanTier);
+    }
+  }, [activeChild?.id, activeChild?.developmentalTier, activeChildLifespanTier]);
+
   // Debounce search input by 250ms
   React.useEffect(() => {
     const handler = setTimeout(() => {
