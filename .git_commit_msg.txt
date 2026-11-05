@@ -1,0 +1,27 @@
+fix(api,web): handle empty JSON request bodies without content-type error
+
+SUMMARY:
+Resolves a 400 Bad Request error ('Body cannot be empty when content-type
+is set to application/json') when clicking 'Complete Lesson & Continue'.
+The apiClient previously attached Content-Type: application/json to all
+requests unconditionally even when body was undefined. Additionally,
+Fastify now parses empty JSON bodies gracefully as {} instead of throwing.
+
+DELIVERABLES:
+1. apps/web/src/lib/api/client.ts:
+   - Only attach Content-Type: application/json header when request body
+     is explicitly provided.
+2. apps/web/src/lib/api/academy.ts:
+   - Explicitly transmit body: JSON.stringify({}) in markLessonComplete.
+3. apps/api/src/app.ts:
+   - Added custom application/json content-type parser to Fastify to
+     gracefully accept empty bodies as {}.
+4. apps/api/test/academyPrioritizedChapters.test.ts:
+   - Added content-type: application/json with empty body to verify
+     successful 200 completion.
+
+TEST VERIFICATION:
+- packages/shared: 5 test suites, 38/38 tests passing.
+- apps/api: 14 test suites, 138/138 tests passing.
+- apps/web: 35 test suites, 343/343 tests passing.
+- Monorepo typecheck: 0 errors across all workspaces.

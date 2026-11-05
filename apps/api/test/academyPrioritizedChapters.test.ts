@@ -280,7 +280,10 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       const completeRes = await app.inject({
         method: 'POST',
         url: `/api/v1/academy/lessons/${lessonId}/complete`,
-        headers: { cookie: userACookie },
+        headers: {
+          cookie: userACookie,
+          'content-type': 'application/json',
+        },
       });
       expect(completeRes.statusCode).toBe(200);
 
