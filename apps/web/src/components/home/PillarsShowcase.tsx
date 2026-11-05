@@ -1,14 +1,20 @@
 import Link from 'next/link';
 import {
+  BookOpen,
+  Sparkles,
+  Flame,
+  FileCheck2,
+  Brain,
+  MessageSquare,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Clock,
+  Compass,
   HeartPulse,
   Utensils,
   Puzzle,
-  Brain,
   Smartphone,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
-  Sparkles,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -28,6 +34,73 @@ export interface PillarData {
   href: string;
   colSpan?: string;
 }
+
+export interface CoreAdvisoryPillar {
+  number: string;
+  title: string;
+  categoryTag: string;
+  badge: string;
+  badgeClass: string;
+  description: string;
+  highlights: string[];
+  href: string;
+  ctaText: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+export const THREE_CORE_PILLARS: CoreAdvisoryPillar[] = [
+  {
+    number: '01',
+    title: 'Parent Intelligence Academy',
+    categoryTag: 'The Advisory Core • 5 Categories',
+    badge: 'Prioritized Chapters (P1 to P3)',
+    badgeClass: 'bg-amber-50 text-amber-900 border-amber-200',
+    description:
+      'Structured 5-minute micro-courses across 5 clinical categories. Chapters ordered strictly by acute necessity (Priority 1: Immediate Friction to Priority 3: Long-Term Scaffolding).',
+    highlights: [
+      '5 Canonical Categories: Behavior, Pediatric Health & Sleep, Nutrition, Play, Digital World',
+      'Neurobiology callouts, clinical insights, and interactive checklists',
+      'Actionable word-for-word dialogue speech bubbles with 1-click copy',
+    ],
+    href: '/academy',
+    ctaText: 'Explore Academy Curriculum',
+    icon: BookOpen,
+  },
+  {
+    number: '02',
+    title: 'Sunday Youth Culture Digest',
+    categoryTag: 'The Weekly Living Feed • Every Sunday',
+    badge: 'Slang Radar & Cringe Meter (1–5)',
+    badgeClass: 'bg-purple-50 text-purple-900 border-purple-200',
+    description:
+      'Keep effortlessly fluent with your child without policing. Decodes trending tween slang, exposes covert app exploits, and sparks organic family dinner conversations.',
+    highlights: [
+      'Searchable Slang Decoder with pronunciation, definitions, and visual 1-5 Cringe Meter',
+      'Sunday Dinner Table Conversation Starters tailored to age tiers',
+      'Exploit Early Warnings: Dark patterns, disguised vault apps, and predator mechanics',
+    ],
+    href: '/digest',
+    ctaText: 'Explore Sunday Digest & Slang',
+    icon: Flame,
+  },
+  {
+    number: '03',
+    title: 'Bilateral Family Pacts & Devices',
+    categoryTag: 'Tech Sovereignty • Pact-as-Code',
+    badge: 'Zero Spyware • 8:30 PM Dock',
+    badgeClass: 'bg-violet-50 text-violet-900 border-violet-200',
+    description:
+      'Replace adversarial device policing with collaborative agreements. Certified MDM profiles enforce bedtime curfews neutrally while safeguarding child privacy.',
+    highlights: [
+      'First-Phone Readiness Assessment (Score 0–100) before smartphone purchase',
+      'Bilateral pact builder with digital co-signatures and printable vector contracts',
+      'Automated 8:30 PM Bedtime Hardware Lock without text-spying or keyloggers',
+    ],
+    href: '/devices',
+    ctaText: 'Explore Family Pacts & Curfews',
+    icon: FileCheck2,
+  },
+];
 
 export const FIVE_BALANCED_PILLARS: PillarData[] = [
   {
@@ -99,116 +172,152 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'Toddler hitting & biting decoded: Pre-verbal motor impulse before language inhibition',
       'Word-for-word co-regulation scripts that hold firm limits while validating big feelings',
     ],
-    clinicalAnchor: 'Based on Gottman Emotion Coaching & Siegel Interpersonal Neurobiology',
+    clinicalAnchor: 'Based on Dan Siegel’s Whole-Brain Child & Ross Greene Collaborative Proactive Solutions',
     href: '/behavior',
   },
   {
     number: '05',
-    title: 'Modern Culture, Devices & Bilateral Pacts',
+    title: 'Balanced Technology & Pact-as-Code',
     category: 'Pillar 5 • Balanced Technology',
-    tagline: 'The "Thinking About a Device?" Action Hub, bilateral pacts & neutral curfews.',
+    tagline: 'Zero-spyware smartphone readiness, digital signatures, and bedtime curfews.',
     description:
-      'Transform technology from an exhausting domestic battle into an empowering rite of passage. Co-signed on-screen agreements and automated 8:30 PM curfews.',
+      'Move beyond fear-mongering and invasive spyware. Assess device readiness (0–100), co-create bilateral agreements, and enforce healthy boundaries.',
     icon: Smartphone,
-    badge: 'Pact-as-Code & Zero Spyware',
-    badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+    badge: 'Apple & Android MDM Certified',
+    badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
     highlights: [
-      'Objective First-Phone Readiness Assessment (Score 0–100) before unboxing',
-      'Bilateral Family Media Pact co-signed by parent and child on screen',
-      'Automated 8:30 PM hardware lockdown: The OS enforces bedtime so you can be the loving parent',
-      'Sunday Youth Culture Digest decoding tween slang (crashout, skibidi, rizz) & app exploits',
+      'First-Phone Readiness Assessment: Objective 0–100 score across 4 developmental maturity dimensions',
+      'The Bilateral Family Media Agreement: Dual-signed contract holding parents and children mutually accountable',
+      'The Neutral 8:30 PM Bed Dock: MDM device profiles enforcing bedroom curfews without manual policing',
     ],
-    clinicalAnchor: 'Based on Declarative Device Management & Zero-Spyware Safe Harbor Architecture',
+    clinicalAnchor: 'Compliant with COPPA Safe Harbor, Apple DDM, and Jonathan Haidt Anxious Generation Principles',
     href: '/devices',
-    colSpan: 'md:col-span-2',
+    colSpan: 'md:col-span-2 lg:col-span-2',
   },
 ];
 
 export function PillarsShowcase() {
   return (
-    <section id="pillars" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
-      <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-        <Badge variant="outline" className="text-xs uppercase tracking-wider text-slate-600 bg-slate-50 border-slate-300">
-          The 5 Balanced Pillars of AlongSide
+    <section id="pillars" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+        <Badge
+          variant="outline"
+          className="text-xs font-bold text-teal-800 bg-teal-50 border-teal-200"
+        >
+          The AlongSide Architecture
         </Badge>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Nurture the Whole Child: Health, Mind, Heart &amp; Environment
+        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+          The 3 Pillars of Parent Calm & Child Understanding
         </h2>
-        <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-          Modern parenting culture oscillates between passive permissiveness and anxious surveillance.
-          AlongSide synthesizes clinical pediatric medicine, developmental psychology, and balanced technology into one comprehensive operating system.
+        <p className="text-base text-slate-600 leading-relaxed">
+          AlongSide converges prioritized clinical education, weekly youth culture intelligence, and bilateral screen contracts into one unified sanctuary.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-        {FIVE_BALANCED_PILLARS.map((pillar) => {
+      {/* 3 Core Pillars Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {THREE_CORE_PILLARS.map((pillar) => {
           const Icon = pillar.icon;
           return (
             <Card
               key={pillar.number}
-              className={`border border-slate-200/90 hover:border-teal-300 transition-all duration-200 hover:shadow-md bg-white ${
-                pillar.colSpan ?? ''
-              }`}
+              className="border-slate-200/90 bg-white hover:border-teal-300 transition-all shadow-xs flex flex-col justify-between"
             >
-              <CardHeader className="space-y-3 pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="h-10 w-10 rounded-xl bg-teal-50 border border-teal-200/80 flex items-center justify-center text-teal-700 shadow-xs">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-teal-800">
-                        {pillar.category}
-                      </span>
-                      <CardTitle className="text-xl sm:text-2xl text-slate-900 font-bold">
-                        {pillar.title}
-                      </CardTitle>
-                    </div>
-                  </div>
-                  <Badge className={`text-xs ${pillar.badgeClass} hidden sm:inline-flex`}>
+              <CardHeader className="p-6 space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-2xl font-black text-slate-200 font-mono">
+                    {pillar.number}
+                  </span>
+                  <Badge
+                    variant="outline"
+                    className={`text-[10px] font-bold border ${pillar.badgeClass}`}
+                  >
                     {pillar.badge}
                   </Badge>
                 </div>
-                <CardDescription className="text-slate-600 text-sm font-medium">
-                  {pillar.tagline}
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white font-bold">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                      {pillar.categoryTag}
+                    </span>
+                    <CardTitle className="text-xl font-bold text-slate-900 leading-snug">
+                      {pillar.title}
+                    </CardTitle>
+                  </div>
+                </div>
+
+                <CardDescription className="text-xs text-slate-600 leading-relaxed pt-1">
+                  {pillar.description}
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-4 pt-1">
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  {pillar.description}
-                </p>
+              <CardContent className="p-6 pt-0 space-y-4">
+                <ul className="space-y-2">
+                  {pillar.highlights.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="text-xs text-slate-700 flex items-start gap-2 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                <div className="space-y-2 pt-1 border-t border-slate-100">
-                  <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide">
-                    Key Clinical Tools &amp; Features:
-                  </div>
-                  <ul className="space-y-2 text-xs text-slate-600">
-                    {pillar.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
-                        <span className="leading-snug">{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-3 flex items-center justify-between border-t border-slate-100 text-xs">
-                  <span className="text-slate-500 italic">
-                    {pillar.clinicalAnchor}
-                  </span>
-                  <Link
-                    href={pillar.href}
-                    className="inline-flex items-center gap-1 font-semibold text-teal-700 hover:text-teal-800 hover:underline"
-                  >
-                    <span>Learn More</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
+                <div className="pt-2">
+                  <Link href={pillar.href} className="block w-full">
+                    <Button
+                      variant="outline"
+                      className="w-full min-h-[44px] gap-2 text-xs font-bold border-slate-300 text-slate-800 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-950"
+                    >
+                      <span>{pillar.ctaText}</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Button>
                   </Link>
                 </div>
               </CardContent>
             </Card>
           );
         })}
+      </div>
+
+      {/* Global Companion: 24/7 AI Child Advisor Spotlight Card */}
+      <div className="rounded-2xl border border-teal-200 bg-gradient-to-r from-teal-900 via-slate-900 to-teal-950 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-500 text-slate-950 font-bold shadow-sm">
+            <Brain className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                Omnipresent Companion
+              </span>
+              <span className="text-[10px] bg-teal-500/20 text-teal-300 font-semibold px-2 py-0.5 rounded-full border border-teal-400/30">
+                Voice Sparring Simulator
+              </span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white">
+              24/7 AI Child Advisor: Safe Harbor Guidance
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+              Trained on 260+ clinical parenting FAQs and developmental neurobiology. Spar against simulated child pushback, generate word-for-word scripts, and get instant answers anytime.
+            </p>
+          </div>
+        </div>
+
+        <Link href="/advisor" className="shrink-0 w-full md:w-auto">
+          <Button
+            size="lg"
+            className="w-full md:w-auto gap-2 bg-teal-400 hover:bg-teal-300 text-slate-950 font-bold min-h-[44px] shadow-sm"
+          >
+            <span>Try AI Voice Sparring</span>
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );

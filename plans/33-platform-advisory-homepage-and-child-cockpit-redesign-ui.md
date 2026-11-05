@@ -304,11 +304,11 @@ This plan delivers a unified, serene, and high-retention advisory homepage exper
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 
-- [ ] All deliverables created and located in correct `apps/web/` directories.
-- [ ] Authenticated `/dashboard` prominently displays Child Advisory Horizon, Priority 1–3 Academy card, Sunday Culture Digest card, Daily Script, and Pact status.
-- [ ] `QuickHealthTriageLauncher` and all medical dosing calculator elements permanently purged from `/dashboard`.
-- [ ] Public `/` homepage showcases the v2.5.0 Advisory Sanctuary positioning, 6-stage lifespan explorer, and 3 Core Pillars.
-- [ ] `npm run typecheck` exits with code 0.
-- [ ] Vitest test suite passes with 100% success.
-- [ ] Diff audited with `ponytail-review` verifying the smallest complete change.
-- [ ] Feature branch `feat/SOU-71-platform-advisory-homepage-and-child-cockpit-redesign-ui` pushed and PR opened targeting `main` with plain text (`.txt`) description.
+- [x] All deliverables created and located in correct `apps/web/` directories.
+- [x] Authenticated `/dashboard` prominently displays Child Advisory Horizon, Priority 1–3 Academy card, Sunday Culture Digest card, Daily Script, and Pact status.
+- [x] `QuickHealthTriageLauncher` and all medical dosing calculator elements permanently purged from `/dashboard`.
+- [x] Public `/` homepage showcases the v2.5.0 Advisory Sanctuary positioning, 6-stage lifespan explorer, and 3 Core Pillars.
+- [x] `npm run typecheck` exits with code 0.
+- [x] Vitest test suite passes with 100% success (34/34 web suites, 490/490 tests monorepo-wide).
+- [x] Diff audited with `ponytail-review` verifying the smallest complete change.
+- [x] Feature branch `feat/SOU-71-platform-advisory-homepage-and-child-cockpit-redesign-ui` pushed and PR opened targeting `main` with plain text (`.txt`) description.
