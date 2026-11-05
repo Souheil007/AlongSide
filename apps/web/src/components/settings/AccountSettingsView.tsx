@@ -160,15 +160,15 @@ export function AccountSettingsView() {
   return (
     <div className="space-y-8 max-w-5xl mx-auto pb-16">
       {/* Header */}
-      <div className="space-y-1.5 border-b border-slate-200 pb-5">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-800">
-          <Shield className="h-4 w-4 text-teal-600" />
+      <div className="space-y-1.5 border-b border-[#E3E3DC] pb-5">
+        <div className="flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-wider text-[#143D2B]">
+          <Shield className="h-4 w-4 text-[#143D2B]" />
           <span>Family Administration &amp; Governance</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-[#111413] tracking-tight">
           Account &amp; Family Settings
         </h1>
-        <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+        <p className="text-sm text-[#494F4C] max-w-2xl leading-relaxed">
           Manage your guardian credentials, family children profiles, Annual Hero Pass subscription,
           and real-time safety notifications.
         </p>
@@ -178,23 +178,23 @@ export function AccountSettingsView() {
         {/* Left Column (2 Cols): Core Settings */}
         <div className="lg:col-span-2 space-y-8">
           {/* Section 1: Guardian Profile */}
-          <Card className="shadow-xs border-slate-200 bg-white overflow-hidden">
-            <CardHeader className="border-b border-slate-100 bg-slate-50/50 pb-4">
+          <Card className="shadow-[0_1px_2px_rgba(17,20,19,0.04)] border-[#E3E3DC] bg-[#FFFFFF] rounded-[10px] overflow-hidden">
+            <CardHeader className="border-b border-[#E3E3DC] bg-[#F4F4F0] pb-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white font-bold shadow-xs">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-[5px] bg-[#143D2B] text-white font-bold shadow-xs">
                     <User className="h-5 w-5" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg font-bold text-slate-900">
+                    <CardTitle className="font-serif text-lg font-semibold text-[#111413]">
                       Guardian Profile
                     </CardTitle>
-                    <CardDescription className="text-xs text-slate-500">
+                    <CardDescription className="text-xs text-[#858C88] font-mono">
                       Primary family administrator and safety contact
                     </CardDescription>
                   </div>
                 </div>
-                <Badge variant="success" className="gap-1 text-[11px]">
+                <Badge variant="success" className="gap-1 text-[11px] font-mono rounded-full">
                   <CheckCircle2 className="h-3 w-3" />
                   Email Verified
                 </Badge>

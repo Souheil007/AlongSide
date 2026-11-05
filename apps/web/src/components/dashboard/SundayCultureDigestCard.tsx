@@ -104,29 +104,33 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
   return (
     <Card
       className={cn(
-        'border-purple-200/80 bg-gradient-to-br from-white via-purple-50/20 to-white shadow-xs hover:border-purple-300 transition-colors',
+        'border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] transition-all hover:border-[#143D2B]/30',
         className
       )}
     >
       <CardHeader className="p-5 pb-3 space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-purple-900">
-            <Sparkles className="h-4 w-4 text-purple-700" />
-            <span>Sunday Youth Culture Digest</span>
+          <div className="flex items-center gap-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <span className="text-xs font-mono font-medium text-[#143D2B] uppercase tracking-wider">
+              Sunday Youth Culture Digest
+            </span>
           </div>
           <Badge
             variant="outline"
-            className="text-[11px] font-bold border-purple-200 text-purple-800 bg-purple-50/60"
+            className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE]"
           >
             Issue #{issueNumber}
           </Badge>
         </div>
 
         <div>
-          <CardTitle className="text-base font-bold text-slate-900 leading-snug line-clamp-2">
+          <CardTitle className="font-serif text-base sm:text-lg font-semibold text-[#111413] leading-snug line-clamp-2">
             {title}
           </CardTitle>
-          <CardDescription className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+          <CardDescription className="text-xs text-[#494F4C] mt-1 line-clamp-2 leading-relaxed">
             Stay effortlessly fluent in tween memes, viral trends, and covert app exploits without policing.
           </CardDescription>
         </div>
@@ -134,25 +138,25 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
 
       <CardContent className="p-5 pt-0 space-y-3.5">
         {/* Word of the Week Spotlight with Cringe Meter */}
-        <div className="rounded-xl border border-purple-200/70 bg-purple-50/40 p-3 space-y-1.5">
+        <div className="rounded-[8px] border border-[#E3E3DC] bg-[#F4F4F0] p-3 space-y-1.5">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-900">
+              <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#858C88]">
                 Word of the Week:
               </span>
-              <span className="text-xs font-bold text-purple-950">
+              <span className="font-serif font-bold text-sm text-[#111413]">
                 &ldquo;{wordOfTheWeek.term}&rdquo;
               </span>
               {wordOfTheWeek.phonetic && (
-                <span className="text-[10px] text-purple-700 font-mono">
+                <span className="text-[10px] text-[#858C88] font-mono">
                   {wordOfTheWeek.phonetic}
                 </span>
               )}
             </div>
 
             {/* Visual Cringe Meter */}
-            <div className="flex items-center gap-1" title={`Cringe Meter: ${wordOfTheWeek.cringeLevel}/5`}>
-              <span className="text-[10px] font-bold text-slate-500">Cringe:</span>
+            <div className="flex items-center gap-1 font-mono" title={`Cringe Meter: ${wordOfTheWeek.cringeLevel}/5`}>
+              <span className="text-[10px] text-[#858C88]">Cringe:</span>
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((lvl) => (
                   <span
@@ -160,38 +164,38 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
                     className={cn(
                       'h-2 w-2 rounded-full',
                       lvl <= wordOfTheWeek.cringeLevel
-                        ? 'bg-amber-500 ring-1 ring-amber-300'
-                        : 'bg-slate-200'
+                        ? 'bg-[#B45309]'
+                        : 'bg-[#E3E3DC]'
                     )}
                   />
                 ))}
               </div>
-              <span className="text-[10px] font-bold text-amber-700 ml-0.5">
+              <span className="text-[10px] font-semibold text-[#B45309] ml-0.5">
                 {wordOfTheWeek.cringeLevel}/5
               </span>
             </div>
           </div>
 
-          <p className="text-xs text-slate-700 leading-relaxed">
+          <p className="text-xs text-[#494F4C] leading-relaxed">
             {wordOfTheWeek.definition}
           </p>
         </div>
 
         {/* Sunday Dinner Conversation Prompt */}
-        <div className="rounded-xl border border-purple-100 bg-purple-50/50 p-3 space-y-1.5">
-          <div className="flex items-center justify-between gap-2 text-[11px] font-bold text-purple-950">
+        <div className="rounded-[8px] border border-[#E3E3DC] bg-[#FFFFFF] p-3 space-y-1.5">
+          <div className="flex items-center justify-between gap-2 text-[11px] font-mono font-medium text-[#143D2B]">
             <div className="flex items-center gap-1.5">
-              <MessageSquare className="h-3.5 w-3.5 text-purple-700 shrink-0" />
+              <MessageSquare className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
               <span>Sunday Dinner Table Starter</span>
             </div>
             <button
               onClick={handleCopyPrompt}
-              className="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-700 hover:text-purple-900 bg-white/80 hover:bg-white px-2 py-0.5 rounded border border-purple-200/80 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 text-[10px] font-mono font-medium text-[#143D2B] hover:text-[#111413] bg-[#F4F4F0] hover:bg-white px-2 py-0.5 rounded-[4px] border border-[#E3E3DC] transition-colors cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="h-3 w-3 text-emerald-600" />
-                  <span className="text-emerald-700">Copied!</span>
+                  <Check className="h-3 w-3 text-[#143D2B]" />
+                  <span>Copied!</span>
                 </>
               ) : (
                 <>
@@ -201,20 +205,20 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
               )}
             </button>
           </div>
-          <p className="text-xs text-slate-700 italic leading-relaxed pl-5">
+          <p className="font-serif italic text-xs text-[#111413] leading-relaxed pl-5">
             &ldquo;{conversationStarter}&rdquo;
           </p>
         </div>
 
         {/* Exploit Early Warning Callout */}
         {topExploit && (
-          <div className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-2.5 flex items-start gap-2 text-xs">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="rounded-[8px] border border-[#B45309]/30 bg-[#FFFBEB] p-2.5 flex items-start gap-2 text-xs">
+            <AlertTriangle className="h-3.5 w-3.5 text-[#B45309] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
-              <span className="font-bold text-amber-950 block text-[11px]">
+              <span className="font-mono font-semibold text-[#B45309] block text-[11px]">
                 Exploit Alert: {topExploit.appName}
               </span>
-              <p className="text-[11px] text-amber-900/90 leading-tight">
+              <p className="text-[11px] text-[#494F4C] leading-tight">
                 {topExploit.guidance}
               </p>
             </div>
@@ -223,13 +227,13 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
 
         {/* Slang Radar Chips */}
         <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
-            <div className="flex items-center gap-1 text-slate-600">
-              <Flame className="h-3.5 w-3.5 text-amber-500" />
+          <div className="flex items-center justify-between text-[11px] font-mono text-[#858C88]">
+            <div className="flex items-center gap-1">
+              <Flame className="h-3.5 w-3.5 text-[#B45309]" />
               <span>Trending Radar:</span>
             </div>
             {topExploit && (
-              <span className="text-[10px] text-amber-700 font-medium truncate max-w-[170px]">
+              <span className="text-[10px] text-[#B45309] font-medium truncate max-w-[170px]">
                 Alert: {topExploit.appName}
               </span>
             )}
@@ -239,11 +243,11 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
               <span
                 key={idx}
                 title={item.definition}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200/80"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-[#F4F4F0] text-[#111413] border border-[#E3E3DC]"
               >
-                <span className="font-bold">&ldquo;{item.term}&rdquo;</span>
+                <span className="font-semibold">&ldquo;{item.term}&rdquo;</span>
                 {item.definition && (
-                  <span className="text-[10px] text-slate-500 font-normal hidden sm:inline truncate max-w-[110px]">
+                  <span className="text-[10px] text-[#858C88] font-normal hidden sm:inline truncate max-w-[110px]">
                     • {item.definition}
                   </span>
                 )}
@@ -257,10 +261,10 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
           <Button
             variant="outline"
             size="sm"
-            className="w-full gap-1.5 text-xs font-semibold border-purple-200 text-purple-900 hover:bg-purple-50 hover:border-purple-300 min-h-[44px]"
+            className="w-full gap-1.5 text-xs font-medium border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-[5px] min-h-[44px]"
           >
             <span>Explore Slang Radar & Full Digest</span>
-            <ArrowRight className="h-3.5 w-3.5 text-purple-700" />
+            <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
           </Button>
         </Link>
       </CardContent>

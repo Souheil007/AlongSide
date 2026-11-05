@@ -57,13 +57,15 @@ export function FaqSection() {
   return (
     <section id="faq" className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full scroll-mt-20">
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-        <Badge variant="outline" className="text-xs uppercase tracking-wider text-slate-600 bg-slate-50 border-slate-300">
-          Frequently Asked Questions
-        </Badge>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Clear Answers for Modern Parents
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
+          <span className="font-mono text-[11px] uppercase tracking-wider">
+            VOL. XXIV // CLINICAL FAQ
+          </span>
+        </div>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
+          Clear Answers for <em className="italic font-normal text-[#143D2B]">Modern Parents</em>
         </h2>
-        <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
           Everything you need to know about our clinical sources, pediatric protocols, zero-spyware pledge, and subscription trial.
         </p>
       </div>
@@ -74,17 +76,17 @@ export function FaqSection() {
           return (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-3 hover:border-teal-300 transition-colors"
+              className="p-6 rounded-[10px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-3 hover:border-[#111413] transition-colors"
             >
               <div className="flex items-start gap-3">
-                <div className="p-1.5 rounded-lg bg-teal-50 border border-teal-200 text-teal-700 shrink-0 mt-0.5">
+                <div className="p-1.5 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 text-[#143D2B] shrink-0 mt-0.5">
                   <Icon className="h-4 w-4" />
                 </div>
-                <h3 className="font-bold text-slate-900 text-base leading-snug">
+                <h3 className="font-serif font-bold text-[#111413] text-base leading-snug">
                   {faq.question}
                 </h3>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-8">
+              <p className="text-xs sm:text-sm text-[#494F4C] leading-relaxed pl-8">
                 {faq.answer}
               </p>
             </div>

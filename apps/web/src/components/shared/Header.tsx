@@ -121,7 +121,7 @@ export function Header() {
   };
 
   return (
-    <header className="no-print sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+    <header className="no-print sticky top-0 z-40 w-full border-b border-[#E3E3DC] bg-[#FBFBF9]/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-2 sm:gap-4">
         {/* Left Section: Brand Logo & Global Multi-Child Switcher */}
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
@@ -130,22 +130,22 @@ export function Header() {
             className="flex items-center gap-2.5 group shrink-0"
             aria-label="AlongSide Home"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shadow-sm transition-transform group-hover:scale-105">
-              <Shield className="h-5 w-5 text-emerald-100" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-[#143D2B] text-white shadow-sm transition-transform group-hover:scale-105">
+              <Shield className="h-4.5 w-4.5 text-emerald-100" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-teal-700 transition-colors">
-                AlongSide
+              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413] leading-tight">
+                AlongSide <em className="italic font-normal text-[#143D2B]">Almanac</em>
               </span>
-              <span className="text-[10px] font-medium tracking-wide uppercase text-teal-700 -mt-1 hidden sm:inline-block">
-                Parent Calm System
+              <span className="font-mono text-[9px] font-semibold tracking-wider uppercase text-[#143D2B] -mt-0.5 hidden sm:inline-block">
+                Pediatric Sanctuary • Lifespan 0–18
               </span>
             </div>
           </Link>
 
           {/* Child Selector embedded next to brand logo for authenticated parents */}
           {isAuthenticated && (
-            <div className="hidden sm:flex items-center pl-1 sm:pl-2 border-l border-slate-200">
+            <div className="hidden sm:flex items-center pl-1 sm:pl-2 border-l border-[#E3E3DC]">
               <ChildSelector variant="header" />
             </div>
           )}
@@ -165,10 +165,10 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 border-b-2 whitespace-nowrap',
+                    'flex items-center gap-1.5 px-3 py-1.5 rounded-[5px] text-xs font-semibold transition-all duration-150 border-b-2 whitespace-nowrap',
                     isActive
-                      ? 'bg-teal-50 text-teal-800 border-teal-600 font-bold shadow-2xs'
-                      : 'text-slate-600 hover:text-teal-700 hover:bg-slate-50 border-transparent font-medium'
+                      ? 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B] font-bold shadow-2xs'
+                      : 'text-[#494F4C] hover:text-[#111413] hover:bg-[#F4F4F0] border-transparent font-medium'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -176,7 +176,7 @@ export function Header() {
                     <Icon
                       className={cn(
                         'h-3.5 w-3.5 shrink-0',
-                        isActive ? 'text-teal-700' : 'text-slate-400'
+                        isActive ? 'text-[#143D2B]' : 'text-[#858C88]'
                       )}
                     />
                   )}
@@ -188,7 +188,7 @@ export function Header() {
         ) : (
           <nav
             aria-label="Public Navigation"
-            className="hidden lg:flex items-center gap-5 text-xs font-semibold text-slate-600"
+            className="hidden lg:flex items-center gap-6 text-xs font-semibold text-[#494F4C]"
           >
             {PUBLIC_NAV_LINKS.map((link) => {
               const isActive =
@@ -200,10 +200,10 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'transition-colors hover:text-teal-700 py-1 border-b-2 border-transparent',
+                    'transition-colors hover:text-[#111413] py-1 border-b-2 border-transparent font-medium',
                     isActive
-                      ? 'text-teal-700 font-bold border-teal-600'
-                      : 'text-slate-600'
+                      ? 'text-[#143D2B] font-bold border-[#143D2B]'
+                      : 'text-[#494F4C]'
                   )}
                 >
                   {link.label}
@@ -221,28 +221,28 @@ export function Header() {
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className={cn(
-                  'flex min-h-[40px] items-center gap-2 rounded-xl border border-slate-200 bg-white/95 px-2.5 py-1.5 text-xs font-medium text-slate-800 shadow-2xs transition-all hover:border-teal-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600/30',
-                  userMenuOpen && 'border-teal-500 ring-2 ring-teal-500/20'
+                  'flex min-h-[40px] items-center gap-2 rounded-[5px] border border-[#E3E3DC] bg-white px-2.5 py-1.5 text-xs font-medium text-[#111413] shadow-2xs transition-all hover:border-[#111413] hover:bg-[#F4F4F0] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/30',
+                  userMenuOpen && 'border-[#143D2B] ring-2 ring-[#143D2B]/20'
                 )}
                 aria-expanded={userMenuOpen}
                 aria-haspopup="menu"
                 aria-label="User account menu"
               >
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-[11px] font-bold text-white shadow-2xs">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-[11px] font-bold text-white shadow-2xs">
                   {getInitials(user.fullName)}
                 </div>
                 <div className="hidden xl:flex flex-col text-left max-w-[120px]">
-                  <span className="truncate font-semibold text-slate-900 text-xs">
+                  <span className="truncate font-semibold text-[#111413] text-xs">
                     {user.fullName}
                   </span>
-                  <span className="truncate text-[10px] text-slate-500 font-normal">
+                  <span className="truncate text-[10px] text-[#858C88] font-normal font-mono">
                     {user.email}
                   </span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-3.5 w-3.5 text-slate-400 transition-transform duration-200',
-                    userMenuOpen && 'rotate-180 text-teal-600'
+                    'h-3.5 w-3.5 text-[#858C88] transition-transform duration-200',
+                    userMenuOpen && 'rotate-180 text-[#143D2B]'
                   )}
                 />
               </button>
@@ -250,28 +250,28 @@ export function Header() {
               {userMenuOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 mt-2 w-64 origin-top-right rounded-2xl border border-slate-200 bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150 z-50"
+                  className="absolute right-0 mt-2 w-64 origin-top-right rounded-[10px] border border-[#E3E3DC] bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150 z-50"
                 >
                   {/* Account Info Header */}
-                  <div className="p-2.5 border-b border-slate-100 flex flex-col gap-1">
+                  <div className="p-2.5 border-b border-[#E3E3DC] flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-xs font-bold text-white shadow-2xs">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-xs font-bold text-white shadow-2xs">
                         {getInitials(user.fullName)}
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="truncate font-bold text-slate-900 text-xs">
+                        <span className="truncate font-bold text-[#111413] text-xs">
                           {user.fullName}
                         </span>
-                        <span className="truncate text-[10px] text-slate-500">
+                        <span className="truncate text-[10px] text-[#858C88] font-mono">
                           {user.email}
                         </span>
                       </div>
                     </div>
                     <div className="mt-1 flex items-center justify-between">
-                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-[10px] font-semibold text-teal-700 border border-teal-200/60">
-                        Parent Calm Account
+                      <span className="rounded-full bg-[#EAF3EE] px-2 py-0.5 text-[10px] font-semibold text-[#143D2B] border border-[#143D2B]/20 font-mono uppercase tracking-wider">
+                        VOL. XXIV // CLINICAL
                       </span>
-                      <span className="text-[10px] text-slate-400 font-medium">
+                      <span className="text-[10px] text-[#858C88] font-medium font-mono">
                         Active
                       </span>
                     </div>
@@ -283,38 +283,38 @@ export function Header() {
                       href="/settings"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
+                      className="flex items-center gap-2.5 rounded-[5px] px-2.5 py-2 text-xs font-medium text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors"
                     >
-                      <Settings className="h-4 w-4 text-teal-600" />
+                      <Settings className="h-4 w-4 text-[#143D2B]" />
                       <span>Account Settings</span>
                     </Link>
                     <Link
                       href="/#pricing"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
+                      className="flex items-center gap-2.5 rounded-[5px] px-2.5 py-2 text-xs font-medium text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors"
                     >
-                      <CreditCard className="h-4 w-4 text-teal-600" />
+                      <CreditCard className="h-4 w-4 text-[#143D2B]" />
                       <span>Billing &amp; Hero Pass</span>
                     </Link>
                     <Link
                       href="/advisor"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
-                      className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-teal-800 transition-colors"
+                      className="flex items-center gap-2.5 rounded-[5px] px-2.5 py-2 text-xs font-medium text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors"
                     >
-                      <HelpCircle className="h-4 w-4 text-teal-600" />
-                      <span>Help &amp; Clinical Guidance</span>
+                      <HelpCircle className="h-4 w-4 text-[#143D2B]" />
+                      <span>Clinical Guidance &amp; FAQ</span>
                     </Link>
                   </div>
 
                   {/* Hardened Logout Action */}
-                  <div className="pt-1 mt-1 border-t border-slate-100">
+                  <div className="pt-1 mt-1 border-t border-[#E3E3DC]">
                     <button
                       type="button"
                       onClick={handleLogout}
                       disabled={isLoggingOut}
-                      className="w-full flex min-h-[38px] items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-xs font-semibold text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-50"
+                      className="w-full flex min-h-[38px] items-center gap-2.5 rounded-[5px] px-2.5 py-2 text-left text-xs font-semibold text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-50"
                     >
                       {isLoggingOut ? (
                         <Loader2 className="h-4 w-4 animate-spin text-rose-600" />
@@ -330,12 +330,12 @@ export function Header() {
           ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   Log in
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="sm" className="gap-1.5 shadow-sm">
+                <Button variant="pill" size="sm" className="gap-1.5 shadow-sm">
                   Start 7-Day Free Trial
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -354,7 +354,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-[5px] p-2 text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle navigation menu"
           >
@@ -369,10 +369,10 @@ export function Header() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-4 animate-in slide-in-from-top duration-200">
+        <div className="md:hidden border-b border-[#E3E3DC] bg-[#FBFBF9] px-4 pt-3 pb-6 space-y-4 animate-in slide-in-from-top duration-200">
           {isAuthenticated && (
-            <div className="pb-3 border-b border-slate-100 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">
+            <div className="pb-3 border-b border-[#E3E3DC] flex items-center justify-between">
+              <span className="text-xs font-semibold text-[#858C88]">
                 Active Child Profile:
               </span>
               <ChildSelector variant="compact" />
@@ -382,7 +382,7 @@ export function Header() {
           <nav className="flex flex-col space-y-1">
             {isAuthenticated ? (
               <>
-                <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#858C88]">
                   Navigation
                 </div>
                 {AUTHENTICATED_CORE_LINKS.map((link) => {
@@ -394,17 +394,17 @@ export function Header() {
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold transition-colors min-h-[44px]',
+                        'flex items-center gap-2.5 rounded-[5px] px-3 py-2 text-sm font-semibold transition-colors min-h-[44px]',
                         isActive
-                          ? 'bg-teal-50 text-teal-800'
-                          : 'text-slate-700 hover:bg-slate-50 hover:text-teal-800'
+                          ? 'bg-[#EAF3EE] text-[#143D2B]'
+                          : 'text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413]'
                       )}
                     >
                       {Icon && (
                         <Icon
                           className={cn(
                             'h-4 w-4 shrink-0',
-                            isActive ? 'text-teal-700' : 'text-slate-400'
+                            isActive ? 'text-[#143D2B]' : 'text-[#858C88]'
                           )}
                         />
                       )}
@@ -425,10 +425,10 @@ export function Header() {
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      'rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
+                      'rounded-[5px] px-3 py-2 text-sm font-semibold transition-colors min-h-[44px] flex items-center',
                       isActive
-                        ? 'bg-teal-50 text-teal-800'
-                        : 'text-slate-700 hover:bg-slate-50 hover:text-teal-800'
+                        ? 'bg-[#EAF3EE] text-[#143D2B]'
+                        : 'text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413]'
                     )}
                   >
                     {link.label}
@@ -438,26 +438,26 @@ export function Header() {
             )}
           </nav>
 
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
+          <div className="pt-3 border-t border-[#E3E3DC] flex flex-col gap-2.5">
             {isAuthenticated && user ? (
               <div className="space-y-3">
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 flex items-center justify-between"
+                  className="rounded-[5px] px-3 py-2 text-sm font-semibold text-[#143D2B] bg-[#EAF3EE] hover:bg-[#D1E7DD] flex items-center justify-between min-h-[44px]"
                 >
                   <span>Go to Home</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-                <div className="px-3 text-xs font-medium text-slate-700 flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-md bg-teal-600 text-[10px] font-bold text-white">
+                <div className="px-3 text-xs font-medium text-[#494F4C] flex items-center gap-2">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#143D2B] text-[10px] font-bold text-white">
                     {getInitials(user.fullName)}
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="font-semibold text-slate-900 truncate">
+                    <span className="font-semibold text-[#111413] truncate">
                       {user.fullName}
                     </span>
-                    <span className="text-[10px] text-slate-500 truncate">
+                    <span className="text-[10px] text-[#858C88] font-mono truncate">
                       {user.email}
                     </span>
                   </div>
@@ -487,7 +487,7 @@ export function Header() {
                   </Button>
                 </Link>
                 <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full justify-center gap-1.5 min-h-[44px]">
+                  <Button variant="pill" className="w-full justify-center gap-1.5 min-h-[44px]">
                     Start 7-Day Free Trial
                     <ArrowRight className="h-4 w-4" />
                   </Button>

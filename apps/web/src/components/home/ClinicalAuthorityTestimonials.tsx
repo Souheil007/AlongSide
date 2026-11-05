@@ -56,13 +56,15 @@ export function ClinicalAuthorityTestimonials() {
   return (
     <section id="testimonials" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-        <Badge variant="outline" className="text-xs uppercase tracking-wider text-slate-600 bg-slate-50 border-slate-300">
-          Clinical Trust &amp; Endorsements
-        </Badge>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Backed by Pediatricians, Child Psychologists &amp; Neurobiologists
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
+          <span className="font-mono text-[11px] uppercase tracking-wider">
+            VOL. XXIV // CLINICAL TRUST
+          </span>
+        </div>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
+          Backed by <em className="italic font-normal text-[#143D2B]">Pediatricians, Psychologists &amp; Neurobiologists</em>
         </h2>
-        <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
           Parenting advice should come from peer-reviewed clinical science, not social media influencers.
           Here is what leading pediatric health professionals say about AlongSide.
         </p>
@@ -75,28 +77,28 @@ export function ClinicalAuthorityTestimonials() {
           return (
             <Card
               key={idx}
-              className="border border-slate-200/90 bg-white shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-md hover:border-[#111413] transition-all flex flex-col justify-between rounded-[10px]"
             >
               <CardContent className="p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="h-10 w-10 rounded-xl bg-teal-50 border border-teal-200/80 flex items-center justify-center text-teal-700 shadow-xs">
+                    <div className="h-10 w-10 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 flex items-center justify-center text-[#143D2B] shadow-xs">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="text-[11px] font-semibold text-teal-800 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">
+                    <span className="font-mono text-[11px] font-semibold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                       {t.badge}
                     </span>
                   </div>
 
-                  <p className="text-slate-700 text-sm leading-relaxed italic">
+                  <p className="font-serif text-base text-[#111413] leading-relaxed italic">
                     &ldquo;{t.quote}&rdquo;
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100">
-                  <div className="font-bold text-slate-900 text-sm">{t.author}</div>
-                  <div className="text-xs text-teal-700 font-medium">{t.credentials}</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
+                <div className="pt-4 border-t border-[#E3E3DC]">
+                  <div className="font-bold text-[#111413] text-sm">{t.author}</div>
+                  <div className="font-mono text-xs text-[#143D2B] font-semibold">{t.credentials}</div>
+                  <div className="text-[11px] text-[#858C88] mt-0.5 font-mono">
                     {t.role} • {t.institution}
                   </div>
                 </div>

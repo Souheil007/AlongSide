@@ -10,6 +10,8 @@ export interface ButtonProps
     | 'ghost'
     | 'destructive'
     | 'accent'
+    | 'forest'
+    | 'pill'
     | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   isLoading?: boolean;
@@ -30,19 +32,23 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const variantStyles: Record<string, string> = {
       default:
-        'bg-teal-600 text-white hover:bg-teal-700 shadow-sm active:bg-teal-800',
+        'bg-[#111413] text-white hover:bg-[#232826] shadow-sm active:bg-[#000000] border border-[#111413]',
+      forest:
+        'bg-[#143D2B] text-white hover:bg-[#0E2B1E] shadow-sm active:bg-[#081C15] border border-[#143D2B]',
+      pill:
+        'bg-[#111413] text-white hover:bg-[#000000] shadow-sm hover:shadow-md rounded-full border border-[#111413]',
       secondary:
-        'bg-slate-100 text-slate-800 hover:bg-slate-200 active:bg-slate-300',
+        'bg-white text-[#111413] border border-[#E3E3DC] hover:bg-[#F4F4F0] hover:border-[#CFCFC5] active:bg-[#EDEDEA]',
       outline:
-        'border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 active:bg-slate-100',
+        'border border-[#E3E3DC] bg-white text-[#111413] hover:border-[#111413] hover:bg-[#FBFBF9] active:bg-[#F4F4F0]',
       ghost:
-        'text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200',
+        'text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] active:bg-[#EDEDEA]',
       destructive:
-        'bg-red-600 text-white hover:bg-red-700 shadow-sm active:bg-red-800',
+        'bg-[#DC2626] text-white hover:bg-[#B91C1C] shadow-sm active:bg-[#991B1B] border border-[#DC2626]',
       accent:
-        'bg-terracotta-600 text-white hover:bg-terracotta-700 shadow-sm active:bg-terracotta-700',
+        'bg-[#B45309] text-white hover:bg-[#92400E] shadow-sm active:bg-[#78350F] border border-[#B45309]',
       link:
-        'text-teal-700 underline-offset-4 hover:underline p-0 h-auto font-medium',
+        'text-[#143D2B] underline-offset-4 hover:underline p-0 h-auto font-medium',
     };
 
     const sizeStyles: Record<string, string> = {
@@ -57,8 +63,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={cn(
-          'inline-flex items-center justify-center rounded-lg font-medium transition-colors select-none',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2',
+          'inline-flex items-center justify-center rounded-[5px] font-semibold transition-all duration-150 select-none',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
           variantStyles[variant],
           sizeStyles[size],

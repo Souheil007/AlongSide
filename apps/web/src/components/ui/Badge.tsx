@@ -10,7 +10,9 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
     | 'success'
     | 'accent'
     | 'roadPre'
-    | 'roadActive';
+    | 'roadActive'
+    | 'publication'
+    | 'telemetry';
 }
 
 export function Badge({
@@ -19,14 +21,18 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variantStyles: Record<string, string> = {
-    default: 'bg-teal-50 text-teal-800 border-teal-200/80',
-    secondary: 'bg-slate-100 text-slate-700 border-slate-200',
-    outline: 'border border-slate-300 text-slate-800 bg-transparent',
+    default: 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/20',
+    publication:
+      'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/20 font-mono text-[11px] font-semibold uppercase tracking-wider',
+    telemetry:
+      'bg-[#F4F4F0] text-[#111413] border-[#E3E3DC] font-mono text-xs font-medium',
+    secondary: 'bg-[#F4F4F0] text-[#494F4C] border-[#E3E3DC]',
+    outline: 'border border-[#E3E3DC] text-[#111413] bg-white',
     destructive: 'bg-red-50 text-red-700 border-red-200',
-    success: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-    accent: 'bg-amber-50 text-amber-800 border-amber-200',
-    roadPre: 'bg-emerald-100/70 text-emerald-900 border-emerald-300 font-semibold',
-    roadActive: 'bg-violet-100/70 text-violet-900 border-violet-300 font-semibold',
+    success: 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/30',
+    accent: 'bg-amber-50 text-[#B45309] border-amber-200',
+    roadPre: 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/30 font-semibold',
+    roadActive: 'bg-[#F4F4F0] text-[#111413] border-[#E3E3DC] font-semibold',
   };
 
   return (

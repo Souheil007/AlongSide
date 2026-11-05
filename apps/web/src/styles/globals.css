@@ -4,73 +4,100 @@
 
 @layer base {
   :root {
-    --background: 40 33% 98%;
-    --foreground: 222 47% 11%;
+    /* Taste 2: Editorial Pediatric Almanac Semantic Color Tokens */
+    --canvas: #fbfbf9;
+    --canvas-subtle: #f4f4f0;
+    --elevated: #ffffff;
+    --ink: #111413;
+    --body: #494f4c;
+    --mute: #858c88;
+    --hairline: #e3e3dc;
+    --hairline-soft: #ededea;
+    --accent-forest: #143d2b;
+    --accent-forest-soft: #eaf3ee;
+    --accent-amber: #b45309;
+    --accent-amber-soft: #fef3c7;
+    --destructive-almanac: #dc2626;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    /* shadcn / Tailwind HSL Semantic Mapping */
+    --background: 60 14% 98%; /* #FBFBF9 Archival Linen */
+    --foreground: 160 7% 7%;  /* #111413 Ink */
+
+    --card: 0 0% 100%;        /* #FFFFFF */
+    --card-foreground: 160 7% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 160 7% 7%;
 
-    --primary: 174 84% 32%;
+    --primary: 152 51% 16%;   /* #143D2B Spruce Brand */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 20% 94%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 60 11% 95%; /* #F4F4F0 Subtle Canvas */
+    --secondary-foreground: 160 7% 7%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 60 11% 95%;
+    --muted-foreground: 150 3% 54%; /* #858C88 Mute */
 
-    --accent: 25 75% 48%;
+    --accent: 32 90% 37%;    /* #B45309 Amber Citation */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%; /* #DC2626 Emergency */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 90%;
-    --input: 214 20% 90%;
-    --ring: 174 84% 32%;
+    --border: 60 10% 88%;     /* #E3E3DC Hairline */
+    --input: 60 10% 88%;
+    --ring: 152 51% 16%;      /* #143D2B Spruce Ring */
 
-    --radius: 0.75rem;
+    --radius: 0.3125rem;      /* 5px Vercel-style precision */
 
-    /* Semantic Road & Pillar Tokens */
-    --color-road-pre-device: #059669;
-    --color-road-active-device: #7C3AED;
-    --color-sage-calm: #2D6A4F;
-    --color-terracotta-warmth: #C85A32;
-    --color-deep-slate: #0F172A;
-    --color-warm-cream: #FDFBF7;
+    /* Typography & Spacing Scale */
+    --font-serif: 'Newsreader', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Shadow Architecture */
+    --shadow-sm: 0 1px 2px rgba(17, 20, 19, 0.04);
+    --shadow-md: 0 4px 12px rgba(17, 20, 19, 0.06);
+    --shadow-lg: 0 12px 28px rgba(17, 20, 19, 0.08);
+    --shadow-xl: 0 24px 48px rgba(17, 20, 19, 0.12);
+
+    /* Legacy Backward Compatibility Tokens */
+    --color-road-pre-device: #143d2b;
+    --color-road-active-device: #111413;
+    --color-sage-calm: #143d2b;
+    --color-terracotta-warmth: #b45309;
+    --color-deep-slate: #111413;
+    --color-warm-cream: #fbfbf9;
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 160 7% 7%;
+    --foreground: 60 14% 98%;
 
-    --card: 222 47% 14%;
-    --card-foreground: 210 40% 98%;
+    --card: 160 6% 10%;
+    --card-foreground: 60 14% 98%;
 
-    --popover: 222 47% 14%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 160 6% 10%;
+    --popover-foreground: 60 14% 98%;
 
-    --primary: 174 70% 40%;
+    --primary: 152 45% 26%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 33% 18%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 160 5% 15%;
+    --secondary-foreground: 60 14% 98%;
 
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 160 5% 15%;
+    --muted-foreground: 150 3% 60%;
 
-    --accent: 25 70% 55%;
+    --accent: 32 80% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
-    --ring: 174 70% 40%;
+    --border: 160 5% 20%;
+    --input: 160 5% 20%;
+    --ring: 152 45% 26%;
   }
 
   * {
@@ -78,9 +105,130 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
+}
+
+/* Taste 2: Editorial Pediatric Almanac Utility Classes */
+.font-serif-almanac {
+  font-family: var(--font-serif);
+}
+
+.font-mono-almanac {
+  font-family: var(--font-mono);
+}
+
+.editorial-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent-forest);
+  letter-spacing: -0.02em;
+}
+
+/* Editorial Publication Eyebrow */
+.badge-publication {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-forest-soft);
+  color: var(--accent-forest);
+  border: 1px solid rgba(20, 61, 43, 0.15);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* Clinical Telemetry Chip */
+.chip-telemetry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--canvas-subtle);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* Vercel Pill Black CTA Button */
+.btn-pill-black {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ink);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  min-height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-pill-black:hover {
+  background: #000000;
+  border-color: #000000;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+}
+
+/* Forest Brand Action Button */
+.btn-forest {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent-forest);
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  min-height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--accent-forest);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-forest:hover {
+  background: #0e2b1e;
+  border-color: #0e2b1e;
+  transform: translateY(-1px);
+}
+
+/* Editorial Card */
+.card-editorial {
+  background: var(--elevated);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.card-editorial:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #cfcfc5;
+}
+
+/* Ambient Radial Mesh Gradient */
+.hero-mesh-aura {
+  background: radial-gradient(circle at 50% -20%, rgba(20, 61, 43, 0.08) 0%, rgba(180, 83, 9, 0.04) 35%, transparent 70%);
 }
 
 /* Print Optimization for Bilateral Agreements & PDF exports */
@@ -102,7 +250,7 @@
     display: block !important;
   }
   .refrigerator-document {
-    border: 2px solid #0f172a !important;
+    border: 2px solid #111413 !important;
     box-shadow: none !important;
     max-width: 100% !important;
     padding: 1.5rem !important;

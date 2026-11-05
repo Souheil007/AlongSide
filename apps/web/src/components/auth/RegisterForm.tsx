@@ -50,16 +50,16 @@ export function RegisterForm() {
   const isLoading = isRegistering || isSubmitting;
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-sm border-slate-200">
+    <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">
       <CardHeader className="space-y-1 text-center">
-        <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800 border border-teal-200 mb-2">
-          <ShieldCheck className="h-3.5 w-3.5 text-teal-600" />
-          7-Day Risk-Free Trial • No Upfront Card
+        <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] px-3 py-1 text-xs font-mono font-semibold text-[#143D2B] border border-[#143D2B]/20 mb-2">
+          <ShieldCheck className="h-3.5 w-3.5 text-[#143D2B]" />
+          7-DAY TRIAL • NO UPFRONT CHARGE
         </div>
-        <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">
+        <CardTitle className="font-serif text-3xl font-bold tracking-tight text-[#111413]">
           Begin your family journey
         </CardTitle>
-        <CardDescription className="text-sm text-slate-500">
+        <CardDescription className="text-sm text-[#494F4C]">
           Create calm, clear digital boundaries tailored to your child’s development
         </CardDescription>
       </CardHeader>
@@ -68,7 +68,7 @@ export function RegisterForm() {
           {serverError && (
             <div
               role="alert"
-              className="flex items-start gap-2.5 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+              className="flex items-start gap-2.5 rounded-[5px] border border-red-200 bg-red-50 p-3 text-sm text-red-800"
             >
               <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0 text-red-600" />
               <span>{serverError}</span>
@@ -105,22 +105,22 @@ export function RegisterForm() {
             {...register("password")}
           />
 
-          <div className="rounded-lg bg-slate-50 p-3 text-xs text-slate-600 space-y-1.5 border border-slate-100">
-            <div className="flex items-center gap-2 text-slate-700 font-medium">
-              <CheckCircle2 className="h-3.5 w-3.5 text-teal-600" />
+          <div className="rounded-[5px] bg-[#F4F4F0] p-3 text-xs text-[#494F4C] space-y-1.5 border border-[#E3E3DC]">
+            <div className="flex items-center gap-2 text-[#111413] font-semibold">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B]" />
               <span>What’s included in your trial:</span>
             </div>
-            <ul className="list-disc list-inside space-y-0.5 text-slate-500 pl-1 text-[11px]">
-              <li>Road 1 vs Road 2 child readiness roadmap</li>
-              <li>Bilateral Family Pact builder & printable treaty</li>
-              <li>Neutral bedtime curfew lockdown enforcement</li>
+            <ul className="list-disc list-inside space-y-0.5 text-[#494F4C] pl-1 text-[11px]">
+              <li>Continuous 0–18 Lifespan Advisory roadmap</li>
+              <li>Bilateral Family Pact builder &amp; vector agreement</li>
+              <li>Neutral 8:30 PM bedtime curfew hardware lock</li>
             </ul>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button
             type="submit"
-            className="w-full min-h-[44px]"
+            className="w-full min-h-[44px] font-bold"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -133,11 +133,11 @@ export function RegisterForm() {
             )}
           </Button>
 
-          <p className="text-center text-xs text-slate-500">
+          <p className="text-center text-xs text-[#858C88]">
             Already have an account?{" "}
             <Link
               href="/login"
-              className="font-medium text-teal-700 hover:text-teal-800 underline underline-offset-2"
+              className="font-semibold text-[#143D2B] hover:underline underline-offset-2"
             >
               Sign in
             </Link>

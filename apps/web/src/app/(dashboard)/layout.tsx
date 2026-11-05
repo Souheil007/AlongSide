@@ -15,7 +15,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[#FDFBF7] pb-20 md:pb-8 flex flex-col">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#FBFBF9] pb-20 md:pb-8 flex flex-col">
       <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex-1">
         <DashboardAuthGuard>{children}</DashboardAuthGuard>
       </main>

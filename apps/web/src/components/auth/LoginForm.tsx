@@ -51,12 +51,12 @@ export function LoginForm() {
   const isLoading = isLoggingIn || isSubmitting;
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-sm border-slate-200">
+    <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">
       <CardHeader className="space-y-1 text-center">
-        <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">
+        <CardTitle className="font-serif text-3xl font-bold tracking-tight text-[#111413]">
           Welcome back
         </CardTitle>
-        <CardDescription className="text-sm text-slate-500">
+        <CardDescription className="text-sm text-[#494F4C]">
           Enter your parent email and password to access your family dashboard
         </CardDescription>
       </CardHeader>
@@ -65,9 +65,9 @@ export function LoginForm() {
           {isLoggedOut && !serverError && (
             <div
               role="status"
-              className="flex items-start gap-2.5 rounded-lg border border-teal-200 bg-teal-50 p-3 text-sm text-teal-800"
+              className="flex items-start gap-2.5 rounded-[5px] border border-[#143D2B]/20 bg-[#EAF3EE] p-3 text-sm text-[#143D2B]"
             >
-              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-teal-600" />
+              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-[#143D2B]" />
               <span>You have been successfully logged out of your AlongSide account.</span>
             </div>
           )}
@@ -75,7 +75,7 @@ export function LoginForm() {
           {serverError && (
             <div
               role="alert"
-              className="flex items-start gap-2.5 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+              className="flex items-start gap-2.5 rounded-[5px] border border-red-200 bg-red-50 p-3 text-sm text-red-800"
             >
               <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0 text-red-600" />
               <span>{serverError}</span>
@@ -105,7 +105,7 @@ export function LoginForm() {
         <CardFooter className="flex flex-col space-y-4">
           <Button
             type="submit"
-            className="w-full min-h-[44px]"
+            className="w-full min-h-[44px] font-bold"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -118,11 +118,11 @@ export function LoginForm() {
             )}
           </Button>
 
-          <p className="text-center text-xs text-slate-500">
+          <p className="text-center text-xs text-[#858C88]">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="font-medium text-teal-700 hover:text-teal-800 underline underline-offset-2"
+              className="font-semibold text-[#143D2B] hover:underline underline-offset-2"
             >
               Start 7-day free trial
             </Link>

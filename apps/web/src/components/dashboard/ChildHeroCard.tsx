@@ -153,18 +153,18 @@ export function ChildHeroCard({
   return (
     <Card
       className={cn(
-        'border-teal-200/90 bg-gradient-to-br from-white via-[#FCFBF8] to-teal-50/30 shadow-sm overflow-hidden',
+        'rounded-[10px] border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] overflow-hidden',
         className
       )}
     >
       <CardContent className="p-5 sm:p-6 space-y-4">
         {/* Top Metadata Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-teal-100 text-teal-800 text-xs font-bold">
+            <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#EAF3EE] text-[#143D2B] text-xs font-bold">
               <Calendar className="h-3.5 w-3.5" />
             </span>
-            <span className="text-xs font-bold text-slate-700 tracking-tight">
+            <span className="font-mono text-xs font-semibold text-[#494F4C] tracking-tight">
               {todayFormatted}
             </span>
           </div>
@@ -172,13 +172,13 @@ export function ChildHeroCard({
           <div className="flex items-center gap-2">
             <Badge
               variant={isPreDevice ? 'roadPre' : 'roadActive'}
-              className="text-[10px] font-bold uppercase tracking-wider"
+              className="text-[10px] font-mono font-bold uppercase tracking-wider"
             >
               {isPreDevice ? 'Road 1: Pre-Device' : 'Road 2: Active-Device'}
             </Badge>
             <span
               className={cn(
-                'rounded-full px-2.5 py-0.5 text-[10px] font-bold border',
+                'rounded-full px-2.5 py-0.5 text-[10px] font-mono font-semibold border',
                 horizon.badgeColor
               )}
             >
@@ -191,31 +191,31 @@ export function ChildHeroCard({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="flex items-start gap-4">
             {/* Child Avatar with Initial */}
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-xl font-black text-white shadow-sm ring-4 ring-teal-50">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[8px] bg-[#143D2B] text-xl font-black text-white shadow-sm ring-4 ring-[#EAF3EE]">
               {child.name.charAt(0).toUpperCase()}
             </div>
 
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
+                <h1 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413]">
                   {child.name}&apos;s Advisory Horizon
                 </h1>
-                <span className="text-xs font-semibold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/80">
+                <span className="font-mono text-xs font-semibold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded-full border border-[#143D2B]/20">
                   {formattedAge}
                 </span>
                 {child.schoolGrade && (
-                  <span className="text-xs text-slate-500 font-medium">
+                  <span className="font-mono text-xs text-[#858C88] font-medium">
                     • {child.schoolGrade}
                   </span>
                 )}
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs font-bold text-teal-900">
-                <Sparkles className="h-3.5 w-3.5 text-teal-600 shrink-0" />
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#143D2B]">
+                <Sparkles className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
                 <span>{horizon.horizon}</span>
               </div>
 
-              <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
+              <p className="text-xs text-[#494F4C] max-w-2xl leading-relaxed">
                 {horizon.subtitle}
               </p>
             </div>
@@ -227,7 +227,8 @@ export function ChildHeroCard({
               <Link href={`/children/${child.id}/readiness`}>
                 <Button
                   size="sm"
-                  className="min-h-[44px] gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-2xs"
+                  variant="forest"
+                  className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
                 >
                   <Compass className="h-4 w-4" />
                   <span>First-Phone Readiness</span>
@@ -238,10 +239,11 @@ export function ChildHeroCard({
               <Link href={`/devices?childId=${child.id}`}>
                 <Button
                   size="sm"
-                  className="min-h-[44px] gap-1.5 bg-violet-700 hover:bg-violet-800 text-white text-xs font-semibold shadow-2xs"
+                  variant="default"
+                  className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
                 >
                   <FileCheck2 className="h-4 w-4" />
-                  <span>Curfew & Pacts</span>
+                  <span>Curfew &amp; Pacts</span>
                   <ChevronRight className="h-3.5 w-3.5 opacity-80" />
                 </Button>
               </Link>
@@ -250,31 +252,31 @@ export function ChildHeroCard({
         </div>
 
         {/* Current Neurodevelopmental Leap Callout */}
-        <div className="rounded-xl border border-teal-200/80 bg-teal-50/50 p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div className="rounded-[6px] border border-[#E3E3DC] bg-[#FBFBF9] p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div className="flex items-start sm:items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white shadow-2xs">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-white shadow-2xs">
               <Brain className="h-4 w-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-teal-900">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
                   Active Leap
                 </span>
-                <span className="text-[10px] text-teal-700 font-semibold bg-white/80 px-2 py-0.2 rounded-full border border-teal-200/60">
+                <span className="font-mono text-[10px] text-[#143D2B] font-semibold bg-[#EAF3EE] px-2 py-0.2 rounded-full border border-[#143D2B]/20">
                   {leap.shortTitle}
                 </span>
               </div>
-              <p className="text-xs font-bold text-slate-900 mt-0.5">
+              <p className="font-serif text-xs font-bold text-[#111413] mt-0.5">
                 {leap.leapTitle}
               </p>
-              <p className="text-[11px] text-slate-600 leading-snug mt-0.5">
+              <p className="text-[11px] text-[#494F4C] leading-snug mt-0.5">
                 {leap.biologicalDescription}
               </p>
             </div>
           </div>
 
           <Link href={`/academy`} className="shrink-0 self-end sm:self-center">
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-800 hover:text-teal-950 underline underline-offset-2">
+            <span className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-[#143D2B] hover:text-[#0E2B1E] underline underline-offset-2">
               <span>View Milestone Science</span>
               <ChevronRight className="h-3 w-3" />
             </span>

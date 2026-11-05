@@ -19,14 +19,14 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         aria-valuemax={max}
         aria-valuenow={Math.round(value)}
         className={cn(
-          'relative h-2.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800',
+          'relative h-2.5 w-full overflow-hidden rounded-full bg-[#F4F4F0] border border-[#E3E3DC]/60',
           className
         )}
         {...props}
       >
         <div
           className={cn(
-            'h-full w-full flex-1 bg-teal-600 transition-all duration-300 ease-in-out',
+            'h-full w-full flex-1 bg-[#143D2B] transition-all duration-300 ease-in-out',
             indicatorClassName
           )}
           style={{ transform: `translateX(-${100 - percentage}%)` }}
