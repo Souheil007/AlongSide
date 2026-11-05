@@ -203,6 +203,64 @@ The public-facing homepage (`apps/web/src/app/page.tsx`) serves as the welcoming
 - **Pricing & Risk-Free Onboarding (`PricingSection.tsx`):**
   - $79/yr Annual Hero Pass with 7-day upfront trial and 1-click cancellation.
 
+### 3.6 Universal Cross-Tab Reactive Child Context Synchronization Standard
+A non-negotiable architectural invariant of AlongSide v2.5.0 is **Universal Cross-Tab Reactive Child Tailoring**:
+> *"Whenever a parent switches their active child in the top navigation bar (or mobile drawer), every single tab, feed, curriculum view, culture radar, device dock, and AI consultation across the entire AlongSide platform MUST automatically and immediately tailor its content, developmental stage, recommendations, and active views to that newly selected child."*
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                        UNIVERSAL REACTIVE CHILD TAILORING ARCHITECTURE                                │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ GLOBAL TOP NAVBAR / MOBILE DRAWER:                                                                     │
+│ • ChildSelector embedded beside logo in Header & MobileNav.                                            │
+│ • Selecting a child updates useChildContextStore (activeChildId) + window.localStorage.                 │
+│ • Emits reactive state updates that all subscribed components immediately consume.                    │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 1. HOME COCKPIT (/dashboard):                                                                          │
+│    • ChildHeroCard: Instantly flips avatar, age ("14 mo" / "8 yrs" / "14 yrs"), developmental leap.   │
+│    • ActiveChapterContinueCard: Evaluates incomplete prioritized Academy chapters for child's tier.    │
+│    • DailyAdvisoryScriptCard: Renders tailored word-for-word dialogue for active child's friction point.│
+│    • SundayCultureDigestCard: Renders age-appropriate culture briefing (Toddler vs Elementary vs Teen).│
+│    • BilateralPactStatusCard: Flips between Pre-Device Readiness Score (0-100) and 8:30 PM MDM Curfew. │
+│    • AskAdvisorPromptBar: Generates 1-tap quick consultation prompts specific to this child.            │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 2. PARENT INTELLIGENCE ACADEMY (/academy):                                                             │
+│    • ActiveChildCalibrationBanner: Displays "Calibrated for [ChildName] · Age [X] · [StageName]".       │
+│    • Selected Tier State: Automatically synchronizes `selectedTier` to `activeChild.developmentalTier`. │
+│    • Course Card Grid: Reactively re-queries courses filtered by the active child's developmental tier. │
+│    • Course/Lesson Detail (/academy/[slug]): Surfaces an Active Child Stage Match indicator showing     │
+│      whether this course matches the currently selected child, with a 1-tap calibration chip.          │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 3. SUNDAY YOUTH CULTURE DIGEST (/digest):                                                              │
+│    • DigestFeedHeader: Highlights active child calibration ("Tailored for Julian · Age 14 · Teen").    │
+│    • DinnerConversationStarters: Automatically calculates `resolveDinnerTier(activeChild)` to serve    │
+│      dinner questions calibrated for Toddler, Elementary, Tween, or Teen.                              │
+│    • SlangDecoderView: Receives `activeChild`. Automatically defaults `selectedTier` to match:         │
+│      - Age <= 6: Screen-free Early Childhood advice banner with preview of future slang.               │
+│      - Age 7-9: Defaults to 'ELEMENTARY' tier slang.                                                   │
+│      - Age 10-12: Defaults to 'TWEEN' tier slang.                                                      │
+│      - Age 13+: Defaults to 'TEEN' tier slang.                                                         │
+│    • ExploitAlertsView: Receives `activeChild`. Elevates and badges exploits directly relevant to      │
+│      the child's platforms (e.g. Roblox/Fortnite for elementary vs Discord/Snapchat for teens).        │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 4. FAMILY PACTS & DEVICES HUB (/devices):                                                              │
+│    • Dynamic Active Tab Tailoring:                                                                     │
+│      - If active child is Road 1 (PRE_DEVICE): Defaults/flips to Tab 1 ("Thinking About a Device?").   │
+│      - If active child is Road 2 (ACTIVE_DEVICE): Defaults/flips to Tab 3 ("Active Device Curfews").   │
+│    • Tab 1 (Readiness): Highlights active child's 10-dimension readiness score and bridge ladder.       │
+│    • Tab 2 (Bilateral Pact): Focuses active child's commitments, pact status, and builder URL.         │
+│    • Tab 3 (Curfews & MDM): Visually highlights and pins the active child's device profile card with a │
+│      prominent "Active Child Profile" ring/badge and 1-tap QR scan enrollment.                          │
+│    • Tab 4 (Culture Radar): Dynamically adapts dinner prompt and trending slang to child's stage.       │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ 5. 24/7 AI CHILD ADVISOR (/advisor & /advisor/faqs & Floating Bubble):                                │
+│    • FloatingAdvisorBubble: Injects `childId: activeChild?.id` and contextual prompts.                 │
+│    • AdvisorDashboardView: Injects `defaultChildId: activeChild?.id`, adds active child calibration    │
+│      header banner, and updates text area placeholder to "Ask about [ChildName]...".                  │
+│    • FaqExplorerView: Automatically updates `selectedTier` filter to match `activeChild.tier`.         │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## 4. The Academy Curriculum Taxonomy: Categories, Courses & Prioritized Chapters
@@ -425,7 +483,8 @@ To implement this vision without breaking existing features or causing merge con
 | **`PLAN-30`** | **Parent Intelligence Academy Categories & Prioritized Chapters API** | **Backend Agent** | Evolve database schema with `AcademyCategory` and `AcademyChapter` models. Add category and chapter queries to Fastify routes. Seed canonical curriculum data across 5 categories and 6 lifespan tiers with prioritized chapters. (Complete - PR #49) |
 | **`PLAN-31`** | **Parent Intelligence Academy Curriculum Explorer & Chapter Reader UI** | **Frontend Agent** | Redesign `/academy` with Category selector tabs, developmental tier auto-calibration pill, prioritized chapter cards (Priority 1, 2, 3 badges), and rich micro-lesson reader with "Clinical Insight" callouts and "What to Say" dialogue bubbles. (Complete - PR #51) |
 | **`PLAN-32`** | **Sunday Culture Digest Living Feed & Dinner Starters UI** | **Frontend Agent** | Elevate `/digest` into the primary "Keep Up With Your Child" Living Feed, featuring current week's edition, searchable Slang Decoder with instant filtering, Exploit & Dark Pattern Early Warnings, and interactive Sunday Dinner Conversation Starters. (Complete - PR #50) |
-| **`PLAN-33`** | **Platform Advisory Homepage & Child Cockpit Redesign UI** | **Frontend Agent** | Redesign both the authenticated Child Advisory Cockpit (`/dashboard`) and the public landing homepage (`/`). Anchor home to Priority 1–3 Academy chapters, Sunday culture briefing, daily empathy scripts, and bedtime curfew status while completely purging legacy medication calculators. |
+| **`PLAN-33`** | **Platform Advisory Homepage & Child Cockpit Redesign UI** | **Frontend Agent** | Redesign both the authenticated Child Advisory Cockpit (`/dashboard`) and the public landing homepage (`/`). Anchor home to Priority 1–3 Academy chapters, Sunday culture briefing, daily empathy scripts, and bedtime curfew status while completely purging legacy medication calculators. (Complete - PR #53) |
+| **`PLAN-34`** | **Universal Cross-Tab Reactive Child Context Synchronization & Multi-Child Tailoring UI** | **Frontend Agent** | Implement universal reactive child tailoring across all tabs: dynamically re-calibrate Academy tier filter, Culture digest slang radar & dinner starters, Devices hub tab & active profile focus, and AI Advisor consultation context upon child switch. |
 
 ---
 
