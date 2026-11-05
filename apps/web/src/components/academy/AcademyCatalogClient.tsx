@@ -79,11 +79,14 @@ export function AcademyCatalogClient() {
     }
   }, [activeChild?.id, activeChild?.developmentalTier, activeChild?.age]);
 
-  // Query category stats
+  // Query category stats (filtered by selected tier)
   const { data: categoryStats = [] } = useQuery<AcademyCategoryStatsDTO[]>({
-    queryKey: ['academy-categories'],
-    queryFn: getAcademyCategories,
-    staleTime: 10 * 60 * 1000,
+    queryKey: ['academy-categories', selectedTier],
+    queryFn: () =>
+      getAcademyCategories({
+        tier: selectedTier === 'ALL' ? undefined : selectedTier,
+      }),
+    staleTime: 5 * 60 * 1000,
   });
 
   // Query modules filtered by category and tier

@@ -161,7 +161,7 @@ export function CategoryPills({
                 )}
               />
               <span>{cat.label}</span>
-              {count !== null && count > 0 && (
+              {count !== null && count >= 0 && (
                 <span
                   className={cn(
                     'text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors',

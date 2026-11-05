@@ -101,6 +101,34 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       expect(payload.success).toBe(true);
       expect(payload.data.categories).toHaveLength(5);
     });
+
+    it('filters category course counts by developmental tier (e.g. TIER_0_INFANCY_TODDLER_0_3)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/categories?tier=TIER_0_INFANCY_TODDLER_0_3',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.categories).toHaveLength(5);
+
+      const totalModules = payload.data.categories.reduce(
+        (acc: number, cat: any) => acc + cat.moduleCount,
+        0
+      );
+      expect(totalModules).toBe(5);
+
+      const behavior = payload.data.categories.find(
+        (c: any) => c.category === AcademyCategory.BEHAVIOR_AND_EMOTIONS
+      );
+      expect(behavior?.moduleCount).toBe(1);
+
+      const digital = payload.data.categories.find(
+        (c: any) => c.category === AcademyCategory.DIGITAL_AND_DEVICES
+      );
+      expect(digital?.moduleCount).toBe(1);
+    });
   });
 
   describe('GET /api/v1/academy/modules (Category & Tier Filtering)', () => {

@@ -285,11 +285,19 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
   };
 
   // GET /categories - List Canonical Categories with Stats & Course Counts
-  fastify.get(
+  fastify.get<{
+    Querystring: { tier?: DevelopmentalTier };
+  }>(
     '/categories',
     {
       preHandler: [optionalAuth],
       schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            tier: { type: 'string', enum: tierEnum },
+          },
+        },
         response: {
           200: {
             type: 'object',
