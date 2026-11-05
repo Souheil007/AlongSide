@@ -12,7 +12,7 @@ export interface PromptContext {
   conversationHistory?: { role: 'user' | 'assistant'; content: string }[];
 }
 
-export function buildAdvisorSystemPrompt(context: PromptContext): string {
+function buildAdvisorSystemPrompt(context: PromptContext): string {
   const { child, matchedFaqs = [] } = context;
 
   const sections: string[] = [

@@ -43,7 +43,7 @@ export interface AcademyRepository {
   ): Promise<AcademyLessonCompletionResponseDTO>;
 }
 
-export const ACADEMY_CATEGORY_METADATA: Record<
+const ACADEMY_CATEGORY_METADATA: Record<
   AcademyCategory,
   { title: string; description: string; sortOrder: number }
 > = {
@@ -79,7 +79,7 @@ export const ACADEMY_CATEGORY_METADATA: Record<
   },
 };
 
-export const SLUG_ALIASES: Record<string, string> = {
+const SLUG_ALIASES: Record<string, string> = {
   'infant-sensory-milestones-and-coregulation': 'behavior-infant-coregulation',
   'early-childhood-executive-function-and-play': 'behavior-preschool-feelings',
   'early-impulse-centers-and-shared-media': 'behavior-elementary-impulses',
@@ -89,7 +89,7 @@ export const SLUG_ALIASES: Record<string, string> = {
   'how-algorithms-shape-teen-brains': 'digital-adolescent-algorithmic-feeds',
 };
 
-export function getEquivalentTiers(tier: string): string[] {
+function getEquivalentTiers(tier: string): string[] {
   switch (tier) {
     case 'TIER_1_AGES_8_9':
     case 'TIER_2_MIDDLE_CHILDHOOD_7_9':

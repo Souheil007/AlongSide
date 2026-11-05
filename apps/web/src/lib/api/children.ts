@@ -117,28 +117,3 @@ export const fetchChildren = async (): Promise<ChildDTO[]> => {
   const res = await getChildren();
   return res.children || [];
 };
-
-export const fetchChild = async (id: string): Promise<ChildDTO> => {
-  const res = await getChild(id);
-  return res.child;
-};
-
-export const submitChildReadinessAssessment = async (
-  childId: string,
-  input: SubmitReadinessAssessmentInput
-): Promise<ReadinessAssessmentAttemptDTO> => {
-  const res = await submitReadinessAssessment(childId, input);
-  return res.attempt;
-};
-
-export const childrenApi = {
-  list: fetchChildren,
-  getChildren,
-  getById: fetchChild,
-  getChild,
-  create: createChild,
-  update: updateChild,
-  delete: deleteChild,
-  submitReadiness: submitReadinessAssessment,
-  submitChildReadinessAssessment,
-};

@@ -15,7 +15,7 @@ import {
   StandardDeviceProfileCompiler,
 } from './profile.compiler.js';
 
-export class DeviceProfileNotFoundError extends Error {
+class DeviceProfileNotFoundError extends Error {
   readonly statusCode = 404;
   readonly code = 'DEVICE_PROFILE_NOT_FOUND';
 

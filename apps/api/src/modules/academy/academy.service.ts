@@ -9,7 +9,7 @@ import type {
 } from '@alongside/shared';
 import type { AcademyRepository } from './academy.repository.js';
 
-export class AcademyModuleNotFoundError extends Error {
+class AcademyModuleNotFoundError extends Error {
   readonly statusCode = 404;
   readonly code = 'NOT_FOUND';
 
@@ -19,7 +19,7 @@ export class AcademyModuleNotFoundError extends Error {
   }
 }
 
-export class AcademyLessonNotFoundError extends Error {
+class AcademyLessonNotFoundError extends Error {
   readonly statusCode = 404;
   readonly code = 'NOT_FOUND';
 

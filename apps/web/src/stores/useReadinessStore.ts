@@ -483,5 +483,3 @@ export const useReadinessStore = create<ReadinessState>((set, get) => ({
   },
 }));
 
-export const READINESS_QUESTIONS = CANONICAL_READINESS_QUESTIONS;
-

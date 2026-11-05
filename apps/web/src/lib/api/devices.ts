@@ -14,8 +14,3 @@ export interface DeviceInfo {
   profile: DeviceProfileDTO;
   childName: string;
 }
-
-export const devicesApi = {
-  getEnrollmentQrCodeUrl,
-  getOtaEnrollmentUrl,
-};
