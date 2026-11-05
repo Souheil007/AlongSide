@@ -1,6 +1,6 @@
 export { HeroSection, HERO_TRUST_SIGNALS } from './HeroSection';
-export { LifespanStageSelector, LIFESPAN_STAGES } from './LifespanStageSelector';
-export type { StageData } from './LifespanStageSelector';
+export { LifespanStageSelector, LIFESPAN_STAGES, CANONICAL_6_LIFESPAN_STAGES } from './LifespanStageSelector';
+export type { StageData, StageCourse } from './LifespanStageSelector';
 export { PillarsShowcase, FIVE_BALANCED_PILLARS, THREE_CORE_PILLARS } from './PillarsShowcase';
 export type { PillarData, CoreAdvisoryPillar } from './PillarsShowcase';
 export { CulturePlaygroundDemo, DEMO_SLANG_TERMS, DEMO_DINNER_STARTERS } from './CulturePlaygroundDemo';

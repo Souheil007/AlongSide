@@ -174,7 +174,7 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
     });
 
     describe('2. Interactive 6-Stage Lifespan Advisory Explorer', () => {
-      it('provides all 6 canonical lifespan tiers with 4 interactive preview cards each', () => {
+      it('provides all 6 canonical lifespan tiers with 5 category tailored courses each', () => {
         expect(CANONICAL_6_LIFESPAN_STAGES).toHaveLength(6);
 
         const stageIds = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.id);
@@ -188,22 +188,25 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
         ]);
 
         for (const stage of CANONICAL_6_LIFESPAN_STAGES) {
-          // Card 1: Active leap
-          expect(stage.leap.title.length).toBeGreaterThan(10);
-          expect(stage.leap.description.length).toBeGreaterThan(20);
+          expect(stage.courses).toHaveLength(5);
+          expect(stage.title.length).toBeGreaterThan(10);
+          expect(stage.subtitle.length).toBeGreaterThan(20);
 
-          // Card 2: Priority Academy Chapter
-          expect(stage.academyChapter.course.length).toBeGreaterThan(5);
-          expect(stage.academyChapter.chapter.length).toBeGreaterThan(5);
-          expect(stage.academyChapter.priorityBadge).toContain('Priority');
+          // All 5 canonical categories must be represented
+          const categories = stage.courses.map((c) => c.category);
+          expect(categories).toContain(AcademyCategory.BEHAVIOR_AND_EMOTIONS);
+          expect(categories).toContain(AcademyCategory.HEALTH_AND_WELLNESS);
+          expect(categories).toContain(AcademyCategory.NUTRITION_AND_FEEDING);
+          expect(categories).toContain(AcademyCategory.DEVELOPMENT_AND_PLAY);
+          expect(categories).toContain(AcademyCategory.DIGITAL_AND_DEVICES);
 
-          // Card 3: Youth Culture & Slang
-          expect(stage.cultureReality.tagline.length).toBeGreaterThan(15);
-          expect(stage.cultureReality.slangSample.length).toBeGreaterThan(3);
-
-          // Card 4: Actionable Dialogue ("What to say")
-          expect(stage.dialogueScript.scenario.length).toBeGreaterThan(5);
-          expect(stage.dialogueScript.whatToSay.length).toBeGreaterThan(15);
+          for (const course of stage.courses) {
+            expect(course.title.length).toBeGreaterThan(5);
+            expect(course.summary.length).toBeGreaterThan(20);
+            expect(course.slug.length).toBeGreaterThan(3);
+            expect(course.lessonCount).toBe(3);
+            expect(course.durationMinutes).toBeGreaterThanOrEqual(12);
+          }
         }
       });
     });
