@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Vercel Design System Preview (The Parent Advisory Sanctuary)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ver-canvas: #fafafa;
+      --ver-elevated: #ffffff;
+      --ver-primary: #171717;
+      --ver-ink: #171717;
+      --ver-body: #4d4d4d;
+      --ver-mute: #8f8f8f;
+      --ver-hairline: #ebebeb;
+      --ver-hairline-soft: #f2f2f2;
+      --ver-link: #0070f3;
+      --ver-radius-btn: 6px;
+      --ver-radius-pill: 9999px;
+      --ver-radius-card: 10px;
+      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--ver-canvas);
+      color: var(--ver-ink);
+      font-family: var(--font-display);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Preview Switcher Bar */
+    .preview-banner {
+      background: #000000;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #333333;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .preview-banner a { color: #50e3c2; text-decoration: none; font-weight: 600; }
+    .preview-banner .badge { background: #ffffff; color: #000000; padding: 2px 8px; border-radius: var(--ver-radius-pill); font-weight: 700; margin-right: 8px; font-size: 11px; }
+
+    /* Site Header */
+    header.site-header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--ver-hairline);
+      position: sticky;
+      top: 41px;
+      z-index: 900;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ver-ink);
+    }
+    .triangle-logo {
+      width: 22px;
+      height: 20px;
+      fill: var(--ver-ink);
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--ver-body);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: var(--ver-ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: var(--ver-radius-btn);
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-pill-black {
+      background: var(--ver-ink);
+      color: #ffffff;
+      border-radius: var(--ver-radius-pill);
+      padding: 10px 22px;
+    }
+    .btn-pill-black:hover {
+      background: #000000;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+    .btn-outline {
+      background: var(--ver-elevated);
+      border-color: var(--ver-hairline);
+      color: var(--ver-ink);
+    }
+    .btn-outline:hover {
+      border-color: #000;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section with Vercel Multi-Stop Radiant Mesh */
+    .hero-section {
+      padding: 80px 0 60px 0;
+      text-align: center;
+      position: relative;
+    }
+    .hero-mesh {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 350px;
+      background: radial-gradient(circle at 30% 30%, rgba(80, 227, 194, 0.25), transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(121, 40, 202, 0.2), transparent 50%),
+                  radial-gradient(circle at 50% 70%, rgba(245, 166, 35, 0.18), transparent 50%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .geist-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid var(--ver-hairline);
+      padding: 5px 14px;
+      border-radius: var(--ver-radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ver-body);
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .geist-mono-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--ver-canvas);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--ver-hairline);
+    }
+    .hero-title {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2.4px;
+      color: var(--ver-ink);
+      margin-bottom: 20px;
+    }
+    .hero-title span.geist-gradient {
+      background: linear-gradient(135deg, #007cf0 0%, #00dfd8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      font-size: 19px;
+      color: var(--ver-body);
+      line-height: 1.6;
+      max-width: 760px;
+      margin: 0 auto 36px auto;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 50px;
+    }
+    .btn-lg {
+      padding: 14px 28px;
+      font-size: 15px;
+    }
+
+    /* Trust Signals */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      border-top: 1px solid var(--ver-hairline);
+      padding-top: 36px;
+    }
+    .trust-card {
+      background: var(--ver-elevated);
+      border: 1px solid var(--ver-hairline);
+      border-radius: var(--ver-radius-btn);
+      padding: 18px 20px;
+      text-align: left;
+    }
+    .trust-card strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ver-ink);
+      margin-bottom: 2px;
+    }
+    .trust-card span { font-size: 12px; color: var(--ver-mute); }
+
+    /* Lifespan Tabs */
+    .section-head {
+      margin: 70px 0 28px 0;
+    }
+    .section-head h2 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      color: var(--ver-ink);
+    }
+    .section-head p {
+      font-size: 15px;
+      color: var(--ver-body);
+      margin-top: 6px;
+    }
+
+    .ver-stage-tabs {
+      display: flex;
+      gap: 6px;
+      background: #eeeeee;
+      padding: 4px;
+      border-radius: var(--ver-radius-btn);
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    .ver-stage-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ver-body);
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .ver-stage-btn.active {
+      background: #ffffff;
+      color: var(--ver-ink);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .ver-card-panel {
+      background: var(--ver-elevated);
+      border: 1px solid var(--ver-hairline);
+      border-radius: var(--ver-radius-card);
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 36px;
+    }
+
+    /* 3 Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 70px;
+    }
+    .pillar-box {
+      background: var(--ver-elevated);
+      border: 1px solid var(--ver-hairline);
+      border-radius: var(--ver-radius-btn);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.15s ease;
+    }
+    .pillar-box:hover { border-color: #000; }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 70px;
+    }
+    .pricing-box {
+      background: var(--ver-elevated);
+      border: 1px solid var(--ver-hairline);
+      border-radius: var(--ver-radius-btn);
+      padding: 40px 36px;
+      position: relative;
+    }
+    .pricing-box.featured {
+      border: 2px solid var(--ver-ink);
+    }
+    .pricing-cost {
+      font-size: 46px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin: 14px 0 6px 0;
+    }
+    .pricing-cost span { font-size: 15px; font-weight: 400; color: var(--ver-mute); letter-spacing: 0; }
+
+    footer.site-footer {
+      border-top: 1px solid var(--ver-hairline);
+      padding: 50px 0;
+      font-size: 13px;
+      color: var(--ver-mute);
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-title { font-size: 38px; }
+      .ver-card-panel { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Preview Switcher Bar -->
+  <div class="preview-banner">
+    <div>
+      <span class="badge">VERCEL SYSTEM</span>
+      <span>Direction 6 of 8: Geist developer aesthetic, stark monochrome ink (#171717) on #fafafa, radiant mesh gradient, 6px clean buttons.</span>
+    </div>
+    <div>
+      <a href="preview-spacex.html">← Prev: SpaceX</a> &nbsp;|&nbsp;
+      <a href="index.html">Master Switcher</a> &nbsp;|&nbsp;
+      <a href="preview-warp.html">Next: Warp →</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-wrap">
+        <svg class="triangle-logo" viewBox="0 0 75 65">
+          <polygon points="37.5,0 75,65 0,65" />
+        </svg>
+        <div class="brand-title">AlongSide</div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#curriculum">Lifespan 0–18</a></li>
+        <li><a href="#pillars">3 Pillars</a></li>
+        <li><a href="#slang">Youth Slang</a></li>
+        <li><a href="#pricing">Family Pass</a></li>
+      </ul>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="#login" class="btn btn-outline">Sign In</a>
+        <a href="#trial" class="btn btn-pill-black">Start Free Trial</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-mesh"></div>
+      <div class="hero-content">
+        <div class="geist-pill-badge">
+          <span class="geist-mono-tag">v2.5.0</span>
+          <span>Barton Schmitt Clinical Standards • Lifespan Family OS</span>
+        </div>
+
+        <h1 class="hero-title">
+          The Parent Advisory Sanctuary: <br>
+          <span class="geist-gradient">Keep Up With Your Child</span> As They Grow.
+        </h1>
+
+        <p class="hero-lead">
+          Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science,
+          prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
+        </p>
+
+        <div class="hero-actions">
+          <a href="#trial" class="btn btn-pill-black btn-lg">Start 7-Day Risk-Free Trial →</a>
+          <a href="#curriculum" class="btn btn-outline btn-lg">Explore 6-Stage Curriculum</a>
+        </div>
+      </div>
+
+      <!-- Trust Strip -->
+      <div class="trust-strip">
+        <div class="trust-card">
+          <strong>Barton Schmitt</strong>
+          <span>Emergency Clinical Protocols</span>
+        </div>
+        <div class="trust-card">
+          <strong>CDC & AAP Verified</strong>
+          <span>Milestones Lifespan 0–18</span>
+        </div>
+        <div class="trust-card">
+          <strong>Zero-Spyware</strong>
+          <span>Transparent MDM Architecture</span>
+        </div>
+        <div class="trust-card">
+          <strong>1-Click Cancel</strong>
+          <span>7-Day Upfront Free Trial</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LIFESPAN EXPLORER -->
+    <section id="curriculum">
+      <div class="section-head">
+        <h2>Lifespan Developmental Explorer (0–18)</h2>
+        <p>Scientific benchmarks and immediate parental priorities mapped across developmental leaps.</p>
+      </div>
+
+      <div class="ver-stage-tabs">
+        <button class="ver-stage-btn">Infants (0–3)</button>
+        <button class="ver-stage-btn">Early Childhood (4–6)</button>
+        <button class="ver-stage-btn">Elementary (7–9)</button>
+        <button class="ver-stage-btn active">Pre-Teens (10–12)</button>
+        <button class="ver-stage-btn">High School (13–15)</button>
+        <button class="ver-stage-btn">Young Adults (16–18)</button>
+      </div>
+
+      <div class="ver-card-panel">
+        <div>
+          <span class="geist-mono-tag" style="margin-bottom: 12px; display: inline-block;">ROAD_1 // PRE_DEVICE</span>
+          <h3 style="font-size: 24px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 12px;">
+            Adrenarche, Social Dopamine Shift & Peer Group Alignment
+          </h3>
+          <p style="color: var(--ver-body); font-size: 15px; margin-bottom: 20px;">
+            At age 10–12, adrenarche triggers neurological restructuring around peer belonging. When your child says <em>“All my friends have phones except me!”</em>, they are expressing an acute peer exclusion fear.
+          </p>
+
+          <div style="background: var(--ver-canvas); border: 1px solid var(--ver-hairline); border-radius: var(--ver-radius-btn); padding: 18px; margin-bottom: 20px;">
+            <strong style="display: block; font-size: 13px; margin-bottom: 6px;">Daily Advisory Script:</strong>
+            <p style="color: var(--ver-mute); font-size: 13px; margin-bottom: 6px;">
+              <strong>Avoid:</strong> <em>“You don’t need what everyone else has.”</em>
+            </p>
+            <p style="color: var(--ver-ink); font-size: 13px; font-weight: 600;">
+              <strong>Say Instead:</strong> <em>“I hear how lonely it feels when friends talk about a chat you can’t see. We protect your sleep and mental health because we love you. Let’s review our First-Phone Readiness checklist together.”</em>
+            </p>
+          </div>
+
+          <a href="#trial" class="btn btn-pill-black">View Empathy Simulator →</a>
+        </div>
+
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+          <div style="background: var(--ver-canvas); border: 1px solid var(--ver-hairline); border-radius: var(--ver-radius-btn); padding: 20px;">
+            <span style="font-size: 12px; color: var(--ver-mute);">First-Phone Readiness</span>
+            <div style="font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-top: 4px;">68 / 100</div>
+          </div>
+
+          <div style="background: var(--ver-canvas); border: 1px solid var(--ver-hairline); border-radius: var(--ver-radius-btn); padding: 20px;">
+            <span style="font-size: 12px; color: var(--ver-mute);">Current Academy Lesson</span>
+            <strong style="display: block; font-size: 15px; margin: 6px 0;">Tween Adrenarche & Volatility</strong>
+            <span style="font-size: 12px; color: var(--ver-link);">4 min read • Chapter 1 →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THE 3 CORE PILLARS SHOWCASE -->
+    <section id="pillars" style="margin-top: 70px;">
+      <div class="section-head">
+        <h2>The 3 Pillars Architecture</h2>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-box">
+          <div>
+            <span class="geist-mono-tag">PILLAR 01</span>
+            <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px 0;">Parent Intelligence Academy</h3>
+            <p style="color: var(--ver-body); font-size: 14px;">120+ prioritized 5-minute micro-lessons covering newborn clinical triage through teenage screen addiction.</p>
+          </div>
+          <div style="margin-top: 24px;">
+            <span style="font-size: 12px; font-weight: 600;">120+ Micro-Lessons</span>
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div>
+            <span class="geist-mono-tag">PILLAR 02</span>
+            <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px 0;">Sunday Youth Culture Digest</h3>
+            <p style="color: var(--ver-body); font-size: 14px;">Weekly briefing explaining teen slang, TikTok algorithms, covert calculator vault apps, and Sunday dinner scripts.</p>
+          </div>
+          <div style="margin-top: 24px;">
+            <span style="font-size: 12px; font-weight: 600; color: #0070f3;">Weekly Drop Every Sunday</span>
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div>
+            <span class="geist-mono-tag">PILLAR 03</span>
+            <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px 0;">Bilateral Pacts & MDM Curfews</h3>
+            <p style="color: var(--ver-body); font-size: 14px;">Signed digital agreements with neutral automated 8:30 PM device lockouts via Apple & Android MDM profiles.</p>
+          </div>
+          <div style="margin-top: 24px;">
+            <span style="font-size: 12px; font-weight: 600;">Zero-Spyware MDM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PRICING SECTION -->
+    <section id="pricing">
+      <div class="section-head" style="text-align: center;">
+        <h2>Simple, Transparent Family Pricing</h2>
+        <p>Full lifespan coverage across all 3 pillars with zero hidden fees.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-box featured">
+          <span class="geist-mono-tag" style="background: var(--ver-ink); color: #fff;">RECOMMENDED</span>
+          <h3 style="font-size: 24px; font-weight: 700; margin-top: 10px;">Annual Hero Pass</h3>
+          <p style="color: var(--ver-mute); font-size: 14px;">7-Day Upfront Free Trial Included</p>
+          <div class="pricing-cost">$79 <span>/ year ($6.58/mo billed annually)</span></div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 24px 0; font-size: 14px; color: var(--ver-body);">
+            <li>✓ <strong>7-Day Risk-Free Trial</strong></li>
+            <li>✓ Unlimited Children (Ages 0–18)</li>
+            <li>✓ 120+ Micro-Lessons in Academy</li>
+            <li>✓ Weekly Youth Culture Digest</li>
+            <li>✓ Bilateral Pacts with MDM Curfews</li>
+          </ul>
+          <a href="#trial" class="btn btn-pill-black btn-lg" style="width: 100%;">Start 7-Day Free Trial →</a>
+        </div>
+
+        <div class="pricing-box">
+          <h3 style="font-size: 24px; font-weight: 700; margin-top: 10px;">Monthly Flex Pass</h3>
+          <p style="color: var(--ver-mute); font-size: 14px;">Month-to-month flexibility</p>
+          <div class="pricing-cost">$9.99 <span>/ month</span></div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 24px 0; font-size: 14px; color: var(--ver-body);">
+            <li>✓ All 6 Lifespan Tiers (0–18)</li>
+            <li>✓ Full Academy Library</li>
+            <li>✓ Weekly Slang Digest</li>
+            <li>✓ 1-Click Cancel Anytime</li>
+          </ul>
+          <a href="#trial" class="btn btn-outline btn-lg" style="width: 100%; margin-top: 36px;">Choose Monthly</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong style="color: var(--ver-ink); font-size: 15px;">AlongSide Sanctuary</strong>
+        <p style="margin-top: 6px; max-width: 320px;">The evidence-based digital parenting operating system for lifespan ages 0–18.</p>
+      </div>
+      <div>
+        <strong style="color: var(--ver-ink);">Clinical Protocols</strong>
+        <p style="margin-top: 6px;">Barton Schmitt Protocols<br>AAP Digital Health Framework<br>CDC Milestone Guidelines</p>
+      </div>
+      <div>
+        <strong style="color: var(--ver-ink);">Privacy Architecture</strong>
+        <p style="margin-top: 6px;">Zero-Spyware Pledge<br>COPPA & FERPA Compliance<br>Encrypted Family Data</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

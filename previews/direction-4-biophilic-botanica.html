@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Direction 4: Biophilic Botanica (Organic Living Calm & Earth Warmth)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F5F0;
+      --surface: #FFFFFF;
+      --surface-subtle: #EFECE4;
+      --surface-warm: #FDF9F3;
+      --ink: #11241C;
+      --ink-muted: #5C6B62;
+      --ink-subtle: #8A9990;
+      --border: #DDD8CB;
+      --border-subtle: #EBE7DC;
+      --primary: #14382C;
+      --primary-hover: #1D4C3C;
+      --secondary: #4A6B53;
+      --accent: #D96B43;
+      --accent-hover: #C25A34;
+      --accent-subtle: #FDF0EB;
+      --wheat: #D4A373;
+      --success: #2A724F;
+      --success-subtle: #EDF7F2;
+      --danger: #B83232;
+
+      --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'DM Mono', monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --shadow-warm: 0 4px 16px -2px rgba(20, 56, 44, 0.05), 0 2px 6px -1px rgba(20, 56, 44, 0.02);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* Top Spec Banner */
+    .direction-badge-bar {
+      background: var(--primary);
+      color: #F7F5F0;
+      padding: 10px 24px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .direction-badge-bar a {
+      color: #F7F5F0;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    /* Botanica Header */
+    header.botanica-header {
+      background: rgba(247, 245, 240, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 41px;
+      z-index: 90;
+    }
+    .header-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-botanica {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .botanica-leaf-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--secondary);
+      color: #FFFFFF;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+    }
+    .botanica-brand-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    nav.botanica-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .botanica-nav-link {
+      padding: 7px 14px;
+      font-family: var(--font-heading);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .botanica-nav-link:hover {
+      color: var(--primary);
+      background: var(--surface-subtle);
+    }
+    .botanica-nav-link.active {
+      color: var(--primary);
+      background: #E5E1D5;
+      font-weight: 700;
+    }
+
+    .botanica-child-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Main Container */
+    main.botanica-main {
+      max-width: 1220px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+    }
+
+    /* Hero Horizon Card */
+    .botanica-hero {
+      background: var(--surface-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px 30px;
+      box-shadow: var(--shadow-warm);
+      margin-bottom: 24px;
+    }
+    .botanica-hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+    .date-botanica {
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-botanica-pre {
+      background: #EDF7F2;
+      color: #2A724F;
+      border: 1px solid #C6E6D5;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-botanica-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media (min-width: 860px) {
+      .hero-botanica-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .botanica-avatar-lg {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 26px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-h1-botanica {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .btn-botanica {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-botanica:hover { background: var(--primary-hover); }
+
+    /* Active Leap Sub-Banner */
+    .botanica-leap-subcard {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #EFECE4;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    @media (min-width: 768px) {
+      .botanica-leap-subcard {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    /* 2-Column Grid */
+    .botanica-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 992px) {
+      .botanica-grid {
+        grid-template-columns: 7fr 5fr;
+      }
+    }
+
+    .botanica-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-warm);
+      margin-bottom: 24px;
+    }
+    .botanica-card-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--secondary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .botanica-card-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.35;
+    }
+    .botanica-card-sub {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: 3px;
+      margin-bottom: 14px;
+    }
+
+    /* Progress bar */
+    .botanica-progress-bar {
+      height: 8px;
+      background: var(--surface-subtle);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: 14px 0 8px;
+    }
+    .botanica-progress-fill {
+      width: 33%;
+      height: 100%;
+      background: var(--secondary);
+      border-radius: var(--radius-full);
+    }
+
+    /* Dialogue boxes */
+    .botanica-dialogue-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (min-width: 640px) {
+      .botanica-dialogue-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .dialogue-cell {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cell-bad {
+      background: #FFF5F5;
+      border: 1px solid #FED7D7;
+    }
+    .cell-good {
+      background: #F3F9F5;
+      border: 1px solid #CEEAD9;
+    }
+
+    /* Sunday Digest */
+    .dinner-starter-box {
+      background: var(--surface-warm);
+      border-left: 3px solid var(--accent);
+      padding: 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    /* AI Advisor Card */
+    .botanica-ai-card {
+      background: #F1EFEA;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+    .botanica-ai-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .botanica-ai-input {
+      flex: 1;
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: #FFFFFF;
+      font-family: var(--font-body);
+      font-size: 13px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Direction Top Bar -->
+  <div class="direction-badge-bar">
+    <div><strong>Direction 4: Biophilic Botanica</strong> &bull; Organic Living Calm &bull; Earth Warmth</div>
+    <div><a href="index.html">&larr; Return to Master Switcher</a></div>
+  </div>
+
+  <!-- Header -->
+  <header class="botanica-header">
+    <div class="header-inner">
+      <a href="#" class="brand-botanica">
+        <div class="botanica-leaf-mark">🌿</div>
+        <div class="botanica-brand-name">AlongSide</div>
+      </a>
+
+      <nav class="botanica-nav">
+        <a href="#" class="botanica-nav-link active">Home</a>
+        <a href="#" class="botanica-nav-link">Parent Academy</a>
+        <a href="#" class="botanica-nav-link">Culture Digest</a>
+        <a href="#" class="botanica-nav-link">Family Pacts &amp; Devices</a>
+      </nav>
+
+      <div class="botanica-child-pill">
+        <span>Maya (11y)</span>
+        <span style="font-size: 10px; color: var(--ink-muted);">&blacktriangledown;</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="botanica-main">
+
+    <!-- Hero Card -->
+    <section class="botanica-hero">
+      <div class="botanica-hero-top">
+        <div class="date-botanica">
+          <span>🌱</span>
+          <span>Thursday, Nov 5, 2026</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <span class="badge-botanica-pre">Road 1: Pre-Device</span>
+          <span style="background: var(--surface-subtle); font-family: var(--font-mono); font-size: 11px; padding: 3px 8px; border-radius: var(--radius-full);">
+            Tweens (Ages 10–12)
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-botanica-content">
+        <div style="display: flex; align-items: flex-start; gap: 18px;">
+          <div class="botanica-avatar-lg">M</div>
+          <div>
+            <h1 class="hero-h1-botanica">Maya&apos;s Advisory Horizon</h1>
+            <div style="font-family: var(--font-heading); font-size: 13.5px; font-weight: 600; color: var(--secondary); margin: 3px 0 6px;">
+              First-Phone Horizon &bull; 11 yrs (6th Grade)
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-muted); max-width: 660px; line-height: 1.5;">
+              Navigating middle school social dynamics, group chat exclusion anxiety, and bilateral phone readiness before high school transition.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <a href="#" class="btn-botanica">
+            <span>First-Phone Readiness (68/100) &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="botanica-leap-subcard">
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--secondary);">
+            Active Leap &bull; Tween Adrenarche
+          </div>
+          <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--primary);">
+            Adrenarche, Social Dopamine Shift &amp; Peer Identity Alignment
+          </div>
+          <div style="font-size: 12px; color: var(--ink-muted);">
+            Adrenal hormone surge sensitizing neural reward circuits to peer acceptance, triggering acute sensitivity to status and exclusion.
+          </div>
+        </div>
+        <div>
+          <a href="#" style="font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--primary); text-decoration: underline;">
+            Science Notes &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <div class="botanica-grid">
+
+      <!-- Left Column -->
+      <div>
+
+        <!-- Card 1: Active Academy Chapter -->
+        <article class="botanica-card">
+          <div class="botanica-card-eyebrow">
+            <span>Current Parent Academy Chapter</span>
+            <span style="color: var(--secondary);">Priority 1 Immediate</span>
+          </div>
+          <h2 class="botanica-card-title">Chapter 1: The Biological Awakening to Peer Status</h2>
+          <div class="botanica-card-sub">Tween Adrenarche &amp; Emotional Volatility &bull; Behavior &amp; Emotions</div>
+
+          <p style="font-size: 13.5px; color: var(--ink-muted); line-height: 1.5; margin-bottom: 12px;">
+            Understanding why peer exclusion feels biologically life-threatening to a 10–12 year old brain, and how to de-escalate without dismissing their grief.
+          </p>
+
+          <div class="botanica-progress-bar">
+            <div class="botanica-progress-fill"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); margin-bottom: 16px;">
+            <span>1 of 3 Chapters Completed &bull; 33%</span>
+            <span>4 min read</span>
+          </div>
+
+          <button class="btn-botanica" style="width: 100%; justify-content: center;">
+            Continue Reading Chapter &rarr;
+          </button>
+        </article>
+
+        <!-- Card 2: Daily Advisory Dialogue Script -->
+        <article class="botanica-card">
+          <div class="botanica-card-eyebrow">
+            <span>Today&apos;s Daily Advisory Script</span>
+            <span>10–12 Year Milestone</span>
+          </div>
+          <h2 class="botanica-card-title">&ldquo;All My Friends Have Phones Except Me! You&apos;re Ruining My Life!&rdquo;</h2>
+          <div class="botanica-card-sub">Pillar: Adrenarche &amp; Social Reward Circuitry</div>
+
+          <div style="background: var(--surface-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 12.5px; color: var(--ink-muted); margin-bottom: 14px;">
+            <strong>Context:</strong> When your tween arrives home furious after being left out of a middle school group chat.
+          </div>
+
+          <div class="botanica-dialogue-grid">
+            <div class="dialogue-cell cell-bad">
+              <div>
+                <div style="font-family: var(--font-heading); font-size: 11px; font-weight: 700; color: var(--danger); text-transform: uppercase; margin-bottom: 8px;">
+                  &times; What Not to Say
+                </div>
+                <div style="font-size: 13.5px; font-weight: 600; line-height: 1.45; margin-bottom: 10px;">
+                  &ldquo;You don&apos;t need what everyone else has. You&apos;re too young, and that&apos;s final.&rdquo;
+                </div>
+              </div>
+              <div style="font-size: 11.5px; color: var(--ink-muted); border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 8px;">
+                Dismisses severe adrenarche-driven peer belonging fear as frivolous entitlement.
+              </div>
+            </div>
+
+            <div class="dialogue-cell cell-good">
+              <div>
+                <div style="font-family: var(--font-heading); font-size: 11px; font-weight: 700; color: var(--success); text-transform: uppercase; margin-bottom: 8px;">
+                  &check; What to Say Instead
+                </div>
+                <div style="font-size: 13.5px; font-weight: 600; line-height: 1.45; margin-bottom: 10px;">
+                  &ldquo;I hear how lonely and painful it feels when friends talk about a chat you can&apos;t see. We protect your sleep and mental health because we love you. Let&apos;s look at our First-Phone Readiness checklist together.&rdquo;
+                </div>
+              </div>
+              <div style="font-size: 11.5px; color: var(--ink-muted); border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 8px;">
+                Deeply validates peer status ache while maintaining an authoritative developmental boundary.
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-botanica" style="background: var(--surface-subtle); color: var(--ink);">
+              📋 Copy Empathy Script
+            </button>
+            <button class="btn-botanica" style="background: var(--accent); flex: 1; justify-content: center;">
+              🎙️ Practice in Voice Sparring Simulator &rarr;
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Right Column -->
+      <div>
+
+        <!-- Card 3: Sunday Youth Culture Digest -->
+        <article class="botanica-card">
+          <div class="botanica-card-eyebrow">
+            <span>Sunday Youth Culture Digest</span>
+            <span>Issue #42</span>
+          </div>
+          <h2 class="botanica-card-title">Decoding &lsquo;Crashout&rsquo; &amp; The Calculator Vault Bypass</h2>
+
+          <div class="dinner-starter-box">
+            <strong>Sunday Dinner Conversation Starter:</strong><br>
+            &ldquo;Ask your child what the funniest meme or phrase they heard this week was, and why it made them or their friends laugh.&rdquo;
+          </div>
+
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px;">
+            <span style="font-family: var(--font-heading); font-size: 20px; font-weight: 700;">Crashout</span>
+            <span style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted);">/ˈkræʃ.aʊt/</span>
+            <span style="font-size: 11px; color: var(--accent); font-weight: 600; margin-left: auto;">[Cringe: 4/5]</span>
+          </div>
+          <p style="font-size: 13px; color: var(--ink-muted); line-height: 1.45;">
+            An explosive overreaction to minor friction or losing a match.
+          </p>
+
+          <div style="display: flex; gap: 6px; margin: 12px 0 16px;">
+            <span style="background: var(--surface-subtle); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11.5px; font-weight: 600;">#Crashout</span>
+            <span style="background: var(--surface-subtle); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11.5px; font-weight: 600;">#Rizz</span>
+            <span style="background: var(--surface-subtle); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11.5px; font-weight: 600;">#Cooked</span>
+          </div>
+
+          <div style="background: #FFFDF7; border: 1px solid #FDE68A; border-radius: var(--radius-sm); padding: 12px; font-size: 12px; color: #78350F; margin-bottom: 14px;">
+            <strong>⚠️ Exploit Alert:</strong> Disguised Calculator Vault apps conceal unmonitored group chats behind a working calculator interface.
+          </div>
+
+          <button class="btn-botanica" style="width: 100%; justify-content: center; background: var(--surface-subtle); color: var(--ink);">
+            Read Full Sunday Digest &rarr;
+          </button>
+        </article>
+
+        <!-- Card 4: Bilateral Pact -->
+        <article class="botanica-card">
+          <div class="botanica-card-eyebrow">
+            <span>Bilateral Family Pact</span>
+            <span>Road 1</span>
+          </div>
+          <h2 class="botanica-card-title">Maya&apos;s Readiness Assessment</h2>
+
+          <div style="display: flex; align-items: center; gap: 14px; margin: 14px 0;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #EDF7F2; border: 2px solid #C6E6D5; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: #2A724F;">
+              68
+            </div>
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 700; font-size: 14px;">Readiness Score: 68 / 100</div>
+              <div style="font-size: 12px; color: var(--ink-muted);">Progressing &bull; Needs Digital Footprint Milestone</div>
+            </div>
+          </div>
+
+          <div style="background: var(--surface-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 12.5px; display: flex; justify-content: space-between; margin-bottom: 14px;">
+            <span>Agreed Bedtime Curfew:</span>
+            <strong>8:30 PM Lock (Kitchen Dock)</strong>
+          </div>
+
+          <button class="btn-botanica" style="width: 100%; justify-content: center; background: var(--surface-subtle); color: var(--ink);">
+            View Signed Bilateral Pact PDF &rarr;
+          </button>
+        </article>
+
+        <!-- Card 5: AI Advisor -->
+        <div class="botanica-ai-card">
+          <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
+            🌿 24/7 AI Clinical Advisor
+          </div>
+          <div style="font-size: 12px; color: var(--ink-muted);">
+            Calibrated to Maya (11y) &bull; 250+ Clinical Scenarios
+          </div>
+
+          <div class="botanica-ai-input-wrap">
+            <input type="text" class="botanica-ai-input" placeholder="Ask AI advisor...">
+            <button class="btn-botanica" style="padding: 0 16px;">Ask</button>
+          </div>
+
+          <div style="font-size: 12px; color: var(--ink); line-height: 1.8;">
+            &bull; How do I evaluate if Maya is ready for a phone?<br>
+            &bull; Talking about algorithm dopamine without preaching<br>
+            &bull; Pre-unboxing agreement before buying a device
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
