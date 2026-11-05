@@ -6,22 +6,19 @@ import { usePathname } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Compass,
-  HeartPulse,
-  Puzzle,
-  Smartphone,
-  MoreHorizontal,
-  Utensils,
-  Brain,
   BookOpen,
   Sparkles,
+  Shield,
+  MoreHorizontal,
+  Settings,
+  CreditCard,
+  HelpCircle,
   X,
   ChevronRight,
-  Shield,
   LogOut,
   Loader2,
   User as UserIcon,
   Bot,
-  Settings,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { ChildSelector } from '@/components/shared/ChildSelector';
@@ -37,16 +34,15 @@ export interface NavItem {
 
 export const PRIMARY_MOBILE_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'Home', icon: Compass },
-  { href: '/health', label: 'Health', icon: HeartPulse, badge: 'Triage' },
-  { href: '/brain-games', label: 'Play', icon: Puzzle },
-  { href: '/devices', label: 'Devices', icon: Smartphone, badge: 'Pacts' },
+  { href: '/academy', label: 'Academy', icon: BookOpen, badge: 'Courses' },
+  { href: '/digest', label: 'Digest', icon: Sparkles, badge: 'Weekly' },
+  { href: '/devices', label: 'Devices', icon: Shield, badge: 'Pacts' },
 ];
 
 export const MORE_MOBILE_ITEMS: NavItem[] = [
-  { href: '/nutrition', label: 'Nutrition & Feeding Hub', icon: Utensils, badge: 'BLW' },
-  { href: '/behavior', label: 'Behavior & Tantrum Decoder', icon: Brain, badge: 'HALT' },
-  { href: '/academy', label: 'Parent Intelligence Academy', icon: BookOpen, badge: 'Courses' },
-  { href: '/digest', label: 'Sunday Youth Culture Digest', icon: Sparkles, badge: 'Weekly' },
+  { href: '/settings', label: 'Account & Family Settings', icon: Settings, badge: 'Profile' },
+  { href: '/#pricing', label: 'Billing & Hero Pass', icon: CreditCard, badge: 'Hero' },
+  { href: '/advisor', label: 'Help & Clinical Guidance', icon: HelpCircle, badge: 'Support' },
 ];
 
 export interface MobileNavProps {
@@ -224,14 +220,14 @@ export function MobileNav({ className }: MobileNavProps) {
               </Link>
             </div>
 
-            {/* Domain Hub Navigation Links */}
+            {/* Secondary Resources & Settings Drawer Tray */}
             <div className="space-y-2">
               <div className="px-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Secondary Hubs &amp; Intelligence
+                Secondary Resources &amp; Settings
               </div>
               {MORE_MOBILE_ITEMS.map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname.startsWith(item.href);
+                const isActive = item.href.startsWith('/#') ? false : pathname.startsWith(item.href);
 
                 return (
                   <Link
@@ -269,45 +265,6 @@ export function MobileNav({ className }: MobileNavProps) {
                   </Link>
                 );
               })}
-            </div>
-
-            {/* Dedicated Account & Family Settings Row */}
-            <div className="space-y-2 pt-1 border-t border-slate-100">
-              <div className="px-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Account &amp; Household Management
-              </div>
-              <Link
-                href="/settings"
-                onClick={() => setMoreDrawerOpen(false)}
-                className={cn(
-                  'flex min-h-[48px] items-center justify-between p-3 rounded-2xl border transition-all text-xs font-semibold',
-                  pathname.startsWith('/settings')
-                    ? 'bg-teal-50/90 border-teal-300 text-teal-900'
-                    : 'border-slate-200/80 bg-white hover:bg-teal-50/50 hover:border-teal-200 text-slate-800'
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'flex h-9 w-9 items-center justify-center rounded-xl shadow-2xs shrink-0',
-                      pathname.startsWith('/settings')
-                        ? 'bg-teal-600 text-white'
-                        : 'bg-slate-100 text-slate-700'
-                    )}
-                  >
-                    <Settings className="h-4.5 w-4.5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-slate-900 text-xs sm:text-sm">
-                      Account &amp; Family Settings
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">
-                      Profile, children, subscription &amp; security
-                    </span>
-                  </div>
-                </div>
-                <ChevronRight className="h-4 w-4 text-slate-400 shrink-0" />
-              </Link>
             </div>
 
             {/* User Account & Hardened Logout Action */}

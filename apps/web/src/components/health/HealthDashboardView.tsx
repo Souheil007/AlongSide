@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
   HeartPulse,
   ShieldCheck,
-  Pill,
   Moon,
   Stethoscope,
 } from 'lucide-react';
@@ -12,7 +11,6 @@ import { useChildContextStore } from '@/stores/useChildContextStore';
 import { useChildAge } from '@/hooks/useChildAge';
 import { EmergencyRedFlagBanner } from './EmergencyRedFlagBanner';
 import { SymptomTriageRunner } from './SymptomTriageRunner';
-import { AntipyreticDosingCalculator } from './AntipyreticDosingCalculator';
 import { SleepRegressionCompanion } from './SleepRegressionCompanion';
 
 interface HealthDashboardViewProps {
@@ -31,7 +29,7 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
   }, [initialChildId, activeChildId, setActiveChild]);
 
   // Active tab state
-  const [activeTab, setActiveTab] = React.useState<'triage' | 'dosing' | 'sleep'>('triage');
+  const [activeTab, setActiveTab] = React.useState<'triage' | 'sleep'>('triage');
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-16">
@@ -51,7 +49,7 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
               Pediatric Health & Symptom Companion
             </h1>
             <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed">
-              Medically conservative guidance for anxious moments. Calibrated 3-zone triage, weight-based antipyretic dosing, and sleep neurobiology.
+              Medically conservative guidance for anxious moments. Calibrated 3-zone triage, sleep neurobiology, and clinical pediatric advisory.
             </p>
           </div>
 
@@ -76,7 +74,7 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
               </div>
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-teal-500/20 pt-2.5 text-xs text-teal-200/80">
-              <span>Est. Weight: ~{childAge.estimatedWeightLbs} lbs</span>
+              <span>Circadian &amp; Triage Calibrated</span>
               <button
                 type="button"
                 onClick={() => setActiveTab('triage')}
@@ -110,19 +108,6 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
 
           <button
             type="button"
-            onClick={() => setActiveTab('dosing')}
-            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
-              activeTab === 'dosing'
-                ? 'border-teal-600 text-teal-900'
-                : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
-            }`}
-          >
-            <Pill className="h-4 w-4" />
-            <span>Antipyretic Dosing Calculator</span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => setActiveTab('sleep')}
             className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
               activeTab === 'sleep'
@@ -141,15 +126,6 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
         {activeTab === 'triage' && (
           <section aria-label="Interactive Symptom Triage Runner">
             <SymptomTriageRunner />
-          </section>
-        )}
-
-        {activeTab === 'dosing' && (
-          <section aria-label="Antipyretic Dosing Calculator">
-            <AntipyreticDosingCalculator
-              initialWeightLbs={childAge.estimatedWeightLbs}
-              initialAgeMonths={childAge.ageMonths}
-            />
           </section>
         )}
 

@@ -15,16 +15,16 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
       expect(homeLink?.label).toBe('Home');
     });
 
-    it('asserts AUTHENTICATED_CORE_LINKS contains exactly the 6 canonical domain tabs', () => {
-      expect(AUTHENTICATED_CORE_LINKS).toHaveLength(6);
+    it('asserts AUTHENTICATED_CORE_LINKS contains the canonical advisory destinations', () => {
+      expect(AUTHENTICATED_CORE_LINKS).toHaveLength(4);
       const labels = AUTHENTICATED_CORE_LINKS.map((link) => link.label);
-      expect(labels).toEqual(['Home', 'Health', 'Nutrition', 'Behavior', 'Play', 'Devices']);
+      expect(labels).toEqual(['Home', 'Parent Academy', 'Culture Digest', 'Family Pacts & Devices']);
     });
 
-    it('asserts "Devices & Pacts" is simplified to "Devices" in primary navigation', () => {
+    it('asserts devices link is present in primary navigation', () => {
       const devicesLink = AUTHENTICATED_CORE_LINKS.find((link) => link.href === '/devices');
       expect(devicesLink).toBeDefined();
-      expect(devicesLink?.label).toBe('Devices');
+      expect(devicesLink?.label).toBe('Family Pacts & Devices');
     });
 
     it('verifies "More" dropdown was eliminated from desktop Header navigation', () => {

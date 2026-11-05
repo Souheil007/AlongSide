@@ -2,12 +2,13 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { NutritionDashboardView } from '@/components/nutrition/NutritionDashboardView';
+import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Pediatric Nutrition & Feeding Hub — AlongSide',
   description:
-    'Pediatric nutrition from infancy to adolescence: Baby-led weaning, safe allergen introduction (LEAP trial), choking hazards registry, and Ellyn Satter Division of Responsibility.',
+    'Pediatric nutrition from infancy to adolescence: Baby-led weaning, safe allergen introduction, and Ellyn Satter Division of Responsibility. Elevated into the Parent Intelligence Academy.',
 };
 
 interface NutritionPageProps {
@@ -29,7 +30,15 @@ export default async function NutritionPage({ searchParams }: NutritionPageProps
   const resolvedParams = searchParams ? await searchParams : undefined;
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
+      <AdvisoryDomainBanner
+        category="NUTRITION_AND_FEEDING"
+        categoryLabel="Nutrition & Healthy Feeding Habits"
+        title="This domain has been elevated into the Parent Intelligence Academy"
+        description="Access structured, prioritized feeding chapters, Ellyn Satter Division of Responsibility scripts, and allergen introduction guides."
+        actionText="Explore Nutrition & Feeding Courses →"
+        href="/academy?category=NUTRITION_AND_FEEDING"
+      />
       <Suspense fallback={<NutritionLoadingFallback />}>
         <NutritionDashboardView initialChildId={resolvedParams?.childId} />
       </Suspense>
