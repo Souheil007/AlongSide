@@ -347,9 +347,9 @@
 
     <!-- Navigation Rows -->
     <div class="nav-sections-wrap">
-      <!-- 5 Vercel Taste Evolutions (Featured) -->
+      <!-- Top User Preferred Cluster: Original Vercel + Taste 1 + Taste 2 -->
       <div class="nav-row">
-        <span class="nav-label">✨ Vercel + Brand Tastes:</span>
+        <span class="nav-label" style="color: #facc15;">⭐️ Top Cluster (Preferred):</span>
         <button class="system-tab-btn active taste-active" onclick="loadPreview('preview-vercel-taste-1-warm-sanctuary.html', 'vercel-taste-1', this)">
           <span class="swatch" style="background: #28543e;"></span>
           Taste 1: Warm Sanctuary Linen
@@ -358,19 +358,72 @@
           <span class="swatch" style="background: #143d2b;"></span>
           Taste 2: Editorial Almanac
         </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel.html', 'vercel', this)">
+          <span class="swatch" style="background: #171717; border: 1px solid #fff;"></span>
+          Original Vercel
+        </button>
+      </div>
+
+      <!-- 10 New Vercel Variations (Tastes 6 to 15) -->
+      <div class="nav-row">
+        <span class="nav-label" style="color: #38bdf8;">✨ 10 New Variations:</span>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-6-ivory-minimalist.html', 'vercel-taste-6', this)">
+          <span class="swatch" style="background: #c7b99c;"></span>
+          Taste 6: Ivory Minimalist
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-7-paris-atelier.html', 'vercel-taste-7', this)">
+          <span class="swatch" style="background: #9b7a44;"></span>
+          Taste 7: Paris Atelier
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-8-porcelain-cedar.html', 'vercel-taste-8', this)">
+          <span class="swatch" style="background: #735e51;"></span>
+          Taste 8: Porcelain & Cedar
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-9-fraunces-antiqua.html', 'vercel-taste-9', this)">
+          <span class="swatch" style="background: #1e3a2f;"></span>
+          Taste 9: Fraunces Antiqua
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-10-swiss-chrono.html', 'vercel-taste-10', this)">
+          <span class="swatch" style="background: #d97706;"></span>
+          Taste 10: Swiss Chrono
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-11-nordic-dune.html', 'vercel-taste-11', this)">
+          <span class="swatch" style="background: #b4783c;"></span>
+          Taste 11: Nordic Dune
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-12-cormorant-academy.html', 'vercel-taste-12', this)">
+          <span class="swatch" style="background: #991b1b;"></span>
+          Taste 12: Cormorant Academy
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-13-smoked-pearl.html', 'vercel-taste-13', this)">
+          <span class="swatch" style="background: #64748b;"></span>
+          Taste 13: Smoked Pearl
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-14-hearthstone-olive.html', 'vercel-taste-14', this)">
+          <span class="swatch" style="background: #3f4f38;"></span>
+          Taste 14: Hearthstone & Olive
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-15-geist-family.html', 'vercel-taste-15', this)">
+          <span class="swatch" style="background: #f59e0b;"></span>
+          Taste 15: Geist Family Twin
+        </button>
+      </div>
+
+      <!-- Archive / Explorations (Tastes 3-5 & Other Benchmarks) -->
+      <div class="nav-row">
+        <span class="nav-label benchmark">Archive / Other:</span>
         <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-3-biophilic-forest.html', 'vercel-taste-3', this)">
           <span class="swatch" style="background: #059669;"></span>
-          Taste 3: Biophilic Forest Core
+          Taste 3: Biophilic
         </button>
         <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-4-clinical-blueprint.html', 'vercel-taste-4', this)">
           <span class="swatch" style="background: #0284c7;"></span>
-          Taste 4: Clinical Blueprint
+          Taste 4: Blueprint
         </button>
         <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-5-human-terracotta.html', 'vercel-taste-5', this)">
           <span class="swatch" style="background: #c2410c;"></span>
-          Taste 5: Terracotta Sunset Hearth
+          Taste 5: Terracotta
         </button>
-      </div>
 
       <!-- Benchmark Systems Reference -->
       <div class="nav-row">
@@ -481,6 +534,147 @@
 
   <script>
     const DESIGN_METADATA = {
+      'vercel-taste-6': {
+        title: "Taste 6: Ivory Minimalist",
+        source: "preview-vercel-taste-6-ivory-minimalist.html",
+        desc: "Gentle Alabaster Ivory canvas (#faf9f5) paired with Carbon Ink typography (#141413), diffused champagne radiant aura, and Double Pillar Shelter mark. Hyper-clean monastic tranquility.",
+        typography: "<strong>Display / Headings:</strong> Inter (SemiBold 700, tight tracking -2.2px)<br><strong>Body:</strong> Inter (15px, #4c4c47)<br><strong>Eyebrows:</strong> JetBrains Mono (uppercase, tracking 0.08em)",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills (CTAs), 6px Buttons, 10px Cards<br><strong>Elevation:</strong> Warm hairline borders (#eae7e0) with champagne bloom<br><strong>Brand Mark:</strong> Minimalist Double Pillar Shelter",
+        suitability: "<strong>Strengths:</strong> Absolute serenity and focus. Zero visual noise or tech coldness; feels like an exclusive architectural studio.<br><strong>Trade-offs:</strong> Monastic simplicity requires strong copywriting to shine.",
+        palette: [
+          { name: "Alabaster", hex: "#faf9f5" },
+          { name: "Carbon Ink", hex: "#141413" },
+          { name: "Champagne", hex: "#c7b99c" },
+          { name: "Hairline", hex: "#eae7e0" }
+        ]
+      },
+      'vercel-taste-7': {
+        title: "Taste 7: Paris Atelier",
+        source: "preview-vercel-taste-7-paris-atelier.html",
+        desc: "Archival Bone canvas (#f9f8f4) meets deep obsidian ink (#101010), Instrument Serif italic accents in headlines, and calligraphic folio crest. The pinnacle of literary salon prestige.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 700) + Instrument Serif (Italic moments)<br><strong>Body:</strong> Inter (15px, #444340)<br><strong>Metadata:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 5px Clean Buttons, 10px Cards<br><strong>Elevation:</strong> Archival hairline borders (#e4e0d6) with soft sepia halo<br><strong>Brand Mark:</strong> Calligraphic Folio & Quill Crest",
+        suitability: "<strong>Strengths:</strong> Commands immense intellectual respect; reads like a prestigious European literary review built on Vercel's engine.<br><strong>Trade-offs:</strong> Italic serif accents add high-culture tone.",
+        palette: [
+          { name: "Obsidian", hex: "#101010" },
+          { name: "Bone Canvas", hex: "#f9f8f4" },
+          { name: "Antique Brass", hex: "#9b7a44" },
+          { name: "Hairline", hex: "#e4e0d6" }
+        ]
+      },
+      'vercel-taste-8': {
+        title: "Taste 8: Porcelain & Cedar",
+        source: "preview-vercel-taste-8-porcelain-cedar.html",
+        desc: "Cool Porcelain canvas (#f8f9fa), Smoked Cedar Black (#1b1c1d), whispering cedar ash aura, and balanced Ensō stones. Japanese architectural serenity meets modern software.",
+        typography: "<strong>Display / Headings:</strong> Plus Jakarta Sans (Weight 700/800, tracking -1.8px)<br><strong>Body:</strong> Inter (15px, #4b4e52)<br><strong>Tags:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 12px Cards<br><strong>Elevation:</strong> Soft cool hairlines (#e5e7eb) with cedar ash gradient<br><strong>Brand Mark:</strong> Balanced Ensō Stones",
+        suitability: "<strong>Strengths:</strong> Extremely calming on eye fatigue; balanced whitespace eliminates cognitive overload.<br><strong>Trade-offs:</strong> Very subtle palette requires high contrast text.",
+        palette: [
+          { name: "Cedar Black", hex: "#1b1c1d" },
+          { name: "Porcelain", hex: "#f8f9fa" },
+          { name: "Cedar Ash", hex: "#735e51" },
+          { name: "Hairline", hex: "#e5e7eb" }
+        ]
+      },
+      'vercel-taste-9': {
+        title: "Taste 9: Fraunces Antiqua",
+        source: "preview-vercel-taste-9-fraunces-antiqua.html",
+        desc: "Warm Vellum canvas (#faf8f4), Espresso Slate (#161514), Fraunces soft-serif headline typography, and botanical sprout crest. Contemporary publishing elegance.",
+        typography: "<strong>Display / Headings:</strong> Fraunces (Variable Soft-Serif 600/700, optical size 144)<br><strong>Body:</strong> Inter (15px, #4a4843)<br><strong>Code:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 11px Cards<br><strong>Elevation:</strong> Vellum hairlines (#e8e4da) with spruce whisper glow<br><strong>Brand Mark:</strong> Botanical Sprout Monogram",
+        suitability: "<strong>Strengths:</strong> Deeply human, warm, and sophisticated without feeling antiquated; bridges tech craft and literary warmth.<br><strong>Trade-offs:</strong> Distinctive serif headlines give strong typographic personality.",
+        palette: [
+          { name: "Espresso", hex: "#161514" },
+          { name: "Warm Vellum", hex: "#faf8f4" },
+          { name: "Muted Spruce", hex: "#1e3a2f" },
+          { name: "Parchment", hex: "#c8a87a" }
+        ]
+      },
+      'vercel-taste-10': {
+        title: "Taste 10: Swiss Chrono",
+        source: "preview-vercel-taste-10-swiss-chrono.html",
+        desc: "Pure stark white canvas (#ffffff), Pitch Black typography (#0a0a0a), micro warm-ochre status dot (#d97706), and Swiss chronometer precision. 100% signal, zero fluff.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 800/900, tight tracking -2.4px)<br><strong>Body:</strong> Inter (15px, #454545)<br><strong>Numerals:</strong> JetBrains Mono tabular figures",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 5px Buttons, 8px Cards<br><strong>Elevation:</strong> Crisp hairlines (#e5e5e5) with subtle ochre focal point<br><strong>Brand Mark:</strong> Dual-Axis Chrono Compass",
+        suitability: "<strong>Strengths:</strong> Ultimate clarity and speed; parents who value engineering efficiency and zero clutter love this.<br><strong>Trade-offs:</strong> High contrast monochrome style with minimal warmth.",
+        palette: [
+          { name: "Pitch Black", hex: "#0a0a0a" },
+          { name: "Pure White", hex: "#ffffff" },
+          { name: "Chrono Ochre", hex: "#d97706" },
+          { name: "Hairline", hex: "#e5e5e5" }
+        ]
+      },
+      'vercel-taste-11': {
+        title: "Taste 11: Nordic Dune",
+        source: "preview-vercel-taste-11-nordic-dune.html",
+        desc: "Warm Dune Sand canvas (#faf7f2), Dark Roast Espresso (#1f1d1a), Pale Camel accents (#b4783c), and Coastal Horizon curve. Soft Scandinavian nursery feeling.",
+        typography: "<strong>Display / Headings:</strong> Plus Jakarta Sans (Weight 800, tracking -2.0px)<br><strong>Body:</strong> Inter (15px, #524e47)<br><strong>Tags:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 12px Cards<br><strong>Elevation:</strong> Dune hairlines (#e9e4dc) with camel sunrise bloom<br><strong>Brand Mark:</strong> Coastal Dune & Sun Arc",
+        suitability: "<strong>Strengths:</strong> Extremely comforting and gentle; feels natural, grounded, and welcoming for young families.<br><strong>Trade-offs:</strong> Warm sand canvas requires bright ambient lighting.",
+        palette: [
+          { name: "Espresso", hex: "#1f1d1a" },
+          { name: "Dune Sand", hex: "#faf7f2" },
+          { name: "Pale Camel", hex: "#b4783c" },
+          { name: "Hairline", hex: "#e9e4dc" }
+        ]
+      },
+      'vercel-taste-12': {
+        title: "Taste 12: Cormorant Academy",
+        source: "preview-vercel-taste-12-cormorant-academy.html",
+        desc: "Oxford Bone canvas (#faf9f6), Deep Navy-Charcoal ink (#0f141c), Cormorant Garamond serif headers, and crimson seal touch (#991b1b). Harvard pediatric prestige.",
+        typography: "<strong>Display / Headings:</strong> Cormorant Garamond (Weight 700) + Inter<br><strong>Body:</strong> Inter (15px, #3c4452)<br><strong>Seal:</strong> JetBrains Mono with crimson badge",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 5px Buttons, 10px Cards<br><strong>Elevation:</strong> Oxford hairlines (#e2e4e8) with slate-blue aura<br><strong>Brand Mark:</strong> Academic Shield & Laurel",
+        suitability: "<strong>Strengths:</strong> Maximum medical authority and clinical trustworthiness; feels like an endowed pediatric medical research center.<br><strong>Trade-offs:</strong> Formal academic feel.",
+        palette: [
+          { name: "Navy Charcoal", hex: "#0f141c" },
+          { name: "Oxford Bone", hex: "#faf9f6" },
+          { name: "Crimson Seal", hex: "#991b1b" },
+          { name: "Slate Blue", hex: "#475569" }
+        ]
+      },
+      'vercel-taste-13': {
+        title: "Taste 13: Smoked Pearl",
+        source: "preview-vercel-taste-13-smoked-pearl.html",
+        desc: "Smoked Pearl canvas (#f6f7f8), Carbon Graphite ink (#121316), diffused silver mist aura, and dual infinity orbit. Featherlight cognitive load.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 700/800, tracking -2.2px)<br><strong>Body:</strong> Inter (15px, #464850)<br><strong>Tags:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 10px Cards<br><strong>Elevation:</strong> Pearl hairlines (#e3e5e8) with silver mist blur<br><strong>Brand Mark:</strong> Silver Dual Orbit",
+        suitability: "<strong>Strengths:</strong> Featherweight visual weight; cool, modern, and high-tech without any harshness.<br><strong>Trade-offs:</strong> Very subtle, neutral color profile.",
+        palette: [
+          { name: "Graphite", hex: "#121316" },
+          { name: "Smoked Pearl", hex: "#f6f7f8" },
+          { name: "Silver Mist", hex: "#64748b" },
+          { name: "Hairline", hex: "#e3e5e8" }
+        ]
+      },
+      'vercel-taste-14': {
+        title: "Taste 14: Hearthstone & Olive",
+        source: "preview-vercel-taste-14-hearthstone-olive.html",
+        desc: "Hearthstone Chalk canvas (#fbf9f5), Muted Cast-Iron ink (#181916), Newsreader serif display accents, and Muted Olive Leaf (#3f4f38). Generational family warmth.",
+        typography: "<strong>Display / Headings:</strong> Newsreader Serif + Plus Jakarta Sans<br><strong>Body:</strong> Plus Jakarta Sans (15px, #494a45)<br><strong>Tags:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 12px Cards<br><strong>Elevation:</strong> Hearth hairlines (#e7e4db) with olive/honey glow<br><strong>Brand Mark:</strong> Hearthstone & Olive Branch",
+        suitability: "<strong>Strengths:</strong> Wholesome, mature, organic warmth; appeals to parents seeking grounding and mindfulness.<br><strong>Trade-offs:</strong> Olive and honey accents require soft lighting.",
+        palette: [
+          { name: "Cast-Iron", hex: "#181916" },
+          { name: "Hearthstone", hex: "#fbf9f5" },
+          { name: "Olive Leaf", hex: "#3f4f38" },
+          { name: "Raw Honey", hex: "#c2873e" }
+        ]
+      },
+      'vercel-taste-15': {
+        title: "Taste 15: Geist Family Twin",
+        source: "preview-vercel-taste-15-geist-family.html",
+        desc: "True Vercel #fafafa canvas, #171717 ink, Dawn Horizon radiant aura (warm amber & whisper emerald at 20%), and Sanctuary Roof apex triangle.",
+        typography: "<strong>Display / Headings:</strong> Inter (Display 700/800, tight tracking -2.4px)<br><strong>Body:</strong> Inter (15px, #4d4d4d)<br><strong>Tags:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 10px Cards<br><strong>Elevation:</strong> Crisp hairlines (#eaeaea) with Dawn Horizon mesh<br><strong>Brand Mark:</strong> Vercel Apex Sanctuary Roof",
+        suitability: "<strong>Strengths:</strong> Exactly Vercel's world-class feel, but perfectly attuned for modern family software.<br><strong>Trade-offs:</strong> Very close to pure Vercel; subtle 1% difference.",
+        palette: [
+          { name: "Vercel Ink", hex: "#171717" },
+          { name: "Vercel Canvas", hex: "#fafafa" },
+          { name: "Dawn Amber", hex: "#f59e0b" },
+          { name: "Hairline", hex: "#eaeaea" }
+        ]
+      },
+
       'vercel-taste-1': {
         title: "Taste 1: Warm Sanctuary Linen",
         source: "preview-vercel-taste-1-warm-sanctuary.html",
