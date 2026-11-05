@@ -101,13 +101,32 @@ The primary desktop navigation bar in `apps/web/src/components/shared/Header.tsx
 
 ## 3. Detailed Tab Anatomy: What Each Screen Contains
 
-### 3.1 Tab 1: Home (`/dashboard`) — The Child Cockpit
-- **Active Child Context Header:** Avatar, child's name, automatically derived exact age in months and years, developmental tier badge, and current developmental leap indicator.
-- **Developmental Roadmap Cockpit:** "Where your child is right now"—a chronological progression bar showing the active neurodevelopmental leap (e.g. *Age 10: Adrenarche, Social Dopamine & Peer Shifts*).
-- **In-Progress Academy Chapter Card:** "Continue Learning": Direct jump into the highest-priority incomplete chapter for the active child's age tier, showing progress bar and estimated reading time (e.g. *Chapter 1: De-escalating Amygdala Meltdowns — Priority 1: Critical*).
-- **This Week's Youth Culture Digest Card:** High-signal preview card with the top slang word of the week, one trending game/app alert, and one Sunday dinner conversation question.
-- **Daily Calm Advisory Prompt:** A word-for-word emotional co-regulation script for today's parenting interactions.
-- **Quick AI Sparring Launcher:** One-click launch into the AI Advisor to practice tricky conversations (e.g. "Practice responding to: 'All my friends have phones except me!'").
+### 3.1 Tab 1: Home (`/dashboard`) — The Authenticated Child Advisory Cockpit
+The authenticated Home screen serves as the daily digital anchor for modern parents, answering the foundational mandate: *"Keep up with your child and up to date with him"*. It eliminates disparate calculators and administrative clutter in favor of a calm, high-signal advisory feed:
+- **Active Child Context Header (`ChildHeroCard`):** Displays avatar, child's name, dynamically derived exact age in months and years (`formatChildAge(child)`), developmental tier badge, and multi-child profile switcher.
+- **Current Neurodevelopmental Leap Indicator:** Reassuring biological explanation of what the child's brain is undergoing right now (e.g. *Age 10–12: Adrenarche, Social Dopamine Sensitivity & Peer Identity Alignment*).
+- **Road Status Indicator:** Pre-Device (Readiness Assessment Mode) vs Active-Device (Hardware Bedtime Dock Active).
+- **Prioritized Academy "Continue Learning" Anchor (`ActiveChapterContinueCard`):** 
+  - Direct connection into the active course for the child's tier.
+  - Highlights the highest-priority incomplete chapter:
+    * **Priority 1 (Critical & Foundational):** Red/amber badge — immediate friction de-escalation & core neurobiology.
+    * **Priority 2 (Daily Routines & Co-Regulation):** Teal/emerald badge — daily habits and predictable rituals.
+    * **Priority 3 (Advanced Scaffolding & Growth):** Purple badge — long-term resilience and future transitions.
+  - Progress bar and estimated read time (e.g. *4 min read*).
+  - 1-click CTA: "Resume Micro-Lesson" linking straight into `/academy/[slug]/[lessonSlug]`.
+- **Sunday Youth Culture Digest Living Pulse (`SundayCultureDigestCard`):**
+  - High-frequency weekly intelligence card displaying Issue # and edition.
+  - **Trending Slang Word of the Week:** Phonetic pronunciation, definition, and visual 1–5 Cringe Meter rating (e.g. *Crashout* · Cringe 4/5).
+  - **Sunday Dinner Table Conversation Starter:** Curated tier-tailored question with a 1-click "Copy Prompt" button.
+  - **Exploit & Dark Pattern Early Warning:** Alert on predatory gaming mechanics or covert app bypasses.
+  - 1-click CTA: "Read Full Digest" linking to `/digest`.
+- **Daily Calm Advisory Script (`DailyAdvisoryScriptCard`):**
+  - Word-for-word emotional dialogue script contrasting reactive mistakes (*"What NOT to Say"*) vs. empathetic, firm guidance (*"What TO Say"*).
+  - 1-click CTA: "Practice in AI Sparring" launching the 24/7 AI Advisor with the scenario pre-loaded.
+- **Bilateral Tech Governance & Bedtime Curfew Status (`BilateralPactStatusCard`):**
+  - Displays neutral hardware curfew status (*"Bedtime Dock: 8:30 PM — Locked via Pact-as-Code · Zero Spyware"*) or First-Phone Readiness Score (*"Readiness Assessment: 78/100"*).
+  - 1-click CTA linking to `/devices`.
+- **Permanently Purged Clutter:** `QuickHealthTriageLauncher` (fever dosing calculators, medication forms, symptom checklists) is permanently removed from the homepage feed.
 
 ### 3.2 Tab 2: Parent Intelligence Academy (`/academy`) — The Advisory Sanctuary
 - **Category Navigation Bar (5 Canonical Pillars):**
@@ -157,6 +176,32 @@ The primary desktop navigation bar in `apps/web/src/components/shared/Header.tsx
   - Apple `.mobileconfig` cryptographic compiler (`node-forge`).
   - Android Enterprise profile policy generator.
   - Single-scan QR code enrollment enforcing the neutral 8:30 PM bed dock with zero surveillance spyware.
+
+### 3.5 The Public Advisory Sanctuary Landing Homepage (`/`)
+The public-facing homepage (`apps/web/src/app/page.tsx`) serves as the welcoming front door for prospective parents, articulating the v2.5.0 value proposition and completely eliminating obsolete medical dosing calculator messaging:
+- **Hero Section (`HeroSection.tsx`):**
+  - Positioning Badge: *"Clinical Pediatric Science • Prioritized Parent Academy • Weekly Youth Culture Digest • Zero-Spyware Pacts"*.
+  - Headline: *"The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow."*
+  - Subheadline: *"Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science, prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18)."*
+  - CTAs: "Start 7-Day Risk-Free Trial" (Primary) and "Explore 0–18 Advisory Curriculum" (Secondary anchor).
+- **Interactive 6-Stage Lifespan Advisory Explorer (`LifespanStageSelector.tsx`):**
+  - Interactive tabs covering all 6 tiers (Infants 0–3, Preschool 4–6, Elementary 7–9, Tweens 10–12, Early Adolescence 13–15, Late Adolescence 16–18).
+  - Previews real UI cards for each stage:
+    1. *Active Neurodevelopmental Leap* (biological brain changes).
+    2. *Prioritized Academy Course* (Priority 1 Critical, Priority 2 Routines, Priority 3 Growth).
+    3. *Youth Culture & Digital Reality* (slang, apps, peer dynamics).
+    4. *Actionable Dialogue* (word-for-word empathy scripts).
+- **The 3 Core Pillars Showcase (`PillarsShowcase.tsx`):**
+  - Pillar 1: **Parent Intelligence Academy** (5 Categories with prioritized chapters) -> `/academy`.
+  - Pillar 2: **Sunday Youth Culture Digest** (Slang Radar, Cringe Meter, Dinner Starters) -> `/digest`.
+  - Pillar 3: **Bilateral Family Pacts & Devices** (Pact-as-Code, 8:30 PM dock, 0-100 readiness) -> `/devices`.
+  - Global Companion: **24/7 AI Child Advisor** (Voice sparring, instant empathy scripts) -> `/advisor`.
+- **Interactive Culture Playground Demo (`CulturePlaygroundDemo.tsx`):**
+  - Live interactive playground allowing visitors to search modern slang terms (*Crashout*, *Rizz*, *Skibidi*) with live Cringe Meter ratings and draw dinner conversation starters.
+- **Bilateral Tech Sovereignty Spotlight (`DeviceActionHubSpotlight.tsx`):**
+  - Reframing screen time from punitive policing to collaborative rite-of-passage contracts.
+- **Pricing & Risk-Free Onboarding (`PricingSection.tsx`):**
+  - $79/yr Annual Hero Pass with 7-day upfront trial and 1-click cancellation.
 
 ---
 
@@ -372,14 +417,15 @@ export interface AcademyModuleDetailDTO extends AcademyModuleDTO {
 
 ## 6. Execution Roadmap & Engineering Plan Delegation
 
-To implement this vision without breaking existing features or causing merge conflicts, the CTO has authored four discrete execution plans in `plans/`:
+To implement this vision without breaking existing features or causing merge conflicts, the CTO has authored five discrete execution plans in `plans/`:
 
 | Plan ID | Title | Assignee | Scope & Mandate |
 | :--- | :--- | :--- | :--- |
-| **`PLAN-29`** | **Navigation & Platform Shell Advisory Pivot UI** | **Frontend Agent** | Streamline primary desktop header (`Header.tsx`) and mobile navigation (`MobileNav.tsx`) to `[ Home \| Academy \| Youth Culture Digest \| Family Pacts ]`. Retire standalone `/health`, `/nutrition`, `/behavior`, `/brain-games` from top navigation bar with clean fallback routing. |
-| **`PLAN-30`** | **Parent Intelligence Academy Categories & Prioritized Chapters API** | **Backend Agent** | Evolve database schema with `AcademyCategory` and `AcademyChapter` models. Add category and chapter queries to Fastify routes. Seed canonical curriculum data across 5 categories and 6 lifespan tiers with prioritized chapters. |
-| **`PLAN-31`** | **Parent Intelligence Academy Curriculum Explorer & Chapter Reader UI** | **Frontend Agent** | Redesign `/academy` with Category selector tabs, developmental tier auto-calibration pill, prioritized chapter cards (Priority 1, 2, 3 badges), and rich micro-lesson reader with "Clinical Insight" callouts and "What to Say" dialogue bubbles. |
-| **`PLAN-32`** | **Sunday Culture Digest Living Feed & Dinner Starters UI** | **Frontend Agent** | Elevate `/digest` into the primary "Keep Up With Your Child" Living Feed, featuring current week's edition, searchable Slang Decoder with instant filtering, Exploit & Dark Pattern Early Warnings, and interactive Sunday Dinner Conversation Starters. |
+| **`PLAN-29`** | **Navigation & Platform Shell Advisory Pivot UI** | **Frontend Agent** | Streamline primary desktop header (`Header.tsx`) and mobile navigation (`MobileNav.tsx`) to `[ Home \| Academy \| Youth Culture Digest \| Family Pacts ]`. Retire standalone `/health`, `/nutrition`, `/behavior`, `/brain-games` from top navigation bar with clean fallback routing. (Complete - PR #48) |
+| **`PLAN-30`** | **Parent Intelligence Academy Categories & Prioritized Chapters API** | **Backend Agent** | Evolve database schema with `AcademyCategory` and `AcademyChapter` models. Add category and chapter queries to Fastify routes. Seed canonical curriculum data across 5 categories and 6 lifespan tiers with prioritized chapters. (Complete - PR #49) |
+| **`PLAN-31`** | **Parent Intelligence Academy Curriculum Explorer & Chapter Reader UI** | **Frontend Agent** | Redesign `/academy` with Category selector tabs, developmental tier auto-calibration pill, prioritized chapter cards (Priority 1, 2, 3 badges), and rich micro-lesson reader with "Clinical Insight" callouts and "What to Say" dialogue bubbles. (Complete - PR #51) |
+| **`PLAN-32`** | **Sunday Culture Digest Living Feed & Dinner Starters UI** | **Frontend Agent** | Elevate `/digest` into the primary "Keep Up With Your Child" Living Feed, featuring current week's edition, searchable Slang Decoder with instant filtering, Exploit & Dark Pattern Early Warnings, and interactive Sunday Dinner Conversation Starters. (Complete - PR #50) |
+| **`PLAN-33`** | **Platform Advisory Homepage & Child Cockpit Redesign UI** | **Frontend Agent** | Redesign both the authenticated Child Advisory Cockpit (`/dashboard`) and the public landing homepage (`/`). Anchor home to Priority 1–3 Academy chapters, Sunday culture briefing, daily empathy scripts, and bedtime curfew status while completely purging legacy medication calculators. |
 
 ---
 
