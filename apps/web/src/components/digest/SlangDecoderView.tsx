@@ -14,7 +14,8 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import type { SlangTermDTO } from '@alongside/shared';
+import type { SlangTermDTO, ChildDTO } from '@alongside/shared';
+import { resolveChildSlangTier } from '@/stores/useChildContextStore';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -320,17 +321,31 @@ export function CringeMeterVisual({ score }: { score: number }) {
 export interface SlangDecoderViewProps {
   initialTerms?: RichSlangTerm[];
   apiSlangTerms?: SlangTermDTO[];
+  child?: ChildDTO | null;
   className?: string;
 }
 
 export function SlangDecoderView({
   initialTerms = CANONICAL_SLANG_CATALOG,
   apiSlangTerms,
+  child,
   className,
 }: SlangDecoderViewProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedTier, setSelectedTier] = React.useState<SlangTierFilter>('ALL');
   const [expandedCardId, setExpandedCardId] = React.useState<string | null>(null);
+
+  // Synchronize slang tier filter reactively with active child context
+  React.useEffect(() => {
+    if (child) {
+      const slangTier = resolveChildSlangTier(child);
+      if (slangTier === 'EARLY_CHILDHOOD') {
+        setSelectedTier('ALL');
+      } else if (slangTier !== 'ALL') {
+        setSelectedTier(slangTier);
+      }
+    }
+  }, [child?.id, child?.age]);
 
   // Merge canonical catalog with any additional API terms
   const termsList = React.useMemo(() => {
@@ -394,9 +409,23 @@ export function SlangDecoderView({
     >
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-700">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Searchable Slang Radar & Decoder</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-700">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Searchable Slang Radar & Decoder</span>
+            </div>
+            {child && (
+              <span
+                data-testid="slang-child-calibration-badge"
+                className="inline-flex items-center gap-1 rounded-full border border-teal-200 bg-teal-50 px-2.5 py-0.5 text-[11px] font-semibold text-teal-800"
+              >
+                <Sparkles className="h-3 w-3 text-teal-600" />
+                <span>
+                  Calibrated for {child.name} ·{' '}
+                  {child.age <= 6 ? 'Early Childhood' : resolveChildSlangTier(child)}
+                </span>
+              </span>
+            )}
           </div>
           <h2
             id="slang-decoder-heading"
@@ -424,6 +453,26 @@ export function SlangDecoderView({
           />
         </div>
       </div>
+
+      {/* Early Childhood Screen-Free Window Notice */}
+      {child && child.age <= 6 && (
+        <div
+          data-testid="early-childhood-screen-free-notice"
+          className="rounded-2xl border border-teal-200 bg-gradient-to-r from-teal-50/80 via-emerald-50/50 to-white p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white shadow-2xs font-bold text-lg">
+            👶
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-sm font-bold text-teal-950">
+              Early Childhood Screen-Free Window
+            </h4>
+            <p className="text-xs text-teal-900 leading-relaxed max-w-3xl">
+              <strong>{child.name}</strong> is in a screen-free developmental stage. Modern slang is not yet relevant, but browse below for an early glimpse into future youth culture!
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Tier Filter Pills */}
       <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by age tier">
