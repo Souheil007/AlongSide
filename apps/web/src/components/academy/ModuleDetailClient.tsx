@@ -34,6 +34,13 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
     queryFn: () => getAcademyModuleBySlug(slug),
   });
 
+  // Active Child Context for stage match calibration (unconditionally declared at the top per React Rules of Hooks)
+  const { children, activeChildId } = useChildContextStore();
+  const activeChild = selectActiveChild({ children, activeChildId });
+  const activeChildTier = activeChild
+    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
+    : null;
+
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto space-y-6 py-6 animate-pulse">
@@ -74,12 +81,6 @@ export function ModuleDetailClient({ slug }: ModuleDetailClientProps) {
     0
   );
 
-  // Active Child Context for stage match calibration
-  const { children, activeChildId } = useChildContextStore();
-  const activeChild = selectActiveChild({ children, activeChildId });
-  const activeChildTier = activeChild
-    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
-    : null;
   const moduleNormalizedTier = normalizeChildTier(module.developmentalTier);
   const isTierMatch = Boolean(activeChild && activeChildTier === moduleNormalizedTier);
 
