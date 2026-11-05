@@ -7,7 +7,7 @@ import type {
 import type { AuthRepository, UserRecord } from './auth.repository.js';
 import { hashPassword, verifyPassword } from './auth.security.js';
 
-export class AuthError extends Error {
+class AuthError extends Error {
   constructor(
     message: string,
     public readonly statusCode: number,
@@ -18,19 +18,19 @@ export class AuthError extends Error {
   }
 }
 
-export class EmailAlreadyExistsError extends AuthError {
+class EmailAlreadyExistsError extends AuthError {
   constructor(message = 'An account with this email address already exists.') {
     super(message, 409, 'EMAIL_ALREADY_EXISTS');
   }
 }
 
-export class InvalidCredentialsError extends AuthError {
+class InvalidCredentialsError extends AuthError {
   constructor(message = 'Invalid email or password.') {
     super(message, 401, 'INVALID_CREDENTIALS');
   }
 }
 
-export class UnauthorizedError extends AuthError {
+class UnauthorizedError extends AuthError {
   constructor(message = 'Authentication required to access this resource.') {
     super(message, 401, 'UNAUTHORIZED');
   }
@@ -53,7 +53,7 @@ export interface AuthResult {
   token?: string;
 }
 
-export function toUserDTO(user: UserRecord): UserDTO {
+function toUserDTO(user: UserRecord): UserDTO {
   return {
     id: user.id,
     email: user.email,

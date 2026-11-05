@@ -6,7 +6,7 @@ import type {
 } from '@alongside/shared';
 import type { DigestRepository } from './digest.repository.js';
 
-export class DigestNotFoundError extends Error {
+class DigestNotFoundError extends Error {
   readonly statusCode = 404;
   readonly code = 'NOT_FOUND';
 

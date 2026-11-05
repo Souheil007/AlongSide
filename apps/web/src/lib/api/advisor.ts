@@ -564,10 +564,3 @@ export async function streamAiAdvisorChat(
     });
   }
 }
-
-export const advisorApi = {
-  searchFaqs,
-  getFeaturedFaqs,
-  streamAiAdvisorChat,
-  CURATED_FAQS,
-};

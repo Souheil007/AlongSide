@@ -7,7 +7,7 @@ import { OpenAiAdapter } from './openai.adapter.js';
 import { GeminiAdapter } from './gemini.adapter.js';
 import { MistralAdapter } from './mistral.adapter.js';
 
-export class AllLlmProvidersFailedError extends Error {
+class AllLlmProvidersFailedError extends Error {
   readonly statusCode = 503;
   readonly code = 'ALL_LLM_PROVIDERS_UNAVAILABLE';
 

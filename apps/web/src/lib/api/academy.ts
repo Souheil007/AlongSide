@@ -186,13 +186,3 @@ export async function markLessonComplete(
     }
   );
 }
-
-export const academyApi = {
-  getAcademyCategories,
-  getAcademyModules,
-  getAcademyModuleBySlug,
-  getModulesByTier,
-  getModuleBySlug,
-  getLesson,
-  markLessonComplete,
-};

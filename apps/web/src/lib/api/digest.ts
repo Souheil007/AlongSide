@@ -61,9 +61,3 @@ export async function getExploitAlerts(
     params,
   });
 }
-
-export const digestApi = {
-  getLatestDigest,
-  searchSlang,
-  getExploitAlerts,
-};
