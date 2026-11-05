@@ -1,7 +1,9 @@
 import {
   calculateChildAge,
   calculateDevelopmentalTier,
+  calculateLifespanTier,
   calculateReadinessScore,
+  DevelopmentalTier,
   type ChildDTO,
   type CreateChildInput,
   type ReadinessAnswer,
@@ -46,10 +48,10 @@ export class ChildrenService {
   constructor(private readonly repository: ChildrenRepository) {}
 
   async createChild(userId: string, input: CreateChildInput): Promise<ChildDTO> {
-    const developmentalTier = calculateDevelopmentalTier(
-      input.birthYear,
-      input.birthMonth
-    );
+    const developmentalTier =
+      input.developmentalTier && Object.values(DevelopmentalTier).includes(input.developmentalTier as DevelopmentalTier)
+        ? (input.developmentalTier as DevelopmentalTier)
+        : calculateDevelopmentalTier(input.birthYear, input.birthMonth);
 
     const record = await this.repository.create(userId, {
       ...input,
@@ -87,7 +89,9 @@ export class ChildrenService {
     const birthMonth = input.birthMonth ?? existing.birthMonth;
 
     let developmentalTier = existing.developmentalTier;
-    if (input.birthYear !== undefined || input.birthMonth !== undefined) {
+    if (input.developmentalTier && Object.values(DevelopmentalTier).includes(input.developmentalTier as DevelopmentalTier)) {
+      developmentalTier = input.developmentalTier as DevelopmentalTier;
+    } else if (input.birthYear !== undefined || input.birthMonth !== undefined) {
       developmentalTier = calculateDevelopmentalTier(birthYear, birthMonth);
     }
 
