@@ -170,6 +170,26 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     ...fastifyOpts,
   });
 
+  // Support empty JSON bodies gracefully without throwing FST_ERR_CTP_EMPTY_JSON_BODY
+  app.addContentTypeParser(
+    'application/json',
+    { parseAs: 'string' },
+    (_req, body, done) => {
+      const text = typeof body === 'string' ? body.trim() : '';
+      if (!text) {
+        done(null, {});
+        return;
+      }
+      try {
+        const json = JSON.parse(text);
+        done(null, json);
+      } catch (err: any) {
+        err.statusCode = 400;
+        done(err, undefined);
+      }
+    }
+  );
+
   // Cross-Origin Resource Sharing
   await app.register(cors, {
     origin: corsOrigin,

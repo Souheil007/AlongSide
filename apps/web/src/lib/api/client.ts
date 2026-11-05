@@ -55,9 +55,12 @@ export async function apiClient<T>(
   }
 
   const defaultHeaders: Record<string, string> = {
-    "Content-Type": "application/json",
     Accept: "application/json",
   };
+
+  if (customConfig.body !== undefined) {
+    defaultHeaders["Content-Type"] = "application/json";
+  }
 
   const config: RequestInit = {
     method: options.method || "GET",

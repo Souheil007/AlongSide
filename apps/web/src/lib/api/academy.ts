@@ -182,6 +182,7 @@ export async function markLessonComplete(
     `/api/v1/academy/lessons/${id}/complete`,
     {
       method: 'POST',
+      body: JSON.stringify({}),
     }
   );
 }
