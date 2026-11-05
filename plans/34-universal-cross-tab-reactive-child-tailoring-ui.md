@@ -119,19 +119,19 @@ This eliminates parental cognitive load, ensures developmental accuracy, prevent
 ---
 
 ## 5. Specific Deliverables (Files to Create / Modify)
-- [ ] `apps/web/src/stores/useChildContextStore.ts` (Pure helpers: `resolveChildSlangTier`, `resolveChildDevicesDefaultTab`, hardened `setActiveChild`)
-- [ ] `apps/web/src/components/academy/AcademyCatalogClient.tsx` (Reactive tier sync upon active child switch)
-- [ ] `apps/web/src/components/academy/ModuleDetailClient.tsx` (Active child stage match chip)
-- [ ] `apps/web/src/components/digest/DigestDashboardClient.tsx` (Propagate active child into slang & exploits views)
-- [ ] `apps/web/src/components/digest/SlangDecoderView.tsx` (Child prop, reactive tier default, early childhood notice)
-- [ ] `apps/web/src/components/digest/ExploitAlertsView.tsx` (Child prop, stage relevance badges)
-- [ ] `apps/web/src/components/devices/DevicesManagementView.tsx` (Reactive tab switching, active child card highlight)
-- [ ] `apps/web/src/components/advisor/AdvisorDashboardView.tsx` (Active child consultation banner, defaultChildId, dynamic placeholder)
-- [ ] `apps/web/src/components/advisor/FaqExplorerView.tsx` (Reactive tier filter synchronization)
-- [ ] `apps/web/test/universalChildTailoring.test.tsx` (Comprehensive cross-tab reactive tailoring test suite)
-- [ ] `plans/34-universal-cross-tab-reactive-child-tailoring-ui.md` (This engineering plan)
-- [ ] `plans/README.md` (Updated master roadmap index)
-- [ ] `docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md` (Section 3.6 Standard)
+- [x] `apps/web/src/stores/useChildContextStore.ts` (Pure helpers: `resolveChildSlangTier`, `resolveChildDevicesDefaultTab`, hardened `setActiveChild`)
+- [x] `apps/web/src/components/academy/AcademyCatalogClient.tsx` (Reactive tier sync upon active child switch)
+- [x] `apps/web/src/components/academy/ModuleDetailClient.tsx` (Active child stage match chip)
+- [x] `apps/web/src/components/digest/DigestDashboardClient.tsx` (Propagate active child into slang & exploits views)
+- [x] `apps/web/src/components/digest/SlangDecoderView.tsx` (Child prop, reactive tier default, early childhood notice)
+- [x] `apps/web/src/components/digest/ExploitAlertsView.tsx` (Child prop, stage relevance badges)
+- [x] `apps/web/src/components/devices/DevicesManagementView.tsx` (Reactive tab switching, active child card highlight)
+- [x] `apps/web/src/components/advisor/AdvisorDashboardView.tsx` (Active child consultation banner, defaultChildId, dynamic placeholder)
+- [x] `apps/web/src/components/advisor/FaqExplorerView.tsx` (Reactive tier filter synchronization)
+- [x] `apps/web/test/universalChildTailoring.test.tsx` (Comprehensive cross-tab reactive tailoring test suite)
+- [x] `plans/34-universal-cross-tab-reactive-child-tailoring-ui.md` (This engineering plan)
+- [x] `plans/README.md` (Updated master roadmap index)
+- [x] `docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md` (Section 3.6 Standard)
 
 ---
 
@@ -164,10 +164,10 @@ npm test
 ---
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
-- [ ] All deliverables created and located in correct directories.
-- [ ] Plan strictly adheres to [`docs/plan-standards.md`](../docs/plan-standards.md).
-- [ ] Code strictly follows [`docs/naming-conventions.md`](../docs/naming-conventions.md) and [`docs/code-quality-principles.md`](../docs/code-quality-principles.md).
-- [ ] `npm run typecheck` exits with code 0 across all workspaces.
-- [ ] Automated tests pass with 100% success rate.
-- [ ] Diff audited against the Ponytail Principle (`ponytail-review`).
-- [ ] Pull request opened targeting `main` with plain text (`.txt`) description.
+- [x] All deliverables created and located in correct directories.
+- [x] Plan strictly adheres to [`docs/plan-standards.md`](../docs/plan-standards.md).
+- [x] Code strictly follows [`docs/naming-conventions.md`](../docs/naming-conventions.md) and [`docs/code-quality-principles.md`](../docs/code-quality-principles.md).
+- [x] `npm run typecheck` exits with code 0 across all workspaces.
+- [x] Automated tests pass with 100% success rate (54 test suites, 513 tests passing).
+- [x] Diff audited against the Ponytail Principle (`ponytail-review`).
+- [x] Pull request opened targeting `main` with plain text (`.txt`) description (PR #55 merged).
