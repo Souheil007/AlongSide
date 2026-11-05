@@ -74,22 +74,22 @@ This plan upgrades the `/digest` page into an engaging, high-retention weekly br
 ---
 
 ## 5. Specific Deliverables (Files to Create / Modify)
-- [ ] `apps/web/src/components/digest/DigestFeedHeader.tsx` (Masthead and issue navigator)
-- [ ] `apps/web/src/components/digest/SlangDecoderView.tsx` (Searchable slang directory with cringe meter)
-- [ ] `apps/web/src/components/digest/ExploitAlertsView.tsx` (Predatory tech and dark pattern alerts)
-- [ ] `apps/web/src/components/digest/DinnerConversationStarters.tsx` (Interactive dinner starters)
-- [ ] `apps/web/src/app/(dashboard)/digest/page.tsx` (Full living feed layout)
-- [ ] `apps/web/test/sundayCultureFeed.test.tsx` (Vitest test suite)
+- [x] `apps/web/src/components/digest/DigestFeedHeader.tsx` (Masthead and issue navigator)
+- [x] `apps/web/src/components/digest/SlangDecoderView.tsx` (Searchable slang directory with cringe meter)
+- [x] `apps/web/src/components/digest/ExploitAlertsView.tsx` (Predatory tech and dark pattern alerts)
+- [x] `apps/web/src/components/digest/DinnerConversationStarters.tsx` (Interactive dinner starters)
+- [x] `apps/web/src/app/(dashboard)/digest/page.tsx` (Full living feed layout)
+- [x] `apps/web/test/sundayCultureFeed.test.tsx` (Vitest test suite)
 
 ---
 
 ## 6. Acceptance Criteria & Verification Plan
-- [ ] Digest loads as the primary cultural feed with zero lag.
-- [ ] Slang search bar filters instantaneously across 50+ modern terms.
-- [ ] Sunday dinner conversation starters provide non-cringe questions tailored to active child's age.
-- [ ] Exploit alerts offer calm, actionable guidance without fear-mongering.
-- [ ] Responsive across mobile (360px) and desktop (1440px).
-- [ ] `npm run typecheck` and `npm run test` exit with code 0.
+- [x] Digest loads as the primary cultural feed with zero lag.
+- [x] Slang search bar filters instantaneously across 50+ modern terms.
+- [x] Sunday dinner conversation starters provide non-cringe questions tailored to active child's age.
+- [x] Exploit alerts offer calm, actionable guidance without fear-mongering.
+- [x] Responsive across mobile (360px) and desktop (1440px).
+- [x] `npm run typecheck` and `npm run test` exit with code 0.
 
 ---
 
@@ -100,7 +100,7 @@ This plan upgrades the `/digest` page into an engaging, high-retention weekly br
 ---
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
-- [ ] All UI components created and accessible.
-- [ ] Passes `ponytail-review` audit for zero speculative bloat.
-- [ ] Conventional commit created.
-- [ ] Pull request submitted with plain text (`.txt`) description.
+- [x] All UI components created and accessible.
+- [x] Passes `ponytail-review` audit for zero speculative bloat.
+- [x] Conventional commit created.
+- [x] Pull request submitted with plain text (`.txt`) description.
