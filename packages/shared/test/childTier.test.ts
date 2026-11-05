@@ -34,6 +34,18 @@ describe('childTier algorithm', () => {
   });
 
   describe('mapAgeToDevelopmentalTier', () => {
+    it('maps infancy/toddlerhood (ages 0-3) to TIER_0_INFANCY_TODDLER_0_3', () => {
+      expect(mapAgeToDevelopmentalTier(0)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+      expect(mapAgeToDevelopmentalTier(2)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+      expect(mapAgeToDevelopmentalTier(3)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+    });
+
+    it('maps early childhood (ages 4-6) to TIER_1_EARLY_CHILDHOOD_4_6', () => {
+      expect(mapAgeToDevelopmentalTier(4)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+      expect(mapAgeToDevelopmentalTier(5)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+      expect(mapAgeToDevelopmentalTier(6)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+    });
+
     it('maps ages 8-9 (or younger) to TIER_1_AGES_8_9', () => {
       expect(mapAgeToDevelopmentalTier(7)).toBe(DevelopmentalTier.TIER_1_AGES_8_9);
       expect(mapAgeToDevelopmentalTier(8)).toBe(DevelopmentalTier.TIER_1_AGES_8_9);

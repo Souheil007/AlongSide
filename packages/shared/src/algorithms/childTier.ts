@@ -85,6 +85,12 @@ export function mapAgeToDevelopmentalTier(
   if (system === 'lifespan') {
     return mapAgeToLifespanTier(age);
   }
+  if (age <= 3) {
+    return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+  }
+  if (age <= 6) {
+    return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
+  }
   if (age <= 9) {
     return DevelopmentalTier.TIER_1_AGES_8_9;
   }

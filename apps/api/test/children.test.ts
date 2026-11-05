@@ -143,7 +143,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
       expect(payload.data.child.developmentalTier).toBe('TIER_4_AGES_14_PLUS');
     });
 
-    it('defaults age < 8 to baseline TIER_1_AGES_8_9', async () => {
+    it('correctly assigns TIER_1_EARLY_CHILDHOOD_4_6 for ages 4-6', async () => {
       const response = await app.inject({
         method: 'POST',
         url: '/api/v1/children',
@@ -158,7 +158,44 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
 
       expect(response.statusCode).toBe(201);
       const payload = response.json();
-      expect(payload.data.child.developmentalTier).toBe('TIER_1_AGES_8_9');
+      expect(payload.data.child.developmentalTier).toBe('TIER_1_EARLY_CHILDHOOD_4_6');
+    });
+
+    it('correctly assigns TIER_0_INFANCY_TODDLER_0_3 for infants (ages 0-3)', async () => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Noah',
+          birthYear: 2024,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+
+      expect(response.statusCode).toBe(201);
+      const payload = response.json();
+      expect(payload.data.child.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
+    });
+
+    it('honors explicitly provided canonical lifespan developmentalTier', async () => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Sofia',
+          birthYear: 2018,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+          developmentalTier: 'TIER_2_MIDDLE_CHILDHOOD_7_9',
+        },
+      });
+
+      expect(response.statusCode).toBe(201);
+      const payload = response.json();
+      expect(payload.data.child.developmentalTier).toBe('TIER_2_MIDDLE_CHILDHOOD_7_9');
     });
 
     it('rejects unauthenticated requests with 401 Unauthorized', async () => {

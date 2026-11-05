@@ -173,6 +173,7 @@ export function ChildOnboardingFlow({
         birthMonth: Number(data.birthMonth),
         roadType: data.roadType,
         schoolGrade: data.schoolGrade?.trim() || undefined,
+        developmentalTier: calculatedTier,
       });
 
       // Synchronize with active household context store
