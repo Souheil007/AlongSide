@@ -52,6 +52,7 @@ graph TD
         P30["30: Academy Categories & Prioritized Chapters API (BE)"]
         P31["31: Academy Curriculum Explorer & Chapter Reader UI (FE)"]
         P32["32: Sunday Culture Digest Living Feed & Dinner Starters UI (FE)"]
+        P33["33: Advisory Homepage & Child Cockpit Redesign UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -113,6 +114,9 @@ graph TD
     P29 --> P31
     P30 --> P31
     P29 --> P32
+    P31 --> P33
+    P32 --> P33
+    P33 --> P14
     P31 --> P14
     P32 --> P14
 ```
@@ -151,10 +155,11 @@ graph TD
 | [**`26-automatic-child-age-derivation-and-domain-sync-ui.md`**](26-automatic-child-age-derivation-and-domain-sync-ui.md) | Automatic Child Age Derivation & Domain Sync UI | **Frontend Agent** | PLAN-04, PLAN-05, PLAN-16, PLAN-25 | Complete (PR #38) |
 | [**`27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md`**](27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md) | Holistic Domain Tabs Decluttering & Redundancy Purge UI | **Frontend Agent** | PLAN-18, PLAN-19, PLAN-25, PLAN-26 | Complete (PR #38) |
 | [**`28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md`**](28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md) | Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Ages 0–18) | **Joint (FE & BE)** | PLAN-08, PLAN-09, PLAN-16, PLAN-25 | Complete (PR #40) |
-| [**`29-navigation-and-platform-shell-advisory-pivot-ui.md`**](29-navigation-and-platform-shell-advisory-pivot-ui.md) | Navigation & Platform Shell Advisory Pivot UI | **Frontend Agent** | PLAN-25, PLAN-27, PLAN-28 | Queued (SOU-65) |
-| [**`30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md`**](30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md) | Academy Categories & Prioritized Chapters API | **Backend Agent** | PLAN-01, PLAN-08, PLAN-16, PLAN-28 | Queued (SOU-65) |
-| [**`31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md`**](31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md) | Academy Curriculum Explorer & Chapter Reader UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29, PLAN-30 | Queued (SOU-65) |
-| [**`32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md`**](32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md) | Sunday Culture Digest Living Feed & Dinner Starters UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29 | Queued (SOU-65) |
+| [**`29-navigation-and-platform-shell-advisory-pivot-ui.md`**](29-navigation-and-platform-shell-advisory-pivot-ui.md) | Navigation & Platform Shell Advisory Pivot UI | **Frontend Agent** | PLAN-25, PLAN-27, PLAN-28 | Complete (PR #48) |
+| [**`30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md`**](30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md) | Academy Categories & Prioritized Chapters API | **Backend Agent** | PLAN-01, PLAN-08, PLAN-16, PLAN-28 | Complete (PR #49) |
+| [**`31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md`**](31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md) | Academy Curriculum Explorer & Chapter Reader UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29, PLAN-30 | Complete (PR #51) |
+| [**`32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md`**](32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md) | Sunday Culture Digest Living Feed & Dinner Starters UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29 | Complete (PR #50) |
+| [**`33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md`**](33-platform-advisory-homepage-and-child-cockpit-redesign-ui.md) | Advisory Homepage & Child Cockpit Redesign UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32 | Queued (SOU-71) |
 
 ---
 
