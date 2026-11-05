@@ -1,6 +1,6 @@
-import type {
-  DevelopmentalTier,
+import {
   AcademyCategory,
+  type DevelopmentalTier,
   AcademyCategoryStatsDTO,
   AcademyModuleDTO,
   AcademyModuleDetailDTO,
@@ -32,15 +32,42 @@ export interface LessonDetailResponse {
 }
 
 /**
- * Fetch all canonical academy categories with course and lesson count statistics.
+ * Fetch all canonical academy categories with course and lesson count statistics, optionally filtered by tier.
  */
-export async function getAcademyCategories(): Promise<AcademyCategoryStatsDTO[]> {
+export async function getAcademyCategories(params?: {
+  tier?: DevelopmentalTier | string;
+}): Promise<AcademyCategoryStatsDTO[]> {
   try {
-    const res = await apiClient<CategoriesResponse>('/api/v1/academy/categories', {
+    const queryParams: Record<string, string | undefined> = {};
+    if (params?.tier && params.tier !== 'ALL') {
+      queryParams.tier = params.tier;
+    }
+    const searchString = new URLSearchParams(
+      Object.entries(queryParams).filter(
+        (entry): entry is [string, string] => entry[1] !== undefined
+      )
+    ).toString();
+    const endpoint = `/api/v1/academy/categories${searchString ? `?${searchString}` : ''}`;
+    const res = await apiClient<CategoriesResponse>(endpoint, {
       method: 'GET',
     });
     return res.categories ?? [];
   } catch (err) {
+    if (params?.tier && params.tier !== 'ALL') {
+      return Object.values(AcademyCategory).map((cat) => {
+        const catModules = MOCK_ACADEMY_MODULES.filter(
+          (m) => m.category === cat && m.developmentalTier === params.tier
+        );
+        const meta = MOCK_ACADEMY_CATEGORIES.find((c) => c.category === cat);
+        return {
+          category: cat,
+          title: meta?.title ?? cat,
+          description: meta?.description ?? '',
+          moduleCount: catModules.length,
+          lessonCount: catModules.reduce((acc, m) => acc + m.lessonCount, 0),
+        };
+      });
+    }
     // Graceful offline fallback to canonical category metadata
     return MOCK_ACADEMY_CATEGORIES;
   }

@@ -6,10 +6,13 @@ export class AcademyController {
   constructor(private readonly service: AcademyService) {}
 
   async listCategories(
-    _request: FastifyRequest,
+    request: FastifyRequest<{
+      Querystring: { tier?: DevelopmentalTier };
+    }>,
     reply: FastifyReply
   ): Promise<void> {
-    const categories = await this.service.getCategoriesWithStats();
+    const { tier } = request.query;
+    const categories = await this.service.getCategoriesWithStats(tier);
 
     return reply.status(200).send({
       success: true,

@@ -32,8 +32,10 @@ export class AcademyLessonNotFoundError extends Error {
 export class AcademyService {
   constructor(private readonly repository: AcademyRepository) {}
 
-  async getCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
-    return this.repository.findCategoriesWithStats();
+  async getCategoriesWithStats(
+    tier?: DevelopmentalTier
+  ): Promise<AcademyCategoryStatsDTO[]> {
+    return this.repository.findCategoriesWithStats(tier);
   }
 
   async getModules(

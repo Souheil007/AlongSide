@@ -21,7 +21,9 @@ import {
 } from '@alongside/shared';
 
 export interface AcademyRepository {
-  findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]>;
+  findCategoriesWithStats(
+    tier?: DevelopmentalTier
+  ): Promise<AcademyCategoryStatsDTO[]>;
   findModules(options?: {
     category?: AcademyCategory;
     tier?: DevelopmentalTier;
@@ -109,8 +111,18 @@ export function getEquivalentTiers(tier: string): string[] {
 export class PrismaAcademyRepository implements AcademyRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
 
-  async findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
+  async findCategoriesWithStats(
+    tier?: DevelopmentalTier
+  ): Promise<AcademyCategoryStatsDTO[]> {
+    const where: any = {};
+    if (tier) {
+      const equivalents = getEquivalentTiers(tier);
+      where.developmentalTier =
+        equivalents.length === 1 ? equivalents[0] : { in: equivalents };
+    }
+
     const modules = await this.prisma.academyModule.findMany({
+      where,
       select: {
         category: true,
         _count: {
@@ -562,14 +574,22 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     }
   }
 
-  async findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
-    const allModules = Array.from(this.modules.values()).filter(
+  async findCategoriesWithStats(
+    tier?: DevelopmentalTier
+  ): Promise<AcademyCategoryStatsDTO[]> {
+    let allModules = Array.from(this.modules.values()).filter(
       (m) => !Object.keys(SLUG_ALIASES).includes(m.slug)
     );
-    const allLessons = Array.from(this.lessons.values()).filter((l) => {
-      const mod = this.modules.get(l.moduleId);
-      return mod && !Object.keys(SLUG_ALIASES).includes(mod.slug);
-    });
+    if (tier) {
+      const equivalents = getEquivalentTiers(tier);
+      allModules = allModules.filter((m) =>
+        equivalents.includes(m.developmentalTier)
+      );
+    }
+    const allModuleIds = new Set(allModules.map((m) => m.id));
+    const allLessons = Array.from(this.lessons.values()).filter((l) =>
+      allModuleIds.has(l.moduleId)
+    );
 
     return Object.values(AcademyCategory)
       .map((cat) => {

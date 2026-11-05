@@ -273,6 +273,16 @@ describe('PLAN-31: Parent Intelligence Academy Curriculum Explorer & Chapter Rea
       expect(categoryKeys).toContain(AcademyCategory.DIGITAL_AND_DEVICES);
     });
 
+    it('getAcademyCategories retrieves tier-filtered category stats for a viewing stage', async () => {
+      const tier0Categories = await getAcademyCategories({
+        tier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+      });
+      expect(tier0Categories).toBeDefined();
+      expect(tier0Categories.length).toBe(5);
+      const totalTier0 = tier0Categories.reduce((acc, c) => acc + c.moduleCount, 0);
+      expect(totalTier0).toBe(6);
+    });
+
     it('getAcademyModules filters courses by category and tier', async () => {
       const behaviorModules = await getAcademyModules({
         category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
