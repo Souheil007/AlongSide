@@ -41,6 +41,22 @@ export const DevelopmentalTier = {
 } as const;
 export type DevelopmentalTier = (typeof DevelopmentalTier)[keyof typeof DevelopmentalTier];
 
+export const AcademyCategory = {
+  BEHAVIOR_AND_EMOTIONS: 'BEHAVIOR_AND_EMOTIONS',
+  HEALTH_AND_WELLNESS: 'HEALTH_AND_WELLNESS',
+  NUTRITION_AND_FEEDING: 'NUTRITION_AND_FEEDING',
+  DEVELOPMENT_AND_PLAY: 'DEVELOPMENT_AND_PLAY',
+  DIGITAL_AND_DEVICES: 'DIGITAL_AND_DEVICES',
+} as const;
+export type AcademyCategory = (typeof AcademyCategory)[keyof typeof AcademyCategory];
+
+export const ChapterPriority = {
+  PRIORITY_1_CRITICAL: 1,
+  PRIORITY_2_ROUTINES: 2,
+  PRIORITY_3_SCAFFOLDING: 3,
+} as const;
+export type ChapterPriority = (typeof ChapterPriority)[keyof typeof ChapterPriority];
+
 export const TriageZone = {
   RED: 'RED',
   YELLOW: 'YELLOW',

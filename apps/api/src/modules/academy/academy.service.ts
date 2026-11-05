@@ -1,5 +1,7 @@
 import type {
+  AcademyCategory,
   DevelopmentalTier,
+  AcademyCategoryStatsDTO,
   AcademyModuleDTO,
   AcademyModuleDetailDTO,
   AcademyLessonDTO,
@@ -30,11 +32,29 @@ export class AcademyLessonNotFoundError extends Error {
 export class AcademyService {
   constructor(private readonly repository: AcademyRepository) {}
 
+  async getCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
+    return this.repository.findCategoriesWithStats();
+  }
+
+  async getModules(
+    options: {
+      category?: AcademyCategory;
+      tier?: DevelopmentalTier;
+    } = {},
+    userId?: string
+  ): Promise<AcademyModuleDTO[]> {
+    return this.repository.findModules({
+      category: options.category,
+      tier: options.tier,
+      userId,
+    });
+  }
+
   async getModulesByTier(
     tier?: DevelopmentalTier,
     userId?: string
   ): Promise<AcademyModuleDTO[]> {
-    return this.repository.findModules({ tier, userId });
+    return this.getModules({ tier }, userId);
   }
 
   async getModuleBySlug(

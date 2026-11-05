@@ -1,5 +1,7 @@
 import type {
+  AcademyCategory,
   AgreementStatus,
+  ChapterPriority,
   ClauseCategory,
   CommitmentParty,
   DevelopmentalTier,
@@ -217,8 +219,31 @@ export interface CultureDigestDTO {
   exploitAlerts: ExploitAlertDTO[];
 }
 
+export interface AcademyCategoryStatsDTO {
+  category: AcademyCategory;
+  title: string;
+  description: string;
+  moduleCount: number;
+  lessonCount: number;
+}
+
+export interface AcademyChapterDTO {
+  id: string;
+  moduleId: string;
+  slug: string;
+  title: string;
+  summary: string;
+  priority: number; // 1 = Critical, 2 = Routines, 3 = Scaffolding
+  sortOrder: number;
+  lessonCount: number;
+  completedLessonCount: number;
+  isCompleted: boolean;
+  lessons: AcademyLessonSummaryDTO[];
+}
+
 export interface AcademyModuleDTO {
   id: string;
+  category: AcademyCategory;
   slug: string;
   title: string;
   summary: string;
@@ -233,6 +258,7 @@ export interface AcademyModuleDTO {
 export interface AcademyLessonSummaryDTO {
   id: string;
   moduleId: string;
+  chapterId?: string | null;
   slug: string;
   title: string;
   readingMinutes: number;
@@ -243,6 +269,7 @@ export interface AcademyLessonSummaryDTO {
 export interface AcademyLessonDTO {
   id: string;
   moduleId: string;
+  chapterId?: string | null;
   slug: string;
   title: string;
   contentMarkdown: string;
@@ -254,10 +281,18 @@ export interface AcademyLessonDTO {
     slug: string;
     title: string;
     developmentalTier: DevelopmentalTier;
+    category?: AcademyCategory;
   };
+  chapter?: {
+    id: string;
+    slug: string;
+    title: string;
+    priority: number;
+  } | null;
 }
 
 export interface AcademyModuleDetailDTO extends AcademyModuleDTO {
+  chapters: AcademyChapterDTO[];
   lessons: AcademyLessonSummaryDTO[];
 }
 
