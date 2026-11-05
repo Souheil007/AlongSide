@@ -47,6 +47,13 @@ graph TD
         P28["28: Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Joint)"]
     end
 
+    subgraph AdvisoryPlatformShift ["v2.5.0 Parent Advisory & Intelligence Sanctuary (Active & Queued)"]
+        P29["29: Navigation & Platform Shell Advisory Pivot UI (FE)"]
+        P30["30: Academy Categories & Prioritized Chapters API (BE)"]
+        P31["31: Academy Curriculum Explorer & Chapter Reader UI (FE)"]
+        P32["32: Sunday Culture Digest Living Feed & Dinner Starters UI (FE)"]
+    end
+
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
         P12["12: Interactive Assessment Suite (Joint)"]
         P13["13: Stripe Billing & 7-Day Trial (BE)"]
@@ -101,6 +108,13 @@ graph TD
     P19 --> P14
     P20 --> P14
     P28 --> P14
+    P28 --> P29
+    P28 --> P30
+    P29 --> P31
+    P30 --> P31
+    P29 --> P32
+    P31 --> P14
+    P32 --> P14
 ```
 
 ---
@@ -137,6 +151,10 @@ graph TD
 | [**`26-automatic-child-age-derivation-and-domain-sync-ui.md`**](26-automatic-child-age-derivation-and-domain-sync-ui.md) | Automatic Child Age Derivation & Domain Sync UI | **Frontend Agent** | PLAN-04, PLAN-05, PLAN-16, PLAN-25 | Complete (PR #38) |
 | [**`27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md`**](27-holistic-domain-tabs-decluttering-and-redundancy-purge-ui.md) | Holistic Domain Tabs Decluttering & Redundancy Purge UI | **Frontend Agent** | PLAN-18, PLAN-19, PLAN-25, PLAN-26 | Complete (PR #38) |
 | [**`28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md`**](28-parent-intelligence-academy-lifespan-curriculum-and-tier-expansion.md) | Parent Intelligence Academy Lifespan Curriculum & Tier Expansion (Ages 0–18) | **Joint (FE & BE)** | PLAN-08, PLAN-09, PLAN-16, PLAN-25 | Complete (PR #40) |
+| [**`29-navigation-and-platform-shell-advisory-pivot-ui.md`**](29-navigation-and-platform-shell-advisory-pivot-ui.md) | Navigation & Platform Shell Advisory Pivot UI | **Frontend Agent** | PLAN-25, PLAN-27, PLAN-28 | Queued (SOU-65) |
+| [**`30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md`**](30-parent-intelligence-academy-categories-and-prioritized-chapters-api.md) | Academy Categories & Prioritized Chapters API | **Backend Agent** | PLAN-01, PLAN-08, PLAN-16, PLAN-28 | Queued (SOU-65) |
+| [**`31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md`**](31-parent-intelligence-academy-curriculum-explorer-and-chapter-reader-ui.md) | Academy Curriculum Explorer & Chapter Reader UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29, PLAN-30 | Queued (SOU-65) |
+| [**`32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md`**](32-sunday-culture-digest-living-feed-and-dinner-starters-ui.md) | Sunday Culture Digest Living Feed & Dinner Starters UI | **Frontend Agent** | PLAN-03, PLAN-09, PLAN-28, PLAN-29 | Queued (SOU-65) |
 
 ---
 

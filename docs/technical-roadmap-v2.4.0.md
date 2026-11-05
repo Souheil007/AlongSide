@@ -304,6 +304,16 @@ graph TD
 - **Key Deliverables:**
   * **Plan 28 (Parent Intelligence Academy Lifespan Curriculum & Tier Expansion):** Expand Parental Intelligence Academy across all 6 canonical lifespan tiers (Ages 0–18), authoring 6 complete neurodevelopmental modules with 18 micro-lessons (Sensory co-regulation, theory of mind, prefrontal impulse control, adrenarche, circadian delay, and autonomy transition), updating validation schemas, bidirectional tier queries, and 6-tier frontend catalog.
 
+
+### Phase 9: Platform Advisory Rearchitecture, Navigation Streamlining & Prioritized Academy Curriculum (Plans 29–32) — 🚀 Active (SOU-65)
+- **Assignee:** Joint (`apps/web`, `apps/api`, `packages/database`, `packages/shared`)
+- **Architectural Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](platform-advisory-rearchitecture-and-academy-chapters-spec.md)
+- **Key Deliverables:**
+  * **Plan 29 (Navigation & Platform Shell Advisory Pivot UI):** Elevate Home, Parent Academy, and Sunday Youth Culture Digest to primary top navbar (`[ Home | Academy | Youth Culture Digest | Family Pacts ]`), retire standalone `/health`, `/nutrition`, `/behavior`, `/brain-games` from header.
+  * **Plan 30 (Academy Categories & Prioritized Chapters API):** Evolve database schema with `AcademyCategory` (5 canonical categories) and `AcademyChapter` (grouped with priority 1, 2, 3), update Fastify endpoints and seed prioritized curriculum across 6 lifespan tiers.
+  * **Plan 31 (Academy Curriculum Explorer & Chapter Reader UI):** Redesign `/academy` with category selector pills, course roadmaps, prioritized chapter cards (Priority 1: Critical to Priority 3: Scaffolding), and rich micro-lesson reader with Clinical Insights and dialogue speech bubbles.
+  * **Plan 32 (Sunday Culture Digest Living Feed & Dinner Starters UI):** Polish `/digest` into the primary "Keep Up With Your Child" Living Feed, featuring searchable Slang Decoder, Exploit & Dark Pattern Early Warnings, and interactive Sunday Dinner Conversation Starters.
+
 ---
 
 ## 6. Definition of Done & Quality Gate
