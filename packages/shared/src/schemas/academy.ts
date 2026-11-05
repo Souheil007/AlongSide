@@ -1,5 +1,15 @@
 import { z } from 'zod';
-import { DevelopmentalTier } from '../constants/index.js';
+import { AcademyCategory, DevelopmentalTier } from '../constants/index.js';
+
+export const AcademyCategorySchema = z.enum([
+  AcademyCategory.BEHAVIOR_AND_EMOTIONS,
+  AcademyCategory.HEALTH_AND_WELLNESS,
+  AcademyCategory.NUTRITION_AND_FEEDING,
+  AcademyCategory.DEVELOPMENT_AND_PLAY,
+  AcademyCategory.DIGITAL_AND_DEVICES,
+]);
+
+export type AcademyCategoryType = z.infer<typeof AcademyCategorySchema>;
 
 export const AcademyTierSchema = z.enum([
   // Canonical v2.4 Lifespan Tiers (Ages 0–18)
@@ -19,6 +29,7 @@ export const AcademyTierSchema = z.enum([
 
 export const AcademyModulesQuerySchema = z.object({
   tier: AcademyTierSchema.optional(),
+  category: AcademyCategorySchema.optional(),
 });
 
 export type AcademyModulesQuery = z.infer<typeof AcademyModulesQuerySchema>;
@@ -28,6 +39,13 @@ export const AcademyModuleSlugParamsSchema = z.object({
 });
 
 export type AcademyModuleSlugParams = z.infer<typeof AcademyModuleSlugParamsSchema>;
+
+export const AcademyChapterSlugParamsSchema = z.object({
+  slug: z.string().trim().min(1, 'Module slug is required'),
+  chapterSlug: z.string().trim().min(1, 'Chapter slug is required'),
+});
+
+export type AcademyChapterSlugParams = z.infer<typeof AcademyChapterSlugParamsSchema>;
 
 export const AcademyLessonIdParamsSchema = z.object({
   id: z.string().trim().min(1, 'Lesson ID is required'),

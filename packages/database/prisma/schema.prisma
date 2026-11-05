@@ -136,6 +136,14 @@ enum ExploitSeverity {
   CRITICAL
 }
 
+enum AcademyCategory {
+  BEHAVIOR_AND_EMOTIONS
+  HEALTH_AND_WELLNESS
+  NUTRITION_AND_FEEDING
+  DEVELOPMENT_AND_PLAY
+  DIGITAL_AND_DEVICES
+}
+
 // ----------------------------------------------------
 // USER & SUBSCRIPTION MODELS
 // ----------------------------------------------------
@@ -367,6 +375,7 @@ model QuizResponse {
 
 model AcademyModule {
   id                 String             @id @default(uuid())
+  category           AcademyCategory    @default(DIGITAL_AND_DEVICES)
   developmentalTier  DevelopmentalTier
   slug               String             @unique
   title              String
@@ -376,15 +385,37 @@ model AcademyModule {
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 
+  chapters           AcademyChapter[]
   lessons            AcademyLesson[]
 
+  @@index([category, developmentalTier])
   @@map("academy_modules")
+}
+
+model AcademyChapter {
+  id                 String             @id @default(uuid())
+  moduleId           String
+  module             AcademyModule      @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  slug               String
+  title              String
+  summary            String
+  priority           Int                @default(1)
+  sortOrder          Int                @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  lessons            AcademyLesson[]
+
+  @@unique([moduleId, slug])
+  @@map("academy_chapters")
 }
 
 model AcademyLesson {
   id                 String             @id @default(uuid())
   moduleId           String
   module             AcademyModule      @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  chapterId          String?
+  chapter            AcademyChapter?    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   slug               String
   title              String
   contentMarkdown    String

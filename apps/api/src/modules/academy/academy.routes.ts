@@ -1,5 +1,5 @@
 import type { FastifyPluginAsync, FastifyRequest } from 'fastify';
-import type { DevelopmentalTier } from '@alongside/shared';
+import type { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
 import { AcademyController } from './academy.controller.js';
 import {
   type AcademyRepository,
@@ -39,28 +39,51 @@ const errorResponseSchema = {
   required: ['success', 'error'],
 };
 
+const categoryEnum = [
+  'BEHAVIOR_AND_EMOTIONS',
+  'HEALTH_AND_WELLNESS',
+  'NUTRITION_AND_FEEDING',
+  'DEVELOPMENT_AND_PLAY',
+  'DIGITAL_AND_DEVICES',
+];
+
+const tierEnum = [
+  'TIER_0_INFANCY_TODDLER_0_3',
+  'TIER_1_EARLY_CHILDHOOD_4_6',
+  'TIER_2_MIDDLE_CHILDHOOD_7_9',
+  'TIER_3_PRE_TEEN_10_12',
+  'TIER_4_EARLY_ADOLESCENCE_13_15',
+  'TIER_5_LATE_ADOLESCENCE_16_18',
+  'TIER_1_AGES_8_9',
+  'TIER_2_AGES_10_11',
+  'TIER_3_AGES_12_13',
+  'TIER_4_AGES_14_PLUS',
+];
+
+const academyCategoryStatsSchema = {
+  type: 'object',
+  properties: {
+    category: { type: 'string', enum: categoryEnum },
+    title: { type: 'string' },
+    description: { type: 'string' },
+    moduleCount: { type: 'number' },
+    lessonCount: { type: 'number' },
+  },
+  required: ['category', 'title', 'description', 'moduleCount', 'lessonCount'],
+};
+
 const academyModuleDtoSchema = {
   type: 'object',
   properties: {
     id: { type: 'string' },
+    category: { type: 'string', enum: categoryEnum },
     slug: { type: 'string' },
     title: { type: 'string' },
     summary: { type: 'string' },
     coverImageUrl: { type: ['string', 'null'] },
     developmentalTier: {
       type: 'string',
-      enum: [
-        'TIER_0_INFANCY_TODDLER_0_3',
-        'TIER_1_EARLY_CHILDHOOD_4_6',
-        'TIER_2_MIDDLE_CHILDHOOD_7_9',
-        'TIER_3_PRE_TEEN_10_12',
-        'TIER_4_EARLY_ADOLESCENCE_13_15',
-        'TIER_5_LATE_ADOLESCENCE_16_18',
-        'TIER_1_AGES_8_9',
-        'TIER_2_AGES_10_11',
-        'TIER_3_AGES_12_13',
-        'TIER_4_AGES_14_PLUS',
-      ],
+      enum: tierEnum,
     },
     sortOrder: { type: 'number' },
     lessonCount: { type: 'number' },
@@ -69,6 +92,7 @@ const academyModuleDtoSchema = {
   },
   required: [
     'id',
+    'category',
     'slug',
     'title',
     'summary',
@@ -85,6 +109,7 @@ const academyLessonSummarySchema = {
   properties: {
     id: { type: 'string' },
     moduleId: { type: 'string' },
+    chapterId: { type: ['string', 'null'] },
     slug: { type: 'string' },
     title: { type: 'string' },
     readingMinutes: { type: 'number' },
@@ -102,16 +127,53 @@ const academyLessonSummarySchema = {
   ],
 };
 
-const academyModuleDetailDtoSchema = {
+const academyChapterDtoSchema = {
   type: 'object',
   properties: {
-    ...academyModuleDtoSchema.properties,
+    id: { type: 'string' },
+    moduleId: { type: 'string' },
+    slug: { type: 'string' },
+    title: { type: 'string' },
+    summary: { type: 'string' },
+    priority: { type: 'number' },
+    sortOrder: { type: 'number' },
+    lessonCount: { type: 'number' },
+    completedLessonCount: { type: 'number' },
+    isCompleted: { type: 'boolean' },
     lessons: {
       type: 'array',
       items: academyLessonSummarySchema,
     },
   },
-  required: [...academyModuleDtoSchema.required, 'lessons'],
+  required: [
+    'id',
+    'moduleId',
+    'slug',
+    'title',
+    'summary',
+    'priority',
+    'sortOrder',
+    'lessonCount',
+    'completedLessonCount',
+    'isCompleted',
+    'lessons',
+  ],
+};
+
+const academyModuleDetailDtoSchema = {
+  type: 'object',
+  properties: {
+    ...academyModuleDtoSchema.properties,
+    chapters: {
+      type: 'array',
+      items: academyChapterDtoSchema,
+    },
+    lessons: {
+      type: 'array',
+      items: academyLessonSummarySchema,
+    },
+  },
+  required: [...academyModuleDtoSchema.required, 'chapters', 'lessons'],
 };
 
 const academyLessonDtoSchema = {
@@ -119,6 +181,7 @@ const academyLessonDtoSchema = {
   properties: {
     id: { type: 'string' },
     moduleId: { type: 'string' },
+    chapterId: { type: ['string', 'null'] },
     slug: { type: 'string' },
     title: { type: 'string' },
     contentMarkdown: { type: 'string' },
@@ -132,8 +195,19 @@ const academyLessonDtoSchema = {
         slug: { type: 'string' },
         title: { type: 'string' },
         developmentalTier: { type: 'string' },
+        category: { type: 'string', enum: categoryEnum },
       },
       required: ['id', 'slug', 'title', 'developmentalTier'],
+    },
+    chapter: {
+      type: ['object', 'null'],
+      properties: {
+        id: { type: 'string' },
+        slug: { type: 'string' },
+        title: { type: 'string' },
+        priority: { type: 'number' },
+      },
+      required: ['id', 'slug', 'title', 'priority'],
     },
   },
   required: [
@@ -210,8 +284,40 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
     }
   };
 
-  // GET /api/v1/academy/modules - List Modules (Optional tier filter & completion status)
-  fastify.get<{ Querystring: { tier?: DevelopmentalTier } }>(
+  // GET /categories - List Canonical Categories with Stats & Course Counts
+  fastify.get(
+    '/categories',
+    {
+      preHandler: [optionalAuth],
+      schema: {
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean', enum: [true] },
+              data: {
+                type: 'object',
+                properties: {
+                  categories: {
+                    type: 'array',
+                    items: academyCategoryStatsSchema,
+                  },
+                },
+                required: ['categories'],
+              },
+            },
+            required: ['success', 'data'],
+          },
+        },
+      },
+    },
+    controller.listCategories.bind(controller)
+  );
+
+  // GET /modules - List Modules (Filter by Category and/or Tier)
+  fastify.get<{
+    Querystring: { category?: AcademyCategory; tier?: DevelopmentalTier };
+  }>(
     '/modules',
     {
       preHandler: [optionalAuth],
@@ -219,20 +325,13 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
         querystring: {
           type: 'object',
           properties: {
+            category: {
+              type: 'string',
+              enum: categoryEnum,
+            },
             tier: {
               type: 'string',
-              enum: [
-                'TIER_0_INFANCY_TODDLER_0_3',
-                'TIER_1_EARLY_CHILDHOOD_4_6',
-                'TIER_2_MIDDLE_CHILDHOOD_7_9',
-                'TIER_3_PRE_TEEN_10_12',
-                'TIER_4_EARLY_ADOLESCENCE_13_15',
-                'TIER_5_LATE_ADOLESCENCE_16_18',
-                'TIER_1_AGES_8_9',
-                'TIER_2_AGES_10_11',
-                'TIER_3_AGES_12_13',
-                'TIER_4_AGES_14_PLUS',
-              ],
+              enum: tierEnum,
             },
           },
         },
@@ -261,7 +360,7 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
     controller.listModules.bind(controller)
   );
 
-  // GET /api/v1/academy/modules/:slug - Get Module by Slug
+  // GET /modules/:slug - Get Module with Prioritized Chapters Hierarchy
   fastify.get<{ Params: { slug: string } }>(
     '/modules/:slug',
     {
@@ -296,7 +395,7 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
     controller.getModuleBySlug.bind(controller)
   );
 
-  // GET /api/v1/academy/lessons/:id - Get Lesson Content by ID
+  // GET /lessons/:id - Get Lesson Content by ID
   fastify.get<{ Params: { id: string } }>(
     '/lessons/:id',
     {
@@ -331,7 +430,7 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
     controller.getLessonById.bind(controller)
   );
 
-  // POST /api/v1/academy/lessons/:id/complete - Mark Lesson Complete
+  // POST /lessons/:id/complete - Mark Lesson Complete
   fastify.post<{ Params: { id: string } }>(
     '/lessons/:id/complete',
     {

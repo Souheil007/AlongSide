@@ -58,7 +58,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
   });
 
   describe('GET /api/v1/academy/modules', () => {
-    it('returns all 6 lifespan neurodevelopmental modules across ages 0-18 when no tier filter is provided', async () => {
+    it('returns all lifespan neurodevelopmental modules across ages 0-18 when no tier filter is provided', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/academy/modules',
@@ -68,7 +68,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const payload = response.json();
       expect(payload.success).toBe(true);
       expect(Array.isArray(payload.data.modules)).toBe(true);
-      expect(payload.data.modules.length).toBe(6);
+      expect(payload.data.modules.length).toBe(30);
 
       const tiers = payload.data.modules.map((m: any) => m.developmentalTier);
       expect(tiers).toContain('TIER_0_INFANCY_TODDLER_0_3');
@@ -88,11 +88,13 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.modules.length).toBe(1);
+      expect(payload.data.modules.length).toBe(5);
 
-      const mod = payload.data.modules[0];
-      expect(mod.slug).toBe('infant-sensory-milestones-and-coregulation');
-      expect(mod.title).toContain('Infant & Toddler');
+      const mod = payload.data.modules.find((m: any) =>
+        m.slug.includes('infant')
+      );
+      expect(mod).toBeDefined();
+      expect(mod.title).toContain('Infant');
       expect(mod.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
       expect(mod.lessonCount).toBe(3);
       expect(mod.completedLessonCount).toBe(0);
@@ -108,11 +110,13 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.modules.length).toBe(1);
+      expect(payload.data.modules.length).toBe(5);
 
-      const mod = payload.data.modules[0];
-      expect(mod.slug).toBe('tween-neurobiology-and-adrenarche');
-      expect(mod.title).toContain('Tween Brain');
+      const mod = payload.data.modules.find((m: any) =>
+        m.slug.includes('tween')
+      );
+      expect(mod).toBeDefined();
+      expect(mod.title).toContain('Tween');
       expect(mod.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
       expect(mod.lessonCount).toBe(3);
       expect(mod.completedLessonCount).toBe(0);

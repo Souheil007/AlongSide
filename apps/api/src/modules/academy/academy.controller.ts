@@ -1,20 +1,34 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import type { DevelopmentalTier } from '@alongside/shared';
+import type { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
 import type { AcademyService } from './academy.service.js';
 
 export class AcademyController {
   constructor(private readonly service: AcademyService) {}
 
+  async listCategories(
+    _request: FastifyRequest,
+    reply: FastifyReply
+  ): Promise<void> {
+    const categories = await this.service.getCategoriesWithStats();
+
+    return reply.status(200).send({
+      success: true,
+      data: {
+        categories,
+      },
+    });
+  }
+
   async listModules(
     request: FastifyRequest<{
-      Querystring: { tier?: DevelopmentalTier };
+      Querystring: { category?: AcademyCategory; tier?: DevelopmentalTier };
     }>,
     reply: FastifyReply
   ): Promise<void> {
-    const { tier } = request.query;
+    const { category, tier } = request.query;
     const userId = request.user?.id;
 
-    const modules = await this.service.getModulesByTier(tier, userId);
+    const modules = await this.service.getModules({ category, tier }, userId);
 
     return reply.status(200).send({
       success: true,

@@ -360,6 +360,11 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     academyRepository: resolvedAcademyRepository,
     academyService: resolvedAcademyService,
   });
+  await app.register(academyRoutes, {
+    prefix: '/api/academy',
+    academyRepository: resolvedAcademyRepository,
+    academyService: resolvedAcademyService,
+  });
   await app.register(digestRoutes, {
     prefix: '/api/v1/digest',
     digestRepository: resolvedDigestRepository,

@@ -3,18 +3,27 @@ import {
   prisma as defaultPrisma,
   type PrismaClient,
   ACADEMY_SEED_MODULES,
+  type AcademyModuleSeedData,
+  type AcademyChapterSeedData,
+  type AcademyLessonSeedData,
 } from '@alongside/database';
-import type {
-  DevelopmentalTier,
-  AcademyModuleDTO,
-  AcademyLessonSummaryDTO,
-  AcademyLessonDTO,
-  AcademyModuleDetailDTO,
-  AcademyLessonCompletionResponseDTO,
+import {
+  AcademyCategory,
+  ChapterPriority,
+  type DevelopmentalTier,
+  type AcademyCategoryStatsDTO,
+  type AcademyChapterDTO,
+  type AcademyModuleDTO,
+  type AcademyLessonSummaryDTO,
+  type AcademyLessonDTO,
+  type AcademyModuleDetailDTO,
+  type AcademyLessonCompletionResponseDTO,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
+  findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]>;
   findModules(options?: {
+    category?: AcademyCategory;
     tier?: DevelopmentalTier;
     userId?: string;
   }): Promise<AcademyModuleDTO[]>;
@@ -31,6 +40,52 @@ export interface AcademyRepository {
     lessonId: string
   ): Promise<AcademyLessonCompletionResponseDTO>;
 }
+
+export const ACADEMY_CATEGORY_METADATA: Record<
+  AcademyCategory,
+  { title: string; description: string; sortOrder: number }
+> = {
+  [AcademyCategory.BEHAVIOR_AND_EMOTIONS]: {
+    title: 'Behavior & Emotional Co-Regulation',
+    description:
+      'Neurobiology-backed emotional co-regulation, tantrum de-escalation, and boundary frameworks.',
+    sortOrder: 1,
+  },
+  [AcademyCategory.HEALTH_AND_WELLNESS]: {
+    title: 'Pediatric Health, Sleep & Biological Rhythms',
+    description:
+      'Authoritative pediatric advisory on sleep architecture, circadian shifts, immunity, and athletic wellness.',
+    sortOrder: 2,
+  },
+  [AcademyCategory.NUTRITION_AND_FEEDING]: {
+    title: 'Nutrition & Healthy Feeding Habits',
+    description:
+      'Allergen introduction, division of responsibility, picky eating de-escalation, and adolescent metabolic health.',
+    sortOrder: 3,
+  },
+  [AcademyCategory.DEVELOPMENT_AND_PLAY]: {
+    title: 'Cognitive Development & Purposeful Play',
+    description:
+      'Executive function, language bursts, spatial reasoning, and real-world maker play across every developmental leap.',
+    sortOrder: 4,
+  },
+  [AcademyCategory.DIGITAL_AND_DEVICES]: {
+    title: 'Modern Digital World, Screens & Device Sovereignty',
+    description:
+      'Bilateral screen agreements, smartphone readiness, dopamine loop navigation, and neutral sleep curfews.',
+    sortOrder: 5,
+  },
+};
+
+export const SLUG_ALIASES: Record<string, string> = {
+  'infant-sensory-milestones-and-coregulation': 'behavior-infant-coregulation',
+  'early-childhood-executive-function-and-play': 'behavior-preschool-feelings',
+  'early-impulse-centers-and-shared-media': 'behavior-elementary-impulses',
+  'tween-neurobiology-and-adrenarche': 'behavior-tween-adrenarche',
+  'pubertal-circadian-delay-and-sleep': 'health-adolescent-sleep-protection',
+  'teen-autonomy-and-graduated-privileges': 'behavior-teen-autonomy',
+  'how-algorithms-shape-teen-brains': 'digital-adolescent-algorithmic-feeds',
+};
 
 export function getEquivalentTiers(tier: string): string[] {
   switch (tier) {
@@ -54,14 +109,64 @@ export function getEquivalentTiers(tier: string): string[] {
 export class PrismaAcademyRepository implements AcademyRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
 
+  async findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
+    const modules = await this.prisma.academyModule.findMany({
+      select: {
+        category: true,
+        _count: {
+          select: { lessons: true },
+        },
+      },
+    });
+
+    const categoryStatsMap = new Map<
+      AcademyCategory,
+      { moduleCount: number; lessonCount: number }
+    >();
+
+    for (const cat of Object.values(AcademyCategory)) {
+      categoryStatsMap.set(cat, { moduleCount: 0, lessonCount: 0 });
+    }
+
+    for (const mod of modules) {
+      const stats = categoryStatsMap.get(mod.category as AcademyCategory);
+      if (stats) {
+        stats.moduleCount += 1;
+        stats.lessonCount += mod._count.lessons;
+      }
+    }
+
+    const categories = Object.values(AcademyCategory).map((cat) => {
+      const meta = ACADEMY_CATEGORY_METADATA[cat];
+      const stats = categoryStatsMap.get(cat) ?? { moduleCount: 0, lessonCount: 0 };
+      return {
+        category: cat,
+        title: meta.title,
+        description: meta.description,
+        moduleCount: stats.moduleCount,
+        lessonCount: stats.lessonCount,
+        sortOrder: meta.sortOrder,
+      };
+    });
+
+    return categories
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map(({ sortOrder: _, ...rest }) => rest);
+  }
+
   async findModules(options?: {
+    category?: AcademyCategory;
     tier?: DevelopmentalTier;
     userId?: string;
   }): Promise<AcademyModuleDTO[]> {
     const where: any = {};
+    if (options?.category) {
+      where.category = options.category;
+    }
     if (options?.tier) {
       const equivalents = getEquivalentTiers(options.tier);
-      where.developmentalTier = equivalents.length === 1 ? equivalents[0] : { in: equivalents };
+      where.developmentalTier =
+        equivalents.length === 1 ? equivalents[0] : { in: equivalents };
     }
 
     const modules = await this.prisma.academyModule.findMany({
@@ -95,6 +200,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
 
       return {
         id: m.id,
+        category: m.category as AcademyCategory,
         slug: m.slug,
         title: m.title,
         summary: m.summary,
@@ -112,9 +218,19 @@ export class PrismaAcademyRepository implements AcademyRepository {
     slug: string,
     userId?: string
   ): Promise<AcademyModuleDetailDTO | null> {
+    const targetSlug = SLUG_ALIASES[slug] || slug;
+
     const moduleRecord = await this.prisma.academyModule.findUnique({
-      where: { slug },
+      where: { slug: targetSlug },
       include: {
+        chapters: {
+          orderBy: [{ priority: 'asc' }, { sortOrder: 'asc' }],
+          include: {
+            lessons: {
+              orderBy: { sortOrder: 'asc' },
+            },
+          },
+        },
         lessons: {
           orderBy: { sortOrder: 'asc' },
         },
@@ -138,9 +254,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
       completedLessonIds = new Set(progress.map((p) => p.lessonId));
     }
 
-    const lessons: AcademyLessonSummaryDTO[] = moduleRecord.lessons.map((l) => ({
+    const flatLessons: AcademyLessonSummaryDTO[] = moduleRecord.lessons.map((l) => ({
       id: l.id,
       moduleId: l.moduleId,
+      chapterId: l.chapterId,
       slug: l.slug,
       title: l.title,
       readingMinutes: l.readingMinutes,
@@ -148,13 +265,45 @@ export class PrismaAcademyRepository implements AcademyRepository {
       isCompleted: completedLessonIds.has(l.id),
     }));
 
-    const lessonCount = lessons.length;
-    const completedLessonCount = lessons.filter((l) => l.isCompleted).length;
+    const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
+      const chLessons: AcademyLessonSummaryDTO[] = ch.lessons.map((l) => ({
+        id: l.id,
+        moduleId: l.moduleId,
+        chapterId: l.chapterId,
+        slug: l.slug,
+        title: l.title,
+        readingMinutes: l.readingMinutes,
+        sortOrder: l.sortOrder,
+        isCompleted: completedLessonIds.has(l.id),
+      }));
+
+      const chLessonCount = chLessons.length;
+      const chCompletedCount = chLessons.filter((l) => l.isCompleted).length;
+      const isCompleted = chLessonCount > 0 && chCompletedCount === chLessonCount;
+
+      return {
+        id: ch.id,
+        moduleId: ch.moduleId,
+        slug: ch.slug,
+        title: ch.title,
+        summary: ch.summary,
+        priority: ch.priority,
+        sortOrder: ch.sortOrder,
+        lessonCount: chLessonCount,
+        completedLessonCount: chCompletedCount,
+        isCompleted,
+        lessons: chLessons,
+      };
+    });
+
+    const lessonCount = flatLessons.length;
+    const completedLessonCount = flatLessons.filter((l) => l.isCompleted).length;
     const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
 
     return {
       id: moduleRecord.id,
-      slug: moduleRecord.slug,
+      category: moduleRecord.category as AcademyCategory,
+      slug: slug === targetSlug ? moduleRecord.slug : slug,
       title: moduleRecord.title,
       summary: moduleRecord.summary,
       coverImageUrl: moduleRecord.coverImageUrl,
@@ -163,7 +312,8 @@ export class PrismaAcademyRepository implements AcademyRepository {
       lessonCount,
       completedLessonCount,
       isCompleted,
-      lessons,
+      chapters,
+      lessons: flatLessons,
     };
   }
 
@@ -180,6 +330,15 @@ export class PrismaAcademyRepository implements AcademyRepository {
             slug: true,
             title: true,
             developmentalTier: true,
+            category: true,
+          },
+        },
+        chapter: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            priority: true,
           },
         },
       },
@@ -205,6 +364,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
     return {
       id: lesson.id,
       moduleId: lesson.moduleId,
+      chapterId: lesson.chapterId,
       slug: lesson.slug,
       title: lesson.title,
       contentMarkdown: lesson.contentMarkdown,
@@ -216,7 +376,16 @@ export class PrismaAcademyRepository implements AcademyRepository {
         slug: lesson.module.slug,
         title: lesson.module.title,
         developmentalTier: lesson.module.developmentalTier as DevelopmentalTier,
+        category: lesson.module.category as AcademyCategory,
       },
+      chapter: lesson.chapter
+        ? {
+            id: lesson.chapter.id,
+            slug: lesson.chapter.slug,
+            title: lesson.chapter.title,
+            priority: lesson.chapter.priority,
+          }
+        : null,
     };
   }
 
@@ -304,33 +473,42 @@ interface InMemoryProgress {
   completedAt: Date;
 }
 
+interface InMemoryModule {
+  id: string;
+  category: AcademyCategory;
+  slug: string;
+  title: string;
+  summary: string;
+  coverImageUrl: string | null;
+  developmentalTier: DevelopmentalTier;
+  sortOrder: number;
+}
+
+interface InMemoryChapter {
+  id: string;
+  moduleId: string;
+  slug: string;
+  title: string;
+  summary: string;
+  priority: number;
+  sortOrder: number;
+}
+
+interface InMemoryLesson {
+  id: string;
+  moduleId: string;
+  chapterId: string | null;
+  slug: string;
+  title: string;
+  contentMarkdown: string;
+  readingMinutes: number;
+  sortOrder: number;
+}
+
 export class InMemoryAcademyRepository implements AcademyRepository {
-  private modules: Map<
-    string,
-    {
-      id: string;
-      slug: string;
-      title: string;
-      summary: string;
-      coverImageUrl: string | null;
-      developmentalTier: DevelopmentalTier;
-      sortOrder: number;
-    }
-  > = new Map();
-
-  private lessons: Map<
-    string,
-    {
-      id: string;
-      moduleId: string;
-      slug: string;
-      title: string;
-      contentMarkdown: string;
-      readingMinutes: number;
-      sortOrder: number;
-    }
-  > = new Map();
-
+  private modules: Map<string, InMemoryModule> = new Map();
+  private chapters: Map<string, InMemoryChapter> = new Map();
+  private lessons: Map<string, InMemoryLesson> = new Map();
   private progressRecords: Map<string, InMemoryProgress> = new Map();
 
   constructor(autoSeed = true) {
@@ -342,43 +520,96 @@ export class InMemoryAcademyRepository implements AcademyRepository {
   private seedDefaultData(): void {
     for (const mod of ACADEMY_SEED_MODULES) {
       const moduleId = `mod-${mod.slug}`;
-      this.modules.set(moduleId, {
+      const moduleRecord: InMemoryModule = {
         id: moduleId,
+        category: mod.category,
         slug: mod.slug,
         title: mod.title,
         summary: mod.summary,
         coverImageUrl: mod.coverImageUrl ?? null,
         developmentalTier: mod.developmentalTier,
         sortOrder: mod.sortOrder,
-      });
+      };
+      this.modules.set(moduleId, moduleRecord);
 
-      for (const lesson of mod.lessons) {
-        const lessonId = `les-${mod.slug}-${lesson.slug}`;
-        this.lessons.set(lessonId, {
-          id: lessonId,
+      for (const chapter of mod.chapters) {
+        const chapterId = `ch-${mod.slug}-${chapter.slug}`;
+        this.chapters.set(chapterId, {
+          id: chapterId,
           moduleId,
-          slug: lesson.slug,
-          title: lesson.title,
-          contentMarkdown: lesson.contentMarkdown,
-          readingMinutes: lesson.readingMinutes,
-          sortOrder: lesson.sortOrder,
+          slug: chapter.slug,
+          title: chapter.title,
+          summary: chapter.summary,
+          priority: chapter.priority,
+          sortOrder: chapter.sortOrder,
         });
+
+        for (const lesson of chapter.lessons) {
+          const lessonId = `les-${mod.slug}-${lesson.slug}`;
+          const lessonRecord: InMemoryLesson = {
+            id: lessonId,
+            moduleId,
+            chapterId,
+            slug: lesson.slug,
+            title: lesson.title,
+            contentMarkdown: lesson.contentMarkdown,
+            readingMinutes: lesson.readingMinutes,
+            sortOrder: lesson.sortOrder,
+          };
+          this.lessons.set(lessonId, lessonRecord);
+        }
       }
     }
   }
 
+  async findCategoriesWithStats(): Promise<AcademyCategoryStatsDTO[]> {
+    const allModules = Array.from(this.modules.values()).filter(
+      (m) => !Object.keys(SLUG_ALIASES).includes(m.slug)
+    );
+    const allLessons = Array.from(this.lessons.values()).filter((l) => {
+      const mod = this.modules.get(l.moduleId);
+      return mod && !Object.keys(SLUG_ALIASES).includes(mod.slug);
+    });
+
+    return Object.values(AcademyCategory)
+      .map((cat) => {
+        const meta = ACADEMY_CATEGORY_METADATA[cat];
+        const catModules = allModules.filter((m) => m.category === cat);
+        const moduleIds = new Set(catModules.map((m) => m.id));
+        const catLessons = allLessons.filter((l) => moduleIds.has(l.moduleId));
+
+        return {
+          category: cat,
+          title: meta.title,
+          description: meta.description,
+          moduleCount: catModules.length,
+          lessonCount: catLessons.length,
+          sortOrder: meta.sortOrder,
+        };
+      })
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map(({ sortOrder: _, ...rest }) => rest);
+  }
+
   async findModules(options?: {
+    category?: AcademyCategory;
     tier?: DevelopmentalTier;
     userId?: string;
   }): Promise<AcademyModuleDTO[]> {
-    let moduleList = Array.from(this.modules.values()).sort(
-      (a, b) => a.sortOrder - b.sortOrder
+    let moduleList = Array.from(this.modules.values()).filter(
+      (m) => !Object.keys(SLUG_ALIASES).includes(m.slug)
     );
+
+    if (options?.category) {
+      moduleList = moduleList.filter((m) => m.category === options.category);
+    }
 
     if (options?.tier) {
       const equivalents = new Set(getEquivalentTiers(options.tier));
       moduleList = moduleList.filter((m) => equivalents.has(m.developmentalTier));
     }
+
+    moduleList.sort((a, b) => a.sortOrder - b.sortOrder);
 
     const allLessons = Array.from(this.lessons.values());
 
@@ -399,6 +630,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
 
       return {
         id: m.id,
+        category: m.category,
         slug: m.slug,
         title: m.title,
         summary: m.summary,
@@ -416,30 +648,73 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     slug: string,
     userId?: string
   ): Promise<AcademyModuleDetailDTO | null> {
-    const mod = Array.from(this.modules.values()).find((m) => m.slug === slug);
+    const targetSlug = SLUG_ALIASES[slug] || slug;
+
+    const mod =
+      Array.from(this.modules.values()).find((m) => m.slug === targetSlug) ??
+      Array.from(this.modules.values()).find((m) => m.slug === slug);
+
     if (!mod) {
       return null;
     }
 
-    const modLessons = Array.from(this.lessons.values())
+    const modChapters = Array.from(this.chapters.values())
+      .filter((ch) => ch.moduleId === mod.id)
+      .sort((a, b) => a.priority - b.priority || a.sortOrder - b.sortOrder);
+
+    const allModLessons = Array.from(this.lessons.values())
       .filter((l) => l.moduleId === mod.id)
       .sort((a, b) => a.sortOrder - b.sortOrder);
 
-    const lessonCount = modLessons.length;
-    let completedLessonCount = 0;
+    const chapters: AcademyChapterDTO[] = modChapters.map((ch) => {
+      const chLessons = allModLessons.filter((l) => l.chapterId === ch.id);
+      const chLessonSummaries: AcademyLessonSummaryDTO[] = chLessons.map((l) => {
+        let isCompleted = false;
+        if (userId) {
+          const key = `${userId}:${l.id}`;
+          isCompleted = this.progressRecords.get(key)?.isCompleted ?? false;
+        }
+        return {
+          id: l.id,
+          moduleId: l.moduleId,
+          chapterId: l.chapterId,
+          slug: l.slug,
+          title: l.title,
+          readingMinutes: l.readingMinutes,
+          sortOrder: l.sortOrder,
+          isCompleted,
+        };
+      });
 
-    const lessonsSummary: AcademyLessonSummaryDTO[] = modLessons.map((l) => {
+      const lessonCount = chLessonSummaries.length;
+      const completedLessonCount = chLessonSummaries.filter((l) => l.isCompleted).length;
+      const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
+
+      return {
+        id: ch.id,
+        moduleId: ch.moduleId,
+        slug: ch.slug,
+        title: ch.title,
+        summary: ch.summary,
+        priority: ch.priority,
+        sortOrder: ch.sortOrder,
+        lessonCount,
+        completedLessonCount,
+        isCompleted,
+        lessons: chLessonSummaries,
+      };
+    });
+
+    const flatLessons: AcademyLessonSummaryDTO[] = allModLessons.map((l) => {
       let isCompleted = false;
       if (userId) {
         const key = `${userId}:${l.id}`;
         isCompleted = this.progressRecords.get(key)?.isCompleted ?? false;
       }
-      if (isCompleted) {
-        completedLessonCount++;
-      }
       return {
         id: l.id,
         moduleId: l.moduleId,
+        chapterId: l.chapterId,
         slug: l.slug,
         title: l.title,
         readingMinutes: l.readingMinutes,
@@ -448,11 +723,14 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       };
     });
 
+    const lessonCount = flatLessons.length;
+    const completedLessonCount = flatLessons.filter((l) => l.isCompleted).length;
     const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
 
     return {
       id: mod.id,
-      slug: mod.slug,
+      category: mod.category,
+      slug,
       title: mod.title,
       summary: mod.summary,
       coverImageUrl: mod.coverImageUrl,
@@ -461,7 +739,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       lessonCount,
       completedLessonCount,
       isCompleted,
-      lessons: lessonsSummary,
+      chapters,
+      lessons: flatLessons,
     };
   }
 
@@ -469,7 +748,17 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     lessonId: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null> {
-    const lesson = this.lessons.get(lessonId);
+    let lesson = this.lessons.get(lessonId);
+    if (!lesson) {
+      for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
+        if (lessonId.includes(alias)) {
+          const targetLessonId = lessonId.replace(alias, target);
+          lesson = this.lessons.get(targetLessonId);
+          if (lesson) break;
+        }
+      }
+    }
+
     if (!lesson) {
       return null;
     }
@@ -479,15 +768,29 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       return null;
     }
 
+    const ch = lesson.chapterId ? this.chapters.get(lesson.chapterId) : null;
+
     let isCompleted = false;
     if (userId) {
       const key = `${userId}:${lesson.id}`;
-      isCompleted = this.progressRecords.get(key)?.isCompleted ?? false;
+      isCompleted =
+        this.progressRecords.get(key)?.isCompleted ??
+        this.progressRecords.get(`${userId}:${lessonId}`)?.isCompleted ??
+        false;
+    }
+
+    let moduleSlug = mod.slug;
+    for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
+      if (lessonId.includes(alias) && mod.slug === target) {
+        moduleSlug = alias;
+        break;
+      }
     }
 
     return {
-      id: lesson.id,
+      id: lessonId,
       moduleId: lesson.moduleId,
+      chapterId: lesson.chapterId,
       slug: lesson.slug,
       title: lesson.title,
       contentMarkdown: lesson.contentMarkdown,
@@ -496,10 +799,19 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       isCompleted,
       module: {
         id: mod.id,
-        slug: mod.slug,
+        slug: moduleSlug,
         title: mod.title,
         developmentalTier: mod.developmentalTier,
+        category: mod.category,
       },
+      chapter: ch
+        ? {
+            id: ch.id,
+            slug: ch.slug,
+            title: ch.title,
+            priority: ch.priority,
+          }
+        : null,
     };
   }
 
@@ -507,7 +819,21 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     userId: string,
     lessonId: string
   ): Promise<AcademyLessonCompletionResponseDTO> {
-    const lesson = this.lessons.get(lessonId);
+    let resolvedLessonId = lessonId;
+    let lesson = this.lessons.get(lessonId);
+    if (!lesson) {
+      for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
+        if (lessonId.includes(alias)) {
+          const targetLessonId = lessonId.replace(alias, target);
+          lesson = this.lessons.get(targetLessonId);
+          if (lesson) {
+            resolvedLessonId = targetLessonId;
+            break;
+          }
+        }
+      }
+    }
+
     if (!lesson) {
       throw new Error(`Lesson not found with id: ${lessonId}`);
     }
@@ -517,15 +843,15 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       throw new Error(`Module not found for lesson: ${lessonId}`);
     }
 
-    const key = `${userId}:${lessonId}`;
     const progress: InMemoryProgress = {
       id: randomUUID(),
       userId,
-      lessonId,
+      lessonId: resolvedLessonId,
       isCompleted: true,
       completedAt: new Date(),
     };
-    this.progressRecords.set(key, progress);
+    this.progressRecords.set(`${userId}:${resolvedLessonId}`, progress);
+    this.progressRecords.set(`${userId}:${lessonId}`, progress);
 
     const modLessons = Array.from(this.lessons.values()).filter(
       (l) => l.moduleId === mod.id
@@ -544,7 +870,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       progress: {
         id: progress.id,
         userId: progress.userId,
-        lessonId: progress.lessonId,
+        lessonId,
         isCompleted: progress.isCompleted,
         completedAt: progress.completedAt.toISOString(),
       },
