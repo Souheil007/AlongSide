@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlongSide — Phase 1 Visual Identity Master Switcher (14 Prototyped Directions from docs/design)</title>
+  <title>AlongSide — Phase 1 Visual Identity Master Switcher (Vercel Taste Evolutions & Design Systems)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -14,6 +14,8 @@
       --panel-border: #232f48;
       --accent: #38bdf8;
       --accent-green: #30a83c;
+      --accent-sage: #28543e;
+      --accent-terracotta: #c2410c;
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --font-ui: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -36,16 +38,22 @@
     header.switcher-bar {
       background: var(--panel);
       border-bottom: 1px solid var(--panel-border);
-      padding: 12px 24px;
+      padding: 10px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    .header-top-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
 
     .brand-title-wrap {
@@ -57,10 +65,13 @@
       background: #0284c7;
       color: #ffffff;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 12px;
       padding: 4px 10px;
       border-radius: 6px;
       letter-spacing: 0.5px;
+    }
+    .brand-badge.taste {
+      background: #c2410c;
     }
     .brand-title {
       font-size: 16px;
@@ -73,19 +84,37 @@
     }
 
     /* System Switcher Tabs */
-    .system-nav-scroll {
+    .nav-sections-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .nav-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       overflow-x: auto;
       max-width: 100%;
-      padding: 4px 0;
+      padding-bottom: 2px;
     }
+    .nav-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+    .nav-label.benchmark {
+      color: var(--text-muted);
+    }
+
     .system-tab-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--panel-border);
       color: var(--text-muted);
-      padding: 7px 12px;
+      padding: 6px 12px;
       border-radius: 20px;
       font-size: 11.5px;
       font-weight: 700;
@@ -105,6 +134,12 @@
       color: #0b0f19;
       border-color: var(--accent);
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+    .system-tab-btn.active.taste-active {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #ffffff;
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
     }
     .system-tab-btn .swatch {
       width: 10px;
@@ -185,7 +220,7 @@
     }
     .preview-frame-wrap {
       width: 100%;
-      height: calc(100vh - 120px);
+      height: calc(100vh - 150px);
       background: #ffffff;
       border-radius: 12px;
       overflow: hidden;
@@ -212,7 +247,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      height: calc(100vh - 65px);
+      height: calc(100vh - 95px);
       transition: transform 0.25s ease;
     }
     .inspector-header {
@@ -286,86 +321,101 @@
 
   <!-- Top Switcher Header -->
   <header class="switcher-bar">
-    <div class="brand-title-wrap">
-      <div class="brand-badge">PHASE 1 VISUAL LAB</div>
-      <div>
-        <div class="brand-title">AlongSide — 14 Design Direction Prototypes</div>
-        <div class="brand-sub">Logged-Out Landing: "The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow"</div>
+    <div class="header-top-row">
+      <div class="brand-title-wrap">
+        <div class="brand-badge taste">VERCEL TASTE EVOLUTIONS</div>
+        <div>
+          <div class="brand-title">AlongSide — Sanctuary Landing Page Identity Lab</div>
+          <div class="brand-sub">5 Brand Tastes infused into Vercel's precision architecture + 14 Benchmark systems</div>
+        </div>
+      </div>
+
+      <!-- Viewport & External Controls -->
+      <div class="controls-wrap">
+        <div class="viewport-group">
+          <button class="viewport-btn active" onclick="setViewport('desktop', this)">Desktop</button>
+          <button class="viewport-btn" onclick="setViewport('laptop', this)">1024px</button>
+          <button class="viewport-btn" onclick="setViewport('tablet', this)">768px</button>
+          <button class="viewport-btn" onclick="setViewport('mobile', this)">390px</button>
+        </div>
+
+        <a id="external-link" href="preview-vercel-taste-1-warm-sanctuary.html" target="_blank" class="open-external-btn">
+          <span>Open Tab ↗</span>
+        </a>
       </div>
     </div>
 
-    <!-- 14 Design Systems Switcher -->
-    <div class="system-nav-scroll">
-      <button class="system-tab-btn active" onclick="loadPreview('preview-mydealz.html', 'mydealz', this)">
-        <span class="swatch" style="background: #30a83c;"></span>
-        1. MyDealz
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-nerdwallet.html', 'nerdwallet', this)">
-        <span class="swatch" style="background: #008254;"></span>
-        2. NerdWallet
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-revolut.html', 'revolut', this)">
-        <span class="swatch" style="background: #494fdf;"></span>
-        3. Revolut
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-sanity.html', 'sanity', this)">
-        <span class="swatch" style="background: #f36458;"></span>
-        4. Sanity
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-spacex.html', 'spacex', this)">
-        <span class="swatch" style="background: #ffffff;"></span>
-        5. SpaceX
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-vercel.html', 'vercel', this)">
-        <span class="swatch" style="background: #171717; border: 1px solid #fff;"></span>
-        6. Vercel
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-warp.html', 'warp', this)">
-        <span class="swatch" style="background: #e28a52;"></span>
-        7. Warp
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-wise.html', 'wise', this)">
-        <span class="swatch" style="background: #9fe870;"></span>
-        8. Wise
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-alloy.html', 'alloy', this)">
-        <span class="swatch" style="background: #5865e8;"></span>
-        9. Alloy Planning
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-artboard.html', 'artboard', this)">
-        <span class="swatch" style="background: #6b55e8;"></span>
-        10. Artboard Studio
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-flyio.html', 'flyio', this)">
-        <span class="swatch" style="background: #f28a4b;"></span>
-        11. Fly.io
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-pirsch.html', 'pirsch', this)">
-        <span class="swatch" style="background: #3d6fe8;"></span>
-        12. Pirsch Analytics
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-streamtime.html', 'streamtime', this)">
-        <span class="swatch" style="background: #f2c94c;"></span>
-        13. Streamtime
-      </button>
-      <button class="system-tab-btn" onclick="loadPreview('preview-subframe.html', 'subframe', this)">
-        <span class="swatch" style="background: #242424; border: 1px solid #737373;"></span>
-        14. Subframe
-      </button>
-    </div>
-
-    <!-- Viewport & External Controls -->
-    <div class="controls-wrap">
-      <div class="viewport-group">
-        <button class="viewport-btn active" onclick="setViewport('desktop', this)">Desktop</button>
-        <button class="viewport-btn" onclick="setViewport('laptop', this)">1024px</button>
-        <button class="viewport-btn" onclick="setViewport('tablet', this)">768px</button>
-        <button class="viewport-btn" onclick="setViewport('mobile', this)">390px</button>
+    <!-- Navigation Rows -->
+    <div class="nav-sections-wrap">
+      <!-- 5 Vercel Taste Evolutions (Featured) -->
+      <div class="nav-row">
+        <span class="nav-label">✨ Vercel + Brand Tastes:</span>
+        <button class="system-tab-btn active taste-active" onclick="loadPreview('preview-vercel-taste-1-warm-sanctuary.html', 'vercel-taste-1', this)">
+          <span class="swatch" style="background: #28543e;"></span>
+          Taste 1: Warm Sanctuary Linen
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-2-editorial-journal.html', 'vercel-taste-2', this)">
+          <span class="swatch" style="background: #143d2b;"></span>
+          Taste 2: Editorial Almanac
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-3-biophilic-forest.html', 'vercel-taste-3', this)">
+          <span class="swatch" style="background: #059669;"></span>
+          Taste 3: Biophilic Forest Core
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-4-clinical-blueprint.html', 'vercel-taste-4', this)">
+          <span class="swatch" style="background: #0284c7;"></span>
+          Taste 4: Clinical Blueprint
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel-taste-5-human-terracotta.html', 'vercel-taste-5', this)">
+          <span class="swatch" style="background: #c2410c;"></span>
+          Taste 5: Terracotta Sunset Hearth
+        </button>
       </div>
 
-      <a id="external-link" href="preview-mydealz.html" target="_blank" class="open-external-btn">
-        <span>Open Tab ↗</span>
-      </a>
+      <!-- Benchmark Systems Reference -->
+      <div class="nav-row">
+        <span class="nav-label benchmark">Original Benchmarks:</span>
+        <button class="system-tab-btn" onclick="loadPreview('preview-vercel.html', 'vercel', this)">
+          <span class="swatch" style="background: #171717; border: 1px solid #fff;"></span>
+          Original Vercel
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-mydealz.html', 'mydealz', this)">
+          <span class="swatch" style="background: #30a83c;"></span>
+          MyDealz
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-nerdwallet.html', 'nerdwallet', this)">
+          <span class="swatch" style="background: #008254;"></span>
+          NerdWallet
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-revolut.html', 'revolut', this)">
+          <span class="swatch" style="background: #494fdf;"></span>
+          Revolut
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-sanity.html', 'sanity', this)">
+          <span class="swatch" style="background: #f36458;"></span>
+          Sanity
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-spacex.html', 'spacex', this)">
+          <span class="swatch" style="background: #ffffff;"></span>
+          SpaceX
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-warp.html', 'warp', this)">
+          <span class="swatch" style="background: #e28a52;"></span>
+          Warp
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-wise.html', 'wise', this)">
+          <span class="swatch" style="background: #9fe870;"></span>
+          Wise
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-subframe.html', 'subframe', this)">
+          <span class="swatch" style="background: #242424; border: 1px solid #737373;"></span>
+          Subframe
+        </button>
+        <button class="system-tab-btn" onclick="loadPreview('preview-streamtime.html', 'streamtime', this)">
+          <span class="swatch" style="background: #f2c94c;"></span>
+          Streamtime
+        </button>
+      </div>
     </div>
   </header>
 
@@ -374,22 +424,22 @@
     <!-- Iframe Container -->
     <div class="stage-container">
       <div id="frame-wrap" class="preview-frame-wrap desktop">
-        <iframe id="preview-frame" src="preview-mydealz.html" title="AlongSide Visual Identity Preview"></iframe>
+        <iframe id="preview-frame" src="preview-vercel-taste-1-warm-sanctuary.html" title="AlongSide Visual Identity Preview"></iframe>
       </div>
     </div>
 
     <!-- Dynamic Design Token Inspector Sidebar -->
     <aside class="inspector-panel">
       <div class="inspector-header">
-        <h3 id="inspector-title">MyDealz Design System</h3>
-        <span id="inspector-source" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">docs/design/DESIGN-mydealz.md</span>
+        <h3 id="inspector-title">Taste 1: Warm Sanctuary Linen</h3>
+        <span id="inspector-source" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">preview-vercel-taste-1-warm-sanctuary.html</span>
       </div>
 
       <div class="inspector-body">
         <div class="spec-card">
           <h4>Core Philosophy</h4>
           <p id="inspector-desc">
-            High-density German deals-community system built on a confident brand green, stacked white cards with signature hot/cold temperature vote meters, and 540px pill buttons.
+            Infuses Vercel's stark minimalism with warm organic linen (#fcfbf9), softened obsidian typography (#191c1b), and a Morning Hearth sage-and-amber radiant aura. Delivers 2:00 AM nervous system regulation for stressed parents.
           </p>
         </div>
 
@@ -403,26 +453,26 @@
         <div class="spec-card">
           <h4>Typography Stack</h4>
           <p id="inspector-typography">
-            <strong>Display / Heading:</strong> Averta CY / Inter (Weight: 700)<br>
-            <strong>Body:</strong> Averta CY / Inter (Weight: 500, 15px)<br>
-            <strong>Eyebrows & Code:</strong> JetBrains Mono
+            <strong>Display / Headings:</strong> Plus Jakarta Sans (Weight: 800, tight tracking -2.2px)<br>
+            <strong>Body:</strong> Inter (Weight: 400/500, 15px, #505652)<br>
+            <strong>Status & Tags:</strong> JetBrains Mono
           </p>
         </div>
 
         <div class="spec-card">
           <h4>Geometry & Elevation</h4>
           <p id="inspector-geometry">
-            <strong>Border Radii:</strong> 540px Pills (Buttons & Meters), 10px Cards<br>
-            <strong>Elevation:</strong> Minimal, subtle hairline borders (#dfe1e4)<br>
-            <strong>Key UI Tell:</strong> Hot/Cold temperature meters (+842°)
+            <strong>Border Radii:</strong> 9999px Pills (CTAs), 6px Action Buttons, 12px Cards<br>
+            <strong>Elevation:</strong> Soft hairline borders (#e7e4dc) with Morning Hearth radiant blur<br>
+            <strong>Brand Mark:</strong> Bilateral Sanctuary Double Arched Shelter
           </p>
         </div>
 
         <div class="spec-card">
           <h4>Suitability for AlongSide Sanctuary</h4>
           <p id="inspector-suitability">
-            <strong>Strengths:</strong> Extremely high information density, clear scannable milestones, engaging community verification feel.<br>
-            <strong>Trade-offs:</strong> Needs careful calibration so the clinical advisory doesn't feel like an e-commerce coupon forum.
+            <strong>Strengths:</strong> Preserves 100% of Vercel's elite digital craftsmanship while completely removing developer coldness. Creates an instant feeling of calm psychological safety.<br>
+            <strong>Trade-offs:</strong> Very subtle shift; requires crisp screen calibration to appreciate warm linen canvas.
           </p>
         </div>
       </div>
@@ -431,6 +481,90 @@
 
   <script>
     const DESIGN_METADATA = {
+      'vercel-taste-1': {
+        title: "Taste 1: Warm Sanctuary Linen",
+        source: "preview-vercel-taste-1-warm-sanctuary.html",
+        desc: "Infuses Vercel's stark minimalism with warm organic linen (#fcfbf9), softened obsidian typography (#191c1b), and a Morning Hearth sage-and-amber radiant aura. Delivers 2:00 AM nervous system regulation for stressed parents.",
+        typography: "<strong>Display / Headings:</strong> Plus Jakarta Sans (Weight 800, tight tracking -2.2px)<br><strong>Body:</strong> Inter (Weight 400/500, 15px, #505652)<br><strong>Tags & Code:</strong> JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills (CTAs), 6px Buttons, 12px Cards<br><strong>Elevation:</strong> Soft hairline borders (#e7e4dc) with Morning Hearth radiant blur<br><strong>Brand Mark:</strong> Bilateral Sanctuary Double Arched Shelter",
+        suitability: "<strong>Strengths:</strong> Preserves 100% of Vercel's elite digital craftsmanship while completely removing developer coldness. Creates an instant feeling of calm psychological safety.<br><strong>Trade-offs:</strong> Very subtle shift; requires crisp screen calibration to appreciate warm linen canvas.",
+        palette: [
+          { name: "Canvas", hex: "#fcfbf9" },
+          { name: "Sage Accent", hex: "#28543e" },
+          { name: "Hearth Amber", hex: "#c87a3e" },
+          { name: "Ink Obsidian", hex: "#191c1b" }
+        ]
+      },
+      'vercel-taste-2': {
+        title: "Taste 2: Editorial Almanac",
+        source: "preview-vercel-taste-2-editorial-journal.html",
+        desc: "Combines Vercel's precision layout with a high-contrast editorial serif (Newsreader italic accent moments in headlines) and an Archival Ink & Deep Spruce radiant wash. Commands immense clinical prestige.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 700) + Newsreader (Italic Serif, 54px)<br><strong>Body:</strong> Inter (15px, #494f4c)<br><strong>Stamp:</strong> JetBrains Mono (VOL. XXIV // CLINICAL)",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 5px Clean Buttons, 10px Cards<br><strong>Elevation:</strong> Crisp hairlines (#e3e3dc) with Archival Ink radial wash<br><strong>Brand Mark:</strong> Almanac Publication Cross & Open Folio",
+        suitability: "<strong>Strengths:</strong> Outstanding institutional authority; feels like a prestigious medical publication from Harvard / AAP Pediatricians built with Vercel's precision.<br><strong>Trade-offs:</strong> Editorial serif adds formal seriousness; best for clinical credibility.",
+        palette: [
+          { name: "Ink Primary", hex: "#111413" },
+          { name: "Forest Spruce", hex: "#143d2b" },
+          { name: "Archival Amber", hex: "#b45309" },
+          { name: "Canvas", hex: "#fbfbf9" }
+        ]
+      },
+      'vercel-taste-3': {
+        title: "Taste 3: Biophilic Forest Core",
+        source: "preview-vercel-taste-3-biophilic-forest.html",
+        desc: "Replaces Vercel's cold cyan/blue gradients with Living Chlorophyll (#059669) and Dew Mint (#6ee7b7) radiant aura, backed by Deep Pine obsidian controls (#064e3b). Evokes natural growth and screen detox.",
+        typography: "<strong>Display / Headings:</strong> Outfit (Weight 800, tight tracking -2px)<br><strong>Body:</strong> Inter (Weight 400/500, 15px, #405950)<br><strong>Tags:</strong> JetBrains Mono in mint fills",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 12px Cards<br><strong>Elevation:</strong> Mint-tinted hairline borders (#dbe7e1) with living chlorophyll radiance<br><strong>Brand Mark:</strong> Biophilic Sprout Node",
+        suitability: "<strong>Strengths:</strong> Visually refreshing, optimistic, and directly connected to neurodevelopmental health and digital calm. Proven to lower parental heart rate.<br><strong>Trade-offs:</strong> Vibrant greens must be balanced with calm neutral whitespace.",
+        palette: [
+          { name: "Deep Pine", hex: "#064e3b" },
+          { name: "Bio Emerald", hex: "#059669" },
+          { name: "Spring Mint", hex: "#10b981" },
+          { name: "Canvas", hex: "#f7faf8" }
+        ]
+      },
+      'vercel-taste-4': {
+        title: "Taste 4: Clinical Blueprint",
+        source: "preview-vercel-taste-4-clinical-blueprint.html",
+        desc: "Pivots Vercel's high-tech aesthetic into a Cadet Navy (#0f172a) and Clinical Cyan (#0284c7) family safety infrastructure. Features crisp telemetry metrics, Barton Schmitt protocol stamps, and architectural shield geometry.",
+        typography: "<strong>Display / Headings:</strong> Plus Jakarta Sans (Weight 800, tight tracking -2.2px)<br><strong>Body:</strong> Inter (15px, #334155)<br><strong>Telemetry:</strong> JetBrains Mono with tabular figures",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Buttons, 10px Cards<br><strong>Elevation:</strong> Crisp slate hairlines (#e2e8f0) with clinical cyan telemetry glow<br><strong>Brand Mark:</strong> Dual-Axis Family Safety Shield",
+        suitability: "<strong>Strengths:</strong> Bulletproof, systematic, and reassuring for analytical parents who want zero ambiguity, verified MDM curfews, and solid protection.<br><strong>Trade-offs:</strong> Technical precision might feel structured rather than cozy.",
+        palette: [
+          { name: "Cadet Navy", hex: "#0f172a" },
+          { name: "Clinical Cyan", hex: "#0284c7" },
+          { name: "Electric Cyan", hex: "#0ea5e9" },
+          { name: "Dew Canvas", hex: "#f8fafc" }
+        ]
+      },
+      'vercel-taste-5': {
+        title: "Taste 5: Terracotta Sunset Hearth",
+        source: "preview-vercel-taste-5-human-terracotta.html",
+        desc: "Injects warm Tuscan Terracotta (#c2410c), Warm Clay (#ffedd5), and Sunset Twilight embers (#ea580c to #6366f1) into Vercel's monochrome frame. Symbolizes the evening dinner hour and peaceful screen curfews.",
+        typography: "<strong>Display / Headings:</strong> Plus Jakarta Sans (Weight 800, tight tracking -2.2px)<br><strong>Body:</strong> Inter (15px, #44403c)<br><strong>Badges:</strong> Warm terracotta fills with JetBrains Mono",
+        geometry: "<strong>Border Radii:</strong> 9999px Pills, 6px Espresso Buttons, 12px Cards<br><strong>Elevation:</strong> Warm stone hairlines (#e7e5e4) with sunset dusk radiance<br><strong>Brand Mark:</strong> Double Hearth Arches (Parent + Child)",
+        suitability: "<strong>Strengths:</strong> Deeply humane, empathetic, and emotionally comforting; directly addresses parental guilt and screens conflict during the dinner/bedtime hours.<br><strong>Trade-offs:</strong> Terracotta is an energetic warm color; requires disciplined application.",
+        palette: [
+          { name: "Terracotta", hex: "#c2410c" },
+          { name: "Sunset Ember", hex: "#ea580c" },
+          { name: "Twilight Violet", hex: "#6366f1" },
+          { name: "Porcelain Canvas", hex: "#faf9f7" }
+        ]
+      },
+      vercel: {
+        title: "Original Vercel Design System",
+        source: "docs/design/DESIGN-vercel.md",
+        desc: "Geist developer platform aesthetic: stark black monochrome ink (#171717) on #fafafa canvas, multi-stop radiant mesh hero gradient (cyan/violet/amber), and clean 6px radii.",
+        typography: "<strong>Display / Headings:</strong> Geist / Inter (Weight 700, tight tracking -2.4px)<br><strong>Code & Tags:</strong> Geist Mono / JetBrains Mono<br><strong>Body:</strong> Inter (15px, #4d4d4d)",
+        geometry: "<strong>Border Radii:</strong> 6px App Buttons, 9999px Pill CTAs, 10px Cards<br><strong>Elevation:</strong> Crisp hairline borders (#ebebeb) with subtle lift<br><strong>Signature:</strong> Multi-stop radiant mesh gradient behind hero",
+        suitability: "<strong>Strengths:</strong> World-class digital polish, ultra-clean readability, timeless developer-grade elegance.<br><strong>Trade-offs:</strong> Can read as a SaaS developer tool rather than a family sanctuary.",
+        palette: [
+          { name: "Ink", hex: "#171717" },
+          { name: "Canvas", hex: "#fafafa" },
+          { name: "Cyan Stop", hex: "#50e3c2" },
+          { name: "Violet Stop", hex: "#7928ca" }
+        ]
+      },
       mydealz: {
         title: "MyDealz Design System",
         source: "docs/design/DESIGN-mydealz.md",
@@ -501,20 +635,6 @@
           { name: "Mute", hex: "#8e8e93" }
         ]
       },
-      vercel: {
-        title: "Vercel Design System",
-        source: "docs/design/DESIGN-vercel.md",
-        desc: "Geist developer platform aesthetic: stark black monochrome ink (#171717) on #fafafa canvas, multi-stop radiant mesh hero gradient (cyan/violet/amber), and clean 6px radii.",
-        typography: "<strong>Display / Headings:</strong> Geist / Inter (Weight 700, tight tracking -2.4px)<br><strong>Code & Tags:</strong> Geist Mono / JetBrains Mono<br><strong>Body:</strong> Inter (15px, #4d4d4d)",
-        geometry: "<strong>Border Radii:</strong> 6px App Buttons, 9999px Pill CTAs, 10px Cards<br><strong>Elevation:</strong> Crisp hairline borders (#ebebeb) with subtle lift<br><strong>Signature:</strong> Multi-stop radiant mesh gradient behind hero",
-        suitability: "<strong>Strengths:</strong> World-class digital polish, ultra-clean readability, timeless developer-grade elegance.<br><strong>Trade-offs:</strong> Can read as a SaaS developer tool rather than a family sanctuary.",
-        palette: [
-          { name: "Ink", hex: "#171717" },
-          { name: "Canvas", hex: "#fafafa" },
-          { name: "Cyan Stop", hex: "#50e3c2" },
-          { name: "Violet Stop", hex: "#7928ca" }
-        ]
-      },
       warp: {
         title: "Warp Design System",
         source: "docs/design/DESIGN-warp.md",
@@ -543,60 +663,18 @@
           { name: "Active Lime", hex: "#cdffad" }
         ]
       },
-      alloy: {
-        title: "Alloy Planning Design System",
-        source: "docs/design/DESIGN-alloy-planning.md",
-        desc: "Structured, collaborative product-native workspace combining clean neutral surfaces (#FAFAFC), primary indigo/periwinkle (#5865E8), roadmap/board multi-view toggles, and Linear sync telemetry.",
-        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 46px/42px)<br><strong>Body:</strong> Inter (14px, #5E6270)<br><strong>Tags & Code:</strong> JetBrains Mono",
-        geometry: "<strong>Border Radii:</strong> 6px Buttons, 10px Cards, 14px Feature Panels, 9999px Pills<br><strong>Elevation:</strong> Hairline borders (#E5E6EC), subtle drag shadow<br><strong>Signature:</strong> View switcher (Roadmap / Board / Table / Feed)",
-        suitability: "<strong>Strengths:</strong> Superb structured planning feeling; parents can switch between roadmap and daily task feed effortlessly.<br><strong>Trade-offs:</strong> Can feel like a B2B project tool if emoji cues are not empathetic.",
+      subframe: {
+        title: "Subframe Design System",
+        source: "docs/design/DESIGN-Subframe.md",
+        desc: "Minimal engineering-forward design-to-code identity built on a near-monochrome light canvas (#FAFAFA), oversized tightly tracked Inter headlines (-0.05em), and dark product preview frames.",
+        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 60px, tight tracking -0.05em)<br><strong>Inspect Tags:</strong> JetBrains Mono code snippets<br><strong>Body:</strong> Inter (15px, #5C5C5C)",
+        geometry: "<strong>Border Radii:</strong> 8px Inputs, 12px Buttons, 16px Cards, 24px Dark Preview Frames<br><strong>Elevation:</strong> Flat surfaces with crisp 1px hairline borders (#E5E5E5)<br><strong>Signature:</strong> Dark product preview showcase inside light canvas",
+        suitability: "<strong>Strengths:</strong> World-class aesthetic restraint, immense visual focus, elegant developer craftsmanship; highly professional.<br><strong>Trade-offs:</strong> Near-monochrome palette relies purely on layout contrast and typography.",
         palette: [
-          { name: "Primary", hex: "#5865e8" },
-          { name: "Canvas", hex: "#ffffff" },
-          { name: "Surface", hex: "#fafafc" },
-          { name: "Success", hex: "#3b9b78" }
-        ]
-      },
-      artboard: {
-        title: "Artboard Studio Design System",
-        source: "docs/design/DESIGN-artboard-studio.md",
-        desc: "Visual creation workspace and studio mockup storefront, combining saturated violet (#6B55E8), artboard staging areas (#E8E8EF), realistic device mockups, and category-led browsing tiles.",
-        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 52px)<br><strong>Body:</strong> Inter (14.5px, #5E5D68)<br><strong>Metadata:</strong> JetBrains Mono (11px)",
-        geometry: "<strong>Border Radii:</strong> 6px Buttons, 10px Thumbnails, 16px Panels, 22px Showcase Surfaces<br><strong>Elevation:</strong> Soft studio drop shadows & hairline borders (#E3E3EA)<br><strong>Signature:</strong> Artboard canvas with 100% scale viewport",
-        suitability: "<strong>Strengths:</strong> Visually dazzling and artistic; showcases device screens and agreements as premium design artifacts.<br><strong>Trade-offs:</strong> Heavy reliance on visual assets; requires high-contrast typography.",
-        palette: [
-          { name: "Primary", hex: "#6b55e8" },
-          { name: "Canvas", hex: "#ffffff" },
-          { name: "Editor Canvas", hex: "#e8e8ef" },
-          { name: "Dark Panel", hex: "#22222b" }
-        ]
-      },
-      flyio: {
-        title: "Fly.io Design System",
-        source: "docs/design/DESIGN-flyio.md",
-        desc: "Dark developer-first infrastructure platform built on charcoal canvas (#17191F), warm energetic orange (#F28A4B), CLI command panels, and low-latency machine status telemetry.",
-        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, tight tracking -2px)<br><strong>Terminal & Telemetry:</strong> JetBrains Mono / Menlo<br><strong>Body:</strong> Inter (14.5px, #B7BBC5)",
-        geometry: "<strong>Border Radii:</strong> 4px Code Blocks, 6px Buttons, 10px Panels, 9999px Status Badges<br><strong>Elevation:</strong> High-contrast dark panels with #343A46 hairline dividers<br><strong>Signature:</strong> CLI terminal block & node machine status",
-        suitability: "<strong>Strengths:</strong> Extreme technical speed and zero-bullshit reliability; parents trust the zero-spyware MDM guarantees.<br><strong>Trade-offs:</strong> Dark developer motif lacks softness for emotional bedtime meltdowns.",
-        palette: [
-          { name: "Primary", hex: "#f28a4b" },
-          { name: "Night Canvas", hex: "#17191f" },
-          { name: "Surface Soft", hex: "#222630" },
-          { name: "Healthy", hex: "#35a879" }
-        ]
-      },
-      pirsch: {
-        title: "Pirsch Analytics Design System",
-        source: "docs/design/DESIGN-pirsch.md",
-        desc: "Privacy-first, cookie-free data intelligence built on clean European blue (#3D6FE8), KPI cards with positive trend indicators, German privacy trust badges, and tabular numerals.",
-        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 48px/42px)<br><strong>Metrics:</strong> Tabular numerals (30px KPI values)<br><strong>Body:</strong> Inter (14px, #596170)",
-        geometry: "<strong>Border Radii:</strong> 6px Buttons/Inputs, 10px Chart Cards, 14px Feature Panels, 9999px Pills<br><strong>Elevation:</strong> Flat white canvas (#FFFFFF) with neutral hairlines (#E4E7ED)<br><strong>Signature:</strong> KPI row with positive trend badges (+18.4%)",
-        suitability: "<strong>Strengths:</strong> Outstanding credibility for data privacy; parents love knowing their children's data is never sold or tracked.<br><strong>Trade-offs:</strong> Data-heavy aesthetic can feel clinical if emotional scripts are secondary.",
-        palette: [
-          { name: "Primary", hex: "#3d6fe8" },
-          { name: "Canvas", hex: "#ffffff" },
-          { name: "Surface", hex: "#f8f9fb" },
-          { name: "Positive", hex: "#23865b" }
+          { name: "Ink Soft", hex: "#242424" },
+          { name: "Canvas", hex: "#fafafa" },
+          { name: "Surface", hex: "#ffffff" },
+          { name: "Focus Blue", hex: "#3e63dd" }
         ]
       },
       streamtime: {
@@ -612,20 +690,6 @@
           { name: "Ink", hex: "#242424" },
           { name: "Healthy", hex: "#39866a" }
         ]
-      },
-      subframe: {
-        title: "Subframe Design System",
-        source: "docs/design/DESIGN-Subframe.md",
-        desc: "Minimal engineering-forward design-to-code identity built on a near-monochrome light canvas (#FAFAFA), oversized tightly tracked Inter headlines (-0.05em), and dark product preview frames.",
-        typography: "<strong>Display / Headings:</strong> Inter (Weight 650, 60px, tight tracking -0.05em)<br><strong>Inspect Tags:</strong> JetBrains Mono code snippets<br><strong>Body:</strong> Inter (15px, #5C5C5C)",
-        geometry: "<strong>Border Radii:</strong> 8px Inputs, 12px Buttons, 16px Cards, 24px Dark Preview Frames<br><strong>Elevation:</strong> Flat surfaces with crisp 1px hairline borders (#E5E5E5)<br><strong>Signature:</strong> Dark product preview showcase inside light canvas",
-        suitability: "<strong>Strengths:</strong> World-class aesthetic restraint, immense visual focus, elegant developer craftsmanship; highly professional.<br><strong>Trade-offs:</strong> Near-monochrome palette relies purely on layout contrast and typography.",
-        palette: [
-          { name: "Ink Soft", hex: "#242424" },
-          { name: "Canvas", hex: "#fafafa" },
-          { name: "Surface", hex: "#ffffff" },
-          { name: "Focus Blue", hex: "#3e63dd" }
-        ]
       }
     };
 
@@ -634,8 +698,14 @@
       document.getElementById('external-link').href = url;
 
       // Update active tab
-      document.querySelectorAll('.system-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.system-tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('taste-active');
+      });
       btn.classList.add('active');
+      if (key.startsWith('vercel-taste')) {
+        btn.classList.add('taste-active');
+      }
 
       // Update Inspector Sidebar
       const meta = DESIGN_METADATA[key];
@@ -668,9 +738,10 @@
       btn.classList.add('active');
     }
 
-    // Initialize with MyDealz
+    // Default load Taste 1 on start
     window.addEventListener('DOMContentLoaded', () => {
-      loadPreview('preview-mydealz.html', 'mydealz', document.querySelector('.system-tab-btn'));
+      const defaultBtn = document.querySelector('.system-tab-btn.taste-active');
+      loadPreview('preview-vercel-taste-1-warm-sanctuary.html', 'vercel-taste-1', defaultBtn);
     });
   </script>
 </body>
