@@ -44,9 +44,9 @@ export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
 export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [];
 
 export const PUBLIC_NAV_LINKS: NavLinkItem[] = [
-  { href: '/#features', label: 'Platform Pillars' },
-  { href: '/health', label: 'Pediatric Health' },
-  { href: '/devices', label: 'Modern Devices & Pacts' },
+  { href: '/#pillars', label: 'Core Pillars' },
+  { href: '/#stages', label: 'Lifespan Stages' },
+  { href: '/#devices-hub', label: 'Family Pacts & Devices' },
   { href: '/#pricing', label: 'Pricing' },
 ];
 

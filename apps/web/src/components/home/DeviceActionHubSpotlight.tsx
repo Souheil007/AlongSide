@@ -54,7 +54,10 @@ export const DEVICE_HUB_STEPS: HubStep[] = [
 
 export function DeviceActionHubSpotlight() {
   return (
-    <section id="devices-hub" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
+    <section id="devices-hub" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative">
+      <span id="devices" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
+      <span id="roads" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
+      <span id="quiz" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <div className="rounded-3xl border-2 border-teal-200/90 bg-gradient-to-b from-teal-50/40 via-white to-slate-50/40 p-6 sm:p-10 lg:p-12 shadow-sm space-y-12">
         {/* Header & Framing */}
         <div className="text-center max-w-3xl mx-auto space-y-4">

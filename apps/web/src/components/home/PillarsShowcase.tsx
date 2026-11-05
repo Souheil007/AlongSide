@@ -198,7 +198,9 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
 
 export function PillarsShowcase() {
   return (
-    <section id="pillars" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="pillars" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative">
+      <span id="features" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
+      <span id="academy" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
         <Badge
           variant="outline"

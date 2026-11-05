@@ -110,7 +110,7 @@ export function CulturePlaygroundDemo() {
     : DEMO_SLANG_TERMS;
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="digest" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       <div className="rounded-3xl border border-purple-200/90 bg-gradient-to-br from-purple-50/40 via-white to-purple-50/20 p-6 sm:p-10 shadow-sm">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-purple-100">
           <div className="space-y-2 max-w-2xl">

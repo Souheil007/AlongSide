@@ -583,7 +583,7 @@ export function LifespanStageSelector() {
     CANONICAL_6_LIFESPAN_STAGES.find((s) => s.id === activeStageId) ?? CANONICAL_6_LIFESPAN_STAGES[0]!;
 
   return (
-    <section id="stages" className="pt-6 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="stages" className="pt-6 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
         <Badge
           variant="outline"
