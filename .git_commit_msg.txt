@@ -1,24 +1,25 @@
-fix(api,web): handle empty JSON request bodies without content-type error
+fix(web): update public navbar links and section anchors for AlongSide v2.5
 
 SUMMARY:
-Resolves a 400 Bad Request error ('Body cannot be empty when content-type
-is set to application/json') when clicking 'Complete Lesson & Continue'.
-The apiClient previously attached Content-Type: application/json to all
-requests unconditionally even when body was undefined. Additionally,
-Fastify now parses empty JSON bodies gracefully as {} instead of throwing.
+When logged out, the navigation header previously rendered outdated tab names
+('Pediatric Health', 'Modern Devices & Pacts') and broken links ('/#features',
+'/health', '/devices') that caused redirect loops to /login. This updates
+PUBLIC_NAV_LINKS to canonical v2.5 landing page anchors and aligns naming.
 
 DELIVERABLES:
-1. apps/web/src/lib/api/client.ts:
-   - Only attach Content-Type: application/json header when request body
-     is explicitly provided.
-2. apps/web/src/lib/api/academy.ts:
-   - Explicitly transmit body: JSON.stringify({}) in markLessonComplete.
-3. apps/api/src/app.ts:
-   - Added custom application/json content-type parser to Fastify to
-     gracefully accept empty bodies as {}.
-4. apps/api/test/academyPrioritizedChapters.test.ts:
-   - Added content-type: application/json with empty body to verify
-     successful 200 completion.
+1. apps/web/src/components/shared/Header.tsx:
+   - Updated PUBLIC_NAV_LINKS to 'Core Pillars' (/#pillars), 'Lifespan Stages'
+     (/#stages), 'Family Pacts & Devices' (/#devices-hub), and 'Pricing'
+     (/#pricing).
+2. apps/web/src/components/home/:
+   - Added scroll-mt-20 and alias anchors (#features, #academy, #devices,
+     #roads, #quiz) across PillarsShowcase, CulturePlaygroundDemo,
+     DeviceActionHubSpotlight, and LifespanStageSelector.
+3. apps/web/src/components/shared/Footer.tsx:
+   - Aligned footer navigation links with canonical landing page anchors.
+4. apps/web/test/navigationAndAuthHardening.test.ts:
+   - Updated tests verifying public links and absence of authenticated route
+     leakage.
 
 TEST VERIFICATION:
 - packages/shared: 5 test suites, 38/38 tests passing.

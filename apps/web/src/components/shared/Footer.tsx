@@ -23,22 +23,22 @@ export function Footer() {
 
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900 mb-3">
-              The Two Roads
+              The Architecture
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/#roads" className="hover:text-teal-700 transition-colors">
-                  Road 1: Pre-Device (Readiness)
+                <Link href="/#stages" className="hover:text-teal-700 transition-colors">
+                  Lifespan Stages (Ages 0–18)
                 </Link>
               </li>
               <li>
-                <Link href="/#roads" className="hover:text-teal-700 transition-colors">
-                  Road 2: Active-Device (Pact)
+                <Link href="/#pillars" className="hover:text-teal-700 transition-colors">
+                  3 Core Advisory Pillars
                 </Link>
               </li>
               <li>
-                <Link href="/#quiz" className="hover:text-teal-700 transition-colors">
-                  Readiness Assessment (0–100)
+                <Link href="/#devices-hub" className="hover:text-teal-700 transition-colors">
+                  Family Pacts & Devices Hub
                 </Link>
               </li>
             </ul>
@@ -46,22 +46,22 @@ export function Footer() {
 
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900 mb-3">
-              Platform
+              Platform Pillars
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/#academy" className="hover:text-teal-700 transition-colors">
+                <Link href="/#pillars" className="hover:text-teal-700 transition-colors">
                   Parent Intelligence Academy
-                </Link>
-              </li>
-              <li>
-                <Link href="/#advisor" className="hover:text-teal-700 transition-colors">
-                  24/7 AI Child Advisor
                 </Link>
               </li>
               <li>
                 <Link href="/#digest" className="hover:text-teal-700 transition-colors">
                   Sunday Culture Digest
+                </Link>
+              </li>
+              <li>
+                <Link href="/#devices-hub" className="hover:text-teal-700 transition-colors">
+                  Bilateral Family Pacts & Curfews
                 </Link>
               </li>
             </ul>

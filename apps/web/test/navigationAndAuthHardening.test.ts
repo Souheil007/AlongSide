@@ -200,13 +200,15 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       expect(PUBLIC_NAV_LINKS).toHaveLength(4);
       const publicHrefs = PUBLIC_NAV_LINKS.map((l) => l.href);
 
-      expect(publicHrefs).toContain('/#features');
-      expect(publicHrefs).toContain('/health');
-      expect(publicHrefs).toContain('/devices');
+      expect(publicHrefs).toContain('/#pillars');
+      expect(publicHrefs).toContain('/#stages');
+      expect(publicHrefs).toContain('/#devices-hub');
       expect(publicHrefs).toContain('/#pricing');
 
-      // Does not contain authenticated-only /dashboard
+      // Does not contain authenticated-only routes
       expect(publicHrefs).not.toContain('/dashboard');
+      expect(publicHrefs).not.toContain('/health');
+      expect(publicHrefs).not.toContain('/devices');
     });
   });
 
