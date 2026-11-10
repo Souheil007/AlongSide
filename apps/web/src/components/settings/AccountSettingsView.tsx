@@ -448,11 +448,11 @@ export function AccountSettingsView() {
                   <label className="flex items-start justify-between p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/40 hover:bg-slate-50 transition-colors cursor-pointer">
                     <div className="space-y-0.5 pr-4">
                       <div className="text-xs font-bold text-slate-900">
-                        Pediatric Health &amp; Barton Schmitt Triage Alerts
+                        Pediatric Health &amp; Sleep Updates
                       </div>
                       <div className="text-[11px] text-slate-500 leading-relaxed">
-                        Immediate red-zone emergency notifications, infant fever thresholds, and
-                        medication dosage reminders.
+                        Bedtime calm guidance, circadian rhythm updates, and restorative sleep
+                        reminders.
                       </div>
                     </div>
                     <input
@@ -589,7 +589,7 @@ export function AccountSettingsView() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-teal-600 shrink-0" />
-                    <span>Pediatric Symptom Triage (Barton Schmitt)</span>
+                    <span>Restorative Sleep Architecture &amp; Wellness Companion</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-teal-600 shrink-0" />
@@ -780,7 +780,7 @@ export function AccountSettingsView() {
             <div className="font-semibold text-slate-900">Before you go:</div>
             <ul className="space-y-1 text-[11px] text-slate-600">
               <li>• Curfew locks on enrolled child devices will become inactive.</li>
-              <li>• Clinical Barton Schmitt triage records will remain in read-only mode.</li>
+              <li>• Saved child wellness records will remain in read-only mode.</li>
               <li>• You can reactivate anytime with 1-click.</li>
             </ul>
           </div>

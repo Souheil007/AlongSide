@@ -1,7 +1,8 @@
 /**
- * Clinical Safe Harbor Emergency Override Filter
- * Canonical Barton Schmitt & AAP Pediatric Safe Harbor Protocol
- * Conforms to PLAN-20 and docs/research/pediatric-health-triage-protocols.md
+ * Crisis Safe Harbor Emergency Override Filter
+ * Immediate Emergency & Life-Safety Guardrails (911 / Poison Control Redirection)
+ * Evaluates inquiries for acute life-threat red flags to protect child safety.
+ * Conforms to SOU-86 non-clinical family OS standard.
  */
 
 export interface ClinicalEmergencyAlert {

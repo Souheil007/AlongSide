@@ -42,7 +42,7 @@ export const PRIMARY_MOBILE_ITEMS: NavItem[] = [
 export const MORE_MOBILE_ITEMS: NavItem[] = [
   { href: '/settings', label: 'Account & Family Settings', icon: Settings, badge: 'Profile' },
   { href: '/#pricing', label: 'Billing & Hero Pass', icon: CreditCard, badge: 'Hero' },
-  { href: '/advisor', label: 'Help & Clinical Guidance', icon: HelpCircle, badge: 'Support' },
+  { href: '/advisor', label: 'Help & Advisory Guidance', icon: HelpCircle, badge: 'Support' },
 ];
 
 export interface MobileNavProps {
@@ -212,7 +212,7 @@ export function MobileNav({ className }: MobileNavProps) {
                       24/7 AI Child Advisor
                     </span>
                     <span className="text-[10px] text-teal-700 font-medium">
-                      Clinical RAG &amp; Voice Sparring
+                      AI Advisor &amp; Voice Sparring
                     </span>
                   </div>
                 </div>

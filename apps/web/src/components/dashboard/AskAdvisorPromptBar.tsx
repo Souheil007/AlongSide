@@ -87,10 +87,10 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
             </span>
             <div>
               <h3 className="font-serif font-semibold text-[#111413] text-sm">
-                24/7 AI Clinical Advisor
+                24/7 AI Child Advisor
               </h3>
               <p className="text-[11px] text-[#494F4C]">
-                Calibrated to {child ? `${child.name} (${child.age} yrs)` : 'your child'} • 250+ scenario clinical vault
+                Calibrated to {child ? `${child.name} (${child.age} yrs)` : 'your child'} • 250+ scenario developmental vault
               </p>
             </div>
           </div>

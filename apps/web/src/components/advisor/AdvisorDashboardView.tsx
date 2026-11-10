@@ -94,7 +94,7 @@ export function AdvisorDashboardView() {
           <span>Back to Family Dashboard</span>
         </Link>
         <span className="text-[11px] text-[#858C88] hidden sm:inline">
-          Full Rehearsal Studio &amp; Clinical Vault
+          Full Rehearsal Studio &amp; Parenting Vault
         </span>
       </div>
 
@@ -114,7 +114,7 @@ export function AdvisorDashboardView() {
             24/7 AI Child Advisor
           </h1>
           <p className="mt-1 text-sm text-[#494F4C] max-w-2xl leading-relaxed">
-            Instant, judgment-free clinical guidance for acute parenting conflict.
+            Instant, judgment-free developmental guidance for acute parenting conflict.
             Transform dopamine crashes and phone battles into calm, collaborative agreements.
           </p>
         </div>
@@ -153,7 +153,7 @@ export function AdvisorDashboardView() {
             </h2>
             <p className="text-xs text-[#494F4C] mt-0.5 leading-relaxed">
               Step into the Voice Sparring Simulator to rehearse responses to bedtime meltdowns,
-              Snapchat begging, and spying accusations with immediate clinical coaching.
+              Snapchat begging, and spying accusations with immediate coaching.
             </p>
           </div>
         </div>

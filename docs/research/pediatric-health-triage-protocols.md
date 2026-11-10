@@ -1,7 +1,12 @@
 # Alongside — Pediatric Health & Symptom Triage Protocols: Clinical Decision Trees, Fever Thresholds & Emergency Guardrails
-**Document Version:** 1.0.0  
+
+> [!WARNING]
+> **RETIRED & DEPRECATED IN SOU-86 (Non-Clinical Platform Transition):**
+> Alongside has permanently transitioned away from being a clinical symptom triage platform. AlongSide is strictly an educational child development, neurobiology, and family communication operating system (Ages 0–18). This document is retained solely for historical audit purposes. AlongSide does NOT provide clinical symptom triage, Barton Schmitt decision trees, emergency medical triage, or antipyretic dosing calculators.
+
+**Document Version:** 1.0.0 (RETIRED)  
 **Author:** Research Engineer  
-**Status:** Approved Canonical Clinical Protocol Specification  
+**Status:** Retired Specification (Replaced by Non-Clinical Child Development OS)  
 **Target Audience:** CTO, Backend Engineer (Seed Data & RAG), Frontend Engineer, AI Advisor Prompt Engineers, Pediatric Advisory Board  
 **Primary Clinical Authorities:** American Academy of Pediatrics (AAP / HealthyChildren.org), Barton Schmitt Pediatric Telephone Protocols (Children's Hospital Colorado), National Health Service (NHS UK) Paediatric Clinical Practice Guidelines, World Health Organization (WHO) Integrated Management of Childhood Illness (IMCI)  
 **Related Paperclip Issue:** SOU-39  

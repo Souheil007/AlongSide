@@ -5,7 +5,7 @@ import { HolisticHomeFeed } from '@/components/dashboard/HolisticHomeFeed';
 export const metadata: Metadata = {
   title: 'Home • AlongSide Family Operating System',
   description:
-    'Daily developmental milestones, purposeful brain play, pediatric health triage, and personalized nutrition for your family.',
+    'Daily developmental milestones, purposeful brain play, restorative sleep architecture, and personalized nutrition for your family.',
 };
 
 interface PageProps {

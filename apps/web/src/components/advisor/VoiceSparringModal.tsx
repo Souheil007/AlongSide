@@ -35,9 +35,9 @@ export const SPARRING_SCENARIOS: SparringScenario[] = [
     title: '2:00 AM Teething & Fever Panic',
     category: 'Pediatric Health & Night Wakings',
     lifespanStage: 'Infant / Toddler (Ages 0–3)',
-    developmentalContext: 'Ages 0–3 • Teething, Night Terrors & Barton Schmitt Comfort Protocol',
+    developmentalContext: 'Ages 0–3 • Teething, Night Terrors & Soothing Protocol',
     objective:
-      'Rehearse staying calm while soothing a crying, feverish toddler and remembering Barton Schmitt comfort protocols without escalating adult exhaustion.',
+      'Rehearse staying calm while soothing a crying toddler and remembering bedtime soothing protocols without escalating adult exhaustion.',
     childDialogue:
       '"(Inconsolable 2:00 AM screaming and crying, hot forehead, arching back, refusing the crib... Waaaah!)"',
     audioDurationSeconds: 4,
@@ -45,19 +45,19 @@ export const SPARRING_SCENARIOS: SparringScenario[] = [
       {
         id: 'opt-1-1',
         label: 'Empathetic & Calm (Recommended)',
-        text: '"I am right here with you, my love. It is 2:00 AM and your mouth hurts. Let\'s hold this cool washcloth together against your gums. We checked your temperature (100.8°F), your breathing is calm, and your body is safe. I will rock you until your heart feels quiet."',
+        text: '"I am right here with you, my love. It is 2:00 AM and your mouth hurts. Let\'s hold this cool washcloth together against your gums. We checked your breathing, you are calm, and your body is safe. I will rock you until your heart feels quiet."',
         toneType: 'EMPATHETIC_FIRM',
         toneScore: 'Regulated & Attuned (98/100)',
         firmnessScore: 'Safe Harbor Biological Grounding (95/100)',
         calmnessScore: 98,
         empathyScore: 96,
         neurobiologyFeedback:
-          'Co-regulates the toddler\'s activated nervous system through low vocal pitch, slow breathing, and tactile comfort. Follows Barton Schmitt green-zone triage by observing breathing while providing soothing counter-pressure.',
+          'Co-regulates the toddler\'s activated nervous system through low vocal pitch, slow breathing, and tactile comfort. Follows grounded soothing routines by observing calm breathing while providing soothing counter-pressure.',
         clinicalVerdict: 'RECOMMENDED',
         deEscalationTips: [
           'Maintain low, slow rhythmic speech (auditory co-regulation).',
           'Offer chilled silicone teether or wet washcloth for gum relief.',
-          'Verify respiratory rate: afebrile or normal work of breathing confirms Green Zone.',
+          'Verify calm breathing confirms child comfort and physiological stability.',
         ],
       },
       {
@@ -544,7 +544,7 @@ export function VoiceSparringModal({
           </DialogTitle>
           <DialogDescription className="text-sm text-slate-600">
             Rehearse 5 high-heat emotional storms across the 0-18 lifespan before they erupt in your home.
-            Receive instant clinical feedback on vocal calmness, empathetic attunement, and firm boundaries.
+            Receive instant feedback on vocal calmness, empathetic attunement, and firm boundaries.
           </DialogDescription>
         </DialogHeader>
 
@@ -585,7 +585,7 @@ export function VoiceSparringModal({
             <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800">
               Step 2: Choose or Voice Your Response
             </h4>
-            <span className="text-xs text-slate-500">Compare clinical approaches</span>
+            <span className="text-xs text-slate-500">Compare approaches</span>
           </div>
 
           <div className="space-y-3">
@@ -633,7 +633,7 @@ export function VoiceSparringModal({
             <span>Or Practice Your Own Custom Words:</span>
           </div>
           <p className="text-xs text-slate-500 mb-3">
-            Type how you would naturally reply. Our AI clinical evaluator analyzes vocal calmness, empathetic attunement, and firmness score (0–100).
+            Type how you would naturally reply. Our AI evaluator analyzes vocal calmness, empathetic attunement, and firmness score (0–100).
           </p>
 
           <div className="flex flex-col sm:flex-row gap-2">

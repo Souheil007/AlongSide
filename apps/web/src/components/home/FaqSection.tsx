@@ -5,6 +5,7 @@ import {
   Smartphone,
   Users,
   CheckCircle2,
+  Brain,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 
@@ -18,14 +19,14 @@ export const FAQS: FaqItem[] = [
   {
     question: 'Is AlongSide only for parents thinking about buying a phone or screen?',
     answer:
-      'No. While AlongSide offers the gold standard for device readiness and bilateral media pacts, it is the complete Lifespan Family OS for children ages 0 to 18. From 2:00 AM pediatric fever triage, safe allergen introduction, and speech milestones to tantrum co-regulation, 100% screen-free brain games, and teen youth culture, AlongSide supports every age and stage.',
+      'No. While AlongSide offers the gold standard for device readiness and bilateral media pacts, it is the complete Lifespan Family OS for children ages 0 to 18. From newborn sleep foundations, safe allergen introduction, and speech milestones to tantrum co-regulation, 100% screen-free brain games, and teen youth culture, AlongSide supports every age and stage.',
     icon: Users,
   },
   {
-    question: 'What are the Barton Schmitt pediatric triage protocols?',
+    question: 'How does AlongSide ground its developmental guidance and courses?',
     answer:
-      'Dr. Barton Schmitt, MD, FAAP, authored the clinical decision protocols utilized by over 95% of pediatric practices and children’s hospitals in the United States. AlongSide’s health companion translates these clinical algorithms into a calm 3-zone guide (Green: Home Care, Yellow: Call Pediatrician, Red: Urgent Emergency) so you never have to panic at 2:00 AM.',
-    icon: HeartPulse,
+      'AlongSide grounds every course, chapter, and advisory interaction in developmental neurobiology, established pediatric milestones (AAP Bright Futures, CDC), and collaborative parenting psychology. We translate complex science into actionable, word-for-word scripts parents can use in real-life moments.',
+    icon: Brain,
   },
   {
     question: 'Does AlongSide install spyware or read my child’s private text messages?',
@@ -59,14 +60,14 @@ export function FaqSection() {
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
-            VOL. XXIV // CLINICAL FAQ
+            VOL. XXIV // PARENTING FAQ
           </span>
         </div>
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
           Clear Answers for <em className="italic font-normal text-[#143D2B]">Modern Parents</em>
         </h2>
         <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
-          Everything you need to know about our clinical sources, pediatric protocols, zero-spyware pledge, and subscription trial.
+          Everything you need to know about our developmental sources, neurobiology foundations, zero-spyware pledge, and subscription trial.
         </p>
       </div>
 

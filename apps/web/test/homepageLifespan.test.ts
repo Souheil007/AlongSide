@@ -29,18 +29,18 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
     });
   });
 
-  describe('Hero Proposition & Clinical Trust Signals', () => {
+  describe('Hero Proposition & Developmental Trust Signals', () => {
     it('contains all 4 canonical trust badges required by PLAN-23', () => {
       expect(HERO_TRUST_SIGNALS).toHaveLength(4);
 
       const titles = HERO_TRUST_SIGNALS.map((s) => s.title);
-      expect(titles).toContain('Barton Schmitt');
+      expect(titles).toContain('Neurobiology');
       expect(titles).toContain('CDC & AAP');
       expect(titles).toContain('Zero-Spyware');
       expect(titles).toContain('1-Click Cancel');
 
-      const barton = HERO_TRUST_SIGNALS.find((s) => s.title === 'Barton Schmitt');
-      expect(barton?.subtitle).toBe('Pediatric Protocols');
+      const neuro = HERO_TRUST_SIGNALS.find((s) => s.title === 'Neurobiology');
+      expect(neuro?.subtitle).toBe('Developmental Science');
     });
   });
 
@@ -131,14 +131,14 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
       expect(FIVE_BALANCED_PILLARS).toHaveLength(5);
 
       const categories = FIVE_BALANCED_PILLARS.map((p) => p.category);
-      expect(categories).toContain('Pillar 1 • Clinical Health');
+      expect(categories).toContain('Pillar 1 • Physical Wellness & Sleep');
       expect(categories).toContain('Pillar 2 • Food & Nutrition');
       expect(categories).toContain('Pillar 3 • Milestones & Play');
       expect(categories).toContain('Pillar 4 • Emotional Health');
       expect(categories).toContain('Pillar 5 • Balanced Technology');
 
       const routes = FIVE_BALANCED_PILLARS.map((p) => p.href);
-      expect(routes).toContain('/health');
+      expect(routes).toContain('/academy?category=HEALTH_AND_WELLNESS');
       expect(routes).toContain('/nutrition');
       expect(routes).toContain('/brain-games');
       expect(routes).toContain('/behavior');
@@ -183,7 +183,7 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
       expect(authors).toContain('Elena Rostova, MS, CCC-SLP');
 
       const roles = CLINICAL_TESTIMONIALS.map((t) => t.role);
-      expect(roles.some((r) => r.includes('Pediatric Emergency Medicine'))).toBe(true);
+      expect(roles.some((r) => r.includes('Pediatric Development Specialist'))).toBe(true);
       expect(roles.some((r) => r.includes('Developmental Neurobiologist'))).toBe(true);
       expect(roles.some((r) => r.includes('Milestone Specialist'))).toBe(true);
 
@@ -223,7 +223,7 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
         questions.some((q) => q.includes('only for parents thinking about buying a phone'))
       ).toBe(true);
       expect(
-        questions.some((q) => q.includes('Barton Schmitt pediatric triage protocols'))
+        questions.some((q) => q.includes('ground its developmental guidance'))
       ).toBe(true);
       expect(
         questions.some((q) => q.includes('spyware or read my child’s private text messages'))

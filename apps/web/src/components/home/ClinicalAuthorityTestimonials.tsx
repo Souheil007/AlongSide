@@ -22,13 +22,13 @@ export interface Testimonial {
 export const CLINICAL_TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      'AlongSide’s 3-zone fever triage and allergen introduction protocols bring the exact clinical rigor we practice in pediatric clinics directly to parents at 2:00 AM. It eliminates late-night panic while keeping children safe.',
+      'AlongSide’s developmental sleep architecture, circadian rhythm guidance, and milestone benchmarks bring pediatric clarity directly to parents at 2:00 AM. It eliminates late-night panic with calm, evidence-based developmental understanding.',
     author: 'Dr. Sarah Jenkins, MD, FAAP',
     credentials: 'Board-Certified Pediatrician',
-    role: 'Pediatric Emergency Medicine Specialist',
+    role: 'Pediatric Development Specialist',
     institution: 'Children’s Health Network',
     icon: Stethoscope,
-    badge: 'Clinical Pediatrician',
+    badge: 'Pediatric Specialist',
   },
   {
     quote:
@@ -38,7 +38,7 @@ export const CLINICAL_TESTIMONIALS: Testimonial[] = [
     role: 'Author & Developmental Neurobiologist',
     institution: 'Family Neurodevelopment Institute',
     icon: Brain,
-    badge: 'Clinical Psychologist',
+    badge: 'Child Psychologist',
   },
   {
     quote:
@@ -58,15 +58,15 @@ export function ClinicalAuthorityTestimonials() {
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
-            VOL. XXIV // CLINICAL TRUST
+            VOL. XXIV // DEVELOPMENTAL SCIENCE
           </span>
         </div>
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
           Backed by <em className="italic font-normal text-[#143D2B]">Pediatricians, Psychologists &amp; Neurobiologists</em>
         </h2>
         <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
-          Parenting advice should come from peer-reviewed clinical science, not social media influencers.
-          Here is what leading pediatric health professionals say about AlongSide.
+          Parenting advice should come from peer-reviewed developmental science, not social media influencers.
+          Here is what leading pediatric and child development professionals say about AlongSide.
         </p>
       </div>
 
@@ -112,9 +112,9 @@ export function ClinicalAuthorityTestimonials() {
       <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-around gap-6 text-center">
         <div className="space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
-            <Award className="h-4 w-4 text-teal-700" /> Barton Schmitt Protocols
+            <Award className="h-4 w-4 text-teal-700" /> Developmental Neurobiology
           </div>
-          <div className="text-[11px] text-slate-500">Gold-standard pediatric triage protocols</div>
+          <div className="text-[11px] text-slate-500">Evidence-based cognitive and emotional science</div>
         </div>
 
         <div className="space-y-1">

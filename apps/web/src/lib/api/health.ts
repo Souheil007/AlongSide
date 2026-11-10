@@ -1,3 +1,10 @@
+/**
+ * @deprecated RETIRED IN SOU-86: AlongSide is a non-clinical developmental parenting platform.
+ * Symptom triage runners, fever calculators, and emergency diagnostic flows have been purged
+ * from active UI routes. Pediatric wellness has been refocused into restorative sleep architecture,
+ * circadian rhythm routines, and soothing scripts inside the Parent Intelligence Academy.
+ * This client module is preserved strictly for backward-compatible schema exports and offline fallbacks.
+ */
 import {
   TriageZone,
   AntipyreticMedication,

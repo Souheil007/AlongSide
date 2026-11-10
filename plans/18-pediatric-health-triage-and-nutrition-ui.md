@@ -4,7 +4,11 @@
 **Dependencies:** PLAN-16, PLAN-17  
 **Estimated Scope:** Large  
 **Paperclip Issue:** SOU-42 (To be delegated)  
-**Status:** ✅ Complete & Verified (PR #27)  
+**Status:** ✅ Complete & Verified (PR #27) — *Clinical Triage Retired in SOU-86*  
+
+> [!NOTE]
+> **RETIRED CLINICAL TRIAGE COMPONENTS (SOU-86):**
+> As part of AlongSide's transition away from a clinical platform in task SOU-86, all clinical symptom triage runners, Barton Schmitt algorithms, and emergency clinical triage elements in `/health` have been permanently retired. The `/health` route has been refactored into a Restorative Sleep & Circadian Rhythms companion elevated into the Parent Intelligence Academy (`/academy?category=HEALTH_AND_WELLNESS`). The Pediatric Nutrition & Feeding Hub (`/nutrition`) remains active as a core lifestyle and feeding pillar.
 
 ---
 

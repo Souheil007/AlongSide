@@ -151,7 +151,7 @@ export function ActiveChildCalibrationBanner({
             </p>
 
             <p className="text-xs text-slate-600">
-              Courses, prioritized chapters, and clinical scripts dynamically calibrated to this developmental window.
+              Courses, prioritized chapters, and communication scripts dynamically calibrated to this developmental window.
             </p>
           </div>
         </div>

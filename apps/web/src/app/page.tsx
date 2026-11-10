@@ -27,13 +27,13 @@ export default function HomePage() {
       {/* 5. "Thinking About Buying a Device?" Action Hub Spotlight */}
       <DeviceActionHubSpotlight />
 
-      {/* 6. Clinical Authority Testimonials & Institutional Trust Badges */}
+      {/* 6. Developmental Authority Testimonials & Trust Badges */}
       <ClinicalAuthorityTestimonials />
 
       {/* 7. Pricing & 7-Day Risk-Free Trial Onboarding */}
       <PricingSection />
 
-      {/* 8. Comprehensive Parenting & Clinical FAQ */}
+      {/* 8. Comprehensive Parenting & Development FAQ */}
       <FaqSection />
     </div>
   );

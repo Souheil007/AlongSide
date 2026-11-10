@@ -471,10 +471,10 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
                 <span>The Core Pediatric Co-Regulation Protocol</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                The HALT Emergency Diagnostic Framework
+                The HALT Diagnostic Framework
               </h2>
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                Before reacting to defiance, rudeness, or explosive tears, run the clinical HALT triage. 92% of acute behavioral breakdowns are neurobiological vulnerabilities, not deliberate defiance.
+                Before reacting to defiance, rudeness, or explosive tears, run the HALT vulnerability check. 92% of acute behavioral breakdowns are neurobiological vulnerabilities, not deliberate defiance.
               </p>
             </div>
 

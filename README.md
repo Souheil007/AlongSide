@@ -1,6 +1,6 @@
 # Alongside (ParentPath)
 
-> **The Holistic Child Upbringing, Health & Lifespan Family Operating System (Ages 0–18): Empowering parents to deeply understand and nurture their child’s pediatric health, nutrition, speech and motor milestones, brain play, and behavioral psychology, while providing modern cultural mentorship, 24/7 clinical AI guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
+> **The Holistic Child Upbringing, Development & Lifespan Family Operating System (Ages 0–18): Empowering parents to deeply understand and nurture their child’s restorative wellness, nutrition, speech and motor milestones, brain play, and behavioral psychology, while providing modern cultural mentorship, 24/7 AI parenting guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15_(App_Router)-black.svg)](https://nextjs.org/)
@@ -22,11 +22,11 @@ Historically, parenting technology suffers from two fatal blinders:
 
 **Alongside v2.4 establishes the Universal Family Operating System across 7 Balanced Pillars:**
 - **Developmental Milestones & Growth ("When He Moves, When He Talks"):** Guilt-free, pediatrician-backed tracking across gross motor, fine motor, speech acquisition, and cognitive stages (Ages 0–18).
-- **Pediatric Health & Symptom Companion (The Safe Resort):** Evidence-based fever triage, common childhood illness decoders, medication calculators, and emergency room vs. home care protocols to end 2:00 AM panic Googling.
+- **Restorative Sleep & Child Wellness Companion:** Evidence-based sleep architecture, circadian rhythm regulation, bedtime soothing routines, and family wind-down strategies elevated into the Parent Intelligence Academy.
 - **Pediatric Nutrition, Feeding & Dietary Safety:** Step-by-step guidance on infant solids, safe allergen introduction, choking hazard prevention, conquering toddler picky eating, and fueling teenage athletic growth.
 - **Brain Games, Sensory Play & Cognitive Enrichment:** Purposeful, offline developmental play—from early animal puppets and high-contrast sensory cards to symbolic block play, LEGO building, and strategic logic chess.
 - **Behavioral Psychology & The Modern Cultural Advisor:** Translating confusing behaviors (tantrums, biting, defiance, lying) into unmet nervous system needs, fostering authoritative warmth with firm boundaries, and mentoring kids in a complex modern world.
-- **24/7 AI Clinical Child Advisor & Voice Sparring Simulator:** Multi-child contextual AI guidance for acute dilemmas and an interactive voice sparring simulator to practice high-stakes parenting conversations out loud.
+- **24/7 AI Child Advisor & Voice Sparring Simulator:** Multi-child contextual AI guidance for acute dilemmas and an interactive voice sparring simulator to practice high-stakes parenting conversations out loud.
 - **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
 
 For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md), the exhaustive [**Competitive Analysis & Strategic Differentiation Specification**](docs/COMPETITIVE_ANALYSIS.md), and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).

@@ -132,7 +132,7 @@ export function FloatingAdvisorBubble() {
           <div className="hidden sm:flex flex-col text-left">
             <span className="text-xs font-bold leading-tight">Ask Advisor</span>
             <span className="text-[10px] text-emerald-200 font-medium leading-tight font-mono">
-              24/7 Clinical AI
+              24/7 AI Advisor
             </span>
           </div>
         </button>
@@ -273,7 +273,7 @@ export function FloatingAdvisorBubble() {
                       How can I help right now?
                     </h3>
                     <p className="mt-1 text-xs text-[#858C88] max-w-xs leading-relaxed">
-                      Instant, empathetic advice for acute tantrums, illness symptoms,
+                      Instant, empathetic advice for tantrums, bedtime battles,
                       picky eating, or phone boundaries.
                     </p>
                   </div>
@@ -310,7 +310,7 @@ export function FloatingAdvisorBubble() {
                             onClick={() => setIsOpen(false)}
                             className="inline-flex items-center gap-1 rounded-[4px] bg-[#EAF3EE] px-1.5 py-0.5 text-[10px] font-mono font-medium text-[#143D2B] hover:bg-[#D1E7DD]"
                           >
-                            <span>Clinical FAQ reference</span>
+                            <span>Advisory FAQ reference</span>
                             <ExternalLink className="h-2.5 w-2.5" />
                           </Link>
                         ))}

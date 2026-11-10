@@ -98,16 +98,16 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
       expect(healthViewContent).not.toContain("setActiveTab('dosing')");
     });
 
-    it('asserts HealthDashboardView retains 3-Zone Symptom Triage and Sleep Regression tabs', () => {
+    it('asserts HealthDashboardView purges clinical symptom triage and retains Sleep Regression Companion', () => {
       const healthViewPath = path.resolve(
         __dirname,
         '../src/components/health/HealthDashboardView.tsx'
       );
       const healthViewContent = fs.readFileSync(healthViewPath, 'utf-8');
 
-      expect(healthViewContent).toContain('3-Zone Symptom Triage');
+      expect(healthViewContent).not.toContain('SymptomTriageRunner');
+      expect(healthViewContent).not.toContain('Barton Schmitt');
       expect(healthViewContent).toContain('Sleep Regression & Nap Transitions');
-      expect(healthViewContent).toContain('SymptomTriageRunner');
       expect(healthViewContent).toContain('SleepRegressionCompanion');
     });
   });

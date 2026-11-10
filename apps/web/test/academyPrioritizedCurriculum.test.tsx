@@ -253,7 +253,7 @@ describe('PLAN-31: Parent Intelligence Academy Curriculum Explorer & Chapter Rea
       expect(element.props.lesson.title).toBe(
         'Adrenarche: The Biological Awakening to Peer Status'
       );
-      expect(element.props.lesson.contentMarkdown).toContain('Clinical Insight:');
+      expect(element.props.lesson.contentMarkdown).toContain('Developmental Insight:');
       expect(element.props.lesson.contentMarkdown).toContain('What to Say:');
       expect(element.props.lesson.contentMarkdown).toContain('- [ ]');
     });

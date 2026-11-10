@@ -95,7 +95,7 @@ export function LessonReaderView({
 
   /**
    * Intelligently parses markdown into structured, semantic UI callouts:
-   * 1. Clinical Insight Callout Card
+   * 1. Developmental / Clinical Insight Callout Card
    * 2. What to Say Dialogue Speech Bubble
    * 3. Interactive Action Protocol Checklists
    * 4. Semantic headers and text
@@ -106,30 +106,33 @@ export function LessonReaderView({
     return blocks.map((block, idx) => {
       const trimmed = block.trim();
 
-      // 1. Clinical Insight Callout Card
+      // 1. Developmental / Clinical Insight Callout Card
       if (
+        trimmed.toLowerCase().includes('developmental insight') ||
         trimmed.toLowerCase().includes('clinical insight') ||
+        trimmed.startsWith('> **Developmental Insight') ||
+        trimmed.startsWith('**Developmental Insight') ||
         trimmed.startsWith('> **Clinical Insight') ||
         trimmed.startsWith('**Clinical Insight')
       ) {
         const cleanText = trimmed
           .replace(/^#+\s*/, '')
           .replace(/^>\s*/, '')
-          .replace(/^\*\*Clinical Insight:?\*\*:?\s*/i, '')
-          .replace(/^Clinical Insight:?\s*/i, '')
+          .replace(/^\*\*(?:Developmental|Clinical) Insight:?\*\*:?\s*/i, '')
+          .replace(/^(?:Developmental|Clinical) Insight:?\s*/i, '')
           .trim();
 
         return (
           <aside
-            key={`clinical-insight-${idx}`}
-            aria-label="Clinical Insight Callout"
+            key={`insight-${idx}`}
+            aria-label="Developmental Insight Callout"
             className="my-6 rounded-2xl border border-teal-200/90 bg-gradient-to-br from-teal-50/80 via-[#F7FCFA] to-white p-5 sm:p-6 shadow-xs"
           >
             <div className="flex items-center gap-2.5 text-teal-900 font-bold text-xs uppercase tracking-wider mb-2.5">
               <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-teal-700 text-white shadow-xs">
                 <Sparkles className="h-3.5 w-3.5" />
               </span>
-              <span>Pediatric Neurobiology · Clinical Insight</span>
+              <span>Pediatric Neurobiology · Developmental Insight</span>
             </div>
             <p className="text-slate-800 text-sm sm:text-base leading-relaxed font-medium">
               {cleanText}
