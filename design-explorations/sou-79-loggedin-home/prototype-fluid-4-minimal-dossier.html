@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Design 4: The Minimal Daily Dossier</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dossierBg: '#FAFAF8',
+            spotlight: '#FFFFFF',
+            ink: '#111413',
+            inkMuted: '#494F4C',
+            whisper: '#858C88',
+            hairline: '#E7E4DC',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              soft: '#FBF0EC'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAFAF8;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-dossierBg">
+
+  <!-- TOP MINIMAL MASTHEAD (WHISPER LINE) -->
+  <header class="border-b border-hairline bg-white/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-md bg-forest text-white font-serif font-bold text-sm flex items-center justify-center">A</span>
+          <span class="font-serif text-lg font-bold tracking-tight text-ink">AlongSide</span>
+        </a>
+      </div>
+
+      <!-- Live Context Switcher -->
+      <div class="inline-flex p-0.5 rounded-full bg-[#EFECE6] text-xs font-semibold">
+        <button id="btnSouheil" onclick="selectChild('souheil')" class="px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition">
+          Souheil (8y)
+        </button>
+        <button id="btnLeo" onclick="selectChild('leo')" class="px-3.5 py-1 rounded-full text-whisper hover:text-ink transition">
+          Leo (3y)
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- SINGLE LINE HORIZON STATUS (ABSOLUTE MINIMALISM, ZERO JARGON WALL) -->
+  <div class="border-b border-hairline bg-white py-2">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs text-inkMuted">
+      <div class="flex items-center gap-2 truncate">
+        <span class="w-2 h-2 rounded-full bg-forest"></span>
+        <span class="font-mono font-bold text-forest text-[11px] uppercase tracking-wider" id="dossierRoad">Road 1: Pre-Device</span>
+        <span class="text-hairline">•</span>
+        <span id="dossierStage">Middle Childhood (7–9y)</span>
+        <span class="text-hairline">•</span>
+        <span class="text-ink font-medium truncate" id="dossierLeap">Active Leap: Prefrontal Inhibitory Control &amp; Peer Play</span>
+      </div>
+      <span class="font-mono text-whisper text-[11px] shrink-0 hidden sm:inline">Tue, Nov 10</span>
+    </div>
+  </div>
+
+  <!-- MAIN DOSSIER: ONLY ONE EXPANSIVE SPOTLIGHT HERO -->
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+
+    <!-- WELCOMING CONTEXT -->
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-[11px] text-forest font-bold uppercase tracking-wider bg-forest-soft px-2 py-0.5 rounded">
+          Daily Dossier • 4-Day Reflection Streak
+        </span>
+      </div>
+      <h1 id="dossierGreeting" class="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+        Good morning, Sarah. Today&apos;s priority with Souheil:
+      </h1>
+    </div>
+
+    <!-- THE SINGULAR SPOTLIGHT (FOCUSED 4-MINUTE ACTION HUB) -->
+    <section aria-label="Today's Singular Priority" class="bg-spotlight rounded-3xl border border-hairline p-6 sm:p-10 shadow-sm space-y-6">
+      
+      <!-- Chapter Metadata Header -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline pb-4">
+        <div>
+          <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
+            Parent Academy • Chapter 3 of 5
+          </span>
+          <h2 id="dossierLessonTitle" class="font-serif text-xl sm:text-2xl font-bold text-ink mt-0.5">
+            When Screen Time Ends: Shifting from Defiance to Co-Regulation
+          </h2>
+        </div>
+        <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-3 py-1 rounded-full border border-forest/20">
+          60% Complete
+        </span>
+      </div>
+
+      <!-- Spoken Audio Player Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-forest-soft/70 border border-forest/20">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-forest text-white flex items-center justify-center shrink-0 hover:bg-forest-hover transition shadow-xs">
+            <span id="playIcon">▶</span>
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-ink">Spoken Audio Briefing (3:45)</span>
+              <span class="font-mono text-[10px] text-forest bg-white px-1.5 py-0.2 rounded border border-forest/20">Aliza Pressman, PhD</span>
+            </div>
+            <p class="font-mono text-[11px] text-inkMuted mt-0.5">Listen while commuting or folding laundry</p>
+          </div>
+        </div>
+
+        <a href="#" class="font-mono text-xs font-bold text-forest hover:underline self-end sm:self-auto">
+          Read Chapter Transcript →
+        </a>
+      </div>
+
+      <!-- The Core Behavioral Insight -->
+      <div class="space-y-3">
+        <p class="font-mono text-xs text-forest uppercase font-bold tracking-wider">
+          What is happening in their brain today:
+        </p>
+        <p id="dossierBrainInsight" class="text-sm text-inkMuted leading-relaxed">
+          At age 8, dopamine levels plummet sharply when a video game or online world is interrupted. Their defensive vocal pushback is not moral disrespect; it is a neurological distress response. Physical co-presence bridges that gap.
+        </p>
+      </div>
+
+      <!-- The Single Living Room Script -->
+      <div class="pt-2 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs text-forest uppercase font-bold tracking-wider">
+            Your Word-for-Word Script Tonight:
+          </span>
+          <button onclick="copyScript()" class="font-mono text-xs text-forest font-semibold hover:underline">
+            <span id="copyBtn">Copy Script 📋</span>
+          </button>
+        </div>
+        <blockquote id="dossierQuote" class="font-serif text-lg sm:text-xl text-ink italic p-5 rounded-2xl bg-[#F7F5F0] border-l-4 border-forest leading-snug">
+          &ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;
+        </blockquote>
+      </div>
+
+    </section>
+
+    <!-- AMBIENT UNDERSTORY HORIZON (UNBOXED BORDERLESS DATA RIBBON) -->
+    <section aria-label="Ambient Family Horizon" class="pt-4 space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-2">
+        <h3 class="font-serif text-lg font-bold text-ink">
+          Ambient Family Horizon
+        </h3>
+        <span class="font-mono text-xs text-whisper">Quiet Background Radar</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-1 text-xs">
+        
+        <!-- Metric 1: Phone Readiness -->
+        <div id="understoryPhoneCol" class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Phone Readiness</span>
+            <span class="font-serif text-base font-bold text-forest">78 / 100</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+            <div class="bg-forest h-1.5 rounded-full w-[78%]"></div>
+          </div>
+          <p class="text-inkMuted text-[11px] leading-snug pt-0.5">
+            <span class="font-semibold text-ink">Milestone:</span> 2 consecutive weeks of independent morning alarm waking.
+          </p>
+        </div>
+
+        <!-- Metric 1 Alternative: Toddler Screen Cap -->
+        <div id="understoryToddlerCol" class="hidden space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Daily Screen Cap</span>
+            <span class="font-serif text-base font-bold text-terracotta">20 / 30m</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+            <div class="bg-terracotta h-1.5 rounded-full w-[66%]"></div>
+          </div>
+          <p class="text-inkMuted text-[11px] leading-snug pt-0.5">
+            <span class="font-semibold text-ink">Milestone:</span> Zero screens 60 minutes before bedtime.
+          </p>
+        </div>
+
+        <!-- Metric 2: Evening Curfew -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Evening Dock</span>
+            <span class="font-mono text-xs font-bold text-forest">8:30 PM Lock</span>
+          </div>
+          <p class="text-inkMuted text-[11px] leading-snug pt-1">
+            Kitchen charging dock active tonight. Protects adolescent sleep architecture.
+          </p>
+        </div>
+
+        <!-- Metric 3: Culture Pulse -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Culture Radar</span>
+            <span class="font-mono text-xs text-whisper">Roblox Trading</span>
+          </div>
+          <p class="text-inkMuted text-[11px] leading-snug pt-1">
+            In-game trading peer pressure reported this week in elementary groups.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let isPlaying = false;
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').textContent = isPlaying ? '❚❚' : '▶';
+    }
+
+    function copyScript() {
+      const text = document.getElementById('dossierQuote').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => { btn.textContent = 'Copy Script 📋'; }, 2000);
+    }
+
+    function selectChild(childKey) {
+      const btnSouheil = document.getElementById('btnSouheil');
+      const btnLeo = document.getElementById('btnLeo');
+      const understoryPhoneCol = document.getElementById('understoryPhoneCol');
+      const understoryToddlerCol = document.getElementById('understoryToddlerCol');
+
+      if (childKey === 'souheil') {
+        btnSouheil.className = 'px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition';
+        btnLeo.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('dossierRoad').textContent = 'Road 1: Pre-Device';
+        document.getElementById('dossierStage').textContent = 'Middle Childhood (7–9y)';
+        document.getElementById('dossierLeap').textContent = 'Active Leap: Prefrontal Inhibitory Control & Peer Play';
+        document.getElementById('dossierGreeting').textContent = "Good morning, Sarah. Today's priority with Souheil:";
+        document.getElementById('dossierLessonTitle').textContent = "When Screen Time Ends: Shifting from Defiance to Co-Regulation";
+        document.getElementById('dossierBrainInsight').textContent = "At age 8, dopamine levels plummet sharply when a video game or online world is interrupted. Their defensive vocal pushback is not moral disrespect; it is a neurological distress response. Physical co-presence bridges that gap.";
+        document.getElementById('dossierQuote').innerHTML = '&ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;';
+
+        understoryPhoneCol.classList.remove('hidden');
+        understoryToddlerCol.classList.add('hidden');
+      } else {
+        btnLeo.className = 'px-3.5 py-1 rounded-full bg-white text-terracotta shadow-2xs transition';
+        btnSouheil.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('dossierRoad').textContent = 'Road 1: Early Childhood';
+        document.getElementById('dossierStage').textContent = 'Toddlerhood (3y)';
+        document.getElementById('dossierLeap').textContent = 'Active Leap: Pre-Verbal Co-Regulation & Tantrum Reset';
+        document.getElementById('dossierGreeting').textContent = "Good morning, Sarah. Today's priority with Leo:";
+        document.getElementById('dossierLessonTitle').textContent = "The 3-Step Living Room Reset for Toddler Meltdowns";
+        document.getElementById('dossierBrainInsight').textContent = "Toddlers cannot process logic or lectures during an amygdala storm. Moving down to floor level and offering steady physical proximity allows their nervous system to settle before any redirect.";
+        document.getElementById('dossierQuote').innerHTML = '&ldquo;You are feeling big mad that the cartoon stopped. I am sitting right here on the carpet with you until your breath gets quiet.&rdquo;';
+
+        understoryPhoneCol.classList.add('hidden');
+        understoryToddlerCol.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>

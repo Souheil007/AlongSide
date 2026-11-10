@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Design 5: The Chronological Day-Flow</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dayflowBg: '#FAF8F5',
+            surface: '#FFFFFF',
+            ink: '#111413',
+            inkMuted: '#494F4C',
+            whisper: '#858C88',
+            hairline: '#E7E4DC',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              soft: '#FBF0EC'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-dayflowBg">
+
+  <!-- TOP MINIMAL HEADER -->
+  <header class="bg-white/90 backdrop-blur border-b border-hairline sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-md bg-forest text-white font-serif font-bold text-sm flex items-center justify-center">A</span>
+          <span class="font-serif text-lg font-bold tracking-tight text-ink">AlongSide</span>
+        </a>
+        <span class="text-whisper text-xs hidden sm:inline">•</span>
+        <span class="font-mono text-xs text-whisper hidden sm:inline">Daily Day-Flow</span>
+      </div>
+
+      <!-- Child Context Capsule -->
+      <div class="inline-flex p-0.5 rounded-full bg-[#EFECE6] text-xs font-semibold">
+        <button id="btnSouheil" onclick="selectChild('souheil')" class="px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition">
+          Souheil (8y)
+        </button>
+        <button id="btnLeo" onclick="selectChild('leo')" class="px-3.5 py-1 rounded-full text-whisper hover:text-ink transition">
+          Leo (3y)
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- AMBIENT HORIZON WHISPER LINE (CLEAN SINGLE STATUS, NO CLUNKY CARD) -->
+  <aside aria-label="Developmental Status Anchor" class="border-b border-hairline bg-white/60 py-2">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs text-inkMuted">
+      <div class="flex items-center gap-2 truncate">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="font-mono font-bold text-forest text-[11px] uppercase tracking-wider" id="timelineRoad">Road 1: Pre-Device</span>
+        <span class="text-hairline">•</span>
+        <span id="timelineStage">Middle Childhood (7–9 yrs)</span>
+        <span class="text-hairline">•</span>
+        <span class="text-ink font-medium truncate" id="timelineLeap">Active Leap: Prefrontal Inhibitory Control &amp; Peer Play</span>
+      </div>
+      <span class="font-mono text-whisper text-[11px] shrink-0 hidden sm:inline">Tuesday, Nov 10</span>
+    </div>
+  </aside>
+
+  <!-- MAIN CHRONOLOGICAL STREAM (FLOWING VERTICAL DAYLINE) -->
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+
+    <!-- WELCOMING GREETING & STREAK -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h1 id="timelineGreeting" class="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+          Welcome home, Sarah. Here is your day with Souheil.
+        </h1>
+        <p class="text-xs sm:text-sm text-inkMuted mt-0.5">
+          Step-by-step guidance synced with your family’s natural rhythm today.
+        </p>
+      </div>
+      <div class="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-hairline text-xs font-mono text-ink shrink-0 self-start sm:self-auto">
+        <span class="text-amber">🔥</span>
+        <span class="font-bold">4-Day Habit Streak</span>
+        <span class="text-whisper">•</span>
+        <span class="text-forest">18 mins</span>
+      </div>
+    </div>
+
+    <!-- THE CONTINUOUS TIMELINE (FLUID CHRONOLOGICAL FLOW) -->
+    <div class="relative pl-6 sm:pl-8 border-l-2 border-hairline space-y-10 my-4">
+      
+      <!-- PHASE 1: MORNING MINDSET (ACTIVE ACADEMY COURSE) -->
+      <section aria-label="Morning Learning" class="relative space-y-4">
+        <!-- Timeline Marker Node -->
+        <span class="absolute -left-[33px] sm:-left-[41px] top-0.5 w-6 h-6 rounded-full bg-forest text-white flex items-center justify-center text-xs shadow-xs">
+          ☀️
+        </span>
+
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
+            Morning Mindset • 07:30 AM
+          </span>
+          <span class="text-whisper text-xs">•</span>
+          <span class="font-mono text-xs text-whisper">Chapter 3 of 5</span>
+        </div>
+
+        <!-- The Seamless Morning Reading & Audio Block -->
+        <div class="bg-surface rounded-2xl p-6 border border-hairline shadow-xs space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline/80 pb-3">
+            <h2 id="timelineLessonTitle" class="font-serif text-xl font-bold text-ink">
+              When Screen Time Ends: Shifting from Defiance to Co-Regulation
+            </h2>
+            <span class="font-mono text-xs font-semibold text-forest bg-forest-soft px-2.5 py-0.5 rounded-full">
+              4 min audio
+            </span>
+          </div>
+
+          <p id="timelineLessonExcerpt" class="text-xs sm:text-sm text-inkMuted leading-relaxed">
+            When an 8-year-old resists powering down their game, an abrupt dopamine plunge is taking place. Stepping into their room 3 minutes prior and establishing eye-level calm prepares their prefrontal cortex before you issue the shut-off request.
+          </p>
+
+          <!-- Audio Bar -->
+          <div class="flex items-center justify-between p-3 rounded-xl bg-forest-soft/60 border border-forest/15">
+            <div class="flex items-center gap-3">
+              <button onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-forest text-white flex items-center justify-center text-xs shadow-xs hover:bg-forest-hover transition">
+                <span id="playIcon">▶</span>
+              </button>
+              <span class="text-xs font-semibold text-ink">Listen to Audio Briefing (3:45)</span>
+            </div>
+            <a href="#" class="font-mono text-xs font-bold text-forest hover:underline">Read Full Chapter →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 2: AFTER-SCHOOL CONNECTION (WORD-FOR-WORD SCRIPT) -->
+      <section aria-label="After-School Friction" class="relative space-y-4">
+        <!-- Timeline Marker Node -->
+        <span class="absolute -left-[33px] sm:-left-[41px] top-0.5 w-6 h-6 rounded-full bg-terracotta text-white flex items-center justify-center text-xs shadow-xs">
+          🌤️
+        </span>
+
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs font-bold text-terracotta uppercase tracking-wider">
+            After-School Connection • 03:30 PM
+          </span>
+          <span class="text-whisper text-xs">•</span>
+          <span class="font-mono text-xs text-whisper">Transition Friction</span>
+        </div>
+
+        <div class="bg-surface rounded-2xl p-6 border border-hairline shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-serif text-base font-bold text-ink">What to say when homework or screen limits trigger friction:</span>
+            <button onclick="copyScript()" class="font-mono text-xs font-semibold text-forest hover:underline">
+              <span id="copyBtn">Copy Script 📋</span>
+            </button>
+          </div>
+
+          <blockquote id="timelineScriptText" class="font-serif text-lg text-ink italic p-4 rounded-xl bg-[#FAF8F5] border-l-4 border-forest leading-snug">
+            &ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;
+          </blockquote>
+
+          <span class="font-mono text-[11px] text-whisper block">Co-Regulation Tip: Speak at eye level; do not shout from across the hallway.</span>
+        </div>
+      </section>
+
+      <!-- PHASE 3: EVENING BEDTIME (CURFEW & MILESTONE PULSE) -->
+      <section aria-label="Evening Wind-down" class="relative space-y-4">
+        <!-- Timeline Marker Node -->
+        <span class="absolute -left-[33px] sm:-left-[41px] top-0.5 w-6 h-6 rounded-full bg-forest text-white flex items-center justify-center text-xs shadow-xs">
+          🌙
+        </span>
+
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
+            Evening Wind-Down • 08:30 PM
+          </span>
+          <span class="text-whisper text-xs">•</span>
+          <span class="font-mono text-xs text-whisper">Curfew &amp; Milestone</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Curfew Card -->
+          <div class="bg-surface p-5 rounded-2xl border border-hairline space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase font-bold text-whisper tracking-wider">Device Curfew Dock</span>
+              <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">8:30 PM Lock</span>
+            </div>
+            <p class="text-xs text-inkMuted leading-relaxed">
+              Living room kitchen dock charges all tablets. Hardware lockdown enforced by family pact.
+            </p>
+          </div>
+
+          <!-- Stage-Adaptive Milestone Card -->
+          <div id="timelinePhoneCol" class="bg-surface p-5 rounded-2xl border border-hairline space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase font-bold text-whisper tracking-wider">Phone Readiness</span>
+              <span class="font-serif text-base font-bold text-forest">78 / 100</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-forest h-1.5 rounded-full w-[78%]"></div>
+            </div>
+            <p class="text-xs text-inkMuted leading-snug pt-0.5">
+              <span class="font-semibold text-ink">Tonight&apos;s Milestone:</span> Independent morning alarm waking streak.
+            </p>
+          </div>
+
+          <!-- Toddler Alternative -->
+          <div id="timelineToddlerCol" class="hidden bg-surface p-5 rounded-2xl border border-hairline space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase font-bold text-whisper tracking-wider">Early Screen Cap</span>
+              <span class="font-serif text-base font-bold text-terracotta">20 / 30m</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-terracotta h-1.5 rounded-full w-[66%]"></div>
+            </div>
+            <p class="text-xs text-inkMuted leading-snug pt-0.5">
+              <span class="font-semibold text-ink">Bedtime Boundary:</span> Zero handheld screens 60 minutes before sleep.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <script>
+    let isPlaying = false;
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').textContent = isPlaying ? '❚❚' : '▶';
+    }
+
+    function copyScript() {
+      const text = document.getElementById('timelineScriptText').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => { btn.textContent = 'Copy Script 📋'; }, 2000);
+    }
+
+    function selectChild(childKey) {
+      const btnSouheil = document.getElementById('btnSouheil');
+      const btnLeo = document.getElementById('btnLeo');
+      const phoneCol = document.getElementById('timelinePhoneCol');
+      const toddlerCol = document.getElementById('timelineToddlerCol');
+
+      if (childKey === 'souheil') {
+        btnSouheil.className = 'px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition';
+        btnLeo.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('timelineRoad').textContent = 'Road 1: Pre-Device';
+        document.getElementById('timelineStage').textContent = 'Middle Childhood (7–9 yrs)';
+        document.getElementById('timelineLeap').textContent = 'Active Leap: Prefrontal Inhibitory Control & Peer Play';
+        document.getElementById('timelineGreeting').textContent = "Welcome home, Sarah. Here is your day with Souheil.";
+        document.getElementById('timelineLessonTitle').textContent = "When Screen Time Ends: Shifting from Defiance to Co-Regulation";
+        document.getElementById('timelineLessonExcerpt').textContent = "When an 8-year-old resists powering down their game, an abrupt dopamine plunge is taking place. Stepping into their room 3 minutes prior and establishing eye-level calm prepares their prefrontal cortex before you issue the shut-off request.";
+        document.getElementById('timelineScriptText').innerHTML = '&ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;';
+
+        phoneCol.classList.remove('hidden');
+        toddlerCol.classList.add('hidden');
+      } else {
+        btnLeo.className = 'px-3.5 py-1 rounded-full bg-white text-terracotta shadow-2xs transition';
+        btnSouheil.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('timelineRoad').textContent = 'Road 1: Early Childhood';
+        document.getElementById('timelineStage').textContent = 'Toddler (3 yrs)';
+        document.getElementById('timelineLeap').textContent = 'Active Leap: Pre-Verbal Co-Regulation & Tantrum Reset';
+        document.getElementById('timelineGreeting').textContent = "Welcome home, Sarah. Here is your day with Leo.";
+        document.getElementById('timelineLessonTitle').textContent = "The 3-Step Living Room Reset for Toddler Meltdowns";
+        document.getElementById('timelineLessonExcerpt').textContent = "Toddlers cannot process logic or lectures during an amygdala storm. Moving down to floor level and offering steady physical proximity allows their nervous system to settle before any redirect.";
+        document.getElementById('timelineScriptText').innerHTML = '&ldquo;You are feeling big mad that the cartoon stopped. I am sitting right here on the carpet with you until your breath gets quiet.&rdquo;';
+
+        phoneCol.classList.add('hidden');
+        toddlerCol.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>

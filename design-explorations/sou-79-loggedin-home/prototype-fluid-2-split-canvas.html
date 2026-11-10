@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Design 2: The Seamless Split-Sheet Sanctuary</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sheet: '#FFFFFF',
+            canvasBg: '#F5F3ED',
+            ink: '#111413',
+            inkMuted: '#494F4C',
+            whisper: '#858C88',
+            hairline: '#E7E4DC',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              soft: '#FBF0EC'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F5F3ED;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen py-4 sm:py-8 px-2 sm:px-6">
+
+  <!-- THE UNIFIED CONTINUOUS CANVAS (ONE SEAMLESS SHEET, NO BOX-IN-BOX GRID) -->
+  <div class="max-w-6xl mx-auto bg-sheet rounded-3xl border border-hairline shadow-[0_4px_24px_rgba(17,20,19,0.03)] overflow-hidden">
+    
+    <!-- UNIFIED HEADER & QUIET AMBIENT STATUS BAR -->
+    <header class="border-b border-hairline px-6 sm:px-10 py-5 bg-white">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        
+        <!-- Brand & Welcoming Ambient Line -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-forest text-white font-serif font-bold text-sm flex items-center justify-center">A</span>
+            <span class="font-serif text-xl font-bold tracking-tight text-ink">AlongSide</span>
+            <span class="text-hairline">•</span>
+            <span class="font-mono text-xs text-forest uppercase font-bold tracking-wider">Sanctuary</span>
+          </div>
+          <!-- The Whisper Status Line: Eliminates the huge text-heavy leap card! -->
+          <p class="text-xs text-inkMuted flex flex-wrap items-center gap-1.5 pt-0.5">
+            <span>Parenting</span>
+            <span class="font-semibold text-ink" id="hdrChildName">Souheil</span>
+            <span>(8y • Middle Childhood)</span>
+            <span class="text-hairline">•</span>
+            <span class="text-forest font-medium" id="hdrLeapChip">Leap: Impulse Control &amp; Peer Play</span>
+          </p>
+        </div>
+
+        <!-- Dynamic Child Switcher & Date -->
+        <div class="flex items-center gap-3 self-start md:self-center">
+          <span class="font-mono text-xs text-whisper hidden lg:inline">Tue, Nov 10</span>
+          <div class="inline-flex p-1 rounded-full bg-[#EFECE6] text-xs font-semibold">
+            <button id="btnSouheil" onclick="selectChild('souheil')" class="px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition">
+              Souheil (8y)
+            </button>
+            <button id="btnLeo" onclick="selectChild('leo')" class="px-3.5 py-1 rounded-full text-whisper hover:text-ink transition">
+              Leo (3y)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- THE SPLIT SHEET BODY: TWO HARMONIZED CONTINUOUS FLOWS (60% FOCUS / 40% RADAR) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-hairline">
+      
+      <!-- LEFT STREAM (7 COLS / ~60%): TODAY'S FOCUS & LEARNING (OPEN EDITORIAL FLOW) -->
+      <section aria-label="Today's Practice Stream" class="lg:col-span-7 p-6 sm:p-10 space-y-10">
+        
+        <!-- GREETING & STREAK -->
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-soft text-forest text-[11px] font-mono font-semibold">
+            <span>🔥 4-Day Reflection Streak</span>
+            <span>•</span>
+            <span>18 mins this week</span>
+          </div>
+          <h1 id="canvasGreeting" class="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+            Welcome home, Sarah. Here is today’s focus for Souheil.
+          </h1>
+          <p id="canvasSubtext" class="text-xs sm:text-sm text-inkMuted leading-relaxed">
+            One 4-minute intentional practice today builds weeks of mutual trust. No perfection required.
+          </p>
+        </div>
+
+        <!-- ACTIVE ACADEMY COURSE ROADMAP (FLUID CONNECTED THREAD, NOT A HEAVY BOX) -->
+        <div class="space-y-4 pt-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-forest">Course in Progress</span>
+              <span class="text-whisper text-xs">•</span>
+              <span class="font-mono text-xs text-whisper">Chapter 3 of 5</span>
+            </div>
+            <span class="font-mono text-xs font-semibold text-forest bg-forest-soft px-2 py-0.5 rounded">60% Complete</span>
+          </div>
+
+          <!-- Continuous Course Thread -->
+          <div class="relative py-2">
+            <div class="flex items-center justify-between relative z-10 text-[11px] font-mono">
+              <div class="flex items-center gap-1.5 text-forest font-bold">
+                <span class="w-6 h-6 rounded-full bg-forest text-white flex items-center justify-center text-[10px]">✓</span>
+                <span class="hidden sm:inline">1. Shift</span>
+              </div>
+              <div class="h-0.5 flex-1 bg-forest mx-2"></div>
+              <div class="flex items-center gap-1.5 text-forest font-bold">
+                <span class="w-6 h-6 rounded-full bg-forest text-white flex items-center justify-center text-[10px]">✓</span>
+                <span class="hidden sm:inline">2. Peers</span>
+              </div>
+              <div class="h-0.5 flex-1 bg-forest mx-2"></div>
+              <div class="flex items-center gap-1.5 text-forest font-black ring-4 ring-forest-soft rounded-full bg-white p-0.5">
+                <span class="w-6 h-6 rounded-full bg-forest text-white flex items-center justify-center text-[10px]">3</span>
+                <span class="font-bold">Today</span>
+              </div>
+              <div class="h-0.5 flex-1 bg-hairline mx-2"></div>
+              <div class="flex items-center gap-1.5 text-whisper">
+                <span class="w-6 h-6 rounded-full bg-[#EFECE6] text-whisper flex items-center justify-center text-[10px]">4</span>
+                <span class="hidden sm:inline">4. Pacts</span>
+              </div>
+              <div class="h-0.5 flex-1 bg-hairline mx-2"></div>
+              <div class="flex items-center gap-1.5 text-whisper">
+                <span class="w-6 h-6 rounded-full bg-[#EFECE6] text-whisper flex items-center justify-center text-[10px]">5</span>
+                <span class="hidden sm:inline">5. Trust</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Chapter Featured Reading (Seamless) -->
+          <div class="space-y-3 pt-2">
+            <h2 id="courseHeadline" class="font-serif text-xl sm:text-2xl font-bold text-ink">
+              Chapter 3: When Screen Time Ends — Shifting from Defiance to Co-Regulation
+            </h2>
+            <p id="courseParagraph" class="text-xs sm:text-sm text-inkMuted leading-relaxed">
+              When an 8-year-old struggles to power off a game, their brain is experiencing a rapid neurochemical downshift. Stepping into their room 3 minutes prior and establishing eye-level calm prepares their prefrontal cortex before you issue the shut-off request.
+            </p>
+
+            <!-- Minimal Audio Capsule Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#F8F6F1] border border-hairline/80">
+              <div class="flex items-center gap-3">
+                <button onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-forest text-white flex items-center justify-center text-xs shadow-xs hover:bg-forest-hover transition">
+                  <span id="playIcon">▶</span>
+                </button>
+                <div>
+                  <p class="text-xs font-semibold text-ink">Spoken Briefing (3:45)</p>
+                  <p class="font-mono text-[10px] text-whisper">Narrated by Dr. Aliza Pressman</p>
+                </div>
+              </div>
+              <a href="#" class="font-mono text-xs font-bold text-forest hover:underline">Read Full Chapter →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TODAY'S LIVING ROOM SCRIPT (INTEGRATED EDITORIAL QUOTE) -->
+        <div class="space-y-3 pt-6 border-t border-hairline">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
+              Today&apos;s Living Room Script
+            </span>
+            <span class="font-mono text-[11px] text-whisper">Try this after school</span>
+          </div>
+
+          <div class="space-y-3 p-5 rounded-2xl bg-forest-soft/60 border border-forest/15">
+            <p class="font-serif text-lg sm:text-xl text-ink italic leading-snug" id="scriptText">
+              &ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;
+            </p>
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-inkMuted font-mono text-[11px]">Core skill: Validate the loss before holding the limit.</span>
+              <button onclick="copyScript()" class="font-mono text-xs font-semibold text-forest bg-white px-2.5 py-1 rounded-md border border-hairline hover:bg-forest-soft transition">
+                <span id="copyFeedback">Copy Text</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT STREAM (5 COLS / ~40%): FAMILY PULSE & MILESTONES (SEAMLESS SIDEBAR) -->
+      <aside aria-label="Family Radar Panel" class="lg:col-span-5 p-6 sm:p-10 bg-[#FAF9F5] space-y-8">
+        
+        <div>
+          <h3 class="font-serif text-lg font-bold text-ink">
+            Developmental Radar
+          </h3>
+          <p class="text-xs text-whisper mt-0.5 font-mono">Real-time status for <span id="radarChildLabel">Souheil</span></p>
+        </div>
+
+        <!-- FIRST-PHONE READINESS RADAR (NO CLUNKY SEPARATE CARD - BLENDS INTO CANVAS) -->
+        <div id="phoneReadinessBlock" class="space-y-3 pb-6 border-b border-hairline">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-ink uppercase font-mono tracking-wider">Phone Readiness</span>
+            <span class="font-serif text-2xl font-bold text-forest">78<span class="text-sm text-whisper font-normal">/100</span></span>
+          </div>
+
+          <div class="w-full bg-[#E5E2D8] rounded-full h-2 overflow-hidden">
+            <div class="bg-forest h-2 rounded-full w-[78%]"></div>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-hairline space-y-1">
+            <span class="font-mono text-[10px] text-forest font-bold uppercase tracking-wider">Active Milestone Gate</span>
+            <p class="text-xs text-ink font-medium leading-snug">
+              Demonstrate 2 consecutive weeks of independent morning alarm waking without parent reminders.
+            </p>
+            <span class="font-mono text-[10px] text-whisper block pt-1">Current streak: 6 of 14 days completed</span>
+          </div>
+        </div>
+
+        <!-- TODDLER ALTERNATIVE (EARLY SCREEN CAP & MELTDOWN RESET) -->
+        <div id="toddlerScreenBlock" class="hidden space-y-3 pb-6 border-b border-hairline">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-ink uppercase font-mono tracking-wider">Early Screen Cap</span>
+            <span class="font-serif text-2xl font-bold text-terracotta">20<span class="text-sm text-whisper font-normal">/30 min</span></span>
+          </div>
+
+          <div class="w-full bg-[#E5E2D8] rounded-full h-2 overflow-hidden">
+            <div class="bg-terracotta h-2 rounded-full w-[66%]"></div>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-hairline space-y-1">
+            <span class="font-mono text-[10px] text-terracotta font-bold uppercase tracking-wider">Floor Meltdown Reset</span>
+            <p class="text-xs text-ink font-medium leading-snug">
+              Sit at eye-level on the rug. Offer steady breathing without rationalizing until motor tremors subside.
+            </p>
+          </div>
+        </div>
+
+        <!-- EVENING CURFEW & PACT STATUS -->
+        <div class="space-y-3 pb-6 border-b border-hairline">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-ink uppercase font-mono tracking-wider">Evening Device Dock</span>
+            <span class="font-mono text-xs font-bold text-forest bg-white px-2 py-0.5 rounded border border-hairline">8:30 PM Lock</span>
+          </div>
+          <p class="text-xs text-inkMuted leading-relaxed">
+            All handheld tablets and screens charge in the family kitchen starting at 8:30 PM to protect melatonin onset.
+          </p>
+          <div class="flex items-center gap-2 text-[11px] font-mono text-forest">
+            <span class="w-2 h-2 rounded-full bg-forest"></span>
+            <span>Family Pact: Hardware Enforced</span>
+          </div>
+        </div>
+
+        <!-- YOUTH CULTURE ALERT (FLUID MINI RADAR) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-ink uppercase font-mono tracking-wider">Culture Radar</span>
+            <span class="font-mono text-[10px] text-whisper">Weekly Slang</span>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
+            <div class="flex items-center gap-1.5">
+              <span class="font-mono text-xs font-bold text-ink">&ldquo;Crash Out&rdquo;</span>
+              <span class="text-[10px] font-mono text-forest bg-forest-soft px-1 rounded">Middle School Tag</span>
+            </div>
+            <p class="text-[11px] text-inkMuted leading-snug">
+              Means losing temper over an online game or chat loss. Use tonight&apos;s dinner conversation starter to explore it with Souheil.
+            </p>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <script>
+    let isPlaying = false;
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').textContent = isPlaying ? '❚❚' : '▶';
+    }
+
+    function copyScript() {
+      const text = document.getElementById('scriptText').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyFeedback');
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Text'; }, 2000);
+    }
+
+    function selectChild(childKey) {
+      const btnSouheil = document.getElementById('btnSouheil');
+      const btnLeo = document.getElementById('btnLeo');
+      const phoneBlock = document.getElementById('phoneReadinessBlock');
+      const toddlerBlock = document.getElementById('toddlerScreenBlock');
+
+      if (childKey === 'souheil') {
+        btnSouheil.className = 'px-3.5 py-1 rounded-full bg-white text-forest shadow-2xs transition';
+        btnLeo.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('hdrChildName').textContent = 'Souheil';
+        document.getElementById('hdrLeapChip').textContent = 'Leap: Impulse Control & Peer Play';
+        document.getElementById('canvasGreeting').textContent = "Welcome home, Sarah. Here is today’s focus for Souheil.";
+        document.getElementById('canvasSubtext').textContent = "One 4-minute intentional practice today builds weeks of mutual trust. No perfection required.";
+        document.getElementById('courseHeadline').textContent = "Chapter 3: When Screen Time Ends — Shifting from Defiance to Co-Regulation";
+        document.getElementById('courseParagraph').textContent = "When an 8-year-old struggles to power off a game, their brain is experiencing a rapid neurochemical downshift. Stepping into their room 3 minutes prior and establishing eye-level calm prepares their prefrontal cortex before you issue the shut-off request.";
+        document.getElementById('scriptText').innerHTML = '&ldquo;I know you were right in the middle of building that world. It’s hard to stop when you’re having so much fun. I’m starting our 3-minute bridge now so we can prep dinner together.&rdquo;';
+        document.getElementById('radarChildLabel').textContent = 'Souheil';
+
+        phoneBlock.classList.remove('hidden');
+        toddlerBlock.classList.add('hidden');
+      } else {
+        btnLeo.className = 'px-3.5 py-1 rounded-full bg-white text-terracotta shadow-2xs transition';
+        btnSouheil.className = 'px-3.5 py-1 rounded-full text-whisper hover:text-ink transition';
+
+        document.getElementById('hdrChildName').textContent = 'Leo';
+        document.getElementById('hdrLeapChip').textContent = 'Leap: Sensory Co-Regulation & Tantrum Reset';
+        document.getElementById('canvasGreeting').textContent = "Welcome home, Sarah. Here is today’s focus for Leo.";
+        document.getElementById('canvasSubtext').textContent = "Toddlerhood is physical. Your steady breathing is their emotional nervous system anchor today.";
+        document.getElementById('courseHeadline').textContent = "Chapter 1: The 3-Step Living Room Reset for Toddler Meltdowns";
+        document.getElementById('courseParagraph').textContent = "Toddlers cannot process logic or lectures during an amygdala storm. Moving down to floor level and offering steady physical proximity allows their nervous system to settle before any redirect.";
+        document.getElementById('scriptText').innerHTML = '&ldquo;Your body is feeling big mad right now because we had to turn off the songs. I am sitting right here on the carpet until you feel ready for a hug.&rdquo;';
+        document.getElementById('radarChildLabel').textContent = 'Leo';
+
+        phoneBlock.classList.add('hidden');
+        toddlerBlock.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
