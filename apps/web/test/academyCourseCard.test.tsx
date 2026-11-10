@@ -93,23 +93,30 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
     });
   });
 
-  describe('2. Multi-Modal Format Pills', () => {
-    it('renders all 3 required pedagogical format pills: Audio Memo, Script Vault, and AI Sparring', () => {
+  describe('2. Elimination of Overwhelming Format Pills & Age in Course Titles', () => {
+    it('does not render overwhelming format pills (Audio Memo, Script Vault, AI Sparring)', () => {
       const html = renderToStaticMarkup(
         React.createElement(ModuleCard, { module: editorialModule })
       );
 
-      // 🎧 Audio Memo format pill
-      expect(html).toContain('🎧 Audio Memo');
+      // Verify pills are eliminated to prevent user overwhelm
+      expect(html).not.toContain('🎧 Audio Memo');
+      expect(html).not.toContain('💬 Script Vault');
+      expect(html).not.toContain('🤖 AI Sparring');
+    });
 
-      // 💬 Script Vault format pill
-      expect(html).toContain('💬 Script Vault');
+    it('renders concise course title with relative age stripped', () => {
+      const moduleWithAge = {
+        ...editorialModule,
+        title: 'Toddler Meltdowns & Limbic Flooding (Ages 1-2)',
+      };
 
-      // 🤖 AI Sparring format pill
-      expect(html).toContain('🤖 AI Sparring');
+      const html = renderToStaticMarkup(
+        React.createElement(ModuleCard, { module: moduleWithAge })
+      );
 
-      // Verify badge styling contains monospace and subtle borders
-      expect(html).toContain('font-mono');
+      expect(html).toContain('Toddler Meltdowns &amp; Limbic Flooding');
+      expect(html).not.toContain('(Ages 1-2)');
     });
   });
 

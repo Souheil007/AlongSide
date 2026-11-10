@@ -170,7 +170,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-toddler-tantrums-co-regulation",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Toddler Meltdowns & Limbic Flooding (Ages 1-2)",
+    title: "Toddler Meltdowns & Limbic Flooding",
     reliefSubtitle: "Calm volcanic tantrums, biting, and emotional dysregulation without yelling or isolating",
     tonightQuickWinTitle: "Lesson 1: The Floor-Level Vagal Grounding Protocol",
     summary: "Navigate the emerging amygdala power surges of early toddlerhood, resolve biting and hitting urges, and establish co-regulation as an external nervous system.",
@@ -300,7 +300,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-older-toddler-defiance-boundaries",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Older Toddler Autonomy & Loving Boundaries (Ages 2-3)",
+    title: "Older Toddler Autonomy & Loving Boundaries",
     reliefSubtitle: "Navigate the 'NO!' phase, transition battles, and defiance while protecting attachment",
     tonightQuickWinTitle: "Lesson 1: The 2-Choice Forced Autonomy Offer",
     summary: "Harness Erikson's autonomy vs. shame stage, dissolve transition battles with visual ladders, and maintain loving containment without punitive threats.",
@@ -430,7 +430,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-preschool-feelings",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Preschool Big Feelings & Theory of Mind (Ages 4-6)",
+    title: "Preschool Big Feelings & Theory of Mind",
     reliefSubtitle: "De-escalate dramatic emotional swings, bedtime delays, and sibling disputes peacefully",
     tonightQuickWinTitle: "Lesson 1: The Name-It-to-Tame-It Feelings Anchor",
     summary: "Decode emerging theory of mind, navigate emotional egocentrism, resolve preschool bedtime resistance, and build empathy scaffolding.",
@@ -560,7 +560,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-elementary-impulses",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Elementary Impulse Control & Sibling Dynamics (Ages 7-9)",
+    title: "Elementary Impulse Control & Sibling Dynamics",
     reliefSubtitle: "Tame school-day decompression explosions, backtalk, and intense sibling rivalry",
     tonightQuickWinTitle: "Lesson 1: The After-School Decompression Bridge",
     summary: "Master prefrontal myelination leaps, resolve 4 PM after-school restraint collapse, establish neutral fairness protocols, and replace punishments with restorative repair.",
@@ -690,7 +690,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-tween-adrenarche",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Tween Adrenarche & Emotional Volatility (Ages 10-12)",
+    title: "Tween Adrenarche & Emotional Volatility",
     reliefSubtitle: "Navigate eye-rolling, mood swings, and door-slamming without losing parental influence",
     tonightQuickWinTitle: "Lesson 1: The Non-Reactive Neutral Stance",
     summary: "Decode adrenarche and DHEA neurochemistry, defuse tween sarcasm and door-slamming, leverage side-by-side car conversations, and build respectful repair contracts.",
@@ -820,7 +820,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-adolescent-identity",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Adolescent Identity, Defiance & Boundaries (Ages 13-15)",
+    title: "Adolescent Identity, Defiance & Boundaries",
     reliefSubtitle: "Stay connected while they pull away, set firm safety limits, and avoid explosive arguments",
     tonightQuickWinTitle: "Lesson 1: The 'Validate First, Solve Second' Framework",
     summary: "Master adolescent synaptic pruning and dopamine drive, implement collaborative boundary agreements, defuse teen hostility, and rebuild trust after safety violations.",
@@ -950,7 +950,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-teen-autonomy",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
-    title: "Late Teen Autonomy & Emotional Sovereignty (Ages 16-18)",
+    title: "Late Teen Autonomy & Emotional Sovereignty",
     reliefSubtitle: "Transition from manager to consultant, handle future anxiety, and prepare for independence",
     tonightQuickWinTitle: "Lesson 1: The Consultant Shift Protocol",
     summary: "Navigate the parental consultant transition, understand late-stage frontal lobe myelination, foster independent life-skill mastery, and build a lifelong emerging adult covenant.",
@@ -1210,7 +1210,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-toddler-sleep-and-nap-transitions",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Toddler Sleep Architecture & Nap Drops (Ages 1-2)",
+    title: "Toddler Sleep Architecture & Nap Drops",
     reliefSubtitle: "Survive the 2-to-1 nap transition, night wakings, and cot-escape attempts peacefully",
     tonightQuickWinTitle: "Lesson 1: The 2-to-1 Nap Transition Bridge",
     summary: "Master the complex 2-to-1 nap drop between 14-18 months, navigate separation anxiety at bedtime, prevent cot escapes, and handle acute pediatric illness.",
@@ -1340,7 +1340,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-older-toddler-toilet-and-bedtime",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Older Toddler Toilet Learning & Night Terrors (Ages 2-3)",
+    title: "Older Toddler Toilet Learning & Night Terrors",
     reliefSubtitle: "Master gentle toilet training and handle night terrors without trauma or power struggles",
     tonightQuickWinTitle: "Lesson 1: The Low-Pressure Toilet Readiness Test",
     summary: "Evidence-based toilet learning readiness, differentiating night terrors from nightmares in deep delta sleep, transitioning to big beds, and sensory hygiene routines.",
@@ -1470,7 +1470,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-preschool-immunity",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Preschool Immunity & Restorative Rest (Ages 4-6)",
+    title: "Preschool Immunity & Restorative Rest",
     reliefSubtitle: "Handle daycare viruses, seasonal fevers, and quiet-time transitions with pediatric confidence",
     tonightQuickWinTitle: "Lesson 1: The Daycare Viral Comfort Protocol",
     summary: "Master preschool viral immunology, understand the normal 8-10 colds per year cycle, replace dropping naps with structured quiet rest hours, and establish preventive wellness.",
@@ -1600,7 +1600,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-elementary-wellness",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Middle Childhood Physical Health & Sleep (Ages 7-9)",
+    title: "Middle Childhood Physical Health & Sleep",
     reliefSubtitle: "Protect 10-hour sleep cycles, manage growing pains, and build active lifestyle habits",
     tonightQuickWinTitle: "Lesson 1: The 10-Hour Sleep Bank Setup",
     summary: "Protect restorative 10-hour sleep architecture, decode musculoskeletal growth spurts, establish 60 minutes of daily outdoor physical activity, and recognize somatic stress signals.",
@@ -1730,7 +1730,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-tween-circadian-leaps",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Pubertal Physical Leaps & Circadian Delays (Ages 10-12)",
+    title: "Pubertal Physical Leaps & Circadian Delays",
     reliefSubtitle: "Navigate pubertal body changes, personal hygiene resistance, and delayed sleep onset",
     tonightQuickWinTitle: "Lesson 1: The 2-Hour Melatonin Wind-Down",
     summary: "Master the biological circadian phase delay, address personal hygiene resistance without shaming, navigate pubertal growth spurts, and protect sports safety.",
@@ -1860,7 +1860,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-adolescent-sleep-protection",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Adolescent Sleep Protection & Athletic Health (Ages 13-15)",
+    title: "Adolescent Sleep Protection & Athletic Health",
     reliefSubtitle: "Protect teen sleep from early school start times, sports burnout, and late-night exhaustion",
     tonightQuickWinTitle: "Lesson 1: The Tech-Free Nightstand Sanctuary",
     summary: "Mitigate the adolescent mental health sleep crisis, eliminate smartphone nightstand contamination, navigate youth athletic concussions, and build autonomic stress recovery.",
@@ -1990,7 +1990,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "health-young-adult-wellness",
     category: AcademyCategory.HEALTH_AND_WELLNESS,
-    title: "Young Adult Physical Autonomy & Wellness (Ages 16-18)",
+    title: "Young Adult Physical Autonomy & Wellness",
     reliefSubtitle: "Hand over medical management, sexual health literacy, and adult lifestyle habits",
     tonightQuickWinTitle: "Lesson 1: The Medical Sovereignty Handover",
     summary: "Transfer adult healthcare independence, prevent university sleep crashes, navigate honest substance harm reduction, and establish lifelong primary care habits.",
@@ -2250,7 +2250,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-toddler-table-manners-picky-eaters",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Toddler Appetite Slumps & Food Refusal (Ages 1-2)",
+    title: "Toddler Appetite Slumps & Food Refusal",
     reliefSubtitle: "Stop mealtime battles, food throwing, and panic over physiological toddler anorexia",
     tonightQuickWinTitle: "Lesson 1: The Division of Responsibility at Table",
     summary: "Master Ellyn Satter’s Division of Responsibility, understand physiological toddler anorexia as growth rates decelerate, resolve food throwing, and secure essential iron and healthy fats.",
@@ -2380,7 +2380,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-older-toddler-independence-and-snacking",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Older Toddler Food Neophobia & Snacking (Ages 2-3)",
+    title: "Older Toddler Food Neophobia & Snacking",
     reliefSubtitle: "Expand safe foods, stop grazing, and handle beige-food fixations without short-order cooking",
     tonightQuickWinTitle: "Lesson 1: The 'One Familiar Safe Food' Rule",
     summary: "Decode evolutionary food neophobia at age 2, dismantle chronic all-day grazing with scheduled snack windows, and bridge new foods through sensory prep.",
@@ -2510,7 +2510,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-preschool-picky-eating",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Preschool Picky Eating & Family Meal Harmony (Ages 4-6)",
+    title: "Preschool Picky Eating & Family Meal Harmony",
     reliefSubtitle: "End short-order cooking, vegetable battles, and dessert obsession with clinical ease",
     tonightQuickWinTitle: "Lesson 1: Neutral Dessert Pairing Protocol",
     summary: "De-weaponize desserts and sugar obsession, decode super-taster taste bud proliferation, transition to family-style bowl dining, and master the 10-exposure framework.",
@@ -2640,7 +2640,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-elementary-fuel",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Elementary Fuel & Sustained Focus (Ages 7-9)",
+    title: "Elementary Fuel & Sustained Focus",
     reliefSubtitle: "Fuel cognitive focus in school, avoid sugar crashes, and pack healthy school lunches",
     tonightQuickWinTitle: "Lesson 1: The High-Protein Morning Focus Bowl",
     summary: "Prevent mid-morning hypoglycemic attention crashes with high-protein breakfasts, navigate glycemic index impact on executive functioning, co-design balanced school lunches, and normalize treats.",
@@ -2770,7 +2770,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-tween-growth-spurts",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Pre-Teen Growth Spurts & Food Relationship (Ages 10-12)",
+    title: "Pre-Teen Growth Spurts & Food Relationship",
     reliefSubtitle: "Handle pubertal hunger surges, protect positive body image, and build nutritional awareness",
     tonightQuickWinTitle: "Lesson 1: The Open Snack Pantry Framework",
     summary: "Fuel ravenous pubertal metabolic leaps, decode leptin/ghrelin surges during peak height velocity, eliminate diet culture and fat-talk at home, and build basic culinary autonomy.",
@@ -2900,7 +2900,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-adolescent-sports-fuel",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Adolescent Metabolic Demands & Sports Nutrition (Ages 13-15)",
+    title: "Adolescent Metabolic Demands & Sports Nutrition",
     reliefSubtitle: "Support high-intensity sports, prevent disordered eating cues, and manage energy crashes",
     tonightQuickWinTitle: "Lesson 1: The Post-Workout Glycogen Window",
     summary: "Master athletic sports nutrition for student athletes, protect female and male bone density, screen for subtle disordered eating flags, and replace energy drinks with authentic hydration.",
@@ -3030,7 +3030,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "nutrition-teen-food-sovereignty",
     category: AcademyCategory.NUTRITION_AND_FEEDING,
-    title: "Teen Food Sovereignty & Lifelong Habits (Ages 16-18)",
+    title: "Teen Food Sovereignty & Lifelong Habits",
     reliefSubtitle: "Prepare teens to cook on a budget, resist fast-food convenience traps, and nourish their bodies",
     tonightQuickWinTitle: "Lesson 1: The Budget Grocery Survival Blueprint",
     summary: "Master budget grocery shopping, understand the gut-brain axis and microbiome impact on mental health, establish batch-cooking routines, and cultivate lifelong intuitive eating.",
@@ -3290,7 +3290,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-toddler-locomotion-and-sensory-bins",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Toddler Gross Motor & Sensory Exploration (Ages 1-2)",
+    title: "Toddler Gross Motor & Sensory Exploration",
     reliefSubtitle: "Channel climbing and dumping energy into purposeful sensory play without house destruction",
     tonightQuickWinTitle: "Lesson 1: The Safe Climbing Crash-Pad Setup",
     summary: "Direct toddler climbing and dumping instincts safely, utilize heavy work and proprioceptive play, create mess-free sensory bins, and scaffold the 50-word language explosion.",
@@ -3420,7 +3420,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-older-toddler-symbolic-play-and-blocks",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Older Toddler Constructive & Symbolic Play (Ages 2-3)",
+    title: "Older Toddler Constructive & Symbolic Play",
     reliefSubtitle: "Foster deep imaginative play and block construction while nurturing pre-academic curiosity",
     tonightQuickWinTitle: "Lesson 1: The Open-Ended Block Challenge",
     summary: "Master the 5 developmental stages of block building, decode symbolic object substitution, foster dialogic storybook reading, and scaffold parallel to cooperative peer play.",
@@ -3550,7 +3550,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-preschool-executive-function",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Imaginative Play & Executive Function (Ages 4-6)",
+    title: "Imaginative Play & Executive Function",
     reliefSubtitle: "Strengthen impulse control, working memory, and attention span through playful games",
     tonightQuickWinTitle: "Lesson 1: The Freeze Dance Working Memory Game",
     summary: "Build core executive function through rule-reversal games, understand frontoparietal imaginative networks, utilize nature loose-parts play, and master fine motor pre-writing skills.",
@@ -3680,7 +3680,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-elementary-logic-maker",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Logic, Spatial Strategy & Creative Maker Play (Ages 7-9)",
+    title: "Logic, Spatial Strategy & Creative Maker Play",
     reliefSubtitle: "Channel gaming passion into real-world engineering, board games, and maker mastery",
     tonightQuickWinTitle: "Lesson 1: The 1-Hour Cardboard Maker Challenge",
     summary: "Harness hands-on maker engineering, activate parietal cortex spatial reasoning, navigate board game dynamics and graceful sportsmanship, and create an independent reading sanctuary.",
@@ -3810,7 +3810,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-tween-flow-hobbies",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Pre-Teen Focus, Flow State & Deep Hobbies (Ages 10-12)",
+    title: "Pre-Teen Focus, Flow State & Deep Hobbies",
     reliefSubtitle: "Help tweens discover deep creative flow, overcome boredom, and build specialized skills",
     tonightQuickWinTitle: "Lesson 1: The Low-Stakes Hobby Discovery Setup",
     summary: "Discover intrinsic creative passions without parental pressure, master Csikszentmihalyi’s neurochemistry of flow, overcome the frustration plateau, and navigate team sports collaboration.",
@@ -3940,7 +3940,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-adolescent-critical-thinking",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Critical Thinking & Real-World Strategy (Ages 13-15)",
+    title: "Critical Thinking & Real-World Strategy",
     reliefSubtitle: "Cultivate analytical thinking, complex debates, and creative expression in young teens",
     tonightQuickWinTitle: "Lesson 1: The Devil's Advocate Dinner Game",
     summary: "Develop formal operational thought and metacognition, cultivate intellectual flexibility through dinner debates, support self-directed passion projects, and connect teens with outside mentors.",
@@ -4070,7 +4070,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "play-teen-intellectual-mastery",
     category: AcademyCategory.DEVELOPMENT_AND_PLAY,
-    title: "Intellectual Mastery & Real-World Strategy (Ages 16-18)",
+    title: "Intellectual Mastery & Real-World Strategy",
     reliefSubtitle: "Support deep focus for exams, portfolio development, and personal life visioning",
     tonightQuickWinTitle: "Lesson 1: The Deep Work 90-Minute Block",
     summary: "Master Cal Newport’s deep work protocols, eliminate cognitive load multitasking traps, foster creative solitude and reflective journaling, and build lifelong compass vision mapping.",
@@ -4330,7 +4330,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-toddler-screen-tantrums-and-coping",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Toddler Digital Boundaries & Co-Viewing (Ages 1-2)",
+    title: "Toddler Digital Boundaries & Co-Viewing",
     reliefSubtitle: "Prevent explosive phone-snatching tantrums and establish screen-free bedrooms",
     tonightQuickWinTitle: "Lesson 1: The Screen-Free Bedroom Sanctuary Audit",
     summary: "Master the neurobiology of the video deficit effect, prevent toddler phone-snatching meltdowns, audit screen-free sleep sanctuaries, and implement the visual stoplight transition.",
@@ -4460,7 +4460,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-older-toddler-audiobooks-and-co-viewing",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Older Toddler High-Quality Media & Co-Viewing (Ages 2-3)",
+    title: "Older Toddler High-Quality Media & Co-Viewing",
     reliefSubtitle: "Curate slow-paced content, leverage audiobooks, and avoid fast-paced algorithm traps",
     tonightQuickWinTitle: "Lesson 1: The Slow-Paced Media Curation Checklist",
     summary: "Distinguish slow-paced intentional media from hyper-stimulating algorithmic traps, utilize screen-free audio players (Toniebox/Yoto), and practice active co-viewing dialogue.",
@@ -4590,7 +4590,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-preschool-media-curation",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Preschool Media Curation & Stopping Transitions (Ages 4-6)",
+    title: "Preschool Media Curation & Stopping Transitions",
     reliefSubtitle: "Set firm 30-minute daily limits, eliminate device bargaining, and turn off TVs peacefully",
     tonightQuickWinTitle: "Lesson 1: The Physical Timer & Episode Agreement",
     summary: "Establish clear episode-based boundaries, decode dopamine reward loops in preschool tablet gaming, declare sacred screen-free zones, and master post-screen bridge activities.",
@@ -4720,7 +4720,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-elementary-first-gaming",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "First Gaming, Dopamine Loops & Readiness (Ages 7-9)",
+    title: "First Gaming, Dopamine Loops & Readiness",
     reliefSubtitle: "Navigate Roblox/Minecraft requests, prevent gaming rages, and maintain homework focus",
     tonightQuickWinTitle: "Lesson 1: The Post-Game Decompression Protocol",
     summary: "De-escalate post-gaming rage and meltdowns, decode predatory variable-reward loot boxes in elementary video games, establish docking routines, and draft a bilateral gaming contract.",
@@ -4850,7 +4850,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-tween-smartphone-pacts",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Tween Smartphone Transition & Family Pacts (Ages 10-12)",
+    title: "Tween Smartphone Transition & Family Pacts",
     reliefSubtitle: "Handle the \"all my friends have phones\" pressure with smart watches, dumbphones, or pacts",
     tonightQuickWinTitle: "Lesson 1: The Wait Until 8th Grade Roadmap",
     summary: "Evaluate genuine smartphone readiness vs peer pressure, decode the neurobiology of social comparison and FOMO in group chats, establish the 8:30 PM charging routine, and draft bilateral pacts.",
@@ -4980,7 +4980,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-adolescent-algorithmic-feeds",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Adolescent Algorithmic Feeds & Digital Reputation (Ages 13-15)",
+    title: "Adolescent Algorithmic Feeds & Digital Reputation",
     reliefSubtitle: "Protect teen mental health from TikTok/Instagram algorithms, cyberbullying, and sleep theft",
     tonightQuickWinTitle: "Lesson 1: The Algorithmic Feed Detox Protocol",
     summary: "Decode recommendation engine neurochemistry, protect adolescent self-worth from social validation circuits, manage digital footprints and privacy, and implement unplugged weekends.",
@@ -5110,7 +5110,7 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "digital-teen-digital-independence",
     category: AcademyCategory.DIGITAL_AND_DEVICES,
-    title: "Teen Digital Independence & Young Adult Covenant (Ages 16-18)",
+    title: "Teen Digital Independence & Young Adult Covenant",
     reliefSubtitle: "Transition monitoring to self-regulation, avoid distracted driving, and master digital focus",
     tonightQuickWinTitle: "Lesson 1: The Zero Distracted Driving Pledge",
     summary: "Prevent fatal distracted driving with automated phone silence, eliminate continuous partial attention in late adolescence, curate an intentional digital diet, and launch young adults with digital sovereignty.",

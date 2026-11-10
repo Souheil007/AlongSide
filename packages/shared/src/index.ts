@@ -8,3 +8,4 @@ export * from './algorithms/milestones.js';
 export * from './algorithms/nutrition.js';
 export * from './algorithms/healthTriage.js';
 export * from './algorithms/pediatricHealth.js';
+export * from './algorithms/courseTitle.js';

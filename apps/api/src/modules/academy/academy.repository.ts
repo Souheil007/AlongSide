@@ -19,6 +19,7 @@ import {
   type AcademyModuleDetailDTO,
   type AcademyLessonCompletionResponseDTO,
   getEquivalentTiers,
+  formatCourseTitle,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
@@ -167,8 +168,23 @@ export class PrismaAcademyRepository implements AcademyRepository {
       where,
       orderBy: { sortOrder: 'asc' },
       include: {
-        lessons: {
+        chapters: {
           select: { id: true },
+        },
+        lessons: {
+          select: {
+            id: true,
+            moduleId: true,
+            chapterId: true,
+            slug: true,
+            title: true,
+            readingMinutes: true,
+            sortOrder: true,
+            audioUrl: true,
+            audioDurationSeconds: true,
+            whatNotToSay: true,
+            deliveryTip: true,
+          },
         },
       },
     });
@@ -192,20 +208,40 @@ export class PrismaAcademyRepository implements AcademyRepository {
       ).length;
       const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
 
+      const lessonsSummary = m.lessons
+        .slice()
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .map((l) => ({
+          id: l.id,
+          moduleId: l.moduleId,
+          chapterId: l.chapterId,
+          slug: l.slug,
+          title: l.title,
+          readingMinutes: l.readingMinutes,
+          sortOrder: l.sortOrder,
+          isCompleted: completedLessonIds.has(l.id),
+          audioUrl: l.audioUrl ?? undefined,
+          audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+          whatNotToSay: l.whatNotToSay ?? undefined,
+          deliveryTip: l.deliveryTip ?? undefined,
+        }));
+
       return {
         id: m.id,
         category: m.category as AcademyCategory,
         slug: m.slug,
-        title: m.title,
+        title: formatCourseTitle(m.title),
         summary: m.summary,
         reliefSubtitle: m.reliefSubtitle ?? undefined,
         tonightQuickWinTitle: m.tonightQuickWinTitle ?? undefined,
         coverImageUrl: m.coverImageUrl,
         developmentalTier: m.developmentalTier as DevelopmentalTier,
         sortOrder: m.sortOrder,
+        chapterCount: m.chapters.length,
         lessonCount,
         completedLessonCount,
         isCompleted,
+        lessons: lessonsSummary,
       };
     });
   }
@@ -308,7 +344,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       id: moduleRecord.id,
       category: moduleRecord.category as AcademyCategory,
       slug: slug === targetSlug ? moduleRecord.slug : slug,
-      title: moduleRecord.title,
+      title: formatCourseTitle(moduleRecord.title),
       summary: moduleRecord.summary,
       reliefSubtitle: moduleRecord.reliefSubtitle ?? undefined,
       tonightQuickWinTitle: moduleRecord.tonightQuickWinTitle ?? undefined,
@@ -540,7 +576,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         id: moduleId,
         category: mod.category,
         slug: mod.slug,
-        title: mod.title,
+        title: formatCourseTitle(mod.title),
         summary: mod.summary,
         reliefSubtitle: mod.reliefSubtitle ?? null,
         tonightQuickWinTitle: mod.tonightQuickWinTitle ?? null,
@@ -641,20 +677,41 @@ export class InMemoryAcademyRepository implements AcademyRepository {
 
     moduleList.sort((a, b) => a.sortOrder - b.sortOrder);
 
+    const allChapters = Array.from(this.chapters.values());
     const allLessons = Array.from(this.lessons.values());
 
     return moduleList.map((m) => {
-      const modLessons = allLessons.filter((l) => l.moduleId === m.id);
+      const modChapters = allChapters.filter((c) => c.moduleId === m.id);
+      const modLessons = allLessons
+        .filter((l) => l.moduleId === m.id)
+        .slice()
+        .sort((a, b) => a.sortOrder - b.sortOrder);
       const lessonCount = modLessons.length;
 
       let completedLessonCount = 0;
-      if (options?.userId) {
-        completedLessonCount = modLessons.filter((l) => {
+      const lessonsSummary = modLessons.map((l) => {
+        let isDone = false;
+        if (options?.userId) {
           const key = `${options.userId}:${l.id}`;
           const p = this.progressRecords.get(key);
-          return p?.isCompleted === true;
-        }).length;
-      }
+          isDone = p?.isCompleted === true;
+        }
+        if (isDone) completedLessonCount++;
+        return {
+          id: l.id,
+          moduleId: l.moduleId,
+          chapterId: l.chapterId,
+          slug: l.slug,
+          title: l.title,
+          readingMinutes: l.readingMinutes,
+          sortOrder: l.sortOrder,
+          isCompleted: isDone,
+          audioUrl: l.audioUrl ?? undefined,
+          audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+          whatNotToSay: l.whatNotToSay ?? undefined,
+          deliveryTip: l.deliveryTip ?? undefined,
+        };
+      });
 
       const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
 
@@ -662,16 +719,18 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         id: m.id,
         category: m.category,
         slug: m.slug,
-        title: m.title,
+        title: formatCourseTitle(m.title),
         summary: m.summary,
         reliefSubtitle: m.reliefSubtitle ?? undefined,
         tonightQuickWinTitle: m.tonightQuickWinTitle ?? undefined,
         coverImageUrl: m.coverImageUrl,
         developmentalTier: m.developmentalTier,
         sortOrder: m.sortOrder,
+        chapterCount: modChapters.length,
         lessonCount,
         completedLessonCount,
         isCompleted,
+        lessons: lessonsSummary,
       };
     });
   }
@@ -771,7 +830,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       id: mod.id,
       category: mod.category,
       slug,
-      title: mod.title,
+      title: formatCourseTitle(mod.title),
       summary: mod.summary,
       reliefSubtitle: mod.reliefSubtitle ?? undefined,
       tonightQuickWinTitle: mod.tonightQuickWinTitle ?? undefined,
@@ -846,7 +905,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       module: {
         id: mod.id,
         slug: moduleSlug,
-        title: mod.title,
+        title: formatCourseTitle(mod.title),
         developmentalTier: mod.developmentalTier,
         category: mod.category,
       },
@@ -923,7 +982,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       module: {
         id: mod.id,
         slug: mod.slug,
-        title: mod.title,
+        title: formatCourseTitle(mod.title),
         lessonCount,
         completedLessonCount,
         percentComplete,

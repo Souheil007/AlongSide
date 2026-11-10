@@ -3,9 +3,10 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Pause, X } from 'lucide-react';
-import type {
-  AcademyLessonSummaryDTO,
-  AcademyModuleDetailDTO,
+import {
+  formatCourseTitle,
+  type AcademyLessonSummaryDTO,
+  type AcademyModuleDetailDTO,
 } from '@alongside/shared';
 import { getTierStageName } from '@/components/academy/ActiveChildCalibrationBanner';
 import { normalizeChildTier } from '@/components/academy/AcademyCatalogClient';
@@ -331,73 +332,13 @@ export function BiteSizedCourseDetailView({
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 space-y-8">
         {/* Masthead */}
         <section className="space-y-3">
-          <div
-            data-testid="active-child-stage-match"
-            className="flex items-center gap-2 text-xs font-mono text-mute"
-          >
-            <span className="text-spruce font-semibold uppercase tracking-wider">
-              {tierInfo.label}
-            </span>
-            <span className="text-hairline">/</span>
-            {isTierMatch && activeChild ? (
-              <span data-testid="stage-match-calibrated" className="text-body font-medium">
-                Calibrated for {activeChild.name}
-              </span>
-            ) : activeChild ? (
-              <span data-testid="stage-match-mismatch" className="text-amber-800">
-                Active child: {activeChild.name} ({getTierStageName(activeChild.developmentalTier)})
-              </span>
-            ) : (
-              <span>Evidence-based pediatric framework</span>
-            )}
-          </div>
-
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-ink tracking-tight leading-snug">
-            {module.title}
+            {formatCourseTitle(module.title)}
           </h1>
 
           <p className="text-body text-sm leading-relaxed">
             {module.summary}
           </p>
-
-          {/* 3 Core Walkaways / Takeaways */}
-          <div
-            data-testid="core-takeaways-card"
-            className="rounded-xl border border-hairline/80 bg-white p-4 space-y-2.5 shadow-2xs"
-          >
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-spruce uppercase tracking-wider">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-spruce/10 text-spruce text-[11px]">
-                ★
-              </span>
-              <span>3 Core Course Takeaways</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs text-body font-sans">
-              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
-                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
-                  1. Biological Root
-                </span>
-                <p className="leading-snug text-ink/90">
-                  Understand the neurobiological cause behind your child&apos;s behavior.
-                </p>
-              </div>
-              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
-                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
-                  2. Verbatim Scripts
-                </span>
-                <p className="leading-snug text-ink/90">
-                  Tested dialogue scripts with tone and posture delivery tips.
-                </p>
-              </div>
-              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
-                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
-                  3. Action Protocol
-                </span>
-                <p className="leading-snug text-ink/90">
-                  Step-by-step household routines and printable guidelines.
-                </p>
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* SECTION 1: TONIGHT'S WINS (The Immediate Focus) */}

@@ -256,9 +256,11 @@ export interface AcademyModuleDTO {
   coverImageUrl?: string | null;
   developmentalTier: DevelopmentalTier;
   sortOrder: number;
+  chapterCount?: number;
   lessonCount: number;
   completedLessonCount: number;
   isCompleted: boolean;
+  lessons?: AcademyLessonSummaryDTO[];
 }
 
 export interface AcademyLessonSummaryDTO {
