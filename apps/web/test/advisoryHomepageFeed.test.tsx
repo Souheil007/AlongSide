@@ -262,8 +262,8 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
         const content = fs.readFileSync(pagePath, 'utf8');
 
         expect(content).toContain('<HeroSection />');
-        expect(content).toContain('<LifespanStageSelector />');
         expect(content).toContain('<PillarsShowcase />');
+        expect(content).toContain('<LifespanStageSelector />');
         expect(content).toContain('<CulturePlaygroundDemo />');
         expect(content).toContain('<DeviceActionHubSpotlight />');
         expect(content).toContain('<ClinicalAuthorityTestimonials />');

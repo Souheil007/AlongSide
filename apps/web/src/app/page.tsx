@@ -1,7 +1,7 @@
 import {
   HeroSection,
-  LifespanStageSelector,
   PillarsShowcase,
+  LifespanStageSelector,
   CulturePlaygroundDemo,
   DeviceActionHubSpotlight,
   ClinicalAuthorityTestimonials,
@@ -15,11 +15,11 @@ export default function HomePage() {
       {/* 1. Hero Section: v2.5.0 Advisory Sanctuary & Trust Signals */}
       <HeroSection />
 
-      {/* 2. Interactive 6-Stage Lifespan Advisory Explorer (0-3, 4-6, 7-9, 10-12, 13-15, 16-18) */}
-      <LifespanStageSelector />
-
-      {/* 3. The 3 Core Pillars Architecture Showcase (Academy, Culture Digest, Family Pacts & Devices) */}
+      {/* 2. The 3 Core Pillars Architecture Showcase (Academy, Culture Digest, Family Pacts & Devices) */}
       <PillarsShowcase />
+
+      {/* 3. Interactive 6-Stage Lifespan Advisory Explorer (0-3, 4-6, 7-9, 10-12, 13-15, 16-18) */}
+      <LifespanStageSelector />
 
       {/* 4. Live Interactive Sunday Youth Culture & Slang Playground Demo */}
       <CulturePlaygroundDemo />
