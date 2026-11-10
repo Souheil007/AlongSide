@@ -211,38 +211,55 @@
 
     <!-- Direction Navigation Tabs -->
     <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchView('alt-a')">
-        <span>Option A: Minimal</span>
-        <span class="winner-tag">RECOMMENDED</span>
+      <!-- 5 Alternative C Evolutions (User Requested) -->
+      <button class="tab-btn active" onclick="switchView('c1-accordion')">
+        <span>C.1: Accordion</span>
+        <span class="winner-tag">TOP FLOW</span>
+      </button>
+      <button class="tab-btn" onclick="switchView('c2-console')">
+        <span>C.2: Console</span>
+      </button>
+      <button class="tab-btn" onclick="switchView('c3-radial')">
+        <span>C.3: Compass Arc</span>
+      </button>
+      <button class="tab-btn" onclick="switchView('c4-dossier')">
+        <span>C.4: Dossier</span>
+      </button>
+      <button class="tab-btn" onclick="switchView('c5-carousel')">
+        <span>C.5: Carousel</span>
+      </button>
+
+      <!-- Original Alternatives -->
+      <button class="tab-btn" onclick="switchView('alt-a')">
+        <span>Orig A: Minimal</span>
       </button>
       <button class="tab-btn" onclick="switchView('alt-b')">
-        <span>Option B: Visual</span>
+        <span>Orig B: Bento</span>
       </button>
-      <button class="tab-btn" onclick="switchView('alt-c')">
-        <span>Option C: Creative</span>
-      </button>
+
+      <!-- Scorecard & Docs -->
       <button class="tab-btn" onclick="switchView('docs')">
-        <span>📋 Audit & Scorecard</span>
+        <span>📋 Comparison Scorecard</span>
       </button>
     </div>
 
     <!-- Responsive Viewport Switcher -->
     <div class="viewport-controls">
       <span>Viewport:</span>
-      <button class="vp-btn active" onclick="setViewport('100%')">Desktop (100%)</button>
-      <button class="vp-btn" onclick="setViewport('768px')">Tablet (768px)</button>
-      <button class="vp-btn" onclick="setViewport('390px')">Mobile (390px)</button>
+      <button class="vp-btn active" onclick="setViewport('100%')">Desktop</button>
+      <button class="vp-btn" onclick="setViewport('768px')">Tablet</button>
+      <button class="vp-btn" onclick="setViewport('390px')">Mobile</button>
     </div>
   </header>
 
   <!-- Info Strip -->
   <div class="info-strip">
     <div class="info-meta">
-      <strong id="activeDirTitle" style="color: #ffffff;">Alternative A — Minimal: The Curated Developmental Ledger</strong>
-      <span id="activeDirDesc" style="color: #9ca3af;">Editorial 2-column split, unboxed syllabus rows, 70% border reduction, single primary CTA.</span>
+      <strong id="activeDirTitle" style="color: #ffffff;">Design C.1 — Fluid Accordion Deck (Inline Progressive Expansion)</strong>
+      <span id="activeDirDesc" style="color: #9ca3af;">Zero mode-switch friction, anchored by age stage. The active domain expands in place revealing its 3 clinical lessons.</span>
     </div>
     <div style="font-family: var(--font-mono); font-size: 12px; color: #9ca3af;">
-      <a href="horizon-alternative-a-minimal.html" id="directPageLink" target="_blank" style="color: #60a5fa; text-decoration: none;">
+      <a href="horizon-c1-fluid-accordion.html" id="directPageLink" target="_blank" style="color: #60a5fa; text-decoration: none;">
         Open Standalone Page ↗
       </a>
     </div>
@@ -251,119 +268,121 @@
   <!-- Preview Sandbox with Iframe -->
   <div class="preview-sandbox">
     <div class="sandbox-frame-wrap" id="sandboxWrap">
-      <iframe id="previewFrame" src="horizon-alternative-a-minimal.html"></iframe>
+      <iframe id="previewFrame" src="horizon-c1-fluid-accordion.html"></iframe>
     </div>
 
     <!-- Documentation & Comparison Scorecard Tab -->
     <div class="doc-view" id="docView">
-      <h2 style="margin-top: 0;">SOU-81 Executive Scorecard: 3 Architectural Alternatives</h2>
+      <h2 style="margin-top: 0;">SOU-81 Executive Scorecard: Alternative C Evolutions</h2>
       <p>
-        The table below reflects the comprehensive 7-criterion evaluation from <code style="font-family: var(--font-mono); color: #fde047;">SECTION_COMPARISON.md</code>:
+        In response to user feedback on Alternative C ("<em>Alternative C is the best, but can we start from it and make it better... do we really need trace 1: domain across 0-18 feels like it adds more friction, keep browse by child age stage, and make 5 more designs starting from Alternative C that are fluent, creative, easy to digest, user friendly, appealing</em>"), we eliminated the dual-mode switcher and produced 5 distinct evolutions anchored strictly by child age stage:
       </p>
 
       <table>
         <thead>
           <tr>
-            <th>Evaluation Dimension</th>
-            <th>Alternative A: Minimal (Ledger)</th>
-            <th>Alternative B: Visual (Bento)</th>
-            <th>Alternative C: Creative (Dual-Axis)</th>
-            <th>Winner</th>
+            <th>Direction</th>
+            <th>Metaphor</th>
+            <th>Fluency & Flow</th>
+            <th>Simplicity & Digestion</th>
+            <th>Appeal & Aesthetic</th>
+            <th>Primary Strengths</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>1. Visual Appeal & Polish</strong></td>
-            <td><strong>9.6 / 10</strong> (World-class editorial dignity)</td>
-            <td>9.4 / 10 (Dynamic bento cards)</td>
-            <td>9.1 / 10 (Interactive cockpit)</td>
-            <td><strong>Alternative A</strong></td>
+            <td><strong>C.1: Fluid Accordion Deck</strong></td>
+            <td>Inline Progressive Expansion</td>
+            <td><strong>9.8 / 10</strong></td>
+            <td><strong>9.7 / 10</strong></td>
+            <td><strong>9.6 / 10</strong></td>
+            <td>Zero layout jumps. Expand any domain in-place; others collapse into slim summary strips. Maintains full spatial awareness of all 5 domains.</td>
           </tr>
           <tr>
-            <td><strong>2. Information Clarity</strong></td>
-            <td><strong>9.7 / 10</strong> (5 categories scanned in 3s)</td>
-            <td>9.0 / 10 (Hero anchor dominant)</td>
-            <td>9.2 / 10 (Inline lesson titles)</td>
-            <td><strong>Alternative A</strong></td>
+            <td><strong>C.2: Editorial Studio Console</strong></td>
+            <td>Master-Detail 35/65 Split</td>
+            <td><strong>9.7 / 10</strong></td>
+            <td><strong>9.8 / 10</strong></td>
+            <td><strong>9.5 / 10</strong></td>
+            <td>Clear separation of concerns: left sidebar for domain navigation, right canvas for syllabus showcase. Most ergonomic for desktop/tablet.</td>
           </tr>
           <tr>
-            <td><strong>3. Simplicity (Ponytail)</strong></td>
-            <td><strong>9.9 / 10</strong> (70% border reduction)</td>
-            <td>8.5 / 10 (Maintains 5 card borders)</td>
-            <td>8.1 / 10 (Complex client state)</td>
-            <td><strong>Alternative A</strong></td>
+            <td><strong>C.3: Horizon Compass Arc</strong></td>
+            <td>Whole-Child Radial Arc</td>
+            <td><strong>9.3 / 10</strong></td>
+            <td><strong>9.4 / 10</strong></td>
+            <td><strong>9.9 / 10</strong></td>
+            <td>Visually stunning connected arc showing the 5 interconnected pillars of child development (sleep affects behavior, tech affects sleep). High emotional resonance.</td>
           </tr>
           <tr>
-            <td><strong>4. Ease of Understanding</strong></td>
-            <td><strong>9.8 / 10</strong> (Immediate mental model)</td>
-            <td>8.9 / 10 (Weighted bento hierarchy)</td>
-            <td>8.7 / 10 (Requires chip clicks)</td>
-            <td><strong>Alternative A</strong></td>
+            <td><strong>C.4: Pediatric Field Dossier</strong></td>
+            <td>Tactile Tabbed Binder</td>
+            <td><strong>9.5 / 10</strong></td>
+            <td><strong>9.6 / 10</strong></td>
+            <td><strong>9.7 / 10</strong></td>
+            <td>Tactile physical folder tabs with archival clinical stamps. Instills profound clinical trust and prestige for anxious parents.</td>
           </tr>
           <tr>
-            <td><strong>5. Accessibility (WCAG)</strong></td>
-            <td><strong>9.8 / 10</strong> (15.2:1 contrast, 48px targets)</td>
-            <td>9.2 / 10 (Multi-column tab index)</td>
-            <td>9.0 / 10 (ARIA live region state)</td>
-            <td><strong>Alternative A</strong></td>
-          </tr>
-          <tr>
-            <td><strong>6. Design System Fit</strong></td>
-            <td><strong>9.9 / 10</strong> (Editorial Pediatric Almanac)</td>
-            <td>9.3 / 10 (Slightly SaaS-skewed)</td>
-            <td>8.8 / 10 (Product demo-skewed)</td>
-            <td><strong>Alternative A</strong></td>
-          </tr>
-          <tr>
-            <td><strong>7. Target Customer Fit</strong></td>
-            <td><strong>9.7 / 10</strong> (Zero cognitive clutter)</td>
-            <td>9.1 / 10 (Visually rich)</td>
-            <td>9.3 / 10 (High engagement)</td>
-            <td><strong>Alternative A</strong></td>
-          </tr>
-          <tr style="background: rgba(20, 61, 43, 0.3);">
-            <td><strong>Overall Weighted Score</strong></td>
-            <td><strong>9.77 / 10 (Highest Score)</strong></td>
-            <td><strong>9.06 / 10</strong></td>
-            <td><strong>8.89 / 10</strong></td>
-            <td><strong>ALTERNATIVE A</strong></td>
+            <td><strong>C.5: Carousel Stream</strong></td>
+            <td>Horizontal Spotlight Ribbon</td>
+            <td><strong>9.6 / 10</strong></td>
+            <td><strong>9.4 / 10</strong></td>
+            <td><strong>9.5 / 10</strong></td>
+            <td>Fluid horizontal ribbon with center spotlight and peeking neighboring cards. Highly mobile-first with smooth arrow and swipe controls.</td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Definitive Recommendation</h2>
-      <p>
-        <strong>Alternative A (The Curated Developmental Ledger)</strong> is overwhelmingly recommended. It completely eliminates the asymmetric 5-card orphan gap that plagues the existing production layout, replaces 15 conflicting card borders with calm editorial typography, and delivers instant, 3-second scannability for busy, anxious parents.
-      </p>
-
-      <h2>Audit Files on Disk</h2>
+      <h2>Audit & Exploration Files on Disk</h2>
       <ul style="margin-left: 20px; margin-top: 10px;">
-        <li><code>SECTION_AUDIT.md</code> — Heuristic critique of existing section</li>
-        <li><code>SECTION_ALTERNATIVES.md</code> — Specifications for Directions A, B, and C</li>
-        <li><code>SECTION_COMPARISON.md</code> — 7-dimension evaluation and justification</li>
-        <li><code>previews/horizon-alternative-a-minimal.html</code> — Standalone Prototype A</li>
-        <li><code>previews/horizon-alternative-b-visual.html</code> — Standalone Prototype B</li>
-        <li><code>previews/horizon-alternative-c-creative.html</code> — Standalone Prototype C</li>
+        <li><code>SECTION_ALTERNATIVES_C_EVOLUTIONS.md</code> — Specifications for the 5 Alternative C evolutions</li>
+        <li><code>SECTION_COMPARISON.md</code> — 7-dimension evaluation and scoring</li>
+        <li><code>SECTION_AUDIT.md</code> — Original heuristic diagnosis of existing section</li>
+        <li><code>horizon-c1-fluid-accordion.html</code> — Standalone Prototype C.1 (Winner)</li>
+        <li><code>horizon-c2-studio-console.html</code> — Standalone Prototype C.2</li>
+        <li><code>horizon-c3-radial-arc.html</code> — Standalone Prototype C.3</li>
+        <li><code>horizon-c4-field-dossier.html</code> — Standalone Prototype C.4</li>
+        <li><code>horizon-c5-carousel-stream.html</code> — Standalone Prototype C.5</li>
       </ul>
     </div>
   </div>
 
   <script>
     const VIEWS = {
+      'c1-accordion': {
+        title: 'Design C.1 — Fluid Accordion Deck (Inline Progressive Expansion)',
+        desc: 'Zero mode-switch friction, anchored by age stage. The active domain expands in place revealing its 3 clinical lessons.',
+        url: 'horizon-c1-fluid-accordion.html'
+      },
+      'c2-console': {
+        title: 'Design C.2 — Editorial Studio Console (Master-Detail Dual Panel)',
+        desc: 'Left panel navigates 5 domains with micro-telemetry; right canvas showcases spotlight curriculum and 3-lesson blueprint.',
+        url: 'horizon-c2-studio-console.html'
+      },
+      'c3-radial': {
+        title: 'Design C.3 — Whole-Child Horizon Compass (5-Pillar Radial Arc)',
+        desc: 'Creative visual arc highlighting whole-child connectivity. Selecting any domain unfolds its curriculum blueprint below.',
+        url: 'horizon-c3-radial-arc.html'
+      },
+      'c4-dossier': {
+        title: 'Design C.4 — Pediatric Field Dossier (Tactile Tabbed Binder)',
+        desc: 'Tactile archival notebook tabs, clinical observation notes, and structured lesson syllabus ledger with board seal.',
+        url: 'horizon-c4-field-dossier.html'
+      },
+      'c5-carousel': {
+        title: 'Design C.5 — Horizon Carousel Stream (Horizontal Spotlight Ribbon)',
+        desc: 'Fluid horizontal stream with spotlight center card, peeking neighbors, and direct category jump pills.',
+        url: 'horizon-c5-carousel-stream.html'
+      },
       'alt-a': {
-        title: "Alternative A — Minimal: The Curated Developmental Ledger (RECOMMENDED)",
-        desc: "Editorial 2-column split, unboxed syllabus rows, 70% border reduction, single primary CTA.",
-        url: "horizon-alternative-a-minimal.html"
+        title: 'Alternative A — Minimal: The Curated Developmental Ledger',
+        desc: 'Original editorial 2-column split, unboxed syllabus rows, 70% border reduction, single primary CTA.',
+        url: 'horizon-alternative-a-minimal.html'
       },
       'alt-b': {
-        title: "Alternative B — Visual: The Milestone Bento Matrix",
-        desc: "Milestone ribbon timeline, 1 hero anchor + 4 balanced companion tiles, visual domain badges.",
-        url: "horizon-alternative-b-visual.html"
-      },
-      'alt-c': {
-        title: "Alternative C — Creative: The Dual-Axis Spotlight Lens",
-        desc: "Dual-mode switcher (Age vs Domain), active spotlight canvas with 3-lesson syllabus drawer.",
-        url: "horizon-alternative-c-creative.html"
+        title: 'Alternative B — Visual: The Milestone Bento Matrix',
+        desc: 'Original milestone progress ribbon, 1+4 asymmetric bento layout, category visual icons.',
+        url: 'horizon-alternative-b-visual.html'
       }
     };
 
