@@ -166,3 +166,68 @@ All three designs strictly respect the approved **Taste 2: Editorial Pediatric A
 - Newsreader editorial serif headings, Inter body UI, JetBrains Mono telemetry.
 - Accessible touch targets (≥ 44×44px), WCAG AA color contrast (≥ 4.5:1), and zero layout shift.
 - Standalone HTML/CSS/JS prototypes authored in `design-explorations/sou-79-loggedin-home/`.
+
+---
+
+## 7. The 5 New Fluid Non-Boxed Designs (Addressing SOU-79 Latest Critique)
+
+### 7.1 Direct Diagnosis of User Critique
+User feedback identified three critical UX and visual flaws on the live dashboard:
+1. **The Top Academic Text Flood:** Opening the page with a massive clinical text block (`"Prefrontal Inhibitory Control & Cooperative Play Strategy"`, `"Emergence of concrete operational reasoning, peer rule-negotiation, and early resistance to immediate digital dopamine..."`, plus multi-line subtitles) swamps the parent upon login.
+   - **Solution:** Replaced with a **whisper-quiet, single-line contextual status anchor** (`Souheil · 8 yrs · Middle Childhood // Active Leap: Impulse & Peer Negotiation` with a subtle progressive disclosure toggle if they want deeper science).
+2. **Redundant Top Phone Assessment CTA:** Having a button pointing to "First-Phone Readiness" right in the header when the full assessment card is already sitting directly below creates redundant visual clutter and navigation confusion.
+   - **Solution:** Removed the duplicate button from the top horizon. The First-Phone Readiness score (78/100) and milestone (`2 consecutive weeks of independent alarm waking`) are cleanly positioned in the family baseline radar.
+3. **The "Box Salad" / "Card-in-Card" Syndrome:** Every element being wrapped in a bordered card (`rounded-[10px] border border-[#E3E3DC] bg-white`) with sub-cards inside creates a disjointed, heavy, rigid corporate dashboard feel.
+   - **Solution:** Designed 5 cardless, continuous, fluid alternatives using open editorial typography, subtle tonal paper washes, seamless split sheets, flowing organic ribbons, and chronological timelines.
+
+---
+
+### 7.2 Design 1: The Quiet Editorial Almanac (`prototype-fluid-1-editorial-journal.html`)
+- **UX Metaphor:** High-prestige editorial morning journal (The New Yorker / Monocle for modern parenting).
+- **Top Horizon:** Single crisp masthead line with live child switcher capsule:
+  `AlongSide • Tuesday, Nov 10 • Souheil (8y) • Road 1: Pre-Device • Active Leap: Impulse & Peer Play`
+- **Visual Architecture:** 100% cardless. Zero border boxes around sections. Sections are separated by generous vertical whitespace (`space-y-12`) and elegant whisper hairline dividers (`border-b border-[#E7E4DC]`).
+- **Hero Learning Flow:** Today's 4-minute course chapter reads like an open, beautifully typeset article with an integrated borderless audio player (`3:45` duration with interactive play/pause) and 5 minimal reading progress dots.
+- **Living Room Script:** Large `Newsreader` serif quote block with a forest-green left accent bar and 1-click clipboard copy button.
+- **Family Horizon:** Seamless 3-column baseline without card borders:
+  - Column 1: Phone Readiness (78/100 minimal bar) for Souheil (8y) // Replaced by Early Screen Cap (20/30 min) when switched to Leo (3y).
+  - Column 2: Evening Curfew (8:30 PM kitchen dock hardware lock).
+  - Column 3: Culture Radar (Roblox in-game economy note).
+
+---
+
+### 7.3 Design 2: The Seamless Split-Sheet Sanctuary (`prototype-fluid-2-split-canvas.html`)
+- **UX Metaphor:** A single continuous wide paper canvas (60% Learning & Focus / 40% Family Radar).
+- **Top Horizon:** Integrated directly into the top greeting:
+  `"Good morning, Sarah. Today with Souheil (8y • Middle Childhood) is about peer negotiation."` with clean pill tags.
+- **Visual Architecture:** Zero floating rectangular card widgets. The entire dashboard is one unified sheet with a subtle vertical hairline separator (`divide-x divide-hairline`).
+- **Left Stream (60%):** Continuous learning thread connecting the 5 course chapters with a crisp progress line, featured active chapter excerpt, spoken briefing player, and word-for-word living room script.
+- **Right Stream (40%):** Seamless sidebar panel holding the First-Phone Readiness ring (78/100), Active Milestone Gate (`2 consecutive weeks of independent alarm waking`), Evening Curfew toggle, and Culture radar without box outlines.
+
+---
+
+### 7.4 Design 3: The Flowing River Ribbon (`prototype-fluid-3-flowing-ribbon.html`)
+- **UX Metaphor:** Organic horizontal stream with gentle curved wave transitions and pastel washes.
+- **Top Horizon:** A smooth horizontal ambient river ribbon across the top in pale spruce soft (`#EAF3EE`) displaying child initial, name, age, road, and 1-line developmental badge.
+- **Visual Architecture:** Replaces rectangular corners with organic pill tracks, curved node lines, and continuous flowing river gradients (`from-[#FAF9F6] to-[#FFFFFF]`).
+- **Hero Connection Bridge:** Merges the course chapter, audio player, and living room script into a single fluid "Learn in 4 Mins → Practice Tonight" river stream.
+- **Ambient Pulse Dock:** Minimal horizontal pill bar at the baseline.
+
+---
+
+### 7.5 Design 4: The Minimal Daily Dossier (`prototype-fluid-4-minimal-dossier.html`)
+- **UX Metaphor:** Executive clarity. At any moment, a parent can only focus on ONE thing.
+- **Top Horizon:** Whisper-thin status strip with live child switcher and clean leap badge.
+- **Visual Architecture:** Extreme visual discipline. Only ONE singular high-impact spotlight surface on the page: "Today's 4-Minute Priority" (The active chapter + audio toggle + 1 script line).
+- **Ambient Understory:** An open, unboxed 3-column data horizon underneath where Phone Readiness (78/100), Evening Curfew (8:30 PM lock), and Culture Radar sit quietly in the background without competing for attention.
+
+---
+
+### 7.6 Design 5: The Chronological Day-Flow (`prototype-fluid-5-chronological-dayflow.html`)
+- **UX Metaphor:** Time-synced narrative mirroring a parent's actual daily rhythm.
+- **Top Horizon:** Single whisper status line at the top with date and active child.
+- **Visual Architecture:** A vertical timeline down the left edge with fluid expandable phase blocks that feel like natural chapters of the day:
+  1. `[07:30 AM ☀️ Morning Mindset]` — Active Academy Course & 4-min Audio Briefing.
+  2. `[03:30 PM 🌤️ After-School Connection]` — Word-for-Word Empathy Script for transition friction.
+  3. `[08:30 PM 🌙 Evening Wind-Down]` — Device Curfew Lock & Phone Readiness Milestone.
+- **Stage Adaptation:** Dynamically transforms the daily schedule when switched to Leo (3y) (e.g. Naptime zero-screens wind-down and toddler floor meltdown calm).

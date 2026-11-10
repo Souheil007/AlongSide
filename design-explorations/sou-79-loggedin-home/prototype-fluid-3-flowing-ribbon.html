@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Design 3: The Flowing River Ribbon</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: '#F7F5F0',
+            sandSoft: '#FAF9F6',
+            ink: '#111413',
+            inkMuted: '#494F4C',
+            whisper: '#858C88',
+            hairline: '#E6E3DA',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE',
+              glow: '#D1E6DA'
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              soft: '#FBF0EC'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .river-gradient {
+      background: linear-gradient(180deg, #FAF9F6 0%, #FFFFFF 100%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-sand">
+
+  <!-- TOP RIVER HEADER: FLUID INTEGRATED STATUS (ZERO CLUNKY RECTANGULAR BOXES) -->
+  <header class="bg-white/90 backdrop-blur border-b border-hairline sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-forest text-white font-serif font-bold text-base flex items-center justify-center shadow-xs">A</span>
+          <span class="font-serif text-xl font-bold tracking-tight text-ink">AlongSide</span>
+        </a>
+      </div>
+
+      <!-- Child Context Capsule -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center p-1 rounded-full bg-sand border border-hairline text-xs font-semibold">
+          <button id="btnSouheil" onclick="selectChild('souheil')" class="flex items-center gap-2 px-3 py-1 rounded-full bg-forest text-white shadow-xs transition">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Souheil (8y)</span>
+          </button>
+          <button id="btnLeo" onclick="selectChild('leo')" class="flex items-center gap-2 px-3 py-1 rounded-full text-inkMuted hover:text-ink transition">
+            <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+            <span>Leo (3y)</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- AMBIENT RIVER STATUS RIBBON (ONE CONTINUOUS SOFT SAGE WAVE) -->
+  <section aria-label="Ambient Horizon Ribbon" class="bg-forest-soft border-b border-forest/15 py-3">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2.5">
+        <span class="w-6 h-6 rounded-full bg-forest text-white font-mono text-[10px] font-bold flex items-center justify-center" id="ribbonAvatarInitial">S</span>
+        <span class="font-serif text-sm font-bold text-ink" id="ribbonChildHeading">Souheil Bichiou • 8 yrs</span>
+        <span class="text-forest/30">•</span>
+        <span class="font-mono text-[11px] text-forest font-semibold uppercase tracking-wider" id="ribbonRoadLabel">Road 1: Pre-Device</span>
+      </div>
+      <div class="flex items-center gap-2 text-inkMuted text-[11px]">
+        <span class="w-2 h-2 rounded-full bg-forest"></span>
+        <span class="font-medium" id="ribbonLeapText">Active Leap: Prefrontal Impulse Control &amp; Peer Collaboration</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN RIVER STREAM: FLUID FLOWING SECTIONS -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+    <!-- WELCOME & STREAK BANNER -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h1 id="riverGreeting" class="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+          Welcome back, Sarah. Here is your daily momentum.
+        </h1>
+        <p id="riverSubtext" class="text-xs sm:text-sm text-inkMuted mt-1">
+          One 4-minute intentional reflection today creates weeks of emotional calm.
+        </p>
+      </div>
+
+      <div class="shrink-0 inline-flex items-center gap-2.5 bg-white px-3.5 py-2 rounded-full border border-hairline shadow-2xs">
+        <span class="text-amber text-sm font-bold">🔥</span>
+        <span class="font-mono text-xs font-bold text-ink">4-Day Habit Streak</span>
+        <span class="text-whisper text-xs">•</span>
+        <span class="font-mono text-[11px] text-forest">18 mins learned</span>
+      </div>
+    </div>
+
+    <!-- THE LEARNING RIVER TRACK: CONNECTED WAVE WITH PULSING ACTIVE NODE -->
+    <section aria-label="Curriculum Stream" class="river-gradient rounded-3xl p-6 sm:p-8 border border-hairline shadow-xs space-y-6">
+      
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/80 pb-4">
+        <div>
+          <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Active Academy Track</span>
+          <h2 id="riverCourseTitle" class="font-serif text-xl sm:text-2xl font-bold text-ink mt-0.5">
+            Navigating Elementary Friendships &amp; Screen Transitions
+          </h2>
+        </div>
+        <span class="font-mono text-xs font-semibold text-forest bg-forest-soft px-3 py-1 rounded-full border border-forest/20">
+          60% Progress (3 of 5 Chapters)
+        </span>
+      </div>
+
+      <!-- Organic River Progress Track -->
+      <div class="py-2">
+        <div class="flex items-center justify-between relative px-2">
+          <!-- Flow Line -->
+          <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1 bg-hairline"></div>
+          <div class="absolute left-6 w-[55%] top-1/2 -translate-y-1/2 h-1 bg-forest"></div>
+
+          <!-- Nodes -->
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span class="w-8 h-8 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center shadow-xs">✓</span>
+            <span class="font-mono text-[10px] text-forest font-semibold">1. The Shift</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span class="w-8 h-8 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center shadow-xs">✓</span>
+            <span class="font-mono text-[10px] text-forest font-semibold">2. Peer Rules</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span class="w-9 h-9 rounded-full bg-forest text-white text-xs font-black flex items-center justify-center ring-4 ring-forest-glow shadow-md animate-pulse">3</span>
+            <span class="font-mono text-[11px] text-forest font-bold">3. Transition (Today)</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1 opacity-60">
+            <span class="w-8 h-8 rounded-full bg-sand border-2 border-hairline text-whisper text-xs font-bold flex items-center justify-center">4</span>
+            <span class="font-mono text-[10px] text-whisper">4. Digital Pacts</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1 opacity-60">
+            <span class="w-8 h-8 rounded-full bg-sand border-2 border-hairline text-whisper text-xs font-bold flex items-center justify-center">5</span>
+            <span class="font-mono text-[10px] text-whisper">5. Bedtime Trust</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTINUOUS PRACTICE BRIDGE: ARTICLE + SPOKEN AUDIO + LIVING ROOM SCRIPT -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-2">
+        
+        <!-- Left: Lesson Audio & Summary (7 cols) -->
+        <div class="md:col-span-7 space-y-3">
+          <span class="font-mono text-[10px] uppercase font-bold text-whisper tracking-wider">Today&apos;s Core Insight</span>
+          <h3 id="riverLessonHeading" class="font-serif text-lg font-bold text-ink">
+            Chapter 3: When Your 8-Year-Old Struggles to Power Off
+          </h3>
+          <p id="riverLessonSummary" class="text-xs text-inkMuted leading-relaxed">
+            Screen transitions cause abrupt dopamine drops in the developing prefrontal cortex. Don&apos;t argue logic from across the room. Step into their field of view 3 minutes before, place a gentle hand on their shoulder, and co-bridge into a physical activity.
+          </p>
+
+          <div class="flex items-center gap-3 pt-1">
+            <button onclick="toggleAudio()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs">
+              <span id="playIcon">▶</span>
+              <span>Listen to Audio (3:45)</span>
+            </button>
+            <a href="#" class="text-xs font-bold text-forest hover:underline">Read Text →</a>
+          </div>
+        </div>
+
+        <!-- Right: What to Say Out Loud (5 cols) -->
+        <div class="md:col-span-5 bg-sandSoft p-5 rounded-2xl border border-hairline space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Tonight&apos;s Script</span>
+            <button onclick="copyScript()" class="font-mono text-[10px] text-whisper hover:text-ink">
+              <span id="copyBtn">Copy 📋</span>
+            </button>
+          </div>
+          <p id="riverScriptQuote" class="font-serif text-base text-ink italic leading-snug">
+            &ldquo;I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.&rdquo;
+          </p>
+          <span class="font-mono text-[10px] text-whisper block">Co-Regulation Tip: Keep your vocal pitch calm and low.</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- HORIZONTAL AMBIENT PULSE DOCK (NO ISOLATED HEAVY BOXES!) -->
+    <section aria-label="Developmental Pulse Dock" class="bg-white rounded-3xl p-6 sm:p-7 border border-hairline space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-lg font-bold text-ink">
+          Family Milestones &amp; Digital Pulse
+        </h3>
+        <span class="font-mono text-xs text-whisper">Calibrated for <span id="dockChildName">Souheil</span></span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-1">
+        
+        <!-- Pillar 1: Phone Readiness (Adaptive for Souheil 8y) -->
+        <div id="dockPhoneCol" class="p-4 rounded-2xl bg-sandSoft border border-hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Phone Readiness</span>
+            <span class="font-serif text-lg font-bold text-forest">78 / 100</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+            <div class="bg-forest h-1.5 rounded-full w-[78%]"></div>
+          </div>
+          <p class="text-[11px] text-inkMuted leading-snug pt-1">
+            <span class="font-semibold text-ink">Next Milestone:</span> 2 consecutive weeks of independent morning alarm waking.
+          </p>
+        </div>
+
+        <!-- Pillar 1 Alternative: Toddler Screen Cap (Adaptive for Leo 3y) -->
+        <div id="dockToddlerCol" class="hidden p-4 rounded-2xl bg-sandSoft border border-hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Daily Screen Cap</span>
+            <span class="font-serif text-lg font-bold text-terracotta">20 / 30m</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+            <div class="bg-terracotta h-1.5 rounded-full w-[66%]"></div>
+          </div>
+          <p class="text-[11px] text-inkMuted leading-snug pt-1">
+            <span class="font-semibold text-ink">Milestone:</span> Zero handheld screens 60 mins before naptime.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Curfew & Pact Hardware Dock -->
+        <div class="p-4 rounded-2xl bg-sandSoft border border-hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Bedtime Curfew</span>
+            <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-1.5 py-0.5 rounded">8:30 PM Lock</span>
+          </div>
+          <p class="text-[11px] text-inkMuted leading-snug pt-1">
+            Devices charge in the kitchen dock tonight. Enforced automatically.
+          </p>
+        </div>
+
+        <!-- Pillar 3: Culture Radar -->
+        <div class="p-4 rounded-2xl bg-sandSoft border border-hairline space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-whisper font-semibold">Culture Radar</span>
+            <span class="font-mono text-[10px] text-whisper">Robux Trading</span>
+          </div>
+          <p class="text-[11px] text-inkMuted leading-snug pt-1">
+            In-game trading pressure reported this week in elementary classes.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let isPlaying = false;
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').textContent = isPlaying ? '❚❚' : '▶';
+    }
+
+    function copyScript() {
+      const text = document.getElementById('riverScriptQuote').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => { btn.textContent = 'Copy 📋'; }, 2000);
+    }
+
+    function selectChild(childKey) {
+      const btnSouheil = document.getElementById('btnSouheil');
+      const btnLeo = document.getElementById('btnLeo');
+      const dockPhoneCol = document.getElementById('dockPhoneCol');
+      const dockToddlerCol = document.getElementById('dockToddlerCol');
+
+      if (childKey === 'souheil') {
+        btnSouheil.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-forest text-white shadow-xs transition';
+        btnLeo.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-inkMuted hover:text-ink transition';
+
+        document.getElementById('ribbonAvatarInitial').textContent = 'S';
+        document.getElementById('ribbonChildHeading').textContent = 'Souheil Bichiou • 8 yrs';
+        document.getElementById('ribbonRoadLabel').textContent = 'Road 1: Pre-Device';
+        document.getElementById('ribbonLeapText').textContent = 'Active Leap: Prefrontal Impulse Control & Peer Collaboration';
+        document.getElementById('riverCourseTitle').textContent = 'Navigating Elementary Friendships & Screen Transitions';
+        document.getElementById('riverLessonHeading').textContent = 'Chapter 3: When Your 8-Year-Old Struggles to Power Off';
+        document.getElementById('riverLessonSummary').textContent = 'Screen transitions cause abrupt dopamine drops in the developing prefrontal cortex. Don’t argue logic from across the room. Step into their field of view 3 minutes before, place a gentle hand on their shoulder, and co-bridge into a physical activity.';
+        document.getElementById('riverScriptQuote').innerHTML = '&ldquo;I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.&rdquo;';
+        document.getElementById('dockChildName').textContent = 'Souheil';
+
+        dockPhoneCol.classList.remove('hidden');
+        dockToddlerCol.classList.add('hidden');
+      } else {
+        btnLeo.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta text-white shadow-xs transition';
+        btnSouheil.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-inkMuted hover:text-ink transition';
+
+        document.getElementById('ribbonAvatarInitial').textContent = 'L';
+        document.getElementById('ribbonChildHeading').textContent = 'Leo Bichiou • 3 yrs';
+        document.getElementById('ribbonRoadLabel').textContent = 'Road 1: Early Childhood';
+        document.getElementById('ribbonLeapText').textContent = 'Active Leap: Pre-Verbal Co-Regulation & Sensory Calming';
+        document.getElementById('riverCourseTitle').textContent = 'Tantrum Co-Regulation & Safe Boundaries';
+        document.getElementById('riverLessonHeading').textContent = 'Chapter 1: The 3-Step Living Room Reset for Toddler Meltdowns';
+        document.getElementById('riverLessonSummary').textContent = 'Toddlers cannot process logic or lectures during an amygdala storm. Moving down to floor level and offering steady physical proximity allows their nervous system to settle before any redirect.';
+        document.getElementById('riverScriptQuote').innerHTML = '&ldquo;You are feeling big mad that the cartoon stopped. I am sitting right here on the carpet with you until your breath gets quiet.&rdquo;';
+        document.getElementById('dockChildName').textContent = 'Leo';
+
+        dockPhoneCol.classList.add('hidden');
+        dockToddlerCol.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
