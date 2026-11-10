@@ -232,18 +232,32 @@ AlongSide/
 
 ---
 
-## 3. The 6 Canonical Developmental Tiers
+## 3. Canonical Developmental Lifespan Tiers & Sub-Tranche Engine
 
-AlongSide v2.4.0 maps childhood development across 6 distinct neurodevelopmental and physical phases:
+AlongSide maps childhood and adolescent development across **8 Canonical Lifespan Cohorts** (with Tier 0 decomposed into Infancy, Younger Toddlerhood, and Older Toddlerhood) paired with an **Intra-Tier Micro-Tranche Engine** for clinical and feeding precision (see full specification in [`docs/system-design-tier-0-decomposition.md`](system-design-tier-0-decomposition.md)):
 
-| Tier | Enum Identifier | Age Bracket | Neurobiological & Developmental Focus | Primary Features & Concerns |
+| Tier | Enum Identifier | Age Bracket | Neurobiological & Developmental Focus | Primary Features & Clinical Concerns |
 | :--- | :--- | :--- | :--- | :--- |
-| **Tier 0** | `TIER_0_INFANCY_TODDLER_0_3` | **Ages 0–3** | High-contrast visual stim, sensory somatosensory integration, mirror neurons, speech bursts (50 words at 24mo), gross motor (tummy time -> walking). | Pediatric fever triage, BLW solids & allergen intro, animal puppets, sleep regressions, tantrum co-regulation. |
+| **Tier 0A** | `TIER_0A_INFANCY_0_1` | **Ages 0–1** (0–12m) | Somatic regulation, primary sensory wiring, synaptogenesis (>1M/sec), rolling $\to$ crawling $\to$ cruising, cooing to first words. | Neonatal fever triage (ER if $\ge 100.4^\circ\text{F}$ under 90d), 100% milk to early peanut/egg allergen intro (LEAP), 4-month sleep regression, zero screens. |
+| **Tier 0B** | `TIER_0B_TODDLER_1_2` | **Ages 1–2** (12–24m) | Locomotion explosion (independent walking $\to$ running), 50-word language burst, 2-word combinations, limbic reactivity surges. | 2-to-1 nap transition, physiological toddler anorexia reassurance, table solids transition, non-punitive physical co-regulation for first tantrums. |
+| **Tier 0C** | `TIER_0C_OLDER_TODDLER_2_3` | **Ages 2–3** (24–36m) | Autonomy vs. Shame (Erikson), 200–500+ words, "Why?" questions, nascent Theory of Mind, parallel to associative play. | Potty training readiness, boundary testing ("No!"), bedtime stalling & night terrors, picky eating & division of responsibility, intentional co-viewing. |
 | **Tier 1** | `TIER_1_EARLY_CHILDHOOD_4_6` | **Ages 4–6** | Rapid language expansion, Theory of Mind emergence, cooperative play, fine motor dexterity (scissors, drawing). | Picky eating solutions, wooden block building, dramatic roleplay, bedtime rituals, co-viewing screen rules. |
 | **Tier 2** | `TIER_2_MIDDLE_CHILDHOOD_7_9` | **Ages 7–9** | Concrete operational thought, peer friendship navigation, rule comprehension, reading fluency, physical sports. | School lunchbox nutrition, logic puzzles, chess, boredom busters, shared family tablet limits. |
 | **Tier 3** | `TIER_3_PRE_TEEN_10_12` | **Ages 10–12** | Adrenarche onset, prepubertal growth, heightened peer sensitivity, early abstract reasoning, dopamine novelty seeking. | "Thinking About a Device?" diagnostic, smartwatch bridge, slang decoders, group chat exclusion coaching. |
 | **Tier 4** | `TIER_4_EARLY_ADOLESCENCE_13_15` | **Ages 13–15** | Peak pubertal transformation, circadian sleep delay (melatonin shifted ~2 hours), identity exploration, social comparison. | Bilateral Family Pact, automated 8:30 PM bedtime lock, body image nutrition, teen voice sparring simulator. |
 | **Tier 5** | `TIER_5_LATE_ADOLESCENCE_16_18` | **Ages 16–18** | Prefrontal cortex maturation, impulse control calibration, executive autonomy, long-term consequences, future orientation. | Autonomy upgrade ceremonies, athletic nutrition, college/career stress navigation, independent self-regulation. |
+
+*(Note: Legacy alias `TIER_0_INFANCY_TODDLER_0_3` is retained in database enums and shared schemas for zero-downtime backward compatibility, dynamically resolving to `TIER_0A`, `TIER_0B`, or `TIER_0C` based on birthdate).*
+
+### 3.1 Intra-Tier Micro-Tranche Engine (Sub-Tier Resolution)
+To prevent database enum bloat while preserving clinical safety in Year 1 (0–12 months) and Toddlerhood, the system derives runtime **`EarlyChildhoodTranche`** attributes from `Child.birthDate` and `calculateChildAgeMonths()`:
+- **`INFANT_FOURTH_TRIMESTER_0_3M` (0–3m):** Neonatal emergency fever protocols, 100% milk feeding, wake windows 45–60m.
+- **`INFANT_AWAKENING_4_6M` (4–6m):** 4-month sleep architecture reorganization, early allergen introduction window (LEAP trial), rolling safety.
+- **`INFANT_MOBILE_EXPLORER_7_12M` (7–12m):** Baby-Led Weaning vs purees, gagging vs choking mastery, cruising, stranger anxiety, babbling.
+- **`TODDLER_FIRST_STEPS_12_18M` (12–18m):** Independent walking, 1-nap drop, table solids, first 10 words.
+- **`TODDLER_LANGUAGE_BURST_18_24M` (18–24m):** 50+ words, 2-word sentences, limbic tantrums requiring calm nervous system anchors.
+- **`OLDER_TODDLER_AUTONOMY_24_30M` (24–30m):** "No!" boundary testing, spoon mastery, parallel play.
+- **`OLDER_TODDLER_PRESCHOOL_PREP_30_36M` (30–36m):** Potty readiness, 300+ words, associative play, "Why?" chains.
 
 ---
 
