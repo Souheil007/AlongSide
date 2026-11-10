@@ -86,16 +86,14 @@ export function AccountSettingsView() {
   const displayChildren: ChildDTO[] =
     children && children.length > 0 ? children : DEMO_FAMILY_CHILDREN;
 
-  // Initialize profile name from user or demo
+  // Initialize profile name from authenticated user
   React.useEffect(() => {
     if (user?.fullName) {
       setProfileName(user.fullName);
-    } else if (!profileName) {
-      setProfileName('Sarah Jenkins');
     }
   }, [user]);
 
-  const guardianEmail = user?.email || 'sarah.jenkins@family.example.com';
+  const guardianEmail = user?.email || '';
   const memberSince = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString('en-US', {
         month: 'long',
@@ -219,7 +217,7 @@ export function AccountSettingsView() {
                       id="guardian-name"
                       value={profileName}
                       onChange={(e) => setProfileName(e.target.value)}
-                      placeholder="e.g. Sarah Jenkins"
+                      placeholder="e.g. Guardian Full Name"
                       className="min-h-[44px]"
                       required
                     />

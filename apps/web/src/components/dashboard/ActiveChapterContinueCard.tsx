@@ -21,7 +21,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { getAcademyModules } from '@/lib/api/academy';
+import { getAcademyModules, getAcademyModuleBySlug } from '@/lib/api/academy';
 import { getPriorityTheme } from '@/components/academy/ChapterRoadmapView';
 import { useChildAge } from '@/hooks/useChildAge';
 import { cn } from '@/lib/utils';
@@ -257,16 +257,58 @@ export function ActiveChapterContinueCard({
     ? (modules.find((m) => !m.isCompleted) ?? modules[0])
     : null;
 
-  const courseTitle = activeModule?.title ?? fallbackAnchor.courseTitle;
-  const moduleSlug = activeModule?.slug ?? fallbackAnchor.moduleSlug;
-  const lessonSlug = fallbackAnchor.lessonSlug;
-  const chapterTitle = fallbackAnchor.chapterTitle;
-  const summary = activeModule?.summary ?? fallbackAnchor.summary;
-  const readingMinutes = fallbackAnchor.readingMinutes;
-  const totalChapters = fallbackAnchor.totalChapters;
-  const completedChapters = fallbackAnchor.completedChapters;
-  const progressPercent = Math.round((completedChapters / totalChapters) * 100);
-  const chapters = fallbackAnchor.chapters;
+  const activeModuleSlug = activeModule?.slug || fallbackAnchor.moduleSlug;
+
+  // Query rich module hierarchy with real chapters and lesson completion flags
+  const { data: moduleDetail } = useQuery({
+    queryKey: ['academy-module-detail', activeModuleSlug],
+    queryFn: () => getAcademyModuleBySlug(activeModuleSlug),
+    enabled: Boolean(activeModuleSlug),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const courseTitle = moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
+  const moduleSlug = moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
+  const summary = moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
+
+  const allLessons = moduleDetail?.lessons && moduleDetail.lessons.length > 0 ? moduleDetail.lessons : [];
+  const currentIncompleteLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
+
+  const lessonSlug = currentIncompleteLesson?.slug ?? fallbackAnchor.lessonSlug;
+  const chapterTitle = currentIncompleteLesson?.title
+    ? `Chapter: ${currentIncompleteLesson.title}`
+    : fallbackAnchor.chapterTitle;
+  const readingMinutes = currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
+
+  const totalChapters = moduleDetail?.chapters?.length || activeModule?.lessonCount || fallbackAnchor.totalChapters;
+  const completedChapters =
+    moduleDetail?.chapters && moduleDetail.chapters.length > 0
+      ? moduleDetail.chapters.filter((c) => c.lessons && c.lessons.length > 0 && c.lessons.every((l) => l.isCompleted)).length
+      : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
+  const progressPercent = totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
+
+  const chapters = React.useMemo(() => {
+    if (moduleDetail?.chapters && moduleDetail.chapters.length > 0) {
+      let foundActive = false;
+      return moduleDetail.chapters.map((ch, idx) => {
+        const isCompleted = ch.lessons && ch.lessons.length > 0 ? ch.lessons.every((l) => l.isCompleted) : false;
+        let isCurrent = false;
+        if (!isCompleted && !foundActive) {
+          isCurrent = true;
+          foundActive = true;
+        }
+        return {
+          id: idx + 1,
+          shortTitle: ch.title.length > 20 ? ch.title.slice(0, 18) + '...' : ch.title,
+          fullTitle: ch.title,
+          completed: isCompleted,
+          isCurrent,
+        };
+      });
+    }
+    return fallbackAnchor.chapters;
+  }, [moduleDetail?.chapters, fallbackAnchor.chapters]);
+
   const audioDuration = fallbackAnchor.audioDuration;
 
   const toggleAudio = () => {
@@ -291,9 +333,11 @@ export function ActiveChapterContinueCard({
               <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
                 Parent Intelligence Academy • Active Course
               </span>
-              <CardTitle className="font-serif text-lg sm:text-xl font-bold text-[#111413] leading-snug mt-0.5">
-                {courseTitle}
-              </CardTitle>
+              <Link href={`/academy/${moduleSlug}`} className="hover:underline">
+                <CardTitle className="font-serif text-lg sm:text-xl font-bold text-[#111413] leading-snug mt-0.5">
+                  {courseTitle}
+                </CardTitle>
+              </Link>
             </div>
           </div>
 

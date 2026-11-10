@@ -1,11 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   DevicesManagementView,
   getRecommendedCurfew,
 } from '@/components/devices/DevicesManagementView';
 import { RoadType, DevelopmentalTier, type ChildDTO } from '@alongside/shared';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false },
+  },
+});
+
+function renderWithProviders(ui: React.ReactElement) {
+  return renderToStaticMarkup(
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+  );
+}
 
 describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SOU-83)', () => {
   const preteenLeo: ChildDTO = {
@@ -45,7 +58,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
 
   describe('Pre-Teen Sequential Stepper & Phone Canvas View', () => {
     it('renders the Roadmap header with developmental milestone progression badge', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -55,7 +68,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
     });
 
     it('renders Step 1: First-Phone Neuro-Readiness Diagnostic with completed score', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -68,7 +81,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
     });
 
     it('renders Step 2 & 3: Bilateral Family Treaty with verified seal and mutual pledges', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -95,8 +108,25 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
       expect(html).toContain('Verified Digital Seal');
     });
 
-    it('renders the Phone Simulator with Bedtime Peace Active notification and emergency dials', () => {
+    it('renders dynamic connected parent signature when user is authenticated (Souheil)', () => {
+      const customClient = new QueryClient();
+      customClient.setQueryData(['auth', 'me'], {
+        id: 'user-souheil',
+        fullName: 'Souheil Bichiou',
+        email: 'souheil@example.com',
+      });
       const html = renderToStaticMarkup(
+        <QueryClientProvider client={customClient}>
+          <DevicesManagementView {...defaultProps} />
+        </QueryClientProvider>
+      );
+      expect(html).toContain('✍ Souheil Bichiou');
+      expect(html).toContain('✍ Leo');
+      expect(html).not.toContain('✍ Sarah &amp; Michael');
+    });
+
+    it('renders the Phone Simulator with Bedtime Peace Active notification and emergency dials', () => {
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -118,7 +148,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
     });
 
     it('renders Print Treaty (PDF) and Launch Pact Wizard action buttons', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -128,7 +158,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
     });
 
     it('renders the Bridge Device Autonomy Ladder and Youth Culture Digest link', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
@@ -145,7 +175,7 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
     };
 
     it('renders the Developmental Clarification for Toddlers instead of contracts', () => {
-      const html = renderToStaticMarkup(
+      const html = renderWithProviders(
         React.createElement(DevicesManagementView, toddlerProps)
       );
 

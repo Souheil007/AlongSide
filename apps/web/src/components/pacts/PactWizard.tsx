@@ -336,7 +336,11 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
                   type="text"
                   value={agreementTitle}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Leo & Sarah's Family Tech Treaty"
+                  placeholder={
+                    activeChild && user
+                      ? `e.g. ${activeChild.name} & ${user.fullName.split(' ')[0]}'s Family Tech Treaty`
+                      : "e.g. Family Technology Treaty"
+                  }
                   className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600 min-h-[44px]"
                 />
               </div>

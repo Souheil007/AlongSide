@@ -31,6 +31,8 @@ export interface ChildHeroCardProps {
   className?: string;
   onOpenOnboarding?: () => void;
   parentName?: string;
+  streakDays?: number;
+  minsLearnedThisWeek?: number;
 }
 
 export interface LeapInfo {
@@ -109,7 +111,9 @@ export function ChildHeroCard({
   child,
   className,
   onOpenOnboarding,
-  parentName = 'Sarah',
+  parentName = 'Parent',
+  streakDays = 4,
+  minsLearnedThisWeek = 18,
 }: ChildHeroCardProps) {
   if (!child) {
     return (
@@ -214,10 +218,10 @@ export function ChildHeroCard({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-serif text-base font-bold text-[#111413]">4-Day Streak</span>
+              <span className="font-serif text-base font-bold text-[#111413]">{streakDays}-Day Streak</span>
               <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-[#EAF3EE] px-1.5 py-0.5 rounded">Active</span>
             </div>
-            <p className="font-mono text-[11px] text-[#858C88]">18 mins learned this week</p>
+            <p className="font-mono text-[11px] text-[#858C88]">{minsLearnedThisWeek} mins learned this week</p>
           </div>
         </div>
       </section>

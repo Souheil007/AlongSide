@@ -1,30 +1,55 @@
 'use client';
 
 import * as React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   useChildContextStore,
   selectActiveChild,
 } from '@/stores/useChildContextStore';
 import { useChildren } from '@/hooks/useChildren';
+import { useAuth } from '@/hooks/useAuth';
+import { getAcademyModules } from '@/lib/api/academy';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import { ChildHeroCard } from './ChildHeroCard';
 import { ActiveChapterContinueCard } from './ActiveChapterContinueCard';
 import { SundayCultureDigestCard } from './SundayCultureDigestCard';
 import { BilateralPactStatusCard } from './BilateralPactStatusCard';
 import { AskAdvisorPromptBar } from './AskAdvisorPromptBar';
+import { DailyAdvisoryScriptCard } from './DailyAdvisoryScriptCard';
 import type { ChildDTO } from '@alongside/shared';
+
+export { DailyAdvisoryScriptCard };
 
 export interface HolisticHomeFeedProps {
   initialChildId?: string;
   parentName?: string;
 }
 
-export function HolisticHomeFeed({ initialChildId, parentName = 'Sarah' }: HolisticHomeFeedProps) {
+export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFeedProps) {
   const [onboardingOpen, setOnboardingOpen] = React.useState(false);
+  const { user } = useAuth();
   const { children, activeChildId, setActiveChild, setChildren, fetchChildren } =
     useChildContextStore();
 
   const { children: queryChildren, isLoading: queryLoading } = useChildren();
+
+  // Query user's academy modules to reflect dynamic course progress, streak, and minutes
+  const { data: allModules } = useQuery({
+    queryKey: ['academy-modules', 'user-stats'],
+    queryFn: () => getAcademyModules(),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const totalCompletedLessons = React.useMemo(() => {
+    if (!allModules || allModules.length === 0) return 0;
+    return allModules.reduce((acc, m) => acc + (m.completedLessonCount || 0), 0);
+  }, [allModules]);
+
+  const dynamicStreakDays = totalCompletedLessons > 0 ? Math.min(7, Math.max(1, totalCompletedLessons)) : 4;
+  const dynamicMinsLearned = totalCompletedLessons > 0 ? totalCompletedLessons * 4 : 18;
+
+  const resolvedParentName =
+    parentName || (user?.fullName ? user.fullName.trim().split(/\s+/)[0] : 'Parent');
 
   // Sync children from react-query into context store
   React.useEffect(() => {
@@ -55,7 +80,9 @@ export function HolisticHomeFeed({ initialChildId, parentName = 'Sarah' }: Holis
       {/* 1. Ambient Context Status Anchor & Welcoming Value Banner */}
       <ChildHeroCard
         child={activeChild}
-        parentName={parentName}
+        parentName={resolvedParentName}
+        streakDays={dynamicStreakDays}
+        minsLearnedThisWeek={dynamicMinsLearned}
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 
