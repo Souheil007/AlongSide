@@ -14,12 +14,14 @@ import { SundayCultureDigestCard } from './SundayCultureDigestCard';
 import { BilateralPactStatusCard } from './BilateralPactStatusCard';
 import { AskAdvisorPromptBar } from './AskAdvisorPromptBar';
 import type { ChildDTO } from '@alongside/shared';
+import { cn } from '@/lib/utils';
 
 export interface HolisticHomeFeedProps {
   initialChildId?: string;
+  parentName?: string;
 }
 
-export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
+export function HolisticHomeFeed({ initialChildId, parentName = 'Sarah' }: HolisticHomeFeedProps) {
   const [onboardingOpen, setOnboardingOpen] = React.useState(false);
   const { children, activeChildId, setActiveChild, setChildren, fetchChildren } =
     useChildContextStore();
@@ -52,24 +54,79 @@ export function HolisticHomeFeed({ initialChildId }: HolisticHomeFeedProps) {
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      {/* 1. Child Advisory Horizon & Current Neurodevelopmental Leap Hero Banner */}
+      {/* Dynamic Multi-Child Calibration Switcher */}
+      {children.length > 1 && (
+        <aside
+          aria-label="Child Switching Bar"
+          className="flex flex-wrap items-center justify-between gap-3 bg-white px-4 py-2.5 rounded-[10px] border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)]"
+        >
+          <div className="flex items-center gap-2.5">
+            <span className="font-mono text-[10px] text-[#858C88] uppercase tracking-wider font-semibold">
+              Active Child:
+            </span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {children.map((c) => {
+                const isSelected = c.id === activeChild?.id;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setActiveChild(c.id)}
+                    className={cn(
+                      'flex items-center gap-2 px-3 py-1 rounded-[6px] text-xs font-semibold transition-all cursor-pointer border',
+                      isSelected
+                        ? 'bg-[#143D2B] text-white border-[#143D2B] shadow-2xs'
+                        : 'bg-[#F4F4F0] text-[#494F4C] border-[#E3E3DC] hover:text-[#111413] hover:bg-[#EAEAEA]'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'w-4 h-4 rounded-full flex items-center justify-center font-mono text-[10px] font-bold',
+                        isSelected ? 'bg-white/20 text-white' : 'bg-white text-[#143D2B]'
+                      )}
+                    >
+                      {c.name.charAt(0).toUpperCase()}
+                    </span>
+                    <span>
+                      {c.name} ({c.age}y)
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setOnboardingOpen(true)}
+            className="text-xs font-mono font-medium text-[#143D2B] hover:underline"
+          >
+            + Add Child
+          </button>
+        </aside>
+      )}
+
+      {/* 1. Welcoming Value Banner & Child Horizon Leap Card */}
       <ChildHeroCard
         child={activeChild}
+        parentName={parentName}
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 
-      {/* 2. Core Advisory Feed Grid: Academy Chapters, Dialogue Scripts, Culture Pulse & Family Pacts */}
+      {/* 2. #1 HERO CENTERPIECE: Active Academy Course Journey Roadmap */}
+      <ActiveChapterContinueCard child={activeChild} />
+
+      {/* 3. STAGE-ADAPTIVE TWO-COLUMN GRID: Daily Empathy Script (Left 7) + Stage Telemetry (Right 5) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column (7 cols): Priority 1-3 Academy Micro-Lesson & Daily Advisory Empathy Dialogue */}
+        {/* Left Column (7 cols): Today's Word-for-Word Empathy Script & Practice Sparring */}
         <div className="lg:col-span-7 space-y-6">
-          <ActiveChapterContinueCard child={activeChild} />
           <DailyAdvisoryScriptCard child={activeChild} />
         </div>
 
-        {/* Right Column (5 cols): Sunday Culture Digest, Bilateral Pact / Curfew Dock & 24/7 AI Advisor */}
+        {/* Right Column (5 cols): Stage-Adaptive Telemetry, Culture Digest & 24/7 AI Advisor */}
         <div className="lg:col-span-5 space-y-6">
-          <SundayCultureDigestCard child={activeChild} />
           <BilateralPactStatusCard child={activeChild} />
+          <SundayCultureDigestCard child={activeChild} />
           <AskAdvisorPromptBar child={activeChild} />
         </div>
       </div>
