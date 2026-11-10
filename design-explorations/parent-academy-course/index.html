@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Parent Academy Course UX Exploration Hub (SOU-82)</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            'linen-subtle': '#F4F4F0',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #111413;
+      color: #FBFBF9;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .preview-frame-container {
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Master Hub Control Bar -->
+  <header class="border-b border-white/10 bg-[#161A18] px-4 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="h-7 w-7 rounded-md bg-spruce flex items-center justify-center text-white text-xs font-bold font-mono">A</div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-serif font-bold text-base text-white tracking-tight">AlongSide</span>
+          <span class="text-xs font-mono text-mute">/ SOU-82 Phase 2</span>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-mono font-medium">
+            Refined Iterations from Direction A
+          </span>
+        </div>
+        <p class="text-[11px] text-mute font-mono">Parent Academy Course Detail Page (`/academy/[slug]`)</p>
+      </div>
+    </div>
+
+    <!-- Direction Switcher Tabs -->
+    <div class="flex flex-wrap items-center gap-2">
+      
+      <!-- New Refined Iterations (Starting from A) -->
+      <div class="flex items-center rounded-lg bg-black/50 p-1 border border-emerald-500/30">
+        <span class="text-[10px] font-mono text-emerald-400 px-2 font-semibold uppercase tracking-wider hidden sm:inline">Refined A:</span>
+        <button onclick="setDirection('prototype-a1-fluent-reader.html', this)" class="direction-tab active px-3 py-1.5 rounded-md text-xs font-medium text-white bg-spruce transition-all flex items-center gap-1.5">
+          <span class="font-mono text-[10px] text-emerald-300 font-bold">A1</span>
+          <span>Fluent Reader</span>
+          <span class="text-[9px] font-mono bg-white/20 px-1 rounded text-white font-semibold">Recommended</span>
+        </button>
+        <button onclick="setDirection('prototype-a2-bite-sized-stream.html', this)" class="direction-tab px-3 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+          <span class="font-mono text-[10px] text-emerald-300 font-bold">A2</span>
+          <span>Bite-Sized Stream</span>
+        </button>
+        <button onclick="setDirection('prototype-a3-spotlight-focus-flow.html', this)" class="direction-tab px-3 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+          <span class="font-mono text-[10px] text-emerald-300 font-bold">A3</span>
+          <span>Spotlight Focus</span>
+        </button>
+      </div>
+
+      <!-- Initial Round Prototypes (For Context & Reference) -->
+      <div class="flex items-center rounded-lg bg-black/40 p-1 border border-white/10">
+        <span class="text-[10px] font-mono text-gray-400 px-2 uppercase tracking-wider hidden sm:inline">Originals:</span>
+        <button onclick="setDirection('prototype-a-minimal-focused.html', this)" class="direction-tab px-2.5 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-white transition-all">
+          <span class="font-mono text-[10px] text-gray-300">A (Original)</span>
+        </button>
+        <button onclick="setDirection('prototype-b-visual-interactive.html', this)" class="direction-tab px-2.5 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-white transition-all">
+          <span class="font-mono text-[10px] text-gray-300">B</span>
+        </button>
+        <button onclick="setDirection('prototype-c-structured-guided.html', this)" class="direction-tab px-2.5 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-white transition-all">
+          <span class="font-mono text-[10px] text-gray-300">C</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Viewport Width Controls -->
+    <div class="flex items-center gap-2">
+      <span class="text-xs font-mono text-mute hidden sm:inline">Viewport:</span>
+      <div class="flex items-center rounded-lg bg-black/40 p-1 border border-white/10">
+        <button onclick="setViewport('100%', this)" class="viewport-btn active px-2.5 py-1 rounded text-xs font-mono text-white bg-white/15 transition-all">
+          Desktop (100%)
+        </button>
+        <button onclick="setViewport('768px', this)" class="viewport-btn px-2.5 py-1 rounded text-xs font-mono text-gray-400 hover:text-white transition-all">
+          Tablet (768px)
+        </button>
+        <button onclick="setViewport('375px', this)" class="viewport-btn px-2.5 py-1 rounded text-xs font-mono text-gray-400 hover:text-white transition-all">
+          Mobile (375px)
+        </button>
+      </div>
+
+      <!-- Open in New Tab -->
+      <a id="open-tab-link" href="prototype-a1-fluent-reader.html" target="_blank" class="p-1.5 rounded bg-black/40 border border-white/10 text-gray-400 hover:text-white transition-colors" title="Open in new window">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Live Responsive Preview Stage -->
+  <main class="flex-1 bg-[#0D100E] p-2 sm:p-4 flex items-center justify-center overflow-auto">
+    <div id="frame-wrapper" class="preview-frame-container w-full h-[88vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-[#FBFBF9] relative">
+      <iframe id="preview-frame" src="prototype-a1-fluent-reader.html" class="w-full h-full border-0"></iframe>
+    </div>
+  </main>
+
+  <!-- Bottom Evaluation Summary Dock -->
+  <footer class="border-t border-white/10 bg-[#161A18] px-4 py-2 text-xs font-mono text-mute flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="text-white font-semibold">Refinement Winner: Direction A1 (Score 9.8/10)</span>
+      <span class="hidden md:inline">• De-boxed continuous editorial stream, zero friction, instant reading launch</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="PAGE_AUDIT.md" class="hover:text-emerald-400 transition-colors">PAGE_AUDIT.md</a>
+      <a href="DESIGN_ALTERNATIVES.md" class="hover:text-emerald-400 transition-colors">DESIGN_ALTERNATIVES.md</a>
+      <a href="DESIGN_COMPARISON.md" class="hover:text-emerald-400 transition-colors">DESIGN_COMPARISON.md</a>
+      <span class="text-amber font-semibold">Strict Approval Gate Active</span>
+    </div>
+  </footer>
+
+  <script>
+    let currentSrc = 'prototype-a1-fluent-reader.html';
+
+    function setDirection(url, btn) {
+      currentSrc = url;
+      document.getElementById('preview-frame').src = url;
+      document.getElementById('open-tab-link').href = url;
+
+      document.querySelectorAll('.direction-tab').forEach(t => {
+        t.classList.remove('active', 'bg-spruce', 'text-white');
+        t.classList.add('text-gray-400');
+      });
+      btn.classList.add('active', 'bg-spruce', 'text-white');
+      btn.classList.remove('text-gray-400');
+    }
+
+    function setViewport(width, btn) {
+      const wrapper = document.getElementById('frame-wrapper');
+      wrapper.style.width = width;
+
+      document.querySelectorAll('.viewport-btn').forEach(b => {
+        b.classList.remove('active', 'bg-white/15', 'text-white');
+        b.classList.add('text-gray-400');
+      });
+      btn.classList.add('active', 'bg-white/15', 'text-white');
+      btn.classList.remove('text-gray-400');
+    }
+  </script>
+
+</body>
+</html>

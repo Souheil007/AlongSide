@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction A3: Spotlight Focus Flow — AlongSide Parent Academy</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            'linen-subtle': '#F4F4F0',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-hover': '#0E2A1E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .smooth-transition {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-hairline/70 bg-linen/95 backdrop-blur-sm sticky top-0 z-30">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <a href="#" class="text-xs font-mono text-mute hover:text-spruce smooth-transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <span>Parent Academy</span>
+      </a>
+
+      <!-- Quick Child Context -->
+      <div class="flex items-center gap-2 text-xs font-mono text-mute">
+        <span class="h-1.5 w-1.5 rounded-full bg-spruce"></span>
+        <span class="text-ink font-semibold">Maya (Age 11)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas -->
+  <main class="max-w-2xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-8">
+
+    <!-- Course Intro -->
+    <section class="space-y-2 text-center sm:text-left">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-spruce bg-spruce-soft px-2.5 py-0.5 rounded-full border border-spruce/20">
+        <span>Digital & Devices</span>
+        <span>•</span>
+        <span>Tween 10–12</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink tracking-tight">
+        Tween Smartphone Transition
+      </h1>
+
+      <p class="text-body text-xs sm:text-sm leading-relaxed max-w-xl">
+        6 micro-lessons to defuse power struggles, protect sleep, and co-design a bilateral device agreement.
+      </p>
+    </section>
+
+    <!-- INTERACTIVE STEPPER STRIP (Ultra-Fluid Lesson Nav) -->
+    <nav class="bg-white rounded-2xl border border-hairline p-3 sm:p-4 shadow-2xs">
+      <div class="flex items-center justify-between text-xs font-mono text-mute mb-3">
+        <span class="text-ink font-semibold">Course Progress</span>
+        <span id="progress-text" class="text-spruce font-semibold">Lesson 3 of 6 · Next up</span>
+      </div>
+
+      <!-- 6-Step Interactive Pips -->
+      <div class="grid grid-cols-6 gap-2">
+        
+        <!-- Step 1 (Done) -->
+        <button onclick="selectLesson(1)" id="pip-1" class="step-pip py-2 rounded-lg bg-spruce-soft border border-emerald-200/80 text-center smooth-transition flex flex-col items-center gap-1 group">
+          <span class="text-xs font-mono text-spruce font-bold">✓</span>
+          <span class="text-[10px] font-mono text-mute group-hover:text-ink hidden sm:inline">1. Dopamine</span>
+        </button>
+
+        <!-- Step 2 (Done) -->
+        <button onclick="selectLesson(2)" id="pip-2" class="step-pip py-2 rounded-lg bg-spruce-soft border border-emerald-200/80 text-center smooth-transition flex flex-col items-center gap-1 group">
+          <span class="text-xs font-mono text-spruce font-bold">✓</span>
+          <span class="text-[10px] font-mono text-mute group-hover:text-ink hidden sm:inline">2. Shame</span>
+        </button>
+
+        <!-- Step 3 (Active) -->
+        <button onclick="selectLesson(3)" id="pip-3" class="step-pip py-2 rounded-lg bg-spruce text-white border-2 border-spruce text-center smooth-transition flex flex-col items-center gap-1 shadow-xs">
+          <span class="text-xs font-mono font-bold">03</span>
+          <span class="text-[10px] font-mono text-spruce-soft font-medium hidden sm:inline">3. Docking</span>
+        </button>
+
+        <!-- Step 4 -->
+        <button onclick="selectLesson(4)" id="pip-4" class="step-pip py-2 rounded-lg bg-linen-subtle border border-hairline hover:border-spruce/40 text-center smooth-transition flex flex-col items-center gap-1">
+          <span class="text-xs font-mono text-mute">04</span>
+          <span class="text-[10px] font-mono text-mute hidden sm:inline">4. Gaming</span>
+        </button>
+
+        <!-- Step 5 -->
+        <button onclick="selectLesson(5)" id="pip-5" class="step-pip py-2 rounded-lg bg-linen-subtle border border-hairline hover:border-spruce/40 text-center smooth-transition flex flex-col items-center gap-1">
+          <span class="text-xs font-mono text-mute">05</span>
+          <span class="text-[10px] font-mono text-mute hidden sm:inline">5. Scams</span>
+        </button>
+
+        <!-- Step 6 -->
+        <button onclick="selectLesson(6)" id="pip-6" class="step-pip py-2 rounded-lg bg-linen-subtle border border-hairline hover:border-spruce/40 text-center smooth-transition flex flex-col items-center gap-1">
+          <span class="text-xs font-mono text-mute">06</span>
+          <span class="text-[10px] font-mono text-mute hidden sm:inline">6. The Pact</span>
+        </button>
+
+      </div>
+    </nav>
+
+    <!-- THE SPOTLIGHT HERO CARD (Dynamically Updates with Zero Friction) -->
+    <section id="spotlight-card" class="rounded-3xl border border-hairline bg-white p-6 sm:p-8 shadow-sm space-y-5 smooth-transition relative overflow-hidden">
+      
+      <!-- Top Telemetry -->
+      <div class="flex items-center justify-between text-xs font-mono">
+        <span id="spotlight-tag" class="px-2.5 py-0.5 rounded-full bg-spruce-soft text-spruce font-semibold border border-spruce/20">
+          Currently Up Next · Priority 1
+        </span>
+        <span id="spotlight-duration" class="text-mute">3 min read</span>
+      </div>
+
+      <!-- Title & Synopsis -->
+      <div class="space-y-2">
+        <h2 id="spotlight-title" class="text-xl sm:text-2xl font-serif font-bold text-ink leading-tight">
+          3. The 8:30 PM Bedtime Dock Protocol
+        </h2>
+        <p id="spotlight-desc" class="text-body text-sm leading-relaxed">
+          Establishing a central living-room charging dock as a neutral household law rather than a punishment, protecting sleep architecture during puberty.
+        </p>
+      </div>
+
+      <!-- Empathy Script Box -->
+      <div id="spotlight-script-box" class="rounded-xl bg-linen-subtle/80 border border-hairline/80 p-4 space-y-1.5">
+        <span class="text-[10px] font-mono uppercase tracking-wider text-mute font-semibold block">Clinician Script for Tonight</span>
+        <p id="spotlight-script" class="font-serif italic text-ink text-sm sm:text-base leading-relaxed">
+          “We protect your sleep because we love your growing brain. The dock is for all phones, including mine.”
+        </p>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-hairline/60">
+        
+        <div class="flex items-center gap-3">
+          <a id="spotlight-cta" href="#" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-spruce hover:bg-spruce-hover text-white text-xs sm:text-sm font-semibold smooth-transition shadow-xs">
+            <span>Start Lesson 3 (3 min)</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+
+          <button onclick="toggleAudio()" class="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border border-hairline hover:bg-linen-subtle text-xs font-mono text-body smooth-transition">
+            <svg class="w-4 h-4 text-spruce" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>
+            <span id="audio-label">Listen (1:45)</span>
+          </button>
+        </div>
+
+        <span class="text-[11px] font-mono text-mute hidden sm:inline">Dr. Thorne Pediatric Review</span>
+      </div>
+
+    </section>
+
+    <!-- OPTIONAL FULL SYLLABUS EXPANDER (Out of the Way) -->
+    <section class="text-center pt-2">
+      <button onclick="toggleFullList()" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce smooth-transition">
+        <span id="full-list-btn">▾ Browse complete 6-lesson syllabus outline</span>
+      </button>
+
+      <div id="full-list" class="hidden mt-4 text-left rounded-2xl border border-hairline bg-white divide-y divide-hairline overflow-hidden shadow-2xs">
+        <div onclick="selectLesson(1)" class="p-3.5 hover:bg-linen-subtle cursor-pointer flex items-center justify-between text-xs">
+          <span class="text-mute line-through">1. Dopamine Loops & Tween Group Chat Friction</span>
+          <span class="font-mono text-spruce">✓ Completed</span>
+        </div>
+        <div onclick="selectLesson(2)" class="p-3.5 hover:bg-linen-subtle cursor-pointer flex items-center justify-between text-xs">
+          <span class="text-mute line-through">2. Setting Boundaries Without Triggering Shame</span>
+          <span class="font-mono text-spruce">✓ Completed</span>
+        </div>
+        <div onclick="selectLesson(3)" class="p-3.5 bg-spruce-soft/30 cursor-pointer flex items-center justify-between text-xs font-semibold text-spruce">
+          <span>3. The 8:30 PM Bedtime Dock Protocol</span>
+          <span class="font-mono">● Up Next (3m)</span>
+        </div>
+        <div onclick="selectLesson(4)" class="p-3.5 hover:bg-linen-subtle cursor-pointer flex items-center justify-between text-xs text-ink">
+          <span>4. Weekend Gaming Agreements & Visual Timers</span>
+          <span class="font-mono text-mute">3m</span>
+        </div>
+        <div onclick="selectLesson(5)" class="p-3.5 hover:bg-linen-subtle cursor-pointer flex items-center justify-between text-xs text-ink">
+          <span>5. Cyber Defense: Spotting Scams & In-Game Traps</span>
+          <span class="font-mono text-mute">4m</span>
+        </div>
+        <div onclick="selectLesson(6)" class="p-3.5 hover:bg-linen-subtle cursor-pointer flex items-center justify-between text-xs text-ink">
+          <span>6. Drafting the Bilateral Family Media Pact</span>
+          <span class="font-mono text-mute">4m</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calming Footer Reassurance -->
+    <footer class="pt-4 border-t border-hairline text-center text-xs font-mono text-mute">
+      <span>Calibrated for Maya (11y) · Pediatric Sleep & Autonomy Standards</span>
+    </footer>
+
+  </main>
+
+  <!-- Exploration Floating Tag -->
+  <aside class="bg-ink text-white py-2 px-4 text-xs font-mono flex items-center justify-between border-t border-hairline">
+    <span>Direction A3: Spotlight Focus Flow · Single-Action Hero + Ambient Stepper</span>
+    <span class="text-spruce-soft font-semibold">Taste 2: Editorial Pediatric Almanac</span>
+  </aside>
+
+  <script>
+    const lessonsData = {
+      1: {
+        tag: 'Completed · Review',
+        duration: '3 min read',
+        title: '1. Dopamine Loops & Tween Group Chat Friction',
+        desc: 'Why adrenarche and neurodevelopmental remodeling make group chat exclusion feel like physical emergency pain to a 6th grader.',
+        script: '“When the chat blows up at night, your brain is flooded. We help you pause so you don’t have to carry that panic alone.”',
+        cta: 'Review Lesson 1'
+      },
+      2: {
+        tag: 'Completed · Review',
+        duration: '3 min read',
+        title: '2. Setting Boundaries Without Triggering Shame',
+        desc: 'Moving past punitive phone confiscation and yelling into calm, neurobiology-backed boundary enforcement.',
+        script: '“I am not taking this because you are in trouble. I am holding this because your prefrontal cortex needs quiet right now.”',
+        cta: 'Review Lesson 2'
+      },
+      3: {
+        tag: 'Currently Up Next · Priority 1',
+        duration: '3 min read',
+        title: '3. The 8:30 PM Bedtime Dock Protocol',
+        desc: 'Establishing a central living-room charging dock as a neutral household law rather than a punishment, protecting sleep architecture during puberty.',
+        script: '“We protect your sleep because we love your growing brain. The dock is for all phones, including mine.”',
+        cta: 'Start Lesson 3 (3 min)'
+      },
+      4: {
+        tag: 'Upcoming · Part 2',
+        duration: '3 min read',
+        title: '4. Weekend Gaming Agreements & Visual Timers',
+        desc: 'Managing Roblox and Fortnite sessions with 10-minute warning buffers and dopamine cooldown windows.',
+        script: '“We agree on the timer before the game launches, so the clock is the umpire, not me.”',
+        cta: 'Preview Lesson 4'
+      },
+      5: {
+        tag: 'Upcoming · Part 2',
+        duration: '4 min read',
+        title: '5. Cyber Defense: Spotting Scams & In-Game Traps',
+        desc: 'Arming your tween to recognize predatory phishing, fake free Robux generators, and stranger DM manipulation.',
+        script: '“If anyone online asks you to keep a secret from Mom or Dad, they are violating our safety pact immediately.”',
+        cta: 'Preview Lesson 5'
+      },
+      6: {
+        tag: 'Upcoming · Part 2',
+        duration: '4 min read',
+        title: '6. Drafting the Bilateral Family Media Pact',
+        desc: 'Co-creating and digitally signing the two-way smartphone pact with clear privileges and natural consequences.',
+        script: '“This agreement is bilateral: you get autonomy benchmarks, and I commit to never snooping without warning.”',
+        cta: 'Preview Lesson 6'
+      }
+    };
+
+    function selectLesson(num) {
+      const data = lessonsData[num];
+      document.getElementById('spotlight-tag').textContent = data.tag;
+      document.getElementById('spotlight-duration').textContent = data.duration;
+      document.getElementById('spotlight-title').textContent = data.title;
+      document.getElementById('spotlight-desc').textContent = data.desc;
+      document.getElementById('spotlight-script').textContent = data.script;
+      document.getElementById('spotlight-cta').innerHTML = `<span>${data.cta}</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+      document.getElementById('progress-text').textContent = `Lesson ${num} of 6 · ${num === 3 ? 'Up next' : num < 3 ? 'Completed' : 'Upcoming'}`;
+
+      // Reset pips
+      for (let i = 1; i <= 6; i++) {
+        const pip = document.getElementById('pip-' + i);
+        if (i === num) {
+          pip.className = 'step-pip py-2 rounded-lg bg-spruce text-white border-2 border-spruce text-center smooth-transition flex flex-col items-center gap-1 shadow-xs';
+        } else if (i < 3) {
+          pip.className = 'step-pip py-2 rounded-lg bg-spruce-soft border border-emerald-200/80 text-center smooth-transition flex flex-col items-center gap-1 group';
+        } else {
+          pip.className = 'step-pip py-2 rounded-lg bg-linen-subtle border border-hairline hover:border-spruce/40 text-center smooth-transition flex flex-col items-center gap-1';
+        }
+      }
+    }
+
+    function toggleAudio() {
+      const l = document.getElementById('audio-label');
+      if (l.textContent.includes('Listen')) {
+        l.textContent = 'Pause (1:45)';
+      } else {
+        l.textContent = 'Listen (1:45)';
+      }
+    }
+
+    function toggleFullList() {
+      const list = document.getElementById('full-list');
+      const btn = document.getElementById('full-list-btn');
+      if (list.classList.contains('hidden')) {
+        list.classList.remove('hidden');
+        btn.textContent = '▲ Hide complete 6-lesson syllabus outline';
+      } else {
+        list.classList.add('hidden');
+        btn.textContent = '▾ Browse complete 6-lesson syllabus outline';
+      }
+    }
+  </script>
+
+</body>
+</html>

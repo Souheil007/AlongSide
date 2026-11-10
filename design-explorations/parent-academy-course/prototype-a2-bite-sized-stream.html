@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction A2: Bite-Sized Micro-Stream — AlongSide Parent Academy</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            'linen-subtle': '#F4F4F0',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-hover': '#0E2A1E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .smooth-transition {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-hairline/70 bg-linen/95 backdrop-blur-sm sticky top-0 z-30">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <a href="#" class="text-xs font-mono text-mute hover:text-spruce smooth-transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <span>Parent Academy</span>
+      </a>
+
+      <!-- Compact Progress Counter -->
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <span class="text-spruce font-semibold">2 of 6 done</span>
+        <span class="text-hairline">•</span>
+        <span class="text-mute">~12m left</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas -->
+  <main class="max-w-2xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-8">
+
+    <!-- Masthead -->
+    <section class="space-y-3">
+      <div class="flex items-center gap-2 text-xs font-mono text-mute">
+        <span class="text-spruce font-semibold uppercase tracking-wider">Tween 10–12</span>
+        <span class="text-hairline">/</span>
+        <span>Calibrated for Maya</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink tracking-tight leading-snug">
+        Tween Smartphone Transition & Family Pacts
+      </h1>
+
+      <p class="text-body text-sm leading-relaxed">
+        Bite-sized micro-lessons to defuse power struggles, defend bedtime sleep, and co-create healthy digital habits.
+      </p>
+    </section>
+
+    <!-- SECTION 1: TONIGHT'S WINS (The Immediate Focus) -->
+    <section class="space-y-3">
+      
+      <div class="flex items-center justify-between text-xs font-mono">
+        <span class="font-bold text-ink uppercase tracking-wider flex items-center gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-spruce"></span>
+          Part 1 · Quick Wins for Tonight
+        </span>
+        <span class="text-spruce font-medium">1 lesson remaining</span>
+      </div>
+
+      <!-- Quick Checklist of Completed Lessons in Part 1 -->
+      <div class="rounded-xl border border-hairline/80 bg-white divide-y divide-hairline/50 overflow-hidden">
+        
+        <div class="px-4 py-2.5 flex items-center justify-between text-xs font-mono text-mute">
+          <div class="flex items-center gap-2.5">
+            <span class="text-spruce font-bold">✓</span>
+            <span class="line-through decoration-hairline text-mute">1. Dopamine Loops & Group Chats</span>
+          </div>
+          <a href="#" class="text-[11px] text-spruce hover:underline">Review</a>
+        </div>
+
+        <div class="px-4 py-2.5 flex items-center justify-between text-xs font-mono text-mute">
+          <div class="flex items-center gap-2.5">
+            <span class="text-spruce font-bold">✓</span>
+            <span class="line-through decoration-hairline text-mute">2. Setting Boundaries Without Shame</span>
+          </div>
+          <a href="#" class="text-[11px] text-spruce hover:underline">Review</a>
+        </div>
+
+      </div>
+
+      <!-- THE TONIGHT HERO FOCUS CARD -->
+      <div class="rounded-2xl border-2 border-spruce/30 bg-spruce-soft/40 p-5 sm:p-6 space-y-4 shadow-xs">
+        
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="px-2 py-0.5 rounded-full bg-spruce text-white text-[10px] font-semibold tracking-wide uppercase">
+            Tonight's Objective
+          </span>
+          <span class="text-spruce font-medium">3 min read</span>
+        </div>
+
+        <div>
+          <h2 class="text-lg sm:text-xl font-serif font-bold text-ink leading-tight">
+            3. The 8:30 PM Bedtime Dock Protocol
+          </h2>
+          <p class="text-xs sm:text-sm text-body leading-relaxed mt-1.5">
+            How to make the living-room charging station a neutral household law so bedtime isn't an argument every evening.
+          </p>
+        </div>
+
+        <div class="bg-white/90 rounded-xl p-3 border border-spruce/20 text-xs">
+          <span class="text-[10px] font-mono font-semibold uppercase text-spruce tracking-wider block mb-1">Empathetic Script to Use</span>
+          <p class="font-serif italic text-ink text-sm">
+            “We protect your sleep because we love your growing brain. The dock is for all phones, including mine.”
+          </p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <a href="#" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-spruce hover:bg-spruce-hover text-white text-xs font-semibold smooth-transition shadow-xs">
+            <span>Start Lesson 3 (3 min)</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+
+          <button onclick="alert('Playing 90-second pediatrician audio summary...')" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-linen-subtle border border-hairline text-xs font-mono text-body smooth-transition">
+            <svg class="w-3.5 h-3.5 text-spruce" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>
+            <span>Audio (1:45)</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION 2: HABITS FOR THIS WEEKEND (Progressive & Fluid) -->
+    <section class="space-y-3 pt-4 border-t border-hairline">
+      
+      <div class="flex items-center justify-between text-xs font-mono text-mute">
+        <span class="font-bold text-ink uppercase tracking-wider">
+          Part 2 · Habits for this Weekend
+        </span>
+        <span>3 lessons · ~11m</span>
+      </div>
+
+      <div class="space-y-2">
+        
+        <!-- Lesson 4 -->
+        <div class="rounded-xl border border-hairline bg-white p-3.5 flex items-center justify-between gap-3 group hover:border-spruce/40 smooth-transition">
+          <div class="flex items-center gap-3">
+            <span class="h-6 w-6 rounded-full bg-linen-subtle text-mute text-xs font-mono flex items-center justify-center shrink-0">4</span>
+            <div>
+              <h3 class="text-xs sm:text-sm font-medium text-ink group-hover:text-spruce smooth-transition">
+                Weekend Gaming Agreements & Timers
+              </h3>
+              <p class="text-[11px] text-mute line-clamp-1">Roblox & Fortnite transitions with 10-minute warning buffers.</p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-mute shrink-0">3m →</span>
+        </div>
+
+        <!-- Lesson 5 -->
+        <div class="rounded-xl border border-hairline bg-white p-3.5 flex items-center justify-between gap-3 group hover:border-spruce/40 smooth-transition">
+          <div class="flex items-center gap-3">
+            <span class="h-6 w-6 rounded-full bg-linen-subtle text-mute text-xs font-mono flex items-center justify-center shrink-0">5</span>
+            <div>
+              <h3 class="text-xs sm:text-sm font-medium text-ink group-hover:text-spruce smooth-transition">
+                Cyber Defense: Spotting In-Game Exploits
+              </h3>
+              <p class="text-[11px] text-mute line-clamp-1">Arming your tween against phishing and stranger chats.</p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-mute shrink-0">4m →</span>
+        </div>
+
+        <!-- Lesson 6 -->
+        <div class="rounded-xl border border-hairline bg-white p-3.5 flex items-center justify-between gap-3 group hover:border-spruce/40 smooth-transition">
+          <div class="flex items-center gap-3">
+            <span class="h-6 w-6 rounded-full bg-linen-subtle text-mute text-xs font-mono flex items-center justify-center shrink-0">6</span>
+            <div>
+              <h3 class="text-xs sm:text-sm font-medium text-ink group-hover:text-spruce smooth-transition">
+                Drafting the Bilateral Family Media Pact
+              </h3>
+              <p class="text-[11px] text-mute line-clamp-1">Co-signing the transparent agreement and setting milestones.</p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-mute shrink-0">4m →</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Calming Footer Reassurance -->
+    <footer class="pt-4 border-t border-hairline text-center text-xs font-mono text-mute">
+      <span>Evidence-based pediatric framework · Dr. Aris Thorne, MD</span>
+    </footer>
+
+  </main>
+
+  <!-- Exploration Floating Tag -->
+  <aside class="bg-ink text-white py-2 px-4 text-xs font-mono flex items-center justify-between border-t border-hairline">
+    <span>Direction A2: Bite-Sized Micro-Stream · Tonight vs Weekend Chunking</span>
+    <span class="text-spruce-soft font-semibold">Taste 2: Editorial Pediatric Almanac</span>
+  </aside>
+
+</body>
+</html>

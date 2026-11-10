@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction C: Structured & Guided — AlongSide Parent Academy</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            'linen-subtle': '#F4F4F0',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            'hairline-soft': '#EDEDEA',
+            spruce: '#143D2B',
+            'spruce-hover': '#0E2A1E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hero-radial-glow {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.06) 0%, rgba(180, 83, 9, 0.03) 40%, transparent 75%);
+    }
+  </style>
+</head>
+<body class="min-h-screen hero-radial-glow flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-hairline bg-linen/90 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="#" class="flex items-center gap-2 group">
+          <div class="h-6 w-6 rounded-md bg-spruce flex items-center justify-center text-white text-xs font-bold font-mono">A</div>
+          <span class="font-serif font-semibold text-lg text-ink tracking-tight group-hover:text-spruce transition-colors">AlongSide</span>
+        </a>
+        <span class="text-hairline">/</span>
+        <span class="text-xs font-mono font-medium text-mute tracking-wide uppercase">Sequential Guide</span>
+      </div>
+      
+      <div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-spruce-soft border border-hairline text-xs font-mono text-spruce">
+        <span class="h-2 w-2 rounded-full bg-spruce"></span>
+        <span>Maya (11y · 6th Grade)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas: Two-Column Split Architecture -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs font-mono text-mute">
+      <a href="#" class="hover:text-spruce transition-colors flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        Curriculum Catalog
+      </a>
+      <span class="text-hairline">/</span>
+      <span class="text-ink truncate">Digital & Devices · Tween 10–12</span>
+    </nav>
+
+    <!-- Two-Column Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT COLUMN: Sticky Course Anchor Card (35% on Desktop) -->
+      <aside class="lg:col-span-5 lg:sticky lg:top-20 space-y-5">
+        
+        <div class="rounded-2xl border border-hairline bg-white p-6 shadow-xs space-y-5">
+          
+          <!-- Category & Stage Calibration Tag -->
+          <div class="space-y-1.5">
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <span class="font-mono uppercase px-2 py-0.5 rounded bg-linen-subtle border border-hairline text-ink font-semibold">
+                Digital & Devices
+              </span>
+              <span class="font-mono text-[11px] text-mute">Tier 4 · Tween</span>
+            </div>
+            <div class="inline-flex items-center gap-1 text-xs font-mono text-spruce font-medium bg-spruce-soft px-2 py-0.5 rounded border border-emerald-200/60">
+              ✓ Calibrated for Maya (Age 11)
+            </div>
+          </div>
+
+          <!-- Course Title in Newsreader Editorial Serif -->
+          <div class="space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-serif font-bold text-ink leading-tight">
+              Tween Smartphone Transition & Family Pacts
+            </h1>
+            <p class="text-body text-xs sm:text-sm leading-relaxed">
+              Step-by-step guidance to prevent screen battles, protect 8:30 PM sleep, and co-sign bilateral household rules.
+            </p>
+          </div>
+
+          <!-- Completion Telemetry -->
+          <div class="p-3.5 rounded-xl bg-linen-subtle border border-hairline space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-ink font-bold">Progress: 2 / 6 Lessons</span>
+              <span class="text-mute font-medium">33% Complete</span>
+            </div>
+            <div class="w-full bg-white border border-hairline-soft h-2 rounded-full overflow-hidden">
+              <div class="bg-spruce h-full rounded-full" style="width: 33.3%;"></div>
+            </div>
+            <p class="text-[11px] text-mute font-mono">~12 minutes estimated reading left</p>
+          </div>
+
+          <!-- The 3 Core Non-Negotiables Callout -->
+          <div class="space-y-2 pt-2 border-t border-hairline-soft">
+            <p class="text-xs font-mono uppercase tracking-wider font-semibold text-ink">Core Course Rules:</p>
+            <ul class="text-xs text-body space-y-1.5 list-disc pl-4">
+              <li>No phone in bedroom after 8:30 PM (Sleep Sanctuary).</li>
+              <li>Dual accountability: Parents model device boundaries.</li>
+              <li>Zero shame for mistakes or accidental exposure.</li>
+            </ul>
+          </div>
+
+          <!-- Persistent Resume CTA -->
+          <div class="pt-2">
+            <a href="#lesson-3" class="w-full py-2.5 px-4 rounded-full bg-ink hover:bg-spruce text-white text-xs sm:text-sm font-medium transition-all shadow-xs flex items-center justify-center gap-2">
+              <span>Resume: Lesson 3 (3 min)</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+          </div>
+
+        </div>
+
+      </aside>
+
+      <!-- RIGHT COLUMN: Sequential Priority Accordions (65% on Desktop) -->
+      <section class="lg:col-span-7 space-y-4">
+        
+        <div class="flex items-center justify-between pb-2 border-b border-hairline">
+          <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-mute">
+            Curriculum Flow · Focus One Priority at a Time
+          </h2>
+          <span class="text-xs font-mono text-mute">3 Priorities</span>
+        </div>
+
+        <!-- ACCORDION 1: Priority 1 (COMPLETED · COLLAPSED BY DEFAULT) -->
+        <div class="rounded-2xl border border-hairline bg-white shadow-xs overflow-hidden transition-all">
+          <button onclick="toggleAccordion('acc-1')" class="w-full p-4 sm:p-5 flex items-center justify-between bg-linen-subtle/50 hover:bg-linen-subtle text-left transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="h-6 w-6 rounded-full bg-spruce-soft text-spruce border border-emerald-200 flex items-center justify-center text-xs font-mono font-bold shrink-0">
+                ✓
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-serif font-bold text-base text-ink">Priority 1: Immediate De-escalation & Brain Biology</span>
+                  <span class="font-mono text-[10px] text-spruce bg-spruce-soft px-1.5 py-0.5 rounded">2/2 Completed</span>
+                </div>
+                <p class="text-xs text-mute font-mono">Immediate friction protocols · Adrenarche dopamine loops</p>
+              </div>
+            </div>
+            <span id="acc-1-icon" class="text-xs font-mono text-mute">▼</span>
+          </button>
+
+          <div id="acc-1-body" class="hidden p-4 sm:p-5 space-y-3 border-t border-hairline-soft">
+            
+            <!-- Lesson 1 -->
+            <div class="p-3 rounded-xl border border-hairline bg-white space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-spruce font-semibold">✓ Lesson 1 · Completed</span>
+                <span class="text-xs font-mono text-mute">3 min read</span>
+              </div>
+              <h4 class="text-sm font-semibold text-ink">Dopamine Loops & Tween Group Chat Friction</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Why peer exclusion in iMessage activates brain pain circuits, and how to de-escalate without dismissing their feelings.
+              </p>
+              <span class="inline-block text-[10px] font-mono bg-linen-subtle px-2 py-0.5 rounded text-mute">
+                Trigger: "Everyone else is on the group chat right now"
+              </span>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="p-3 rounded-xl border border-hairline bg-white space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-spruce font-semibold">✓ Lesson 2 · Completed</span>
+                <span class="text-xs font-mono text-mute">3 min read</span>
+              </div>
+              <h4 class="text-sm font-semibold text-ink">Setting Boundaries Without Triggering Shame</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Replacing emotional confiscation with calm, non-punitive boundary statements that preserve parent-child trust.
+              </p>
+              <span class="inline-block text-[10px] font-mono bg-linen-subtle px-2 py-0.5 rounded text-mute">
+                Trigger: "You are the meanest parent in 6th grade"
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ACCORDION 2: Priority 2 (ACTIVE CURRENT STEP · EXPANDED BY DEFAULT) -->
+        <div class="rounded-2xl border-2 border-spruce bg-white shadow-sm overflow-hidden transition-all">
+          <button onclick="toggleAccordion('acc-2')" class="w-full p-4 sm:p-5 flex items-center justify-between bg-spruce-soft/40 hover:bg-spruce-soft/60 text-left transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="h-6 w-6 rounded-full bg-spruce text-white flex items-center justify-center text-xs font-mono font-bold shrink-0">
+                2
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-serif font-bold text-base text-ink">Priority 2: Daily Routines & Bedtime Anchors</span>
+                  <span class="font-mono text-[10px] text-amber font-semibold bg-amber-soft px-1.5 py-0.5 rounded">● In Progress</span>
+                </div>
+                <p class="text-xs text-body font-mono">Neutral household rules · Sleep defense rituals</p>
+              </div>
+            </div>
+            <span id="acc-2-icon" class="text-xs font-mono text-spruce font-bold">▲</span>
+          </button>
+
+          <div id="acc-2-body" class="p-4 sm:p-5 space-y-4 border-t border-hairline-soft">
+            
+            <!-- Lesson 3 (ACTIVE TARGET) -->
+            <div id="lesson-3" class="p-4 rounded-xl border-2 border-spruce bg-spruce-soft/20 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-spruce font-bold uppercase tracking-wider">● Next Lesson to Read</span>
+                <span class="text-xs font-mono text-mute">3 min read</span>
+              </div>
+              <h4 class="text-base font-bold text-ink">Lesson 3: The 8:30 PM Bedtime Dock Protocol</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Establishing the living-room charging dock as a neutral household law rather than a personal punishment. Protects melatonin and rapid-eye-movement sleep.
+              </p>
+              
+              <!-- Practical Trigger Badge -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <span class="text-[10px] font-mono bg-white border border-spruce/30 px-2 py-0.5 rounded text-spruce font-semibold">
+                  Trigger: "Can I just check my alarm on my phone in bed?"
+                </span>
+              </div>
+
+              <!-- Action button -->
+              <div class="pt-2 flex items-center justify-between">
+                <span class="text-[11px] font-mono text-mute">Includes printable dock sign</span>
+                <a href="#" class="px-4 py-1.5 rounded-full bg-spruce text-white text-xs font-medium hover:bg-spruce-hover transition-colors shadow-2xs">
+                  Read Lesson 3 Now →
+                </a>
+              </div>
+            </div>
+
+            <!-- Lesson 4 (Upcoming) -->
+            <div class="p-4 rounded-xl border border-hairline bg-white space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-mute font-medium">Lesson 4 · Upcoming</span>
+                <span class="text-xs font-mono text-mute">3 min read</span>
+              </div>
+              <h4 class="text-sm font-semibold text-ink">Lesson 4: Weekend Gaming Agreements & Visual Timers</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Managing Roblox and Fortnite transitions with 10-minute warning buffers and dopamine breaks to stop post-game rage.
+              </p>
+              <span class="inline-block text-[10px] font-mono bg-linen-subtle px-2 py-0.5 rounded text-mute">
+                Trigger: Post-gaming irritability & sibling screaming
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ACCORDION 3: Priority 3 (COLLAPSED BY DEFAULT) -->
+        <div class="rounded-2xl border border-hairline bg-white shadow-xs overflow-hidden transition-all">
+          <button onclick="toggleAccordion('acc-3')" class="w-full p-4 sm:p-5 flex items-center justify-between bg-linen-subtle/50 hover:bg-linen-subtle text-left transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="h-6 w-6 rounded-full bg-linen-subtle text-mute border border-hairline flex items-center justify-center text-xs font-mono shrink-0">
+                3
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-serif font-bold text-base text-ink">Priority 3: Long-Term Scaffolding & Digital Defense</span>
+                  <span class="font-mono text-[10px] text-mute bg-linen-subtle px-1.5 py-0.5 rounded">0/2 Completed</span>
+                </div>
+                <p class="text-xs text-mute font-mono">Scams, algorithms, and 7th grade smartphone independence</p>
+              </div>
+            </div>
+            <span id="acc-3-icon" class="text-xs font-mono text-mute">▼</span>
+          </button>
+
+          <div id="acc-3-body" class="hidden p-4 sm:p-5 space-y-3 border-t border-hairline-soft">
+            
+            <!-- Lesson 5 -->
+            <div class="p-3 rounded-xl border border-hairline bg-white space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-mute">Lesson 5 · Upcoming</span>
+                <span class="text-xs font-mono text-mute">4 min read</span>
+              </div>
+              <h4 class="text-sm font-semibold text-ink">Cyber Defense: Spotting Scams & In-Game Exploits</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Empowering your tween to recognize predatory phishing, free Robux scams, and stranger chat traps.
+              </p>
+              <span class="inline-block text-[10px] font-mono bg-linen-subtle px-2 py-0.5 rounded text-mute">
+                Trigger: Unknown Discord or Roblox messages
+              </span>
+            </div>
+
+            <!-- Lesson 6 -->
+            <div class="p-3 rounded-xl border border-hairline bg-white space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono text-mute">Lesson 6 · Upcoming</span>
+                <span class="text-xs font-mono text-mute">4 min read</span>
+              </div>
+              <h4 class="text-sm font-semibold text-ink">Drafting the Bilateral Family Media Pact</h4>
+              <p class="text-xs text-body leading-relaxed">
+                Co-signing the transparent agreement and setting readiness benchmarks for smartphone independence.
+              </p>
+              <span class="inline-block text-[10px] font-mono bg-linen-subtle px-2 py-0.5 rounded text-mute">
+                Trigger: Formal device handover milestone
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Exploration Floating Banner -->
+  <div class="bg-ink text-white py-2 px-4 text-center text-xs font-mono flex items-center justify-between border-t border-hairline">
+    <span>Direction C: Structured & Guided · Sequential Accordion Guide</span>
+    <span class="text-spruce-soft font-semibold">Taste 2: Editorial Pediatric Almanac</span>
+  </div>
+
+  <script>
+    function toggleAccordion(id) {
+      const body = document.getElementById(id + '-body');
+      const icon = document.getElementById(id + '-icon');
+      if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+        icon.textContent = '▲';
+      } else {
+        body.classList.add('hidden');
+        icon.textContent = '▼';
+      }
+    }
+  </script>
+
+</body>
+</html>
