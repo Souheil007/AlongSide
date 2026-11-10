@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction H — The Generational Time Capsule & Cultural Bridge | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            vintage: '#8B5CF6',
+            'vintage-soft': '#F5F3FF',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+    .vintage-cassette {
+      background: linear-gradient(135deg, #FAF5FF 0%, #EDE9FE 100%);
+      border: 2px dashed #C4B5FD;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-12">
+  <div class="max-w-5xl mx-auto space-y-8">
+
+    <!-- Top Navigation Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 8 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction H: Generational Time Capsule</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-vintage/30 bg-vintage-soft px-3 py-1 font-mono text-xs text-vintage font-semibold">
+          Bridging Then & Now
+        </span>
+      </div>
+    </header>
+
+    <!-- Child Selector Masthead -->
+    <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <span class="font-mono text-[11px] uppercase tracking-wider text-mute block font-semibold">Compare Generations For:</span>
+        <div class="flex flex-wrap items-center gap-2" id="child-tabs">
+          <button onclick="setChild('julian')" id="tab-julian" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition">
+            <span class="w-5 h-5 rounded-full bg-spruce text-white flex items-center justify-center text-[10px] font-bold">J</span>
+            <span>Julian · 14 yrs</span>
+          </button>
+          <button onclick="setChild('maya')" id="tab-maya" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px] font-bold">M</span>
+            <span>Maya · 8 yrs</span>
+          </button>
+          <button onclick="setChild('mateo')" id="tab-mateo" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px] font-bold">M</span>
+            <span>Mateo · 14 mo</span>
+          </button>
+        </div>
+      </div>
+      <div class="border-t md:border-t-0 md:border-l border-hairline pt-3 md:pt-0 md:pl-5">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">The Core Reassurance</span>
+        <span class="font-serif text-sm font-semibold text-ink italic">"Kids haven't changed; only the tools have."</span>
+      </div>
+    </div>
+
+    <!-- The Dual-Lens Generational Comparison Stage -->
+    <div class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-6">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="font-mono text-xs uppercase tracking-widest text-amber font-bold">Generational Reality Check</span>
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-ink" id="capsule-title">
+          When You Were 14 vs. Julian at 14
+        </h2>
+        <p class="text-xs sm:text-sm text-body" id="capsule-subtext">
+          Remember when your parents thought your slang was ridiculous and your pop culture was destroying society? Take a breath.
+        </p>
+      </div>
+
+      <!-- Side-by-Side Artifact Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+
+        <!-- Column Left: THEN (Parent Era) -->
+        <div class="rounded-2xl p-6 vintage-cassette space-y-4">
+          <div class="flex items-center justify-between border-b border-purple-200 pb-3">
+            <span class="font-mono text-xs font-bold text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
+              <span>📼</span> <span id="era-then-title">You in 1999 (Age 14)</span>
+            </span>
+            <span class="font-mono text-[10px] bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-semibold">Vintage Era</span>
+          </div>
+
+          <ul class="space-y-3 text-xs text-purple-950" id="era-then-list">
+            <!-- Injected dynamically -->
+          </ul>
+
+          <div class="p-3 bg-white/70 rounded-xl border border-purple-200 text-[11px] text-purple-900 italic" id="era-then-quote">
+            "Your parents said: 'Why are you glued to that computer screen listening to modem screeching?'"
+          </div>
+        </div>
+
+        <!-- Column Right: NOW (Child Era) -->
+        <div class="rounded-2xl p-6 bg-spruce-soft border-2 border-spruce/30 space-y-4">
+          <div class="flex items-center justify-between border-b border-spruce/20 pb-3">
+            <span class="font-mono text-xs font-bold text-spruce uppercase tracking-wider flex items-center gap-1.5">
+              <span>📱</span> <span id="era-now-title">Julian in 2026 (Age 14)</span>
+            </span>
+            <span class="font-mono text-[10px] bg-spruce text-white px-2 py-0.5 rounded font-semibold">Current Era</span>
+          </div>
+
+          <ul class="space-y-3 text-xs text-emerald-950" id="era-now-list">
+            <!-- Injected dynamically -->
+          </ul>
+
+          <div class="p-3 bg-white/70 rounded-xl border border-spruce/20 text-[11px] text-spruce italic" id="era-now-quote">
+            "You might say: 'Why are you watching a Discord stream of someone else playing a video game?'"
+          </div>
+        </div>
+
+      </div>
+
+      <!-- The Psychological Equivalence Banner -->
+      <div class="p-4 rounded-xl bg-canvas-subtle border border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">The Shared Pediatric Truth:</span>
+          <p class="text-body font-medium" id="capsule-insight">
+            Both eras solved the exact same evolutionary milestone: establishing autonomy, belonging to a peer tribe, and practicing independence.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Vintage-to-Modern Slang Translator Widget -->
+    <div class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-hairline pb-4">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-wider text-mute font-bold block">Interactive Feature</span>
+          <h3 class="font-serif text-2xl font-bold text-ink">The Cross-Generational Slang Machine</h3>
+        </div>
+        <span class="font-mono text-xs text-spruce bg-spruce-soft px-3 py-1 rounded-full font-semibold">Translate Vintage → 2026</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <!-- Input Selector (Vintage term) -->
+        <div class="md:col-span-5 space-y-2">
+          <label class="font-mono text-[11px] uppercase tracking-wider text-mute block font-semibold">Pick a 90s/2000s Slang Term:</label>
+          <select id="slang-select" onchange="translateSlang()" class="w-full p-3 rounded-xl border border-hairline bg-canvas-subtle text-ink font-mono text-xs font-semibold focus:outline-none focus:border-spruce transition">
+            <option value="all-that">"All that and a bag of chips"</option>
+            <option value="as-if">"As if!"</option>
+            <option value="talk-hand">"Talk to the hand"</option>
+            <option value="da-bomb">"Da bomb / Fire"</option>
+            <option value="chill-pill">"Take a chill pill"</option>
+          </select>
+        </div>
+
+        <!-- Arrow Divider -->
+        <div class="md:col-span-2 text-center text-spruce font-bold text-xl">
+          <span class="hidden md:inline">➔</span>
+          <span class="md:hidden">⬇</span>
+        </div>
+
+        <!-- Output Card (2026 Modern Equivalent) -->
+        <div class="md:col-span-5 p-4 rounded-xl bg-spruce-soft border border-spruce/30 space-y-1.5" id="slang-output-card">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">2026 Peer Equivalent:</span>
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-2xl font-bold text-ink" id="trans-term">"Peak / Has Infinite Aura"</span>
+          </div>
+          <p class="text-xs text-body" id="trans-context">Used when someone or something is unquestionably top-tier and universally respected.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tonight's Sunday Slang Swap Game Card -->
+    <div class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-4 border-2 border-spruce/20 shadow-md">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Tonight's Sunday Dinner Game: "The Slang Swap"
+        </span>
+        <button onclick="copySwapGame()" id="btn-copy-game" class="px-3 py-1 rounded-lg border border-hairline bg-canvas-subtle hover:bg-white text-ink font-mono text-xs transition flex items-center gap-1">
+          <span>Copy Game Rules</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <h4 class="font-serif text-xl font-bold text-ink" id="game-title">
+          "The Pizza Night Trade: You teach 1 vintage word, they teach 1 modern word."
+        </h4>
+        <p class="text-xs sm:text-sm text-body leading-relaxed" id="game-desc">
+          Around the dinner table tonight: You reveal one embarrassing slang word from your middle school years (and explain how you used it). In exchange, Julian has to teach you one current term without making fun of your pronunciation.
+        </p>
+        <div class="p-3 bg-canvas-subtle rounded-xl text-xs font-mono text-mute flex items-center justify-between">
+          <span>Why it works: Mutual vulnerability breaks parental defensiveness and turns awkwardness into shared laughter.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const GENERATION_DATA = {
+      julian: {
+        title: "When You Were 14 vs. Julian at 14",
+        subtext: "Remember when your parents thought your slang was ridiculous and your pop culture was destroying society? Take a breath.",
+        thenTitle: "You in 1999 (Age 14)",
+        nowTitle: "Julian in 2026 (Age 14)",
+        thenList: [
+          "<strong>Communication:</strong> Dial-up AOL Instant Messenger (AIM) with dramatic away messages written with lyrics.",
+          "<strong>Music:</strong> Burning mix CDs on Nero Burning ROM or waiting 45 minutes on Napster for one MP3.",
+          "<strong>Social Status:</strong> Having a clear pager with numeric codes (like '143' for I love you), or gel pens.",
+          "<strong>Parent Dread:</strong> 'Video games rot your brain!' and 'Who is this person in your chat room?'"
+        ],
+        nowList: [
+          "<strong>Communication:</strong> Discord voice channels with screenshare + late night group chats.",
+          "<strong>Music:</strong> Spotify Blend playlists and 15-second TikTok trending audio sounds.",
+          "<strong>Social Status:</strong> Accumulating unspoken 'Aura points' and maintaining Snapchat Snapstreaks.",
+          "<strong>Parent Dread:</strong> 'Algorithms rot your brain!' and 'What does skibidi even mean?'"
+        ],
+        thenQuote: "\"Your parents said: 'Why are you glued to that computer screen listening to modem screeching?'\"",
+        nowQuote: "\"You might say: 'Why are you watching a Discord stream of someone else playing a video game?'\"",
+        insight: "Both eras solved the exact same evolutionary milestone: establishing autonomy, belonging to a peer tribe, and practicing independence.",
+        gameTitle: "\"The Pizza Night Trade: You teach 1 vintage word, they teach 1 modern word.\"",
+        gameDesc: "Around the dinner table tonight: You reveal one embarrassing slang word from your middle school years (and explain how you used it). In exchange, Julian has to teach you one current term without making fun of your pronunciation."
+      },
+
+      maya: {
+        title: "When You Were 8 vs. Maya at 8",
+        subtext: "Schoolyard blacktop politics have not changed in 30 years—only the trading items evolved.",
+        thenTitle: "You in 1999 (Age 8)",
+        nowTitle: "Maya in 2026 (Age 8)",
+        thenList: [
+          "<strong>Playground Currency:</strong> Pogs, Slammers, Beanie Babies, and trading stickers in spiral notebooks.",
+          "<strong>Entertainment:</strong> Saturday morning cartoons on VHS tapes and Game Boy Color with worms.",
+          "<strong>Social Drama:</strong> 'You can't jump on our hopscotch grid' and secret friendship clubs.",
+          "<strong>Parent Dread:</strong> 'If you keep watching Pokemon your eyes are going to turn square!'"
+        ],
+        nowList: [
+          "<strong>Playground Currency:</strong> Holographic Pokemon cards, mini Squishmallows, and scented erasers.",
+          "<strong>Entertainment:</strong> Minecraft Bedrock co-op worlds and Bluey episodes on demand.",
+          "<strong>Social Drama:</strong> 'You broke the pinky promise and traded Emma my holographic Mewtwo!'",
+          "<strong>Parent Dread:</strong> 'Is tablet Minecraft giving her too much screen time?'"
+        ],
+        thenQuote: "\"Your parents said: 'Go outside and don't come back until the streetlights turn on!'\"",
+        nowQuote: "\"You might say: 'Why do you care so much about this piece of shiny foil cardboard?'\"",
+        insight: "Elementary school barter teaches early negotiation, perceived fairness, and social boundary testing.",
+        gameTitle: "\"The Recess Nostalgia Swap: What did you trade when you were 8?\"",
+        gameDesc: "Show Maya a picture of 90s Pogs or Beanie Babies. Compare how much they cost then vs. what Pokemon cards trade for at her school today."
+      },
+
+      mateo: {
+        title: "When You Were a Baby vs. Mateo at 14 Months",
+        subtext: "The infant brain is a biological masterpiece that hasn't changed in 50,000 years.",
+        thenTitle: "You as a Toddler (Early 90s)",
+        nowTitle: "Mateo in 2026 (14 Months)",
+        thenList: [
+          "<strong>Sensory Audio:</strong> Barney tapes, Raffi cassette tapes, and Fisher-Price cassette players.",
+          "<strong>Motor Play:</strong> Dropping wooden blocks off high chair trays and banging pots with spoons.",
+          "<strong>Parent Tool:</strong> The Sears parenting encyclopedia and asking grandma on a landline phone."
+        ],
+        nowList: [
+          "<strong>Sensory Audio:</strong> Ms. Rachel songs, CoComelon cadence, and interactive digital nursery rhymes.",
+          "<strong>Motor Play:</strong> Dropping silicone suction bowls and clapping hands to rhythmic beats.",
+          "<strong>Parent Tool:</strong> Alongside pediatric neuroscience algorithms and high chair mirror loops."
+        ],
+        thenQuote: "\"Grandma said: 'Just let him cry it out, he has to learn.' (Debunked by modern neuroscience!)\"",
+        nowQuote: "\"Alongside says: 'Repetitive cadence soothes the infant nervous system and wires speech.'\"",
+        insight: "The infant need for warm attunement and predictable rhythm is universal across human history.",
+        gameTitle: "\"High Chair Time Travel Duet\"",
+        gameDesc: "Sing a childhood song your parents sang to you (like Raffi's 'Baby Beluga') and watch Mateo's mirror neurons light up with pure joy."
+      }
+    };
+
+    const SLANG_TRANSLATIONS = {
+      "all-that": { term: "\"Peak / Has Infinite Aura\"", context: "Used when someone or something is unquestionably top-tier and universally respected." },
+      "as-if": { term: "\"That's Cap / Be Serious\"", context: "Expressing total disbelief or calling out an obvious falsehood or exaggeration." },
+      "talk-hand": { term: "\"Left on Read / Don't Care\"", context: "Complete dismissal of someone's complaint or refusal to engage in drama." },
+      "da-bomb": { term: "\"Bussin / Absolute Fire\"", context: "Describing exceptional food, music, or an incredible athletic play." },
+      "chill-pill": { term: "\"Don't Crashout / Take a Breath\"", context: "Warning a friend who is losing their composure or blowing up unnecessarily." }
+    };
+
+    function setChild(childKey) {
+      const data = GENERATION_DATA[childKey];
+
+      // Update switcher buttons
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        if (k === childKey) {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition";
+        } else {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition";
+        }
+      });
+
+      // Update titles
+      document.getElementById('capsule-title').textContent = data.title;
+      document.getElementById('capsule-subtext').textContent = data.subtext;
+      document.getElementById('era-then-title').textContent = data.thenTitle;
+      document.getElementById('era-now-title').textContent = data.nowTitle;
+
+      // Update lists
+      const thenUl = document.getElementById('era-then-list');
+      thenUl.innerHTML = data.thenList.map(li => `<li>${li}</li>`).join('');
+
+      const nowUl = document.getElementById('era-now-list');
+      nowUl.innerHTML = data.nowList.map(li => `<li>${li}</li>`).join('');
+
+      document.getElementById('era-then-quote').textContent = data.thenQuote;
+      document.getElementById('era-now-quote').textContent = data.nowQuote;
+      document.getElementById('capsule-insight').textContent = data.insight;
+
+      document.getElementById('game-title').textContent = data.gameTitle;
+      document.getElementById('game-desc').textContent = data.gameDesc;
+    }
+
+    function translateSlang() {
+      const val = document.getElementById('slang-select').value;
+      const trans = SLANG_TRANSLATIONS[val];
+      document.getElementById('trans-term').textContent = trans.term;
+      document.getElementById('trans-context').textContent = trans.context;
+    }
+
+    function copySwapGame() {
+      const title = document.getElementById('game-title').textContent;
+      const desc = document.getElementById('game-desc').textContent;
+      navigator.clipboard.writeText(`Sunday Dinner Game: ${title}\n${desc}`);
+      const btn = document.getElementById('btn-copy-game');
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+
+    // Default to Julian
+    setChild('julian');
+  </script>
+</body>
+</html>
