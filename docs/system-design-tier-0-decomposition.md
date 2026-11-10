@@ -9,7 +9,6 @@
 - [**System Architecture Specification**](system-architecture.md) (`docs/system-architecture.md`)
 - [**Codebase Design Specification**](codebase-design.md) (`docs/codebase-design.md`)
 - [**Lifespan Developmental Milestones**](research/developmental-milestones-0-18.md) (`docs/research/developmental-milestones-0-18.md`)
-- [**Pediatric Health Triage Protocols**](research/pediatric-health-triage-protocols.md) (`docs/research/pediatric-health-triage-protocols.md`)
 - [**Pediatric Nutrition & Feeding Science**](research/pediatric-nutrition-feeding-science.md) (`docs/research/pediatric-nutrition-feeding-science.md`)
 
 ---
