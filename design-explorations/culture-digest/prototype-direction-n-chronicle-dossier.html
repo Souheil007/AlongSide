@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction N — The Connected Chronicle & Field Dossier | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+            dossier: '#334155',
+            'dossier-soft': '#F1F5F9',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .dossier-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+    .reel-strip-item {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    }
+    .reel-strip-item:hover {
+      transform: translateY(-2px);
+      border-color: #143D2B;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-12">
+  <div class="max-w-6xl mx-auto space-y-10">
+
+    <!-- Top Navigation Bar & Master Hub Link -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 14 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction N: The Connected Chronicle & Field Dossier</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-semibold">
+          Dossier #42 · Week of Nov 10, 2026
+        </span>
+      </div>
+    </header>
+
+    <!-- Header & Dynamic Child Selector -->
+    <div class="dossier-card bg-card rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 border-l-4 border-l-spruce">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold">Field Dossier & Intelligence Brief</span>
+          <span class="text-mute font-mono text-xs">·</span>
+          <span class="font-mono text-xs text-mute" id="dossier-tier-label">Julian (14y · Pioneer)</span>
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+          Sunday Cultural Intelligence Briefing
+        </h1>
+        <p class="text-body text-sm sm:text-base max-w-2xl" id="dossier-subtitle">
+          Structured field reports, interactive reels, generational benchmarking, and tier-tailored micro-language.
+        </p>
+      </div>
+
+      <!-- Child Switcher Tabs -->
+      <div class="flex items-center gap-2 bg-canvas-subtle p-2 rounded-2xl border border-hairline shrink-0">
+        <button onclick="setDossierChild('julian')" id="btn-dossier-julian" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-white text-spruce font-mono text-xs font-bold shadow-2xs transition">
+          <span class="w-4 h-4 rounded-full bg-spruce text-white flex items-center justify-center text-[9px]">J</span>
+          <span>Julian · 14y</span>
+        </button>
+        <button onclick="setDossierChild('maya')" id="btn-dossier-maya" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]">M</span>
+          <span>Maya · 8y</span>
+        </button>
+        <button onclick="setDossierChild('mateo')" id="btn-dossier-mateo" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]">M</span>
+          <span>Mateo · 14m</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 1: CULTURAL REELS (Horizontal Briefing Cards with Click-to-Play) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Pillar 1 · Field Reels (45-Second Video Intelligence)
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink">Bite-Sized Video Briefings</h2>
+        </div>
+        <span class="text-xs font-mono text-mute">Click Card to Launch Reel Player</span>
+      </div>
+
+      <!-- Horizontal Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="dossier-reels-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 2: WEEKLY BLOGS & MAGAZINE DISPATCHES (3 Field Reports) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            Pillar 2 · Weekly Field Notes & Magazine Dispatches
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink">Pediatric Field Reports</h2>
+        </div>
+        <span class="text-xs font-mono text-mute" id="dossier-blog-count">3 Curated Reports</span>
+      </div>
+
+      <!-- 3 In-Depth Field Reports -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="dossier-blogs-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 3: GENERATIONAL BENCHMARK ("When You Were X vs. Child at X") -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-dossier font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-dossier" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Pillar 3 · Generational Benchmark & Time Mirror
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink" id="dossier-mirror-heading">When You Were 14 vs. Julian at 14</h2>
+        </div>
+        <span class="text-xs font-mono bg-dossier-soft text-dossier px-3 py-1 rounded-full font-semibold border border-dossier/20">
+          Evolutionary Invariance
+        </span>
+      </div>
+
+      <!-- Benchmark Table / Cards -->
+      <div class="dossier-card bg-card rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="dossier-mirror-grid">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <div class="p-4 rounded-2xl bg-canvas-subtle border border-hairline flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono">
+          <span class="text-body font-medium" id="dossier-mirror-quote">"The technology transforms; the developmental imperative for peer connection and autonomy does not."</span>
+          <span class="text-spruce font-bold shrink-0">Developmental Science Standard</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 4: DECODE MODERN YOUTH VOCABULARY (Tailored & Conditional) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+            Pillar 4 · Micro-Language Compass
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink" id="dossier-vocab-heading">Decode Modern Youth Vocabulary</h2>
+        </div>
+        <span class="text-xs font-mono text-mute" id="dossier-vocab-pill">Tier Tailored</span>
+      </div>
+
+      <div id="dossier-vocab-container" class="space-y-4">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- REEL PLAYER OVERLAY MODAL -->
+  <div id="dossier-reel-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-card w-full max-w-xl rounded-3xl overflow-hidden border border-hairline shadow-2xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-hairline pb-4">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block" id="modal-category">Reel Briefing</span>
+          <h3 class="font-serif text-2xl font-bold text-ink" id="modal-title">Reel Title</h3>
+        </div>
+        <button onclick="closeDossierReelModal()" class="text-mute hover:text-ink p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Video Player Frame Simulation -->
+      <div class="w-full aspect-video rounded-2xl bg-slate-900 p-6 flex flex-col justify-between text-white relative">
+        <div class="flex items-center justify-between text-xs font-mono text-white/70">
+          <span id="modal-duration">0:45</span>
+          <span class="px-2 py-0.5 rounded-full bg-white/20 text-[10px]">Playing Audio Briefing 🔊</span>
+        </div>
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-white/20 border border-white/30 flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6 text-white fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p class="text-sm font-serif italic text-white/90" id="modal-caption">"..."</p>
+        </div>
+        <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+          <div class="bg-white h-full" style="width: 60%;"></div>
+        </div>
+      </div>
+
+      <!-- Clinical Takeaway & Script -->
+      <div class="space-y-3">
+        <div class="p-4 bg-spruce-soft rounded-2xl border border-spruce/20 space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">Pediatric Clinical Action</span>
+          <p class="text-xs text-spruce font-medium leading-relaxed" id="modal-script">"..."</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeDossierReelModal()" class="px-5 py-2.5 rounded-xl bg-spruce text-white font-mono text-xs font-semibold hover:bg-spruce-light transition">
+          Close Briefing
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION LOGIC & DATA -->
+  <script>
+    const DOSSIER_DATA = {
+      julian: {
+        childName: "Julian",
+        age: 14,
+        tierBadge: "Julian (14y · Adolescent Pioneer · Active-Device)",
+        subtitle: "Adolescent social psychology, group chat dynamics, viral culture, and parent-teen connection.",
+        reels: [
+          {
+            id: "r1",
+            title: "What is a 'Crashout' & Why Teens Fear It",
+            duration: "0:45",
+            category: "Emotional Regulation",
+            caption: "\"Bro had a complete crashout during 4th period...\" Loss of emotional composure in front of peers.",
+            script: "\"It sounds like people were on edge at school today. If you want to vent or just chill, I'm around.\""
+          },
+          {
+            id: "r2",
+            title: "Why Discord Voice Calls Last 4+ Hours",
+            duration: "0:38",
+            category: "Digital Socializing",
+            caption: "\"They aren't playing games the whole time; they are co-existing in virtual parallel space.\"",
+            script: "\"I see you guys keeping the call on while studying. I'll give you a heads up at 8:15 before the auto-curfew.\""
+          },
+          {
+            id: "r3",
+            title: "The Silent Economy of 'Aura Points'",
+            duration: "0:40",
+            category: "Peer Status",
+            caption: "\"Minus 1,000 aura for tripping; plus 500 aura for fixing the teacher's projector calmly.\"",
+            script: "\"Handling that soccer rainout without complaining was definitely plus 500 aura in my book.\""
+          }
+        ],
+        blogs: [
+          {
+            id: "b1",
+            title: "The Algorithmic Rage-Bait Trap",
+            author: "Dr. Aris Thorne",
+            readTime: "5 min",
+            teaser: "Why teen feeds push controversy over humor, and how to build critical media immunity."
+          },
+          {
+            id: "b2",
+            title: "The Death of 'How Was School?'",
+            author: "Elena Rostova",
+            readTime: "3 min",
+            teaser: "Why direct interrogation causes shutdowns, and the power of parallel driving conversations."
+          },
+          {
+            id: "b3",
+            title: "Late-Night Discord & Sleep Biology",
+            author: "Dr. Marcus Vance",
+            readTime: "4 min",
+            teaser: "How the 8:30 PM device dock curfew preserves essential REM sleep without causing FOMO panic."
+          }
+        ],
+        mirror: {
+          heading: "When You Were 14 vs. Julian at 14",
+          thenTitle: "You in 1999 (Age 14)",
+          nowTitle: "Julian in 2026 (Age 14)",
+          thenList: [
+            "<strong>Communication:</strong> Dial-up AOL Instant Messenger (AIM) with dramatic lyric away messages.",
+            "<strong>Music & Media:</strong> Waiting 45 minutes on Napster for one MP3 file, or taping the radio.",
+            "<strong>Peer Status:</strong> Having a clear Motorola pager with numeric codes, or wearing frosted tips.",
+            "<strong>Adult Panic:</strong> \"Video games rot your brain and chatrooms are dangerous!\""
+          ],
+          nowList: [
+            "<strong>Communication:</strong> Discord persistent voice lobbies and ephemeral Snapchat Snapstreaks.",
+            "<strong>Music & Media:</strong> Algorithmic Spotify Blend playlists and 15-second TikTok sound loops.",
+            "<strong>Peer Status:</strong> Accumulating unspoken 'Aura points' and Fortnite battle pass cosmetics.",
+            "<strong>Adult Panic:</strong> \"Algorithmic doomscrolling and brainrot memes destroy attention!\""
+          ],
+          quote: "\"Every generation invents a cultural clubhouse that baffles their parents. The human need for peer belonging and autonomy remains identical.\""
+        },
+        vocabEligible: true,
+        vocabCategory: "Adolescent Peer Lexicon",
+        vocabList: [
+          { word: "Crashout", meaning: "A reckless loss of emotional composure.", usage: "\"He had a total crashout over the referee's call.\"", calm: "\"Sounds like things got heated. Did he cool down after?\"" },
+          { word: "Aura Points", meaning: "Imaginary scorecard for cool composure.", usage: "\"Tripping is -500 aura; helping the teacher is +1000 aura.\"", calm: "\"Staying calm during that soccer match was high aura.\"" },
+          { word: "Cooked", meaning: "Exhausted, in trouble, or facing guaranteed failure.", usage: "\"I didn't study for Spanish; I am completely cooked.\"", calm: "\"If you're cooked, let's take a 10-minute break and tackle it together.\"" },
+          { word: "Locked In", meaning: "Deep focus and elimination of distractions.", usage: "\"He was fully locked in on that essay for two hours.\"", calm: "\"I see you locked in. I'll make sure the house stays quiet.\"" }
+        ]
+      },
+
+      maya: {
+        childName: "Maya",
+        age: 8,
+        tierBadge: "Maya (8y · Elementary Trailblazer · Pre-Device)",
+        subtitle: "Elementary playground barter, Pokemon card trading, Minecraft co-op rules, and fairness.",
+        reels: [
+          {
+            id: "r1",
+            title: "The Recess Pokemon Card Economy",
+            duration: "0:42",
+            category: "Schoolyard Barter",
+            caption: "\"You broke the pinky promise and traded my shiny Mewtwo!\" Recess contracts and perceived value.",
+            script: "\"Tell me about the trade you made today. Did both of you feel good about it?\""
+          },
+          {
+            id: "r2",
+            title: "Roblox Obbies & Collaborative Ethics",
+            duration: "0:36",
+            category: "Gaming Ethics",
+            caption: "\"Don't grief my build!\" Unwritten moral codes inside shared virtual sandbox worlds.",
+            script: "\"It sounds like someone didn't follow the building rules. How do you want to fix it?\""
+          },
+          {
+            id: "r3",
+            title: "Why Squishmallows Dominate 3rd Grade",
+            duration: "0:39",
+            category: "Sensory Anchors",
+            caption: "\"They aren't just toys; they are portable tactile grounding anchors in noisy classrooms.\"",
+            script: "\"Which Squishmallow was in your backpack today for good luck?\""
+          }
+        ],
+        blogs: [
+          {
+            id: "b1",
+            title: "The Blacktop Barter Market",
+            author: "Dr. Claire Moreau",
+            readTime: "4 min",
+            teaser: "How playground trading of cards, erasers, and plushies teaches real-world negotiation ethics."
+          },
+          {
+            id: "b2",
+            title: "Minecraft Co-Op: The Ethics of 'Griefing'",
+            author: "Daniel Hayes",
+            readTime: "3 min",
+            teaser: "Why breaking someone's virtual building feels like real emotional betrayal to an 8-year-old."
+          },
+          {
+            id: "b3",
+            title: "The Pre-Device Sanctuary Advantage",
+            author: "Dr. Aris Thorne",
+            readTime: "4 min",
+            teaser: "Why protecting Maya on Road 1 (Pre-Device) through grade school builds lifelong social resilience."
+          }
+        ],
+        mirror: {
+          heading: "When You Were 8 vs. Maya at 8",
+          thenTitle: "You in 1999 (Age 8)",
+          nowTitle: "Maya in 2026 (Age 8)",
+          thenList: [
+            "<strong>Playground Currency:</strong> Pogs, Slammers, Beanie Babies, and trading stickers in notebooks.",
+            "<strong>Entertainment:</strong> Saturday morning VHS cartoons, Game Boy Color with worm light.",
+            "<strong>Social Drama:</strong> \"You can't jump on our hopscotch grid!\" and secret lunchtime clubs.",
+            "<strong>Adult Panic:</strong> \"If you sit that close to the television, your eyes will turn square!\""
+          ],
+          nowList: [
+            "<strong>Playground Currency:</strong> Holographic Pokemon cards, mini Squishmallows, and scented erasers.",
+            "<strong>Entertainment:</strong> Minecraft Bedrock creative worlds, Bluey episodes, and slime videos.",
+            "<strong>Social Drama:</strong> \"You broke the pinky promise and traded Emma my holographic Mewtwo!\"",
+            "<strong>Adult Panic:</strong> \"Is playing Minecraft on the tablet giving her too much screen time?\""
+          ],
+          quote: "\"Schoolyard blacktop politics have not changed in 40 years. Children are simply practicing agreements and fairness.\""
+        },
+        vocabEligible: true,
+        vocabCategory: "Elementary Schoolyard Lexicon",
+        vocabList: [
+          { word: "Griefing", meaning: "Deliberately sabotaging someone else's digital build.", usage: "\"He came onto our Minecraft server and started griefing our garden!\"", calm: "\"That feels really unfair when you worked hard. Let's make sure backups are on.\"" },
+          { word: "No Backsies", meaning: "Unwritten recess law that completed trades are final.", usage: "\"We shook hands on the Pikachu—no backsies!\"", calm: "\"Even with 'no backsies', kind friends check if someone felt pressured.\"" },
+          { word: "Duping", meaning: "Duplicating items through game glitches or tricks.", usage: "\"She said she got three Mewtwos from duping in the game.\"", calm: "\"Do you think getting items through shortcuts is as fun as earning them?\"" },
+          { word: "Oof / Bruh", meaning: "Reaction to a clumsy stumble or mild disappointment.", usage: "\"I dropped my pencil case on the stairs... big oof.\"", calm: "\"Oof indeed! Did everything survive the fall?\"" }
+        ]
+      },
+
+      mateo: {
+        childName: "Mateo",
+        age: 1.1,
+        tierBadge: "Mateo (14m · Infant Nestling · Pre-Device Sanctuary)",
+        subtitle: "Auditory cadence loops, mirror neurons, high-chair physics, and pre-verbal milestones.",
+        reels: [
+          {
+            id: "r1",
+            title: "Why 'Ms. Rachel' Cadence Captivates Baby Brains",
+            duration: "0:35",
+            category: "Acoustic Mapping",
+            caption: "\"Exaggerated facial phonemes and rhythmic musical contours light up infant language centers.\"",
+            script: "\"When talking with Mateo, pause for 3 seconds after speaking so his brain mirrors the mouth shape.\""
+          },
+          {
+            id: "r2",
+            title: "The High-Chair Gravity Experiment",
+            duration: "0:40",
+            category: "Object Permanence",
+            caption: "\"He dropped the spoon 12 times in a row. He's testing gravity and social cause-and-effect.\"",
+            script: "\"Hand the spoon back calmly twice with a smile: 'All done dropping for now!'\""
+          },
+          {
+            id: "r3",
+            title: "Mirror Neurons & Repetitive Babble",
+            duration: "0:38",
+            category: "Serve-and-Return",
+            caption: "\"When he babbles 'Ba-ba', echo it right back. That serve-and-return wires empathy.\"",
+            script: "\"Look right into Mateo's eyes and echo his exact pitch. Watch him realize you're in sync.\""
+          }
+        ],
+        blogs: [
+          {
+            id: "b1",
+            title: "The Science of Acoustic Nesting",
+            author: "Dr. Sophie Alverez",
+            readTime: "4 min",
+            teaser: "Why familiar parental voices settle the infant autonomic nervous system faster than white noise."
+          },
+          {
+            id: "b2",
+            title: "Pre-Verbal Phonemes: Decoding 'Ah-Da'",
+            author: "Elena Rostova",
+            readTime: "3 min",
+            teaser: "How referential pointing combined with vocal sounds marks the leap into symbolic human thought."
+          },
+          {
+            id: "b3",
+            title: "High-Chair Sensory Integration",
+            author: "Dr. Claire Moreau",
+            readTime: "3 min",
+            teaser: "Why smearing avocado puree on the tray is crucial tactile motor planning before oral acceptance."
+          }
+        ],
+        mirror: {
+          heading: "When You Were a Baby vs. Mateo at 14 Months",
+          thenTitle: "You as a Toddler (Early 1990s)",
+          nowTitle: "Mateo in 2026 (14 Months)",
+          thenList: [
+            "<strong>Sensory Audio:</strong> Barney tapes on VHS, Raffi cassettes, plastic Fisher-Price tape players.",
+            "<strong>Motor Play:</strong> Banging metal pots with wooden spoons, dropping plastic keys off high-chair.",
+            "<strong>Parent Advisory:</strong> The dog-eared Sears baby encyclopedia and calling Grandma on a landline.",
+            "<strong>Old Advice:</strong> \"Just let the baby cry it out in the crib—he has to learn self-reliance!\""
+          ],
+          nowList: [
+            "<strong>Sensory Audio:</strong> Ms. Rachel songs, gentle CoComelon cadence, acoustic white noise.",
+            "<strong>Motor Play:</strong> Silicone suction bowls, sensory water mats, Montessori wooden cylinders.",
+            "<strong>Parent Advisory:</strong> AlongSide evidence-based pediatric neurobiology feeds and 24/7 AI chat.",
+            "<strong>Neuroscience:</strong> \"Prompt attunement and comforting builds secure attachment that enables autonomy!\""
+          ],
+          quote: "\"The infant nervous system has not changed in 50,000 years. Biological attunement and warm touch remain invariant.\""
+        },
+        vocabEligible: false,
+        vocabCategory: "Pre-Verbal Acoustic Signals & High-Chair Gestures",
+        vocabNotice: "Youth internet slang is not applicable to infants. AlongSide conditionally presents Mateo's Stage-Appropriate Pre-Verbal Signal Decoder.",
+        vocabList: [
+          { word: "Referential Pointing", meaning: "Extending index finger while checking if parent sees it.", usage: "Points to ceiling fan and vocalizes \"Ooo!\"", calm: "\"Yes, look at the big fan spinning around!\" (Validates shared attention)." },
+          { word: "Lip Trills / Raspberries", meaning: "Blowing air through closed lips for tactile feedback.", usage: "Blowing raspberries into high-chair tray.", calm: "\"Blow a raspberry right back with a smile to reinforce motor vocal play.\"" },
+          { word: "Repetitive Babble ('Ba-Ba')", meaning: "Canonical babbling practicing bilabial consonants (B, M, P).", usage: "Holding a block and vocalizing \"Ba-ba-ba\".", calm: "\"Ba-ba! Are you holding your blue ball? That is a blue ball!\"" }
+        ]
+      }
+    };
+
+    let activeDossierKey = 'julian';
+
+    function setDossierChild(key) {
+      activeDossierKey = key;
+      const data = DOSSIER_DATA[key];
+
+      // Update button styling
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById('btn-dossier-' + k);
+        if (k === key) {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-white text-spruce font-mono text-xs font-bold shadow-2xs transition";
+          btn.querySelector('span:first-child').className = "w-4 h-4 rounded-full bg-spruce text-white flex items-center justify-center text-[9px]";
+        } else {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition";
+          btn.querySelector('span:first-child').className = "w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]";
+        }
+      });
+
+      // Update Header
+      document.getElementById('dossier-tier-label').textContent = data.tierBadge;
+      document.getElementById('dossier-subtitle').textContent = data.subtitle;
+
+      // Render Reels
+      renderDossierReels(data.reels);
+
+      // Render Blogs
+      renderDossierBlogs(data.blogs);
+
+      // Render Mirror
+      renderDossierMirror(data.mirror);
+
+      // Render Vocab
+      renderDossierVocab(data);
+    }
+
+    function renderDossierReels(reels) {
+      const container = document.getElementById('dossier-reels-grid');
+      container.innerHTML = reels.map(r => `
+        <div onclick="openDossierReelModal('${r.id}')" class="dossier-card reel-strip-item bg-card rounded-2xl p-5 cursor-pointer flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono text-mute">
+              <span class="text-spruce font-semibold uppercase">${r.category}</span>
+              <span class="bg-canvas-subtle px-2 py-0.5 rounded text-[10px]">${r.duration}</span>
+            </div>
+            <h4 class="font-serif text-lg font-bold text-ink leading-snug">${r.title}</h4>
+            <p class="text-xs text-body italic line-clamp-2">${r.caption}</p>
+          </div>
+          <div class="pt-2 border-t border-hairline flex items-center justify-between text-xs font-mono text-spruce">
+            <span>Play Video Briefing</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderDossierBlogs(blogs) {
+      const container = document.getElementById('dossier-blogs-grid');
+      container.innerHTML = blogs.map(b => `
+        <div class="dossier-card bg-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-[11px] font-mono text-mute">
+              <span class="text-spruce font-bold">Field Dispatch</span>
+              <span>${b.readTime} read</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-ink leading-snug">${b.title}</h4>
+            <span class="text-[10px] font-mono text-mute block">By ${b.author}</span>
+            <p class="text-xs text-body leading-relaxed">${b.teaser}</p>
+          </div>
+          <div class="pt-2 border-t border-hairline flex items-center justify-between text-xs font-mono text-spruce font-semibold">
+            <span>Read Full Dispatch →</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderDossierMirror(mirror) {
+      document.getElementById('dossier-mirror-heading').textContent = mirror.heading;
+      document.getElementById('dossier-mirror-quote').textContent = mirror.quote;
+      const container = document.getElementById('dossier-mirror-grid');
+
+      container.innerHTML = `
+        <div class="p-5 rounded-2xl bg-canvas-subtle border-l-4 border-l-dossier space-y-3">
+          <span class="font-mono text-xs uppercase tracking-wider text-dossier font-bold block">${mirror.thenTitle}</span>
+          <ul class="space-y-2 text-xs text-body leading-relaxed">
+            ${mirror.thenList.map(item => `<li>• ${item}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-card border-l-4 border-l-spruce border border-hairline shadow-xs space-y-3">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold block">${mirror.nowTitle}</span>
+          <ul class="space-y-2 text-xs text-ink leading-relaxed">
+            ${mirror.nowList.map(item => `<li>• ${item}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    function renderDossierVocab(data) {
+      const container = document.getElementById('dossier-vocab-container');
+      const heading = document.getElementById('dossier-vocab-heading');
+      const pill = document.getElementById('dossier-vocab-pill');
+
+      if (data.vocabEligible) {
+        heading.textContent = `Decode Modern Youth Vocabulary (${data.vocabCategory})`;
+        pill.textContent = "Eligible Tier · Micro-Language Active";
+        pill.className = "text-xs font-mono text-spruce bg-spruce-soft px-3 py-1 rounded-full font-semibold border border-spruce/20";
+
+        container.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${data.vocabList.map(v => `
+              <div class="dossier-card bg-card rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between border-b border-hairline pb-2">
+                  <span class="font-serif text-xl font-bold text-ink">"${v.word}"</span>
+                  <span class="font-mono text-[10px] text-spruce bg-spruce-soft px-2 py-0.5 rounded-full font-medium">Slang</span>
+                </div>
+                <p class="text-xs text-body">${v.meaning}</p>
+                <div class="p-2.5 bg-canvas-subtle rounded-xl text-xs font-mono text-mute italic">${v.usage}</div>
+                <div class="p-2.5 bg-spruce-soft rounded-xl text-xs text-spruce font-medium">
+                  <span class="font-mono text-[10px] font-bold uppercase block">Parent Calm Script:</span>
+                  ${v.calm}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        heading.textContent = "Pre-Verbal Acoustic Signals & High-Chair Gestures";
+        pill.textContent = "Youth Slang Excluded (Not Applicable to Infant)";
+        pill.className = "text-xs font-mono text-amber bg-amber-soft px-3 py-1 rounded-full font-semibold border border-amber/30";
+
+        container.innerHTML = `
+          <div class="p-4 bg-amber-soft/50 border border-amber/30 rounded-2xl flex items-start gap-3">
+            <svg class="w-5 h-5 text-amber shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="space-y-0.5">
+              <span class="font-mono text-[11px] uppercase tracking-wider text-amber font-bold block">Developmentally Calibrated Filter Active</span>
+              <p class="text-xs text-body leading-relaxed">${data.vocabNotice}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            ${data.vocabList.map(v => `
+              <div class="dossier-card bg-card rounded-2xl p-5 space-y-2.5">
+                <span class="font-serif text-base font-bold text-ink block">${v.word}</span>
+                <p class="text-xs text-body leading-relaxed">${v.meaning}</p>
+                <div class="p-2 bg-canvas-subtle rounded-xl text-xs font-mono text-mute italic">${v.usage}</div>
+                <div class="p-2 bg-spruce-soft rounded-xl text-xs text-spruce font-medium">
+                  <span class="font-mono text-[10px] font-bold uppercase block">Pediatric Cue:</span>
+                  ${v.calm}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function openDossierReelModal(reelId) {
+      const data = DOSSIER_DATA[activeDossierKey];
+      const reel = data.reels.find(r => r.id === reelId);
+      if (!reel) return;
+
+      document.getElementById('modal-category').textContent = `Field Reel · ${reel.category}`;
+      document.getElementById('modal-title').textContent = reel.title;
+      document.getElementById('modal-caption').textContent = reel.caption;
+      document.getElementById('modal-duration').textContent = `0:18 / ${reel.duration}`;
+      document.getElementById('modal-script').textContent = reel.script;
+
+      document.getElementById('dossier-reel-modal').classList.remove('hidden');
+    }
+
+    function closeDossierReelModal() {
+      document.getElementById('dossier-reel-modal').classList.add('hidden');
+    }
+
+    // Initialize on Julian
+    setDossierChild('julian');
+  </script>
+</body>
+</html>
