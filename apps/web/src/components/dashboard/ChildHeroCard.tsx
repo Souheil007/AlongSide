@@ -10,7 +10,7 @@ import {
   ChevronRight,
   Shield,
   Brain,
-  Zap,
+  Flame,
 } from 'lucide-react';
 import {
   type ChildDTO,
@@ -30,6 +30,7 @@ export interface ChildHeroCardProps {
   child: ChildDTO | null;
   className?: string;
   onOpenOnboarding?: () => void;
+  parentName?: string;
 }
 
 export interface LeapInfo {
@@ -108,28 +109,29 @@ export function ChildHeroCard({
   child,
   className,
   onOpenOnboarding,
+  parentName = 'Sarah',
 }: ChildHeroCardProps) {
   if (!child) {
     return (
       <Card
         className={cn(
-          'border-dashed border-2 border-teal-300 bg-teal-50/40 p-6 sm:p-8 text-center shadow-xs',
+          'border-dashed border-2 border-[#143D2B]/30 bg-[#EAF3EE]/40 p-6 sm:p-8 text-center shadow-xs rounded-[10px]',
           className
         )}
       >
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-teal-800 mb-3">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-3">
           <Shield className="h-6 w-6" />
         </div>
-        <h2 className="text-xl font-bold tracking-tight text-slate-900">
-          Welcome to the AlongSide Advisory Sanctuary
+        <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413]">
+          Welcome to Your Family Learning Sanctuary
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto mt-1 leading-relaxed">
-          Add your first child profile to personalize your prioritized developmental academy chapters, word-for-word empathy scripts, and youth culture intelligence.
+        <p className="text-xs sm:text-sm text-[#494F4C] max-w-md mx-auto mt-1 leading-relaxed">
+          Add your first child profile to personalize your daily conversation scripts, prioritized developmental academy chapters, and evidence-based habit rhythms.
         </p>
         <div className="mt-4">
           <Button
             onClick={onOpenOnboarding}
-            className="min-h-[44px] gap-2 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs px-6"
+            className="min-h-[44px] gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-6 rounded-[5px]"
           >
             Add First Child Profile
           </Button>
@@ -142,6 +144,8 @@ export function ChildHeroCard({
   const horizon = getChildDevelopmentalHorizon(child.developmentalTier || child.age);
   const formattedAge = formatChildAge(child);
   const leap = getDevelopmentalLeap(child.developmentalTier || child.age);
+  const isToddler = (child.age !== undefined && child.age !== null && child.age <= 3) ||
+    String(child.developmentalTier || '').includes('TIER_0');
 
   // Friendly date formatting
   const todayFormatted = new Intl.DateTimeFormat('en-US', {
@@ -151,138 +155,187 @@ export function ChildHeroCard({
   }).format(new Date());
 
   return (
-    <Card
-      className={cn(
-        'rounded-[10px] border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] overflow-hidden',
-        className
-      )}
-    >
-      <CardContent className="p-5 sm:p-6 space-y-4">
-        {/* Top Metadata Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+    <div className={cn('space-y-4', className)}>
+      {/* 1. Welcoming Value Banner (Feel At Home & Understand Purpose) */}
+      <section
+        aria-label="Welcome & Purpose"
+        className="bg-white rounded-[10px] border border-[#E3E3DC] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4"
+      >
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#EAF3EE] text-[#143D2B] text-xs font-bold">
-              <Calendar className="h-3.5 w-3.5" />
-            </span>
-            <span className="font-mono text-xs font-semibold text-[#494F4C] tracking-tight">
-              {todayFormatted}
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-mono text-xs text-[#143D2B] font-semibold uppercase tracking-wider">
+              Your Family&apos;s Calm Daily Headquarters
             </span>
           </div>
-
-          <div className="flex items-center gap-2">
-            <Badge
-              variant={isPreDevice ? 'roadPre' : 'roadActive'}
-              className="text-[10px] font-mono font-bold uppercase tracking-wider"
-            >
-              {isPreDevice ? 'Road 1: Pre-Device' : 'Road 2: Active-Device'}
-            </Badge>
-            <span
-              className={cn(
-                'rounded-full px-2.5 py-0.5 text-[10px] font-mono font-semibold border',
-                horizon.badgeColor
-              )}
-            >
-              {horizon.stage || horizon.tierLabel}
-            </span>
-          </div>
+          <h1 className="font-serif text-xl sm:text-2xl font-bold text-[#111413] tracking-tight">
+            Welcome home, {parentName}. Here is today&apos;s guidance for {child.name}.
+          </h1>
+          <p className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
+            {isToddler
+              ? 'Toddlerhood is about emotional co-regulation and clear, gentle boundaries. You are your child’s calm anchor.'
+              : 'You’re building healthy habits and emotional trust, one small conversation at a time. No perfection required—just 4 minutes of intentional learning today.'}
+          </p>
         </div>
 
-        {/* Hero Main Content */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="flex items-start gap-4">
-            {/* Child Avatar with Initial */}
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[8px] bg-[#143D2B] text-xl font-black text-white shadow-sm ring-4 ring-[#EAF3EE]">
-              {child.name.charAt(0).toUpperCase()}
+        {/* Weekly Habit Streak Badge */}
+        <div className="shrink-0 flex items-center gap-3 bg-[#FBFBF9] px-4 py-3 rounded-[8px] border border-[#E3E3DC]">
+          <div className="w-10 h-10 rounded-full bg-[#FEF3C7] text-[#B45309] flex items-center justify-center text-lg font-bold">
+            <Flame className="w-5 h-5 text-[#B45309]" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-serif text-base font-bold text-[#111413]">4-Day Streak</span>
+              <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-[#EAF3EE] px-1.5 py-0.5 rounded">Active</span>
+            </div>
+            <p className="font-mono text-[11px] text-[#858C88]">18 mins learned this week</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Child Horizon & Active Developmental Leap */}
+      <Card className="rounded-[10px] border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] overflow-hidden">
+        <CardContent className="p-5 sm:p-6 space-y-4">
+          {/* Top Metadata Row */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+            <div className="flex items-center gap-2">
+              <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#EAF3EE] text-[#143D2B] text-xs font-bold">
+                <Calendar className="h-3.5 w-3.5" />
+              </span>
+              <span className="font-mono text-xs font-semibold text-[#494F4C] tracking-tight">
+                {todayFormatted}
+              </span>
             </div>
 
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413]">
-                  {child.name}&apos;s Advisory Horizon
-                </h1>
-                <span className="font-mono text-xs font-semibold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded-full border border-[#143D2B]/20">
-                  {formattedAge}
-                </span>
-                {child.schoolGrade && (
-                  <span className="font-mono text-xs text-[#858C88] font-medium">
-                    • {child.schoolGrade}
-                  </span>
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={isPreDevice ? 'roadPre' : 'roadActive'}
+                className="text-[10px] font-mono font-bold uppercase tracking-wider"
+              >
+                {isPreDevice ? 'Road 1: Pre-Device' : 'Road 2: Active-Device'}
+              </Badge>
+              <span
+                className={cn(
+                  'rounded-full px-2.5 py-0.5 text-[10px] font-mono font-semibold border',
+                  horizon.badgeColor
                 )}
-              </div>
-
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#143D2B]">
-                <Sparkles className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
-                <span>{horizon.horizon}</span>
-              </div>
-
-              <p className="text-xs text-[#494F4C] max-w-2xl leading-relaxed">
-                {horizon.subtitle}
-              </p>
+              >
+                {horizon.stage || horizon.tierLabel}
+              </span>
             </div>
           </div>
 
-          {/* Quick Road Action Launcher */}
-          <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
-            {isPreDevice ? (
-              <Link href={`/children/${child.id}/readiness`}>
-                <Button
-                  size="sm"
-                  variant="forest"
-                  className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
-                >
-                  <Compass className="h-4 w-4" />
-                  <span>First-Phone Readiness</span>
-                  <ChevronRight className="h-3.5 w-3.5 opacity-80" />
-                </Button>
-              </Link>
-            ) : (
-              <Link href={`/devices?childId=${child.id}`}>
-                <Button
-                  size="sm"
-                  variant="default"
-                  className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
-                >
-                  <FileCheck2 className="h-4 w-4" />
-                  <span>Curfew &amp; Pacts</span>
-                  <ChevronRight className="h-3.5 w-3.5 opacity-80" />
-                </Button>
-              </Link>
-            )}
-          </div>
-        </div>
-
-        {/* Current Neurodevelopmental Leap Callout */}
-        <div className="rounded-[6px] border border-[#E3E3DC] bg-[#FBFBF9] p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          <div className="flex items-start sm:items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-white shadow-2xs">
-              <Brain className="h-4 w-4" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
-                  Active Leap
-                </span>
-                <span className="font-mono text-[10px] text-[#143D2B] font-semibold bg-[#EAF3EE] px-2 py-0.2 rounded-full border border-[#143D2B]/20">
-                  {leap.shortTitle}
-                </span>
+          {/* Hero Main Content */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="flex items-start gap-4">
+              {/* Child Avatar with Initial */}
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[8px] bg-[#143D2B] text-xl font-black text-white shadow-sm ring-4 ring-[#EAF3EE]">
+                {child.name.charAt(0).toUpperCase()}
               </div>
-              <p className="font-serif text-xs font-bold text-[#111413] mt-0.5">
-                {leap.leapTitle}
-              </p>
-              <p className="text-[11px] text-[#494F4C] leading-snug mt-0.5">
-                {leap.biologicalDescription}
-              </p>
+
+              <div className="space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413]">
+                    {child.name}&apos;s Advisory Horizon
+                  </h2>
+                  <span className="font-mono text-xs font-semibold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded-full border border-[#143D2B]/20">
+                    {formattedAge}
+                  </span>
+                  {child.schoolGrade && (
+                    <span className="font-mono text-xs text-[#858C88] font-medium">
+                      • {child.schoolGrade}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#143D2B]">
+                  <Sparkles className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
+                  <span>{horizon.horizon}</span>
+                </div>
+
+                <p className="text-xs text-[#494F4C] max-w-2xl leading-relaxed">
+                  {horizon.subtitle}
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Road Action Launcher (Stage-Aware) */}
+            <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
+              {isPreDevice ? (
+                isToddler ? (
+                  <Link href="/behavior">
+                    <Button
+                      size="sm"
+                      variant="forest"
+                      className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>Co-Regulation Routines</span>
+                      <ChevronRight className="h-3.5 w-3.5 opacity-80" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href={`/children/${child.id}/readiness`}>
+                    <Button
+                      size="sm"
+                      variant="forest"
+                      className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
+                    >
+                      <Compass className="h-4 w-4" />
+                      <span>First-Phone Readiness</span>
+                      <ChevronRight className="h-3.5 w-3.5 opacity-80" />
+                    </Button>
+                  </Link>
+                )
+              ) : (
+                <Link href={`/devices?childId=${child.id}`}>
+                  <Button
+                    size="sm"
+                    variant="default"
+                    className="min-h-[44px] gap-1.5 text-xs font-bold shadow-2xs"
+                  >
+                    <FileCheck2 className="h-4 w-4" />
+                    <span>Curfew &amp; Pacts</span>
+                    <ChevronRight className="h-3.5 w-3.5 opacity-80" />
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
-          <Link href={`/academy`} className="shrink-0 self-end sm:self-center">
-            <span className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-[#143D2B] hover:text-[#0E2B1E] underline underline-offset-2">
-              <span>View Milestone Science</span>
-              <ChevronRight className="h-3 w-3" />
-            </span>
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
+          {/* Current Neurodevelopmental Leap Callout */}
+          <div className="rounded-[6px] border border-[#E3E3DC] bg-[#FBFBF9] p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex items-start sm:items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-white shadow-2xs">
+                <Brain className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
+                    Active Leap
+                  </span>
+                  <span className="font-mono text-[10px] text-[#143D2B] font-semibold bg-[#EAF3EE] px-2 py-0.2 rounded-full border border-[#143D2B]/20">
+                    {leap.shortTitle}
+                  </span>
+                </div>
+                <p className="font-serif text-xs font-bold text-[#111413] mt-0.5">
+                  {leap.leapTitle}
+                </p>
+                <p className="text-[11px] text-[#494F4C] leading-snug mt-0.5">
+                  {leap.biologicalDescription}
+                </p>
+              </div>
+            </div>
+
+            <Link href="/academy" className="shrink-0 self-end sm:self-center">
+              <span className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-[#143D2B] hover:text-[#0E2B1E] underline underline-offset-2">
+                <span>View Milestone Science</span>
+                <ChevronRight className="h-3 w-3" />
+              </span>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
