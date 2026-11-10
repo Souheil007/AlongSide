@@ -189,4 +189,47 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).not.toContain('Skibidi');
     });
   });
+
+  describe('4. Whole-Child Horizon Compass Arc & Spotlight Architecture (Design C.3)', () => {
+    it('verifies all 30 courses across 6 tiers have authoritative clinical notes and 3 structured micro-lessons', () => {
+      for (const stage of CANONICAL_6_LIFESPAN_STAGES) {
+        for (const course of stage.courses) {
+          expect(course.clinicalNote).toBeDefined();
+          expect(course.clinicalNote.length).toBeGreaterThan(15);
+          expect(course.lessons).toHaveLength(3);
+
+          for (const lesson of course.lessons) {
+            expect(lesson.num).toMatch(/^0[123]$/);
+            expect(lesson.title.length).toBeGreaterThan(10);
+            expect(lesson.dur).toMatch(/\d+ min/);
+          }
+        }
+      }
+    });
+
+    it('renders the Whole-Child Compass hub, pillar focus tags, and 3-lesson micro-syllabus drawer', () => {
+      const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
+
+      // Whole-Child Compass Hub
+      expect(html).toContain('WHOLE-CHILD COMPASS // Ages 0–3 • 5 PILLARS OF DEVELOPMENT');
+      expect(html).toContain('PILLAR FOCUS • Behavior &amp; Emotions • Ages 0–3');
+
+      // Clinical Rationale Note Box
+      expect(html).toContain('Clinical Rationale:');
+      expect(html).toContain('Infant amygdala response &amp; mirror neuron co-regulation.');
+
+      // 3-Lesson Micro-Syllabus Drawer
+      expect(html).toContain('Inside This Pillar (3 Lessons)');
+      expect(html).toContain('§ 01');
+      expect(html).toContain('The Neurobiology of the Infant Amygdala &amp; Attachment Bond');
+      expect(html).toContain('§ 02');
+      expect(html).toContain('Pre-Verbal Tantrums: De-escalation Without Isolation');
+      expect(html).toContain('§ 03');
+      expect(html).toContain('The Co-Regulation Protocol: 3 Sensory Resets When Exhausted');
+
+      // Primary CTA
+      expect(html).toContain('Start Pillar Course in Academy');
+      expect(html).toContain('href="/academy/behavior-infant-coregulation"');
+    });
+  });
 });
