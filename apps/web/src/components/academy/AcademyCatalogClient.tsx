@@ -70,16 +70,15 @@ export function AcademyCatalogClient() {
     }
   }, [urlCategory]);
 
-  // Developmental tier filter state (default to active child tier or ALL)
-  const [selectedTier, setSelectedTier] = React.useState<'ALL' | DevelopmentalTier>('ALL');
-
-  React.useEffect(() => {
+  // Viewed stage is ALWAYS relative to the selected child
+  const selectedTier = React.useMemo<'ALL' | DevelopmentalTier>(() => {
     if (activeChild) {
-      setSelectedTier(normalizeChildTier(activeChild.developmentalTier, activeChild.age));
+      return normalizeChildTier(activeChild.developmentalTier, activeChild.age);
     }
+    return 'ALL';
   }, [activeChild?.id, activeChild?.developmentalTier, activeChild?.age]);
 
-  // Query category stats (filtered by selected tier)
+  // Query category stats (filtered by selected child tier)
   const { data: categoryStats = [] } = useQuery<AcademyCategoryStatsDTO[]>({
     queryKey: ['academy-categories', selectedTier],
     queryFn: () =>
@@ -89,7 +88,7 @@ export function AcademyCatalogClient() {
     staleTime: 5 * 60 * 1000,
   });
 
-  // Query modules filtered by category and tier
+  // Query modules filtered by category and child tier
   const {
     data: modules = [],
     isLoading: isModulesLoading,
@@ -108,18 +107,15 @@ export function AcademyCatalogClient() {
 
   const handleResetFilters = () => {
     setSelectedCategory('ALL');
-    setSelectedTier('ALL');
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Active Child Context Calibration Banner */}
       <ActiveChildCalibrationBanner
         childName={activeChild?.name}
         childAge={activeChild?.age}
         childTier={activeChild?.developmentalTier}
-        selectedTier={selectedTier}
-        onSelectTier={setSelectedTier}
       />
 
       {/* 5-Category Horizontal Selector Pills */}

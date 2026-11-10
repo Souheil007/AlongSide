@@ -6,8 +6,6 @@ import type { ChildDTO } from '@alongside/shared';
 import {
   useChildContextStore,
   selectActiveChild,
-  formatChildAge,
-  DEMO_FAMILY_CHILDREN,
 } from '@/stores/useChildContextStore';
 import { cn } from '@/lib/utils';
 
@@ -23,11 +21,8 @@ export function DigestFeedHeader({
   className,
 }: DigestFeedHeaderProps) {
   const storeActiveChild = useChildContextStore(selectActiveChild);
-  const storeChildren = useChildContextStore((s) => s.children);
-  const setActiveChild = useChildContextStore((s) => s.setActiveChild);
 
   const activeChild = propChild !== undefined ? propChild : storeActiveChild;
-  const childrenList = storeChildren.length > 0 ? storeChildren : DEMO_FAMILY_CHILDREN;
 
   // Calibration badge text for unit tests and display
   let calibrationText = 'Tailored for Leo (Age 10 · Pre-Teen)';
@@ -86,11 +81,11 @@ export function DigestFeedHeader({
         </div>
 
         <span className="text-xs text-[#858C88] hidden sm:inline-block">
-          Editorial Pediatric Almanac · Issue #{issueNumber}
+          Editorial Pediatric Guide · Issue #{issueNumber}
         </span>
       </div>
 
-      {/* Masthead Card with Child Switcher */}
+      {/* Masthead Card */}
       <div className="rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xs">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -108,47 +103,6 @@ export function DigestFeedHeader({
           <p className="text-[#494F4C] text-sm sm:text-base max-w-2xl leading-relaxed">
             {subtitleText}
           </p>
-        </div>
-
-        {/* Child Selector Pills */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 bg-[#F4F4F0] p-2 rounded-2xl border border-[#E3E3DC] shrink-0">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#858C88] font-bold px-2">
-            Viewing For:
-          </span>
-          <div className="flex flex-wrap items-center gap-1.5">
-            {childrenList.map((c) => {
-              const isSelected = activeChild?.id === c.id;
-              const ageStr = formatChildAge(c);
-              const initial = c.name.charAt(0).toUpperCase();
-
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => setActiveChild(c.id)}
-                  className={cn(
-                    'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition',
-                    isSelected
-                      ? 'border border-[#143D2B] bg-white text-[#143D2B] font-bold shadow-xs'
-                      : 'border border-transparent bg-transparent text-[#494F4C] hover:bg-white/70'
-                  )}
-                >
-                  <span
-                    className={cn(
-                      'w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold',
-                      isSelected
-                        ? 'bg-[#143D2B] text-white'
-                        : 'bg-slate-200 text-[#494F4C]'
-                    )}
-                  >
-                    {initial}
-                  </span>
-                  <span>
-                    {c.name} · {ageStr}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
         </div>
       </div>
     </header>

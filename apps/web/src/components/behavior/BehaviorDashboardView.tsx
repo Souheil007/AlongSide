@@ -208,28 +208,6 @@ export function BehaviorDashboardView({ initialChildId }: BehaviorDashboardViewP
           </div>
         </div>
 
-        {/* Multi-child switch */}
-        {children && children.length > 1 && (
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[11px] text-slate-400 font-semibold mr-1">
-              Switch Child:
-            </span>
-            {children.map((child) => (
-              <button
-                key={child.id}
-                type="button"
-                onClick={() => setActiveChild(child.id)}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all min-h-[32px] cursor-pointer ${
-                  child.id === activeChildId
-                    ? 'bg-teal-700 text-white font-bold shadow-2xs'
-                    : 'bg-white hover:bg-teal-50 text-slate-700 border border-slate-200'
-                }`}
-              >
-                {child.name}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Hub Navigation Tabs */}

@@ -127,13 +127,11 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('16–18');
     });
 
-    it('renders active stage telemetry capsule and exploration curriculum link without redundant banner noise', () => {
+    it('verifies active stage telemetry capsule and exploration link are cleanly removed', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
-      expect(html).toContain('Ages 0–3');
-      expect(html).toContain('Infants &amp; Toddlers');
-      expect(html).toContain('Explore all Ages 0–3 curriculum');
-      expect(html).toContain('/academy?tier=TIER_0_INFANCY_TODDLER_0_3');
+      expect(html).not.toContain('5 clinical growth pillars calibrated for this stage');
+      expect(html).not.toContain('Explore all Ages 0–3 curriculum');
 
       // Verified absence of redundant clunky banner headers
       expect(html).not.toContain('HORIZON // Ages 0–3');
@@ -171,12 +169,12 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('12 min');
     });
 
-    it('renders reassuring clinical footer bar linking directly to /academy', () => {
+    it('verifies telemetry capsule and continuous lifespan footer lines are purged for clean presentation', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
-      expect(html).toContain('Continuous Lifespan Curriculum:');
-      expect(html).toContain('Browse All Academy Categories');
-      expect(html).toContain('href="/academy"');
+      expect(html).not.toContain('5 clinical growth pillars calibrated for this stage');
+      expect(html).not.toContain('Continuous Lifespan Curriculum:');
+      expect(html).not.toContain('Clinically peer-reviewed guidance covering every core developmental domain');
     });
   });
 

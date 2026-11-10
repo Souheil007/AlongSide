@@ -14,7 +14,6 @@ import {
   Utensils,
   Puzzle,
   ArrowRight,
-  ShieldCheck,
   BookOpen,
   type LucideIcon,
 } from 'lucide-react';
@@ -735,29 +734,6 @@ export function LifespanStageSelector() {
             );
           })}
         </div>
-
-        {/* Active Horizon Telemetry Capsule */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-1 sm:px-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EAF3EE] border border-[#143D2B]/15 text-[#143D2B] text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#143D2B]" />
-              <span className="font-mono text-[11px] font-bold">{activeStage.ageLabel}</span>
-              <span className="text-[#143D2B]/30">•</span>
-              <span>{activeStage.tabLabel}</span>
-            </span>
-            <span className="text-xs text-[#6B726E] hidden sm:inline">
-              5 clinical growth pillars calibrated for this stage
-            </span>
-          </div>
-
-          <Link
-            href={`/academy?tier=${activeStage.tier}`}
-            className="text-xs font-semibold text-[#143D2B] hover:text-[#0C261B] hover:underline inline-flex items-center gap-1 shrink-0"
-          >
-            <span>Explore all {activeStage.ageLabel} curriculum</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
       </div>
 
       {/* WHOLE-CHILD HORIZON COMPASS ARCHITECTURE (DESIGN C.3) */}
@@ -934,33 +910,6 @@ export function LifespanStageSelector() {
           </div>
         </div>
 
-      </div>
-
-      {/* Clean Reassuring Footer Callout */}
-      <div className="mt-6 rounded-[10px] border border-[#E3E3DC] bg-[#F4F4F0] p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAF3EE] text-[#143D2B]">
-            <ShieldCheck className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-xs sm:text-sm font-bold text-[#111413]">
-              <strong className="text-[#143D2B] font-bold">Continuous Lifespan Curriculum:</strong> 5 tailored clinical modules calibrated for {activeStage.ageLabel} ({activeStage.tabLabel})
-            </p>
-            <p className="text-xs text-[#494F4C]">
-              Clinically peer-reviewed guidance covering every core developmental domain without shame or surveillance.
-            </p>
-          </div>
-        </div>
-        <Link href="/academy" className="shrink-0">
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2 font-bold text-xs border-[#E3E3DC] bg-white hover:bg-[#EAF3EE] text-[#143D2B]"
-          >
-            <span>Browse All Academy Categories</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Button>
-        </Link>
       </div>
     </section>
   );
