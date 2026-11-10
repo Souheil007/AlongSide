@@ -11,6 +11,8 @@ import { ChildHeroCard } from '../src/components/dashboard/ChildHeroCard';
 import { ActiveChapterContinueCard } from '../src/components/dashboard/ActiveChapterContinueCard';
 import { DailyAdvisoryScriptCard } from '../src/components/dashboard/DailyAdvisoryScriptCard';
 import { BilateralPactStatusCard } from '../src/components/dashboard/BilateralPactStatusCard';
+import { SundayCultureDigestCard } from '../src/components/dashboard/SundayCultureDigestCard';
+import { AskAdvisorPromptBar } from '../src/components/dashboard/AskAdvisorPromptBar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -157,6 +159,8 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Peer Impulse Control');
       expect(html).toContain('Emotional Reset');
       expect(html).toContain('Next Goal: 2 weeks alarm waking');
+      expect(html).toContain('14 Days Independent Morning Alarm Waking');
+      expect(html).toContain('Day 9 of 14 Completed');
       expect(html).toContain('Parent Compass Reminder');
       expect(html).toContain('You don&#x27;t have to get every moment right');
     });
@@ -182,6 +186,43 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Today&#x27;s Sensory Activity');
       expect(html).toContain('15 min outdoor water &amp; leaf play');
       expect(html).toContain('Parent Compass Reminder');
+    });
+  });
+
+  describe('5. Sunday Youth Culture Digest (SundayCultureDigestCard)', () => {
+    it('renders 3-column living feed with Cringe Meter, App Spotlight, and Dinner Starter', () => {
+      const html = wrapWithQueryClient(
+        <SundayCultureDigestCard child={mockTweenMaya} />
+      );
+
+      expect(html).toContain('Living Schoolyard Feed');
+      expect(html).toContain('Sunday Youth Culture Digest');
+      expect(html).toContain('Slang of the Week');
+      expect(html).toContain('Parent Cringe Meter:');
+      expect(html).toContain('App Spotlight');
+      expect(html).toContain('Sunday Dinner Table Starter');
+      expect(html).toContain('Shuffle 🎲');
+      expect(html).toContain('Trending Radar:');
+    });
+  });
+
+  describe('6. 24/7 AI Child Advisor — Empathetic Co-Pilot (AskAdvisorPromptBar)', () => {
+    it('renders Empathetic Co-Pilot format matching user approval with Frequent Situations and Voice Sparring', () => {
+      const html = renderToStaticMarkup(
+        <AskAdvisorPromptBar child={mockTweenMaya} />
+      );
+
+      expect(html).toContain('Empathetic Co-Pilot');
+      expect(html).toContain('24/7 AI Child Advisor');
+      expect(html).toContain('Trained on Developmental Neurobiology • Non-Judgmental');
+      expect(html).toContain('Ask Dr. Alongside');
+      expect(html).toContain('Frequent Situations:');
+      expect(html).toContain('Console Meltdown');
+      expect(html).toContain('Peer Phone Pressure');
+      expect(html).toContain('Slammed Bedroom Door');
+      expect(html).toContain('De-escalating Screen Shutdown Meltdowns');
+      expect(html).toContain('Actionable Guide');
+      expect(html).toContain('Practice Voice Sparring (2 Min)');
     });
   });
 });
