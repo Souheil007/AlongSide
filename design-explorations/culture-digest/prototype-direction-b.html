@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction B — Visual & Interactive Codex | Sunday Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            'hairline-soft': '#EDEDEA',
+            spruce: '#143D2B',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.06) 0%, rgba(180, 83, 9, 0.03) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+    .cringe-bar {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-8 lg:p-12">
+  <div class="max-w-4xl mx-auto space-y-8">
+    
+    <!-- Top Bar & Meta -->
+    <div class="flex items-center justify-between border-b border-hairline pb-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Cultural Codex & Radar</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          Vol. 42 · Interactive Sunday Codex
+        </span>
+      </div>
+    </div>
+
+    <!-- Interactive Child Switcher (Hero Level) -->
+    <div class="hairline-card bg-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <span class="font-mono text-[11px] uppercase tracking-wider text-mute">Active Child Context:</span>
+        <div class="flex items-center gap-2" id="child-tabs">
+          <button onclick="setChild('mateo')" id="tab-mateo" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-sm transition">
+            <span class="w-6 h-6 rounded-full bg-spruce text-white flex items-center justify-center text-[10px]">M</span>
+            <span>Mateo · 14 mo</span>
+          </button>
+          <button onclick="setChild('maya')" id="tab-maya" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px]">M</span>
+            <span>Maya · 8 yrs</span>
+          </button>
+          <button onclick="setChild('julian')" id="tab-julian" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px]">J</span>
+            <span>Julian · 14 yrs</span>
+          </button>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 border-t md:border-t-0 md:border-l border-hairline pt-3 md:pt-0 md:pl-4">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Road Governance</span>
+          <span id="road-badge" class="font-mono text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            Road 1: Pre-Device
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Masthead -->
+    <header class="space-y-2 text-center sm:text-left">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-mute">
+        <span>Direction B — Visual & Interactive</span>
+        <span>•</span>
+        <span>4-Quadrant Cultural Radar</span>
+      </div>
+      <h1 id="page-title" class="font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-ink">
+        The Toddler Sensorimotor & Melodic Landscape
+      </h1>
+      <p id="page-subtitle" class="text-body text-sm sm:text-base max-w-2xl leading-relaxed">
+        Interactive cultural telemetry calibrated for Mateo's exact developmental window.
+      </p>
+    </header>
+
+    <!-- SECTION 1: 4-Quadrant Visual Cultural Radar -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="font-serif text-xl font-semibold text-ink flex items-center gap-2">
+          <span>Cultural Radar</span>
+          <span class="font-mono text-xs text-mute font-normal">(4 Living Dimensions)</span>
+        </h2>
+        <span class="font-mono text-xs text-spruce">Updated This Sunday</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="radar-grid">
+        <!-- Quadrant 1: Language & Lingo -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2.5">
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-spruce"></span>
+              A. Language & Vocal Expressions
+            </span>
+            <span id="q1-tag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-canvas-subtle border border-hairline text-mute">
+              Pre-Verbal Rhythm
+            </span>
+          </div>
+          <h3 id="q1-title" class="font-serif text-lg font-semibold text-ink">Gesture Loops & Imitative Babble</h3>
+          <p id="q1-desc" class="text-body text-xs sm:text-sm leading-relaxed">
+            Consonant-vowel chains ("ba-ba", "ma-ma") coupled with emphatic finger pointing and clapping rituals.
+          </p>
+          <div class="p-2.5 rounded-lg bg-canvas-subtle border border-hairline-soft text-xs text-body flex items-start gap-2">
+            <span class="font-mono text-spruce font-semibold">Tip:</span>
+            <span id="q1-tip">Repeat their syllables with melodic exaggeration to accelerate vocabulary binding.</span>
+          </div>
+        </div>
+
+        <!-- Quadrant 2: Media & Entertainment -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2.5">
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber"></span>
+              B. Media & Shows
+            </span>
+            <span id="q2-tag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-canvas-subtle border border-hairline text-mute">
+              Low-Stimulation Audio
+            </span>
+          </div>
+          <h3 id="q2-title" class="font-serif text-lg font-semibold text-ink">Ms. Rachel & Acoustic Nursery Verses</h3>
+          <p id="q2-desc" class="text-body text-xs sm:text-sm leading-relaxed">
+            Slow-paced human facial close-ups with enunciated mouth shapes and acoustic nursery verses.
+          </p>
+          <div class="p-2.5 rounded-lg bg-canvas-subtle border border-hairline-soft text-xs text-body flex items-start gap-2">
+            <span class="font-mono text-amber font-semibold">Tip:</span>
+            <span id="q2-tip">Prioritize human faces over animated fast-cut cartoons to protect attention spans.</span>
+          </div>
+        </div>
+
+        <!-- Quadrant 3: Playground & Peers -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2.5">
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              C. Playground & Social Currency
+            </span>
+            <span id="q3-tag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-canvas-subtle border border-hairline text-mute">
+              Parallel Play
+            </span>
+          </div>
+          <h3 id="q3-title" class="font-serif text-lg font-semibold text-ink">Physical Sand & Water Barter</h3>
+          <p id="q3-desc" class="text-body text-xs sm:text-sm leading-relaxed">
+            Playing side-by-side with shared buckets and shovels. Early ownership battles ("Mine!") signify boundary testing.
+          </p>
+          <div class="p-2.5 rounded-lg bg-canvas-subtle border border-hairline-soft text-xs text-body flex items-start gap-2">
+            <span class="font-mono text-spruce font-semibold">Tip:</span>
+            <span id="q3-tip">Sportscast without taking sides: "You both really want the yellow shovel right now."</span>
+          </div>
+        </div>
+
+        <!-- Quadrant 4: Emotional Climate -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2.5">
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+              D. Emotional Dynamics
+            </span>
+            <span id="q4-tag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-canvas-subtle border border-hairline text-mute">
+              Separation Anxiety
+            </span>
+          </div>
+          <h3 id="q4-title" class="font-serif text-lg font-semibold text-ink">Object Permanence & Safe Return</h3>
+          <p id="q4-desc" class="text-body text-xs sm:text-sm leading-relaxed">
+            Testing whether caregivers return after walking out of sight. Peek-a-boo serves as the emotional workout.
+          </p>
+          <div class="p-2.5 rounded-lg bg-canvas-subtle border border-hairline-soft text-xs text-body flex items-start gap-2">
+            <span class="font-mono text-indigo-700 font-semibold">Tip:</span>
+            <span id="q4-tip">Use consistent goodbye rituals rather than sneaking away to preserve secure attachment.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Interactive Cultural Term & "Say This / Not That" -->
+    <section class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline-soft pb-4">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Word / Phenomenon of the Week</span>
+          <h3 id="term-name" class="font-serif text-2xl sm:text-3xl font-semibold text-ink mt-0.5">
+            "Peek-a-Boo & The Vanishing Act"
+          </h3>
+          <p id="term-phonetic" class="font-mono text-xs text-mute">Cultural Origin: Universal Infant Play</p>
+        </div>
+
+        <!-- Audio Pronunciation Simulator -->
+        <div class="flex items-center gap-2">
+          <button onclick="playAudioDemo()" id="audio-btn" class="font-mono text-xs inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-hairline bg-canvas-subtle hover:bg-white transition text-body font-medium">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+            <span id="audio-label">Hear In Context</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Cringe Meter -->
+      <div class="space-y-2 bg-canvas-subtle p-4 rounded-xl border border-hairline-soft">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-body font-medium flex items-center gap-1.5">
+            <span>Parent Calibration Level:</span>
+            <strong id="cringe-level-num" class="text-ink">1/5</strong>
+          </span>
+          <span id="cringe-badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-200">
+            Completely Safe & Encouraged
+          </span>
+        </div>
+        <div class="flex gap-1.5 h-2 w-full rounded-full bg-slate-200/60 p-0.5" id="cringe-bars">
+          <div class="cringe-bar flex-1 rounded-full bg-emerald-600"></div>
+          <div class="cringe-bar flex-1 rounded-full bg-transparent"></div>
+          <div class="cringe-bar flex-1 rounded-full bg-transparent"></div>
+          <div class="cringe-bar flex-1 rounded-full bg-transparent"></div>
+          <div class="cringe-bar flex-1 rounded-full bg-transparent"></div>
+        </div>
+        <p id="cringe-desc" class="text-xs text-mute">
+          Universal infant bonding exercise. Absolutely zero cringe for parents—this is optimal developmental sparring.
+        </p>
+      </div>
+
+      <!-- Say This vs Not That Interactive Comparison -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-1.5">
+          <span class="font-mono text-xs uppercase tracking-wider text-rose-700 font-semibold flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Parent Pitfall (Avoid):
+          </span>
+          <p id="avoid-quote" class="text-xs sm:text-sm text-body italic leading-relaxed">
+            Interrupting their focus with sudden toys or rushing the turn-taking moment.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 space-y-1.5">
+          <span class="font-mono text-xs uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Parent Calm Posture (Try This):
+          </span>
+          <p id="try-quote" class="text-xs sm:text-sm text-body leading-relaxed font-medium">
+            Cover your face with a light cloth, wait 3 seconds for them to reach out, then smile and say "BOO!" softly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Interactive Dinner Table Card Deck -->
+    <section class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline-soft pb-3">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            Interactive Sunday Dinner Deck
+          </span>
+          <p class="text-xs text-mute mt-0.5">Card <span id="card-index">1</span> of 3 · Calibrated for Tonight</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="shuffleDeck()" class="font-mono text-xs inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-hairline bg-canvas-subtle hover:bg-white transition text-body font-medium">
+            <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Shuffle Prompt</span>
+          </button>
+          <button onclick="copyDeckPrompt()" id="copy-deck-btn" class="font-mono text-xs px-3 py-1.5 rounded-xl border border-spruce bg-spruce text-white hover:bg-emerald-900 transition font-medium">
+            Copy to Phone
+          </button>
+        </div>
+      </div>
+
+      <!-- The Active Card -->
+      <div id="deck-card-container" class="p-6 rounded-2xl bg-canvas-subtle border border-hairline space-y-4 transition-all">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span id="deck-card-tag" class="px-2 py-0.5 rounded bg-white border border-hairline text-spruce font-medium">
+            Sensory Humor & Play
+          </span>
+          <span class="text-mute">Tonight at 6:30 PM</span>
+        </div>
+
+        <blockquote id="deck-question" class="font-serif text-xl sm:text-2xl italic font-normal text-ink leading-snug">
+          "What was the silliest animal sound or face that made you giggle the hardest today?"
+        </blockquote>
+
+        <div class="border-t border-hairline-soft pt-3 text-xs text-body flex items-start gap-2">
+          <span class="font-mono text-spruce font-semibold">Coach Note:</span>
+          <span id="deck-note">Model the silliest face you can make first. Toddlers respond to vulnerability and silly exaggeration.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Contextual Digital Horizon (Clean, Non-Alarmist!) -->
+    <div id="horizon-card" class="hairline-card rounded-2xl p-5 bg-card border-l-4 border-l-emerald-600 space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span id="horizon-header">Pre-Device Sanctuary Status</span>
+        </span>
+        <span id="horizon-pill" class="font-mono text-[11px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+          Zero Exploits Active
+        </span>
+      </div>
+      <p id="horizon-body" class="text-body text-xs sm:text-sm leading-relaxed">
+        Mateo is on Road 1 (Pre-Device). He has no personal smartphone or active accounts. The cybersecurity exploit warnings (Discord raids, calculator vaults) are safely irrelevant to your family at this time.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="pt-4 pb-12 text-center text-xs font-mono text-mute border-t border-hairline space-y-1">
+      <p>AlongSide Almanac · Direction B: Visual & Interactive Codex</p>
+      <p class="text-[11px] text-body">Demonstrates 4-Quadrant Radar, Cringe Thermometer & Sibling Context</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const DATA = {
+      mateo: {
+        name: 'Mateo',
+        roadBadge: 'Road 1: Pre-Device',
+        roadBadgeClass: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+        pageTitle: 'The Toddler Sensorimotor & Melodic Landscape',
+        pageSubtitle: 'Interactive cultural telemetry calibrated for Mateo\'s exact developmental window (14 months).',
+        q1Tag: 'Pre-Verbal Rhythm',
+        q1Title: 'Gesture Loops & Imitative Babble',
+        q1Desc: 'Consonant-vowel chains ("ba-ba", "ma-ma") coupled with emphatic finger pointing and clapping rituals.',
+        q1Tip: 'Repeat their syllables with melodic exaggeration to accelerate vocabulary binding.',
+        q2Tag: 'Low-Stimulation Audio',
+        q2Title: 'Ms. Rachel & Acoustic Nursery Verses',
+        q2Desc: 'Slow-paced human facial close-ups with enunciated mouth shapes and acoustic nursery verses.',
+        q2Tip: 'Prioritize human faces over animated fast-cut cartoons to protect attention spans.',
+        q3Tag: 'Parallel Play',
+        q3Title: 'Physical Sand & Water Barter',
+        q3Desc: 'Playing side-by-side with shared buckets and shovels. Early ownership battles ("Mine!") signify boundary testing.',
+        q3Tip: 'Sportscast without taking sides: "You both really want the yellow shovel right now."',
+        q4Tag: 'Separation Anxiety',
+        q4Title: 'Object Permanence & Safe Return',
+        q4Desc: 'Testing whether caregivers return after walking out of sight. Peek-a-boo serves as the emotional workout.',
+        q4Tip: 'Use consistent goodbye rituals rather than sneaking away to preserve secure attachment.',
+        termName: '"Peek-a-Boo & The Vanishing Act"',
+        termPhonetic: 'Cultural Origin: Universal Infant Play',
+        cringeScore: 1,
+        cringeLabel: 'Completely Safe & Encouraged',
+        cringeBadgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+        cringeDesc: 'Universal infant bonding exercise. Absolutely zero cringe for parents—this is optimal developmental sparring.',
+        avoidQuote: 'Interrupting their focus with sudden toys or rushing the turn-taking moment.',
+        tryQuote: 'Cover your face with a light cloth, wait 3 seconds for them to reach out, then smile and say "BOO!" softly.',
+        deck: [
+          {
+            tag: 'Sensory Humor & Play',
+            question: '"What was the silliest animal sound or face that made you giggle the hardest today?"',
+            note: 'Model the silliest face you can make first. Toddlers respond to vulnerability and silly exaggeration.'
+          },
+          {
+            tag: 'Pretend Food Sharing',
+            question: '"If baby animals could talk at dinner, what would a puppy ask to eat first?"',
+            note: 'Engage sensory observation and finger food exploration with zero eating pressure.'
+          },
+          {
+            tag: 'Daycare & Bedtime',
+            question: '"Who gave the biggest hug or wave today when you said goodbye?"',
+            note: 'Helps re-establish secure emotional connection after a day of daycare separation.'
+          }
+        ],
+        horizonHeader: 'Pre-Device Sanctuary Status',
+        horizonPill: 'Zero Exploits Active',
+        horizonBody: 'Mateo is on Road 1 (Pre-Device). He has no personal smartphone or active accounts. The cybersecurity exploit warnings (Discord raids, calculator vaults) are safely irrelevant to your family at this time.',
+        borderClass: 'border-l-emerald-600'
+      },
+      maya: {
+        name: 'Maya',
+        roadBadge: 'Road 1: Pre-Device',
+        roadBadgeClass: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+        pageTitle: 'The 3rd-Grade Playground Economy & Co-Op Culture',
+        pageSubtitle: 'Interactive cultural telemetry calibrated for Maya\'s grade school world (8 years old).',
+        q1Tag: 'Schoolyard Lingo',
+        q1Title: '"No Take-Backs" & Recess Rules',
+        q1Desc: 'Oral playground treaties, handshakes, and secret club passwords that determine game inclusion.',
+        q1Tip: 'Ask how rules get resolved when someone claims a dispute at recess.',
+        q2Tag: 'Co-Op Media',
+        q2Title: 'Minecraft Bedrock & Adopt Me Pets',
+        q2Desc: 'Collaborative creative building and collecting rare virtual pets with school classmates.',
+        q2Tip: 'Ask Maya to give you a tour of her Minecraft build rather than lecturing about screen limits.',
+        q3Tag: 'Recess Currency',
+        q3Title: 'Trading Cards & Friendship Bracelets',
+        q3Desc: 'Trading Pokemon cards, stickers, and friendship beads. The foundation of early economic appraisal.',
+        q3Tip: 'Coach Maya to take 24 hours before trading any high-value card so impulse gives way to judgment.',
+        q4Tag: 'Social Belonging',
+        q4Title: 'The "Secret Best Friend" Shift',
+        q4Desc: 'Moving from universal playmates to dyadic best friends and navigating temporary exclusions.',
+        q4Tip: 'Validate the sting of exclusion: "It hurts when a game changes without warning."',
+        termName: '"Skibidi / Fanum Tax" (In Context)',
+        termPhonetic: 'Cultural Origin: YouTube Elementary Meme',
+        cringeScore: 5,
+        cringeLabel: 'Nuclear Cringe If Parents Say It Seriously',
+        cringeBadgeClass: 'bg-rose-100 text-rose-800 border-rose-200',
+        cringeDesc: 'Absurdist playground meme currency. If a parent tries to use this seriously, kids die of secondhand embarrassment.',
+        avoidQuote: 'Saying "That dinner is totally Skibidi, Maya!" to sound cool.',
+        tryQuote: 'Playful eye-roll acknowledgment: "If you take a fry from my plate, that is the Parent Tax, not Fanum Tax."',
+        deck: [
+          {
+            tag: 'Playground Imagination',
+            question: '"If you could invent a brand new school subject that every kid had to take, what would the homework be?"',
+            note: 'Start with a funny subject like "Lego Fort Engineering" to lower academic defensiveness.'
+          },
+          {
+            tag: 'School Social Humor',
+            question: '"What was something that happened at school this week that made your whole table laugh out loud?"',
+            note: 'Focuses on peer joy and inside jokes rather than test scores or behavior grades.'
+          },
+          {
+            tag: 'Empathy & Secret Superpowers',
+            question: '"If you had a secret superpower for 24 hours but could only use it to help someone in class, who would you pick?"',
+            note: 'Nurtures perspective-taking and classroom empathy without moralizing.'
+          }
+        ],
+        horizonHeader: 'Pre-Device Gaming Horizon',
+        horizonPill: 'Console Supervised',
+        horizonBody: 'Maya participates in co-op Minecraft and Nintendo Switch on the shared living room console. No unmonitored smartphone or app store accounts are active.',
+        borderClass: 'border-l-emerald-600'
+      },
+      julian: {
+        name: 'Julian',
+        roadBadge: 'Road 2: Active Device',
+        roadBadgeClass: 'text-indigo-700 bg-indigo-50 border-indigo-200',
+        pageTitle: 'Adolescent Identity, Group Chats & High School Social Signals',
+        pageSubtitle: 'Interactive cultural telemetry calibrated for Julian\'s 9th-grade freshman year (14 years old).',
+        q1Tag: 'Peer Vernacular',
+        q1Title: '"Crashout", "Rizz" & "Cooked"',
+        q1Desc: 'Fast-moving dialect communicating emotional overwhelm ("cooked"), romantic charisma ("rizz"), and overload.',
+        q1Tip: 'Translate the emotion beneath the slang: "cooked" usually means exhausted or anxious about an exam.',
+        q2Tag: 'Creator Feeds',
+        q2Title: 'Twitch Streams & Short-Form Gaming Clips',
+        q2Desc: 'Late-night competitive esports streams, reaction channels, and algorithmic humor loops.',
+        q2Tip: 'Watch one 5-minute creator clip together to understand his humor without judgment.',
+        q3Tag: 'Digital Currency',
+        q3Title: 'Group Chat Hierarchy & Snap Streaks',
+        q3Desc: 'The pressure to maintain daily streaks and instant reply rituals as proof of social loyalty.',
+        q3Tip: 'Acknowledge the stress: "It must feel exhausting having to reply to everyone before sleeping."',
+        q4Tag: 'Autonomy vs Safety',
+        q4Title: 'The Need for Unmonitored Thought',
+        q4Desc: 'Navigating privacy boundaries, emerging romantic interests, and developing an independent identity.',
+        q4Tip: 'Honor physical and digital privacy in exchange for open communication on safety and curfews.',
+        termName: '"Crashout"',
+        termPhonetic: '/ˈkræʃ.aʊt/ · TikTok & Gaming Origin',
+        cringeScore: 4,
+        cringeLabel: 'High Cringe If Misused / Use with Care',
+        cringeBadgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
+        cringeDesc: 'Signals dysregulation or emotional exhaustion. Safe to reflect back with gentle curiosity, not mocking.',
+        avoidQuote: 'Mocking him during a bad mood: "Are you having a little crashout right now, Julian?"',
+        tryQuote: 'Empathetic de-escalation: "That loss looked super frustrating. Let\'s get some fresh air or grab a snack."',
+        deck: [
+          {
+            tag: 'Group Chat Dynamics',
+            question: '"What was the funniest absurd meme or video sent to your friend group this week?"',
+            note: 'Shows interest in his humor without prying into personal peer gossip.'
+          },
+          {
+            tag: 'Future Horizon',
+            question: '"If you could skip ahead to age 25 for just one afternoon, what career or city would you want to check out?"',
+            note: 'Inspires long-term vision and identity exploration during confusing freshman shifts.'
+          },
+          {
+            tag: 'Stress & Relief',
+            question: '"Which class or assignment this semester has felt the most exhausting, and how can we make weeknights easier?"',
+            note: 'Positions parents as supportive allies rather than nagging taskmasters.'
+          }
+        ],
+        horizonHeader: 'Active-Device Pact & Curfew Spotlight',
+        horizonPill: 'Pact Active · 9:00 PM Curfew',
+        horizonBody: 'Julian\'s smartphone has an active Apple MDM curfew profile that disables social feeds neutrally at 9:00 PM on school nights. Detailed app limits managed in Device Hub.',
+        borderClass: 'border-l-indigo-600'
+      }
+    };
+
+    let activeChildKey = 'mateo';
+    let currentDeckIdx = 0;
+
+    function setChild(key) {
+      activeChildKey = key;
+      currentDeckIdx = 0;
+      const d = DATA[key];
+
+      // Update tabs
+      ['mateo', 'maya', 'julian'].forEach(k => {
+        const btn = document.getElementById('tab-' + k);
+        if (k === key) {
+          btn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-sm transition';
+        } else {
+          btn.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition';
+        }
+      });
+
+      // Update Road Badge
+      const rb = document.getElementById('road-badge');
+      rb.textContent = d.roadBadge;
+      rb.className = 'font-mono text-xs font-medium px-2 py-0.5 rounded border ' + d.roadBadgeClass;
+
+      // Update Masthead
+      document.getElementById('page-title').textContent = d.pageTitle;
+      document.getElementById('page-subtitle').textContent = d.pageSubtitle;
+
+      // Update Quadrants
+      document.getElementById('q1-tag').textContent = d.q1Tag;
+      document.getElementById('q1-title').textContent = d.q1Title;
+      document.getElementById('q1-desc').textContent = d.q1Desc;
+      document.getElementById('q1-tip').textContent = d.q1Tip;
+
+      document.getElementById('q2-tag').textContent = d.q2Tag;
+      document.getElementById('q2-title').textContent = d.q2Title;
+      document.getElementById('q2-desc').textContent = d.q2Desc;
+      document.getElementById('q2-tip').textContent = d.q2Tip;
+
+      document.getElementById('q3-tag').textContent = d.q3Tag;
+      document.getElementById('q3-title').textContent = d.q3Title;
+      document.getElementById('q3-desc').textContent = d.q3Desc;
+      document.getElementById('q3-tip').textContent = d.q3Tip;
+
+      document.getElementById('q4-tag').textContent = d.q4Tag;
+      document.getElementById('q4-title').textContent = d.q4Title;
+      document.getElementById('q4-desc').textContent = d.q4Desc;
+      document.getElementById('q4-tip').textContent = d.q4Tip;
+
+      // Update Term & Cringe Meter
+      document.getElementById('term-name').textContent = d.termName;
+      document.getElementById('term-phonetic').textContent = d.termPhonetic;
+      document.getElementById('cringe-level-num').textContent = d.cringeScore + '/5';
+      const cb = document.getElementById('cringe-badge');
+      cb.textContent = d.cringeLabel;
+      cb.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider border ' + d.cringeBadgeClass;
+      document.getElementById('cringe-desc').textContent = d.cringeDesc;
+
+      // Render cringe bars
+      const bars = document.getElementById('cringe-bars').children;
+      for (let i = 0; i < 5; i++) {
+        if (i < d.cringeScore) {
+          bars[i].className = 'cringe-bar flex-1 rounded-full ' + (d.cringeScore >= 4 ? 'bg-rose-500' : (d.cringeScore >= 3 ? 'bg-amber-500' : 'bg-emerald-600'));
+        } else {
+          bars[i].className = 'cringe-bar flex-1 rounded-full bg-transparent';
+        }
+      }
+
+      document.getElementById('avoid-quote').textContent = d.avoidQuote;
+      document.getElementById('try-quote').textContent = d.tryQuote;
+
+      renderDeck();
+
+      // Horizon Card
+      document.getElementById('horizon-header').textContent = d.horizonHeader;
+      document.getElementById('horizon-pill').textContent = d.horizonPill;
+      document.getElementById('horizon-body').textContent = d.horizonBody;
+      const hc = document.getElementById('horizon-card');
+      hc.className = 'hairline-card rounded-2xl p-5 bg-card space-y-2 border-l-4 ' + d.borderClass;
+    }
+
+    function renderDeck() {
+      const d = DATA[activeChildKey];
+      const card = d.deck[currentDeckIdx];
+      document.getElementById('card-index').textContent = currentDeckIdx + 1;
+      document.getElementById('deck-card-tag').textContent = card.tag;
+      document.getElementById('deck-question').textContent = card.question;
+      document.getElementById('deck-note').textContent = card.note;
+    }
+
+    function shuffleDeck() {
+      const d = DATA[activeChildKey];
+      currentDeckIdx = (currentDeckIdx + 1) % d.deck.length;
+      const container = document.getElementById('deck-card-container');
+      container.style.opacity = '0.5';
+      container.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        renderDeck();
+        container.style.opacity = '1';
+        container.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    function copyDeckPrompt() {
+      const q = document.getElementById('deck-question').innerText;
+      navigator.clipboard.writeText(q).then(() => {
+        const btn = document.getElementById('copy-deck-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy to Phone'; }, 2000);
+      });
+    }
+
+    function playAudioDemo() {
+      const btn = document.getElementById('audio-btn');
+      const label = document.getElementById('audio-label');
+      label.textContent = 'Simulating Audio...';
+      btn.classList.add('bg-spruce-soft', 'text-spruce');
+      setTimeout(() => {
+        label.textContent = 'Played in Context ✓';
+        setTimeout(() => {
+          label.textContent = 'Hear In Context';
+          btn.classList.remove('bg-spruce-soft', 'text-spruce');
+        }, 1500);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

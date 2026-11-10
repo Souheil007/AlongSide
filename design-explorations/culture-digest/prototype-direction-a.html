@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction A — Minimal & Focused | Sunday Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            'hairline-soft': '#EDEDEA',
+            spruce: '#143D2B',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.03) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-8 lg:p-12">
+  <div class="max-w-3xl mx-auto space-y-10">
+    
+    <!-- Top Bar: Navigation / Back to Hub -->
+    <div class="flex items-center justify-between border-b border-hairline pb-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Culture Digest</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-spruce-soft px-2.5 py-0.5 font-mono text-xs text-spruce font-medium">
+          Vol. 42 · Sunday Edition
+        </span>
+      </div>
+    </div>
+
+    <!-- Active Child Selector Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-canvas-subtle p-3 rounded-xl border border-hairline">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-mono uppercase tracking-wider text-mute">Browsing for:</span>
+        <div class="flex items-center gap-1.5" id="child-switcher">
+          <button onclick="setChild('mateo')" id="btn-mateo" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-white text-ink border-spruce font-mono shadow-sm">
+            Mateo · 14 mo
+          </button>
+          <button onclick="setChild('maya')" id="btn-maya" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono">
+            Maya · 8 yrs
+          </button>
+          <button onclick="setChild('julian')" id="btn-julian" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono">
+            Julian · 14 yrs
+          </button>
+        </div>
+      </div>
+      <div id="road-badge" class="font-mono text-xs text-spruce flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+        <span id="road-text">Road 1: Pre-Device Sanctuary</span>
+      </div>
+    </div>
+
+    <!-- Direction Header -->
+    <header class="space-y-3">
+      <div class="flex items-center gap-2 font-mono text-xs text-mute">
+        <span>Direction A — Minimal & Focused</span>
+        <span>•</span>
+        <span>Estimated read: 90 seconds</span>
+      </div>
+      <h1 id="digest-title" class="font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-ink leading-tight">
+        First Gestures, Melodic Earworms & Sensorimotor Discovery
+      </h1>
+      <p id="digest-subtitle" class="text-body text-base leading-relaxed">
+        Everything you need to connect with Mateo this week—distilled into one cultural fascination, one dinner prompt, and the developmental science behind it.
+      </p>
+    </header>
+
+    <!-- Card 1: The Cultural Fascination of the Week -->
+    <section class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          1. The Cultural Phenomenon This Week
+        </span>
+        <span id="tag-category" class="font-mono text-xs px-2 py-0.5 rounded bg-canvas-subtle border border-hairline text-body">
+          Early Language & Sound
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        <h2 id="card1-heading" class="font-serif text-2xl font-semibold text-ink">
+          The "Wheels on the Bus" & Repetitive Gesture Loop
+        </h2>
+        <p id="card1-desc" class="text-body text-sm sm:text-base leading-relaxed">
+          Mateo is currently fascinated by cause-and-effect physical gestures paired with repetitive vocal rhythms (clapping, "round and round", peek-a-boo). In toddler peer circles and daycare, these musical hand-games serve as the earliest shared playground currency.
+        </p>
+      </div>
+
+      <div class="p-3.5 rounded-xl bg-canvas-subtle border border-hairline-soft text-xs sm:text-sm text-body space-y-1">
+        <strong class="text-ink font-medium block">Parent Calm Takeaway:</strong>
+        <p id="card1-takeaway">
+          When they ask to repeat the exact same 4-line verse 12 times in a row, their brain isn't being stubborn—it is testing predictive neural patterns. Leaning into the repetition builds deep emotional security.
+        </p>
+      </div>
+    </section>
+
+    <!-- Card 2: Tonight's Dinner Table Conversation Starter -->
+    <section class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-5 border-l-4 border-l-spruce">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          2. Tonight's Sunday Table Prompt
+        </span>
+        <button onclick="copyPrompt()" id="copy-btn" class="font-mono text-xs inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-hairline bg-white hover:bg-canvas-subtle transition text-body font-medium">
+          <span id="copy-text">Copy Prompt</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <p class="text-xs uppercase font-mono tracking-wider text-mute">Ask this at dinner tonight:</p>
+        <blockquote id="dinner-question" class="font-serif text-xl sm:text-2xl italic font-normal text-ink leading-snug">
+          "What was the silliest animal sound or funny face that made you giggle the hardest today?"
+        </blockquote>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+        <div class="p-3 rounded-lg bg-canvas-subtle border border-hairline-soft space-y-1">
+          <span class="font-mono text-spruce uppercase tracking-wider font-semibold block">Conversational Posture:</span>
+          <p id="dinner-tip" class="text-body leading-relaxed">
+            Model funny animal sounds first (like a squeaky lion). Wait patiently for eye contact and turn-taking smiles without pushing.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-canvas-subtle border border-hairline-soft space-y-1">
+          <span class="font-mono text-spruce uppercase tracking-wider font-semibold block">Follow-Up Probe:</span>
+          <p id="dinner-followup" class="text-body leading-relaxed">
+            "Can you show me the silliest sound a baby puppy makes when it's hungry?"
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card 3: The Developmental Translation -->
+    <section class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          3. The Developmental Translation
+        </span>
+        <span class="font-mono text-xs text-mute">Pediatric Science Note</span>
+      </div>
+
+      <div class="space-y-3">
+        <h3 id="card3-heading" class="font-serif text-xl font-semibold text-ink">
+          Mirror Neurons, Turn-Taking & Affect Attunement
+        </h3>
+        <p id="card3-body" class="text-body text-sm sm:text-base leading-relaxed">
+          Between 12 and 18 months, speech emerges primarily through rhythmic physical resonance rather than vocabulary memorization. Shared laughter and synchronized physical gestures activate the mirror neuron system, which serves as the neurological bedrock for lifelong emotional empathy.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contextual Horizon Footnote (Replaces the 4-card Exploit Wall!) -->
+    <div id="device-horizon-container" class="rounded-xl border border-hairline p-4 bg-canvas-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+        <span id="horizon-summary" class="text-body font-mono">
+          <strong>Pre-Device Sanctuary:</strong> Zero device threats or screen exploits relevant to Mateo's developmental stage.
+        </span>
+      </div>
+      <a href="#devices" id="horizon-link" class="text-spruce font-mono font-medium hover:underline inline-flex items-center gap-1">
+        Learn about Road 1 Roadmap →
+      </a>
+    </div>
+
+    <!-- Editorial Signoff -->
+    <footer class="pt-6 pb-12 text-center space-y-2 border-t border-hairline text-xs font-mono text-mute">
+      <p>AlongSide Almanac · Published every Sunday at 8:00 AM · Taste 2: Editorial Pediatric Almanac</p>
+      <p class="text-[11px] text-body">Next edition released Sunday, November 17, 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const CHILD_DATA = {
+      mateo: {
+        name: 'Mateo',
+        ageLabel: '14 mo · Infant/Toddler',
+        road: 'Road 1: Pre-Device Sanctuary',
+        roadColor: 'bg-emerald-500',
+        title: 'First Gestures, Melodic Earworms & Sensorimotor Discovery',
+        subtitle: 'Everything you need to connect with Mateo this week—distilled into one cultural fascination, one dinner prompt, and the developmental science behind it.',
+        category: 'Early Language & Sound',
+        card1Heading: 'The "Wheels on the Bus" & Repetitive Gesture Loop',
+        card1Desc: 'Mateo is currently fascinated by cause-and-effect physical gestures paired with repetitive vocal rhythms (clapping, "round and round", peek-a-boo). In toddler peer circles and daycare, these musical hand-games serve as the earliest shared playground currency.',
+        card1Takeaway: 'When they ask to repeat the exact same 4-line verse 12 times in a row, their brain isn\'t being stubborn—it is testing predictive neural patterns. Leaning into the repetition builds deep emotional security.',
+        dinnerQuestion: '"What was the silliest animal sound or funny face that made you giggle the hardest today?"',
+        dinnerTip: 'Model funny animal sounds first (like a squeaky lion). Wait patiently for eye contact and turn-taking smiles without pushing.',
+        dinnerFollowup: '"Can you show me the silliest sound a baby puppy makes when it\'s hungry?"',
+        card3Heading: 'Mirror Neurons, Turn-Taking & Affect Attunement',
+        card3Body: 'Between 12 and 18 months, speech emerges primarily through rhythmic physical resonance rather than vocabulary memorization. Shared laughter and synchronized physical gestures activate the mirror neuron system, which serves as the neurological bedrock for lifelong emotional empathy.',
+        horizonSummary: '<strong>Pre-Device Sanctuary:</strong> Zero device threats or screen exploits relevant to Mateo\'s developmental stage.',
+        horizonLink: 'Learn about Road 1 Roadmap →'
+      },
+      maya: {
+        name: 'Maya',
+        ageLabel: '8 yrs · 3rd Grade Elementary',
+        road: 'Road 1: Pre-Device Sanctuary',
+        roadColor: 'bg-emerald-500',
+        title: 'Recess Currencies, Pokemon Trading & Collaborative World-Building',
+        subtitle: 'Stay fluently connected with Maya\'s 3rd-grade social ecosystem—recess barter rules, creative playgrounds, and meaningful dinnertime dialogue.',
+        category: 'Schoolyard & Peer Dynamics',
+        card1Heading: 'Playground Card Trades & The "Recess Barter Economy"',
+        card1Desc: 'In 3rd grade, physical trading cards (Pokemon, sports, sticker albums) and imaginary playground clubs dominate recess social politics. Who trades fairly and who reneges on a trade forms the basis of early playground reputation and social trust.',
+        card1Takeaway: 'If Maya feels upset over an "unfair" trade, resist the urge to intervene with the school immediately. Coach her on setting boundaries: "You can always say: I need to think about this trade until tomorrow."',
+        dinnerQuestion: '"If you could invent a brand new school subject that every kid had to take, what would the homework be?"',
+        dinnerTip: 'Start by answering first with a humorous subject (like "Pillow Fort Engineering"). Keep the tone playful to lower academic guards.',
+        dinnerFollowup: '"What kind of test would the teacher give at the end of the year to get an A+?"',
+        card3Heading: 'Reciprocal Altruism, Fairness & Executive Negotiation',
+        card3Body: 'Between ages 7 and 9, children transition from rigid adult-imposed rules to peer-negotiated social contracts (Piaget\'s autonomous morality). Navigating small playground trades teaches impulse control, value appraisal, and emotional resilience when a deal goes sour.',
+        horizonSummary: '<strong>Pre-Device Horizon:</strong> Maya does not possess an unmonitored smartphone. Co-op Minecraft rules active on family console.',
+        horizonLink: 'View Pre-Device Agreement Guide →'
+      },
+      julian: {
+        name: 'Julian',
+        ageLabel: '14 yrs · 9th Grade Freshman',
+        road: 'Road 2: Active Device (Enrolled)',
+        roadColor: 'bg-indigo-500',
+        title: 'Decoding "Crashout", Gaming Frustration & Freshman Identity',
+        subtitle: 'Understand Julian\'s digital peer language, emotional stress valves, and late-adolescent autonomy without becoming the family police officer.',
+        category: 'Adolescent Language & Digital Horizon',
+        card1Heading: 'Understanding "Crashout": Meme Slang vs. True Overload',
+        card1Desc: 'Julian and his peers frequently use "Crashout" to describe an explosive emotional reaction or gaming meltdown. While used playfully online, it often masks genuine frustration, social fatigue, or schoolwork overwhelm during the high school transition.',
+        card1Takeaway: 'When teens use dramatic slang, they are testing whether adults will overreact. Acknowledge with calm validation: "Sounds like you hit your limit today. Want 20 minutes of quiet before dinner?"',
+        dinnerQuestion: '"What was something absurd or hilarious that happened in your group chat or halls this week?"',
+        dinnerTip: 'Ask with genuine curiosity about peer culture, not surveillance. Do not ask for names or specifics unless he volunteers them.',
+        dinnerFollowup: '"Did everyone find it funny, or did it start getting awkward?"',
+        card3Heading: 'Adolescent Prefrontal Maturation & Digital Dopamine',
+        card3Body: 'At 14, the brain\'s emotional limbic system matures years ahead of the prefrontal cortex (executive impulse control). Competitive online games deliver rapid variable-ratio dopamine spikes. When losses occur, emotional regulation falters—manifesting as the classic "crashout".',
+        horizonSummary: '<strong>Active-Device Status:</strong> Curfew scheduled for 9:00 PM tonight. Apple MDM profile verified active with zero dark pattern alerts.',
+        horizonLink: 'Manage Julian\'s Device Profile →'
+      }
+    };
+
+    function setChild(childKey) {
+      const data = CHILD_DATA[childKey];
+      if (!data) return;
+
+      // Update button styles
+      ['mateo', 'maya', 'julian'].forEach(k => {
+        const btn = document.getElementById('btn-' + k);
+        if (k === childKey) {
+          btn.className = 'px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-white text-ink border-spruce font-mono shadow-sm';
+        } else {
+          btn.className = 'px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono';
+        }
+      });
+
+      // Update content
+      document.getElementById('road-text').textContent = data.road;
+      document.getElementById('digest-title').textContent = data.title;
+      document.getElementById('digest-subtitle').textContent = data.subtitle;
+      document.getElementById('tag-category').textContent = data.category;
+      document.getElementById('card1-heading').textContent = data.card1Heading;
+      document.getElementById('card1-desc').textContent = data.card1Desc;
+      document.getElementById('card1-takeaway').textContent = data.card1Takeaway;
+      document.getElementById('dinner-question').textContent = data.dinnerQuestion;
+      document.getElementById('dinner-tip').textContent = data.dinnerTip;
+      document.getElementById('dinner-followup').textContent = data.dinnerFollowup;
+      document.getElementById('card3-heading').textContent = data.card3Heading;
+      document.getElementById('card3-body').textContent = data.card3Body;
+      document.getElementById('horizon-summary').innerHTML = data.horizonSummary;
+      document.getElementById('horizon-link').textContent = data.horizonLink;
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById('dinner-question').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        const span = document.getElementById('copy-text');
+        span.textContent = 'Copied to Clipboard!';
+        btn.classList.add('bg-spruce-soft', 'text-spruce', 'border-spruce');
+        setTimeout(() => {
+          span.textContent = 'Copy Prompt';
+          btn.classList.remove('bg-spruce-soft', 'text-spruce', 'border-spruce');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
