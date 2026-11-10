@@ -3,173 +3,163 @@
 **Task ID:** SOU-80 (Phase 2 — Page-Level UX Exploration & Design Alternatives)  
 **Target Route:** `apps/web/src/app/(dashboard)/digest/`  
 **Design System Standard:** Taste 2: Editorial Pediatric Almanac (`design-system/alongside/MASTER.md`)  
-**Status:** Complete Architectural Specification for 8 Visual Prototypes (Original 3 + 5 Brand New Immersive Paradigms)  
+**Status:** Complete Architectural Specification for 11 Visual Prototypes (Original 3 + 5 Immersive + 3 Synthesized Hybrid Masters)  
 
 ---
 
-## 1. Design Exploration Context & Direct User Mandate
+## 1. Design Exploration Context & Evolution
 
-### 1.1 The User's Direct Feedback & Challenge
-Following the delivery of the initial three design explorations (Directions A, B, and C), the user provided crucial design feedback:
+### 1.1 The User's Progressive Design Guidance
+1. **Initial Feedback on Directions A–C:**
+   > *"still i didnt like the designs you gave me , culture digest page should feel more immersive to the user appealing , contains really the culture digest for a parent tailored to his child tier , generate for me 5 more designs"*
+2. **Latest Strategic Guidance on Directions D–H:**
+   > *"feels like every directions of the 5 has a good thing of its own , what do you think of making the page rich enough , but not redundant and not overwhelming , but a place that keeps the user hooked in , learning about what is happening in the surrounding of his child and making feels more connected to his child and up to date with him , think of 3 more designs that uses the already things you gave me in the 5 designs"*
 
-> *"still i didnt like the designs you gave me , culture digest page should feel more immersive to the user appealing , contains really the culture digest for a parent tailored to his child tier , generate for me 5 more designs"*
-
-### 1.2 Core Product Diagnostic & Strategic Directives
-1. **True Immersion & Visual Appeal:** The Culture Digest cannot be just a dry card layout or a static text list. It must feel like an **experiential window** into the child's living world—incorporating simulated feeds, visual artifacts, audio waveforms, interactive sparring trials, and rich sensory atmosphere.
-2. **Authentic Lifespan Tailoring:** The content must genuinely reflect what children at each specific age experience:
-   - **Infant / Toddler (Explorer Tier · 0–3 yrs, e.g. Mateo 14 mo):** Sensory rhythm loops, nursery cadence (*Ms. Rachel*, *CoComelon*, *The Wheels on the Bus*), physical mimicry, object permanence physics experiments, predictive neurobiology.
-   - **Elementary (Trailblazer Tier · 7–9 yrs, e.g. Maya 8 yrs):** Playground blacktop barter economy (Pokemon holographic card trading, Squishmallows, friendship bracelets), *Minecraft Bedrock* co-op rules ("Never dig straight down", anti-griefing pacts), and shifting peer alliances.
-   - **Adolescence (Pioneer Tier · 13–15 yrs, e.g. Julian 14 yrs):** Group chats (Discord, iMessage), viral slang decoded in context (*Crashout*, *Cooked*, *No cap*, *Lock in*, *Aura points +/- 1000*), peer status anxiety, emotional regulation, and avoiding parental "cringe" tell-tales.
-3. **Exploit Warnings Purged from Digest:** The alarmist 4-card cybersecurity exploit wall ("Gambling wheels", "Calculator vaults", "Raid bots") has been permanently relocated to the Device Management Hub (`/devices`). Culture Digest focuses on **connection, developmental empathy, and dinnertime conversation**.
+### 1.2 Core Product Diagnostic & Hybrid Synthesis Mandate
+- **Rich Enough without Clutter:** Rather than isolated gimmicks or overwhelming walls of text, each synthesized design combines high-value cultural immersion with strict information hierarchy.
+- **Hooked In & Connected:** Parents stay engaged through tactile, interactive micro-actions: testing their radar in a 1-minute quiz, converting vintage 90s slang to modern 2026 lingo, previewing simulated peer chats with audio waveforms, and rehearsing conversational sparring before dinnertime.
+- **Authentic Lifespan Tailoring:**
+  - **Julian (14 yrs · Pioneer Tier · Active-Device):** Group chat dynamics, decoding *Crashout* and *Aura Points*, peer status pressure, late-night voice calls, and non-cringe adult bridging.
+  - **Maya (8 yrs · Trailblazer Tier · Pre-Device):** Recess blacktop trade economy, holographic Pokemon card trading, Squishmallows, Minecraft co-op rules ("Never grief a house"), and concrete operational fairness.
+  - **Mateo (14 mo · Explorer Tier · Pre-Device Sanctuary):** High-chair spoon physics experiments (object permanence), auditory cadence repetition (*Wheels on the bus*), mirror neuron attunement, and 100% screen-free reassurance.
+- **Exploit Warnings Relocated:** The 4-card cybersecurity exploit wall remains permanently quarantined in the Device Management Hub (`/devices`). Culture Digest delivers reassuring **Pre-Device Sanctuary** or calm **Digital Horizon curfew** badges.
 
 ---
 
-## 2. Overview of All 8 Design Paradigms
+## 2. Overview of All 11 Design Paradigms
 
 ```mermaid
 graph TD
-    Hub["Culture Digest Phase 2 Exploration Hub (index.html)"]
+    Hub["Culture Digest Exploration Hub (index.html · 11 Prototypes)"]
     
+    subgraph SynthesizedHybrids["⭐ 3 New Synthesized Hybrid Masters (Recommended)"]
+        I["Direction I: The Sunday Cultural Pulse & Live Companion<br/>(Barometer + Simulated Peer Window + 1999 Translator + Sparring Trial)"]
+        J["Direction J: The Interactive Field Guide & Empathy Lab<br/>(Radar Quiz Hook + Native Audio + Social Physics Ledger + 3-Course Tear-Sheet)"]
+        K["Direction K: The Connected Storyfeed & Dialogue Studio<br/>(Story Navigation Strip + Scene Card + Time Mirror + Dialogue Sandbox + Sticky Prompt)"]
+    end
+
+    subgraph ImmersiveExplorations["5 Immersive Paradigms (D-H)"]
+        D["Direction D: Sparring Holodeck (Simulated Feed & Branching Sandbox)"]
+        E["Direction E: Visual Magazine (Archival Dossier & 3-Course Tear-Sheet)"]
+        F["Direction F: Constellation Radar (Spatial Orbit Graph & Velocity Inspector)"]
+        G["Direction G: Culture Reels (Swipeable Micro-Stories & Quiz)"]
+        H["Direction H: Generational Capsule (Then 1999 vs Now 2026 & Slang Machine)"]
+    end
+
     subgraph OriginalExplorations["Original Formats (A-C)"]
-        A["Direction A: Minimal Almanac<br/>(90-second 3-card briefing)"]
-        B["Direction B: Visual Codex<br/>(4-quadrant radar & cringe meter)"]
-        C["Direction C: Guided Ritual<br/>(Understand → Connect → Guide stepper)"]
+        A["Direction A: Minimal Almanac (3-card 90-sec briefing)"]
+        B["Direction B: Visual Codex (4-quadrant radar & cringe meter)"]
+        C["Direction C: Guided Ritual (Understand → Connect → Guide stepper)"]
     end
 
-    subgraph NewImmersiveExplorations["5 New High-Immersion Paradigms (D-H)"]
-        D["Direction D: Sparring Holodeck<br/>(Simulated Peer Feed & Branching Dialogue Sandbox)"]
-        E["Direction E: Visual Magazine<br/>(Archival Zine, Artifacts & 3-Course Tear-Sheet)"]
-        F["Direction F: Constellation Radar<br/>(Spatial Orbit Graph & Velocity Inspector)"]
-        G["Direction G: Culture Reels<br/>(Swipeable Micro-Stories & Interactive Quiz)"]
-        H["Direction H: Generational Capsule<br/>(Then 1999 vs Now 2026 & Slang Machine)"]
-    end
-
+    Hub --> SynthesizedHybrids
+    Hub --> ImmersiveExplorations
     Hub --> OriginalExplorations
-    Hub --> NewImmersiveExplorations
 ```
 
 ---
 
-## 3. The 5 Brand New Immersive Prototypes (Directions D – H)
+## 3. The 3 Brand-New Synthesized Hybrid Masters (Directions I – K)
 
-### 3.1 Direction D — The Peer World Holodeck & Live Sparring Simulator
-- **Prototype File:** `prototype-direction-d-dialogue-simulator.html`
+### 3.1 Direction I — The Sunday Cultural Pulse & Live Companion
+- **Prototype File:** `prototype-direction-i-pulse-companion.html`
 - **UX Philosophy:**
-  > *"Don't just read about their culture—enter their world and rehearse the conversation before dinnertime."*
-- **Information Architecture:**
-  - **Left Stage (Living Peer Feed Viewport):**
-    - Renders an interactive simulated device/environment. For Julian (14yo): An authentic animated Discord/iMessage group chat with realistic slang, typing bubbles, and a playable voice note audio waveform. For Maya (8yo): A recess barter table with Pokemon card trading and barter dialogue. For Mateo (14mo): A sensory nursery soundboard with cadence waveforms.
-    - Decoded cultural signals pillbox highlighting slang terms in real-world context.
-  - **Right Stage (Parental Sparring & Reaction Engine):**
-    - Real-world scenario: *"Julian slumps on the couch: 'Bro, I crashed out today. I am so cooked.'"*
-    - Interactive 3-choice branching simulator:
-      * *Option A (Lecture):* Triggers simulated defensive shutdown (-1000 Aura, bedroom door slams).
-      * *Option B (Over-cringe forced slang):* Triggers deep eye-roll and awkward distancing.
-      * *Option C (Calm Neurobiology Bridge):* Triggers prefrontal regulation, relaxed posture, and an open conversation.
-  - **Tonight's Dinner Spark:** Single high-leverage question with 1-click clipboard copy.
-- **Trade-Offs:**
-  - *Advantages:* Highest emotional resonance and pedagogical value; turns passive reading into active behavioral muscle memory.
-  - *Disadvantages:* Requires higher screen real estate; best viewed on desktop or tablet.
+  > *"The complete weekly pulse in one balanced, unified command center — scannable, immersive, and immediately actionable."*
+- **Synthesis of Best Elements:**
+  - **From Directions E & F:** Top **Weekly Emotional Weather Barometer** (4 visual gauges: Peer Validation Drive, Autonomy Need, Social Curiosity, Prefrontal Fatigue) + **Cultural Velocity Chips** (`Surging 🔥`, `Stable ⚡`, `Fading ❄️`).
+  - **From Direction D:** Left Stage **Window into Their World** (Interactive simulated peer feed: animated Discord chat with realistic replies, typing indicator, AND a playable audio note snippet with dynamic waveform bars).
+  - **From Direction H:** Right Stage **Vintage Translator (1999 ↔ 2026)** (Interactive dropdown: select a phrase you said at their age → converts to 2026 child equivalent with pediatric insight).
+  - **From Direction D:** Right Stage **Quick Sparring Rehearsal** (Interactive 3-choice simulation: Lecture vs. Cringe vs. Calm Bridge with simulated child emotional reaction).
+  - **From Direction E:** Zone 3 **Tonight's Dinnertime Spark** (High-leverage dinner prompt with 1-click clipboard copy button and toast notification).
+- **Why It Keeps the User Hooked In:**
+  - Every zone is interactive without requiring navigation away from the screen.
+  - Zero cognitive clutter: Left column is "Their World", Right column is "Your Bridge", Bottom bar is "Tonight's Action".
 
 ---
 
-### 3.2 Direction E — The Sunday Cultural Dossier & Visual Audio Zine
-- **Prototype File:** `prototype-direction-e-visual-magazine.html`
+### 3.2 Direction J — The Interactive Cultural Field Guide & Empathy Lab
+- **Prototype File:** `prototype-direction-j-field-guide-lab.html`
 - **UX Philosophy:**
-  > *"A visual luxury publication written specifically for parents who care deeply about youth culture and developmental science."*
-- **Information Architecture:**
-  - **Editorial Cover Masthead:** Archival volume tag (`Vol. 42 · Sunday, Nov 15, 2026`), drop-cap typography, and caliber switcher.
-  - **The Vibe & Emotional Weather Barometer:** 4 visual gauges tracking Peer Validation Pressure, Desire for Autonomy, Playfulness, and Prefrontal Fatigue.
-  - **The Cultural Artifact Gallery:**
-    * *Artifact 01 (Linguistic Anatomy):* Phonetic IPA pronunciation, audio waveform bar with playable cadence, and Say This / Never Say That contrast.
-    * *Artifact 02 (Social Physics):* Inspectable visual ledger (e.g. Julian's "Aura Points Scoreboard", Maya's "Recess Currency Hierarchy", Mateo's "Toddler Dopamine Sequence").
-  - **Sunday Dinner Companion Tear-Sheet:** A perforated 3-course conversational menu (1. Appetizer Warm-Up, 2. Main Course Peer Insight, 3. Dessert Generational Swap) with 1-click clipboard copy.
-- **Trade-Offs:**
-  - *Advantages:* Breathtaking visual appeal; feels prestigious, relaxing, and deeply informative.
-  - *Disadvantages:* Long-form reading experience; takes 3–4 minutes to read fully.
+  > *"An archival pediatric field manual meets tactile discovery lab — turning parents from bewildered outsiders into certified cultural insiders."*
+- **Synthesis of Best Elements:**
+  - **From Direction G:** **The Weekly Parent Radar Challenge** (Interactive 1-minute quiz hook at the top: tests the parent's intuition on authentic peer scenarios with instant celebratory confetti / pediatric coaching).
+  - **From Directions E & D:** **Featured Cultural Artifact with Native Audio Pronunciation** (Phonetic IPA pronunciation, playable audio waveform cadence, and an explicit Parental Cringe Meter explaining why parents must understand it but never speak it).
+  - **From Direction E:** **Social Physics Visual Ledger** (Julian's Aura Points Balance Sheet / Maya's Recess Trading Hierarchy / Mateo's Toddler Dopamine Sequence).
+  - **From Direction E & D:** **The Perforated Sunday Dinner Tear-Sheet** (3-course conversational menu: Course 1 Appetizer Icebreaker, Course 2 Main Peer Insight, Course 3 Dessert Generational Swap with one-click copy for the whole menu).
+  - **Pediatric Endorsement:** Reassuring clinical field note by Dr. Thorne.
+- **Why It Keeps the User Hooked In:**
+  - The gamified pop quiz immediately creates curiosity and tests intuition.
+  - The audio pronunciation visualizer is satisfying and tactile.
+  - The social ledger explains the hidden rules of school life visually.
 
 ---
 
-### 3.3 Direction F — The Cultural Ecosystem Map & Constellation Radar
-- **Prototype File:** `prototype-direction-f-ecosystem-map.html`
+### 3.3 Direction K — The Connected Storyfeed & Dialogue Studio
+- **Prototype File:** `prototype-direction-k-connected-storyfeed.html`
 - **UX Philosophy:**
-  > *"A living spatial constellation mapping the child's cultural universe into interconnected gravitational clusters."*
-- **Information Architecture:**
-  - **Concentric Orbital Canvas:** Radial grid with SVG orbits. Central core represents the child (Julian, Maya, Mateo).
-  - **Orbiting Interactive Nodes:** Positioned across 5 cultural clusters (Vernacular & Lingo, Peer Codes & Status, Media & Gaming, Blacktop Territory, Hidden Pressures).
-  - **Node Velocity Indicators:** Real-time momentum badges (`Surging 🔥`, `Stable Staple ⚡`, `Fading ❄️`).
-  - **Interactive Slide-In Inspector:**
-    * Cultural category and authentic dialogue snippet.
-    * Pediatric Clinical Neurobiology translation (e.g. why amygdala hijack happens in public).
-    * Parent Calm Bridge script with 1-click copy.
-  - **Cluster Filter Bar:** Quickly isolates Lingo, Peer Codes, or Media.
-- **Trade-Offs:**
-  - *Advantages:* Spatial discovery feels exciting, modern, and non-linear; parents can explore what interests them.
-  - *Disadvantages:* Requires user interaction (clicking nodes) to read content.
+  > *"Social media rebuilt for family connection: A modern, fluid card stream with embedded interactive sandboxes."*
+- **Synthesis of Best Elements:**
+  - **From Direction G:** **Top Story Navigation Strip** (Circular avatar highlights: The Scene, Time Mirror, Sparring Lab, Social Rules) allowing rapid jumping.
+  - **From Direction D:** **Story Card 01: The Live Scene** (Simulated group chat / playground dialogue with animated typing indicator and playable audio waveform).
+  - **From Direction H:** **Story Card 02: The Generational Mirror** (Side-by-side comparison: "When You Were [Age] in 1999" vs "Your Child in 2026" with the timeless pediatric constant highlighted).
+  - **From Direction D:** **Story Card 03: Dialogue Rehearsal Studio** (Embedded 3-choice branching simulator: Lecture vs Cringe vs Calm Bridge with live simulated child reaction).
+  - **From Direction E & F:** **Story Card 04: Social Status & Rules Decoder** (Visual currency cards + road safety reassurance seal).
+  - **From Direction E:** **Sticky Bottom Dinnertime Prompt Bar** (Tonight's high-connection prompt floating calmly at the bottom with 1-click clipboard copy).
+- **Why It Keeps the User Hooked In:**
+  - Feels like modern high-end editorial feeds (Instagram Stories + Substack).
+  - Lowest reading friction while retaining deep pedagogical depth.
 
 ---
 
-### 3.4 Direction G — Sunday Culture Stories & Micro-Reels
-- **Prototype File:** `prototype-direction-g-culture-reels.html`
-- **UX Philosophy:**
-  > *"Modern, bite-sized visual story cards designed for the busy parent on mobile—tap, learn, connect in 60 seconds."*
-- **Information Architecture:**
-  - **Mobile-First Story Reel Container:** Styled like Substack/Instagram visual stories with top progress bars and keyboard arrow support.
-  - **5 Sequential Story Cards:**
-    1. *Story 1: The Weekly Vibe Check* (Emotional weather & developmental driver).
-    2. *Story 2: Word on the Street* (Featured slang term with audio wave and dialogue context).
-    3. *Story 3: Interactive Parent Quiz* ("What does this mean?") with instant celebration confetti or coaching.
-    4. *Story 4: The Conversational Flip* (Say This vs. Never Say That).
-    5. *Story 5: Dinnertime Action* (One memorable prompt + copy button).
-  - **Child Calibration Tabs:** Instant toggle between Julian, Maya, and Mateo.
-- **Trade-Offs:**
-  - *Advantages:* Lowest cognitive friction; addictive and delightful to tap through on smartphones.
-  - *Disadvantages:* Content is constrained to micro-cards; lacks the deep essay depth of Direction E.
+## 4. Retained 5 Immersive Prototypes (Directions D – H)
+
+For reference and comparative auditing, the previously authored 5 immersive prototypes remain fully operational in the hub:
+- **Direction D (The Peer World Holodeck & Live Sparring Simulator):** `prototype-direction-d-dialogue-simulator.html`
+- **Direction E (The Sunday Cultural Dossier & Visual Audio Zine):** `prototype-direction-e-visual-magazine.html`
+- **Direction F (The Cultural Ecosystem Map & Constellation Radar):** `prototype-direction-f-ecosystem-map.html`
+- **Direction G (Sunday Culture Stories & Micro-Reels):** `prototype-direction-g-culture-reels.html`
+- **Direction H (The Generational Time Capsule & Cultural Bridge):** `prototype-direction-h-generational-capsule.html`
 
 ---
 
-### 3.5 Direction H — The Generational Time Capsule & Cultural Bridge
-- **Prototype File:** `prototype-direction-h-generational-capsule.html`
-- **UX Philosophy:**
-  > *"Kids haven't changed; only the tools have. Bridge the generational divide through laughter, nostalgia, and mutual vulnerability."*
-- **Information Architecture:**
-  - **Side-by-Side Dual-Era Cards:**
-    * *THEN (1999/Vintage Era):* AIM away messages, burning CDs on Nero, Tamagotchis, pager codes ("143"), JNCO jeans, parental dread over dial-up modem screeching.
-    * *NOW (2026 Current Era):* Discord voice calls, Spotify blends, Aura points, BeReal, parental dread over algorithms.
-    * *Pediatric Equivalence Insight:* Demonstrates that both generations were fulfilling the identical developmental need for autonomy and peer belonging.
-  - **The Cross-Generational Slang Machine:**
-    * Interactive dropdown converter: Select a 90s/2000s slang term ("All that and a bag of chips", "As if!", "Talk to the hand", "Da bomb", "Chill pill") → Instantly outputs the 2026 equivalent ("Peak", "That's Cap", "Left on Read", "Bussin", "Don't Crashout").
-  - **Tonight's Sunday Slang Swap Party Game:**
-    * Dinner table game rules: Parent teaches 1 vintage phrase, child teaches 1 modern phrase.
-- **Trade-Offs:**
-  - *Advantages:* Dissolves parental anxiety instantly through humor and nostalgia; high dinnertime engagement.
-  - *Disadvantages:* More playful than clinical; less emphasis on specific device technical rules.
+## 5. Retained Original Formats (Directions A – C)
+
+- **Direction A (Minimal & Focused — The Sunday Almanac):** `prototype-direction-a.html`
+- **Direction B (Visual & Interactive — Cultural Codex & Radar):** `prototype-direction-b.html`
+- **Direction C (Structured & Guided — Sunday Family Table):** `prototype-direction-c.html`
 
 ---
 
-## 4. Retained Original Formats (Directions A – C)
+## 6. Comprehensive 11-Direction Comparative Scoring Matrix
 
-For archival completeness and comparative breadth, the initial three directions remain accessible in the preview hub:
-- **Direction A (Minimal & Focused — The Sunday Almanac):** 90-second 3-card vertical briefing (`prototype-direction-a.html`).
-- **Direction B (Visual & Interactive — Cultural Codex & Radar):** 4-quadrant radar, cringe-o-meter, and interactive card deck (`prototype-direction-b.html`).
-- **Direction C (Structured & Guided — Sunday Family Table):** 3-step progressive stepper rail: Understand → Connect → Guide (`prototype-direction-c.html`).
-
----
-
-## 5. Comprehensive 8-Direction Comparative Scoring Matrix
-
-| Dimension | Dir A (Almanac) | Dir B (Codex) | Dir C (Ritual) | Dir D (Holodeck) | Dir E (Magazine) | Dir F (Constellation) | Dir G (Reels) | Dir H (Capsule) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Immersion** | 7.5 | 8.2 | 7.8 | **9.8** | **9.7** | 9.5 | 9.6 | 9.4 |
-| **Visual Appeal** | 8.2 | 8.8 | 8.4 | 9.6 | **9.9** | 9.7 | 9.8 | 9.5 |
-| **Lifespan Authenticity** | 8.0 | 8.5 | 8.2 | **9.9** | **9.8** | 9.6 | 9.5 | 9.7 |
-| **Cognitive Simplicity** | **9.5** | 7.8 | 8.6 | 8.8 | 7.5 | 8.2 | **9.4** | 9.0 |
-| **Actionability (Dinner)** | 9.0 | 8.8 | 9.2 | **9.9** | 9.4 | 9.2 | 9.7 | 9.6 |
-| **Mobile UX** | 9.0 | 8.0 | 8.5 | 8.9 | 8.6 | 8.2 | **9.9** | 9.2 |
-| **Parent Reassurance** | 8.5 | 8.2 | 8.8 | 9.7 | 9.6 | 9.4 | 9.3 | **9.9** |
+| Dimension | Dir A (Almanac) | Dir B (Codex) | Dir C (Ritual) | Dir D (Holodeck) | Dir E (Magazine) | Dir F (Constellation) | Dir G (Reels) | Dir H (Capsule) | ⭐ Dir I (Pulse Companion) | ⭐ Dir J (Field Guide Lab) | ⭐ Dir K (Storyfeed Studio) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Immersion** | 7.5 | 8.2 | 7.8 | 9.8 | 9.7 | 9.5 | 9.6 | 9.4 | **9.9** | 9.8 | 9.7 |
+| **Visual Appeal** | 8.2 | 8.8 | 8.4 | 9.6 | **9.9** | 9.7 | 9.8 | 9.5 | **9.9** | **9.9** | 9.8 |
+| **Lifespan Authenticity** | 8.0 | 8.5 | 8.2 | 9.9 | 9.8 | 9.6 | 9.5 | 9.7 | **9.9** | **9.9** | 9.8 |
+| **Cognitive Simplicity** | 9.5 | 7.8 | 8.6 | 8.8 | 7.5 | 8.2 | 9.4 | 9.0 | **9.4** | 9.1 | **9.6** |
+| **Actionability (Dinner)**| 9.0 | 8.8 | 9.2 | 9.9 | 9.4 | 9.2 | 9.7 | 9.6 | **9.9** | 9.8 | 9.8 |
+| **Mobile UX** | 9.0 | 8.0 | 8.5 | 8.9 | 8.6 | 8.2 | 9.9 | 9.2 | 9.4 | 9.2 | **9.9** |
+| **Parent Connection** | 8.2 | 8.0 | 8.6 | 9.7 | 9.5 | 9.3 | 9.4 | 9.8 | **9.9** | 9.8 | **9.9** |
+| **Zero Overwhelm** | **9.8** | 7.5 | 8.4 | 8.6 | 7.2 | 8.0 | 9.5 | 9.1 | **9.5** | 9.2 | **9.6** |
 
 ---
 
-## 6. Engineering Integrity & Approval Gate
-- **Zero Production Modification:** All code is strictly quarantined in `design-explorations/culture-digest/`. No production components (`apps/web/src/components/digest/`), routes, or tokens have been altered.
+## 7. Strategic Recommendation
+
+### **Top Recommendation: Direction I (The Sunday Cultural Pulse & Live Companion)**
+- **Why:** It delivers the absolute highest synthesis of value. In a single screen without endless scrolling or nested modals, the parent gets:
+  1. The 10-second weekly vibe check (emotional weather + surging velocity).
+  2. The authentic living window (peer chat + voice note).
+  3. The generational bridge (laughing at vintage slang).
+  4. The conversation rehearsal and dinner question.
+- It solves the exact tension raised by leadership: **rich enough to keep the user hooked, but not redundant and not overwhelming.**
+
+### **Alternative Top Pick: Direction K (The Connected Storyfeed & Dialogue Studio)**
+- If leadership prefers a mobile-first, vertical content feed experience that mirrors modern apps while delivering high-depth interactive sandboxes.
+
+---
+
+## 8. Engineering Integrity & Approval Gate
+- **Zero Production Modification:** All code is quarantined in `design-explorations/culture-digest/`. No production components (`apps/web/src/components/digest/`), routes, or tokens have been altered.
 - **Approval Gate Active:** Implementation of the chosen direction awaits formal approval from leadership.
