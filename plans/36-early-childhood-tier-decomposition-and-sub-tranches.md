@@ -169,7 +169,7 @@ This revised plan provides 100% comprehensive, end-to-end coverage across all pa
      6. `pre-teens-10-12`: Tier 3 (`Ages 10–12`)
      7. `early-adolescence-13-15`: Tier 4 (`Ages 13–15`)
      8. `late-adolescence-16-18`: Tier 5 (`Ages 16–18`)
-   - Style the selector buttons as an 8-segment wrapped pill rail conforming to Editorial Pediatric Almanac guidelines (`MASTER.md`).
+   - Style the selector buttons as an 8-segment wrapped pill rail conforming to Editorial Pediatric Almanac guidelines (`docs/design-system/MASTER.md`).
 2. Update unit test `apps/web/src/components/home/LifespanStageSelector.test.tsx` to assert all 8 stages and 40 category courses.
 
 ### Task 7: Child Onboarding Flow, Modal & Account Settings Tier Hardening (`apps/web`) [Assignee: Frontend Agent]

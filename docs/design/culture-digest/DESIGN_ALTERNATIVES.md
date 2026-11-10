@@ -2,7 +2,7 @@
 **Author:** Frontend Autonomous Systems Engineer  
 **Task ID:** SOU-80 (Phase 2 — Page-Level UX Exploration & Design Alternatives)  
 **Target Route:** `apps/web/src/app/(dashboard)/digest/`  
-**Design System Standard:** Taste 2: Editorial Pediatric Almanac (`design-system/alongside/MASTER.md`)  
+**Design System Standard:** Taste 2: Editorial Pediatric Almanac (`docs/design-system/MASTER.md`)  
 **Status:** Complete Architectural Specification for 14 Visual Prototypes (3 New Master Designs + 3 Hybrids + 5 Immersive + 3 Original)  
 
 ---

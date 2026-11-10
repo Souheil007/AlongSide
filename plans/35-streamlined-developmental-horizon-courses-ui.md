@@ -21,7 +21,7 @@ By replacing the legacy 4-card layout (neurodevelopmental leap, priority chapter
 ## 2. Inputs & Architectural References
 
 - **Parent Paperclip Task:** SOU-77 (`.paperclip-task.md`)
-- **Canonical Design System:** [`design-system/alongside/MASTER.md`](../design-system/alongside/MASTER.md) (Taste 2: Editorial Pediatric Almanac)
+- **Canonical Design System:** [`docs/design-system/MASTER.md`](../docs/design-system/MASTER.md) (Taste 2: Editorial Pediatric Almanac)
 - **Design Tokens & Typography:** Newsreader (`font-serif`), Inter (`font-sans`), JetBrains Mono (`font-mono`), Spruce Green (`#143D2B`), Spruce Light (`#EAF3EE`), Hairline Borders (`#E3E3DC`).
 - **Canonical Academy Categories & Tiers:**
   - Categories: `BEHAVIOR_AND_EMOTIONS`, `HEALTH_AND_WELLNESS`, `NUTRITION_AND_FEEDING`, `DEVELOPMENT_AND_PLAY`, `DIGITAL_AND_DEVICES` ([`packages/shared/src/constants/index.ts`](../packages/shared/src/constants/index.ts))

@@ -21,7 +21,12 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
 - [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
 
-### 3. Engineering Standards (`docs/engineering-standards/`)
+### 3. Design System & Design Explorations (`docs/design-system/` & `docs/design/`)
+- [**`MASTER.md`**](design-system/MASTER.md) — Canonical AlongSide Master Design System (Taste 2: Editorial Pediatric Almanac, 3-layer tokens, typography scales, component rules).
+- [**`culture-digest/`**](design/culture-digest/) — Sunday Youth Culture Digest visual designs, interactive HTML prototypes (Directions A–N), and comparison matrices.
+- [**`docs/design/`**](design/) — Visual architecture benchmarks (Subframe, Vercel, Wise, Linear, Stripe).
+
+### 4. Engineering Standards (`docs/engineering-standards/`)
 Canonical human and agent engineering standards:
 - [**`codebase-design.md`**](engineering-standards/codebase-design.md) — Deep module architecture, seam catalog (7 canonical seams), test fake adapters, and leverage principles.
 - [**`frontend-skill-matrix.md`**](engineering-standards/frontend-skill-matrix.md) — Frontend autonomous skill dispatch matrix, invocation rules, and quality gates.
@@ -32,7 +37,7 @@ Canonical human and agent engineering standards:
 - [**`naming-conventions.md`**](engineering-standards/naming-conventions.md) — File, variable, database, and API route naming standards.
 - [**`documentation-standards.md`**](engineering-standards/documentation-standards.md) — Canonical rules for code comments, PR descriptions, and markdown documentation.
 
-### 4. Active AI Agent Rules (`.agents/rules/`)
+### 5. Active AI Agent Rules (`.agents/rules/`)
 Machine-enforceable rules automatically discovered and loaded into autonomous agent system prompts:
 - [**`01-plan-standards.md`**](../.agents/rules/01-plan-standards.md) — Plan syntax & mandatory structure.
 - [**`02-git-commits.md`**](../.agents/rules/02-git-commits.md) — Conventional commit rules & banned anti-patterns.
@@ -42,7 +47,7 @@ Machine-enforceable rules automatically discovered and loaded into autonomous ag
 - [**`06-codebase-design.md`**](../.agents/rules/06-codebase-design.md) — Deep modules, seam catalog, dependency acceptance, and the Deletion Test.
 - [**`07-backend-skill-matrix.md`**](../.agents/rules/07-backend-skill-matrix.md) — Backend autonomous skill invocation matrix, Fastify plugin encapsulation, schema serialization, Node.js v22 runtime patterns, and `.inject()` testing.
 
-### 5. Whole-Child Research & Knowledge Base (`docs/research/`)
+### 6. Whole-Child Research & Knowledge Base (`docs/research/`)
 Authored by the Research Engineer to de-risk engineering and ground Alongside in whole-child developmental psychology, neurobiology, and authentic parent sentiment:
 - [**`developmental-milestones-0-18.md`**](research/developmental-milestones-0-18.md) — Comprehensive Lifespan Developmental Milestones (Ages 0–18), CDC 2022 revised 75th percentile benchmarks, month-by-month and year-by-year progression across gross/fine motor, speech bursts, intelligibility percentages, and red-flag screening triggers (ASQ-3 / M-CHAT-R/F).
 - [**`pediatric-nutrition-feeding-science.md`**](research/pediatric-nutrition-feeding-science.md) — Pediatric Nutrition & Feeding Science: infant solids introduction, BLW vs purees, early allergen introduction (LEAP / EAT trials), choking prevention vs gagging reflex, strict infant prohibitions (<1y), and toddler picky eating solutions via Ellyn Satter's Division of Responsibility.

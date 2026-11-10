@@ -35,7 +35,7 @@ Upgrade the **Parent Intelligence Academy** from its current prototype state (21
   - [`docs/research/age-by-age-neurodevelopment-matrix.md`](../docs/research/age-by-age-neurodevelopment-matrix.md) (Neurobiology from birth to 18)
   - [`docs/research/modern-parenting-faq-vault-100.md`](../docs/research/modern-parenting-faq-vault-100.md) (100+ clinical Q&A scripts)
 - **Team Governance:** [`AGENTS.md`](../AGENTS.md) and [`docs/engineering-standards/plan-standards.md`](../docs/engineering-standards/plan-standards.md)
-- **Design System:** [`design-system/alongside/MASTER.md`](../design-system/alongside/MASTER.md) (Taste 2: Editorial Pediatric Almanac)
+- **Design System:** [`docs/design-system/MASTER.md`](../docs/design-system/MASTER.md) (Taste 2: Editorial Pediatric Almanac)
 
 ---
 

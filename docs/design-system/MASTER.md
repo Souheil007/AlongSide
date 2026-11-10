@@ -1,6 +1,6 @@
 # AlongSide Design System — MASTER.md (Approved Canonical Source of Truth)
 
-> **LOGIC:** When building or modifying a specific page or route, first check `design-system/alongside/pages/[page-name].md`.  
+> **LOGIC:** When building or modifying a specific page or route, first check `docs/design-system/pages/[page-name].md`.  
 > If that file exists, its page-specific rules **override** this Master file.  
 > If not, strictly adhere to the global rules below.
 
