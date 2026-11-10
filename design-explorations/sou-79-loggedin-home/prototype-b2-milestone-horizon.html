@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Direction B.2: The Milestone Horizon (Visual Domain Radar &amp; Academy Progression)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            canvasSubtle: '#F4F4F0',
+            elevated: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            hairlineSoft: '#EDEDEA',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            amber: {
+              DEFAULT: '#B45309',
+              soft: '#FEF3C7'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hero-radial {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.06) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-forest-soft selection:text-forest">
+
+  <!-- TOP PROTOTYPE NAVIGATION BAR -->
+  <aside aria-label="Prototype Navigation" class="bg-forest text-white text-xs py-2 px-4 border-b border-forest-hover flex flex-wrap items-center justify-between gap-3 sticky top-0 z-50">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-mono font-semibold tracking-wider uppercase text-[11px]">Direction B.2: The Milestone Horizon</span>
+      <span class="hidden sm:inline text-white/70">• 5-Domain Visual Radar &amp; Academy Progression</span>
+    </div>
+    <div class="flex items-center gap-2 text-[11px]">
+      <span class="text-white/70">Switch Design:</span>
+      <a href="prototype-b1-learning-sanctuary.html" class="hover:text-emerald-300 transition text-white/80">B.1 Sanctuary</a>
+      <span class="text-white/40">|</span>
+      <span class="font-bold underline text-white px-1.5 py-0.5 rounded bg-white/10">B.2 Horizon</span>
+      <span class="text-white/40">|</span>
+      <a href="prototype-b3-operating-compass.html" class="hover:text-emerald-300 transition text-white/80">B.3 Compass</a>
+      <span class="text-white/40">|</span>
+      <a href="index.html" class="hover:text-emerald-300 transition text-white/80 font-mono">← Master Hub</a>
+    </div>
+  </aside>
+
+  <!-- APP HEADER WITH CHILD SWITCHER -->
+  <header class="bg-white border-b border-hairline sticky top-8 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center font-serif text-lg font-bold shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif text-lg font-bold tracking-tight text-ink leading-tight">AlongSide</span>
+            <span class="font-mono text-[9px] uppercase tracking-wider text-mute font-medium">Milestone Horizon Cockpit</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-1 text-xs">
+          <a href="#" class="px-3 py-1.5 rounded-md font-semibold text-forest bg-forest-soft">Horizon Cockpit</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Parent Academy</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Culture Digest</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Family Pacts</a>
+        </nav>
+      </div>
+
+      <!-- INTERACTIVE CHILD SWITCHER -->
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline font-mono text-[10px] text-mute uppercase tracking-wider">Active Child:</span>
+        <div class="flex items-center p-1 rounded-xl bg-canvasSubtle border border-hairline text-xs font-medium">
+          <button id="btnChildMaya" onclick="switchChild('maya')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition">
+            <span class="w-5 h-5 rounded-md bg-forest text-white font-mono text-[10px] font-bold flex items-center justify-center">M</span>
+            <span>Maya (11y)</span>
+          </button>
+          <button id="btnChildLeo" onclick="switchChild('leo')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition">
+            <span class="w-5 h-5 rounded-md bg-amber text-white font-mono text-[10px] font-bold flex items-center justify-center">L</span>
+            <span>Leo (3y)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN COCKPIT -->
+  <main class="flex-1 hero-radial pb-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 space-y-6">
+
+      <!-- WELCOMING HEADER (FEEL AT HOME) -->
+      <section class="bg-white/90 backdrop-blur rounded-2xl border border-hairline p-5 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs text-forest font-semibold uppercase tracking-wider block mb-1">Empathetic Family Advisory</span>
+          <h1 id="welcomeHeading" class="font-serif text-2xl font-bold text-ink">
+            Welcome home, Sarah. Here is where Maya is growing today.
+          </h1>
+          <p id="welcomeSubtext" class="text-xs sm:text-sm text-body mt-1 max-w-2xl leading-relaxed">
+            Parenting is an everyday practice of calm presence. Select a domain below to see tailored lessons and practical tools.
+          </p>
+        </div>
+
+        <div class="shrink-0 flex items-center gap-3 bg-forest-soft/70 px-4 py-3 rounded-xl border border-forest/20">
+          <div class="w-9 h-9 rounded-full bg-forest text-white flex items-center justify-center font-bold text-sm">
+            ✓
+          </div>
+          <div>
+            <span class="font-serif text-base font-bold text-ink block">3 of 5 Chapters Mastered</span>
+            <span class="font-mono text-[11px] text-forest font-semibold">Course Completion: 60%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. INTERACTIVE 5-DOMAIN PARENTING HORIZON (CLICKABLE TABS) -->
+      <section aria-label="5 Parenting Domains" class="bg-white rounded-2xl border border-hairline p-4 sm:p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between border-b border-hairline pb-2.5">
+          <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider flex items-center gap-1.5">
+            <span>🧭</span>
+            <span>Interactive 5-Domain Horizon Radar</span>
+          </span>
+          <span class="text-[11px] font-mono text-mute">Click a domain to focus lessons</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 pt-1">
+          <!-- Domain 1: Emotions (Active Default) -->
+          <button id="domainBtn1" onclick="selectDomain(1)" class="p-3 rounded-xl border-2 border-forest bg-forest-soft/70 text-left transition shadow-xs">
+            <span class="text-base block mb-1">❤️</span>
+            <span class="font-serif text-sm font-bold text-ink block">Emotions</span>
+            <span class="font-mono text-[10px] text-forest font-bold">Active Focus</span>
+          </button>
+
+          <!-- Domain 2: Sleep & Bedtime -->
+          <button id="domainBtn2" onclick="selectDomain(2)" class="p-3 rounded-xl border border-hairline bg-linen hover:border-forest/40 text-left transition">
+            <span class="text-base block mb-1">🌙</span>
+            <span class="font-serif text-sm font-bold text-ink block">Sleep &amp; Rest</span>
+            <span class="font-mono text-[10px] text-mute">Routine On Track</span>
+          </button>
+
+          <!-- Domain 3: Daily Connection -->
+          <button id="domainBtn3" onclick="selectDomain(3)" class="p-3 rounded-xl border border-hairline bg-linen hover:border-forest/40 text-left transition">
+            <span class="text-base block mb-1">🗣️</span>
+            <span class="font-serif text-sm font-bold text-ink block">Connection</span>
+            <span class="font-mono text-[10px] text-mute">Dinner Talk Today</span>
+          </button>
+
+          <!-- Domain 4: Screens & Tech (Calibrated) -->
+          <button id="domainBtn4" onclick="selectDomain(4)" class="p-3 rounded-xl border border-hairline bg-linen hover:border-forest/40 text-left transition">
+            <span class="text-base block mb-1">📱</span>
+            <span id="domainScreenLabel" class="font-serif text-sm font-bold text-ink block">Phone Readiness</span>
+            <span id="domainScreenBadge" class="font-mono text-[10px] text-amber font-bold">Score 78%</span>
+          </button>
+
+          <!-- Domain 5: Play & Curiosity -->
+          <button id="domainBtn5" onclick="selectDomain(5)" class="p-3 rounded-xl border border-hairline bg-linen hover:border-forest/40 text-left transition">
+            <span class="text-base block mb-1">🧩</span>
+            <span class="font-serif text-sm font-bold text-ink block">Play &amp; Curiosity</span>
+            <span class="font-mono text-[10px] text-mute">Weekly Milestone</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. HERO CENTERPIECE: ACADEMY COURSE PROGRESS HUB (CIRCULAR RADIAL PROGRESS) -->
+      <section aria-label="Active Course Mastery Hub" class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          
+          <!-- Left: Big Radial Gauge & Course Overview -->
+          <div class="flex items-center gap-5">
+            <div class="relative w-32 h-32 shrink-0 flex items-center justify-center">
+              <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="#EDEDEA" stroke-width="8" fill="none"/>
+                <circle id="courseProgressRing" cx="50" cy="50" r="40" stroke="#143D2B" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="100" stroke-linecap="round" fill="none" class="transition-all duration-700"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="coursePercentText" class="font-serif text-2xl font-bold text-ink leading-none">60%</span>
+                <span class="font-mono text-[9px] uppercase tracking-wider text-mute mt-0.5">Mastered</span>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <span class="font-mono text-[10px] font-bold text-forest uppercase tracking-wider">Active Academy Chapter</span>
+              <h2 id="courseHeading" class="font-serif text-xl font-bold text-ink">
+                Navigating Tween Friendships &amp; Digital Independence
+              </h2>
+              <p id="courseSubheading" class="text-xs text-body leading-relaxed max-w-lg">
+                Chapter 3: Staying calm and connected when middle school group chat friction causes explosive tears at home.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Direct 1-Click Action -->
+          <div class="shrink-0 flex flex-col items-end gap-2 w-full md:w-auto">
+            <a href="#" class="w-full md:w-auto px-5 py-3 rounded-xl bg-forest text-white hover:bg-forest-hover transition text-xs font-bold flex items-center justify-center gap-2 shadow-xs">
+              <span>Continue Chapter 3 (5 min)</span>
+              <span>→</span>
+            </a>
+            <span class="font-mono text-[11px] text-mute">Estimated time: 5 minutes</span>
+          </div>
+
+        </div>
+
+        <!-- 3-Bullet Practical Key Takeaways Drawer -->
+        <div class="p-4 bg-linen rounded-xl border border-hairline space-y-2">
+          <span class="font-mono text-xs font-bold text-ink uppercase tracking-wider block">Today's Key Practical Takeaways:</span>
+          <div id="takeawaysList" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-body">
+            <div class="p-3 bg-white rounded-lg border border-hairline flex items-start gap-2">
+              <span class="font-bold text-forest">1.</span>
+              <span>Listen for 5 minutes without offering a single logical fix.</span>
+            </div>
+            <div class="p-3 bg-white rounded-lg border border-hairline flex items-start gap-2">
+              <span class="font-bold text-forest">2.</span>
+              <span>Validate the hurt: "That hurts so much when friends leave you out."</span>
+            </div>
+            <div class="p-3 bg-white rounded-lg border border-hairline flex items-start gap-2">
+              <span class="font-bold text-forest">3.</span>
+              <span>Protect sleep: The 8:30 PM device curfew holds with love.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SPLIT INTERACTIVE STUDIO: SPARRING SIMULATOR (LEFT 7) + STAGE TELEMETRY (RIGHT 5) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- LEFT COLUMN (7 COLS): INTERACTIVE CHILD SPARRING SIMULATOR -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-5">
+            <div class="flex items-center justify-between border-b border-hairline pb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center text-sm font-bold">
+                  🎙️
+                </div>
+                <div>
+                  <h3 class="font-serif text-base font-bold text-ink">Interactive Parenting Sparring Lab</h3>
+                  <p id="sparringContext" class="text-xs text-mute font-mono">Calibrated to Maya (Age 11)</p>
+                </div>
+              </div>
+              <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">Safe Sandbox</span>
+            </div>
+
+            <!-- Simulated Child Statement -->
+            <div class="p-4 rounded-xl bg-canvasSubtle border border-hairline space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-amber">Simulated Child Reaction:</span>
+                <span class="font-mono text-[11px] text-mute">Emotion: Hurt &amp; Angry</span>
+              </div>
+              <p id="sparringTrigger" class="font-serif text-lg font-bold text-ink">
+                &ldquo;You don't understand anything! If I don't reply right now, everyone will talk about me tomorrow!&rdquo;
+              </p>
+            </div>
+
+            <!-- Interactive Response Choices (Test your skill) -->
+            <div class="space-y-2.5">
+              <span class="font-mono text-xs font-bold text-ink uppercase tracking-wider block">Choose How You Respond:</span>
+
+              <button onclick="testResponse(1)" class="w-full text-left p-3.5 rounded-xl border border-hairline hover:border-amber/50 bg-white hover:bg-amber-soft/20 transition flex items-start gap-3">
+                <span class="font-mono text-xs font-bold text-mute bg-canvasSubtle px-2 py-1 rounded shrink-0">Choice A</span>
+                <div>
+                  <span class="text-xs text-ink font-semibold block">&ldquo;That's ridiculous. True friends don't talk behind your back, now put the phone away.&rdquo;</span>
+                  <span class="text-[11px] text-mute">Dismissive / Logical Fix</span>
+                </div>
+              </button>
+
+              <button onclick="testResponse(2)" class="w-full text-left p-3.5 rounded-xl border-2 border-forest bg-forest-soft/60 transition flex items-start gap-3 shadow-xs">
+                <span class="font-mono text-xs font-bold text-forest bg-white px-2 py-1 rounded shrink-0">Choice B</span>
+                <div>
+                  <span class="text-xs text-ink font-bold block">&ldquo;I hear how terrified you feel about being left out. Come sit with me. Let's breathe through this fear together.&rdquo;</span>
+                  <span class="text-[11px] text-forest font-semibold">Empathetic Co-Regulation (Recommended)</span>
+                </div>
+              </button>
+            </div>
+
+            <!-- Feedback Result Box -->
+            <div id="sparringFeedback" class="p-3.5 rounded-xl bg-linen border border-hairline text-xs space-y-1">
+              <span class="font-bold text-forest">Why Choice B De-escalates:</span>
+              <p class="text-body leading-relaxed">
+                When a child is flooded with social panic, logic feels like an attack. Co-regulating with physical presence lowers cortisol and lets rational thinking return.
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN (5 COLS): STAGE-ADAPTIVE STATUS TELEMETRY -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- STAGE TELEMETRY CONTAINER (POPULATED BY JS) -->
+          <div id="stageTelemetryContainer">
+            <!-- Defaults to Maya -->
+          </div>
+
+          <!-- VALUE REMINDER CARD -->
+          <section class="bg-white rounded-2xl border border-hairline p-5 shadow-sm space-y-2">
+            <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider flex items-center gap-1.5">
+              <span>🏡</span>
+              <span>Why You Are Here</span>
+            </span>
+            <p class="text-xs text-body leading-relaxed">
+              Alongside isn't about tracking or policing your children. It is your daily sanctuary to build empathetic connection, establish peaceful agreements, and help your children grow into self-regulated adults.
+            </p>
+          </section>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- INTERACTION SCRIPTS FOR DIRECTION B.2 -->
+  <script>
+    let currentChild = 'maya';
+
+    const mayaConfig = {
+      welcomeHeading: "Welcome home, Sarah. Here is where Maya is growing today.",
+      welcomeSubtext: "Parenting is an everyday practice of calm presence. Select a domain above to see tailored lessons and practical tools.",
+      domainScreenLabel: "Phone Readiness",
+      domainScreenBadge: "Score 78%",
+      courseHeading: "Navigating Tween Friendships & Digital Independence",
+      courseSubheading: "Chapter 3: Staying calm and connected when middle school group chat friction causes explosive tears at home.",
+      coursePercent: "60%",
+      ringOffset: "100",
+      sparringContext: "Calibrated to Maya (Age 11 • 6th Grade)",
+      sparringTrigger: "“You don't understand anything! If I don't reply right now, everyone will talk about me tomorrow!”",
+      takeaways: [
+        { num: "1", text: "Listen for 5 minutes without offering a single logical fix." },
+        { num: "2", text: "Validate the hurt: “That hurts so much when friends leave you out.”" },
+        { num: "3", text: "Protect sleep: The 8:30 PM device curfew holds with love." }
+      ],
+      telemetryHtml: `
+        <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-md bg-forest-soft text-forest flex items-center justify-center font-bold text-xs">📱</span>
+              <div>
+                <h3 class="font-serif text-base font-bold text-ink">First-Phone Readiness Radar</h3>
+                <span class="text-[10px] font-mono text-forest">Road 1: Pre-Device Objective Checklist</span>
+              </div>
+            </div>
+            <span class="font-mono text-xs text-forest font-bold bg-forest-soft px-2 py-0.5 rounded">78 / 100</span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Sleep Independence</span>
+              <span class="font-mono font-bold text-forest">90%</span>
+            </div>
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Homework Without Prompts</span>
+              <span class="font-mono font-bold text-forest">85%</span>
+            </div>
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Impulse Pause Under Stress</span>
+              <span class="font-mono font-bold text-amber">65%</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-body">Willingness to Ask for Help</span>
+              <span class="font-mono font-bold text-forest">80%</span>
+            </div>
+          </div>
+
+          <div class="p-3 bg-linen rounded-xl border border-hairline flex items-center justify-between text-xs">
+            <span class="text-body">Next Step: Bilateral Pact Signing</span>
+            <a href="#" class="font-mono font-bold text-forest hover:underline">View Pact →</a>
+          </div>
+        </section>
+
+        <!-- Bedtime Curfew Dock -->
+        <section class="bg-white rounded-2xl border border-hairline p-4 shadow-sm flex items-center justify-between gap-3 mt-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center font-bold text-xs">
+              🌙
+            </div>
+            <div>
+              <span class="font-serif text-sm font-bold text-ink block">8:30 PM Bedtime Dock</span>
+              <span class="text-[11px] text-mute font-mono">Hardware Enforced Curfew</span>
+            </div>
+          </div>
+          <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">Active</span>
+        </section>
+      `
+    };
+
+    const leoConfig = {
+      welcomeHeading: "Welcome home, Sarah. Here is where Leo is growing today.",
+      welcomeSubtext: "Toddlerhood is a season of big emotions and sensory exploration. Connect before directing, and breathe together.",
+      domainScreenLabel: "Screen Boundaries",
+      domainScreenBadge: "20m of 30m Used",
+      courseHeading: "Taming Big Feelings: Tantrums, Sharing & Screen Limits",
+      courseSubheading: "Chapter 2: How to co-regulate when turning off the TV causes explosive floor meltdowns.",
+      coursePercent: "40%",
+      ringOffset: "150",
+      sparringContext: "Calibrated to Leo (Age 3 • Toddler Explorer)",
+      sparringTrigger: "“NO! I don't want to stop! I want to watch Bluey more and more!”",
+      takeaways: [
+        { num: "1", text: "Sit on the floor to match eye level before speaking." },
+        { num: "2", text: "Say: “It's hard to stop. I will hold you while you are mad.”" },
+        { num: "3", text: "Transition bridge: Walk to the window together to find birds." }
+      ],
+      telemetryHtml: `
+        <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-md bg-amber-soft text-amber flex items-center justify-center font-bold text-xs">🧸</span>
+              <div>
+                <h3 class="font-serif text-base font-bold text-ink">Toddler Screen Health</h3>
+                <span class="text-[10px] font-mono text-mute">Age 3 Cap: 30 minutes daily</span>
+              </div>
+            </div>
+            <span class="font-mono text-xs text-forest font-bold bg-forest-soft px-2 py-0.5 rounded">20 / 30m</span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="text-body">Daily Allotment Used</span>
+              <span class="font-mono font-bold text-ink">66%</span>
+            </div>
+            <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+              <div class="h-full bg-forest rounded-full w-[66%]"></div>
+            </div>
+            <p class="text-[11px] text-mute pt-1">Zero screens within 1 hour of bedtime to support natural melatonin.</p>
+          </div>
+
+          <!-- Sensory Play Milestones -->
+          <div class="p-3 bg-linen rounded-xl border border-hairline space-y-1 text-xs">
+            <span class="font-bold text-forest block">Today's Sensory Milestone:</span>
+            <p class="text-body">Finger painting and water play completed (25 mins). Excellent tactile engagement!</p>
+          </div>
+        </section>
+
+        <!-- Meltdown First-Aid Dock -->
+        <section class="bg-white rounded-2xl border border-hairline p-4 shadow-sm flex items-center justify-between gap-3 mt-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-soft text-amber flex items-center justify-center font-bold text-xs">
+              🌬️
+            </div>
+            <div>
+              <span class="font-serif text-sm font-bold text-ink block">30-Second Tantrum Reset</span>
+              <span class="text-[11px] text-mute font-mono">Breathe, get low, connect</span>
+            </div>
+          </div>
+          <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">Ready</span>
+        </section>
+      `
+    };
+
+    function switchChild(child) {
+      currentChild = child;
+      const data = child === 'maya' ? mayaConfig : leoConfig;
+
+      // Update button styles
+      document.getElementById('btnChildMaya').className = child === 'maya' 
+        ? "flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition"
+        : "flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition";
+      document.getElementById('btnChildLeo').className = child === 'leo'
+        ? "flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition"
+        : "flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition";
+
+      // Update DOM
+      document.getElementById('welcomeHeading').textContent = data.welcomeHeading;
+      document.getElementById('welcomeSubtext').textContent = data.welcomeSubtext;
+      document.getElementById('domainScreenLabel').textContent = data.domainScreenLabel;
+      document.getElementById('domainScreenBadge').textContent = data.domainScreenBadge;
+      document.getElementById('courseHeading').textContent = data.courseHeading;
+      document.getElementById('courseSubheading').textContent = data.courseSubheading;
+      document.getElementById('coursePercentText').textContent = data.coursePercent;
+      document.getElementById('courseProgressRing').style.strokeDashoffset = data.ringOffset;
+      document.getElementById('sparringContext').textContent = data.sparringContext;
+      document.getElementById('sparringTrigger').textContent = data.sparringTrigger;
+      document.getElementById('stageTelemetryContainer').innerHTML = data.telemetryHtml;
+
+      // Update Takeaways
+      const takeawaysEl = document.getElementById('takeawaysList');
+      takeawaysEl.innerHTML = data.takeaways.map(t => `
+        <div class="p-3 bg-white rounded-lg border border-hairline flex items-start gap-2">
+          <span class="font-bold text-forest">${t.num}.</span>
+          <span>${t.text}</span>
+        </div>
+      `).join('');
+    }
+
+    function selectDomain(index) {
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`domainBtn${i}`);
+        if (i === index) {
+          btn.className = "p-3 rounded-xl border-2 border-forest bg-forest-soft/70 text-left transition shadow-xs";
+        } else {
+          btn.className = "p-3 rounded-xl border border-hairline bg-linen hover:border-forest/40 text-left transition";
+        }
+      }
+    }
+
+    function testResponse(choice) {
+      const fb = document.getElementById('sparringFeedback');
+      if (choice === 2) {
+        fb.innerHTML = `
+          <span class="font-bold text-forest">✓ Excellent Empathetic Choice:</span>
+          <p class="text-body leading-relaxed">
+            By validating the fear of social exclusion instead of arguing with it, you activate their parasympathetic nervous system and maintain trust.
+          </p>
+        `;
+      } else {
+        fb.innerHTML = `
+          <span class="font-bold text-amber">Notice the Friction:</span>
+          <p class="text-body leading-relaxed">
+            Calling their social fear "ridiculous" escalates adrenaline and causes a defensive lockdown. Try validating the pain first before boundary enforcement.
+          </p>
+        `;
+      }
+    }
+
+    // Initialize with Maya
+    switchChild('maya');
+  </script>
+</body>
+</html>

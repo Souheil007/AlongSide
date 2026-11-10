@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Phase 2 Iteration Hub: Logged-In Home UX Exploration (Direction B Variations)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            canvasSubtle: '#F4F4F0',
+            elevated: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            hairlineSoft: '#EDEDEA',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            amber: {
+              DEFAULT: '#B45309',
+              soft: '#FEF3C7'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #111413;
+      color: #FBFBF9;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .viewport-frame {
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP HUB CONTROL BAR -->
+  <header class="bg-[#181C1B] border-b border-white/10 px-4 py-3 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Phase Tag -->
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center font-serif text-lg font-bold shadow-xs">
+          A
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-serif text-base font-bold text-white tracking-tight">AlongSide</span>
+            <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Phase 2 Iteration</span>
+          </div>
+          <p class="font-mono text-xs text-white/60">Direction B Evolutions: Active Courses, Warm Advisory &amp; Stage Adaptation</p>
+        </div>
+      </div>
+
+      <!-- DESIGN ALTERNATIVE SELECTOR (B.1, B.2, B.3) -->
+      <div class="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10">
+        <button id="btnB1" onclick="switchPrototype('prototype-b1-learning-sanctuary.html', 'B1')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>B.1: Learning Sanctuary (Recommended)</span>
+        </button>
+        <button id="btnB2" onclick="switchPrototype('prototype-b2-milestone-horizon.html', 'B2')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white transition">
+          B.2: Milestone Horizon
+        </button>
+        <button id="btnB3" onclick="switchPrototype('prototype-b3-operating-compass.html', 'B3')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white transition">
+          B.3: Operating Compass
+        </button>
+      </div>
+
+      <!-- VIEWPORT DEVICE CONTROLS -->
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-[11px] text-white/50 hidden sm:inline">Viewport:</span>
+        <div class="flex items-center bg-black/40 p-1 rounded-lg border border-white/10 text-xs font-mono">
+          <button id="btnDesktop" onclick="setViewport('100%')" class="px-2.5 py-1 rounded bg-white/20 text-white font-bold transition">Desktop (1440px)</button>
+          <button id="btnTablet" onclick="setViewport('768px')" class="px-2.5 py-1 rounded text-white/60 hover:text-white transition">Tablet (768px)</button>
+          <button id="btnMobile" onclick="setViewport('390px')" class="px-2.5 py-1 rounded text-white/60 hover:text-white transition">Mobile (390px)</button>
+        </div>
+        <a id="btnExternal" href="prototype-b1-learning-sanctuary.html" target="_blank" class="p-1.5 rounded-lg bg-white/10 text-white/80 hover:text-white border border-white/10 transition" title="Open in new window">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- USER FEEDBACK BANNER (SHOWING HOW REQUIREMENTS WERE MET) -->
+  <aside class="bg-[#1D2421] border-b border-forest/30 px-4 py-2.5 text-xs text-white/90">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-bold text-emerald-400 bg-forest px-2 py-0.5 rounded text-[10px] uppercase">User Mandates Applied:</span>
+        <span class="text-white/80">1. Purged clinical jargon → Warm advisory &amp; coping</span>
+        <span class="text-white/40">•</span>
+        <span class="text-white/80">2. Phone readiness hidden for toddlers (Leo 3y)</span>
+        <span class="text-white/40">•</span>
+        <span class="text-white/80">3. Active courses &amp; progress track is #1 Hero</span>
+        <span class="text-white/40">•</span>
+        <span class="text-white/80">4. Feel at home &amp; clear purpose</span>
+      </div>
+      <div class="flex items-center gap-3 font-mono text-[11px] text-white/60">
+        <a href="DESIGN_ALTERNATIVES.md" class="hover:text-emerald-300 underline">Read Alternatives Spec</a>
+        <span>|</span>
+        <a href="DESIGN_COMPARISON.md" class="hover:text-emerald-300 underline">Read Comparison Matrix</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- LIVE PROTOTYPE EMBED PREVIEW -->
+  <main class="flex-1 flex flex-col items-center justify-start p-4 bg-[#0A0D0C] overflow-hidden">
+    <div id="viewportContainer" class="viewport-frame w-full h-[calc(100vh-140px)] rounded-xl border border-white/15 overflow-hidden shadow-2xl bg-[#FBFBF9]">
+      <iframe id="prototypeFrame" src="prototype-b1-learning-sanctuary.html" class="w-full h-full border-0" title="AlongSide UX Exploration Preview"></iframe>
+    </div>
+  </main>
+
+  <!-- FOOTER QUICK REFERENCE & ORIGINAL PROTOTYPES LINK -->
+  <footer class="bg-[#181C1B] border-t border-white/10 px-4 py-2.5 text-xs text-white/60">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 font-mono text-[11px]">
+      <div>
+        <span>Design System: </span>
+        <strong class="text-emerald-400">Taste 2: Editorial Pediatric Almanac</strong>
+        <span class="text-white/40"> (Newsreader + Inter + JetBrains Mono)</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-white/40">Original Phase 2 Protypes:</span>
+        <a href="prototype-a-minimal-focused.html" class="hover:text-white underline">Dir A (Minimal)</a>
+        <a href="prototype-b-visual-interactive.html" class="hover:text-white underline">Dir B (Original)</a>
+        <a href="prototype-c-structured-guided.html" class="hover:text-white underline">Dir C (Guided)</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CONTROLLER SCRIPT -->
+  <script>
+    function switchPrototype(file, code) {
+      document.getElementById('prototypeFrame').src = file;
+      document.getElementById('btnExternal').href = file;
+
+      // Update button classes
+      const b1 = document.getElementById('btnB1');
+      const b2 = document.getElementById('btnB2');
+      const b3 = document.getElementById('btnB3');
+
+      [b1, b2, b3].forEach(b => {
+        b.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white transition";
+      });
+
+      if (code === 'B1') {
+        b1.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      } else if (code === 'B2') {
+        b2.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      } else {
+        b3.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      }
+    }
+
+    function setViewport(width) {
+      const container = document.getElementById('viewportContainer');
+      container.style.width = width;
+
+      // Update buttons
+      const btnD = document.getElementById('btnDesktop');
+      const btnT = document.getElementById('btnTablet');
+      const btnM = document.getElementById('btnMobile');
+
+      [btnD, btnT, btnM].forEach(b => {
+        b.className = "px-2.5 py-1 rounded text-white/60 hover:text-white transition";
+      });
+
+      if (width === '100%') btnD.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      else if (width === '768px') btnT.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      else btnM.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+    }
+  </script>
+</body>
+</html>
