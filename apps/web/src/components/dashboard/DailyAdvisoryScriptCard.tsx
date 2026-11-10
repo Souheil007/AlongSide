@@ -4,20 +4,18 @@ import * as React from 'react';
 import Link from 'next/link';
 import {
   MessageSquare,
-  XCircle,
-  CheckCircle2,
   Mic,
   Copy,
   Check,
-  Sparkles,
-  ArrowRight,
   Brain,
+  ArrowRight,
+  Sprout,
 } from 'lucide-react';
 import {
   DevelopmentalTier,
   type ChildDTO,
 } from '@alongside/shared';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -36,6 +34,7 @@ export interface AdvisoryScript {
   toSayWhy: string;
   scenarioId: string;
   neurobiologyPillar: string;
+  tonightChallenge?: string;
 }
 
 export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
@@ -48,6 +47,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Sets an unshakeable boundary with calm nervous system co-regulation.',
     scenarioId: 'toddler-hitting-boundary',
     neurobiologyPillar: 'Pre-Verbal Amygdala Co-Regulation',
+    tonightChallenge: 'When your toddler starts to melt down, sit down on the floor so your eyes are below their level. Open your arms and say nothing for 10 seconds. Let them come to your calm.',
   },
   [DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6]: {
     scenarioTitle: 'Grocery Aisle Toy Meltdown & Impulse Frustration',
@@ -58,6 +58,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Validates wanting without giving in to the impulse, engaging the prefrontal pause.',
     scenarioId: 'preschool-store-meltdown',
     neurobiologyPillar: 'Theory of Mind & Delay Scaffolding',
+    tonightChallenge: 'Practice the "freeze and breathe" game before dinner: dance for 30 seconds, freeze like statues, take 3 deep belly breaths together.',
   },
   [DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9]: {
     scenarioTitle: 'Sibling Gaming Fairness & Screentime Transition Rage',
@@ -68,6 +69,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Firm limit anchored to predictability, followed by positive dopamine redirection.',
     scenarioId: 'elementary-screentime-transition',
     neurobiologyPillar: 'Concrete Operational Delayed Gratification',
+    tonightChallenge: 'Spend 10 uninterrupted minutes with your child before bedtime playing a non-screen card or board game where they choose the rules.',
   },
   [DevelopmentalTier.TIER_3_PRE_TEEN_10_12]: {
     scenarioTitle: '“All My Friends Have Phones Except Me! You’re Ruining My Life!”',
@@ -78,6 +80,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Deeply validates peer status ache while maintaining an authoritative developmental boundary.',
     scenarioId: 'tween-peer-phone-pressure',
     neurobiologyPillar: 'Adrenarche & Social Reward Circuitry',
+    tonightChallenge: 'Before asking about homework, give your tween 10 minutes of complete, distraction-free listening. Do not offer solutions—just say: “That sounds really hard. I’m right here with you.”',
   },
   [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15]: {
     scenarioTitle: 'Bedtime Device Dock Resistance (8:30 PM Curfew)',
@@ -88,6 +91,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Depersonalizes enforcement using Pact-as-Code and circadian neurobiology.',
     scenarioId: 'teen-bedtime-dock-resistance',
     neurobiologyPillar: 'Biological Melatonin Delay Defense',
+    tonightChallenge: 'Model the dock rule yourself tonight: put your own phone in the living room charging station at the exact same time your teen does.',
   },
   [DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18]: {
     scenarioTitle: 'Algorithmic Comparison, Doomscrolling & Anxiety',
@@ -98,6 +102,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Allies with the teen against algorithmic manipulation without patronizing lecturing.',
     scenarioId: 'young-adult-algorithmic-burnout',
     neurobiologyPillar: 'Executive Autonomy & Digital Sovereignty',
+    tonightChallenge: 'Ask your teen one open question with zero judgment: “Which account that you follow makes you feel worst about your life?” Listen without giving advice.',
   },
 };
 
@@ -135,6 +140,7 @@ export function DailyAdvisoryScriptCard({
   const [copied, setCopied] = React.useState(false);
   const script = resolveAdvisoryScript(child?.developmentalTier ?? child?.age);
   const childName = child?.name ?? 'Your Child';
+  const childAge = child?.age ?? 10;
 
   const handleCopyScript = async () => {
     try {
@@ -149,123 +155,123 @@ export function DailyAdvisoryScriptCard({
   };
 
   return (
-    <Card
-      className={cn(
-        'border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden',
-        className
-      )}
-    >
-      <CardHeader className="p-5 pb-3 space-y-2">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
-              <MessageSquare className="h-4 w-4" />
-            </span>
-            <span className="text-xs font-mono font-medium text-[#143D2B] uppercase tracking-wider">
-              Daily Calm Advisory Script
-            </span>
-          </div>
-
-          <Badge
-            variant="outline"
-            className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE]"
-          >
-            <Brain className="h-3 w-3 mr-1" />
-            {script.neurobiologyPillar}
-          </Badge>
-        </div>
-
-        <div>
-          <CardTitle className="font-serif text-base sm:text-lg font-semibold text-[#111413] leading-snug">
-            {script.scenarioTitle}
-          </CardTitle>
-          <CardDescription className="text-xs text-[#494F4C] mt-0.5 leading-relaxed">
-            {script.scenarioContext.replace('your tween', `${childName}`).replace('your child', `${childName}`)}
-          </CardDescription>
-        </div>
-      </CardHeader>
-
-      <CardContent className="p-5 pt-0 space-y-3.5">
-        {/* Contrast Grid: What NOT to say vs What TO say */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {/* Reactive (What NOT to say) */}
-          <div className="rounded-[8px] border border-[#DC2626]/20 bg-[#FFF5F5] p-3.5 space-y-1.5">
-            <div className="flex items-center gap-1.5 text-xs font-mono font-medium text-[#DC2626]">
-              <XCircle className="h-4 w-4 text-[#DC2626] shrink-0" />
-              <span>What NOT to Say (Reactive)</span>
-            </div>
-            <p className="font-serif italic text-xs text-[#111413] leading-relaxed">
-              {script.whatNotToSay}
-            </p>
-            <p className="text-[11px] font-mono text-[#DC2626]/90 leading-snug pt-0.5">
-              ⚠️ {script.notToSayWhy}
-            </p>
-          </div>
-
-          {/* Empathetic & Firm (What TO say) */}
-          <div className="rounded-[8px] border border-[#143D2B]/20 bg-[#EAF3EE]/50 p-3.5 space-y-1.5 relative">
-            <div className="flex items-center justify-between gap-1 text-xs font-mono font-medium text-[#143D2B]">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-[#143D2B] shrink-0" />
-                <span>What TO Say (Empathetic & Firm)</span>
+    <div className={cn('space-y-4', className)}>
+      <Card className="border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden">
+        <CardHeader className="p-5 pb-3 space-y-2 border-b border-[#E3E3DC]">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
+                <MessageSquare className="h-4 w-4" />
+              </span>
+              <div>
+                <CardTitle className="font-serif text-base sm:text-lg font-bold text-[#111413]">
+                  Today&apos;s Word-for-Word Empathy Script
+                </CardTitle>
+                <p className="text-[11px] font-mono text-[#858C88]">
+                  Calibrated to {childName} ({childAge} yrs)
+                </p>
               </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE]"
+              >
+                <Brain className="h-3 w-3 mr-1" />
+                {script.neurobiologyPillar}
+              </Badge>
+
               <button
+                type="button"
                 onClick={handleCopyScript}
-                className="inline-flex items-center gap-1 text-[10px] font-mono font-medium text-[#143D2B] hover:text-[#111413] bg-white px-2 py-0.5 rounded-[4px] border border-[#E3E3DC] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 text-xs font-mono font-bold text-[#143D2B] hover:text-[#0E2B1E] bg-[#EAF3EE] hover:bg-[#143D2B]/10 px-2.5 py-1 rounded-[4px] border border-[#143D2B]/20 transition-colors cursor-pointer"
                 title="Copy dialogue to clipboard"
               >
                 {copied ? (
                   <>
-                    <Check className="h-3 w-3 text-[#143D2B]" />
+                    <Check className="h-3.5 w-3.5 text-[#143D2B]" />
                     <span>Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="h-3 w-3" />
+                    <Copy className="h-3.5 w-3.5" />
                     <span>Copy</span>
                   </>
                 )}
               </button>
             </div>
-            <p className="font-serif italic text-xs font-medium text-[#111413] leading-relaxed">
-              {script.whatToSay}
+          </div>
+        </CardHeader>
+
+        <CardContent className="p-5 pt-4 space-y-4">
+          {/* Friction Trigger Box */}
+          <div className="p-3.5 rounded-[8px] bg-[#F4F4F0] border border-[#E3E3DC] space-y-1">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#B45309] block">
+              When This Happens Today:
+            </span>
+            <p className="font-serif text-sm sm:text-base font-bold text-[#111413] leading-snug">
+              &ldquo;{script.scenarioContext.replace('your tween', childName).replace('your child', childName)}&rdquo;
             </p>
-            <p className="text-[11px] font-mono text-[#143D2B]/90 leading-snug pt-0.5">
+          </div>
+
+          {/* Empathetic Word-for-Word Script Quote */}
+          <div className="p-5 rounded-[8px] bg-[#FBFBF9] border border-[#E3E3DC] space-y-2">
+            <span className="font-mono text-[10px] font-bold text-[#143D2B] uppercase tracking-wider block">
+              Say This (Calm &amp; Connected):
+            </span>
+            <blockquote className="font-serif text-base sm:text-lg font-medium text-[#111413] leading-relaxed">
+              &ldquo;{script.whatToSay}&rdquo;
+            </blockquote>
+            <p className="text-[11px] font-mono text-[#143D2B] pt-1">
               ✅ {script.toSayWhy}
             </p>
           </div>
-        </div>
 
-        {/* Practice in AI Voice Sparring Action Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-1 rounded-[8px] bg-[#F4F4F0] border border-[#E3E3DC] p-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[5px] bg-[#143D2B] text-white shadow-2xs">
-              <Mic className="h-4 w-4" />
+          {/* Tonight's 5-Minute Practice Challenge */}
+          <div className="p-4 rounded-[8px] bg-[#EAF3EE]/60 border border-[#143D2B]/20 flex items-start gap-3">
+            <Sprout className="w-5 h-5 text-[#143D2B] shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider block">
+                Tonight&apos;s 5-Minute Practice:
+              </span>
+              <p className="text-xs text-[#494F4C] leading-relaxed">
+                {script.tonightChallenge ||
+                  `Give ${childName} 10 minutes of complete, distraction-free listening before offering solutions.`}
+              </p>
             </div>
-            <div className="text-xs">
-              <span className="font-semibold text-[#111413] block">
-                Practice in AI Voice Sparring Simulator
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Practice in AI Child Simulator Action Bar */}
+      <Card className="border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] p-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-[#143D2B] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+              <Mic className="w-4.5 h-4.5" />
+            </div>
+            <div>
+              <span className="font-serif text-sm font-bold text-[#111413] block">
+                Practice with AI Child Simulator
               </span>
               <span className="text-[11px] text-[#858C88]">
-                Spar against an AI simulating {childName}&apos;s emotional pushback before real-life moments.
+                Test your calm voice against pushback before talking to {childName}
               </span>
             </div>
           </div>
 
-          <Link
-            href={`/advisor?scenario=${script.scenarioId}`}
-            className="w-full sm:w-auto shrink-0"
-          >
+          <Link href={`/advisor?scenario=${script.scenarioId}`} className="w-full sm:w-auto shrink-0">
             <Button
               size="sm"
-              className="w-full sm:w-auto min-h-[44px] gap-1.5 bg-[#111413] hover:bg-[#143D2B] text-white text-xs font-medium rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] px-4 transition-colors"
+              className="w-full sm:w-auto min-h-[44px] gap-1.5 rounded-[5px] bg-[#FBFBF9] border border-[#E3E3DC] text-xs font-bold text-[#143D2B] hover:bg-[#143D2B] hover:text-white transition"
             >
-              <span>Practice Dialogue</span>
+              <span>Start Practice Sparring</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>
-      </CardContent>
-    </Card>
+      </Card>
+    </div>
   );
 }
