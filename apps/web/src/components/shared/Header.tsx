@@ -269,7 +269,7 @@ export function Header() {
                     </div>
                     <div className="mt-1 flex items-center justify-between">
                       <span className="rounded-full bg-[#EAF3EE] px-2 py-0.5 text-[10px] font-semibold text-[#143D2B] border border-[#143D2B]/20 font-mono uppercase tracking-wider">
-                        VOL. XXIV // CLINICAL
+                        VOL. XXIV // ADVISORY
                       </span>
                       <span className="text-[10px] text-[#858C88] font-medium font-mono">
                         Active
@@ -304,7 +304,7 @@ export function Header() {
                       className="flex items-center gap-2.5 rounded-[5px] px-2.5 py-2 text-xs font-medium text-[#494F4C] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors"
                     >
                       <HelpCircle className="h-4 w-4 text-[#143D2B]" />
-                      <span>Clinical Guidance &amp; FAQ</span>
+                      <span>Advisory Guidance &amp; FAQ</span>
                     </Link>
                   </div>
 

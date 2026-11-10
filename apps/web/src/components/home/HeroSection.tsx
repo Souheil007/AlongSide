@@ -16,9 +16,9 @@ import { Badge } from '@/components/ui/Badge';
 
 export const HERO_TRUST_SIGNALS = [
   {
-    title: 'Barton Schmitt',
-    subtitle: 'Pediatric Protocols',
-    icon: Stethoscope,
+    title: 'Neurobiology',
+    subtitle: 'Developmental Science',
+    icon: Brain,
   },
   {
     title: 'CDC & AAP',
@@ -54,10 +54,10 @@ export function HeroSection() {
         {/* Editorial Publication Eyebrow Pill */}
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1.5 text-xs font-medium text-[#494F4C] shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
           <span className="rounded-[4px] bg-[#EAF3EE] px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
-            VOL. XXIV // CLINICAL
+            WHOLE-CHILD ADVISORY
           </span>
           <span className="font-medium text-[#494F4C]">
-            Barton Schmitt Protocols • Lifespan Pediatric Authority
+            Neurodevelopmental Science • Lifespan Family OS
           </span>
         </div>
 
@@ -72,7 +72,7 @@ export function HeroSection() {
 
         {/* Empathetic Editorial Subheadline */}
         <p className="text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
-          Replace parenting anxiety, guilt, and 2:00 AM panic Googling with clinical developmental science,
+          Replace parenting anxiety, guilt, and exhaustion with evidence-based developmental science,
           prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
         </p>
 

@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${formattedTitle} — Parent Intelligence Academy`,
-    description: 'Explore lessons and clinical scripts for this neurodevelopmental milestone.',
+    description: 'Explore lessons and communication scripts for this neurodevelopmental milestone.',
   };
 }
 

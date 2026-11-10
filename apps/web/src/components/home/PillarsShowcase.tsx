@@ -56,10 +56,10 @@ export const THREE_CORE_PILLARS: CoreAdvisoryPillar[] = [
     badge: 'Prioritized Chapters (P1 to P3)',
     badgeClass: 'bg-amber-50 text-amber-900 border-amber-200',
     description:
-      'Structured 5-minute micro-courses across 5 clinical categories. Chapters ordered strictly by acute necessity (Priority 1: Immediate Friction to Priority 3: Long-Term Scaffolding).',
+      'Structured 5-minute micro-courses across 5 core categories. Chapters ordered strictly by necessity (Priority 1: Immediate Friction to Priority 3: Long-Term Scaffolding).',
     highlights: [
       '5 Canonical Categories: Behavior, Pediatric Health & Sleep, Nutrition, Play, Digital World',
-      'Neurobiology callouts, clinical insights, and interactive checklists',
+      'Neurobiology callouts, developmental insights, and interactive checklists',
       'Actionable word-for-word dialogue speech bubbles with 1-click copy',
     ],
     href: '/academy',
@@ -105,21 +105,21 @@ export const THREE_CORE_PILLARS: CoreAdvisoryPillar[] = [
 export const FIVE_BALANCED_PILLARS: PillarData[] = [
   {
     number: '01',
-    title: 'Pediatric Health & Triage ("The Safe Resort")',
-    category: 'Pillar 1 • Clinical Health',
-    tagline: 'End 2:00 AM panic Googling with clinical fever & illness triage.',
+    title: 'Child Wellness & Restorative Sleep ("The Sleep Sanctuary")',
+    category: 'Pillar 1 • Physical Wellness & Sleep',
+    tagline: 'End bedtime chaos and sleep anxiety with evidence-based developmental routines.',
     description:
-      'Pediatrician-backed 3-zone symptom protocols clarifying when to monitor at home, call your doctor, or head to the emergency room.',
+      'Pediatrician-backed sleep architecture and circadian biology clarifying nap consolidation, bedtime anxiety, and restorative family rhythms.',
     icon: HeartPulse,
-    badge: 'Barton Schmitt Protocols',
+    badge: 'Pediatric Sleep Science',
     badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
     highlights: [
-      'Age-calibrated fever triage (< 3mo emergency, 3-6mo 101°F check, 6mo+ behavior)',
-      'Common childhood illness decoders (Croup, RSV, Ear Infections, Hand-Foot-Mouth)',
-      'Pediatric sleep regressions & circadian rhythm calibration',
+      'Age-calibrated sleep architecture (4-month cycle shift, 8-10mo separation anxiety)',
+      'Bedtime calm rituals & sensory co-regulation strategies',
+      'Circadian rhythm calibration & natural melatonin optimization',
     ],
-    clinicalAnchor: 'Based on Barton Schmitt Pediatric Protocols & AAP Clinical Practice',
-    href: '/health',
+    clinicalAnchor: 'American Academy of Pediatrics (AAP) & Pediatric Sleep Foundations',
+    href: '/academy?category=HEALTH_AND_WELLNESS',
   },
   {
     number: '02',

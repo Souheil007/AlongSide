@@ -23,7 +23,7 @@ export const MOCK_ACADEMY_CATEGORIES: AcademyCategoryStatsDTO[] = [
   {
     category: AcademyCategory.HEALTH_AND_WELLNESS,
     title: 'Pediatric Health & Sleep',
-    description: 'Circadian biology, restorative sleep architecture, and red-flag triage.',
+    description: 'Circadian biology, restorative sleep architecture, and soothing routines.',
     moduleCount: 6,
     lessonCount: 36,
   },
@@ -281,7 +281,7 @@ export const MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR: AcademyModuleDetailDTO = {
 };
 
 /**
- * Detailed Sample Lesson with Clinical Insight and "What to Say"
+ * Detailed Sample Lesson with Developmental Insight and "What to Say"
  */
 export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
   id: 'les-tween-adrenarche-bio',
@@ -294,7 +294,7 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
   isCompleted: true,
   contentMarkdown: `Around ages 9 to 11, long before visible pubertal changes occur, the adrenal glands awaken in a biological event known as **adrenarche**. This chemical surge releases DHEA and adrenal androgens, fundamentally rewiring how your child interprets their social standing.
 
-> **Clinical Insight:** During adrenarche, the amygdala and striatum develop heightened sensitivity to social evaluation. A minor remark like "Please finish your homework" can be perceived by the tween brain not as parental guidance, but as a public threat to their emerging autonomy and status.
+> **Developmental Insight:** During adrenarche, the amygdala and striatum develop heightened sensitivity to social evaluation. A minor remark like "Please finish your homework" can be perceived by the tween brain not as parental guidance, but as a public threat to their emerging autonomy and status.
 
 ### Why Logic Fails During an Adrenarche Meltdown
 

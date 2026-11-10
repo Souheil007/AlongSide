@@ -258,7 +258,7 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
               <CardDescription className="text-sm text-slate-600 max-w-2xl">
                 Before purchasing or handing over a personal smartphone, evaluate {activeChild.name}
                 &apos;s impulse control, bedtime habits, and online safety instincts across 10
-                clinical dimensions.
+                developmental dimensions.
               </CardDescription>
             </CardHeader>
 
@@ -486,7 +486,7 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
                   </Link>
                 </div>
 
-                {/* Clinical Sleep Neurobiology Insight */}
+                {/* Developmental Sleep Neurobiology Insight */}
                 <div className="rounded-xl border border-violet-100 bg-violet-50/50 p-4 text-xs text-violet-950 flex items-start gap-3">
                   <ShieldCheck className="h-5 w-5 text-violet-700 shrink-0 mt-0.5" />
                   <p className="leading-relaxed">

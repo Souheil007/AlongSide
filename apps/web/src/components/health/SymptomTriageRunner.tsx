@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * @deprecated RETIRED IN SOU-86: AlongSide has permanently transitioned away from being a clinical symptom triage platform.
+ * This component is retained solely for backward compatibility and is not mounted in any active application view.
+ */
+
 import * as React from 'react';
 import { calculateEstimatedWeightLbs } from '@/hooks/useChildAge';
 import {

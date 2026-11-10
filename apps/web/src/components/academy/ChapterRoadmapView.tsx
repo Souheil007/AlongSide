@@ -172,7 +172,7 @@ export function ChapterRoadmapView({ module, className }: ChapterRoadmapViewProp
             Curriculum Roadmap: Chapters by Priority
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Structured advisory chapters sequenced by clinical urgency. Complete Priority 1 first for acute situations.
+            Structured advisory chapters sequenced by developmental urgency. Complete Priority 1 first for acute situations.
           </p>
         </div>
 

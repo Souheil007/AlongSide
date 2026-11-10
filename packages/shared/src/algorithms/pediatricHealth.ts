@@ -1,3 +1,7 @@
+/**
+ * @deprecated RETIRED IN SOU-86: AlongSide has permanently transitioned away from being a clinical symptom triage platform.
+ * Retained solely for backward compatibility with legacy test suites.
+ */
 import {
   TriageZone,
   TemperatureMethod,

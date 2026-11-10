@@ -1,10 +1,14 @@
-# Plan 20: Clinical AI Advisor Lifespan RAG & Voice Sparring Upgrade
+# Plan 20: AI Child Advisor Lifespan RAG & Voice Sparring Upgrade
 **Plan ID:** `PLAN-20`  
 **Assignee:** Joint (FE & BE)  
 **Dependencies:** PLAN-10, PLAN-11, PLAN-16, PLAN-17, PLAN-18, PLAN-19  
 **Estimated Scope:** Large  
 **Paperclip Issue:** SOU-45  
-**Status:** Completed & Verified  
+**Status:** Completed & Verified — *Refactored to Non-Clinical in SOU-86*  
+
+> [!NOTE]
+> **NON-CLINICAL PARENTING ADVISOR TRANSITION (SOU-86):**
+> As part of AlongSide's transition away from a clinical platform in task SOU-86, the AI Advisor and FAQ vault have been refactored to focus purely on developmental neurobiology, evidence-based milestone guidance, and collaborative parenting communication scripts. Clinical symptom triage claims have been retired.
 
 ---
 

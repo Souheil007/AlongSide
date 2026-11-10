@@ -1,5 +1,10 @@
 'use client';
 
+/**
+ * @deprecated RETIRED IN SOU-86: AlongSide has permanently transitioned away from being a clinical symptom triage platform.
+ * This component is not mounted in active application views.
+ */
+
 import * as React from 'react';
 import { AlertTriangle, PhoneCall, ShieldAlert, ChevronDown, ChevronUp, LifeBuoy } from 'lucide-react';
 import { Button } from '@/components/ui/Button';

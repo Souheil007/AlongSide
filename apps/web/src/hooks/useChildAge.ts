@@ -162,7 +162,7 @@ export function deriveChildAge(
 
 /**
  * Authoritative React hook providing reactive, automatic child age calibration.
- * Reads the active child from useChildContextStore and derives all clinical,
+ * Reads the active child from useChildContextStore and derives all biological,
  * nutritional, and developmental parameters.
  */
 export function useChildAge(): ChildAgeProfile {
