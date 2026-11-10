@@ -26,7 +26,7 @@ By replacing the legacy 4-card layout (neurodevelopmental leap, priority chapter
 - **Canonical Academy Categories & Tiers:**
   - Categories: `BEHAVIOR_AND_EMOTIONS`, `HEALTH_AND_WELLNESS`, `NUTRITION_AND_FEEDING`, `DEVELOPMENT_AND_PLAY`, `DIGITAL_AND_DEVICES` ([`packages/shared/src/constants/index.ts`](../packages/shared/src/constants/index.ts))
   - Seed Curriculum: 30 canonical modules in [`packages/database/prisma/seed/academy.seed.ts`](../packages/database/prisma/seed/academy.seed.ts)
-- **Frontend Execution Protocol:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md) and [`AGENTS.md`](../AGENTS.md)
+- **Frontend Execution Protocol:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md) and [`AGENTS.md`](../AGENTS.md)
 
 ---
 
@@ -149,7 +149,7 @@ By replacing the legacy 4-card layout (neurodevelopmental leap, priority chapter
 
 ## 6. Verification & Definition of Done (DoD) Checklist
 
-- [x] `plans/35-streamlined-developmental-horizon-courses-ui.md` created adhering to `docs/plan-standards.md`.
+- [x] `plans/35-streamlined-developmental-horizon-courses-ui.md` created adhering to `docs/engineering-standards/plan-standards.md`.
 - [x] Outdated triage/emergency widgets and slang cringe meters fully removed from `LifespanStageSelector.tsx`.
 - [x] Section showcases all 6 age tranches (0-3, 4-6, 7-9, 10-12, 13-15, 16-18) and the 5 tailored categories.
 - [x] No walls of text or bluffing; layout is appealing, concise, and aligned with Editorial Pediatric Almanac design tokens.

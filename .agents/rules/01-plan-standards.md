@@ -1,6 +1,6 @@
 # Agent Rule: Plan Authoring & Naming Standards
 
-Canonical Specification: [`docs/plan-standards.md`](file:///C:/GithubProjects/AlongSide/docs/plan-standards.md)  
+Canonical Specification: [`docs/engineering-standards/plan-standards.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/plan-standards.md)  
 Applies To: CTO Agent, Technical Planners, Executing Engineers  
 
 ---

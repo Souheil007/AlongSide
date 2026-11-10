@@ -23,7 +23,7 @@ Such prompts **do not explicitly say**:
 - "Use `app.inject()` with in-memory test fakes instead of spinning up raw network ports in Vitest."
 - "Implement graceful shutdown using `close-with-grace` to drain in-flight SSE streams and close PostgreSQL connection pools."
 - "Leverage Node.js LTS v22 native type stripping with `import type` and const objects instead of runtime transpiler bloat."
-- "Enforce deep domain module interfaces conforming to [docs/codebase-design.md](file:///C:/GithubProjects/AlongSide/docs/codebase-design.md)."
+- "Enforce deep domain module interfaces conforming to [docs/engineering-standards/codebase-design.md](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/codebase-design.md)."
 
 **The Golden Principle of Autonomous Backend Skill Execution:**
 > The Backend Agent must infer required technical standards and specialized skills from the **implicit architectural layer, runtime environment (Node.js LTS v22), framework paradigms (Fastify v4/v5 + TypeScript), and lifecycle stage** of every task, proactively applying verified patterns to guarantee production resilience, sub-millisecond overhead, and zero architectural drift.

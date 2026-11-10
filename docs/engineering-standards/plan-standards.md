@@ -76,7 +76,7 @@ Every plan authored by the CTO or Technical Planner must contain the following s
 - **Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md)
 - **Data Models:** [`docs/data-models.md`](../docs/data-models.md)
-- **Code Quality & Git Standards:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md), [`docs/git-commit-standards.md`](../docs/git-commit-standards.md)
+- **Code Quality & Git Standards:** [`docs/engineering-standards/code-quality-principles.md`](code-quality-principles.md), [`docs/engineering-standards/git-commit-standards.md`](git-commit-standards.md)
 
 ---
 

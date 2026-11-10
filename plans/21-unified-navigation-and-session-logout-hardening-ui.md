@@ -24,8 +24,8 @@ This plan consolidates navigation into a single, cohesive, high-leverage Top App
 
 - **Holistic Redesign & Navigation Spec:** [`docs/holistic-redesign-and-navigation-spec.md`](../docs/holistic-redesign-and-navigation-spec.md)
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Seam 10: Frontend Multi-Child State & Offline Sync)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Seam 10: Frontend Multi-Child State & Offline Sync)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 - **Existing Implementation Files:**
   * `apps/web/src/components/shared/Header.tsx`
   * `apps/web/src/components/shared/DashboardNav.tsx`

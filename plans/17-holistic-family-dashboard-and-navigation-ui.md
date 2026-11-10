@@ -31,8 +31,8 @@ The Frontend Agent will:
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Section 4.1: Navigation Architecture & Real-World Use Cases)
 - **Technical Roadmap:** [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md) (Section 3 & 4)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md) (Client Layer & Seam 10)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Seam 10: Frontend Multi-Child State & Offline Sync)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Seam 10: Frontend Multi-Child State & Offline Sync)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 - **Design System & Taste Guidelines:** "Parent Calm" tokens, anti-slop visual standards.
 
 ---

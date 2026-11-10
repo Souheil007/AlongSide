@@ -18,7 +18,7 @@ Scaffold the `apps/web/` application using Next.js 15 (App Router, React 19), Ta
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Section 1: Vision & Pillars, Section 5: Trial Onboarding)
 - **Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md) (Client Layer)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Section 2: Auth Endpoints)
-- **Code Quality & Design Standards:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md)
+- **Code Quality & Design Standards:** [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md)
 - **Agent Boundaries:** [`AGENTS.md`](../AGENTS.md) (Frontend Engineer Scope)
 
 ---

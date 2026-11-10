@@ -29,8 +29,8 @@ This plan executes a comprehensive overhaul:
 - **Product Scope v2.4.0:** [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)
 - **Data Models:** [`docs/data-models.md`](../docs/data-models.md)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md)
-- **Code Quality Principles:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md)
-- **Git Commit Standards:** [`docs/git-commit-standards.md`](../docs/git-commit-standards.md)
+- **Code Quality Principles:** [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md)
+- **Git Commit Standards:** [`docs/engineering-standards/git-commit-standards.md`](../docs/engineering-standards/git-commit-standards.md)
 
 ---
 

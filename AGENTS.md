@@ -12,14 +12,14 @@ Alongside employs a specialized multi-agent engineering workflow overseen by the
 All agents must strictly adhere to the canonical engineering standards:
 - [**Expert System Design Specification**](docs/system-design-specification.md) (`docs/system-design-specification.md` — Quantitative sizing, blueprints, trade-offs, and resilience)
 - [**System Architecture Specification**](docs/system-architecture.md) (`docs/system-architecture.md` — Monorepo layout, data flows, and security)
-- [**Codebase Design Specification**](docs/codebase-design.md) (`docs/codebase-design.md` — Deep modules, seam catalog, testability, and leverage | Active Rule: [`.agents/rules/06-codebase-design.md`](.agents/rules/06-codebase-design.md))
-- [**Frontend Autonomous Skill Matrix & Execution Protocol**](docs/frontend-skill-matrix.md) (`docs/frontend-skill-matrix.md` | Active Rule: [`.agents/rules/05-frontend-skill-matrix.md`](.agents/rules/05-frontend-skill-matrix.md))
-- [**Backend Autonomous Skill Matrix & Fastify/Node.js Protocol**](docs/backend-skill-matrix.md) (`docs/backend-skill-matrix.md` | Active Rule: [`.agents/rules/07-backend-skill-matrix.md`](.agents/rules/07-backend-skill-matrix.md))
-- [**Plan Authoring & Naming Standards**](docs/plan-standards.md) (`docs/plan-standards.md` | Active Rule: [`.agents/rules/01-plan-standards.md`](.agents/rules/01-plan-standards.md))
-- [**Git Commit Message Standards (Conventional Commits)**](docs/git-commit-standards.md) (`docs/git-commit-standards.md` | Active Rule: [`.agents/rules/02-git-commits.md`](.agents/rules/02-git-commits.md))
-- [**Code Quality, Security & Testing Principles**](docs/code-quality-principles.md) (`docs/code-quality-principles.md` | Active Rule: [`.agents/rules/04-code-quality-and-testing.md`](.agents/rules/04-code-quality-and-testing.md))
-- [**Naming Conventions & Code Style Guide**](docs/naming-conventions.md) (`docs/naming-conventions.md`)
-- [**Documentation & Docstring Standards**](docs/documentation-standards.md) (`docs/documentation-standards.md`)
+- [**Codebase Design Specification**](docs/engineering-standards/codebase-design.md) (`docs/engineering-standards/codebase-design.md` — Deep modules, seam catalog, testability, and leverage | Active Rule: [`.agents/rules/06-codebase-design.md`](.agents/rules/06-codebase-design.md))
+- [**Frontend Autonomous Skill Matrix & Execution Protocol**](docs/engineering-standards/frontend-skill-matrix.md) (`docs/engineering-standards/frontend-skill-matrix.md` | Active Rule: [`.agents/rules/05-frontend-skill-matrix.md`](.agents/rules/05-frontend-skill-matrix.md))
+- [**Backend Autonomous Skill Matrix & Fastify/Node.js Protocol**](docs/engineering-standards/backend-skill-matrix.md) (`docs/engineering-standards/backend-skill-matrix.md` | Active Rule: [`.agents/rules/07-backend-skill-matrix.md`](.agents/rules/07-backend-skill-matrix.md))
+- [**Plan Authoring & Naming Standards**](docs/engineering-standards/plan-standards.md) (`docs/engineering-standards/plan-standards.md` | Active Rule: [`.agents/rules/01-plan-standards.md`](.agents/rules/01-plan-standards.md))
+- [**Git Commit Message Standards (Conventional Commits)**](docs/engineering-standards/git-commit-standards.md) (`docs/engineering-standards/git-commit-standards.md` | Active Rule: [`.agents/rules/02-git-commits.md`](.agents/rules/02-git-commits.md))
+- [**Code Quality, Security & Testing Principles**](docs/engineering-standards/code-quality-principles.md) (`docs/engineering-standards/code-quality-principles.md` | Active Rule: [`.agents/rules/04-code-quality-and-testing.md`](.agents/rules/04-code-quality-and-testing.md))
+- [**Naming Conventions & Code Style Guide**](docs/engineering-standards/naming-conventions.md) (`docs/engineering-standards/naming-conventions.md`)
+- [**Documentation & Docstring Standards**](docs/engineering-standards/documentation-standards.md) (`docs/engineering-standards/documentation-standards.md`)
 - [**Architectural Boundaries & Ownership**](.agents/rules/03-agent-boundaries.md) (`.agents/rules/03-agent-boundaries.md`)
 
 ```mermaid
@@ -92,7 +92,7 @@ The agent MUST autonomously invoke these skills based on implicit task context a
 | **7. Friction & Upgrades** | `complain`, `suggestion-box` | Silently submit tool friction (`complain`) or platform improvements (`suggestion-box`) without derailing task execution. |
 | **8. Pre-Commit Verification** | `paperclip`, `ponytail-review` | Execute `npm run typecheck`, `npm run lint`, `npm test`, and audit diff with `ponytail-review`. Commit with Conventional Commits v1.0.0. Deliver clickable links. |
 
-See canonical specification: [`docs/frontend-skill-matrix.md`](docs/frontend-skill-matrix.md) and active rule: [`.agents/rules/05-frontend-skill-matrix.md`](.agents/rules/05-frontend-skill-matrix.md).
+See canonical specification: [`docs/engineering-standards/frontend-skill-matrix.md`](docs/engineering-standards/frontend-skill-matrix.md) and active rule: [`.agents/rules/05-frontend-skill-matrix.md`](.agents/rules/05-frontend-skill-matrix.md).
 
 ---
 
@@ -114,7 +114,7 @@ See canonical specification: [`docs/frontend-skill-matrix.md`](docs/frontend-ski
     - `digest`: Sunday culture digest, slang decoders, exploit early warnings.
     - `billing`: Stripe subscription billing (7-day upfront trial, $79/yr Annual Hero Pass, $9.99/mo flex pass).
   - Author comprehensive integration and unit tests using Vitest and Fastify inject.
-  - Design **deep backend domain modules** conforming to [`docs/codebase-design.md`](docs/codebase-design.md):
+  - Design **deep backend domain modules** conforming to [`docs/engineering-standards/codebase-design.md`](docs/engineering-standards/codebase-design.md):
     - Expose small, high-leverage interfaces that hide internal XML serialization, cryptography (`node-forge`), and vector similarity math.
     - Provide both a production adapter and an in-memory test fake adapter for every external I/O seam (`AppleMobileConfigSigner` + `FakeDevProfileSigner`, `OpenAiStreamingAdapter` + `DeterministicAiAdvisorFake`, `StripeBillingAdapter` + `FakeBillingGateway`).
     - Eliminate shallow pass-through services that merely forward calls 1:1 to Prisma.
@@ -142,7 +142,7 @@ The agent MUST autonomously invoke these skills based on implicit task context a
 | **8. Integration Testing** | `fastify-best-practices` | Author Fastify `.inject()` integration tests in Vitest with in-memory fakes. Never spin up physical TCP ports. Assert status codes and payloads. |
 | **9. Pre-Commit Review** | `ponytail-review`, `paperclip` | Audit git diff with Ponytail Principle (eliminate speculative code). Verify `tsc --noEmit` exits 0 and test suites pass 100%. Deliver clickable links. |
 
-See canonical specification: [`docs/backend-skill-matrix.md`](docs/backend-skill-matrix.md) and active rule: [`.agents/rules/07-backend-skill-matrix.md`](.agents/rules/07-backend-skill-matrix.md).
+See canonical specification: [`docs/engineering-standards/backend-skill-matrix.md`](docs/engineering-standards/backend-skill-matrix.md) and active rule: [`.agents/rules/07-backend-skill-matrix.md`](.agents/rules/07-backend-skill-matrix.md).
 
 ---
 
@@ -186,11 +186,11 @@ To maximize engineering throughput, the Frontend Agent and Backend Agent operate
 
 ### 4.1 Step-by-Step Task Lifecycle
 
-1. **Plan Inspection & Validation:** Review assigned plan in `plans/` (e.g. `plans/01-project-setup-and-db.md`). Verify plan adheres to [`docs/plan-standards.md`](docs/plan-standards.md).
+1. **Plan Inspection & Validation:** Review assigned plan in `plans/` (e.g. `plans/01-project-setup-and-db.md`). Verify plan adheres to [`docs/engineering-standards/plan-standards.md`](docs/engineering-standards/plan-standards.md).
 2. **Git Branch Creation (MANDATORY):** Always branch from the latest `main`: `git checkout -b <type>/<issue-id>-<short-description>`. Committing application code directly to `main` is strictly forbidden.
-3. **Implementation & Local Testing:** Write clean, modular code conforming to [`docs/code-quality-principles.md`](docs/code-quality-principles.md) and [`docs/naming-conventions.md`](docs/naming-conventions.md).
+3. **Implementation & Local Testing:** Write clean, modular code conforming to [`docs/engineering-standards/code-quality-principles.md`](docs/engineering-standards/code-quality-principles.md) and [`docs/engineering-standards/naming-conventions.md`](docs/engineering-standards/naming-conventions.md).
 4. **Pre-Commit Verification:** Run `npm run typecheck`, `npm run lint`, `npm test`, and execute a **`ponytail-review`** audit on `git diff HEAD` to eliminate bloat, verify callers, and ensure the smallest complete change.
-5. **Atomic Conventional Commits:** Commit messages strictly complying with [`docs/git-commit-standards.md`](docs/git-commit-standards.md): `<type>(<scope>): <imperative description>`.
+5. **Atomic Conventional Commits:** Commit messages strictly complying with [`docs/engineering-standards/git-commit-standards.md`](docs/engineering-standards/git-commit-standards.md): `<type>(<scope>): <imperative description>`.
 6. **Push Branch & Open Pull Request (PR):** Push feature branch (`git push origin <branch>`) and open a Pull Request targeting `main`. **The PR description MUST be written as plain text (`.txt`), NEVER Markdown (`.md`).** GitHub populates the squash commit message directly from the PR body; Markdown formatting (`##`, `**`, `[]()`) clutters terminal git logs. Use plain uppercase section labels (`SUMMARY:`, `DELIVERABLES:`, `TEST VERIFICATION:`) and issue closure keywords (`Fixes SOU-X`).
 7. **Human Approval & Merge Gate (ZERO AUTONOMOUS MERGING):**
    * **ONLY THE HUMAN USER (Souheil) MAY MERGE PULL REQUESTS.**
@@ -205,14 +205,14 @@ To maximize engineering throughput, the Frontend Agent and Backend Agent operate
 
 An agent may mark a plan or Paperclip task complete **only** when all of the following criteria are satisfied:
 - [ ] All deliverables specified in the plan file are created and located in the correct directory.
-- [ ] If authoring or modifying an engineering plan, it strictly adheres to [`docs/plan-standards.md`](docs/plan-standards.md).
-- [ ] Code strictly follows [`docs/naming-conventions.md`](docs/naming-conventions.md) and [`docs/code-quality-principles.md`](docs/code-quality-principles.md).
-- [ ] All newly authored modules satisfy the **Deletion Test** and adhere to [`docs/codebase-design.md`](docs/codebase-design.md) (deep modules, clean seams, zero shallow pass-throughs).
+- [ ] If authoring or modifying an engineering plan, it strictly adheres to [`docs/engineering-standards/plan-standards.md`](docs/engineering-standards/plan-standards.md).
+- [ ] Code strictly follows [`docs/engineering-standards/naming-conventions.md`](docs/engineering-standards/naming-conventions.md) and [`docs/engineering-standards/code-quality-principles.md`](docs/engineering-standards/code-quality-principles.md).
+- [ ] All newly authored modules satisfy the **Deletion Test** and adhere to [`docs/engineering-standards/codebase-design.md`](docs/engineering-standards/codebase-design.md) (deep modules, clean seams, zero shallow pass-throughs).
 - [ ] External I/O seams include both production adapters and in-memory test fake adapters; dependencies are accepted rather than created internally.
 - [ ] No TypeScript errors exist (`tsc --noEmit` exits with code 0).
 - [ ] Automated tests (unit/integration) pass with 100% success.
 - [ ] **Ponytail Diff Audit Passed (`ponytail-review`):** Working diff audited against over-engineering; smallest complete change verified with zero speculative bloat.
-- [ ] All Git commits strictly adhere to [`docs/git-commit-standards.md`](docs/git-commit-standards.md) (Conventional Commits v1.0.0).
+- [ ] All Git commits strictly adhere to [`docs/engineering-standards/git-commit-standards.md`](docs/engineering-standards/git-commit-standards.md) (Conventional Commits v1.0.0).
 - [ ] **Pull Request Opened for Squash Merge:** Feature branch pushed to origin and PR submitted targeting `main` with plain text (`.txt`) description (no `##`, `**`, or markdown links) and linked issue ID (`Fixes SOU-X`).
 - [ ] All user-facing strings are clear, empathetic, and aligned with `PROJECT_SCOPE.md` v2.4.0.
 - [ ] No secrets or sensitive test credentials are committed to git.

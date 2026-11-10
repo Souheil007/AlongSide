@@ -17,7 +17,7 @@ Execute complete end-to-end integration and launch hardening across the full Alo
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Section 6: Success Metrics & KPIs, Section 7: Phased Roadmap)
 - **Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md) (All sections)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md)
-- **Code Quality & Testing Principles:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md)
+- **Code Quality & Testing Principles:** [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md)
 - **Agent Boundaries:** [`AGENTS.md`](../AGENTS.md)
 
 ---

@@ -34,7 +34,7 @@ The resulting research de-risks and directly populates:
 - **Whole-Child Matrix:** [`docs/research/age-by-age-neurodevelopment-matrix.md`](../docs/research/age-by-age-neurodevelopment-matrix.md)
 - **System Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md) (AI Advisor Streaming RAG Data Flow 3.3)
 - **Data Models:** [`docs/data-models.md`](../docs/data-models.md) (`AcademyModule`, `FaqItem`, `SlangTerm`, `ExploitAlert`)
-- **Plan Authoring Standards:** [`docs/plan-standards.md`](../docs/plan-standards.md)
+- **Plan Authoring Standards:** [`docs/engineering-standards/plan-standards.md`](../docs/engineering-standards/plan-standards.md)
 - **Team Governance:** [`AGENTS.md`](../AGENTS.md) (Section 2.4 Research Engineer Protocol)
 
 ---
@@ -122,7 +122,7 @@ The resulting research de-risks and directly populates:
 2. All 6 developmental cohorts (Ages 5–7, 8–9, 10–11, 12–13, 14–15, 16–18+) include deep clinical analysis of thinking patterns, hormonal shifts (adrenarche/gonadarche), behavioral manifestations, and social structures.
 3. FAQ Vault scenarios span both whole-child developmental flashpoints (puberty, school anxiety, peer exclusion, emotional regulation) and modern device/media battles.
 4. Every FAQ script follows the 3-step architecture (*Empathy, Boundary, Agency*) and includes clinical rationale.
-5. All deliverables conform to `docs/plan-standards.md`, `docs/code-quality-principles.md`, and `AGENTS.md`.
+5. All deliverables conform to `docs/engineering-standards/plan-standards.md`, `docs/engineering-standards/code-quality-principles.md`, and `AGENTS.md`.
 6. Zero application code modified in `apps/web/`, `apps/api/`, or `packages/database/`.
 
 ---

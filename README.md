@@ -109,7 +109,7 @@ Alongside includes a root [`Makefile`](Makefile) providing standardized commands
 
 ## 🏛️ System Architecture & Expert System Design
 
-Alongside is engineered as a type-safe, decoupled monorepo leveraging standard npm workspaces. For complete quantitative capacity estimations (100k+ DAU sizing, QPS, cache RAM), architectural trade-off evaluations, and deep module seam architecture, see the authoritative [**Expert System Design Specification**](docs/system-design-specification.md), [**System Architecture Specification**](docs/system-architecture.md), and [**Codebase Design Specification**](docs/codebase-design.md).
+Alongside is engineered as a type-safe, decoupled monorepo leveraging standard npm workspaces. For complete quantitative capacity estimations (100k+ DAU sizing, QPS, cache RAM), architectural trade-off evaluations, and deep module seam architecture, see the authoritative [**Expert System Design Specification**](docs/system-design-specification.md), [**System Architecture Specification**](docs/system-architecture.md), and [**Codebase Design Specification**](docs/engineering-standards/codebase-design.md).
 
 ```mermaid
 graph TD
@@ -225,7 +225,7 @@ AlongSide/
 ├── docs/                         # Canonical Specifications & Engineering Standards
 │   ├── system-design-specification.md # Quantitative sizing, capacity estimations & blueprints
 │   ├── system-architecture.md         # Monorepo layout, security boundaries & data flows
-│   ├── codebase-design.md             # Deep modules, seam catalog & test fakes
+│   ├── engineering-standards/         # Deep modules, skill matrices, plan & git standards
 │   └── api-specification.md           # Authoritative REST API contract & DTO catalog
 ├── plans/                        # Discrete Agent Execution Plans (Numbered 01–14)
 ├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules

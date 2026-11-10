@@ -1,6 +1,6 @@
 # Agent Rule: Backend Autonomous Skill Matrix & Fastify/Node.js Protocol
 
-Canonical Specification: [`docs/backend-skill-matrix.md`](file:///C:/GithubProjects/AlongSide/docs/backend-skill-matrix.md)  
+Canonical Specification: [`docs/engineering-standards/backend-skill-matrix.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/backend-skill-matrix.md)  
 Applies To: Backend Agent, API Engineers, Autonomous Task Runners  
 
 ---

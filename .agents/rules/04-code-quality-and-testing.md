@@ -1,6 +1,6 @@
 # Agent Rule: Code Quality, Security & Verification Standards
 
-Canonical Specification: [`docs/code-quality-principles.md`](file:///C:/GithubProjects/AlongSide/docs/code-quality-principles.md) & [`docs/naming-conventions.md`](file:///C:/GithubProjects/AlongSide/docs/naming-conventions.md)  
+Canonical Specification: [`docs/engineering-standards/code-quality-principles.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/code-quality-principles.md) & [`docs/engineering-standards/naming-conventions.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/naming-conventions.md)  
 Applies To: All Engineering Agents  
 
 ---

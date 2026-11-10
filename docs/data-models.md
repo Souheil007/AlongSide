@@ -5,8 +5,8 @@
 **Target Audience:** Backend Engineer, Database Administrator, Frontend Engineer  
 **Companion Documents:**  
 - [`docs/system-architecture.md`](system-architecture.md)  
-- [`docs/technical-roadmap-v2.4.0.md`](technical-roadmap-v2.4.0.md)  
-- [`docs/codebase-design.md`](codebase-design.md)  
+- [`docs/system-design-specification.md`](system-design-specification.md)  
+- [`docs/engineering-standards/codebase-design.md`](engineering-standards/codebase-design.md)  
 
 ---
 

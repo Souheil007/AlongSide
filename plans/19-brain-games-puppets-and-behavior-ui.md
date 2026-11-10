@@ -29,7 +29,7 @@ The Frontend Agent will:
 - **Technical Roadmap:** [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md) (Section 3 & Phase 4)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md) (PlayHub & BehaviorHub)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Sections 14 and 15)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 
 ---
 

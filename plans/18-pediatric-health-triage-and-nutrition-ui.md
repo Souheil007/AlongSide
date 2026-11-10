@@ -31,7 +31,7 @@ The Frontend Agent will:
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md) (HealthHub & NutritionHub)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Sections 12 and 13)
 - **Primary Source Research:** [`docs/research/pediatric-health-triage-protocols.md`](../docs/research/pediatric-health-triage-protocols.md)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Agent Rule: Frontend Autonomous Skill Matrix & Invocation Protocol
 
-Canonical Specification: [`docs/frontend-skill-matrix.md`](file:///C:/GithubProjects/AlongSide/docs/frontend-skill-matrix.md)  
+Canonical Specification: [`docs/engineering-standards/frontend-skill-matrix.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/frontend-skill-matrix.md)  
 Applies To: Frontend Agent, UI Engineers, Autonomous Task Runners  
 
 ---

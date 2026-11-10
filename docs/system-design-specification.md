@@ -491,7 +491,7 @@ CREATE INDEX "idx_faq_items_embedding" ON "faq_items" USING hnsw ("embedding" ve
 
 ## 8. Phased Implementation Roadmap & Engineering Plan Mapping
 
-The Alongside system design is executed across **14 discrete, ordered engineering plans** adhering strictly to [`docs/plan-standards.md`](./plan-standards.md) and [`AGENTS.md`](../AGENTS.md).
+The Alongside system design is executed across **14 discrete, ordered engineering plans** adhering strictly to [`docs/engineering-standards/plan-standards.md`](./engineering-standards/plan-standards.md) and [`AGENTS.md`](../AGENTS.md).
 
 ```mermaid
 flowchart TD

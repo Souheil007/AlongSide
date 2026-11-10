@@ -16,7 +16,7 @@ This plan upgrades the `/digest` page into an engaging, high-retention weekly br
 
 ## 2. Inputs & Architectural References
 - **Advisory Platform Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md)
-- **Frontend Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
+- **Frontend Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
 - **Culture Digest Backend API:** [`docs/api-specification.md`](../docs/api-specification.md) (`GET /api/digest/latest`, `GET /api/digest/slang`, `GET /api/digest/exploits`)
 - **Parent Calm Design System:** [`docs/system-architecture.md`](../docs/system-architecture.md)
 

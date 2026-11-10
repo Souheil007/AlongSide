@@ -3,10 +3,10 @@
 **Status:** Master Engineering Plan Index  
 **Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Companion Documents:**  
-- [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md)  
+- [`docs/system-design-specification.md`](../docs/system-design-specification.md)  
 - [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)  
 - [`docs/system-architecture.md`](../docs/system-architecture.md)  
-- [`docs/codebase-design.md`](../docs/codebase-design.md)  
+- [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md)  
 
 ---
 
@@ -55,6 +55,7 @@ graph TD
         P33["33: Advisory Homepage & Child Cockpit Redesign UI (FE)"]
         P35["35: Streamlined Developmental Horizon Courses UI (FE)"]
         P36["36: Early Childhood Tier 0 Decomposition & Sub-Tranches (Joint)"]
+        P37["37: Academy Editorial Course Content & Rich Preview Architecture (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -169,12 +170,13 @@ graph TD
 | [**`34-universal-cross-tab-reactive-child-tailoring-ui.md`**](34-universal-cross-tab-reactive-child-tailoring-ui.md) | Universal Cross-Tab Reactive Child Context Synchronization & Multi-Child Tailoring UI | **Frontend Agent** | PLAN-29, PLAN-30, PLAN-31, PLAN-32, PLAN-33 | Complete (PR #55) |
 | [**`35-streamlined-developmental-horizon-courses-ui.md`**](35-streamlined-developmental-horizon-courses-ui.md) | Streamlined Developmental Horizon Courses & Category Advisory UI | **Frontend Agent** | PLAN-30, PLAN-33 | Complete (PR #67) |
 | [**`36-early-childhood-tier-decomposition-and-sub-tranches.md`**](36-early-childhood-tier-decomposition-and-sub-tranches.md) | Early Childhood Tier 0 Decomposition & Sub-Tranche Engine | **Joint (FE & BE)** | PLAN-30, PLAN-33, PLAN-35 | Approved (Ready for Delegation) |
+| [**`37-parent-intelligence-academy-course-editorial-and-preview-architecture.md`**](37-parent-intelligence-academy-course-editorial-and-preview-architecture.md) | Academy Editorial Course Content & Rich Preview Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-35 | Approved (Ready for Delegation) |
 
 ---
 
 ## 3. Plan Authoring & Execution Standards
 
-All plans within this directory strictly comply with [**`docs/plan-standards.md`**](../docs/plan-standards.md):
+All plans within this directory strictly comply with [**`docs/engineering-standards/plan-standards.md`**](../docs/engineering-standards/plan-standards.md):
 1. **Naming Standard:** `plans/[XX]-[short-kebab-case-descriptive-title].md` (two-digit zero-padded sequence).
 2. **Standard Document Sections:**
    - Metadata Header (Plan ID, Assignee, Dependencies, Scope)
@@ -186,7 +188,7 @@ All plans within this directory strictly comply with [**`docs/plan-standards.md`
    - 6. Acceptance Criteria & Verification Plan
    - 7. Role Boundaries & Prohibitions
    - 8. Definition of Done (DoD) Sign-Off Checklist
-3. **Commit Standards:** Any commits made during plan execution must follow [**`docs/git-commit-standards.md`**](../docs/git-commit-standards.md) (Conventional Commits v1.0.0).
+3. **Commit Standards:** Any commits made during plan execution must follow [**`docs/engineering-standards/git-commit-standards.md`**](../docs/engineering-standards/git-commit-standards.md) (Conventional Commits v1.0.0).
 
 ---
 
@@ -196,13 +198,13 @@ When delegating a plan as a Paperclip issue:
 1. Provide the exact plan file path in the issue description.
 2. Verify that all preceding dependency plans have reached `done` status.
 3. Assert that the executing agent adheres strictly to directory ownership in [`AGENTS.md`](../AGENTS.md).
-4. Review the deliverables checklist upon plan completion against `docs/plan-standards.md`.
+4. Review the deliverables checklist upon plan completion against `docs/engineering-standards/plan-standards.md`.
 
 ---
 
 ## 5. Codebase Design & Deep Module Implementation Requirements
 
-When implementing any plan, executing engineers (Frontend Agent & Backend Agent) MUST adhere to [**`docs/codebase-design.md`**](../docs/codebase-design.md) and [**`.agents/rules/06-codebase-design.md`**](../.agents/rules/06-codebase-design.md):
+When implementing any plan, executing engineers (Frontend Agent & Backend Agent) MUST adhere to [**`docs/engineering-standards/codebase-design.md`**](../docs/engineering-standards/codebase-design.md) and [**`.agents/rules/06-codebase-design.md`**](../.agents/rules/06-codebase-design.md):
 - **Pass the Deletion Test:** Avoid authoring shallow pass-through services where a method merely forwards arguments 1:1 to Prisma or downstream libraries without enforcing domain invariants.
 - **Accept Dependencies at Seams:** Inject external collaborators (cryptography, AI streaming, Stripe, storage) via parameters or constructors rather than hardcoding client singletons.
 - **Ship Matching Test Fakes:** Every external I/O seam must include both a production adapter and an in-memory test fake adapter (`FakeDevProfileSigner`, `DeterministicAiAdvisorFake`, `FakeBillingGateway`, `FakePediatricTriageAdapter`, `FakePlayRecommender`) for fast, deterministic unit and integration tests.

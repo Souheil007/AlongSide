@@ -21,8 +21,8 @@ It retires disjointed standalone tabs (`/health`, `/nutrition`, `/behavior`, `/b
 - **Advisory Platform Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md)
 - **Canonical Scope:** [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)
 - **Navigation & Decluttering Spec:** [`docs/streamlined-navigation-and-tab-decluttering-spec.md`](../docs/streamlined-navigation-and-tab-decluttering-spec.md)
-- **Frontend Skill Matrix & Boundaries:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
-- **Git Commit Standards:** [`docs/git-commit-standards.md`](../docs/git-commit-standards.md)
+- **Frontend Skill Matrix & Boundaries:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
+- **Git Commit Standards:** [`docs/engineering-standards/git-commit-standards.md`](../docs/engineering-standards/git-commit-standards.md)
 
 ---
 
@@ -98,7 +98,7 @@ It retires disjointed standalone tabs (`/health`, `/nutrition`, `/behavior`, `/b
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 - [ ] All tasks completed and verified with tests.
-- [ ] Code follows `docs/naming-conventions.md` and `docs/frontend-skill-matrix.md`.
+- [ ] Code follows `docs/engineering-standards/naming-conventions.md` and `docs/engineering-standards/frontend-skill-matrix.md`.
 - [ ] Working git diff passes `ponytail-review`.
 - [ ] Atomic conventional commit created.
 - [ ] Pull request submitted with plain text (`.txt`) description.

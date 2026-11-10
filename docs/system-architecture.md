@@ -4,8 +4,8 @@
 **Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Frontend Engineer, Backend Engineer, DevOps, Stakeholders  
 **Companion Deep-Dive:** [**Expert System Design Specification**](system-design-specification.md) (Capacity estimations, trade-off matrices, resilience protocols)  
-**Deep Module & Seam Architecture:** [**Codebase Design Specification**](codebase-design.md) (Module depth, 10 canonical seams, test fake adapters, and Deletion Test)  
-**Technical Roadmap:** [**Technical Roadmap v2.4.0**](technical-roadmap-v2.4.0.md)
+**Deep Module & Seam Architecture:** [**Codebase Design Specification**](engineering-standards/codebase-design.md) (Module depth, 10 canonical seams, test fake adapters, and Deletion Test)  
+**Platform Advisory Rearchitecture Spec:** [**Advisory Platform & Academy Chapters Spec**](platform-advisory-rearchitecture-and-academy-chapters-spec.md)
 
 ---
 

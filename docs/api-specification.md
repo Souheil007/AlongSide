@@ -5,7 +5,7 @@
 **Target Audience:** Frontend Engineer, Backend Engineer, QA  
 **Companion Documents:**  
 - [`docs/system-architecture.md`](system-architecture.md)  
-- [`docs/technical-roadmap-v2.4.0.md`](technical-roadmap-v2.4.0.md)  
+- [`docs/system-design-specification.md`](system-design-specification.md)  
 - [`docs/data-models.md`](data-models.md)  
 
 ---

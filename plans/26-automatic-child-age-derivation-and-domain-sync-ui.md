@@ -23,7 +23,7 @@ This breaks the intelligent parenting OS experience. This plan introduces a cent
 ## 2. Inputs & Architectural References
 
 - **Streamlined Navigation & Zero-Redundant-Age Spec:** [`docs/streamlined-navigation-and-tab-decluttering-spec.md`](../docs/streamlined-navigation-and-tab-decluttering-spec.md)
-- **Codebase Design (Deep Modules & Seams):** [`docs/codebase-design.md`](../docs/codebase-design.md)
+- **Codebase Design (Deep Modules & Seams):** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md)
 - **Child Context Store:** `apps/web/src/stores/useChildContextStore.ts`
 - **Pediatric Health & Triage Spec:** [`docs/system-architecture.md`](../docs/system-architecture.md)
 

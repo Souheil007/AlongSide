@@ -28,9 +28,9 @@ This plan delivers a unified, serene, and high-retention advisory homepage exper
 - **Canonical Advisory Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md) (Sections 1, 2, 3.1, 3.5)
 - **Canonical Product Scope:** [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Deep modules & clean seams)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
-- **Plan Standards:** [`docs/plan-standards.md`](../docs/plan-standards.md)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Deep modules & clean seams)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
+- **Plan Standards:** [`docs/engineering-standards/plan-standards.md`](../docs/engineering-standards/plan-standards.md)
 - **Merged PRs from Phase 9:**
   - PR #48: `feat(web): navigation & platform shell advisory pivot` (Plan 29)
   - PR #49: `feat(api): academy categories & prioritized chapters API` (Plan 30)

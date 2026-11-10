@@ -35,11 +35,11 @@ The Backend Agent will:
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Pillars 1, 2, 3, 4, 5)
 - **Technical Roadmap:** [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md) (Sections 2, 3, 4, 5)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md) (Monorepo layout, Service layer, Data layer)
-- **Codebase Design & Seam Architecture:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Seam 6: Pediatric Triage Engine, Seam 7: Milestone Engine, Seam 8: Nutrition Engine, Seam 9: Play Recommender)
+- **Codebase Design & Seam Architecture:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Seam 6: Pediatric Triage Engine, Seam 7: Milestone Engine, Seam 8: Nutrition Engine, Seam 9: Play Recommender)
 - **Data Models:** [`docs/data-models.md`](../docs/data-models.md) (Prisma models: `Milestone`, `ChildMilestone`, `SymptomProtocol`, `ChildHealthLog`, `NutritionGuide`, `BrainGameActivity`, `BehaviorGuide`)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Sections 11, 12, 13, 14, 15)
 - **Primary Source Research:** [`docs/research/pediatric-health-triage-protocols.md`](../docs/research/pediatric-health-triage-protocols.md)
-- **Backend Protocol:** [`docs/backend-skill-matrix.md`](../docs/backend-skill-matrix.md)
+- **Backend Protocol:** [`docs/engineering-standards/backend-skill-matrix.md`](../docs/engineering-standards/backend-skill-matrix.md)
 
 ---
 

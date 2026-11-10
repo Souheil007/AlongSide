@@ -19,7 +19,7 @@ Establish the foundational monorepo workspace structure, the `@alongside/shared`
 - **System Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md)
 - **Database Schema Specification:** [`docs/data-models.md`](../docs/data-models.md)
 - **Tech Stack Decision Record:** [`docs/tech-stack-decision.md`](../docs/tech-stack-decision.md)
-- **Code Quality & Git Standards:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md), [`docs/git-commit-standards.md`](../docs/git-commit-standards.md)
+- **Code Quality & Git Standards:** [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md), [`docs/engineering-standards/git-commit-standards.md`](../docs/engineering-standards/git-commit-standards.md)
 - **Agent Boundaries:** [`AGENTS.md`](../AGENTS.md)
 
 ---

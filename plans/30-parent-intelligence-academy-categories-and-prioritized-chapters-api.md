@@ -23,8 +23,8 @@ Each course is divided into **Chapters ordered by priority** (`priority: 1 = Cri
 
 ## 2. Inputs & Architectural References
 - **Advisory Platform Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Deep Modules & Seam Catalog)
-- **Backend Skill Matrix:** [`docs/backend-skill-matrix.md`](../docs/backend-skill-matrix.md), [`.agents/rules/07-backend-skill-matrix.md`](../.agents/rules/07-backend-skill-matrix.md)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Deep Modules & Seam Catalog)
+- **Backend Skill Matrix:** [`docs/engineering-standards/backend-skill-matrix.md`](../docs/engineering-standards/backend-skill-matrix.md), [`.agents/rules/07-backend-skill-matrix.md`](../.agents/rules/07-backend-skill-matrix.md)
 - **Prisma Schema & Data Models:** [`docs/data-models.md`](../docs/data-models.md)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md)
 

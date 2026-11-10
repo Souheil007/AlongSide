@@ -28,7 +28,7 @@ This plan declutters each domain tab to deliver an effortless, calm, and tailore
 - **Streamlined Navigation & Tab Decluttering Spec:** [`docs/streamlined-navigation-and-tab-decluttering-spec.md`](../docs/streamlined-navigation-and-tab-decluttering-spec.md)
 - **Automatic Child Age Derivation:** [`plans/26-automatic-child-age-derivation-and-domain-sync-ui.md`](26-automatic-child-age-derivation-and-domain-sync-ui.md)
 - **Canonical Product Scope:** [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 
 ---
 

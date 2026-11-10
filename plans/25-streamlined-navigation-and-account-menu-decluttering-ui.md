@@ -27,8 +27,8 @@ This plan renames "Today" to **"Home"**, establishes a clean, balanced 6-tab pri
 - **Streamlined Navigation Spec:** [`docs/streamlined-navigation-and-tab-decluttering-spec.md`](../docs/streamlined-navigation-and-tab-decluttering-spec.md)
 - **Canonical Product Scope:** [`docs/PROJECT_SCOPE.md`](../docs/PROJECT_SCOPE.md)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md)
-- **Code Quality & Testing Principles:** [`docs/code-quality-principles.md`](../docs/code-quality-principles.md)
-- **Git Commit Standards:** [`docs/git-commit-standards.md`](../docs/git-commit-standards.md)
+- **Code Quality & Testing Principles:** [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md)
+- **Git Commit Standards:** [`docs/engineering-standards/git-commit-standards.md`](../docs/engineering-standards/git-commit-standards.md)
 
 ---
 

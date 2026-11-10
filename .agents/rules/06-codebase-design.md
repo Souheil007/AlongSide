@@ -1,6 +1,6 @@
 # Agent Rule: Codebase Design & Deep Module Architecture
 
-Canonical Specification: [`docs/codebase-design.md`](file:///C:/GithubProjects/AlongSide/docs/codebase-design.md)  
+Canonical Specification: [`docs/engineering-standards/codebase-design.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/codebase-design.md)  
 Applies To: Frontend Agent, Backend Agent, Technical Planners  
 
 ---

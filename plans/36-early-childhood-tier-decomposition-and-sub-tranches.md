@@ -43,12 +43,12 @@ This revised plan provides 100% comprehensive, end-to-end coverage across all pa
 
 - **Canonical System Design Specification:** [`docs/system-design-tier-0-decomposition.md`](../docs/system-design-tier-0-decomposition.md)
 - **Master Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md)
-- **Codebase Design Principles:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Deep modules, in-memory fakes, clean seams)
+- **Codebase Design Principles:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Deep modules, in-memory fakes, clean seams)
 - **Developmental Research & Foundations:**
   - [`docs/research/developmental-milestones-0-18.md`](../docs/research/developmental-milestones-0-18.md) (CDC 75th percentile milestones)
   - [`docs/research/pediatric-nutrition-feeding-science.md`](../docs/research/pediatric-nutrition-feeding-science.md) (Allergen exposure windows & BLW)
   - [`docs/research/age-by-age-neurodevelopment-matrix.md`](../docs/research/age-by-age-neurodevelopment-matrix.md) (Neurobiology from birth to 18)
-- **Team Governance:** [`AGENTS.md`](../AGENTS.md) and [`docs/plan-standards.md`](../docs/plan-standards.md)
+- **Team Governance:** [`AGENTS.md`](../AGENTS.md) and [`docs/engineering-standards/plan-standards.md`](../docs/engineering-standards/plan-standards.md)
 - **Platform Strategic Boundary:** Non-Clinical Family OS Mandate ([`README.md`](../README.md) & [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) v2.4.0)
 
 ---

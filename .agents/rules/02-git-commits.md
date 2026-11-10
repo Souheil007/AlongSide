@@ -1,6 +1,6 @@
 # Agent Rule: Conventional Commits & Branch Naming
 
-Canonical Specification: [`docs/git-commit-standards.md`](file:///C:/GithubProjects/AlongSide/docs/git-commit-standards.md)  
+Canonical Specification: [`docs/engineering-standards/git-commit-standards.md`](file:///C:/GithubProjects/AlongSide/docs/engineering-standards/git-commit-standards.md)  
 Applies To: All Autonomous Agents, Engineers, and Authors  
 
 ---

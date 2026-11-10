@@ -30,8 +30,8 @@ The service features:
 - **Architecture Specification:** [`docs/system-architecture.md`](../docs/system-architecture.md) (Data Flow 3.3: Streaming RAG Flow)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Section 6: AI Advisor & FAQ Endpoints)
 - **Data Models:** [`docs/data-models.md`](../docs/data-models.md) (`AiConversation`, `AiMessage`, `FaqItem`, `FaqCategory`)
-- **Codebase Design & Seam Catalog:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Seam 2: 24/7 AI Child Advisor & Vector FAQ Retrieval)
-- **Backend Protocol:** [`docs/backend-skill-matrix.md`](../docs/backend-skill-matrix.md)
+- **Codebase Design & Seam Catalog:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Seam 2: 24/7 AI Child Advisor & Vector FAQ Retrieval)
+- **Backend Protocol:** [`docs/engineering-standards/backend-skill-matrix.md`](../docs/engineering-standards/backend-skill-matrix.md)
 - **Engineering Principles:** The Ponytail Principle (`.agents/rules/04-code-quality-and-testing.md`)
 
 ---

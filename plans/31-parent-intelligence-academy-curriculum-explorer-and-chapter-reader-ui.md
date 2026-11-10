@@ -16,7 +16,7 @@ It transforms the experience from a generic video course catalog into an interac
 
 ## 2. Inputs & Architectural References
 - **Advisory Platform Specification:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md)
-- **Frontend Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
+- **Frontend Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md), [`.agents/rules/05-frontend-skill-matrix.md`](../.agents/rules/05-frontend-skill-matrix.md)
 - **Parent Calm Design System:** [`docs/system-architecture.md`](../docs/system-architecture.md)
 - **Backend API Contract:** PLAN-30 (`GET /api/academy/categories`, `GET /api/academy/modules`, `GET /api/academy/modules/:slug`)
 

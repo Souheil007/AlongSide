@@ -29,7 +29,7 @@ This plan transforms the landing page into a stunning, empathetic, and comprehen
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Pillars 1–5, Section 4.1)
 - **Paul Graham Idea Roast & Decacorn Pivot:** [`docs/PAUL_GRAHAM_ROAST.md`](../docs/PAUL_GRAHAM_ROAST.md) (Sections 9, 10, 11)
 - **Technical Roadmap:** [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 - **Existing Page:** `apps/web/src/app/page.tsx`
 
 ---

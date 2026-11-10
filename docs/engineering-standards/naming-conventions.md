@@ -107,7 +107,7 @@
 
 ## 5. Git & Source Control Standards
 
-> **Authoritative Specification:** For complete guidelines on commit types, monorepo scopes, formatting rules, breaking changes, and prohibitions, see [**`docs/git-commit-standards.md`**](git-commit-standards.md).
+> **Authoritative Specification:** For complete guidelines on commit types, monorepo scopes, formatting rules, breaking changes, and prohibitions, see [**`docs/engineering-standards/git-commit-standards.md`**](git-commit-standards.md).
 
 ### 5.1 Branch Naming Convention
 Branches must adhere to the format `<type>/<issue-id>-<short-description>`:

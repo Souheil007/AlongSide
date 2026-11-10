@@ -4,8 +4,8 @@
 **Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
 **Target Audience:** Frontend Engineer, Backend Engineer, Technical Architects, Code Reviewers  
 **Companion Documents:**  
-- [**System Architecture Specification**](system-architecture.md)  
-- [**Technical Roadmap v2.4.0**](technical-roadmap-v2.4.0.md)  
+- [**System Architecture Specification**](../system-architecture.md)  
+- [**System Design Specification**](../system-design-specification.md)  
 - [**Code Quality, Security & Testing Principles**](code-quality-principles.md)  
 - [**Naming Conventions & Code Style Guide**](naming-conventions.md)  
 - Active Rule: [`.agents/rules/06-codebase-design.md`](../.agents/rules/06-codebase-design.md)

@@ -6,9 +6,8 @@
 **Companion Documents:**  
 - [`docs/PROJECT_SCOPE.md`](PROJECT_SCOPE.md) (Canonical Product Scope v2.4.0)  
 - [`docs/system-architecture.md`](system-architecture.md) (System Architecture)  
-- [`docs/codebase-design.md`](codebase-design.md) (Deep Modules & Seam Catalog)  
-- [`docs/lifespan-parent-intelligence-academy-spec.md`](lifespan-parent-intelligence-academy-spec.md) (0–18 Lifespan Curriculum Specification)  
-- [`docs/streamlined-navigation-and-tab-decluttering-spec.md`](streamlined-navigation-and-tab-decluttering-spec.md) (Navigation & Decluttering)  
+- [`docs/system-design-specification.md`](system-design-specification.md) (Expert System Design Specification)  
+- [`docs/engineering-standards/codebase-design.md`](engineering-standards/codebase-design.md) (Deep Modules & Seam Catalog)  
 - [`plans/README.md`](../plans/README.md) (Master Engineering Execution Index)  
 
 ---
@@ -493,4 +492,4 @@ To implement this vision without breaking existing features or causing merge con
 - [x] Clear resolution on why antipyretic dosing calculators are purged (zero economic value, high liability, episodic churn).
 - [x] Navigation bar strictly streamlined to 4 core tabs + user account menu.
 - [x] Deep module and seam architecture preserved with backward compatibility for existing Academy consumers.
-- [x] All plans authoritatively comply with [`docs/plan-standards.md`](plan-standards.md).
+- [x] All plans authoritatively comply with [`docs/engineering-standards/plan-standards.md`](engineering-standards/plan-standards.md).

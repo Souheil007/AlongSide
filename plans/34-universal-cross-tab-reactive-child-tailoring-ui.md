@@ -20,8 +20,8 @@ This eliminates parental cognitive load, ensures developmental accuracy, prevent
 
 ## 2. Inputs & Architectural References
 - **Canonical Advisory Spec:** [`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md`](../docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md) (Section 3.6: Universal Cross-Tab Reactive Child Context Synchronization Standard)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Deep Client Modules & Single Source of Truth)
-- **Frontend Autonomous Skill Matrix:** [`docs/frontend-skill-matrix.md`](../docs/frontend-skill-matrix.md)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Deep Client Modules & Single Source of Truth)
+- **Frontend Autonomous Skill Matrix:** [`docs/engineering-standards/frontend-skill-matrix.md`](../docs/engineering-standards/frontend-skill-matrix.md)
 - **Child Context Store:** [`apps/web/src/stores/useChildContextStore.ts`](../apps/web/src/stores/useChildContextStore.ts)
 - **Global Header & Navigation:** [`apps/web/src/components/shared/Header.tsx`](../apps/web/src/components/shared/Header.tsx) & [`ChildSelector.tsx`](../apps/web/src/components/shared/ChildSelector.tsx)
 - **Parent Intelligence Academy:** [`apps/web/src/components/academy/AcademyCatalogClient.tsx`](../apps/web/src/components/academy/AcademyCatalogClient.tsx) & [`ModuleDetailClient.tsx`](../apps/web/src/components/academy/ModuleDetailClient.tsx)
@@ -165,8 +165,8 @@ npm test
 
 ## 8. Definition of Done (DoD) Sign-Off Checklist
 - [x] All deliverables created and located in correct directories.
-- [x] Plan strictly adheres to [`docs/plan-standards.md`](../docs/plan-standards.md).
-- [x] Code strictly follows [`docs/naming-conventions.md`](../docs/naming-conventions.md) and [`docs/code-quality-principles.md`](../docs/code-quality-principles.md).
+- [x] Plan strictly adheres to [`docs/engineering-standards/plan-standards.md`](../docs/engineering-standards/plan-standards.md).
+- [x] Code strictly follows [`docs/engineering-standards/naming-conventions.md`](../docs/engineering-standards/naming-conventions.md) and [`docs/engineering-standards/code-quality-principles.md`](../docs/engineering-standards/code-quality-principles.md).
 - [x] `npm run typecheck` exits with code 0 across all workspaces.
 - [x] Automated tests pass with 100% success rate (54 test suites, 513 tests passing).
 - [x] Diff audited against the Ponytail Principle (`ponytail-review`).

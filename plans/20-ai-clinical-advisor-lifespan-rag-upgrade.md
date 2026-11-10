@@ -27,7 +27,7 @@ The joint engineering team will:
 - **Canonical Product Scope:** [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (Section 3: Pillar 6 "24/7 Clinical AI Advisor, Voice Sparring & 250+ Scenario FAQ Vault")
 - **Technical Roadmap:** [`docs/technical-roadmap-v2.4.0.md`](../docs/technical-roadmap-v2.4.0.md) (Section 3 & Phase 5)
 - **System Architecture:** [`docs/system-architecture.md`](../docs/system-architecture.md) (Data Flow 4.3: Whole-Child Streaming RAG Flow)
-- **Codebase Design Specification:** [`docs/codebase-design.md`](../docs/codebase-design.md) (Seam 2: 24/7 Clinical AI Advisor)
+- **Codebase Design Specification:** [`docs/engineering-standards/codebase-design.md`](../docs/engineering-standards/codebase-design.md) (Seam 2: 24/7 Clinical AI Advisor)
 - **Primary Source Research:** [`docs/research/pediatric-health-triage-protocols.md`](../docs/research/pediatric-health-triage-protocols.md)
 - **API Specification:** [`docs/api-specification.md`](../docs/api-specification.md) (Section 6 & 12)
 
