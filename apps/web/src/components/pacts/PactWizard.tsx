@@ -27,6 +27,7 @@ import {
   type AgreementClauseInput,
 } from '@alongside/shared';
 import { usePactStore, formatCurfew12Hour } from '@/stores/usePactStore';
+import { useChildContextStore } from '@/stores/useChildContextStore';
 import { useChildren } from '@/hooks/useChildren';
 import { useAuth } from '@/hooks/useAuth';
 import { agreementsApi } from '@/lib/api/agreements';
@@ -79,6 +80,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
   } = usePactStore();
 
   const [enrollmentModalOpen, setEnrollmentModalOpen] = React.useState(false);
+  const { activeChildId } = useChildContextStore();
 
   // Initialize wizard with selected child or first available child
   React.useEffect(() => {
@@ -86,6 +88,8 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
 
     const targetChild = initialChildId
       ? children.find((c) => c.id === initialChildId)
+      : activeChildId
+      ? children.find((c) => c.id === activeChildId)
       : childId
       ? children.find((c) => c.id === childId)
       : children[0];
@@ -98,7 +102,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
         targetChild.roadType
       );
     }
-  }, [initialChildId, children, childrenLoading, childId, initializeWizard]);
+  }, [initialChildId, activeChildId, children, childrenLoading, childId, initializeWizard]);
 
   const activeChild = children.find((c) => c.id === childId) || null;
   const formattedCurfew = formatCurfew12Hour(curfewTime);
@@ -184,7 +188,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
   };
 
   const stepsMeta = [
-    { number: 1, title: 'Foundations', subtitle: 'Child & Context' },
+    { number: 1, title: 'Foundations', subtitle: 'Pact & Context' },
     { number: 2, title: 'Clauses & Curfew', subtitle: 'Curfew & Boundaries' },
     { number: 3, title: 'Co-Signing', subtitle: 'Bilateral Signatures' },
     { number: 4, title: 'Treaty Sealed', subtitle: 'Print & Deploy' },
@@ -285,76 +289,43 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
         </div>
       )}
 
-      {/* STEP 1: Child Selection & Foundations */}
+      {/* STEP 1: Agreement Foundations */}
       {activeStep === 1 && (
         <div className="space-y-6">
           <Card className="border-slate-200/90 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg">Step 1: Select Child & Foundations</CardTitle>
+              <CardTitle className="text-lg">Step 1: Agreement Foundations</CardTitle>
               <CardDescription>
-                Choose which family member this agreement is for. The agreement presets will automatically adapt to their developmental tier and road.
+                Agreement presets automatically adapt to the child selected in the header.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Child Profile Selector */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                  Select Child
-                </label>
-                {childrenLoading ? (
-                  <div className="text-xs text-slate-500 py-3">Loading child profiles...</div>
-                ) : children.length === 0 ? (
-                  <div className="p-4 rounded-xl border border-dashed border-slate-300 text-center space-y-2">
-                    <p className="text-xs text-slate-600">No child profiles found.</p>
-                    <Link href="/children/new">
-                      <Button size="sm">Create Child Profile</Button>
-                    </Link>
+              {/* Active Child Context Display */}
+              {activeChild ? (
+                <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/60 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-teal-800 font-bold block">
+                      Active Child Agreement Partner
+                    </span>
+                    <p className="text-base font-bold text-slate-900">
+                      {activeChild.name} <span className="text-xs font-normal text-slate-600">· Age {activeChild.age}</span>
+                    </p>
                   </div>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {children.map((child) => {
-                      const isSelected = child.id === childId;
-                      const isPre = child.roadType === RoadType.PRE_DEVICE;
-
-                      return (
-                        <button
-                          key={child.id}
-                          type="button"
-                          onClick={() => {
-                            initializeWizard(
-                              child.id,
-                              child.name,
-                              child.developmentalTier,
-                              child.roadType
-                            );
-                          }}
-                          className={cn(
-                            'p-4 rounded-xl border text-left transition-all space-y-2',
-                            isSelected
-                              ? 'border-teal-600 bg-teal-50/60 shadow-xs ring-2 ring-teal-500/20'
-                              : 'border-slate-200 hover:border-slate-300 bg-white'
-                          )}
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="font-bold text-sm text-slate-900">
-                              {child.name}
-                            </span>
-                            <Badge
-                              variant={isPre ? 'roadPre' : 'roadActive'}
-                              className="text-[10px]"
-                            >
-                              {isPre ? 'Road 1: Pre-Device' : 'Road 2: Active'}
-                            </Badge>
-                          </div>
-                          <p className="text-xs text-slate-500">
-                            Age {child.age} • Grade {child.schoolGrade || 'N/A'}
-                          </p>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                  <Badge
+                    variant={activeChild.roadType === RoadType.PRE_DEVICE ? 'roadPre' : 'roadActive'}
+                    className="text-[10px]"
+                  >
+                    {activeChild.roadType === RoadType.PRE_DEVICE ? 'Road 1: Pre-Device' : 'Road 2: Active'}
+                  </Badge>
+                </div>
+              ) : children.length === 0 ? (
+                <div className="p-4 rounded-xl border border-dashed border-slate-300 text-center space-y-2">
+                  <p className="text-xs text-slate-600">No child profiles found.</p>
+                  <Link href="/children/new">
+                    <Button size="sm">Create Child Profile</Button>
+                  </Link>
+                </div>
+              ) : null}
 
               {/* Agreement Title Input */}
               <div>

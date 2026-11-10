@@ -243,48 +243,48 @@ export function DinnerConversationStarters({
           role="status"
           aria-live="polite"
           data-testid="toast-notification"
-          className="mb-4 rounded-xl border border-teal-400/50 bg-teal-900/95 px-4 py-3 text-xs sm:text-sm text-teal-100 shadow-lg flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2"
+          className="mb-4 rounded-xl border border-emerald-400/40 bg-[#071911] px-4 py-3 text-xs sm:text-sm text-emerald-100 shadow-lg flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2"
         >
           <div className="flex items-center gap-2">
-            <Check className="h-4 w-4 text-teal-300 shrink-0" />
-            <span className="font-medium">{toastMessage}</span>
+            <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+            <span className="font-medium text-white">{toastMessage}</span>
           </div>
           <button
             type="button"
             onClick={() => setToastMessage(null)}
-            className="text-teal-300 hover:text-white text-xs font-semibold"
+            className="text-emerald-300 hover:text-white text-xs font-semibold"
           >
             Dismiss
           </button>
         </div>
       )}
 
-      <div className="relative overflow-hidden rounded-3xl border border-teal-200/90 bg-gradient-to-br from-teal-850 via-teal-900 to-slate-900 p-6 sm:p-10 text-white shadow-lg">
+      <div className="relative overflow-hidden rounded-3xl border border-[#143D2B] bg-[#0E2B1E] p-6 sm:p-10 text-white shadow-xl">
         {/* Ambient radial glow */}
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 h-64 w-64 rounded-full bg-teal-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-12 -mr-12 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-3xl space-y-6">
           {/* Header meta badges */}
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-700/80 border border-teal-500/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-teal-100">
-              <UtensilsCrossed className="h-3.5 w-3.5" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/25 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+              <UtensilsCrossed className="h-3.5 w-3.5 text-emerald-300" />
               <span>Sunday Dinner Conversation Starter</span>
             </span>
 
             <span
               data-testid="dinner-tier-badge"
-              className="inline-flex items-center gap-1.5 rounded-full bg-teal-950/60 border border-teal-400/30 px-3 py-1 text-xs font-medium text-teal-200"
+              className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-medium text-emerald-100"
             >
-              <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+              <Sparkles className="h-3.5 w-3.5 text-emerald-300" />
               <span>Tailored for {childDisplayName} ({currentQuestion.tierLabel})</span>
             </span>
 
             {isSaved && (
               <span
                 data-testid="saved-indicator"
-                className="inline-flex items-center gap-1 rounded-full bg-amber-500/30 border border-amber-400/40 px-2.5 py-0.5 text-[11px] font-bold text-amber-200"
+                className="inline-flex items-center gap-1 rounded-full bg-amber-400 border border-amber-300 px-2.5 py-0.5 text-[11px] font-bold text-[#0E2B1E]"
               >
-                <BookmarkCheck className="h-3 w-3 text-amber-300" />
+                <BookmarkCheck className="h-3 w-3 text-[#0E2B1E]" />
                 <span>Saved for Sunday</span>
               </span>
             )}
@@ -295,33 +295,33 @@ export function DinnerConversationStarters({
             <h2
               id="dinner-starter-heading"
               data-testid="dinner-question-text"
-              className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-white"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight text-white"
             >
               &ldquo;{currentQuestion.question}&rdquo;
             </h2>
 
-            <p className="text-teal-100/90 text-xs sm:text-sm leading-relaxed">
+            <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed">
               Open-ended, non-confrontational questions designed to spark natural family dialogue without triggering defensive adolescent shutdowns.
             </p>
           </div>
 
           {/* Parent Calm Strategy Box */}
-          <div className="rounded-2xl border border-teal-500/30 bg-teal-950/50 p-4 sm:p-5 space-y-2 text-xs sm:text-sm text-teal-100/90">
+          <div className="rounded-2xl border border-emerald-500/30 bg-[#071911] p-4 sm:p-5 space-y-2.5 text-xs sm:text-sm text-emerald-100">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-teal-300 uppercase tracking-wider text-[11px] block">
+              <span className="font-bold text-emerald-300 uppercase tracking-wider text-[11px] block">
                 Parent Calm Rule of Engagement
               </span>
-              <span className="text-[11px] text-teal-400 font-mono">
+              <span className="text-[11px] text-emerald-300 font-mono">
                 Prompt {currentIndex + 1} of {questionsForTier.length}
               </span>
             </div>
-            <p className="leading-relaxed font-normal">
+            <p className="leading-relaxed font-normal text-white/95">
               {currentQuestion.parentCalmTip} Start by answering the question yourself first to model vulnerability and curiosity.
             </p>
             {currentQuestion.followUpPrompt && (
-              <div className="pt-1.5 text-xs text-teal-200/90 flex items-baseline gap-1.5 border-t border-teal-800/60">
-                <span className="font-semibold text-teal-300 shrink-0">Follow-up:</span>
-                <span className="italic">&ldquo;{currentQuestion.followUpPrompt}&rdquo;</span>
+              <div className="pt-2 text-xs text-emerald-100 flex items-baseline gap-1.5 border-t border-emerald-900/80">
+                <span className="font-semibold text-emerald-300 shrink-0">Follow-up:</span>
+                <span className="italic text-white">&ldquo;{currentQuestion.followUpPrompt}&rdquo;</span>
               </div>
             )}
           </div>
@@ -335,7 +335,7 @@ export function DinnerConversationStarters({
               onClick={handleCopy}
               variant="outline"
               size="sm"
-              className="bg-white/10 hover:bg-white/20 text-white border-teal-400/40 gap-2 text-xs font-semibold"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-2 text-xs font-semibold"
               aria-label="Copy question to clipboard"
             >
               {copied ? (
@@ -345,7 +345,7 @@ export function DinnerConversationStarters({
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5 text-teal-200" />
+                  <Copy className="h-3.5 w-3.5 text-emerald-200" />
                   <span>Copy Question</span>
                 </>
               )}
@@ -358,10 +358,10 @@ export function DinnerConversationStarters({
               onClick={handleShuffle}
               variant="outline"
               size="sm"
-              className="bg-white/10 hover:bg-white/20 text-white border-teal-400/40 gap-2 text-xs font-semibold"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-2 text-xs font-semibold"
               aria-label="Shuffle dinner question"
             >
-              <Shuffle className="h-3.5 w-3.5 text-teal-200" />
+              <Shuffle className="h-3.5 w-3.5 text-emerald-200" />
               <span>Shuffle Question</span>
             </Button>
 
@@ -373,21 +373,21 @@ export function DinnerConversationStarters({
               variant="outline"
               size="sm"
               className={cn(
-                'gap-2 text-xs font-semibold transition-all border-teal-400/40',
+                'gap-2 text-xs font-semibold transition-all border border-white/20',
                 isSaved
-                  ? 'bg-amber-500/20 text-amber-200 border-amber-400/60 hover:bg-amber-500/30'
+                  ? 'bg-amber-400 hover:bg-amber-300 text-[#0E2B1E] border-amber-300 font-bold'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               )}
               aria-label={isSaved ? 'Remove from Sunday Dinner list' : 'Save to Sunday Dinner list'}
             >
               {isSaved ? (
                 <>
-                  <BookmarkCheck className="h-3.5 w-3.5 text-amber-300" />
+                  <BookmarkCheck className="h-3.5 w-3.5 text-[#0E2B1E]" />
                   <span>Saved to Dinner List</span>
                 </>
               ) : (
                 <>
-                  <Bookmark className="h-3.5 w-3.5 text-teal-200" />
+                  <Bookmark className="h-3.5 w-3.5 text-emerald-200" />
                   <span>Save to Sunday Dinner List</span>
                 </>
               )}

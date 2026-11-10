@@ -12,7 +12,7 @@ export function Footer() {
                 <Shield className="h-4 w-4" />
               </div>
               <span className="font-serif font-bold text-[#111413] tracking-tight text-xl">
-                AlongSide <em className="italic font-normal text-[#143D2B]">Almanac</em>
+                AlongSide
               </span>
             </div>
             <p className="text-sm text-[#494F4C] leading-relaxed">

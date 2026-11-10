@@ -135,7 +135,7 @@ export function Header() {
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413] leading-tight">
-                AlongSide <em className="italic font-normal text-[#143D2B]">Almanac</em>
+                AlongSide
               </span>
               <span className="font-mono text-[9px] font-semibold tracking-wider uppercase text-[#143D2B] -mt-0.5 hidden sm:inline-block">
                 Pediatric Sanctuary • Lifespan 0–18

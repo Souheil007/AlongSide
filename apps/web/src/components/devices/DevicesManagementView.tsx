@@ -84,7 +84,7 @@ export function DevicesManagementView({
   child: propChild,
   children: propChildren,
 }: DevicesManagementViewProps) {
-  const { children: storeChildren, activeChildId, setActiveChild } = useChildContextStore();
+  const { children: storeChildren, activeChildId } = useChildContextStore();
 
   // Active child resolution with safe fallback and DI support
   const children = propChildren && propChildren.length > 0
@@ -195,25 +195,14 @@ export function DevicesManagementView({
           </p>
         </div>
 
-        {/* Profile Switcher */}
-        <div className="flex items-center gap-2 self-start sm:self-center">
-          <label htmlFor="child-profile-select" className="text-xs font-mono text-[#858C88] hidden md:inline">
-            Active Child:
-          </label>
-          <select
-            id="child-profile-select"
-            value={activeChild?.id || ''}
-            onChange={(e) => setActiveChild(e.target.value)}
-            className="text-xs font-mono bg-[#F4F4F0] border border-[#E3E3DC] rounded-[6px] px-3 py-2 font-medium text-[#111413] focus:outline-none focus:ring-1 focus:ring-[#143D2B] cursor-pointer shadow-2xs"
-          >
-            {children.map((child) => (
-              <option key={child.id} value={child.id}>
-                {child.name} (Age {child.age} &bull; Tier{' '}
-                {child.age <= 3 ? '0' : child.age <= 9 ? '2' : child.age <= 12 ? '3' : '4'})
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Calibrated Child Context Badge */}
+        {activeChild && (
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#E3E3DC] bg-[#F4F4F0] text-xs font-mono text-[#494F4C] self-start sm:self-center">
+            <span className="font-semibold text-[#143D2B]">{activeChild.name}</span>
+            <span className="text-[#858C88]">·</span>
+            <span>Age {activeChild.age}</span>
+          </div>
+        )}
       </div>
 
       {/* ========================================================================= */}
