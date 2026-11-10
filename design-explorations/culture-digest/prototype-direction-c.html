@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction C — Structured & Guided Ritual | Sunday Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            'hairline-soft': '#EDEDEA',
+            spruce: '#143D2B',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.03) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+    .step-active {
+      border-color: #143D2B;
+      background-color: #EAF3EE;
+      color: #143D2B;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-8 lg:p-12">
+  <div class="max-w-3xl mx-auto space-y-8">
+    
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between border-b border-hairline pb-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Sunday Family Ritual</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          Vol. 42 · 3-Step Guided Ritual
+        </span>
+      </div>
+    </div>
+
+    <!-- Active Child Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-canvas-subtle p-3 rounded-xl border border-hairline">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-mono uppercase tracking-wider text-mute">Family Member:</span>
+        <div class="flex items-center gap-1.5" id="child-switcher">
+          <button onclick="setChild('mateo')" id="btn-mateo" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-white text-ink border-spruce font-mono shadow-sm">
+            Mateo · 14 mo
+          </button>
+          <button onclick="setChild('maya')" id="btn-maya" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono">
+            Maya · 8 yrs
+          </button>
+          <button onclick="setChild('julian')" id="btn-julian" class="px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono">
+            Julian · 14 yrs
+          </button>
+        </div>
+      </div>
+      <div id="road-badge" class="font-mono text-xs text-spruce flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+        <span id="road-text">Road 1: Pre-Device Sanctuary</span>
+      </div>
+    </div>
+
+    <!-- Direction Header -->
+    <header class="space-y-2">
+      <div class="flex items-center gap-2 font-mono text-xs text-mute">
+        <span>Direction C — Structured & Guided</span>
+        <span>•</span>
+        <span>A 3-Step Sunday Ritual</span>
+      </div>
+      <h1 id="page-title" class="font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-ink leading-tight">
+        The Sunday Table Ritual: Understand, Connect & Guide
+      </h1>
+      <p id="page-subtitle" class="text-body text-sm sm:text-base leading-relaxed">
+        A structured progression for Sunday morning: Explore what's occupying Mateo's world, prepare tonight's table dialogue, and maintain healthy developmental boundaries.
+      </p>
+    </header>
+
+    <!-- 3-STAGE PROGRESS STEPPER -->
+    <nav class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-canvas-subtle border border-hairline text-xs font-mono">
+      <button onclick="scrollToStep('step-1')" id="nav-step-1" class="py-2.5 px-3 rounded-xl text-center transition border border-transparent step-active">
+        <span class="block text-[10px] text-mute uppercase tracking-wider">Step 1</span>
+        <span class="block truncate">1. Understand</span>
+      </button>
+      <button onclick="scrollToStep('step-2')" id="nav-step-2" class="py-2.5 px-3 rounded-xl text-center transition border border-transparent text-body hover:bg-white">
+        <span class="block text-[10px] text-mute uppercase tracking-wider">Step 2</span>
+        <span class="block truncate">2. Connect</span>
+      </button>
+      <button onclick="scrollToStep('step-3')" id="nav-step-3" class="py-2.5 px-3 rounded-xl text-center transition border border-transparent text-body hover:bg-white">
+        <span class="block text-[10px] text-mute uppercase tracking-wider">Step 3</span>
+        <span class="block truncate">3. Guide</span>
+      </button>
+    </nav>
+
+    <!-- STEP 1: UNDERSTAND (Their World & Culture) -->
+    <section id="step-1" class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-5">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-spruce text-white flex items-center justify-center text-[11px] font-bold">1</span>
+            Step 1: Understand Their World
+          </span>
+          <p class="text-xs text-mute font-mono">What is shaping their imagination & peer circle this week</p>
+        </div>
+        <span id="step1-tag" class="font-mono text-xs px-2.5 py-0.5 rounded bg-canvas-subtle border border-hairline text-body">
+          Sensory Milestone
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        <h2 id="step1-headline" class="font-serif text-2xl font-semibold text-ink">
+          The "Cause-and-Effect" Physical Clapping Ritual
+        </h2>
+        <p id="step1-body" class="text-body text-sm sm:text-base leading-relaxed">
+          Mateo has unlocked the joy of deliberate intentional actions—dropping a spoon from a high chair, waiting for the clatter, clapping enthusiastically, and looking directly into your eyes to see if you share the delight.
+        </p>
+      </div>
+
+      <!-- Expert Clinical Insight (Progressive Disclosure) -->
+      <div class="p-4 rounded-xl bg-canvas-subtle border border-hairline-soft space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Pediatric Translation</span>
+          <span class="text-[11px] font-mono text-mute">Sensorimotor Stage (Piaget)</span>
+        </div>
+        <p id="step1-insight" class="text-xs sm:text-sm text-body leading-relaxed">
+          This isn't misbehavior or food throwing—it is empirical physics. Dropping objects tests gravity, acoustic reverberation, and relational permanence ("Does my caregiver stay emotionally available when I make a mess?").
+        </p>
+      </div>
+    </section>
+
+    <!-- STEP 2: CONNECT (Tonight at the Sunday Table) -->
+    <section id="step-2" class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-6 border-l-4 border-l-spruce">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-spruce text-white flex items-center justify-center text-[11px] font-bold">2</span>
+            Step 2: Connect At Tonight's Table
+          </span>
+          <p class="text-xs text-mute font-mono">The curated question to open joyful family dialogue</p>
+        </div>
+        <button onclick="copyDinnerPrompt()" id="step2-copy-btn" class="font-mono text-xs inline-flex items-center gap-1 px-3 py-1 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle transition text-body font-medium shadow-sm">
+          <span id="step2-copy-text">Copy Prompt</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-mute">Ask this at dinner tonight:</span>
+        <blockquote id="step2-question" class="font-serif text-2xl sm:text-3xl italic font-normal text-ink leading-snug">
+          "What was the silliest animal sound or face that made you giggle the hardest today?"
+        </blockquote>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="p-3.5 rounded-xl bg-canvas-subtle border border-hairline-soft space-y-1">
+          <span class="font-mono text-spruce uppercase tracking-wider font-semibold block">Conversational Posture:</span>
+          <p id="step2-posture" class="text-body leading-relaxed">
+            Model the silliness first. Toddlers connect through physical mimicry and turn-taking smiles rather than analytical logic.
+          </p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-canvas-subtle border border-hairline-soft space-y-1">
+          <span class="font-mono text-spruce uppercase tracking-wider font-semibold block">Next Step If They Clam Up:</span>
+          <p id="step2-rescue" class="text-body leading-relaxed">
+            Gently make a funny baby animal sound yourself. Don't press for a verbal response; honor quiet observation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: GUIDE (Developmental & Digital Horizon) -->
+    <!-- Bifurcated context: Clean guidance for Pre-Device vs Calm Digital Literacy for Active-Device -->
+    <section id="step-3" class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-5">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-spruce text-white flex items-center justify-center text-[11px] font-bold">3</span>
+            Step 3: Guide The Horizon
+          </span>
+          <p class="text-xs text-mute font-mono" id="step3-sub">Developmental Boundaries & Digital Literacy</p>
+        </div>
+        <span id="step3-badge" class="font-mono text-xs px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+          Pre-Device Sanctuary
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        <h3 id="step3-title" class="font-serif text-xl font-semibold text-ink">
+          Screen-Free Wonder Window & Sensory Play
+        </h3>
+        <p id="step3-desc" class="text-body text-sm sm:text-base leading-relaxed">
+          At 14 months, the American Academy of Pediatrics strongly recommends prioritizing hands-on 3D tactile experiences over 2D pixels. Mateo's brain develops spatial depth, bilateral motor control, and emotional attunement best through real-world physical exploration.
+        </p>
+      </div>
+
+      <!-- Actionable Guideline -->
+      <div class="p-4 rounded-xl border border-hairline bg-canvas-subtle space-y-2 text-xs sm:text-sm">
+        <strong class="font-mono uppercase tracking-wider text-spruce font-semibold block" id="step3-action-label">
+          Recommended Family Practice This Week:
+        </strong>
+        <p id="step3-action-text" class="text-body leading-relaxed">
+          Create a 15-minute "Sensory Water Basin" session with measuring cups, floating sponges, and safe kitchen spoons. Hands-on tactile play wires neural density far deeper than any interactive tablet video.
+        </p>
+      </div>
+
+      <!-- Subtle Device Gateway (If needed) -->
+      <div class="border-t border-hairline-soft pt-3 flex items-center justify-between text-xs font-mono text-mute">
+        <span id="step3-footnote">Governed by AlongSide Pre-Device Roadmap</span>
+        <a href="#hub" id="step3-link" class="text-spruce font-medium hover:underline">
+          View Developmental Roadmap →
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-4 pb-12 text-center text-xs font-mono text-mute border-t border-hairline space-y-1">
+      <p>AlongSide Almanac · Direction C: Structured & Guided 3-Stage Ritual</p>
+      <p class="text-[11px] text-body">Understand → Connect → Guide · Calibrated for Continuous Family Growth</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const DATA = {
+      mateo: {
+        roadText: 'Road 1: Pre-Device Sanctuary',
+        roadBadgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        pageTitle: 'The Sunday Table Ritual: Understand, Connect & Guide',
+        pageSubtitle: 'A structured progression for Sunday morning: Explore what\'s occupying Mateo\'s world, prepare tonight\'s table dialogue, and maintain healthy developmental boundaries.',
+        step1Tag: 'Sensory Milestone',
+        step1Headline: 'The "Cause-and-Effect" Physical Clapping Ritual',
+        step1Body: 'Mateo has unlocked the joy of deliberate intentional actions—dropping a spoon from a high chair, waiting for the clatter, clapping enthusiastically, and looking directly into your eyes to see if you share the delight.',
+        step1Insight: 'This isn\'t misbehavior or food throwing—it is empirical physics. Dropping objects tests gravity, acoustic reverberation, and relational permanence ("Does my caregiver stay emotionally available when I make a mess?").',
+        step2Question: '"What was the silliest animal sound or face that made you giggle the hardest today?"',
+        step2Posture: 'Model the silliness first. Toddlers connect through physical mimicry and turn-taking smiles rather than analytical logic.',
+        step2Rescue: 'Gently make a funny baby animal sound yourself. Don\'t press for a verbal response; honor quiet observation.',
+        step3Badge: 'Pre-Device Sanctuary',
+        step3BadgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        step3Title: 'Screen-Free Wonder Window & Sensory Play',
+        step3Desc: 'At 14 months, the American Academy of Pediatrics strongly recommends prioritizing hands-on 3D tactile experiences over 2D pixels. Mateo\'s brain develops spatial depth, bilateral motor control, and emotional attunement best through real-world physical exploration.',
+        step3ActionLabel: 'Recommended Family Practice This Week:',
+        step3ActionText: 'Create a 15-minute "Sensory Water Basin" session with measuring cups, floating sponges, and safe kitchen spoons. Hands-on tactile play wires neural density far deeper than any interactive tablet video.',
+        step3Footnote: 'Governed by AlongSide Pre-Device Roadmap',
+        step3Link: 'View Developmental Roadmap →'
+      },
+      maya: {
+        roadText: 'Road 1: Pre-Device Sanctuary',
+        roadBadgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        pageTitle: 'The 3rd-Grade Sunday Ritual: Recess, Reciprocity & Fairness',
+        pageSubtitle: 'A structured progression for Sunday morning: Explore Maya\'s 3rd-grade playground economy, prepare tonight\'s table conversation, and coach healthy social boundaries.',
+        step1Tag: 'Social Development',
+        step1Headline: 'The Recess Barter Economy & Trading Fairness',
+        step1Body: 'In 3rd grade, social status and trust revolve around reciprocal playground trade treaties—trading cards, collectible stickers, and friendship bracelets. Navigating "fair vs unfair" deals is Maya\'s daily social crucible.',
+        step1Insight: 'Between 7 and 9, the brain transitions from egocentrism to moral reciprocity. When Maya complains of an unfair trade, she is wrestling with the emotional sting of betrayal and early value appraisal.',
+        step2Question: '"If you could invent a brand new school subject that every kid had to take, what would the homework be?"',
+        step2Posture: 'Start by answering first with a humorous subject (like "Pillow Fort Engineering"). Keep the tone playful to lower academic guards.',
+        step2Rescue: 'Follow up with curiosity: "What kind of test would the teacher give to earn an A+ in Pillow Forts?"',
+        step3Badge: 'Pre-Device Console Rules',
+        step3BadgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        step3Title: 'Co-Op Console Boundaries & Screen Stopping Cues',
+        step3Desc: 'Maya does not possess a personal smartphone, but she plays collaborative Minecraft with classmates on the family console. At 8, stopping cues must be scheduled with advance warning rather than abrupt unplugging.',
+        step3ActionLabel: 'Recommended Family Practice This Week:',
+        step3ActionText: 'Use the "One Sunset Rule" before ending a Minecraft session: give a 5-minute warning so Maya can finish her build and place her character in a safe shelter before saving.',
+        step3Footnote: 'Pre-Device Console Agreement Active',
+        step3Link: 'View Family Console Agreement →'
+      },
+      julian: {
+        roadText: 'Road 2: Active Device (Enrolled)',
+        roadBadgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+        pageTitle: 'The Freshman Sunday Ritual: Slang, Stress & Digital Autonomy',
+        pageSubtitle: 'A structured progression for Sunday morning: Understand Julian\'s freshman vernacular, connect meaningfully at dinner without prying, and maintain calm digital curfews.',
+        step1Tag: 'Peer Vernacular',
+        step1Headline: 'Decoding "Crashout": When Slang Masks Real Overwhelm',
+        step1Body: 'Julian\'s friend group uses "crashout" to describe sudden angry meltdowns during online games or school frustration. Behind the hyperbole, freshman year brings high social stakes and academic workload spikes.',
+        step1Insight: 'Adolescent amygdala reactivity spikes years before prefrontal executive control finishes wiring (age 25). Slang serves as emotional armor to vent frustration without appearing vulnerable.',
+        step2Question: '"What was something absurd or hilarious that happened in your group chats or hallways this week?"',
+        step2Posture: 'Ask with genuine interest in peer culture, not surveillance. Do not demand names or specifics unless he shares voluntarily.',
+        step2Rescue: 'Acknowledge the hilarity: "High school hallway drama is undefeated. Sounds like quite a Tuesday."',
+        step3Badge: 'Active Device Pact · 9:00 PM Curfew',
+        step3BadgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+        step3Title: 'Digital Literacy Spotlight: Spotting Algorithmic Rage-Bait',
+        step3Desc: 'Rather than moralizing about screen time, coach Julian on the economic architecture of feeds: Algorithms promote content that provokes anger because outrage drives 4x more comments than joy.',
+        step3ActionLabel: 'Recommended Family Practice This Week:',
+        step3ActionText: 'At 9:00 PM tonight, the Apple MDM curfew neutrally locks social feeds so Julian gets 8+ hours of uninterrupted sleep. Confirm his bedside charger is placed outside the bedroom.',
+        step3Footnote: 'Apple MDM Profile Verified Active',
+        step3Link: 'Review Device Profile & Curfews →'
+      }
+    };
+
+    let activeChildKey = 'mateo';
+
+    function setChild(key) {
+      activeChildKey = key;
+      const d = DATA[key];
+
+      // Update switcher buttons
+      ['mateo', 'maya', 'julian'].forEach(k => {
+        const btn = document.getElementById('btn-' + k);
+        if (k === key) {
+          btn.className = 'px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-white text-ink border-spruce font-mono shadow-sm';
+        } else {
+          btn.className = 'px-3 py-1 rounded-full text-xs font-medium border transition-colors bg-transparent text-body border-hairline hover:bg-white font-mono';
+        }
+      });
+
+      // Update content
+      document.getElementById('road-text').textContent = d.roadText;
+      document.getElementById('page-title').textContent = d.pageTitle;
+      document.getElementById('page-subtitle').textContent = d.pageSubtitle;
+
+      document.getElementById('step1-tag').textContent = d.step1Tag;
+      document.getElementById('step1-headline').textContent = d.step1Headline;
+      document.getElementById('step1-body').textContent = d.step1Body;
+      document.getElementById('step1-insight').textContent = d.step1Insight;
+
+      document.getElementById('step2-question').textContent = d.step2Question;
+      document.getElementById('step2-posture').textContent = d.step2Posture;
+      document.getElementById('step2-rescue').textContent = d.step2Rescue;
+
+      const badge = document.getElementById('step3-badge');
+      badge.textContent = d.step3Badge;
+      badge.className = 'font-mono text-xs px-2.5 py-0.5 rounded border ' + d.step3BadgeClass;
+
+      document.getElementById('step3-title').textContent = d.step3Title;
+      document.getElementById('step3-desc').textContent = d.step3Desc;
+      document.getElementById('step3-action-label').textContent = d.step3ActionLabel;
+      document.getElementById('step3-action-text').textContent = d.step3ActionText;
+      document.getElementById('step3-footnote').textContent = d.step3Footnote;
+      document.getElementById('step3-link').textContent = d.step3Link;
+    }
+
+    function scrollToStep(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      ['nav-step-1', 'nav-step-2', 'nav-step-3'].forEach(n => {
+        const btn = document.getElementById(n);
+        btn.classList.remove('step-active');
+        btn.classList.add('text-body', 'hover:bg-white');
+      });
+      const activeNavId = 'nav-' + id;
+      const activeBtn = document.getElementById(activeNavId);
+      if (activeBtn) {
+        activeBtn.classList.add('step-active');
+        activeBtn.classList.remove('text-body', 'hover:bg-white');
+      }
+    }
+
+    function copyDinnerPrompt() {
+      const q = document.getElementById('step2-question').innerText;
+      navigator.clipboard.writeText(q).then(() => {
+        const span = document.getElementById('step2-copy-text');
+        span.textContent = 'Copied to Clipboard!';
+        setTimeout(() => { span.textContent = 'Copy Prompt'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
