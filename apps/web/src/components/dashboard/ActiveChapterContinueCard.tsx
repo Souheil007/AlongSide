@@ -9,6 +9,7 @@ import {
   Pause,
   ArrowRight,
   Check,
+  Copy,
   Headphones,
 } from 'lucide-react';
 import {
@@ -217,6 +218,33 @@ export function ActiveChapterContinueCard({
   const fallbackAnchor = resolveTierAnchor(child?.developmentalTier ?? child?.age);
 
   const [isPlayingAudio, setIsPlayingAudio] = React.useState(false);
+  const [scriptCopied, setScriptCopied] = React.useState(false);
+
+  const tonightScript = React.useMemo(() => {
+    const age = child?.age ?? 10;
+    if (age <= 3) {
+      return '“Your feelings are so big right now. I’m sitting right here on the carpet with you until your breathing slows down.”';
+    }
+    if (age <= 6) {
+      return '“I see you’re really frustrated. Let’s take two deep breaths together, and then we’ll decide what happens next.”';
+    }
+    if (age <= 12) {
+      return '“I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.”';
+    }
+    return '“I hear you, and I understand why you feel that way. Let’s take 10 minutes to reset, and then talk through this calmly without raising our voices.”';
+  }, [child?.age]);
+
+  const handleCopyScript = async () => {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(tonightScript);
+        setScriptCopied(true);
+        setTimeout(() => setScriptCopied(false), 2000);
+      }
+    } catch {
+      // ignore
+    }
+  };
 
   // Fetch modules for this tier
   const { data: modules } = useQuery({
@@ -345,53 +373,92 @@ export function ActiveChapterContinueCard({
           </div>
         </div>
 
-        {/* 2. TODAY'S ACTIVE LESSON HERO CARD */}
-        <div className="p-4 sm:p-5 rounded-[8px] bg-[#EAF3EE]/80 border border-[#143D2B]/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="space-y-1.5 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-white px-2 py-0.5 rounded border border-[#143D2B]/20 uppercase tracking-wider">
-                Today&apos;s Active Lesson
-              </span>
-              <span className="font-mono text-xs text-[#858C88] font-medium">
-                {readingMinutes} minutes • Audio or Text
-              </span>
+        {/* 2. TODAY'S ACTIVE LESSON & TONIGHT'S SCRIPT (2-COLUMN GRID) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+          {/* Left: Active Lesson & Audio Player (7 cols) */}
+          <div className="md:col-span-7 p-4 sm:p-5 rounded-xl bg-[#EAF3EE]/80 border border-[#143D2B]/20 flex flex-col justify-between space-y-3">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-white px-2 py-0.5 rounded border border-[#143D2B]/20 uppercase tracking-wider">
+                  Today&apos;s Active Lesson
+                </span>
+                <span className="font-mono text-xs text-[#858C88] font-medium">
+                  {readingMinutes} minutes • Audio or Text
+                </span>
+              </div>
+              <h3 className="font-serif text-base sm:text-lg font-bold text-[#111413] leading-snug">
+                {chapterTitle}
+              </h3>
+              <p className="text-xs text-[#494F4C] leading-relaxed">
+                {summary}
+              </p>
             </div>
-            <h3 className="font-serif text-base sm:text-lg font-bold text-[#111413] leading-snug">
-              {chapterTitle}
-            </h3>
-            <p className="text-xs text-[#494F4C] leading-relaxed max-w-2xl">
-              {summary}
-            </p>
+
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <Button
+                type="button"
+                onClick={toggleAudio}
+                className="min-h-[44px] gap-2 rounded-lg bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-bold shadow-xs transition cursor-pointer"
+              >
+                {isPlayingAudio ? (
+                  <>
+                    <Pause className="w-4 h-4 fill-current" />
+                    <span>Pause Audio</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-4 h-4 fill-current" />
+                    <span>Listen to Audio ({audioDuration})</span>
+                  </>
+                )}
+              </Button>
+
+              <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
+                <Button
+                  variant="outline"
+                  className="min-h-[44px] gap-1.5 rounded-lg bg-white border-[#E3E3DC] text-xs font-semibold text-[#111413] hover:bg-[#F4F4F0] transition"
+                >
+                  <span>Read Lesson</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0 self-stretch sm:self-auto">
-            <Button
-              type="button"
-              onClick={toggleAudio}
-              className="min-h-[44px] gap-2 rounded-[5px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-bold shadow-xs transition"
-            >
-              {isPlayingAudio ? (
-                <>
-                  <Pause className="w-4 h-4 fill-current" />
-                  <span>Pause Audio</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 fill-current" />
-                  <span>Listen to Audio ({audioDuration})</span>
-                </>
-              )}
-            </Button>
+          {/* Right: What to Say Out Loud Tonight (5 cols) */}
+          <div className="md:col-span-5 p-4 sm:p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider">
+                  Tonight&apos;s Script
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCopyScript}
+                  className="inline-flex items-center gap-1 font-mono text-[10px] text-[#143D2B] hover:text-[#0E2B1E] bg-white px-2 py-0.5 rounded border border-[#E3E3DC] shadow-2xs transition cursor-pointer"
+                >
+                  {scriptCopied ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-600" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-[#143D2B]" />
+                      <span>Copy 📋</span>
+                    </>
+                  )}
+                </button>
+              </div>
 
-            <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
-              <Button
-                variant="outline"
-                className="min-h-[44px] gap-1.5 rounded-[5px] bg-white border-[#E3E3DC] text-xs font-semibold text-[#111413] hover:bg-[#F4F4F0] transition"
-              >
-                <span>Read Lesson</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Button>
-            </Link>
+              <blockquote className="font-serif text-sm text-[#111413] italic leading-relaxed">
+                {tonightScript}
+              </blockquote>
+            </div>
+
+            <span className="font-mono text-[10px] text-[#858C88] block border-t border-[#E3E3DC] pt-2">
+              Co-Regulation Tip: Keep vocal pitch calm and low. Connect before correcting.
+            </span>
           </div>
         </div>
 

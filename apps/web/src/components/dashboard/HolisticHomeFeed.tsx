@@ -106,30 +106,24 @@ export function HolisticHomeFeed({ initialChildId, parentName = 'Sarah' }: Holis
         </aside>
       )}
 
-      {/* 1. Welcoming Value Banner & Child Horizon Leap Card */}
+      {/* 1. Ambient Context Status Anchor & Welcoming Value Banner */}
       <ChildHeroCard
         child={activeChild}
         parentName={parentName}
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 
-      {/* 2. #1 HERO CENTERPIECE: Active Academy Course Journey Roadmap */}
+      {/* 2. SECTION 1: Active Academy Track (Hero Centerpiece with Visual Roadmap & Tonight's Script) */}
       <ActiveChapterContinueCard child={activeChild} />
 
-      {/* 3. STAGE-ADAPTIVE TWO-COLUMN GRID: Daily Empathy Script (Left 7) + Stage Telemetry (Right 5) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column (7 cols): Today's Word-for-Word Empathy Script & Practice Sparring */}
-        <div className="lg:col-span-7 space-y-6">
-          <DailyAdvisoryScriptCard child={activeChild} />
-        </div>
+      {/* 3. SECTION 2: Sunday Youth Culture Digest (Living Schoolyard Feed with Cringe Meter & Table Starter) */}
+      <SundayCultureDigestCard child={activeChild} />
 
-        {/* Right Column (5 cols): Stage-Adaptive Telemetry, Culture Digest & 24/7 AI Advisor */}
-        <div className="lg:col-span-5 space-y-6">
-          <BilateralPactStatusCard child={activeChild} />
-          <SundayCultureDigestCard child={activeChild} />
-          <AskAdvisorPromptBar child={activeChild} />
-        </div>
-      </div>
+      {/* 4. SECTION 3: First-Phone Assessment & Readiness Radar (Stage-Adaptive 3-Column Grid) */}
+      <BilateralPactStatusCard child={activeChild} />
+
+      {/* 5. SECTION 4: 24/7 AI Child Advisor (Empathetic Co-Pilot & Voice Sparring Simulator) */}
+      <AskAdvisorPromptBar child={activeChild} />
 
       {/* Child Onboarding Modal */}
       <ChildOnboardingModal
