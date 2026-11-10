@@ -7,7 +7,7 @@
 **Companion Documents:**  
 - [**Expert System Design Specification**](system-design-specification.md) (`docs/system-design-specification.md`)
 - [**System Architecture Specification**](system-architecture.md) (`docs/system-architecture.md`)
-- [**Codebase Design Specification**](codebase-design.md) (`docs/codebase-design.md`)
+- [**Codebase Design Specification**](engineering-standards/codebase-design.md) (`docs/engineering-standards/codebase-design.md`)
 - [**Lifespan Developmental Milestones**](research/developmental-milestones-0-18.md) (`docs/research/developmental-milestones-0-18.md`)
 - [**Pediatric Nutrition & Feeding Science**](research/pediatric-nutrition-feeding-science.md) (`docs/research/pediatric-nutrition-feeding-science.md`)
 
@@ -306,14 +306,16 @@ graph LR
 - `DietaryStage.SOLIDS_INTRODUCED` $\to$ Suggested default for `ageMonths` between 4 and 12.
 - `DietaryStage.TODDLER_TABLE` $\to$ Suggested default for `TIER_0B_TODDLER_1_2` and `TIER_0C_OLDER_TODDLER_2_3`.
 
-### 6.4 AI Clinical Advisor Invariant Injection
-When the AI Advisor initializes a session for an active child:
-- If child is in `TIER_0A_INFANCY_0_1`, the system prompt injects:
-  > *"CRITICAL CLINICAL INVARIANT: Child is an infant (Age: {ageMonths} months). Any report of fever >= 100.4°F in an infant under 90 days is a medical emergency. Recommend zero screen exposure under 24 months. Emphasize responsive serve-and-return communication and maternal/paternal postpartum support."*
-- If child is in `TIER_0B_TODDLER_1_2`, the system prompt injects:
-  > *"CLINICAL INVARIANT: Child is a young toddler (Age: {ageMonths} months). Focus on gross motor safety, physiological toddler anorexia reassurance, 2-to-1 nap transitions, and non-punitive physical co-regulation for limbic tantrums."*
-- If child is in `TIER_0C_OLDER_TODDLER_2_3`, the system prompt injects:
-  > *"CLINICAL INVARIANT: Child is an older toddler (Age: {ageYears} years). Focus on autonomy support (Erikson), setting firm loving limits without shame, potty learning readiness, and intentional slow-paced media co-viewing."*
+### 6.4 AI Child Advisor Developmental Neurobiology Prompt Injection (`prompt.builder.ts`)
+Conforming to the SOU-86 Non-Clinical Family OS mandate, AlongSide's 24/7 AI Child Advisor ("Ask Alongside Anything") focuses on empathetic developmental neurobiology, restorative sleep rhythms, and collaborative parenting. Note that acute pediatric life threats (such as neonatal fever $\ge 100.4^\circ\text{F}$ in infants under 90 days, respiratory distress, and toxic ingestion) are automatically intercepted upstream by the `ClinicalSafeHarborFilter` (`apps/api/src/modules/ai-advisor/safe-harbor.filter.ts`) with immediate emergency redirection.
+
+When building the conversational system prompt in `apps/api/src/modules/ai-advisor/prompt.builder.ts` for an active child:
+- If child is in `TIER_0A_INFANCY_0_1`, inject Somatic Regulation & Circadian Foundations:
+  > *"DEVELOPMENTAL CONTEXT: Child is an infant (Age: {ageMonths} months). Focus on somatic regulation, responsive serve-and-return communication, 45–90 minute wake windows, the landmark 4-month sleep regression, AAP zero screen recommendations under 24 months, and maternal/paternal postpartum reassurance."*
+- If child is in `TIER_0B_TODDLER_1_2`, inject Amygdala Co-Regulation & Locomotion:
+  > *"DEVELOPMENTAL CONTEXT: Child is a young toddler (Age: {ageMonths} months). Focus on motor exploration safety, physiological toddler anorexia reassurance, the 2-to-1 nap drop, and serving as the external nervous system during pre-verbal limbic tantrums without punitive isolation."*
+- If child is in `TIER_0C_OLDER_TODDLER_2_3`, inject Autonomy & Boundary Testing:
+  > *"DEVELOPMENTAL CONTEXT: Child is an older toddler (Age: {ageYears} years). Focus on Eriksonian autonomy support, setting firm loving boundaries without shame, toilet learning readiness, and intentional parent co-viewing."*
 
 ---
 
@@ -373,13 +375,21 @@ The homepage selector seamlessly evolves from 6 tabs to 8 tabs. On desktop, it d
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 8.2 Child Onboarding & Age Derivation
+### 8.2 Child Onboarding & Reactive Age Derivation
 When a parent enters a birthdate:
 - Birthdate: `March 15, 2026` (Child is 8 months old).
 - Derived Tier: `TIER_0A_INFANCY_0_1` (Infancy: 0–1 yr).
 - Derived Tranche: `INFANT_MOBILE_EXPLORER_7_12M` (7–12 Months).
 - Auto-Suggested Feeding Stage: `SOLIDS_INTRODUCED`.
 - Display Badge: `"8 Months Old • Mobile Explorer & First Foods"`.
+
+### 8.3 Reactive Client State & Cockpit Integration
+1. **Authoritative Age Hook (`apps/web/src/hooks/useChildAge.ts`):** `deriveDevelopmentalTier()` must accept `(ageYears, ageMonths)` to resolve `TIER_0A` (0–12m), `TIER_0B` (13–24m), and `TIER_0C` (25–36m), providing reactive synchronization for all child domain screens.
+2. **Context Store Horizon Resolver (`apps/web/src/stores/useChildContextStore.ts`):** `getChildDevelopmentalHorizon()` maps 0A, 0B, 0C to discrete stage titles, subtitles, and color themes.
+3. **Active Child Cockpit Card (`apps/web/src/components/dashboard/ChildHeroCard.tsx`):** Decomposes `DEVELOPMENTAL_LEAPS` from a single monolithic entry into 3 targeted neurobiological leaps:
+   - `TIER_0A_INFANCY_0_1`: "Sensory Co-Regulation, Sleep Architecture & Pre-Verbal Secure Attachment"
+   - `TIER_0B_TODDLER_1_2`: "Locomotion Explosion, First 50 Words & Limbic Tantrum Co-Regulation"
+   - `TIER_0C_OLDER_TODDLER_2_3`: "Autonomy Surge, Boundary Testing, Symbolic Play & Potty Learning"
 
 ---
 
@@ -397,11 +407,12 @@ When a parent enters a birthdate:
 
 | Phase | Title | Assigned Agent | Paperclip Issue | Deliverables |
 | :--- | :--- | :--- | :--- | :--- |
-| **Phase 1** | Schema Evolution, Prisma Migration & Seed Updates | **Backend Agent** | SOU-85 | Update `schema.prisma`, author migration, seed 15 new early childhood Academy courses (0A, 0B, 0C). |
-| **Phase 2** | Shared Contract Expansion & Algorithmic Tranches | **Backend Agent** | SOU-86 | Update `@alongside/shared` enums, `childTier.ts`, Zod schemas, and unit tests. |
-| **Phase 3** | Frontend Stage Selector & 8-Tier Horizon UI | **Frontend Agent** | SOU-87 | Update `CANONICAL_6_LIFESPAN_STAGES` $\to$ `CANONICAL_8_LIFESPAN_STAGES` in `LifespanStageSelector.tsx`. |
-| **Phase 4** | Child Cockpit, Onboarding & Tranche Badge Display | **Frontend Agent** | SOU-88 | Update Child Onboarding, Modal, and Cockpit to display precise month/tranche badges for ages 0–3. |
-| **Phase 5** | Clinical AI Advisor System Prompt Invariant Updates | **Joint (FE & BE)** | SOU-89 | Inject infant vs toddler safety invariants into AI chat context based on active child tier. |
+| **Phase 1** | Schema Evolution, Prisma Migration & Multi-Seed Updates | **Backend Agent** | SOU-85 | Update `schema.prisma`, author additive migration, update seeds (`academy`, `milestones`, `behavior`, `brainGames`, `faqs`, `health`). |
+| **Phase 2** | Shared Contract Expansion, Micro-Tranches & Pure Algorithms | **Backend Agent** | SOU-86 | Update `@alongside/shared` constants, `childTier.ts`, Zod schemas (`academy`, `child`, `faq`), and unit tests. |
+| **Phase 3** | Fastify Route Schemas, Service Age Derivation & Prompt Invariants | **Backend Agent** | SOU-87 | Update Fastify route schemas (`children.routes.ts`, `academy.routes.ts`, `faqs.routes.ts`), calculate `ageMonths` on DTO, and update `prompt.builder.ts`. |
+| **Phase 4** | Frontend Stage Selector & 8-Tier Horizon UI | **Frontend Agent** | SOU-88 | Update `CANONICAL_6_LIFESPAN_STAGES` $\to$ `CANONICAL_8_LIFESPAN_STAGES` in `LifespanStageSelector.tsx` and unit tests. |
+| **Phase 5** | Reactive Child Age Hook, Store & Cockpit Hero Card | **Frontend Agent** | SOU-89 | Update `useChildAge.ts`, `useChildContextStore.ts`, and `ChildHeroCard.tsx` developmental leaps. |
+| **Phase 6** | Onboarding Flow, Domain Catalogs, Culture Digest & Mock Sync | **Frontend Agent** | SOU-91 | Update onboarding flow, `ActiveChildCalibrationBanner`, `ModuleCard`, behavior/brain games catalogs, digest stage resolvers, and mock data. |
 
 ---
 
