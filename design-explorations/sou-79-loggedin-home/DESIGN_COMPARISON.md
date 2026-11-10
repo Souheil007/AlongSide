@@ -1,88 +1,84 @@
-# AlongSide — Design Comparison & Strategic Evaluation: Logged-In Home Dashboard
+# AlongSide — Design Comparison & Evaluation Matrix (Phase 2 Iteration)
 **Author:** Frontend Autonomous Systems Engineer  
 **Task ID:** SOU-79 (Phase 2 — Page-Level UX Exploration & Design Alternatives)  
-**Target Page:** Logged-In Home Dashboard (`/dashboard`)  
-**Design Standard:** Approved Direction: **Taste 2: Editorial Pediatric Almanac** (`design-system/alongside/MASTER.md`)  
-**Deliverable:** 9-Dimension Comparative Evaluation & Final Recommendation  
+**Target Page:** Logged-In Home Page (`/dashboard`)  
+**Design Alternatives Evaluated:** 
+- **Direction B.1:** The Learning Sanctuary (Curriculum Journey & Daily Parenting Rhythm)
+- **Direction B.2:** The Milestone Horizon (Visual Domain Radar & Academy Progression)
+- **Direction B.3:** The Family Operating Compass (Audio-First Micro-Lessons & Daily Connection Studio)
 
 ---
 
-## Executive Overview
+## 1. Evaluation Methodology
 
-To solve the cognitive friction, text density, and border fragmentation identified in [`PAGE_AUDIT.md`](./PAGE_AUDIT.md), three distinct design alternatives were authored in [`DESIGN_ALTERNATIVES.md`](./DESIGN_ALTERNATIVES.md) and built as responsive prototypes:
-- **Direction A: Minimal & Focused** (The Calm Daily Compass)
-- **Direction B: Visual & Interactive** (The Developmental Horizon Radar)
-- **Direction C: Structured & Guided** (The 3-Phase Daily Routine)
+In accordance with the Paperclip Task SOU-79 specification and the user's specific feedback, all three B-series variations are evaluated across **nine rigorous dimensions** on a 1–10 scale:
 
-This document provides a rigorous, evidence-based comparative evaluation across the 9 mandated criteria and concludes with a definitive engineering recommendation for implementation approval.
-
----
-
-## 1. Comprehensive 9-Dimension Comparative Matrix
-
-| Evaluation Criterion | Direction A: Minimal & Focused | Direction B: Visual & Interactive | Direction C: Structured & Guided | Winner |
-| :--- | :--- | :--- | :--- | :--- |
-| **1. Clarity of Information** | **9.6 / 10**<br/>Laser focus on today's core conversation script and primary lesson. No competing widgets. | **8.8 / 10**<br/>Gauges and timeline clarify developmental status visually, though complex graphics require initial scanning. | **9.0 / 10**<br/>Clear time-of-day buckets make information context obvious. | **Direction A** |
-| **2. Ease of Understanding** | **9.5 / 10**<br/>Words parents should say are front and center in plain English. No medical jargon barrier. | **8.7 / 10**<br/>Intuitive icons and status rings, but multi-axis telemetry requires some cognitive deciphering. | **9.2 / 10**<br/>Routine-based structure mirrors real daily parent schedules naturally. | **Direction A** |
-| **3. Cognitive Load** | **9.8 / 10**<br/>Lowest cognitive load. 1 hero card + 2 clean pillars. Zero visual clutter or nested boxes. | **8.2 / 10**<br/>Moderate density due to radial charts, audio wave controls, and multi-quadrant status meters. | **9.1 / 10**<br/>Low per view because 2 of the 3 daily phases are collapsed by default. | **Direction A** |
-| **4. Visual Appeal** | **9.3 / 10**<br/>Understated editorial elegance. Generous white space, exquisite Newsreader typography, warm linen. | **9.7 / 10**<br/>Striking visual presence. Custom SVG radial arc meters, timeline nodes, and modern telemetry look premium. | **9.0 / 10**<br/>Clean and organized, but resembles an instructional checklist more than a sanctuary. | **Direction B** |
-| **5. Ease of Navigation** | **9.1 / 10**<br/>Flat, direct hierarchy. All essential elements are visible in 1 screen fold without hidden tabs. | **8.9 / 10**<br/>Node-based timeline allows quick jumping across ages, but adds interactive complexity. | **8.6 / 10**<br/>Requires clicking across Morning/Dinner/Bedtime tabs to find specific information out-of-time. | **Direction A** |
-| **6. Steps to Complete Main Task** | **1 Step (0 clicks)**<br/>Parent sees the exact words to say immediately upon page load. 1 click to copy or listen. | **1–2 Steps**<br/>Parent sees visual status; 1 click to toggle audio script or play sparring scenario. | **2–3 Steps**<br/>Parent may need to switch to "After-School" or "Evening" tab to view specific content. | **Direction A** |
-| **7. Mobile Experience** | **9.8 / 10**<br/>Flawless mobile layout. Fits the entire daily script and primary CTAs within the first 600px of viewport. | **8.8 / 10**<br/>Radial charts and sliders scale well, but require horizontal scrolling or stacking on narrow 360px screens. | **9.2 / 10**<br/>Accordions and tabs are mobile-native, though tab switching requires thumb gymnastics. | **Direction A** |
-| **8. Accessibility (WCAG AAA/AA)** | **9.8 / 10**<br/>High-contrast typography (15.2:1), 48px touch targets, zero reliance on color alone, semantic headings. | **9.1 / 10**<br/>SVG gauges include ARIA live regions and text values, but complex visual arcs require screen-reader fallbacks. | **9.4 / 10**<br/>Accessible tabs and accordion states with standard keyboard navigation (`Tab`, `ArrowKeys`, `Space`). | **Direction A** |
-| **9. Brand Identity Consistency** | **9.9 / 10**<br/>Perfect realization of Taste 2: Editorial Pediatric Almanac. Soothing, warm, authoritative, non-punitive. | **9.2 / 10**<br/>Strong brand feel, but veers slightly closer to a tech-forward analytics dashboard than a calm sanctuary. | **9.1 / 10**<br/>Warm and helpful, but step-by-step structure can feel slightly like a task management tool. | **Direction A** |
-| **Overall Weighted Score** | **9.6 / 10 (Strongest Overall)** | **9.0 / 10 (Highest Visual Polish)** | **9.1 / 10 (Highest Routine Guidance)** | **Direction A** |
+1. **Clarity of Information:** Can parents scan and digest what matters within 5 seconds?
+2. **Ease of Understanding:** Is copy clear, plainspoken, and free of clinical/academic jargon?
+3. **Cognitive Load:** Does the interface promote psychological calm or induce decision fatigue?
+4. **Visual Appeal:** Does it embody high-prestige editorial craft without generic AI clichés?
+5. **Ease of Navigation:** Can parents switch between children, courses, and tools intuitively?
+6. **Hero Action & Course Prominence:** Are active courses and learning progress unmistakable as the #1 focus?
+7. **Child Stage Adaptability:** Does the UI correctly differentiate a toddler (no phone readiness) from a tween?
+8. **Mobile Experience & Touch UX:** Are touch targets ≥ 44×44px, vertical rhythm disciplined, and no horizontal scroll?
+9. **Brand Consistency & Emotional Safety:** Does the experience feel warm, empathetic, and truly like "home"?
 
 ---
 
-## 2. In-Depth Criterion Analysis
+## 2. Comprehensive 9-Dimension Comparison Matrix
 
-### 2.1 Cognitive Load & Consumer Psychology
-- **Current Production Page:** Overwhelms users by placing 6 separate cards on the screen simultaneously, totaling 18 separate badges, 12 borders, and 400+ words of dense text.
-- **Direction A (Minimal & Focused):** Reduces cognitive load by **over 70%**. It answers the parent's immediate emotional question (*"What is happening with Maya today and what should I say?"*) in a single glance. By moving background neurobiology behind an optional toggle, parents who want deep clinical citations can read them, while rushed parents get immediate, actionable support.
-- **Direction B (Visual & Interactive):** Successfully cuts reading fatigue through visual communication, but introduces visual complexity through multi-segment charts and interactive controls.
-- **Direction C (Structured & Guided):** Chunks information smartly by time-of-day, but creates cognitive friction when a parent at 9:00 AM wants to check tonight's curfew rules.
-
-### 2.2 Task Efficiency & Time-to-Value
-- In Direction A, **Time-to-Value is under 3 seconds**. A parent standing in line at the grocery store or walking into their home can pull up the app, glance at the large-type script, and instantly use the guidance.
-- Direction B requires 5–8 seconds to inspect the radial gauges and explore the timeline.
-- Direction C requires 6–10 seconds if the parent needs to switch tabs to find the relevant section.
-
-### 2.3 Mobile & Responsive Feasibility
-- With 65%+ of parents accessing digital parenting tools on mobile devices (smartphones at bedside or on the go), **Direction A offers an unmatched mobile experience**. It eliminates the 3,200px infinite scroll of current production, delivering a clean 3-card stack that fits naturally in thumb reach.
-
----
-
-## 3. The Definitive Recommendation: Direction A (The Calm Daily Compass) with Selected Direction B Visual Enhancements
-
-### Recommendation Summary:
-**Direction A: Minimal & Focused** is unequivocally the strongest overall design direction for AlongSide's logged-in dashboard.
-
-It most purely embodies the **"Parent Calm at 2:00 AM"** ethos of the approved brand identity (`design-system/alongside/MASTER.md`), dramatically outperforms the current page on cognitive load and mobile usability, and delivers instant value to parents in seconds.
-
-### Recommended Synthesis (The Ideal Hybrid):
-To capture the best attributes of both directions without compromising simplicity, we recommend adopting **Direction A's layout and information architecture** while incorporating **two high-leverage visual elements from Direction B**:
-1. **Adopt Direction A's Primary Layout:**
-   - Quiet, uncrowded child context strip at the top.
-   - Hero Word-for-Word Empathy Script card in high-contrast Newsreader typography.
-   - Clean 50/50 two-pillar split: Today's 3-Minute Micro-Lesson (Left) + Culture Slang & Dinner Starter (Right).
-   - Quiet, 1-line baseline curfew dock at the bottom.
-2. **Incorporate Direction B's Micro-Visual Enhancements:**
-   - In the right-hand Culture card, utilize Direction B's visual **Cringe Meter flame rating** rather than text labels.
-   - In the baseline curfew dock, utilize a clean visual **status badge with subtle green pulse** showing that hardware lock and bedtime peace are active.
-   - Include a 1-click **Audio Preview** button on the script card so parents can listen to the empathetic phrasing on their commute.
+| Evaluation Dimension | Weight | Direction B.1 (Learning Sanctuary) | Direction B.2 (Milestone Horizon) | Direction B.3 (Operating Compass) |
+| :--- | :---: | :---: | :---: | :---: |
+| **1. Clarity of Information** | 10% | **9.6 / 10** (Clean visual nodes, instant glance) | **8.9 / 10** (Rich radar, slightly higher density) | **9.2 / 10** (Direct audio player, clear metrics) |
+| **2. Ease of Understanding** | 15% | **9.8 / 10** (Zero jargon, plain empathetic coaching) | **9.1 / 10** (Structured domains, clear takeaways) | **9.5 / 10** (Actionable choices, practical scripts) |
+| **3. Cognitive Load** | 15% | **9.5 / 10** (Low friction, clear sequential path) | **8.7 / 10** (5 interactive domains to choose from) | **9.1 / 10** (Audio reduces visual screen fatigue) |
+| **4. Visual Appeal** | 10% | **9.7 / 10** (Warm editorial aesthetic, elegant nodes) | **9.4 / 10** (Modern telemetry rings and dials) | **9.3 / 10** (Podcast-style player, clean tree) |
+| **5. Ease of Navigation** | 10% | **9.6 / 10** (Child switcher directly updates all cards) | **9.2 / 10** (Domain tabs + child switcher) | **9.3 / 10** (Clean linear flow, simple dock) |
+| **6. Hero Course Prominence** | 15% | **9.9 / 10** (Interactive journey roadmap is #1 anchor) | **9.5 / 10** (Large progress ring + chapter list) | **9.7 / 10** (Audio player + remaining time bar) |
+| **7. Child Stage Adaptability** | 15% | **9.8 / 10** (Toddler = Meltdowns/Screens; Tween = Phone) | **9.6 / 10** (Domain indicators shift per age) | **9.4 / 10** (Decision tree adapts per child) |
+| **8. Mobile Experience & Touch** | 5% | **9.5 / 10** (Large tap nodes, seamless 1-col stack) | **8.8 / 10** (Horizontal domain scroll on mobile) | **9.6 / 10** (Large audio controls, quick taps) |
+| **9. Brand & Emotional Safety** | 5% | **9.9 / 10** (Feels like a supportive family sanctuary) | **9.2 / 10** (High utility, slightly more analytical) | **9.6 / 10** (Warm coaching, empowering tone) |
+| **WEIGHTED TOTAL SCORE** | **100%** | **9.70 / 10 🏆 WINNER** | **9.18 / 10** | **9.44 / 10** |
 
 ---
 
-## 4. Approval Gate & Next Phase Roadmap
+## 3. In-Depth Comparative Analysis
 
-In accordance with Paperclip task SOU-79 instructions:
-> **"STOP after presenting the three alternatives and your recommendation. Wait for my explicit approval of one alternative. After approval, implementation can be discussed as a separate phase."**
+### Direction B.1: The Learning Sanctuary (Recommended Winner — 9.70/10)
+- **Core Strengths:**
+  - **Unmistakable Learning Centricity:** The visual Course Journey Roadmap (`[Ch. 1] ➔ [Ch. 2] ➔ [● Ch. 3]`) communicates immediate momentum. Parents feel proud of what they've completed and motivated to finish today's 4-minute chapter.
+  - **Flawless Child Stage Differentiation:** The interactive switcher at the top (`Maya 11y` vs. `Leo 3y`) immediately demonstrates stage intelligence. For Leo, phone readiness is completely absent, replaced by a 30-minute early screen limit ring and toddler meltdown coping steps. For Maya, the First-Phone Readiness Radar appears with full clarity.
+  - **Emotional Resonance ("Feels Like Home"):** Welcoming headline, warm editorial typography (`Newsreader`), soft Linen canvas, and zero clinical jargon. It feels like entering a peaceful home library with a trusted family mentor.
+- **Trade-Offs:**
+  - Focuses on the current active course; exploring other course categories requires clicking into the Academy catalog tray or top navigation.
 
-No application code or production stylesheets will be modified until explicit user approval is granted.
+### Direction B.2: The Milestone Horizon (Runner-Up — 9.18/10)
+- **Core Strengths:**
+  - **Comprehensive Domain Visibility:** Parents can see at a glance how their child is progressing across all 5 life pillars (Emotions, Sleep, Connection, Digital, Play).
+  - **AI Sparring Integration:** Provides an interactive button to practice difficult conversations before facing them in real life.
+- **Trade-Offs:**
+  - Presenting 5 domain tabs plus a circular progress ring and sparring widget increases visual density and requires slightly more cognitive effort than B.1.
 
-### Transition Roadmap (Upon Human Approval):
-1. **Phase 2 Complete:** Audit, design alternatives, comparative matrix, and three fully functional standalone prototypes delivered.
-2. **Human User Decision:** Select **Direction A (Recommended)**, **Direction B**, or **Direction C**.
-3. **Phase 3 (Implementation Planning):** Author architectural implementation plan in `plans/` detailing atomic component updates to `apps/web/src/components/dashboard/`.
-4. **Phase 4 (Production Build):** Build and test the approved dashboard in Next.js 15 with 100% test coverage and Ponytail diff review.
+### Direction B.3: The Family Operating Compass (Strong Contender — 9.44/10)
+- **Core Strengths:**
+  - **Audio-First Convenience:** Designed specifically for busy, multitasking parents who want to listen while commuting or preparing breakfast.
+  - **Interactive 'Cope & Connect' Decision Tree:** Highly educational tool demonstrating the difference between reactive parenting and empathetic co-regulation.
+- **Trade-Offs:**
+  - Parents who prefer visual reading over audio listening may find the large waveform audio player less relevant than a structured curriculum roadmap.
+
+---
+
+## 4. Strategic Recommendation: Direction B.1 with Curated Micro-Interactions
+
+We recommend **Direction B.1 (The Learning Sanctuary)** as the primary design foundation for the logged-in home dashboard, enhanced with the following two best-in-class elements from B.2 and B.3:
+
+1. **From Direction B.3:** Include the 1-click **Audio/Read Toggle** on the hero lesson card so parents can listen on the go or read quietly.
+2. **From Direction B.2:** Include the quick **"Practice Calm Response"** button that opens the AI Child Advisor sparring drawer for the daily conversation script.
+
+This composite approach gives parents an instantly recognizable, comforting "home" that puts structured learning first, speaks with pure empathetic clarity, and perfectly adapts to whether the parent is raising a 3-year-old toddler or an 11-year-old tween.
+
+---
+
+## 5. Next Step: Approval Gate
+
+In strict adherence to the Paperclip task protocol, **zero application code will be altered until the human user reviews the prototypes and grants explicit approval**.

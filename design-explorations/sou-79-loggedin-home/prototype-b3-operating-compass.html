@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Direction B.3: The Family Operating Compass (Audio-First Micro-Lessons &amp; Daily Coaching)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            linen: '#FBFBF9',
+            canvasSubtle: '#F4F4F0',
+            elevated: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            hairlineSoft: '#EDEDEA',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE'
+            },
+            amber: {
+              DEFAULT: '#B45309',
+              soft: '#FEF3C7'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hero-radial {
+      background: radial-gradient(circle at 50% -10%, rgba(20, 61, 43, 0.06) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+    @keyframes wave {
+      0%, 100% { height: 6px; }
+      50% { height: 26px; }
+    }
+    .wave-bar {
+      animation: wave 1.2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-forest-soft selection:text-forest">
+
+  <!-- TOP PROTOTYPE NAVIGATION BAR -->
+  <aside aria-label="Prototype Navigation" class="bg-forest text-white text-xs py-2 px-4 border-b border-forest-hover flex flex-wrap items-center justify-between gap-3 sticky top-0 z-50">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-mono font-semibold tracking-wider uppercase text-[11px]">Direction B.3: The Operating Compass</span>
+      <span class="hidden sm:inline text-white/70">• Audio-First Micro-Lessons &amp; Daily Coaching</span>
+    </div>
+    <div class="flex items-center gap-2 text-[11px]">
+      <span class="text-white/70">Switch Design:</span>
+      <a href="prototype-b1-learning-sanctuary.html" class="hover:text-emerald-300 transition text-white/80">B.1 Sanctuary</a>
+      <span class="text-white/40">|</span>
+      <a href="prototype-b2-milestone-horizon.html" class="hover:text-emerald-300 transition text-white/80">B.2 Horizon</a>
+      <span class="text-white/40">|</span>
+      <span class="font-bold underline text-white px-1.5 py-0.5 rounded bg-white/10">B.3 Compass</span>
+      <span class="text-white/40">|</span>
+      <a href="index.html" class="hover:text-emerald-300 transition text-white/80 font-mono">← Master Hub</a>
+    </div>
+  </aside>
+
+  <!-- APP HEADER WITH CHILD SWITCHER -->
+  <header class="bg-white border-b border-hairline sticky top-8 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center font-serif text-lg font-bold shadow-xs">
+            A
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif text-lg font-bold tracking-tight text-ink leading-tight">AlongSide</span>
+            <span class="font-mono text-[9px] uppercase tracking-wider text-mute font-medium">Daily Audio Coaching</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-1 text-xs">
+          <a href="#" class="px-3 py-1.5 rounded-md font-semibold text-forest bg-forest-soft">Coaching Studio</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Parent Academy</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Culture Digest</a>
+          <a href="#" class="px-3 py-1.5 rounded-md font-medium text-body hover:text-ink transition">Family Pacts</a>
+        </nav>
+      </div>
+
+      <!-- ACTIVE CHILD SWITCHER -->
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline font-mono text-[10px] text-mute uppercase tracking-wider">Active Child:</span>
+        <div class="flex items-center p-1 rounded-xl bg-canvasSubtle border border-hairline text-xs font-medium">
+          <button id="btnChildMaya" onclick="switchChild('maya')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition">
+            <span class="w-5 h-5 rounded-md bg-forest text-white font-mono text-[10px] font-bold flex items-center justify-center">M</span>
+            <span>Maya (11y)</span>
+          </button>
+          <button id="btnChildLeo" onclick="switchChild('leo')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition">
+            <span class="w-5 h-5 rounded-md bg-amber text-white font-mono text-[10px] font-bold flex items-center justify-center">L</span>
+            <span>Leo (3y)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN VIEW -->
+  <main class="flex-1 hero-radial pb-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 space-y-6">
+
+      <!-- WELCOMING VALUE BANNER (FEEL AT HOME & WHY YOU ARE HERE) -->
+      <section class="bg-white/90 backdrop-blur rounded-2xl border border-hairline p-5 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="w-2 h-2 rounded-full bg-forest"></span>
+            <span class="font-mono text-xs text-forest font-semibold uppercase tracking-wider">Hands-Free Daily Parenting Audio</span>
+          </div>
+          <h1 id="welcomeHeading" class="font-serif text-2xl font-bold text-ink">
+            Welcome home, Sarah. Listen to today's 4-minute chapter for Maya.
+          </h1>
+          <p id="welcomeSubtext" class="text-xs sm:text-sm text-body mt-1 max-w-2xl leading-relaxed">
+            Designed for busy parents on the go. Pop in your earbuds while cooking dinner or on your commute to hear today's evidence-based parenting script.
+          </p>
+        </div>
+
+        <!-- Weekly Progress Pill -->
+        <div class="shrink-0 flex items-center gap-3 bg-linen px-4 py-3 rounded-xl border border-hairline">
+          <div class="w-9 h-9 rounded-full bg-forest text-white flex items-center justify-center font-bold text-sm">
+            🎧
+          </div>
+          <div>
+            <span class="font-serif text-base font-bold text-ink block">3 of 5 Mastered</span>
+            <span class="font-mono text-[11px] text-mute">18 mins listened this week</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. HERO CENTERPIECE: AUDIO-FIRST ACADEMY LESSON PLAYER (THE #1 ACTION) -->
+      <section aria-label="Audio Micro-Lesson Player" class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-forest text-white flex items-center justify-center font-bold text-xs">
+              🎙️
+            </div>
+            <div>
+              <span class="font-mono text-[10px] font-bold text-forest uppercase tracking-wider">Today's Active Audio Chapter</span>
+              <h2 id="audioCourseTitle" class="font-serif text-lg sm:text-xl font-bold text-ink">
+                Navigating Tween Friendships &amp; Digital Independence
+              </h2>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span id="chapterProgressBadge" class="font-mono text-xs font-bold text-forest bg-forest-soft px-2.5 py-1 rounded-full border border-forest/20">
+              Chapter 3 of 5 (60% Done)
+            </span>
+          </div>
+        </div>
+
+        <!-- BIG PODCAST-STYLE PLAYER CARD -->
+        <div class="p-6 rounded-xl bg-forest-soft border border-forest/20 space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="font-mono text-[11px] text-forest font-bold uppercase tracking-wider">Playing Today's Lesson:</span>
+              <h3 id="audioChapterHeadline" class="font-serif text-xl font-bold text-ink mt-0.5">
+                Chapter 3: When Your Tween Feels Left Out of the Group Chat
+              </h3>
+              <p id="audioSpeakerText" class="text-xs text-mute font-mono mt-1">
+                Narrated by Dr. Lisa Chen (Pediatric Advisor) • 3:45 remaining
+              </p>
+            </div>
+
+            <!-- Download Cheat Sheet Link -->
+            <a href="#" class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-hairline text-xs font-semibold text-ink hover:bg-canvasSubtle transition">
+              <span>📄</span>
+              <span>1-Page Parent PDF</span>
+            </a>
+          </div>
+
+          <!-- Player Controls & Waveform -->
+          <div class="p-4 bg-white rounded-xl border border-hairline flex flex-col sm:flex-row items-center gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+              <button onclick="toggleAudio()" class="w-11 h-11 rounded-full bg-forest text-white flex items-center justify-center hover:bg-forest-hover transition shadow-sm">
+                <svg id="playIconSvg" class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="text-xs font-mono text-mute hover:text-ink">15s ⟲</button>
+              <button class="text-xs font-mono text-mute hover:text-ink">⟳ 15s</button>
+            </div>
+
+            <!-- Waveform visualizer -->
+            <div class="flex-1 flex items-center gap-1 h-8 px-2 overflow-hidden w-full">
+              <div class="w-1 bg-forest/40 rounded-full h-2 wave-bar" style="animation-delay: 0.1s"></div>
+              <div class="w-1 bg-forest/60 rounded-full h-4 wave-bar" style="animation-delay: 0.3s"></div>
+              <div class="w-1 bg-forest rounded-full h-6 wave-bar" style="animation-delay: 0.2s"></div>
+              <div class="w-1 bg-forest rounded-full h-3 wave-bar" style="animation-delay: 0.5s"></div>
+              <div class="w-1 bg-forest/80 rounded-full h-5 wave-bar" style="animation-delay: 0.4s"></div>
+              <div class="w-1 bg-forest rounded-full h-7 wave-bar" style="animation-delay: 0.2s"></div>
+              <div class="w-1 bg-forest/70 rounded-full h-4 wave-bar" style="animation-delay: 0.6s"></div>
+              <div class="w-1 bg-forest/50 rounded-full h-3 wave-bar" style="animation-delay: 0.1s"></div>
+              <div class="w-1 bg-forest rounded-full h-6 wave-bar" style="animation-delay: 0.3s"></div>
+              <div class="w-1 bg-forest/60 rounded-full h-2 wave-bar" style="animation-delay: 0.4s"></div>
+            </div>
+
+            <!-- Playback Speed -->
+            <div class="flex items-center gap-1 shrink-0 text-xs font-mono">
+              <button class="px-2 py-1 rounded bg-canvasSubtle border border-hairline text-ink font-bold">1.0x</button>
+              <button class="px-2 py-1 rounded text-mute hover:text-ink">1.2x</button>
+              <button class="px-2 py-1 rounded text-mute hover:text-ink">1.5x</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. SPLIT INTERACTIVE STUDIO: DECISION TREE (LEFT 7) + STAGE TELEMETRY (RIGHT 5) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- LEFT COLUMN (7 COLS): INTERACTIVE "COPE & CONNECT" DECISION TREE -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-hairline pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-md bg-forest-soft text-forest flex items-center justify-center font-bold text-xs">🌿</span>
+                <div>
+                  <h3 class="font-serif text-base font-bold text-ink">The "Cope &amp; Connect" Decision Tree</h3>
+                  <p id="decisionTreeContext" class="text-xs text-mute font-mono">Real-World Scenario Simulator</p>
+                </div>
+              </div>
+              <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">Interactive Exercise</span>
+            </div>
+
+            <!-- The Real-World Scenario Trigger -->
+            <div class="p-3.5 rounded-xl bg-canvasSubtle border border-hairline space-y-1">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber block">Tonight's Scenario:</span>
+              <p id="scenarioQuestion" class="font-serif text-base font-bold text-ink">
+                Maya arrives home furious, slams the kitchen cabinet door, and screams: &ldquo;No one at school likes me!&rdquo;
+              </p>
+            </div>
+
+            <!-- Interactive Branching Choices -->
+            <div class="space-y-3">
+              <span class="font-mono text-xs font-bold text-ink uppercase tracking-wider block">How Will You Respond?</span>
+
+              <!-- Branch A (Reactive) -->
+              <div class="p-4 rounded-xl border border-hairline bg-white hover:border-amber/50 transition cursor-pointer" onclick="selectBranch('A')">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-mono text-xs font-bold text-amber">Path A: The Logical Fix (Reactive)</span>
+                  <span class="text-xs text-mute">Common Default</span>
+                </div>
+                <p class="text-xs text-body italic">&ldquo;Don't slam cabinets in this house! Why are you always making drama? You have plenty of friends.&rdquo;</p>
+              </div>
+
+              <!-- Branch B (Empathetic Bridge) -->
+              <div class="p-4 rounded-xl border-2 border-forest bg-forest-soft/60 transition cursor-pointer shadow-xs" onclick="selectBranch('B')">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-mono text-xs font-bold text-forest">Path B: The Empathetic Bridge (Recommended)</span>
+                  <span class="font-mono text-[10px] text-forest font-bold bg-white px-2 py-0.5 rounded border border-forest/20">Calm Co-Regulation</span>
+                </div>
+                <p class="text-xs text-ink font-medium italic">&ldquo;Oof, that looks like a really heavy day. You don't have to talk right now, but I made tea and I'm right here.&rdquo;</p>
+              </div>
+            </div>
+
+            <!-- Result Feedback Box -->
+            <div id="branchFeedback" class="p-4 rounded-xl bg-linen border border-hairline text-xs space-y-1">
+              <span class="font-bold text-forest block">Why Path B Prevents an Evening Blowup:</span>
+              <p class="text-body leading-relaxed">
+                Adolescents don't slam doors because they hate cabinets—they slam doors because their emotional cup is spilling over. Offering silent physical safety invites them to open up when cortisol drops.
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN (5 COLS): STAGE-ADAPTIVE TELEMETRY -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- STAGE TELEMETRY CONTAINER (POPULATED BY JS) -->
+          <div id="stageTelemetryContainer">
+            <!-- Defaults to Maya -->
+          </div>
+
+          <!-- ACADEMY MILESTONE BADGES (FEEL SENSE OF PROGRESS) -->
+          <section class="bg-white rounded-2xl border border-hairline p-5 shadow-sm space-y-3">
+            <span class="font-mono text-xs font-bold text-forest uppercase tracking-wider flex items-center gap-1.5">
+              <span>🏅</span>
+              <span>Your Family Academy Badges</span>
+            </span>
+
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-3 rounded-lg bg-linen border border-hairline flex items-center gap-2">
+                <span class="text-lg">🛡️</span>
+                <div>
+                  <span class="font-bold text-ink block">Sleep Guardian</span>
+                  <span class="text-[10px] text-mute font-mono">14 Days No Screens</span>
+                </div>
+              </div>
+              <div class="p-3 rounded-lg bg-linen border border-hairline flex items-center gap-2">
+                <span class="text-lg">🤝</span>
+                <div>
+                  <span class="font-bold text-ink block">Pact Pioneer</span>
+                  <span class="text-[10px] text-mute font-mono">Bilateral Agreement</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- INTERACTION SCRIPTS FOR DIRECTION B.3 -->
+  <script>
+    let activeChild = 'maya';
+    let isPlaying = false;
+
+    const mayaData = {
+      welcomeHeading: "Welcome home, Sarah. Listen to today's 4-minute chapter for Maya.",
+      welcomeSubtext: "Designed for busy parents on the go. Pop in your earbuds while cooking dinner or on your commute to hear today's evidence-based parenting script.",
+      audioCourseTitle: "Navigating Tween Friendships & Digital Independence",
+      chapterProgressBadge: "Chapter 3 of 5 (60% Done)",
+      audioChapterHeadline: "Chapter 3: When Your Tween Feels Left Out of the Group Chat",
+      audioSpeakerText: "Narrated by Dr. Lisa Chen (Pediatric Advisor) • 3:45 remaining",
+      decisionTreeContext: "Real-World Middle School Friction",
+      scenarioQuestion: "Maya arrives home furious, slams the kitchen cabinet door, and screams: “No one at school likes me!”",
+      telemetryHtml: `
+        <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-md bg-forest-soft text-forest flex items-center justify-center font-bold text-xs">📱</span>
+              <div>
+                <h3 class="font-serif text-base font-bold text-ink">First-Phone Readiness</h3>
+                <span class="text-[10px] font-mono text-forest">Road 1: Pre-Device Objective Checklist</span>
+              </div>
+            </div>
+            <span class="font-mono text-xs text-forest font-bold bg-forest-soft px-2 py-0.5 rounded">78%</span>
+          </div>
+
+          <div class="space-y-1.5 text-xs">
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Independent Morning Waking</span>
+              <span class="font-mono font-bold text-forest">90%</span>
+            </div>
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Homework Completion</span>
+              <span class="font-mono font-bold text-forest">85%</span>
+            </div>
+            <div class="flex justify-between pb-1 border-b border-hairlineSoft">
+              <span class="text-body">Peer Chat Boundary Readiness</span>
+              <span class="font-mono font-bold text-amber">65%</span>
+            </div>
+          </div>
+
+          <div class="p-3 bg-linen rounded-xl border border-hairline flex items-center justify-between text-xs">
+            <span class="text-body">Curfew: 8:30 PM Bedtime Lock</span>
+            <a href="#" class="font-mono font-bold text-forest hover:underline">Manage Dock →</a>
+          </div>
+        </section>
+      `
+    };
+
+    const leoData = {
+      welcomeHeading: "Welcome home, Sarah. Listen to today's 3-minute chapter for Leo.",
+      welcomeSubtext: "Toddlers need calm repetition. Pop in your earbuds to learn how to keep your own nervous system steady when Leo has a big meltdown.",
+      audioCourseTitle: "Taming Big Feelings: Tantrums, Sharing & Screen Limits",
+      chapterProgressBadge: "Chapter 2 of 5 (40% Done)",
+      audioChapterHeadline: "Chapter 2: The 30-Second Calm Down Breath for Toddler Meltdowns",
+      audioSpeakerText: "Narrated by Dr. Lisa Chen (Pediatric Advisor) • 2:50 remaining",
+      decisionTreeContext: "Real-World Toddler Friction",
+      scenarioQuestion: "Leo throws his cup across the room and lies on the kitchen floor screaming when told TV time is over.",
+      telemetryHtml: `
+        <section class="bg-white rounded-2xl border border-hairline p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-md bg-amber-soft text-amber flex items-center justify-center font-bold text-xs">🧸</span>
+              <div>
+                <h3 class="font-serif text-base font-bold text-ink">Toddler Screen Time</h3>
+                <span class="text-[10px] font-mono text-mute">Age 3 Guideline: Max 30 min daily</span>
+              </div>
+            </div>
+            <span class="font-mono text-xs text-forest font-bold bg-forest-soft px-2 py-0.5 rounded">20 / 30m</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+              <div class="h-full bg-forest rounded-full w-[66%]"></div>
+            </div>
+            <p class="text-[11px] text-mute">66% of daily screen allotment used. 10 minutes remaining for today.</p>
+          </div>
+
+          <div class="p-3 bg-linen rounded-xl border border-hairline text-xs space-y-1">
+            <span class="font-bold text-forest block">Bedtime Routine Tip:</span>
+            <p class="text-body">Dim overhead lights at 6:30 PM. Read 2 board books with soft physical touch.</p>
+          </div>
+        </section>
+      `
+    };
+
+    function switchChild(child) {
+      activeChild = child;
+      const data = child === 'maya' ? mayaData : leoData;
+
+      // Update switcher buttons
+      document.getElementById('btnChildMaya').className = child === 'maya'
+        ? "flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition"
+        : "flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition";
+      document.getElementById('btnChildLeo').className = child === 'leo'
+        ? "flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold bg-white text-forest shadow-xs transition"
+        : "flex items-center gap-2 px-3 py-1.5 rounded-lg text-mute hover:text-ink transition";
+
+      // Update DOM
+      document.getElementById('welcomeHeading').textContent = data.welcomeHeading;
+      document.getElementById('welcomeSubtext').textContent = data.welcomeSubtext;
+      document.getElementById('audioCourseTitle').textContent = data.audioCourseTitle;
+      document.getElementById('chapterProgressBadge').textContent = data.chapterProgressBadge;
+      document.getElementById('audioChapterHeadline').textContent = data.audioChapterHeadline;
+      document.getElementById('audioSpeakerText').textContent = data.audioSpeakerText;
+      document.getElementById('decisionTreeContext').textContent = data.decisionTreeContext;
+      document.getElementById('scenarioQuestion').textContent = data.scenarioQuestion;
+      document.getElementById('stageTelemetryContainer').innerHTML = data.telemetryHtml;
+    }
+
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      const icon = document.getElementById('playIconSvg');
+      if (isPlaying) {
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+      } else {
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      }
+    }
+
+    function selectBranch(branch) {
+      const fb = document.getElementById('branchFeedback');
+      if (branch === 'B') {
+        fb.innerHTML = `
+          <span class="font-bold text-forest block">✓ Why Path B Prevents an Evening Blowup:</span>
+          <p class="text-body leading-relaxed">
+            By acknowledging the overwhelming emotion without matching their rage or asking 20 questions, you become their external calm anchor.
+          </p>
+        `;
+      } else {
+        fb.innerHTML = `
+          <span class="font-bold text-amber block">Why Path A Spikes Adrenaline:</span>
+          <p class="text-body leading-relaxed">
+            Telling a stressed child to "stop making drama" invalidates their emotional reality, triggering defensive defiance and cabinet slamming.
+          </p>
+        `;
+      }
+    }
+
+    // Initialize with Maya
+    switchChild('maya');
+  </script>
+</body>
+</html>

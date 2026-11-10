@@ -1,158 +1,168 @@
-# AlongSide — Design Alternatives: Logged-In Home Dashboard
+# AlongSide — Design Alternatives (Phase 2 Iteration): Logged-In Home Dashboard
 **Author:** Frontend Autonomous Systems Engineer  
 **Task ID:** SOU-79 (Phase 2 — Page-Level UX Exploration & Design Alternatives)  
 **Target Page:** Logged-In Home Page (`/dashboard`)  
 **Design Identity:** **Taste 2: Editorial Pediatric Almanac** (Archival Linen `#FBFBF9`, Deep Spruce `#143D2B`, Newsreader Editorial Serif + Inter UI + JetBrains Mono)  
-**Deliverable:** 3 Distinct Architectural Approaches  
+**Deliverable:** 3 Distinct Visual & Interactive Variations Branching from Direction B  
 
 ---
 
-## Strategic Design Overview
+## 1. Executive Feedback & Strategic Evolution
 
-Following the comprehensive audit in [`PAGE_AUDIT.md`](./PAGE_AUDIT.md), we have developed **three distinct design alternatives** to transform the logged-in home dashboard from a text-heavy, fragmented control panel into a high-utility, calming parent sanctuary.
+Following the initial exploration of Directions A, B, and C, user feedback confirmed:
+> *"The Direction B feels the best, but right now its content is off: you are showing 'explore clinical protocols', but we diverged from being clinical to be more like an advisory, teaching platform to cope up with your child. Also, regarding First-Phone Readiness, it shouldn't appear for each tier—for a toddler it is not relevant. And I think the active courses and progress track is the most important thing here. Give me 3 more designs starting from Direction B, where the content is really relevant and makes the user feel home and understand why and for what they are there."*
 
-Each alternative adheres strictly to Alongside's approved brand tokens and typography while exploring fundamentally different information architectures, interaction models, and visual hierarchies:
+### Key Corrective Mandates Applied in this Iteration:
+
+1. **Purge Clinical Language → Elevate Warm Advisory & Teaching**:
+   - ❌ **Eliminated:** "Clinical protocols", "diagnostic testing", "dopamine baseline", "adrenal hormone awakening", "pathology".
+   - ✅ **Adopted:** Warm, empathetic parenting guidance, coping tools for parent stress, emotional co-regulation, everyday connection scripts, and science-backed parenting lessons explained in plain, relatable language.
+
+2. **Stage-Adaptive Intelligence (Toddler vs. Tween)**:
+   - ❌ **Eliminated:** Universal "First-Phone Readiness" widget. Showing phone readiness for a 3-year-old toddler is absurd and confusing.
+   - ✅ **Implemented:** Dynamic developmental calibration based on child age:
+     - **For Toddlers (Leo, Age 3 • Explorer):** Displays early screen limits (0–30 min/day), bedtime wind-down without screens, sensory play milestones, and coping strategies for toddler emotional meltdowns.
+     - **For Tweens (Maya, Age 11 • Pathfinder):** Displays the First-Phone Readiness Compass (78/100 across 4 quadrants), middle-school group chat empathy scripts, and the 8:30 PM bedtime device dock curfew.
+
+3. **Active Courses & Progress Tracking as the HERO Centerpiece**:
+   - The user's primary motivation for logging in is **structured learning and tracking progress**.
+   - The active Academy course is now the dominant hero centerpiece across all three designs, featuring interactive chapter nodes, progress bars/rings, estimated reading/listening times, weekly habit streaks, and actionable daily exercises.
+
+4. **"Feel at Home & Understand Why You Are Here"**:
+   - Replaced cold telemetry dashboards with an inviting, calming **"Parenting Living Room"** feel.
+   - Clear value proposition banner immediately upon logging in: *"Your family's calm daily headquarters — evidence-based parenting lessons, daily conversation scripts, and healthy habits tailored to your kids."*
 
 ```mermaid
 graph TD
-    Audit["PAGE_AUDIT.md Findings:<br/>Text-heavy, Jargon Overload, Redundant AI Bar, Nested Borders"]
+    Feedback["User Feedback on Direction B:<br/>1. Purge clinical protocols → Advisory & teaching<br/>2. Phone readiness only for tweens, NOT toddlers<br/>3. Active courses & progress track as #1 Hero<br/>4. Make user feel at home & clear on why they're here"]
     
-    Audit --> DirA["Direction A: Minimal & Focused<br/>(The Calm Daily Compass)<br/>• 1 Primary Hero Action<br/>• Generous Whitespace<br/>• 2-Column Clean Split"]
+    Feedback --> B1["Direction B.1: The Learning Sanctuary<br/>• Visual Course Journey Roadmap<br/>• Chapter Completion Nodes & Habit Streak<br/>• Interactive Child Switcher (Maya vs. Leo)<br/>• Today's Practical Parenting Exercise"]
     
-    Audit --> DirB["Direction B: Visual & Interactive<br/>(The Developmental Horizon Radar)<br/>• Interactive Horizon Map<br/>• Radial Telemetry Gauges<br/>• Audio Sparring Script Player"]
+    Feedback --> B2["Direction B.2: The Milestone Horizon<br/>• 5-Domain Visual Parenting Radar<br/>• Large Circular Course Progress Ring<br/>• Interactive AI Conversation Sparring<br/>• Stage-Calibrated Telemetry (Sensory vs. Phone)"]
     
-    Audit --> DirC["Direction C: Structured & Guided<br/>(The 3-Phase Daily Routine)<br/>• Morning / Dinner / Bedtime Stepper<br/>• Daypart Contextual Reveal<br/>• Progressive Disclosure Drawers"]
+    Feedback --> B3["Direction B.3: The Family Operating Compass<br/>• Audio-First Micro-Lesson Player (Hands-Free)<br/>• Interactive 'Cope & Connect' Decision Tree<br/>• Comprehensive Academy Certification Dock<br/>• Stage-Sensitive Bedtime & Screen Card"]
 ```
 
 ---
 
-## Direction A: Minimal & Focused (The Calm Daily Compass)
+## 2. Direction B.1: The Learning Sanctuary (Curriculum Journey & Daily Parenting Rhythm)
 
 ### 1. UX Philosophy & Core Concept
-**"One primary anchor. Zero unnecessary noise."**
-Parents frequently check AlongSide with less than two minutes between tasks. Direction A treats the dashboard as a **Calm Daily Compass**. It eliminates all nested borders, strips out academic jargon in favor of plainspoken empathy, and focuses 100% of the initial screen fold on the #1 tool parents need today: **Today's Word-for-Word Empathy Script**.
+**"Your family's learning living room: structured growth, zero overwhelm."**  
+Direction B.1 treats Alongside as a calming sanctuary where parents build long-term confidence. The centerpiece of the entire screen is an interactive **Course Journey Roadmap** showing where the parent stands in their current Academy course. It emphasizes small, achievable daily wins (3–5 minutes) that build momentum without guilt.
 
 ### 2. Information Architecture & Layout
-- **Global Child Header Glance (Quiet Strip):**
-  - Child avatar, name, age, active developmental stage, and a single status pill (`Readiness: 78%` or `Curfew: 8:30 PM Lock`).
-  - No nested leap boxes, no duplicate badges.
-- **Hero Anchor (100% Width): The Daily Dialogue Card:**
-  - The relatable real-world friction scenario displayed clearly: *"When your tween feels excluded from a middle school group chat."*
-  - The exact words to say highlighted in high-contrast editorial serif (`Newsreader`, 22px):
-    > *“I hear how lonely and painful it feels when friends talk about a chat you can’t see. We protect your sleep because we love you. Let's look at the readiness checklist together.”*
-  - Fast action buttons: **Copy Script**, **Listen (Audio)**, and an expandable toggle for **"Why this works with tween brain biology"** (progressive disclosure).
-- **Secondary Grid (Clean 50/50 Balanced Split):**
-  - **Left Pillar — Today's 3-Minute Micro-Lesson:**
-    - Single Academy chapter card with an understated progress bar, estimated reading time (`3 min`), and direct "Read Lesson" CTA.
-  - **Right Pillar — Today's Youth Culture & Dinner Starter:**
-    - Slang of the week (`Crashout`), clean 3-point cringe rating, and one dinner conversation question to ask tonight.
-- **Quiet Baseline Footer Dock:**
-  - A subtle 1-line bar displaying hardware curfew status and quick link to pact settings.
+- **Warm Editorial Welcome & Child Switcher Bar:**
+  - *"Welcome home, Sarah. You're building a connected family, one small moment at a time."*
+  - Interactive multi-child switcher (`[Maya • 11y • 6th Grade]` | `[Leo • 3y • Toddler]`). Clicking immediately updates the entire page context.
+- **Hero Centerpiece (100% Width): The Course Journey Roadmap:**
+  - Active Course: *"Navigating Tween Friendships & Digital Independence"* (for Maya) or *"Taming Big Feelings: Tantrums, Sharing & Screen Limits"* (for Leo).
+  - Interactive visual node map: `[Ch. 1 Done ✓] ➔ [Ch. 2 Done ✓] ➔ [● Ch. 3 Active] ➔ [Ch. 4 Upcoming] ➔ [Ch. 5 Upcoming]`.
+  - Prominent **"Continue Lesson (4 min)"** action with choice of Audio or Text.
+  - **Weekly Habit Telemetry:** 4-Day Streak indicator, 18 minutes learned this week, and "You're in the top 15% of consistent parents."
+- **Two-Column Stage-Adaptive Grid (7 cols / 5 cols):**
+  - **Left (7 cols) — Today's Practical Parenting Script & Action:**
+    - High-contrast editorial dialogue card with relatable daily friction.
+    - Word-for-word empathy script highlighted in large `Newsreader` serif.
+    - One concrete "Try Tonight" family activity (e.g. 5-minute pre-dinner check-in).
+  - **Right (5 cols) — Stage-Calibrated Visual Radar:**
+    - **If Maya (Tween):** First-Phone Readiness Dial (78/100) with 4 quadrants + 8:30 PM bedtime dock curfew status.
+    - **If Leo (Toddler):** Early Screen Boundaries Dial (20/30 min used today) + Toddler Meltdown Coping Kit ("The 3-Step Calm Down Sequence").
+- **Baseline Academy Catalog Tray:**
+  - Horizontal carousel of recommended next courses across the 5 canonical domains.
 
-### 3. Content Simplification & Reorganization
-- **Removed:** Redundant static AI Advisor prompt box, 4 competing hero badges, inline 5-line biological descriptions, secondary slang pills that clutter the card.
-- **Progressively Disclosed:** The "What NOT to say" and medical justifications are hidden behind an elegant "Show Neurobiology Why" toggle so parents see the positive action first.
-- **Replaced:** Medical terminology (*"sensitizing neural reward circuits"*) replaced with plain empathetic coaching (*"Tween brains feel peer exclusion like physical pain"*).
-
-### 4. Customer Experience Impact
-- **Time-to-Value:** 3 seconds. The parent immediately sees what to say to their child today without scrolling.
-- **Cognitive Load:** Minimal. Zero visual clutter, airy white space, clear focal hierarchy.
-
-### 5. Trade-Offs
-- **Advantages:** Fastest scanning speed, lowest cognitive friction, ideal for mobile devices, high emotional calm.
-- **Disadvantages:** Less immediate visibility of deep platform features (e.g. secondary academy courses, health triage) until navigated to via top menu.
+### 3. Why It Solves the Feedback
+- Eliminates all clinical terminology; speaks like a wise, compassionate mentor.
+- Centers active learning immediately on login.
+- Directly demonstrates how the UI shifts between a 3-year-old toddler (zero phone readiness) and an 11-year-old tween.
 
 ---
 
-## Direction B: Visual & Interactive (The Developmental Horizon Radar)
+## 3. Direction B.2: The Milestone Horizon (Visual Domain Radar & Academy Progression)
 
 ### 1. UX Philosophy & Core Concept
-**"See your child's developmental world visually, not through paragraphs."**
-Instead of asking busy parents to read paragraphs of developmental milestones and curfew agreements, Direction B translates data into **engaging visual telemetry, interactive radar maps, and audio-first tools**.
+**"See where your child is growing across all 5 life domains, then dive into tailored learning."**  
+Direction B.2 translates developmental guidance into an interactive **5-Domain Horizon Radar**. Instead of abstract age brackets or medical labels, parents navigate through five relatable pillars of childhood: *Emotions, Sleep & Bedtime, Connection & Play, Digital Habits, and Learning*.
 
 ### 2. Information Architecture & Layout
-- **Top Interactive Strip: The Developmental Horizon Radar (Timeline Visualizer):**
-  - An interactive horizontal node-based timeline showing the child's progress across 6 lifespan stages:
-    `[Infant] ➔ [Toddler] ➔ [Early Childhood] ➔ [Middle Childhood] ➔ ● [Tween (Age 11)] ➔ [Teen] ➔ [Young Adult]`
-  - Clicking any milestone node visually slides the active focus and displays that stage's key developmental challenge.
-- **Split Telemetry Cockpit (7 cols / 5 cols):**
-  - **Left (7 cols): The Interactive Voice & Script Studio:**
-    - Visual "Audio Waveform Player" mockup allowing parents to listen to an empathetic pediatrician voice model reading the script.
-    - Interactive "Adversarial Reaction vs. Connected Co-Regulation" toggle slider demonstrating the neurological difference.
-    - Direct "Launch Voice Sparring Simulator" button with live microphone indicator.
-  - **Right (5 cols): The Family Status Radar & Culture Pulse:**
-    - **Visual Circular Progress Gauge (Radial Score):** A beautiful SVG ring displaying First-Phone Readiness (`78/100`) broken into 4 colored quadrant arcs: *Sleep Hygiene, Social Impulse, Online Safety, Emotional Regulation*.
-    - **Interactive Slang Decoder Card:** A visual "Cringe Meter" (flame icons + danger level) with interactive flip-card revealing the secret app exploit alert.
-- **Bottom Full-Width Strip: Course Learning Horizon:**
-  - Visual chapter cards with icon badges and interactive completion checkboxes.
+- **Interactive 5-Domain Horizon Bar (Top Strip):**
+  - 5 interactive domain tabs with live health indicators:
+    1. `Emotions & Meltdowns` (Active Focus)
+    2. `Sleep & Bedtime Routines`
+    3. `Daily Connection & Talk`
+    4. `Screens & Digital World` (Stage-tailored)
+    5. `Play & Curiosity`
+  - Clicking any domain filters the active course and today's guidance dynamically.
+- **Hero Centerpiece (100% Width): Active Academy Mastery Hub:**
+  - **Visual Circular Progress Ring:** 60% Complete (Chapter 3 of 5).
+  - Prominent course card with chapter breakdown: *"Staying Calm When Your Child Pushes Every Button"*.
+  - Direct action: **"Start Chapter 3 (5 min)"** with interactive audio waveform.
+  - Interactive **"Key Takeaways"** drawer: 3 bullet points summarizing what you will learn.
+- **Two-Column Interactive Studio (7 cols / 5 cols):**
+  - **Left (7 cols) — Interactive AI Practice Sparring Studio:**
+    - Test what you learned! An interactive voice/text simulator allowing parents to practice handling a difficult moment before it happens in real life.
+    - Features realistic simulated child prompts ("It's not fair!", "Everyone else gets to watch YouTube!").
+  - **Right (5 cols) — Stage-Adaptive Family Telemetry:**
+    - **For Maya (Tween):** First-Phone Readiness Radar with peer pressure and sleep metrics.
+    - **For Leo (Toddler):** Sensory Regulation & Bedtime Routine Ring with sleep score and zero-screen wind-down tracker.
+- **Quiet Footer Dock:**
+  - Fast-action emergency button: *"Need instant advice right now? Ask the 24/7 AI Parent Advisor"*.
 
-### 3. Content Simplification & Reorganization
-- **Visualized:** The text-based 78/100 readiness score is replaced with an interactive radial breakdown.
-- **Transformed:** The static script is transformed into an interactive audio-visual practice module with a toggle between destructive vs. connected phrasing.
-- **Interactive:** Slang and culture warnings use interactive flip-cards rather than dense text boxes.
-
-### 4. Customer Experience Impact
-- **Engagement:** High. Parents feel like they have a modern, high-tech instrument panel for family upbringing.
-- **Retention:** Visual progress bars and interactive gauges give parents a sense of tangible progress and gamified growth.
-
-### 5. Trade-Offs
-- **Advantages:** Highly engaging, replaces text fatigue with visual models, provides interactive micro-actions (audio, dials, sliders), appeals to tech-forward parents.
-- **Disadvantages:** Higher visual density than Direction A; requires deliberate visual hierarchy so the gauges do not feel overwhelming.
+### 3. Why It Solves the Feedback
+- Puts learning progress at the heart of the home screen while grounding it in 5 practical domains of family life.
+- Interactive sparring turns passive reading into active skill-building.
+- Distinct stage-calibrated telemetry prevents irrelevant tools from cluttering toddler views.
 
 ---
 
-## Direction C: Structured & Guided (The 3-Phase Daily Routine)
+## 4. Direction B.3: The Family Operating Compass (Audio-First Micro-Lessons & Daily Connection Studio)
 
 ### 1. UX Philosophy & Core Concept
-**"Guided parenting synchronized with the rhythm of your family's day."**
-Parenting does not happen in a vacuum—it moves through daily rituals: **Morning Preparation**, **After-School Connection**, and **Evening Wind-Down**. Direction C organizes the dashboard into an intuitive, time-of-day guided journey that automatically surfaces the right advice at the right hour.
+**"Designed for busy parents on the move: listen, learn, and cope in real time."**  
+Direction B.3 recognizes that parents rarely sit at a desk. They access Alongside while making dinner, driving to soccer practice, or rocking a toddler to sleep. B.3 is an **Audio-First Coaching Studio** that turns every spare 3-minute window into a high-impact learning moment.
 
 ### 2. Information Architecture & Layout
-- **Contextual Daypart Stepper (Top Navigation Bar):**
-  - Three distinct interactive tabs with live time indicator:
-    - 🌅 **Phase 1: Morning Mindset** (Active 6:00 AM – 11:59 AM)
-    - 🌆 **Phase 2: After-School & Dinner Pulse** (Active 12:00 PM – 6:59 PM)
-    - 🌙 **Phase 3: Evening Dock & Bedtime Calm** (Active 7:00 PM – 11:59 PM)
-  - Parents can click any tab to jump forward or backward in their day's routine, or let the app highlight the active time automatically.
-- **Phase-Specific Focused Content Cards:**
-  - **If Morning Mindset Selected:**
-    - Surfaces the **3-Minute Academy Micro-Lesson**: Morning parenting neurobiology booster.
-    - Quick habit checklist: "Set intention for calm responses before school drop-off."
-  - **If After-School & Dinner Selected:**
-    - Surfaces **Today's Youth Culture & Dinner Starter**: The slang word of the day (`Crashout`) + The dinner conversation starter question.
-    - The **Daily Empathy Script** for after-school phone/friend friction.
-  - **If Evening Dock Selected:**
-    - Surfaces the **Bedtime Curfew & Device Dock Status**: Hardware curfew lock countdown (`8:30 PM Lock in 1h 45m`).
-    - The bedtime blue-light negotiation script.
-- **Progressive Disclosure Accordions:**
-  - Deep scientific citations, AAP guidelines, and neurobiology explanations are nested within collapsible accordions labeled *"Why this works: Pediatric Clinical Science"*.
-- **Persistent Bottom Bar: Quick Switcher:**
-  - Quick-switch between children with individual daily routine progress checkmarks (e.g. `Maya: 2/3 complete`, `Leo: 1/3 complete`).
+- **Audio-First Course Player (Hero Centerpiece - 100% Width):**
+  - Prominent podcast-style audio card with visual animated waveform.
+  - Active Chapter: *"Chapter 2: The 5-Minute Warning That Actually Prevents Meltdowns"*.
+  - Controls: Play/Pause, 15s skip, speed toggle (`1.0x`, `1.2x`, `1.5x`), and direct "Download Cheat Sheet (PDF)" link.
+  - Embedded course progress bar (3 of 4 chapters complete) and remaining time (`3:45`).
+- **Interactive "Cope & Connect" Decision Tree (7 cols):**
+  - An interactive scenario simulator where parents explore different choices:
+    - *Scenario:* Child refuses to put away tablet / toys at bedtime.
+    - *Choice A (Reactive):* "Count to 3 or take it away." ➔ *Result:* Triggers fight-or-flight, spikes bedtime adrenaline, 45-minute tantrum.
+    - *Choice B (Connected Bridge):* "Physical touch + acknowledgment of fun + 2-minute transition." ➔ *Result:* Child feels seen, smooth transition to storytime.
+- **Stage-Adaptive Visual Tracker (5 cols):**
+  - **Maya View:** First-Phone Readiness checklist (78%) + 8:30 PM bedtime dock curfew status.
+  - **Leo View:** Screen-free play tracker (3/3 activities done today) + sensory wind-down timer.
+- **Academy Achievement & Certification Dock:**
+  - Visual display of completed Academy badges: *"Toddler Emotional Anchor"*, *"Pact Architect"*, *"Digital Mentor"*.
 
-### 3. Content Simplification & Reorganization
-- **Chunked by Time:** Instead of presenting all 6 domain areas at once, the dashboard chunks content into three bite-sized chapters matching real parent schedules.
-- **Accordionized:** Detailed background text is hidden until explicitly requested.
-- **Sequential:** Parents are guided through a clear, achievable 3-step daily routine.
-
-### 4. Customer Experience Impact
-- **Cognitive Load:** Ultra-low per view, because only 1 of the 3 phases is prominently expanded at any moment.
-- **Routine Building:** Builds a daily habit of opening AlongSide in the morning, at dinner, and at bedtime.
-
-### 5. Trade-Offs
-- **Advantages:** Eliminates information overload by 66% on any single view; deeply intuitive for routine-oriented parents; creates natural morning and evening engagement loops.
-- **Disadvantages:** Hides evening device data when on the morning tab unless the user clicks the tab; requires an active click to browse across the full day.
+### 3. Why It Solves the Feedback
+- Highly empathetic, coaching-focused tone.
+- Audio-first format allows learning without staring at a screen.
+- The interactive "Cope & Connect" decision tree gives parents instant, tangible insight into why connection works better than control.
 
 ---
 
-## Summary Comparison Matrix of Directions
+## 5. Summary Matrix: The 3 B-Series Variations
 
-| Dimension | Direction A: Minimal & Focused | Direction B: Visual & Interactive | Direction C: Structured & Guided |
+| Dimension | Direction B.1 (The Learning Sanctuary) | Direction B.2 (The Milestone Horizon) | Direction B.3 (The Operating Compass) |
 | :--- | :--- | :--- | :--- |
-| **Primary Focal Point** | Today's Word-for-Word Empathy Script | Interactive Developmental Horizon Radar & Gauges | Contextual 3-Phase Daily Routine (Morning/Dinner/Night) |
-| **Reading Burden** | Low (Concise, high-impact typography) | Very Low (Visual diagrams, dials, audio cards) | Low-Medium (Chunked into 3 focused phase views) |
-| **Information Density** | Clean & Spacious (Minimalist) | Rich & Visual (Telemetry Dashboard) | Modular & Sequential (Accordion-based) |
-| **Interactive Mechanisms** | Copy button, Audio toggle, Science drawer | Timeline node picker, Radial arc gauge, Audio player | Daypart tab switcher, Habit checklist, Expandable drawers |
-| **Mobile UX** | Superior (zero scroll needed for primary script) | High (compact interactive visual cards) | Excellent (vertical accordions match mobile habits) |
-| **Brand Alignment** | 100% (Taste 2 Editorial Almanac) | 100% (Taste 2 + Modern Vercel Telemetry) | 100% (Taste 2 + Pediatric Routine Structure) |
+| **Primary UX Metaphor** | Visual Course Journey Roadmap | 5-Domain Parenting Horizon Radar | Audio-First Daily Coaching Studio |
+| **Hero Focal Point** | Interactive Chapter Nodes & Habit Streak | Circular Progress Ring & Milestone Radar | Audio Player & 5-Min Micro-Lesson |
+| **Tone & Voice** | Warm, encouraging, structured | Analytical, growth-oriented, engaging | Actionable, empathetic, hands-free |
+| **Child Stage Adaptability** | Interactive Toddler vs. Tween switcher | Dynamic 5-Domain filtering by stage | Reactive decision tree calibrated to age |
+| **Phone Readiness Placement** | Tweens only (hidden for Toddlers) | Tweens only (replaced by Sensory Dial) | Tweens only (replaced by Play Tracker) |
+| **Interactive Tool** | Try Tonight practical exercise | AI Voice Sparring Simulator | Interactive Cope & Connect Decision Tree |
+| **Best For** | Parents seeking calm, step-by-step mastery | Parents seeking deep developmental clarity | Busy parents needing practical audio advice |
 
-All three directions will be brought to life as fully interactive, responsive standalone prototypes in `design-explorations/sou-79-loggedin-home/`.
+---
+
+## 6. Verification & Next Steps
+
+All three designs strictly respect the approved **Taste 2: Editorial Pediatric Almanac** design system:
+- Archival Linen (`#FBFBF9`), Forest Spruce (`#143D2B`), Spruce Soft (`#EAF3EE`), Warm Amber (`#B45309`), Hairline borders (`#E3E3DC`).
+- Newsreader editorial serif headings, Inter body UI, JetBrains Mono telemetry.
+- Accessible touch targets (≥ 44×44px), WCAG AA color contrast (≥ 4.5:1), and zero layout shift.
+- Standalone HTML/CSS/JS prototypes authored in `design-explorations/sou-79-loggedin-home/`.
