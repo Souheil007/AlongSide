@@ -66,6 +66,20 @@ const config: Config = {
           'amber-soft': '#FEF3C7',
           destructive: '#DC2626',
         },
+        // Editorial Pediatric Almanac Aliases (Prototype A2 fidelity)
+        linen: '#FBFBF9',
+        'linen-subtle': '#F4F4F0',
+        ink: '#111413',
+        body: '#494F4C',
+        mute: '#858C88',
+        hairline: '#E3E3DC',
+        spruce: {
+          DEFAULT: '#143D2B',
+          hover: '#0E2A1E',
+          soft: '#EAF3EE',
+        },
+        'spruce-hover': '#0E2A1E',
+        'spruce-soft': '#EAF3EE',
         // Parent Calm Canonical Tokens (Backward-compatible)
         sage: {
           50: '#F0FDF4',
