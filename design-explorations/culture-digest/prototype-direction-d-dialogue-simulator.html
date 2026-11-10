@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction D — The Peer World Holodeck & Live Sparring Simulator | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            'hairline-soft': '#EDEDEA',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% 0%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.03);
+    }
+    .chat-bubble {
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(8px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .wave-bar {
+      animation: wave 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes wave {
+      0% { height: 6px; }
+      100% { height: 28px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-6 lg:p-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Header & Brand Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 8 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction D: Peer World Holodeck</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Interactive Live Sparring Mode
+        </span>
+      </div>
+    </header>
+
+    <!-- Child Selector Bar (Calibrated across 3 distinct lifespan stages) -->
+    <div class="hairline-card bg-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-mute">Select Child to Experience Their World:</span>
+          <span class="font-mono text-[10px] text-amber bg-amber-soft px-2 py-0.5 rounded-full font-semibold">Live Sandbox</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 pt-1" id="child-tabs">
+          <button onclick="setChild('julian')" id="tab-julian" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition">
+            <span class="w-6 h-6 rounded-full bg-spruce text-white flex items-center justify-center text-[11px] font-bold">J</span>
+            <span>Julian · 14 yrs (Adolescence / Active Device)</span>
+          </button>
+          <button onclick="setChild('maya')" id="tab-maya" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-body flex items-center justify-center text-[11px] font-bold">M</span>
+            <span>Maya · 8 yrs (Grade School / Pre-Device)</span>
+          </button>
+          <button onclick="setChild('mateo')" id="tab-mateo" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-body flex items-center justify-center text-[11px] font-bold">M</span>
+            <span>Mateo · 14 mo (Toddler / Sensorimotor)</span>
+          </button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 border-t md:border-t-0 md:border-l border-hairline pt-3 md:pt-0 md:pl-5">
+        <div class="space-y-0.5 text-right md:text-left">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Parent Posture</span>
+          <span id="posture-tag" class="font-mono text-xs font-semibold text-spruce">Curious & Sparring</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dual-Stage Holodeck Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT STAGE: The Living Peer World Simulation (Col 1-5 or 6) -->
+      <div class="lg:col-span-5 space-y-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-coral animate-ping"></div>
+            <h2 class="font-mono text-xs uppercase tracking-wider font-bold text-ink" id="world-title">Their Living Peer Feed</h2>
+          </div>
+          <span class="font-mono text-[11px] text-mute" id="world-badge">Simulation View</span>
+        </div>
+
+        <!-- Simulated Device / Environment Frame -->
+        <div class="hairline-card bg-card rounded-2xl overflow-hidden border border-hairline shadow-md">
+          <!-- Device Top Notch & Status Bar -->
+          <div class="bg-slate-900 text-slate-300 px-4 py-2.5 flex items-center justify-between text-[11px] font-mono">
+            <span id="sim-time">3:42 PM</span>
+            <div class="flex items-center gap-1.5" id="sim-app-badge">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="sim-network-title">Discord: 8th Grade Squad</span>
+            </div>
+            <span>5G 92%</span>
+          </div>
+
+          <!-- Dynamic Simulation Feed Content -->
+          <div id="sim-feed-container" class="p-4 sm:p-5 space-y-3 bg-[#F8F9FA] min-h-[440px] flex flex-col justify-between">
+            <!-- Messages injected dynamically via JS -->
+          </div>
+
+          <!-- Audio Waveform Snippet Bar -->
+          <div class="bg-white border-t border-hairline p-3.5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-mute flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-coral" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/></svg>
+                <span id="audio-label">Voice Note Snippet · 0:14</span>
+              </span>
+              <button onclick="toggleAudio()" id="btn-audio-play" class="px-2.5 py-1 rounded-md bg-spruce text-white font-mono text-[11px] hover:bg-spruce-light transition flex items-center gap-1">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span>Play Sound</span>
+              </button>
+            </div>
+            <!-- Waveform bars -->
+            <div class="h-6 flex items-center gap-1 bg-canvas-subtle p-1.5 rounded-lg border border-hairline overflow-hidden" id="waveform">
+              <div class="w-1 bg-spruce rounded-full h-3"></div>
+              <div class="w-1 bg-spruce rounded-full h-5"></div>
+              <div class="w-1 bg-spruce rounded-full h-2"></div>
+              <div class="w-1 bg-spruce rounded-full h-4"></div>
+              <div class="w-1 bg-coral rounded-full h-6"></div>
+              <div class="w-1 bg-coral rounded-full h-3"></div>
+              <div class="w-1 bg-spruce rounded-full h-5"></div>
+              <div class="w-1 bg-spruce rounded-full h-2"></div>
+              <div class="w-1 bg-spruce rounded-full h-4"></div>
+              <div class="w-1 bg-spruce rounded-full h-5"></div>
+              <div class="w-1 bg-spruce rounded-full h-2"></div>
+              <div class="w-1 bg-spruce rounded-full h-6"></div>
+              <div class="w-1 bg-spruce rounded-full h-3"></div>
+            </div>
+            <p class="text-[11px] text-body italic" id="audio-caption">"Bro literally don't let Henderson catch you lacking, that test was diabolical fr."</p>
+          </div>
+        </div>
+
+        <!-- Quick Slang & Cultural Glossary Pill Box -->
+        <div class="hairline-card bg-card rounded-xl p-4 space-y-2.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-mute block">Decoded Cultural Signals (In Context)</span>
+          <div class="flex flex-wrap gap-2" id="cultural-signals-tags">
+            <!-- Dynamic tags -->
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT STAGE: The Parental Conversational Sparring Studio (Col 6-12) -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <h2 class="font-mono text-xs uppercase tracking-wider font-bold text-ink">Parental Sparring & Dinner Table Simulator</h2>
+          </div>
+          <span class="font-mono text-[11px] text-spruce font-semibold">Test Your Response Real-Time</span>
+        </div>
+
+        <!-- Scenario Prompt Card -->
+        <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-4">
+          <div class="space-y-1">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-amber font-semibold" id="scenario-stage-tag">Scenario: Returning Home from School</span>
+            <h3 class="font-serif text-xl sm:text-2xl text-ink font-semibold" id="scenario-headline">"Julian drops his backpack, slumps on the couch, and mutters: 'Bro, I crashed out today. I am so cooked.'"</h3>
+            <p class="text-xs sm:text-sm text-body" id="scenario-subtext">His prefrontal cortex is exhausted from 7 hours of social positioning and micro-evaluations. How do you respond?</p>
+          </div>
+
+          <!-- 3 Interactive Choice Buttons -->
+          <div class="space-y-2.5 pt-2" id="choice-container">
+            <button onclick="pickChoice(1)" id="btn-choice-1" class="w-full text-left p-3.5 rounded-xl border border-hairline hover:border-slate-400 bg-canvas-subtle hover:bg-white transition space-y-1 group">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-body group-hover:text-ink">Option A: The Authority / Lecture Reaction</span>
+                <span class="font-mono text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">High Risk</span>
+              </div>
+              <p class="text-xs text-body" id="choice-1-text">"Don't call me 'bro', and stop with the dramatic slang. What did you do to your teacher?"</p>
+            </button>
+
+            <button onclick="pickChoice(2)" id="btn-choice-2" class="w-full text-left p-3.5 rounded-xl border border-hairline hover:border-slate-400 bg-canvas-subtle hover:bg-white transition space-y-1 group">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-body group-hover:text-ink">Option B: The Over-Eager "Cool Parent"</span>
+                <span class="font-mono text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">High Cringe</span>
+              </div>
+              <p class="text-xs text-body" id="choice-2-text">"No cap Julian, did you take a massive L? Was the vibe lowkey negative rizz?"</p>
+            </button>
+
+            <button onclick="pickChoice(3)" id="btn-choice-3" class="w-full text-left p-3.5 rounded-xl border border-spruce/40 bg-spruce-soft/40 hover:bg-spruce-soft transition space-y-1 group">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-spruce group-hover:text-spruce-light">Option C: The Calm Neurobiology Bridge (Recommended)</span>
+                <span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Optimal Connection</span>
+              </div>
+              <p class="text-xs text-body" id="choice-3-text">"Whoa. 'Crashed out' sounds like your nervous system hit a redline. Grab a glass of water first—what pushed you over the edge?"</p>
+            </button>
+          </div>
+
+          <!-- Simulated Reaction Result Box -->
+          <div id="reaction-box" class="hairline-card bg-[#FAF9F5] rounded-xl p-4 sm:p-5 border-l-4 border-l-spruce space-y-3 transition-all">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span id="reaction-icon" class="text-xl">✨</span>
+                <span id="reaction-status" class="font-mono text-xs font-bold text-spruce uppercase tracking-wider">Simulated Teen Reaction: Connection Opened</span>
+              </div>
+              <span id="reaction-score" class="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-white border border-hairline text-ink">+500 Aura / Calm Attunement</span>
+            </div>
+            <p id="reaction-quote" class="font-serif italic text-sm sm:text-base text-ink">
+              "Julian drops his shoulders, lets out a long breath, and walks over to the counter: 'It was 6th period chem, Mom. The lab partner left me doing the whole titration and the beaker cracked. Everyone stared.'"
+            </p>
+            <div class="pt-2 border-t border-hairline flex items-center justify-between text-xs text-mute">
+              <span id="reaction-neuro-tip" class="font-mono text-[11px]">🧠 Pediatric Insight: Acknowledging the bodily state de-escalates amygdala hijack.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sunday Dinner Companion Card with 1-Click Copy -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3 border border-spruce/20">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              Tonight's Dinner Table Spark
+            </span>
+            <button onclick="copyDinnerPrompt()" id="btn-copy" class="px-2.5 py-1 rounded-md border border-hairline bg-canvas-subtle hover:bg-white text-ink font-mono text-[11px] font-medium transition flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy to Phone</span>
+            </button>
+          </div>
+          <p id="dinner-prompt-text" class="font-serif text-lg text-ink font-medium leading-relaxed">
+            "If someone in your grade had to win an award for gaining +1000 Aura points this week without even trying, who was it and what happened?"
+          </p>
+          <div class="flex items-center gap-2 text-[11px] font-mono text-mute">
+            <span class="w-1.5 h-1.5 rounded-full bg-spruce"></span>
+            <span id="dinner-posture-tip">Rules of Engagement: Listen 80%, laugh easily, no moralizing.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Lifespan Cultural Data calibrated across all 3 tiers
+    const CULTURAL_DATA = {
+      julian: {
+        name: "Julian",
+        age: "14 yrs",
+        tier: "Pioneer (Early Adolescence)",
+        road: "Road 2: Active Device",
+        posture: "Curious & Sparring (Non-Cringe)",
+        worldTitle: "Julian's Discord & Group Chat Feed",
+        worldBadge: "Live Peer Comms",
+        simApp: "Discord · #grade8-hangout",
+        simTime: "3:42 PM",
+        simMessages: [
+          { sender: "Tyler_K", role: "Classmate", text: "yo did anyone see what happened in 4th period Henderson's class?", isSelf: false },
+          { sender: "Julian_B", role: "Julian", text: "bro don't even ask I literally crashed out on the titration lab 💀", isSelf: true },
+          { sender: "Sammy_99", role: "Best Friend", text: "bro was cooked fr. but Henderson took -500 aura for that pop quiz anyway", isSelf: false },
+          { sender: "Marcus_Z", role: "Classmate", text: "lock in tonight for math though, exam is diabolical", isSelf: false }
+        ],
+        audioLabel: "Voice Note Snippet · 0:14",
+        audioCaption: '"Bro literally don\'t let Henderson catch you lacking, that test was diabolical fr."',
+        signals: [
+          { term: "Crashout", meaning: "Sudden loss of emotional control / blowing up", type: "Urgent Slang" },
+          { term: "Cooked", meaning: "Doomed / facing inevitable failure or embarrassment", type: "Peer State" },
+          { term: "Aura Points", meaning: "Unspoken social currency of composure & cool", type: "Social Status" },
+          { term: "Lock In", meaning: "Focus 100% with zero distractions", type: "Habit" }
+        ],
+        scenarioHeadline: '"Julian drops his backpack, slumps on the couch, and mutters: \'Bro, I crashed out today. I am so cooked.\'"',
+        scenarioSubtext: "His prefrontal cortex is exhausted from 7 hours of social positioning and micro-evaluations. How do you respond?",
+        choices: [
+          {
+            label: "Option A: The Authority / Lecture Reaction",
+            badge: "High Risk",
+            badgeClass: "text-rose-600 bg-rose-50 border-rose-200",
+            text: '"Don\'t call me \'bro\', and stop with the dramatic slang. What did you do to your teacher?"',
+            reaction: {
+              icon: "🚪",
+              status: "Simulated Reaction: -1000 Aura · Defensive Shutdown",
+              score: "Bedroom door slams. Zero trust built.",
+              quote: '"Julian rolls his eyes into the back of his head, grabs his phone, mutters \'nothing, forget it,\' and walks upstairs to his room. Conversation over."',
+              neuroTip: "🧠 Pediatric Insight: Demanding linguistic compliance when cortisol is spiked triggers an adolescent threat reflex."
+            }
+          },
+          {
+            label: "Option B: The Over-Eager 'Cool Parent'",
+            badge: "High Cringe",
+            badgeClass: "text-amber-700 bg-amber-50 border-amber-200",
+            text: '"No cap Julian, did you take a massive L? Was the vibe lowkey negative rizz?"',
+            reaction: {
+              icon: "😬",
+              status: "Simulated Reaction: Extreme Cringe Shock",
+              score: "Pity smile + awkward distancing",
+              quote: '"Julian physically recoils: \'Mom, please never say that again. It hurts my ears.\' He chuckles awkwardly, but the emotional opening is lost."',
+              neuroTip: "🧠 Pediatric Insight: Teens need parents to be the stable adult container, not a peer cosplay."
+            }
+          },
+          {
+            label: "Option C: The Calm Neurobiology Bridge (Recommended)",
+            badge: "Optimal Connection",
+            badgeClass: "text-emerald-700 bg-emerald-50 border-emerald-200",
+            text: '"Whoa. \'Crashed out\' sounds like your nervous system hit a redline. Grab a glass of water first—what pushed you over the edge?"',
+            reaction: {
+              icon: "✨",
+              status: "Simulated Reaction: +500 Aura · Connection Opened",
+              score: "Prefrontal regulation + open conversation",
+              quote: '"Julian drops his shoulders, lets out a long breath, and walks over to the counter: \'It was 6th period chem, Mom. The lab partner left me doing the whole titration and the beaker cracked. Everyone stared.\'"',
+              neuroTip: "🧠 Pediatric Insight: Acknowledging the bodily state de-escalates amygdala hijack without judging the emotion."
+            }
+          }
+        ],
+        dinnerPrompt: '"If someone in your grade had to win an award for gaining +1000 Aura points this week without even trying, who was it and what happened?"',
+        dinnerTip: "Rules of Engagement: Listen 80%, laugh easily, no moralizing."
+      },
+
+      maya: {
+        name: "Maya",
+        age: "8 yrs",
+        tier: "Trailblazer (Elementary School)",
+        road: "Road 1: Pre-Device Sanctuary",
+        posture: "Playground Economy & Peer Reciprocity",
+        worldTitle: "Maya's Recess & Minecraft Playground",
+        worldBadge: "Playground Barter Ledger",
+        simApp: "Recess Table: 3rd Grade Quad",
+        simTime: "11:45 AM",
+        simMessages: [
+          { sender: "Maya_B", role: "Maya", text: "I have a duplicate holographic Mewtwo card from the silver pack!", isSelf: true },
+          { sender: "Emma_S", role: "Classmate", text: "I will trade you my pink Squishmallow clip AND my glitter eraser for it!", isSelf: false },
+          { sender: "Chloe_R", role: "Classmate", text: "No fair Emma, you promised Chloe you wouldn't trade that eraser!", isSelf: false },
+          { sender: "Maya_B", role: "Maya", text: "If we play Minecraft tonight on the shared tablet, don't build near my horse stable!", isSelf: true }
+        ],
+        audioLabel: "Playground Audio Chants · 0:11",
+        audioCaption: '"Double double this this, double double that that! You\'re out, not my friend until recess two!"',
+        signals: [
+          { term: "Holo Mewtwo Trade", meaning: "High-stakes 3rd grade playground currency", type: "Barter Economy" },
+          { term: "Best Friend Contracts", meaning: "Fluid, daily shifting friendship allegiances", type: "Social Schema" },
+          { term: "Minecraft Griefing", meaning: "Accidentally breaking a friend's digital house", type: "Peer Ethics" },
+          { term: "Squishmallow Hunt", meaning: "Tactile collectible status symbol", type: "Playground Trend" }
+        ],
+        scenarioHeadline: '"Maya runs in from the school bus, throws her shoes off, and declares: \'Emma is not my best friend anymore. She traded my holographic card to Chloe!\'"',
+        scenarioSubtext: "Her sense of playground justice and reciprocal fairness is wounded. How do you respond?",
+        choices: [
+          {
+            label: "Option A: Dismissive / Minimizing",
+            badge: "High Frustration",
+            badgeClass: "text-rose-600 bg-rose-50 border-rose-200",
+            text: '"It is just a piece of shiny cardboard, Maya. Don\'t make a big deal out of nothing."',
+            reaction: {
+              icon: "😢",
+              status: "Simulated Reaction: Emotional Invalidation",
+              score: "Tears + Feeling Unheard",
+              quote: '"Maya stomps her foot: \'You never understand anything! It was worth three EX cards!\' She retreats to her bedroom feeling betrayed by both Emma and home."',
+              neuroTip: "🧠 Pediatric Insight: At 8 years old, playground trades are genuine training wheels for adult contract law."
+            }
+          },
+          {
+            label: "Option B: Over-Intervention",
+            badge: "Anxiety Inducing",
+            badgeClass: "text-amber-700 bg-amber-50 border-amber-200",
+            text: '"I am emailing Emma\'s mom right now and telling the principal trading should be banned."',
+            reaction: {
+              icon: "😰",
+              status: "Simulated Reaction: Playground Social Panic",
+              score: "Fear of being labeled a tattle-tale",
+              quote: '"Maya panics: \'NO! Mom do NOT do that! Everyone will hate me and call me a baby!\' Now she has to manage both the trade loss and parental overreach."',
+              neuroTip: "🧠 Pediatric Insight: Over-rescuing deprives children of negotiating peer repair and autonomy."
+            }
+          },
+          {
+            label: "Option C: Empathetic Investigative Posture (Recommended)",
+            badge: "Optimal Connection",
+            badgeClass: "text-emerald-700 bg-emerald-50 border-emerald-200",
+            text: '"Oh man, when a trade goes sideways like that, it feels like someone broke a pinky promise. Tell me the whole trade deal from the start."',
+            reaction: {
+              icon: "🤝",
+              status: "Simulated Reaction: Deep Catharsis & Problem Solving",
+              score: "Restored Emotional Balance",
+              quote: '"Maya breathes, climbs onto the kitchen stool, and recounts the play-by-play. Together you script what she can say to Emma tomorrow at morning line-up."',
+              neuroTip: "🧠 Pediatric Insight: Active listening allows the 8-year-old brain to organize sequence, causality, and empathy."
+            }
+          }
+        ],
+        dinnerPrompt: '"If our dinner table had a trading post tonight, what chore would you trade for an extra 15 minutes of bedtime reading?"',
+        dinnerTip: "Rules of Engagement: Playful negotiation, let the child win a trade."
+      },
+
+      mateo: {
+        name: "Mateo",
+        age: "14 mo",
+        tier: "Explorer (Infant & Toddler)",
+        road: "Road 1: Pre-Device Sanctuary",
+        posture: "Sensory Rhythm & Mirror Neurons",
+        worldTitle: "Mateo's Sensory & Song Universe",
+        worldBadge: "Rhythm & Mirror Attunement",
+        simApp: "Sensory Nursery Soundboard",
+        simTime: "9:15 AM",
+        simMessages: [
+          { sender: "Mateo", role: "Mateo (Vocal)", text: "Ba-ba! (points emphatically to the toy basket)", isSelf: true },
+          { sender: "Parent Calm", role: "Mirror", text: "You see the yellow ball! Ball bounces! Boing boing!", isSelf: false },
+          { sender: "Mateo", role: "Mateo (Gesture)", text: "*Claps hands twice rapidly, grins, stomps feet on rug*", isSelf: true },
+          { sender: "Neuro Check", role: "Brain Science", text: "Mirror neurons firing: Rhythmic mimicry building syntax pathways.", isSelf: false }
+        ],
+        audioLabel: "Cadence & Nursery Waveform · 0:08",
+        audioCaption: '"The wheels on the bus go round and round... (Repetitive cadence wires prefrontal prediction)."',
+        signals: [
+          { term: "Repetitive Song Loop", meaning: "Demands the exact same song 15 times", type: "Prediction Circuit" },
+          { term: "Object Permanence Play", meaning: "Drops spoon off high chair to test physics", type: "Sensorimotor Test" },
+          { term: "The 'Mine!' Declaration", meaning: "First emergence of self-concept & agency", type: "Identity Milestone" },
+          { term: "Physical Mimicry", meaning: "Claps when you clap, waves when you wave", type: "Mirror Neurons" }
+        ],
+        scenarioHeadline: '"Mateo pushes his sweet potato bowl off the high chair tray with eye contact, then points and yells \'UH-OH!\'"',
+        scenarioSubtext: "He is running a repeated scientific experiment on gravity and parental reaction velocity. How do you respond?",
+        choices: [
+          {
+            label: "Option A: Angry Reaction / Shaming",
+            badge: "Cortisol Spike",
+            badgeClass: "text-rose-600 bg-rose-50 border-rose-200",
+            text: '"Bad boy! You do NOT throw food on the floor! Look at this mess!"',
+            reaction: {
+              icon: "🥺",
+              status: "Simulated Reaction: Fear & Confusion",
+              score: "Limbic Alarm / Shuts Down",
+              quote: '"Mateo\'s lower lip quivers. He doesn\'t understand malice or waste; he only perceives sudden parental anger. He bursts into overwhelmed tears."',
+              neuroTip: "🧠 Pediatric Insight: Toddlers under 24 months lack impulse control circuits; shame damages learning exploration."
+            }
+          },
+          {
+            label: "Option B: Passive Re-Drop Game",
+            badge: "Exhaustion Loop",
+            badgeClass: "text-amber-700 bg-amber-50 border-amber-200",
+            text: '"Oh silly boy! (Picks it up, puts it back on tray without boundary, Mateo immediately throws it again)."',
+            reaction: {
+              icon: "🔄",
+              status: "Simulated Reaction: Endless Play Loop",
+              score: "30-minute floor cleaning marathon",
+              quote: '"Mateo giggles and hurls the spoon again. He has successfully trained the parent into a fun fetch machine."',
+              neuroTip: "🧠 Pediatric Insight: Without calm physical boundaries, toddlers repeat cause-and-effect loops indefinitely."
+            }
+          },
+          {
+            label: "Option C: Calm Boundary + Floor Physics Translation (Recommended)",
+            badge: "Optimal Connection",
+            badgeClass: "text-emerald-700 bg-emerald-50 border-emerald-200",
+            text: '"The bowl went splat on the floor! Food stays on the tray. If food goes down, all done with bowl."',
+            reaction: {
+              icon: "🌱",
+              status: "Simulated Reaction: Calm Understanding & Boundary Register",
+              score: "Clear Neurobiological Regulation",
+              quote: '"Mateo watches you calmly set the bowl on the counter. He understands the cause and effect without fright. You offer a teething cracker on the tray."',
+              neuroTip: "🧠 Pediatric Insight: Neutral consequence delivered with warm eye contact wires healthy limit-testing."
+            }
+          }
+        ],
+        dinnerPrompt: '"High Chair Duet: Sing the \'Wheels on the Bus\' with Mateo, but replace \'The Horn goes Beep Beep\' with silly animal noises he loves."',
+        dinnerTip: "Rules of Engagement: Big facial expressions, high pitch cadence (Parentese)."
+      }
+    };
+
+    let currentChild = 'julian';
+    let isPlaying = false;
+
+    function setChild(childKey) {
+      currentChild = childKey;
+      const data = CULTURAL_DATA[childKey];
+
+      // Update tabs
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        if (k === childKey) {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition";
+        } else {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition";
+        }
+      });
+
+      // Update Posture & Headings
+      document.getElementById('posture-tag').textContent = data.posture;
+      document.getElementById('world-title').textContent = data.worldTitle;
+      document.getElementById('world-badge').textContent = data.worldBadge;
+      document.getElementById('sim-network-title').textContent = data.simApp;
+      document.getElementById('sim-time').textContent = data.simTime;
+      document.getElementById('audio-label').textContent = data.audioLabel;
+      document.getElementById('audio-caption').textContent = data.audioCaption;
+
+      // Update Messages
+      const feedContainer = document.getElementById('sim-feed-container');
+      feedContainer.innerHTML = '';
+      data.simMessages.forEach(msg => {
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble p-3 rounded-xl max-w-[85%] text-xs space-y-1 ${
+          msg.isSelf 
+            ? 'ml-auto bg-spruce text-white rounded-br-none' 
+            : 'mr-auto bg-white border border-hairline text-ink rounded-bl-none shadow-2xs'
+        }`;
+        bubble.innerHTML = `
+          <div class="flex items-center justify-between text-[10px] font-mono opacity-70">
+            <span>${msg.sender}</span>
+            <span>${msg.role}</span>
+          </div>
+          <p class="leading-relaxed">${msg.text}</p>
+        `;
+        feedContainer.appendChild(bubble);
+      });
+
+      // Update Cultural Signals
+      const signalsBox = document.getElementById('cultural-signals-tags');
+      signalsBox.innerHTML = '';
+      data.signals.forEach(s => {
+        const pill = document.createElement('div');
+        pill.className = "p-2 rounded-lg bg-canvas-subtle border border-hairline text-xs space-y-0.5 flex-1 min-w-[140px]";
+        pill.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] font-bold text-spruce">${s.term}</span>
+            <span class="font-mono text-[9px] text-mute">${s.type}</span>
+          </div>
+          <p class="text-[11px] text-body">${s.meaning}</p>
+        `;
+        signalsBox.appendChild(pill);
+      });
+
+      // Update Scenario & Choices
+      document.getElementById('scenario-stage-tag').textContent = `Scenario · ${data.tier}`;
+      document.getElementById('scenario-headline').textContent = data.scenarioHeadline;
+      document.getElementById('scenario-subtext').textContent = data.scenarioSubtext;
+
+      // Update Choice options
+      for (let i = 1; i <= 3; i++) {
+        const c = data.choices[i - 1];
+        document.getElementById(`choice-${i}-text`).textContent = c.text;
+      }
+
+      // Default to choice 3 (Recommended)
+      pickChoice(3);
+
+      // Dinner Table Card
+      document.getElementById('dinner-prompt-text').textContent = data.dinnerPrompt;
+      document.getElementById('dinner-posture-tip').textContent = data.dinnerTip;
+    }
+
+    function pickChoice(num) {
+      const data = CULTURAL_DATA[currentChild];
+      const choice = data.choices[num - 1];
+
+      // Update button borders
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById(`btn-choice-${i}`);
+        if (i === num) {
+          btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-spruce bg-white transition space-y-1 shadow-sm";
+        } else {
+          btn.className = "w-full text-left p-3.5 rounded-xl border border-hairline bg-canvas-subtle hover:bg-white transition space-y-1 group";
+        }
+      }
+
+      // Update reaction box
+      const r = choice.reaction;
+      document.getElementById('reaction-icon').textContent = r.icon;
+      document.getElementById('reaction-status').textContent = r.status;
+      document.getElementById('reaction-score').textContent = r.score;
+      document.getElementById('reaction-quote').textContent = r.quote;
+      document.getElementById('reaction-neuro-tip').textContent = r.neuroTip;
+    }
+
+    function toggleAudio() {
+      const btn = document.getElementById('btn-audio-play');
+      const wave = document.getElementById('waveform');
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        btn.innerHTML = `<svg class="w-3 h-3 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/></svg><span>Pause</span>`;
+        wave.classList.add('animate-pulse');
+      } else {
+        btn.innerHTML = `<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play Sound</span>`;
+        wave.classList.remove('animate-pulse');
+      }
+    }
+
+    function copyDinnerPrompt() {
+      const text = document.getElementById('dinner-prompt-text').textContent.trim();
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btn-copy');
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+
+    // Initialize Julian on load
+    setChild('julian');
+  </script>
+</body>
+</html>
