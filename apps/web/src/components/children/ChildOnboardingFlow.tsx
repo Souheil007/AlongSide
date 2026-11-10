@@ -10,8 +10,11 @@ import {
   type ChildDTO,
   RoadType,
   calculateChildAge,
+  calculateChildAgeMonths,
   calculateLifespanTier,
+  resolveEarlyChildhoodTranche,
   DevelopmentalTier,
+  EarlyChildhoodTranche,
 } from '@alongside/shared';
 import { useCreateChild } from '@/hooks/useChildren';
 import { useChildContextStore } from '@/stores/useChildContextStore';
@@ -59,6 +62,24 @@ export const ONBOARDING_YEARS = Array.from({ length: 19 }, (_, i) => currentYear
 
 export function getTierDisplay(tier: DevelopmentalTier | string) {
   switch (tier) {
+    case DevelopmentalTier.TIER_0A_INFANCY_0_1:
+      return {
+        name: 'Infancy (0–12 mo)',
+        focus: 'Somatic Regulation, Sleep Architecture & Feeding Foundations',
+        badgeColor: 'bg-rose-50 text-rose-800 border-rose-200',
+      };
+    case DevelopmentalTier.TIER_0B_TODDLER_1_2:
+      return {
+        name: 'Younger Toddler (1–2 yrs)',
+        focus: 'Locomotion, First Words & Amygdala Co-Regulation',
+        badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
+      return {
+        name: 'Older Toddler (2–3 yrs)',
+        focus: 'Autonomy, Boundary Testing & Potty Readiness',
+        badgeColor: 'bg-orange-50 text-orange-800 border-orange-200',
+      };
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return {
         name: 'Infancy & Toddler (0–3)',
@@ -150,10 +171,30 @@ export function ChildOnboardingFlow({
     return calculateChildAge(Number(watchedBirthYear), Number(watchedBirthMonth));
   }, [watchedBirthYear, watchedBirthMonth]);
 
+  const calculatedAgeMonths = React.useMemo(() => {
+    if (!watchedBirthYear || !watchedBirthMonth) return 8 * 12;
+    return calculateChildAgeMonths(
+      new Date(Number(watchedBirthYear), Number(watchedBirthMonth) - 1, 1)
+    );
+  }, [watchedBirthYear, watchedBirthMonth]);
+
+  const microTranche = React.useMemo(() => {
+    if (calculatedAgeMonths > 36) return null;
+    return resolveEarlyChildhoodTranche(calculatedAgeMonths);
+  }, [calculatedAgeMonths]);
+
+  const calculatedAgeDisplay =
+    calculatedAgeMonths < 24 ? `${calculatedAgeMonths} mo` : `${calculatedAge} yrs`;
+
   const calculatedTier = React.useMemo(() => {
     if (!watchedBirthYear || !watchedBirthMonth) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
-    return calculateLifespanTier(Number(watchedBirthYear), Number(watchedBirthMonth));
-  }, [watchedBirthYear, watchedBirthMonth]);
+    return calculateLifespanTier(
+      Number(watchedBirthYear),
+      Number(watchedBirthMonth),
+      new Date(),
+      calculatedAgeMonths
+    );
+  }, [watchedBirthYear, watchedBirthMonth, calculatedAgeMonths]);
 
   const tierInfo = getTierDisplay(calculatedTier);
 
@@ -499,13 +540,18 @@ export function ChildOnboardingFlow({
                 Neurodevelopmental Lifespan Profile
               </span>
               <span className="text-xs font-medium text-slate-500">
-                Calculated Age: <strong className="text-slate-800">{calculatedAge} yrs</strong>
+                Calculated Age: <strong className="text-slate-800">{calculatedAgeDisplay}</strong>
               </span>
             </div>
             <div className="flex items-center gap-2.5 flex-wrap">
               <Badge className={`text-xs font-semibold px-2.5 py-0.5 ${tierInfo.badgeColor}`}>
                 {tierInfo.name}
               </Badge>
+              {microTranche && (
+                <Badge variant="outline" className="text-[10px] font-mono text-slate-700 bg-white border-slate-300">
+                  Sub-Tranche: {microTranche.replace(/_/g, ' ')}
+                </Badge>
+              )}
               <span className="text-xs text-slate-600">{tierInfo.focus}</span>
             </div>
           </div>

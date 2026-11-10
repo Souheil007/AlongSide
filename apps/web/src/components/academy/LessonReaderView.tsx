@@ -141,18 +141,45 @@ export function LessonReaderView({
         );
       }
 
-      // 2. What to Say Dialogue Speech Bubble
+      // 2. Comparative Dialogue Table (What NOT to Say vs What to Say Instead)
       if (
+        trimmed.toLowerCase().includes('what not to say') ||
         trimmed.toLowerCase().includes('what to say') ||
+        trimmed.toLowerCase().includes('comparative dialogue') ||
         trimmed.toLowerCase().includes('alongside empathetic response') ||
         (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
         trimmed.startsWith('> "')
       ) {
-        const cleanDialogue = trimmed
+        let notToSay =
+          lesson.whatNotToSay ||
+          'Stop overreacting! You are making a huge deal out of nothing.';
+        let toSay = trimmed;
+        const deliveryTip =
+          lesson.deliveryTip ||
+          'Lower your voice tone, unhurried cadence, and match eye level before speaking.';
+
+        if (
+          trimmed.toLowerCase().includes('what not to say') &&
+          trimmed.toLowerCase().includes('what to say')
+        ) {
+          const parts = trimmed.split(/what to say(?:\s+instead)?:?/i);
+          if (parts.length >= 2) {
+            notToSay = parts[0]!
+              .replace(/^#+\s*/, '')
+              .replace(/what not to say:?/i, '')
+              .replace(/[*_"`]/g, '')
+              .trim();
+            toSay = parts[1]!
+              .replace(/[*_`]/g, '')
+              .trim();
+          }
+        }
+
+        const cleanDialogue = toSay
           .replace(/^#+\s*/, '')
           .replace(/^>\s*/, '')
           .replace(/^\*\*What to Say:?\*\*:?\s*/i, '')
-          .replace(/^What to Say:?\s*/i, '')
+          .replace(/^What to Say(?:\s+Instead)?:?\s*/i, '')
           .replace(/^Alongside Empathetic Response:?\s*/i, '')
           .replace(/^"/, '')
           .replace(/"$/, '')
@@ -162,49 +189,83 @@ export function LessonReaderView({
 
         return (
           <aside
-            key={`dialogue-${idx}`}
-            aria-label="Actionable What to Say Dialogue"
-            className="my-6 rounded-2xl border border-amber-200/90 bg-gradient-to-br from-amber-50/70 via-[#FCFAF5] to-white p-5 sm:p-6 shadow-xs"
+            key={`comparative-dialogue-${idx}`}
+            aria-label="Comparative Dialogue Table"
+            data-testid="comparative-dialogue-table"
+            className="my-6 rounded-2xl border border-slate-200 overflow-hidden shadow-xs bg-white"
           >
-            <div className="flex items-center justify-between gap-3 mb-3">
-              <div className="flex items-center gap-2.5 text-amber-900 font-bold text-xs uppercase tracking-wider">
-                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-600 text-white shadow-xs">
-                  <User className="h-3.5 w-3.5" />
-                </span>
-                <span>What to Say · Actionable Parent Dialogue</span>
+            <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex items-center justify-between">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                <MessageCircle className="h-4 w-4 text-teal-700" />
+                Comparative Dialogue · What NOT to Say vs What to Say Instead
+              </span>
+              <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
+                Verbatim Script Vault
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+              {/* Red-tinted: What NOT to Say */}
+              <div
+                data-testid="what-not-to-say-box"
+                className="bg-rose-50/50 p-5 space-y-2.5"
+              >
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-800">
+                  <span className="h-2 w-2 rounded-full bg-rose-600 shrink-0" />
+                  <span>What NOT to Say (Instinctive Reaction)</span>
+                </div>
+                <blockquote className="border-l-3 border-rose-400 pl-3 italic text-sm text-rose-950 font-medium leading-relaxed">
+                  &ldquo;{notToSay}&rdquo;
+                </blockquote>
+                <p className="text-[11px] text-rose-800/80 leading-relaxed font-sans">
+                  ⚠️ Why this backfires: Escalates limbic defensiveness or triggers internal shame in an already overwhelmed nervous system.
+                </p>
               </div>
 
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => handleCopyScript(cleanDialogue)}
-                className="h-8 gap-1.5 text-xs text-amber-900 hover:bg-amber-100 hover:text-amber-950 font-medium shrink-0"
-                aria-label="Copy dialogue script to clipboard"
+              {/* Green/Amber-tinted: What to Say Instead */}
+              <div
+                data-testid="what-to-say-instead-box"
+                className="bg-emerald-50/50 p-5 space-y-2.5"
               >
-                {isCurrentlyCopied ? (
-                  <>
-                    <Check className="h-3.5 w-3.5 text-emerald-600" />
-                    <span className="text-emerald-700 font-semibold">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5 text-amber-800" />
-                    <span>Copy Script</span>
-                  </>
-                )}
-              </Button>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800">
+                    <span className="h-2 w-2 rounded-full bg-emerald-600 shrink-0" />
+                    <span>What to Say Instead (Co-Regulation)</span>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCopyScript(cleanDialogue)}
+                    className="h-7 text-xs text-emerald-800 hover:bg-emerald-100 font-semibold gap-1.5 shrink-0"
+                    aria-label="Copy dialogue script to clipboard"
+                    data-testid="copy-script-btn"
+                  >
+                    {isCurrentlyCopied ? (
+                      <>
+                        <Check className="h-3.5 w-3.5 text-emerald-600" />
+                        <span className="text-emerald-700 font-semibold">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3.5 w-3.5 text-emerald-700" />
+                        <span>Copy Script</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <blockquote className="border-l-3 border-emerald-500 pl-3 italic text-sm text-emerald-950 font-semibold leading-relaxed">
+                  &ldquo;{cleanDialogue}&rdquo;
+                </blockquote>
+                <div
+                  data-testid="delivery-tip-badge"
+                  className="rounded-lg bg-white border border-emerald-200/80 p-2 text-[11px] text-emerald-900 flex items-start gap-1.5 shadow-2xs"
+                >
+                  <span className="font-bold shrink-0">💡 Delivery Tip (Vocal Cadence &amp; Posture):</span>
+                  <span>{deliveryTip}</span>
+                </div>
+              </div>
             </div>
-
-            <div className="relative pl-4 border-l-3 border-amber-400 py-1">
-              <p className="text-slate-900 text-sm sm:text-base font-semibold italic leading-relaxed">
-                &ldquo;{cleanDialogue}&rdquo;
-              </p>
-            </div>
-
-            <p className="mt-3 text-[11px] text-amber-800 font-medium">
-              💡 <span className="font-semibold">Delivery Tip:</span> Lower your voice tone, unhurried cadence, and match eye level before speaking.
-            </p>
           </aside>
         );
       }
@@ -429,7 +490,16 @@ export function LessonReaderView({
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <Link
+              href={`/advisor?prompt=${encodeURIComponent(`I want to roleplay practicing the communication script from the lesson "${lesson.title}". Can you play the role of the child so I can practice my empathetic response?`)}`}
+              data-testid="practice-with-ai-advisor-btn"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-teal-600/40 bg-teal-50 hover:bg-teal-100 text-teal-900 px-4 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-2xs"
+            >
+              <Sparkles className="h-4 w-4 text-teal-700" />
+              <span>Practice with AI Advisor</span>
+            </Link>
+
             <Button
               type="button"
               size="lg"

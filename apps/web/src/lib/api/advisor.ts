@@ -330,6 +330,17 @@ export async function searchFaqs(params?: {
     filtered = filtered.filter((f) => {
       if (!f.targetTier) return true;
       if (f.targetTier === reqTier) return true;
+      // Equivalent mappings between canonical decomposed early childhood tiers and legacy Tier 0
+      if (
+        (f.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 &&
+          (reqTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+            reqTier === DevelopmentalTier.TIER_0B_TODDLER_1_2 ||
+            reqTier === DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3)) ||
+        (reqTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 &&
+          (f.targetTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+            f.targetTier === DevelopmentalTier.TIER_0B_TODDLER_1_2 ||
+            f.targetTier === DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3))
+      ) return true;
       // Equivalent mappings between canonical 6 tiers and legacy tiers
       if (
         (reqTier === DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9 && f.targetTier === DevelopmentalTier.TIER_1_AGES_8_9) ||

@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { ExploitSeverity } from '@alongside/shared';
 import { getSlangToneDetails } from '../src/components/digest/SlangCard';
 import { getSeverityDetails } from '../src/components/digest/ExploitAlertCard';
@@ -9,6 +9,12 @@ import {
 } from '../src/lib/api/digest';
 
 describe('Sunday Youth Culture Digest Component & API Specification', () => {
+  const originalFetch = global.fetch;
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    vi.restoreAllMocks();
+  });
   describe('Slang Tone Classification', () => {
     it('classifies red flag and toxic slang terms with high-alert styling', () => {
       const toxic1 = getSlangToneDetails('Toxic Alert');

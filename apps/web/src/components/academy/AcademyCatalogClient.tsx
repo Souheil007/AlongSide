@@ -22,19 +22,26 @@ export function normalizeChildTier(
 ): DevelopmentalTier {
   if (tier) {
     const s = String(tier);
-    if (s.includes('TIER_0') || s.includes('0_3')) return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
-    if (s.includes('TIER_1_EARLY') || s.includes('4_6')) return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
-    if (s.includes('TIER_2_MIDDLE') || s.includes('7_9') || s === DevelopmentalTier.TIER_1_AGES_8_9)
-      return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
-    if (s.includes('TIER_3_PRE_TEEN') || s.includes('10_12') || s === DevelopmentalTier.TIER_2_AGES_10_11)
-      return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
-    if (s.includes('TIER_4_EARLY_ADOLESCENCE') || s.includes('13_15') || s === DevelopmentalTier.TIER_3_AGES_12_13)
-      return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
-    if (s.includes('TIER_5_LATE') || s.includes('16_18') || s === DevelopmentalTier.TIER_4_AGES_14_PLUS)
-      return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
+    // Explicit checks for legacy aliases first to avoid substring collisions
+    if (s === DevelopmentalTier.TIER_1_AGES_8_9) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
+    if (s === DevelopmentalTier.TIER_2_AGES_10_11) return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
+    if (s === DevelopmentalTier.TIER_3_AGES_12_13) return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
+    if (s === DevelopmentalTier.TIER_4_AGES_14_PLUS) return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
+
+    if (s.includes('TIER_0A') || s.endsWith('0_1')) return DevelopmentalTier.TIER_0A_INFANCY_0_1;
+    if (s.includes('TIER_0B') || s.endsWith('1_2')) return DevelopmentalTier.TIER_0B_TODDLER_1_2;
+    if (s.includes('TIER_0C') || s.endsWith('2_3')) return DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3;
+    if (s.includes('TIER_0_') || s.endsWith('0_3')) return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+    if (s.includes('TIER_1_EARLY') || s.endsWith('4_6')) return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
+    if (s.includes('TIER_2_MIDDLE') || s.endsWith('7_9')) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
+    if (s.includes('TIER_3_PRE_TEEN') || s.endsWith('10_12')) return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;
+    if (s.includes('TIER_4_EARLY_ADOLESCENCE') || s.endsWith('13_15')) return DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15;
+    if (s.includes('TIER_5_LATE') || s.endsWith('16_18')) return DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
   }
   if (age !== undefined && age !== null) {
-    if (age <= 3) return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+    if (age <= 1) return DevelopmentalTier.TIER_0A_INFANCY_0_1;
+    if (age === 2) return DevelopmentalTier.TIER_0B_TODDLER_1_2;
+    if (age === 3) return DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3;
     if (age <= 6) return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
     if (age <= 9) return DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
     if (age <= 12) return DevelopmentalTier.TIER_3_PRE_TEEN_10_12;

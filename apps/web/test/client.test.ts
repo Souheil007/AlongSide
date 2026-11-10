@@ -1,8 +1,15 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { apiClient, ApiClientError } from '../src/lib/api/client';
 
 describe('apiClient', () => {
+  const originalFetch = global.fetch;
+
   beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
     vi.restoreAllMocks();
   });
 

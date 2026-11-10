@@ -42,6 +42,24 @@ export interface LeapInfo {
 }
 
 export const DEVELOPMENTAL_LEAPS: Record<string, LeapInfo> = {
+  [DevelopmentalTier.TIER_0A_INFANCY_0_1]: {
+    shortTitle: 'Infancy (Ages 0–1 / 0–12m)',
+    leapTitle: 'Somatic Regulation & Sleep Architecture Foundations',
+    biologicalDescription:
+      'Circadian rhythm entrainment, vagal nerve tone regulation, mirror neuron attunement, and secure sensory attachment.',
+  },
+  [DevelopmentalTier.TIER_0B_TODDLER_1_2]: {
+    shortTitle: 'Younger Toddlerhood (Ages 1–2 / 12–24m)',
+    leapTitle: 'Locomotion, First Words & Amygdala Co-Regulation',
+    biologicalDescription:
+      'Rapid synaptic growth during upright locomotion, receptive vocabulary explosion, and external parental nervous system co-regulation.',
+  },
+  [DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3]: {
+    shortTitle: 'Older Toddlerhood (Ages 2–3 / 24–36m)',
+    leapTitle: 'Autonomy, Boundary Testing & Language Burst',
+    biologicalDescription:
+      'Eriksonian autonomy versus doubt, burgeoning expressiveness, behavioral limit-testing, and physiological potty readiness.',
+  },
   [DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3]: {
     shortTitle: 'Infancy & Toddlerhood (Ages 0–3)',
     leapTitle: 'Sensory Co-Regulation & Pre-Verbal Secure Attachment',
@@ -89,6 +107,25 @@ export function getDevelopmentalLeap(tierOrAge?: string | number | null): LeapIn
     return DEVELOPMENTAL_LEAPS[tierOrAge]!;
   }
 
+  if (typeof tierOrAge === 'string') {
+    if (
+      tierOrAge === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 ||
+      tierOrAge === 'TIER_0_INFANCY_TODDLER_0_3' ||
+      tierOrAge === 'TIER_0'
+    ) {
+      return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3]!;
+    }
+    if (tierOrAge.includes('TIER_0A') || tierOrAge.endsWith('0_1')) {
+      return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0A_INFANCY_0_1]!;
+    }
+    if (tierOrAge.includes('TIER_0B') || tierOrAge.endsWith('1_2')) {
+      return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0B_TODDLER_1_2]!;
+    }
+    if (tierOrAge.includes('TIER_0C') || tierOrAge.endsWith('2_3')) {
+      return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3]!;
+    }
+  }
+
   let age = typeof tierOrAge === 'number' ? tierOrAge : 10;
   if (typeof tierOrAge === 'string') {
     if (tierOrAge.includes('0_3') || tierOrAge.includes('TIER_0')) age = 2;
@@ -99,7 +136,9 @@ export function getDevelopmentalLeap(tierOrAge?: string | number | null): LeapIn
     else if (tierOrAge.includes('16_18') || tierOrAge.includes('TIER_5_LATE') || tierOrAge.includes('TIER_4_AGES_14_PLUS')) age = 17;
   }
 
-  if (age <= 3) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3]!;
+  if (age <= 1) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0A_INFANCY_0_1]!;
+  if (age === 2) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0B_TODDLER_1_2]!;
+  if (age === 3) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3]!;
   if (age <= 6) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6]!;
   if (age <= 9) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9]!;
   if (age <= 12) return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_3_PRE_TEEN_10_12]!;

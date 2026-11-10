@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {
   DevelopmentalTier,
+  EarlyChildhoodTranche,
   NutritionStage,
   type ChildDTO,
+  resolveEarlyChildhoodTranche,
 } from '@alongside/shared';
 import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
 
@@ -13,6 +15,7 @@ export interface ChildAgeProfile {
   ageMonths: number;
   ageDisplay: string;
   developmentalTier: DevelopmentalTier;
+  earlyChildhoodTranche: EarlyChildhoodTranche | null;
   estimatedWeightLbs: number;
   feedingStage: NutritionStage;
   isUnder6Months: boolean;
@@ -64,11 +67,30 @@ export function deriveFeedingStage(ageMonths: number, ageYears: number): Nutriti
 }
 
 /**
- * Derives canonical 6-tier developmental category from age in years.
+ * Derives canonical lifespan developmental tier from age in years and optional months.
+ * Supports early childhood decomposition: 0A (0-12m), 0B (13-24m), 0C (25-36m).
  */
-export function deriveDevelopmentalTier(ageYears: number): DevelopmentalTier {
-  if (ageYears <= 3) {
-    return DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3;
+export function deriveDevelopmentalTier(
+  ageYears: number,
+  ageMonths?: number
+): DevelopmentalTier {
+  if (ageMonths !== undefined && ageMonths <= 36) {
+    if (ageMonths <= 12) {
+      return DevelopmentalTier.TIER_0A_INFANCY_0_1;
+    }
+    if (ageMonths <= 24) {
+      return DevelopmentalTier.TIER_0B_TODDLER_1_2;
+    }
+    return DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3;
+  }
+  if (ageYears <= 1) {
+    return DevelopmentalTier.TIER_0A_INFANCY_0_1;
+  }
+  if (ageYears === 2) {
+    return DevelopmentalTier.TIER_0B_TODDLER_1_2;
+  }
+  if (ageYears === 3) {
+    return DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3;
   }
   if (ageYears <= 6) {
     return DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
@@ -99,7 +121,8 @@ export function deriveChildAge(
       ageYears: 1,
       ageMonths: 14,
       ageDisplay: '14 mo',
-      developmentalTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+      developmentalTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      earlyChildhoodTranche: resolveEarlyChildhoodTranche(14),
       estimatedWeightLbs: 24,
       feedingStage: NutritionStage.TODDLER_TABLE,
       isUnder6Months: false,
@@ -138,7 +161,8 @@ export function deriveChildAge(
 
   const ageDisplay = ageMonths < 24 ? `${ageMonths} mo` : `${ageYears} yrs`;
   const estimatedWeightLbs = calculateEstimatedWeightLbs(ageMonths, ageYears);
-  const developmentalTier = deriveDevelopmentalTier(ageYears);
+  const developmentalTier = deriveDevelopmentalTier(ageYears, ageMonths);
+  const earlyChildhoodTranche = resolveEarlyChildhoodTranche(ageMonths);
   const feedingStage = deriveFeedingStage(ageMonths, ageYears);
   const isUnder6Months = ageMonths < 6;
 
@@ -149,6 +173,7 @@ export function deriveChildAge(
     ageMonths,
     ageDisplay,
     developmentalTier,
+    earlyChildhoodTranche,
     estimatedWeightLbs,
     feedingStage,
     isUnder6Months,

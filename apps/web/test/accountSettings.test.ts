@@ -26,7 +26,8 @@ describe('Account Settings & Family Management Specification (PLAN-24)', () => {
       expect(mateo.name).toBe('Mateo');
       expect(formatChildAge(mateo)).toMatch(/mo|yr/);
       const horizon0 = getChildDevelopmentalHorizon(mateo.developmentalTier);
-      expect(horizon0.stage).toContain('Infancy');
+      expect(horizon0.stage).toMatch(/Toddler|Infancy/);
+      expect(horizon0.tierLabel).toBe('Tier 0B: Younger Toddler');
 
       // Child 2: Maya (Middle Childhood)
       const maya = children[1]!;

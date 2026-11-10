@@ -53,11 +53,32 @@ describe('useChildContextStore Specification (PLAN-17)', () => {
   });
 
   describe('getChildDevelopmentalHorizon Helper', () => {
-    it('resolves Tier 0 (0–3 yrs) speech and walking horizon', () => {
-      const horizon = getChildDevelopmentalHorizon(1);
+    it('resolves Tier 0 (0–3 yrs) speech and walking horizon for legacy tier', () => {
+      const horizon = getChildDevelopmentalHorizon(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
       expect(horizon.horizon).toContain('Speech, Sensory Play & Walking Window');
       expect(horizon.stage).toContain('Infancy & Toddlerhood');
       expect(horizon.tierLabel).toContain('Tier 0');
+    });
+
+    it('resolves Tier 0A (0–1 yrs) somatic regulation horizon', () => {
+      const horizon = getChildDevelopmentalHorizon(1);
+      expect(horizon.horizon).toContain('Somatic Regulation & Sleep Architecture Window');
+      expect(horizon.stage).toContain('Infancy');
+      expect(horizon.tierLabel).toContain('Tier 0A');
+    });
+
+    it('resolves Tier 0B (1–2 yrs) locomotion horizon', () => {
+      const horizon = getChildDevelopmentalHorizon(2);
+      expect(horizon.horizon).toContain('Locomotion & Language Burst Window');
+      expect(horizon.stage).toContain('Younger Toddlerhood');
+      expect(horizon.tierLabel).toContain('Tier 0B');
+    });
+
+    it('resolves Tier 0C (2–3 yrs) autonomy horizon', () => {
+      const horizon = getChildDevelopmentalHorizon(3);
+      expect(horizon.horizon).toContain('Autonomy, Boundary Testing & Potty Learning Window');
+      expect(horizon.stage).toContain('Older Toddlerhood');
+      expect(horizon.tierLabel).toContain('Tier 0C');
     });
 
     it('resolves Tier 1 (4–6 yrs) curiosity and play horizon', () => {

@@ -40,10 +40,20 @@ describe('Child Onboarding Modal Hardening & Lifespan Age Engine Specification (
       expect(toddlerAge).toBeGreaterThanOrEqual(1);
     });
 
-    it('maps all 6 canonical lifespan tiers correctly in calculateLifespanTier', () => {
-      // Age 0-3 -> TIER_0_INFANCY_TODDLER_0_3
+    it('maps all 8 canonical lifespan tiers correctly in calculateLifespanTier', () => {
+      // Age 0-1 -> TIER_0A_INFANCY_0_1
+      expect(calculateLifespanTier(currentYear, new Date().getMonth() + 1)).toBe(
+        DevelopmentalTier.TIER_0A_INFANCY_0_1
+      );
+
+      // Age 1-2 -> TIER_0B_TODDLER_1_2
       expect(calculateLifespanTier(currentYear - 1, 6)).toBe(
-        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        DevelopmentalTier.TIER_0B_TODDLER_1_2
+      );
+
+      // Age 2-3 -> TIER_0C_OLDER_TODDLER_2_3
+      expect(calculateLifespanTier(currentYear - 3, 6)).toBe(
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3
       );
 
       // Age 4-6 -> TIER_1_EARLY_CHILDHOOD_4_6
@@ -75,6 +85,19 @@ describe('Child Onboarding Modal Hardening & Lifespan Age Engine Specification (
 
   describe('Task 2: Full Lifespan Tier Display Calibration (getTierDisplay)', () => {
     it('returns rich descriptive metadata for early childhood tiers', () => {
+      const tier0A = getTierDisplay(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(tier0A.name).toBe('Infancy (0–12 mo)');
+      expect(tier0A.focus).toContain('Somatic Regulation');
+      expect(tier0A.badgeColor).toContain('rose');
+
+      const tier0B = getTierDisplay(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+      expect(tier0B.name).toBe('Younger Toddler (1–2 yrs)');
+      expect(tier0B.focus).toContain('Locomotion');
+
+      const tier0C = getTierDisplay(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+      expect(tier0C.name).toBe('Older Toddler (2–3 yrs)');
+      expect(tier0C.focus).toContain('Autonomy');
+
       const tier0 = getTierDisplay(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
       expect(tier0.name).toBe('Infancy & Toddler (0–3)');
       expect(tier0.focus).toContain('BLW');

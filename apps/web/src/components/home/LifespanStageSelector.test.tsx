@@ -4,18 +4,21 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
 import {
   LifespanStageSelector,
+  CANONICAL_8_LIFESPAN_STAGES,
   CANONICAL_6_LIFESPAN_STAGES,
   LIFESPAN_STAGES,
 } from './LifespanStageSelector';
 
-describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory UI Specification', () => {
-  describe('1. Canonical 6 Developmental Horizon Data Architecture', () => {
-    it('defines exactly 6 lifespan tiers spanning continuous development from birth to adulthood (0–18)', () => {
-      expect(CANONICAL_6_LIFESPAN_STAGES).toHaveLength(6);
+describe('Plan 36 & 37: 8-Stage Lifespan Horizon & Category Advisory UI Specification', () => {
+  describe('1. Canonical 8 Developmental Horizon Data Architecture', () => {
+    it('defines exactly 8 lifespan tiers spanning continuous development from birth to adulthood (0–18)', () => {
+      expect(CANONICAL_8_LIFESPAN_STAGES).toHaveLength(8);
 
-      const stageIds = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.id);
+      const stageIds = CANONICAL_8_LIFESPAN_STAGES.map((s) => s.id);
       expect(stageIds).toEqual([
-        'infants-toddlers',
+        'infancy-0-1',
+        'toddler-1-2',
+        'older-toddler-2-3',
         'early-childhood',
         'middle-childhood',
         'pre-teens',
@@ -23,9 +26,11 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
         'late-adolescence',
       ]);
 
-      const tiers = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.tier);
+      const tiers = CANONICAL_8_LIFESPAN_STAGES.map((s) => s.tier);
       expect(tiers).toEqual([
-        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
         DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
         DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
@@ -33,9 +38,11 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
         DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
       ]);
 
-      const ageLabels = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.ageLabel);
+      const ageLabels = CANONICAL_8_LIFESPAN_STAGES.map((s) => s.ageLabel);
       expect(ageLabels).toEqual([
-        'Ages 0–3',
+        'Ages 0–1',
+        'Ages 1–2',
+        'Ages 2–3',
         'Ages 4–6',
         'Ages 7–9',
         'Ages 10–12',
@@ -44,7 +51,7 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       ]);
     });
 
-    it('each developmental tier contains exactly 5 courses tailored to the 5 canonical Academy categories', () => {
+    it('each developmental tier contains exactly 5 courses tailored to the 5 canonical Academy categories (40 courses total)', () => {
       const expectedCategories = [
         AcademyCategory.BEHAVIOR_AND_EMOTIONS,
         AcademyCategory.HEALTH_AND_WELLNESS,
@@ -53,8 +60,10 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
         AcademyCategory.DIGITAL_AND_DEVICES,
       ];
 
-      for (const stage of CANONICAL_6_LIFESPAN_STAGES) {
+      let totalCourses = 0;
+      for (const stage of CANONICAL_8_LIFESPAN_STAGES) {
         expect(stage.courses).toHaveLength(5);
+        totalCourses += stage.courses.length;
 
         const stageCategories = stage.courses.map((c) => c.category);
         expect(stageCategories).toEqual(expectedCategories);
@@ -69,6 +78,11 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
           expect(course.durationMinutes).toBeGreaterThanOrEqual(12);
         }
       }
+      expect(totalCourses).toBe(40);
+    });
+
+    it('preserves backward-compatible CANONICAL_6_LIFESPAN_STAGES export', () => {
+      expect(CANONICAL_6_LIFESPAN_STAGES).toBe(CANONICAL_8_LIFESPAN_STAGES);
     });
 
     it('preserves backward-compatible LIFESPAN_STAGES export with 4 developmental tiers', () => {
@@ -95,31 +109,23 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('5 core growth categories');
     });
 
-    it('renders all 6 horizon spectrum rail buttons on a single row (grid-cols-6) without horizontal scroll wheel or multi-line wraps', () => {
+    it('renders all 8 horizon spectrum rail buttons wrapped cleanly (lg:grid-cols-8)', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
       expect(html).toContain('role="tablist"');
-      expect(html).toContain('grid-cols-6');
-      expect(html).not.toContain('overflow-x-auto');
+      expect(html).toContain('lg:grid-cols-8');
 
-      // Full stage labels
-      expect(html).toContain('Infants &amp; Toddlers');
+      // Stage labels
+      expect(html).toContain('Infancy');
+      expect(html).toContain('Younger Toddler');
+      expect(html).toContain('Older Toddler');
       expect(html).toContain('Early Childhood');
       expect(html).toContain('Middle Childhood');
-      expect(html).toContain('Pre-Teens &amp; Tweens');
-      expect(html).toContain('Early Adolescence');
-      expect(html).toContain('Late Adolescence');
-
-      // Micro mobile labels
-      expect(html).toContain('Infants');
-      expect(html).toContain('Early');
-      expect(html).toContain('Middle');
-      expect(html).toContain('Tweens');
-      expect(html).toContain('Teens');
-      expect(html).toContain('Launch');
 
       // Age numbers
-      expect(html).toContain('0–3');
+      expect(html).toContain('0–1');
+      expect(html).toContain('1–2');
+      expect(html).toContain('2–3');
       expect(html).toContain('4–6');
       expect(html).toContain('7–9');
       expect(html).toContain('10–12');
@@ -127,7 +133,7 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('16–18');
     });
 
-    it('verifies active stage telemetry capsule and exploration link are cleanly removed', () => {
+    it('verifies active stage telemetry capsule and exploration link are cleanly rendered', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
       expect(html).not.toContain('5 clinical growth pillars calibrated for this stage');
@@ -153,7 +159,7 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('Sensory Overload &amp; Infant Co-Regulation');
       expect(html).toContain('Infant Health Foundations &amp; Sleep Architecture');
       expect(html).toContain('Infant First Foods &amp; Allergen Introduction');
-      expect(html).toContain('Infant Sensory Awakening &amp; Language Bursts');
+      expect(html).toContain('Serve-and-Return Attunement &amp; Floor Time');
       expect(html).toContain('Zero Screens Under 2 &amp; Parent Tech Modeling');
 
       // Course URLs
@@ -206,8 +212,8 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
   });
 
   describe('4. Whole-Child Horizon Compass Arc & Spotlight Architecture (Design C.3)', () => {
-    it('verifies all 30 courses across 6 tiers have authoritative clinical notes and 3 structured micro-lessons', () => {
-      for (const stage of CANONICAL_6_LIFESPAN_STAGES) {
+    it('verifies all 40 courses across 8 tiers have authoritative clinical notes and 3 structured micro-lessons', () => {
+      for (const stage of CANONICAL_8_LIFESPAN_STAGES) {
         for (const course of stage.courses) {
           expect(course.clinicalNote).toBeDefined();
           expect(course.clinicalNote.length).toBeGreaterThan(15);
@@ -226,21 +232,21 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
       // Whole-Child Compass Hub
-      expect(html).toContain('WHOLE-CHILD COMPASS // Ages 0–3 • 5 PILLARS OF DEVELOPMENT');
-      expect(html).toContain('PILLAR FOCUS • Behavior &amp; Emotions • Ages 0–3');
+      expect(html).toContain('WHOLE-CHILD COMPASS // Ages 0–1 • 5 PILLARS OF DEVELOPMENT');
+      expect(html).toContain('PILLAR FOCUS • Behavior &amp; Emotions • Ages 0–1');
 
       // Clinical Rationale Note Box
       expect(html).toContain('Clinical Rationale:');
-      expect(html).toContain('Infant amygdala response &amp; mirror neuron co-regulation.');
+      expect(html).toContain('Infant limbic system, crying curves &amp; vagal tone co-regulation.');
 
       // 3-Lesson Micro-Syllabus Drawer
       expect(html).toContain('Inside This Pillar (3 Lessons)');
       expect(html).toContain('§ 01');
-      expect(html).toContain('The Neurobiology of the Infant Amygdala &amp; Attachment Bond');
+      expect(html).toContain('Infant Limbic System &amp; The Crying Curve');
       expect(html).toContain('§ 02');
-      expect(html).toContain('Pre-Verbal Tantrums: De-escalation Without Isolation');
+      expect(html).toContain('Vagal Tone &amp; Physical Soothing Cadence');
       expect(html).toContain('§ 03');
-      expect(html).toContain('The Co-Regulation Protocol: 3 Sensory Resets When Exhausted');
+      expect(html).toContain('Sensory Resets for Overwhelmed Parents');
 
       // Primary CTA
       expect(html).toContain('Start Pillar Course in Academy');

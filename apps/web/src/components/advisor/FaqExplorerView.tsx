@@ -38,6 +38,9 @@ export const FAQ_CATEGORIES = [
 
 export const TIER_TABS = [
   { id: 'ALL', label: 'All Ages (0–18)' },
+  { id: DevelopmentalTier.TIER_0A_INFANCY_0_1, label: 'Ages 0–1 (Tier 0A: Infancy)' },
+  { id: DevelopmentalTier.TIER_0B_TODDLER_1_2, label: 'Ages 1–2 (Tier 0B: Younger Toddler)' },
+  { id: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3, label: 'Ages 2–3 (Tier 0C: Older Toddler)' },
   { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: 'Ages 0–3 (Tier 0: Infancy & Toddler)' },
   { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: 'Ages 4–6 (Tier 1: Early Childhood)' },
   { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: 'Ages 7–9 (Tier 2: Middle Childhood)' },

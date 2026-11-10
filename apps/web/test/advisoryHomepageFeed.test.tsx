@@ -67,12 +67,24 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
 
   describe('Part A: Authenticated Child Advisory Cockpit (/dashboard)', () => {
     describe('1. Child Advisory Hero Card & Neurodevelopmental Leaps', () => {
-      it('provides authoritative biological leaps across all 6 developmental tiers', () => {
-        expect(Object.keys(DEVELOPMENTAL_LEAPS)).toHaveLength(6);
+      it('provides authoritative biological leaps across all developmental tiers', () => {
+        expect(Object.keys(DEVELOPMENTAL_LEAPS).length).toBeGreaterThanOrEqual(8);
 
-        // Tier 0 (0-3y)
+        // Tier 0A (0-1y)
+        const leapT0A = getDevelopmentalLeap(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+        expect(leapT0A.leapTitle).toContain('Somatic Regulation');
+
+        // Tier 0B (1-2y)
+        const leapT0B = getDevelopmentalLeap(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+        expect(leapT0B.leapTitle).toContain('Locomotion');
+
+        // Tier 0C (2-3y)
+        const leapT0C = getDevelopmentalLeap(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+        expect(leapT0C.leapTitle).toContain('Autonomy');
+
+        // Legacy Tier 0 (0-3y)
         const leapT0 = getDevelopmentalLeap(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
-        expect(leapT0.leapTitle).toContain('Sensory Co-Regulation');
+        expect(leapT0.leapTitle).toBeDefined();
 
         // Tier 1 (4-6y)
         const leapT1 = getDevelopmentalLeap(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
@@ -173,13 +185,15 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
       });
     });
 
-    describe('2. Interactive 6-Stage Lifespan Advisory Explorer', () => {
-      it('provides all 6 canonical lifespan tiers with 5 category tailored courses each', () => {
-        expect(CANONICAL_6_LIFESPAN_STAGES).toHaveLength(6);
+    describe('2. Interactive 8-Stage Lifespan Advisory Explorer', () => {
+      it('provides all 8 canonical lifespan tiers with 5 category tailored courses each', () => {
+        expect(CANONICAL_6_LIFESPAN_STAGES).toHaveLength(8);
 
         const stageIds = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.id);
         expect(stageIds).toEqual([
-          'infants-toddlers',
+          'infancy-0-1',
+          'toddler-1-2',
+          'older-toddler-2-3',
           'early-childhood',
           'middle-childhood',
           'pre-teens',

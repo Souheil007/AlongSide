@@ -36,7 +36,7 @@ describe('Automatic Child Age Derivation & Pediatric Calibration Specification (
     expect(derived.isUnder6Months).toBe(true);
     expect(derived.isInfantUnder6Mo).toBe(true);
     expect(derived.feedingStage).toBe(NutritionStage.MILK_ONLY);
-    expect(derived.developmentalTier).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+    expect(derived.developmentalTier).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
 
     // Barton Schmitt weight formula: Math.round(8 + 1.2 * 4) = 13 lbs (between 12-15 lbs)
     expect(derived.estimatedWeightLbs).toBe(13);
@@ -67,7 +67,7 @@ describe('Automatic Child Age Derivation & Pediatric Calibration Specification (
     expect(derived.isInfantUnder6Mo).toBe(false);
     expect(derived.isToddlerUnder2).toBe(true);
     expect(derived.feedingStage).toBe(NutritionStage.TODDLER_TABLE);
-    expect(derived.developmentalTier).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+    expect(derived.developmentalTier).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
     expect(derived.isAutoCalibrated).toBe(true);
   });
 
@@ -123,7 +123,7 @@ describe('Automatic Child Age Derivation & Pediatric Calibration Specification (
     expect(fallback.ageDisplay).toBe('14 mo');
     expect(fallback.estimatedWeightLbs).toBe(24);
     expect(fallback.feedingStage).toBe(NutritionStage.TODDLER_TABLE);
-    expect(fallback.developmentalTier).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+    expect(fallback.developmentalTier).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
     expect(fallback.isUnder6Months).toBe(false);
     expect(fallback.isInfantUnder6Mo).toBe(false);
     expect(fallback.isAutoCalibrated).toBe(false);
@@ -143,8 +143,12 @@ describe('Automatic Child Age Derivation & Pediatric Calibration Specification (
     expect(deriveFeedingStage(84, 7)).toBe(NutritionStage.BALANCED_SCHOOL);
     expect(deriveFeedingStage(156, 13)).toBe(NutritionStage.PUBERTAL_GROWTH);
 
-    // Developmental tiers
-    expect(deriveDevelopmentalTier(2)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+    // Developmental tiers (decomposed early childhood tiers)
+    expect(deriveDevelopmentalTier(0, 4)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+    expect(deriveDevelopmentalTier(1, 14)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+    expect(deriveDevelopmentalTier(2, 28)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+    expect(deriveDevelopmentalTier(2)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+    expect(deriveDevelopmentalTier(3)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
     expect(deriveDevelopmentalTier(5)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
     expect(deriveDevelopmentalTier(8)).toBe(DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9);
     expect(deriveDevelopmentalTier(11)).toBe(DevelopmentalTier.TIER_3_PRE_TEEN_10_12);
