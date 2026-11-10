@@ -70,6 +70,35 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('18 mins learned this week');
     });
 
+    it('renders dynamic greeting for connected user Souheil and child Lina (SOU-89)', () => {
+      const mockChildLina: ChildDTO = {
+        ...mockTweenMaya,
+        id: 'child-lina',
+        name: 'Lina',
+      };
+      const html = renderToStaticMarkup(
+        <ChildHeroCard
+          child={mockChildLina}
+          parentName="Souheil"
+          streakDays={6}
+          minsLearnedThisWeek={24}
+        />
+      );
+
+      expect(html).toContain('Welcome home, Souheil. Here is today&#x27;s guidance for Lina.');
+      expect(html).toContain('6-Day Streak');
+      expect(html).toContain('24 mins learned this week');
+    });
+
+    it('defaults to Parent when parentName is omitted (never static Sarah)', () => {
+      const html = renderToStaticMarkup(
+        <ChildHeroCard child={mockTweenMaya} />
+      );
+
+      expect(html).toContain('Welcome home, Parent. Here is today&#x27;s guidance for Maya.');
+      expect(html).not.toContain('Welcome home, Sarah.');
+    });
+
     it('renders toddler-calibrated encouragement for toddler Leo', () => {
       const html = renderToStaticMarkup(
         <ChildHeroCard child={mockToddlerLeo} parentName="Sarah" />

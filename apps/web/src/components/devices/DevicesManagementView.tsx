@@ -28,6 +28,7 @@ import {
   selectActiveChild,
   DEMO_FAMILY_CHILDREN,
 } from '@/stores/useChildContextStore';
+import { useAuth } from '@/hooks/useAuth';
 import { formatCurfew12Hour } from '@/stores/usePactStore';
 import { EnrollmentModal } from './EnrollmentModal';
 import {
@@ -85,6 +86,7 @@ export function DevicesManagementView({
   children: propChildren,
 }: DevicesManagementViewProps) {
   const { children: storeChildren, activeChildId } = useChildContextStore();
+  const { user } = useAuth();
 
   // Active child resolution with safe fallback and DI support
   const children = propChildren && propChildren.length > 0
@@ -447,7 +449,7 @@ export function DevicesManagementView({
                   <div className="bg-white/70 p-2.5 rounded border border-[#E6DEC9]">
                     <span className="text-[9px] text-[#858C88] block">Child Signature</span>
                     <span className="font-serif italic font-bold text-[#111413] text-sm block">
-                      ✍ {activeChild?.name || 'Child'} Davies
+                      ✍ {activeChild?.name || 'Child'}{user?.fullName ? '' : ' Davies'}
                     </span>
                     <span className="text-[9px] text-[#143D2B] font-semibold block">
                       Verified Digital Seal
@@ -456,7 +458,7 @@ export function DevicesManagementView({
                   <div className="bg-white/70 p-2.5 rounded border border-[#E6DEC9]">
                     <span className="text-[9px] text-[#858C88] block">Parent Signatures</span>
                     <span className="font-serif italic font-bold text-[#111413] text-sm block">
-                      ✍ Sarah &amp; Michael
+                      {user?.fullName ? `✍ ${user.fullName}` : '✍ Sarah & Michael'}
                     </span>
                     <span className="text-[9px] text-[#143D2B] font-semibold block">
                       Verified Digital Seal
@@ -677,7 +679,7 @@ export function DevicesManagementView({
               Print Bilateral Agreement
             </DialogTitle>
             <DialogDescription className="text-xs text-[#494F4C] leading-relaxed">
-              Exporting the signed Bilateral Family Treaty between {activeChild?.name || 'Child'} Davies and Parents for physical refrigerator display.
+              Exporting the signed Bilateral Family Treaty between {activeChild?.name || 'Child'}{user?.fullName ? '' : ' Davies'} and {user?.fullName || 'Parents'} for physical refrigerator display.
             </DialogDescription>
           </DialogHeader>
 
