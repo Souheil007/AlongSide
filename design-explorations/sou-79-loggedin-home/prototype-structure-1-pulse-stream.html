@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide — Design 1: The Dynamic Pulse Stream</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: '#F7F5F0',
+            sandSoft: '#FAF9F6',
+            ink: '#111413',
+            inkMuted: '#494F4C',
+            whisper: '#858C88',
+            hairline: '#E6E3DA',
+            forest: {
+              DEFAULT: '#143D2B',
+              hover: '#0E2B1E',
+              soft: '#EAF3EE',
+              glow: '#D1E6DA'
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              soft: '#FBF0EC',
+              hover: '#A84420'
+            },
+            amberSoft: '#FEF6E9'
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 0 0 rgba(20, 61, 43, 0.4);
+      animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes pulse-ring {
+      to {
+        box-shadow: 0 0 0 12px rgba(20, 61, 43, 0);
+      }
+    }
+    .wave-bar {
+      animation: wave 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes wave {
+      0% { height: 4px; }
+      100% { height: 20px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-sand">
+
+  <!-- TOP HEADER: CLEAN, UNCLUTTERED, CALM -->
+  <header class="bg-white/90 backdrop-blur border-b border-hairline sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand & Hub Return Link -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-forest text-white font-serif font-bold text-base flex items-center justify-center shadow-xs">A</span>
+          <span class="font-serif text-xl font-bold tracking-tight text-ink">AlongSide</span>
+        </a>
+        <span class="hidden sm:inline-block font-mono text-[10px] text-forest bg-forest-soft px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold border border-forest/20">
+          Design 1: Dynamic Pulse Stream
+        </span>
+      </div>
+
+      <!-- Child Context Capsule Switcher -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center p-1 rounded-full bg-sand border border-hairline text-xs font-semibold">
+          <button id="btnSouheil" onclick="selectChild('souheil')" class="flex items-center gap-2 px-3.5 py-1 rounded-full bg-forest text-white shadow-xs transition">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Souheil (8y)</span>
+          </button>
+          <button id="btnLeo" onclick="selectChild('leo')" class="flex items-center gap-2 px-3.5 py-1 rounded-full text-inkMuted hover:text-ink transition">
+            <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+            <span>Leo (3y)</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- SINGLE-LINE AMBIENT STATUS ANCHOR (REPLACES 500-WORD CLINICAL JARGON BOX) -->
+  <section aria-label="Context Bar" class="bg-forest-soft border-b border-forest/15 py-2.5 transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-serif text-sm font-bold text-ink" id="anchorChildLabel">Souheil Bichiou • 8 yrs</span>
+        <span class="text-forest/40">•</span>
+        <span class="font-mono text-[11px] text-forest font-semibold uppercase tracking-wider" id="anchorRoadLabel">Road 1: Pre-Device</span>
+        <span class="text-forest/40">•</span>
+        <span class="text-inkMuted text-[11px]" id="anchorTierLabel">Middle Childhood (7–9 yrs)</span>
+      </div>
+      <div class="flex items-center gap-2 text-[11px] text-inkMuted">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="font-medium" id="anchorMilestoneLabel">Active Goal: 14-Day Independent Morning Alarm (Day 9 of 14)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN STREAM IN THE EXACT MANDATED STRUCTURE -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-9">
+
+    <!-- WELCOME & STREAK BANNER -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h1 id="streamGreeting" class="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+          Welcome back, Sarah. Here is today's family pulse.
+        </h1>
+        <p id="streamSubtext" class="text-xs sm:text-sm text-inkMuted mt-0.5">
+          One 4-minute intentional reflection today creates weeks of emotional calm.
+        </p>
+      </div>
+
+      <div class="shrink-0 inline-flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-full border border-hairline shadow-2xs self-start sm:self-auto">
+        <span class="text-amber-500 text-sm font-bold">🔥</span>
+        <span class="font-mono text-xs font-bold text-ink">4-Day Habit Streak</span>
+        <span class="text-whisper text-xs">•</span>
+        <span class="font-mono text-[11px] text-forest">18 mins learned this week</span>
+      </div>
+    </div>
+
+    <!-- ========================================================================================= -->
+    <!-- SECTION 1: ACTIVE ACADEMY TRACK (THE HERO CENTERPIECE) -->
+    <!-- ========================================================================================= -->
+    <section aria-label="Active Academy Track" class="bg-white rounded-3xl p-6 sm:p-8 border border-hairline shadow-xs space-y-6">
+      
+      <!-- Track Header -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/70 pb-4">
+        <div>
+          <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Active Academy Track</span>
+          <h2 id="courseTitle" class="font-serif text-xl sm:text-2xl font-bold text-ink mt-0.5">
+            Navigating Elementary Friendships &amp; Screen Transitions
+          </h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="courseProgressBadge" class="font-mono text-xs font-semibold text-forest bg-forest-soft px-3 py-1 rounded-full border border-forest/20">
+            60% Progress (3 of 5 Chapters)
+          </span>
+        </div>
+      </div>
+
+      <!-- Fluid Visual Roadmap (Chapter Nodes) -->
+      <div class="py-2">
+        <div class="flex items-center justify-between relative px-2 sm:px-6">
+          <!-- Flow Line -->
+          <div class="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-1 bg-hairline"></div>
+          <div id="courseProgressBar" class="absolute left-8 w-[50%] top-1/2 -translate-y-1/2 h-1 bg-forest transition-all duration-500"></div>
+
+          <!-- Chapter Nodes -->
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span class="w-8 h-8 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center shadow-xs">✓</span>
+            <span class="font-mono text-[10px] text-forest font-semibold hidden sm:inline">1. The Shift</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span class="w-8 h-8 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center shadow-xs">✓</span>
+            <span class="font-mono text-[10px] text-forest font-semibold hidden sm:inline">2. Peer Rules</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1">
+            <span id="activeNodePulse" class="w-9 h-9 rounded-full bg-forest text-white text-xs font-black flex items-center justify-center ring-4 ring-forest-glow shadow-md pulse-glow">3</span>
+            <span class="font-mono text-[11px] text-forest font-bold">3. Transition (Today)</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1 opacity-60">
+            <span class="w-8 h-8 rounded-full bg-sand border-2 border-hairline text-whisper text-xs font-bold flex items-center justify-center">4</span>
+            <span class="font-mono text-[10px] text-whisper hidden sm:inline">4. Digital Pacts</span>
+          </div>
+          <div class="relative z-10 flex flex-col items-center gap-1.5 bg-white px-1 opacity-60">
+            <span class="w-8 h-8 rounded-full bg-sand border-2 border-hairline text-whisper text-xs font-bold flex items-center justify-center">5</span>
+            <span class="font-mono text-[10px] text-whisper hidden sm:inline">5. Bedtime Trust</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Chapter Audio & Co-Regulation Capsule -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-2">
+        <!-- Left: Audio Player & Lesson Summary -->
+        <div class="md:col-span-7 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[10px] uppercase font-bold text-whisper tracking-wider">Today's Core Principle</span>
+            <span class="text-whisper text-xs">•</span>
+            <span class="font-mono text-[10px] text-forest font-semibold">4 Min Listen</span>
+          </div>
+          <h3 id="lessonTitle" class="font-serif text-lg font-bold text-ink">
+            Chapter 3: When Your 8-Year-Old Struggles to Power Off
+          </h3>
+          <p id="lessonSummary" class="text-xs text-inkMuted leading-relaxed">
+            Screen transitions cause abrupt dopamine drops in the developing prefrontal cortex. Don't argue logic from across the room. Step into their field of view 3 minutes before, place a gentle hand on their shoulder, and co-bridge into a physical activity.
+          </p>
+
+          <div class="flex items-center gap-3 pt-1">
+            <button onclick="toggleAudio()" class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs">
+              <span id="audioPlayIcon">▶</span>
+              <span id="audioPlayLabel">Listen to Audio (3:45)</span>
+            </button>
+            <div id="audioWaveVisualizer" class="hidden items-end gap-1 h-5 px-2">
+              <span class="w-1 bg-emerald-500 rounded-full wave-bar" style="animation-delay: 0.1s"></span>
+              <span class="w-1 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.3s"></span>
+              <span class="w-1 bg-emerald-600 rounded-full wave-bar" style="animation-delay: 0.2s"></span>
+              <span class="w-1 bg-emerald-500 rounded-full wave-bar" style="animation-delay: 0.4s"></span>
+            </div>
+            <a href="#" class="text-xs font-bold text-forest hover:underline">Read Lesson →</a>
+          </div>
+        </div>
+
+        <!-- Right: What to Say Out Loud Tonight -->
+        <div class="md:col-span-5 bg-sandSoft p-5 rounded-2xl border border-hairline space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Tonight's Script</span>
+            <button onclick="copyScript()" class="font-mono text-[10px] text-whisper hover:text-ink">
+              <span id="copyScriptBtn">Copy 📋</span>
+            </button>
+          </div>
+          <p id="scriptQuote" class="font-serif text-base text-ink italic leading-snug">
+            &ldquo;I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.&rdquo;
+          </p>
+          <span class="font-mono text-[10px] text-whisper block">Co-Regulation Tip: Keep vocal pitch calm and low.</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================================= -->
+    <!-- SECTION 2: SUNDAY YOUTH CULTURE DIGEST (DYNAMIC, LIVELY, NOT STATIC!) -->
+    <!-- ========================================================================================= -->
+    <section aria-label="Sunday Youth Culture Digest" class="bg-white rounded-3xl p-6 sm:p-7 border border-hairline space-y-5">
+      
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/70 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[11px] font-bold text-terracotta uppercase tracking-wider">Living Schoolyard Feed</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-ink mt-0.5">
+            Sunday Youth Culture Digest
+          </h3>
+        </div>
+        <span class="font-mono text-[11px] text-whisper">
+          Updated Nov 10 • Pre-Teen Slang &amp; Gaming Radar
+        </span>
+      </div>
+
+      <!-- 3 Dynamic Cards: Slang Decoder with Interactive Cringe Meter + App Trend + Dinner Starter -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- Card 1: Interactive Slang Decoder -->
+        <div class="p-5 rounded-2xl bg-sandSoft border border-hairline flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-forest font-bold">Slang of the Week</span>
+              <span class="font-mono text-[10px] text-whisper" id="slangPronounce">/rɪz/</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <h4 class="font-serif text-xl font-bold text-ink" id="slangWord">&ldquo;Rizz&rdquo;</h4>
+              <span class="text-xs text-inkMuted font-mono">noun / verb</span>
+            </div>
+            <p class="text-[11px] text-inkMuted leading-snug" id="slangMeaning">
+              Short for <em>charisma</em>. The ability to charm someone through conversation or confidence without trying too hard.
+            </p>
+          </div>
+
+          <!-- Interactive Cringe Meter -->
+          <div class="pt-2 border-t border-hairline/80 space-y-1.5">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+              <span class="text-whisper">Parent Cringe Meter:</span>
+              <span id="cringeRatingText" class="font-bold text-amber-600">3/5 (Moderate)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="setCringeLevel(1)" class="flex-1 h-2 rounded-full bg-emerald-400 hover:opacity-80 transition" title="1/5 Safe"></button>
+              <button onclick="setCringeLevel(2)" class="flex-1 h-2 rounded-full bg-emerald-500 hover:opacity-80 transition" title="2/5 Mild"></button>
+              <button onclick="setCringeLevel(3)" class="flex-1 h-2 rounded-full bg-amber-400 hover:opacity-80 transition" title="3/5 Moderate"></button>
+              <button onclick="setCringeLevel(4)" class="flex-1 h-2 rounded-full bg-sand border border-hairline hover:opacity-80 transition" title="4/5 Cringe"></button>
+              <button onclick="setCringeLevel(5)" class="flex-1 h-2 rounded-full bg-sand border border-hairline hover:opacity-80 transition" title="5/5 Nuclear Cringe"></button>
+            </div>
+            <p id="cringeAdvice" class="text-[10px] text-inkMuted italic">
+              Safe to understand, but do NOT use it out loud in front of their friends!
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: App & Gaming Safety Radar -->
+        <div class="p-5 rounded-2xl bg-sandSoft border border-hairline flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-terracotta font-bold">App Spotlight</span>
+              <span class="font-mono text-[10px] text-whisper">Ages 8–12</span>
+            </div>
+            <h4 class="font-serif text-base font-bold text-ink">Roblox Voice Chat &amp; Trading</h4>
+            <p class="text-[11px] text-inkMuted leading-snug">
+              Kids are feeling social pressure to trade 'Adopt Me' pets and cosmetics. Unmoderated spatial voice chat can expose younger tweens to older peer profanity.
+            </p>
+          </div>
+
+          <div class="pt-2 border-t border-hairline/80 flex items-center justify-between">
+            <span class="font-mono text-[10px] text-whisper">Recommended Action</span>
+            <span class="font-mono text-[10px] font-bold text-forest bg-forest-soft px-2 py-0.5 rounded">Check Account Pin</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Dynamic Sunday Dinner Table Starter -->
+        <div class="p-5 rounded-2xl bg-forest-soft/60 border border-forest/20 flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-forest font-bold flex items-center gap-1">
+                <span>✨</span> <span>Dinner Table Starter</span>
+              </span>
+              <button onclick="shuffleQuestion()" class="font-mono text-[10px] text-forest hover:text-forest-hover font-bold flex items-center gap-1">
+                <span>Shuffle 🎲</span>
+              </button>
+            </div>
+            <h4 class="font-serif text-base font-bold text-ink" id="dinnerQuestionTitle">The &ldquo;Rose, Thorn &amp; Banana&rdquo;</h4>
+            <p class="text-[12px] text-ink italic leading-snug font-serif" id="dinnerQuestionPrompt">
+              &ldquo;What was one funny or bizarre thing that happened at school today that nobody else noticed?&rdquo;
+            </p>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between">
+            <span class="text-[10px] text-inkMuted leading-tight">
+              Promotes laughter without feeling like an interrogation.
+            </span>
+            <button id="btnCopyDinner" onclick="copyDinnerPrompt()" class="shrink-0 font-mono text-[10px] font-bold text-forest hover:text-forest-hover px-2.5 py-1 rounded-full bg-white border border-forest/30 shadow-2xs transition">
+              Copy 📱
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================================= -->
+    <!-- SECTION 3: SOUHEIL BICHIOU'S FIRST-PHONE READINESS RADAR & ASSESSMENT -->
+    <!-- ========================================================================================= -->
+    <section aria-label="First-Phone Readiness Radar & Assessment" class="bg-white rounded-3xl p-6 sm:p-7 border border-hairline space-y-5">
+      
+      <!-- Section Header -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/70 pb-3">
+        <div>
+          <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Objective Developmental Evaluation</span>
+          <h3 id="radarSectionTitle" class="font-serif text-xl font-bold text-ink mt-0.5">
+            Souheil Bichiou's First-Phone Assessment &amp; Readiness Radar
+          </h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs font-bold text-forest bg-forest-soft px-3 py-1 rounded-full border border-forest/20">
+            Current Score: 78 / 100
+          </span>
+        </div>
+      </div>
+
+      <!-- Radar Content Grid: Visual Gauge + 4 Quadrants + Interactive 14-Day Alarm Milestone -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        
+        <!-- Left: Circular SVG Readiness Gauge (4 cols) -->
+        <div class="md:col-span-4 flex flex-col items-center justify-center p-4 rounded-2xl bg-sandSoft border border-hairline text-center space-y-3">
+          <div class="relative w-32 h-32 flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke="#E6E3DA" stroke-width="8" fill="transparent" />
+              <circle id="radarCircleStroke" cx="50" cy="50" r="40" stroke="#143D2B" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="55.2" stroke-linecap="round" fill="transparent" class="transition-all duration-700" />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="readinessScoreBig" class="font-serif text-3xl font-bold text-ink">78</span>
+              <span class="font-mono text-[10px] text-whisper">out of 100</span>
+            </div>
+          </div>
+          <div>
+            <span class="font-serif text-sm font-bold text-forest">Approaching Smartphone Readiness</span>
+            <p class="text-[11px] text-inkMuted mt-0.5 leading-snug">
+              Demonstrates strong prefrontal habits; working through morning autonomy milestone.
+            </p>
+          </div>
+        </div>
+
+        <!-- Middle: 4 Quadrant Progression Bars (4 cols) -->
+        <div class="md:col-span-4 space-y-3">
+          <span class="font-mono text-[10px] uppercase font-bold text-whisper tracking-wider">4 Core Developmental Quadrants</span>
+          
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-medium">
+              <span class="text-ink">1. Sleep &amp; Morning Autonomy</span>
+              <span class="font-mono font-bold text-forest">92%</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-forest h-1.5 rounded-full w-[92%]"></div>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-medium">
+              <span class="text-ink">2. Emotional Self-Regulation</span>
+              <span class="font-mono font-bold text-forest">75%</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-forest h-1.5 rounded-full w-[75%]"></div>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-medium">
+              <span class="text-ink">3. Peer Pressure Resistance</span>
+              <span class="font-mono font-bold text-amber-600">68%</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-amber-500 h-1.5 rounded-full w-[68%]"></div>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-medium">
+              <span class="text-ink">4. Task Completion Before Screens</span>
+              <span class="font-mono font-bold text-forest">77%</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+              <div class="bg-forest h-1.5 rounded-full w-[77%]"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Active Milestone Interactive Tracker (4 cols) -->
+        <div class="md:col-span-4 p-5 rounded-2xl bg-forest-soft/60 border border-forest/20 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-forest font-bold">Active Milestone Gate</span>
+            <span class="font-mono text-[10px] text-emerald-800 font-bold bg-white px-2 py-0.5 rounded-full border border-forest/20">Gate #2</span>
+          </div>
+
+          <h4 class="font-serif text-sm font-bold text-ink">
+            14 Days Independent Morning Alarm Waking
+          </h4>
+          <p class="text-[11px] text-inkMuted leading-snug">
+            Proves prefrontal executive function without parent nagging before introducing personal device notifications.
+          </p>
+
+          <!-- Interactive 14-Day Dot Grid -->
+          <div class="pt-1 space-y-1.5">
+            <div class="flex items-center justify-between text-[10px] font-mono text-inkMuted">
+              <span>Progress Streak:</span>
+              <span id="streakCountText" class="font-bold text-forest">Day 9 of 14 Completed</span>
+            </div>
+            <div class="grid grid-cols-7 gap-1">
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <span class="w-6 h-6 rounded-md bg-forest text-white text-[10px] font-bold flex items-center justify-center">✓</span>
+              <button id="day10Btn" onclick="toggleDay10()" class="w-6 h-6 rounded-md bg-white border border-forest/40 text-forest text-[10px] font-bold flex items-center justify-center hover:bg-forest-soft transition" title="Click to log today's success!">10</button>
+              <span class="w-6 h-6 rounded-md bg-sand border border-hairline text-whisper text-[10px] flex items-center justify-center">11</span>
+              <span class="w-6 h-6 rounded-md bg-sand border border-hairline text-whisper text-[10px] flex items-center justify-center">12</span>
+              <span class="w-6 h-6 rounded-md bg-sand border border-hairline text-whisper text-[10px] flex items-center justify-center">13</span>
+              <span class="w-6 h-6 rounded-md bg-sand border border-hairline text-whisper text-[10px] flex items-center justify-center">14</span>
+            </div>
+            <p id="alarmLogStatus" class="text-[10px] text-whisper italic">
+              Tap day 10 above to record today's alarm success!
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================================= -->
+    <!-- SECTION 4: 24/7 AI CHILD ADVISOR (DYNAMIC, INTERACTIVE CONVERSATIONAL CO-PILOT) -->
+    <!-- ========================================================================================= -->
+    <section aria-label="24/7 AI Child Advisor" class="bg-white rounded-3xl p-6 sm:p-7 border border-hairline space-y-5">
+      
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/70 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Parent Co-Regulation Co-Pilot</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-ink mt-0.5">
+            24/7 AI Child Advisor
+          </h3>
+        </div>
+        <span class="font-mono text-[11px] text-whisper">
+          Developmental Neurobiology • Zero Judgment
+        </span>
+      </div>
+
+      <!-- Quick Interactive Scenario Triggers -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[10px] uppercase font-bold text-whisper tracking-wider">Immediate Situation Help</span>
+          <span class="font-mono text-[10px] text-whisper">Tap a scenario for instant co-regulation script</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button onclick="selectAdvisorPrompt('fortnite')" id="promptBtn1" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-forest text-white transition shadow-2xs">
+            ⚡ Meltdown when turning off console
+          </button>
+          <button onclick="selectAdvisorPrompt('snapchat')" id="promptBtn2" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-sandSoft border border-hairline text-ink hover:border-forest transition">
+            📱 &ldquo;Everyone in 3rd grade has a phone!&rdquo;
+          </button>
+          <button onclick="selectAdvisorPrompt('silent')" id="promptBtn3" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-sandSoft border border-hairline text-ink hover:border-forest transition">
+            🤐 Went silent &amp; slammed door after school
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Interactive Response Container + Voice Sparring Simulator Launcher -->
+      <div class="p-5 rounded-2xl bg-sandSoft border border-hairline space-y-4">
+        
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-forest text-white font-serif font-bold text-sm flex items-center justify-center shrink-0">
+            A
+          </div>
+          <div class="space-y-2 flex-1">
+            <div class="flex items-center justify-between">
+              <span class="font-serif text-sm font-bold text-ink" id="advisorResponseTitle">
+                When Facing an Abrupt Console Shutdown Meltdown
+              </span>
+              <span class="font-mono text-[10px] text-forest font-semibold bg-forest-soft px-2 py-0.5 rounded">Neurobiology Insight</span>
+            </div>
+            
+            <p class="text-xs text-inkMuted leading-relaxed" id="advisorResponseText">
+              His emotional explosion is not defiance; it is a neurological dopamine crash. In video games, the brain receives micro-dopamine hits every 4 seconds. When the power button is hit abruptly, the prefrontal cortex experiences real physical withdrawal.
+            </p>
+
+            <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
+              <span class="font-mono text-[10px] text-whisper uppercase font-bold">Say this right now:</span>
+              <p class="font-serif text-sm text-ink italic leading-snug" id="advisorScriptText">
+                &ldquo;I know that game was intensely fun. It feels terrible when it has to stop. I'm right here with you. Take two big breaths, and let's go get water together.&rdquo;
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Sparring Simulator Launcher Bar -->
+        <div class="pt-2 border-t border-hairline/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🎙️</span>
+            <div>
+              <span class="text-xs font-bold text-ink block">Voice Sparring Simulator</span>
+              <span class="text-[11px] text-whisper">Practice this roleplay out loud with our AI child voice simulator before entering his room</span>
+            </div>
+          </div>
+
+          <button onclick="launchVoiceSparring()" id="btnVoiceSparring" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs shrink-0">
+            <span>Start 2-Min Practice Sparring</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    let isPlaying = false;
+    let currentChild = 'souheil';
+    let day10Completed = false;
+
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      document.getElementById('audioPlayIcon').textContent = isPlaying ? '❚❚' : '▶';
+      document.getElementById('audioPlayLabel').textContent = isPlaying ? 'Pause Audio' : 'Listen to Audio (3:45)';
+      const wave = document.getElementById('audioWaveVisualizer');
+      if (isPlaying) {
+        wave.classList.remove('hidden');
+        wave.classList.add('inline-flex');
+      } else {
+        wave.classList.add('hidden');
+        wave.classList.remove('inline-flex');
+      }
+    }
+
+    function copyScript() {
+      const text = document.getElementById('scriptQuote').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyScriptBtn');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => { btn.textContent = 'Copy 📋'; }, 2000);
+    }
+
+    function copyDinnerPrompt() {
+      const text = document.getElementById('dinnerQuestionPrompt').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btnCopyDinner');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => { btn.textContent = 'Copy 📱'; }, 2000);
+    }
+
+    const dinnerQuestions = [
+      {
+        title: 'The "Rose, Thorn & Banana"',
+        prompt: '“What was one funny or bizarre thing that happened at school today that nobody else noticed?”'
+      },
+      {
+        title: 'The Avatar Swap',
+        prompt: '“If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”'
+      },
+      {
+        title: 'The Schoolyard Rumor',
+        prompt: '“What is one game or app that everyone at school is talking about, but you think is completely overrated?”'
+      },
+      {
+        title: 'The Superpower Trade',
+        prompt: '“Would you rather have unlimited Robux for 1 hour, or be able to pause time in real life whenever you want?”'
+      }
+    ];
+    let qIndex = 0;
+
+    function shuffleQuestion() {
+      qIndex = (qIndex + 1) % dinnerQuestions.length;
+      document.getElementById('dinnerQuestionTitle').textContent = dinnerQuestions[qIndex].title;
+      document.getElementById('dinnerQuestionPrompt').textContent = dinnerQuestions[qIndex].prompt;
+    }
+
+    function setCringeLevel(level) {
+      const labels = ['1/5 (Zero Cringe)', '2/5 (Mild)', '3/5 (Moderate)', '4/5 (Heavy Cringe)', '5/5 (Nuclear Cringe)'];
+      const notes = [
+        'Safe to use casually. Kids will find it normal.',
+        'Acceptable to acknowledge, mild chuckles.',
+        'Safe to understand, but do NOT use it out loud in front of their friends!',
+        'Instant eye-roll guaranteed if uttered by a parent.',
+        'Social catastrophe. Never say this in public or school carpool!'
+      ];
+      document.getElementById('cringeRatingText').textContent = labels[level - 1];
+      document.getElementById('cringeAdvice').textContent = notes[level - 1];
+    }
+
+    function toggleDay10() {
+      day10Completed = !day10Completed;
+      const btn = document.getElementById('day10Btn');
+      const text = document.getElementById('streakCountText');
+      const score = document.getElementById('readinessScoreBig');
+      const stroke = document.getElementById('radarCircleStroke');
+      const status = document.getElementById('alarmLogStatus');
+
+      if (day10Completed) {
+        btn.textContent = '✓';
+        btn.classList.add('bg-forest', 'text-white');
+        btn.classList.remove('bg-white', 'text-forest');
+        text.textContent = 'Day 10 of 14 Completed!';
+        score.textContent = '80';
+        stroke.setAttribute('stroke-dashoffset', '50.2');
+        status.textContent = 'Awesome! Day 10 logged. Score jumped from 78 to 80!';
+        status.classList.add('text-forest', 'font-bold');
+      } else {
+        btn.textContent = '10';
+        btn.classList.remove('bg-forest', 'text-white');
+        btn.classList.add('bg-white', 'text-forest');
+        text.textContent = 'Day 9 of 14 Completed';
+        score.textContent = '78';
+        stroke.setAttribute('stroke-dashoffset', '55.2');
+        status.textContent = 'Tap day 10 above to record today\'s alarm success!';
+        status.classList.remove('text-forest', 'font-bold');
+      }
+    }
+
+    const advisorScenarios = {
+      fortnite: {
+        title: 'When Facing an Abrupt Console Shutdown Meltdown',
+        text: 'His emotional explosion is not defiance; it is a neurological dopamine crash. In video games, the brain receives micro-dopamine hits every 4 seconds. When the power button is hit abruptly, the prefrontal cortex experiences real physical withdrawal.',
+        script: '“I know that game was intensely fun. It feels terrible when it has to stop. I\'m right here with you. Take two big breaths, and let\'s go get water together.”'
+      },
+      snapchat: {
+        title: 'When They Say “Everyone in 3rd Grade Has a Phone!”',
+        text: 'This is the universal pre-teen belonging alarm. At age 8–10, peer exclusion feels equivalent to physical danger to their social brain. Do not debate statistics or claim other parents are wrong.',
+        script: '“I hear you, and I understand why you feel left out when kids talk about it. Our family timeline is about protecting your focus and sleep, not punishing you. Let’s talk about how you can stay in touch with your 2 closest friends this weekend.”'
+      },
+      silent: {
+        title: 'When They Go Silent & Slam Their Bedroom Door',
+        text: 'Door slamming is an emotional boundary declaration when their nervous system is overwhelmed from schoolyard stimulus. Do not chase them down or demand immediate eye contact.',
+        script: '“I see you need some quiet space right now. That is totally okay. I’m leaving a snack and some water right outside your door. Come down whenever you’re ready; no questions asked.”'
+      }
+    };
+
+    function selectAdvisorPrompt(key) {
+      const data = advisorScenarios[key];
+      document.getElementById('advisorResponseTitle').textContent = data.title;
+      document.getElementById('advisorResponseText').textContent = data.text;
+      document.getElementById('advisorScriptText').textContent = data.script;
+
+      // Reset button styles
+      ['promptBtn1', 'promptBtn2', 'promptBtn3'].forEach(id => {
+        const b = document.getElementById(id);
+        b.classList.remove('bg-forest', 'text-white');
+        b.classList.add('bg-sandSoft', 'border', 'border-hairline', 'text-ink');
+      });
+
+      if (key === 'fortnite') {
+        document.getElementById('promptBtn1').classList.add('bg-forest', 'text-white');
+      } else if (key === 'snapchat') {
+        document.getElementById('promptBtn2').classList.add('bg-forest', 'text-white');
+      } else {
+        document.getElementById('promptBtn3').classList.add('bg-forest', 'text-white');
+      }
+    }
+
+    function launchVoiceSparring() {
+      const btn = document.getElementById('btnVoiceSparring');
+      btn.innerHTML = '<span>🎙️ Connecting Voice Simulator...</span>';
+      btn.classList.add('bg-emerald-700');
+      setTimeout(() => {
+        alert('Voice Sparring Simulator Active! Speak aloud into your microphone to practice the co-regulation script with the simulated child voice.');
+        btn.innerHTML = '<span>Start 2-Min Practice Sparring</span><span>→</span>';
+        btn.classList.remove('bg-emerald-700');
+      }, 700);
+    }
+
+    function selectChild(child) {
+      currentChild = child;
+      const btnS = document.getElementById('btnSouheil');
+      const btnL = document.getElementById('btnLeo');
+
+      if (child === 'souheil') {
+        btnS.className = "flex items-center gap-2 px-3.5 py-1 rounded-full bg-forest text-white shadow-xs transition";
+        btnL.className = "flex items-center gap-2 px-3.5 py-1 rounded-full text-inkMuted hover:text-ink transition";
+
+        document.getElementById('anchorChildLabel').textContent = "Souheil Bichiou • 8 yrs";
+        document.getElementById('anchorRoadLabel').textContent = "Road 1: Pre-Device";
+        document.getElementById('anchorTierLabel').textContent = "Middle Childhood (7–9 yrs)";
+        document.getElementById('anchorMilestoneLabel').textContent = "Active Goal: 14-Day Independent Morning Alarm (Day 9 of 14)";
+
+        document.getElementById('courseTitle').textContent = "Navigating Elementary Friendships & Screen Transitions";
+        document.getElementById('lessonTitle').textContent = "Chapter 3: When Your 8-Year-Old Struggles to Power Off";
+        document.getElementById('scriptQuote').textContent = '“I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.”';
+
+        document.getElementById('radarSectionTitle').textContent = "Souheil Bichiou's First-Phone Assessment & Readiness Radar";
+        document.getElementById('readinessScoreBig').textContent = day10Completed ? "80" : "78";
+      } else {
+        btnL.className = "flex items-center gap-2 px-3.5 py-1 rounded-full bg-terracotta text-white shadow-xs transition";
+        btnS.className = "flex items-center gap-2 px-3.5 py-1 rounded-full text-inkMuted hover:text-ink transition";
+
+        document.getElementById('anchorChildLabel').textContent = "Leo Bichiou • 3 yrs";
+        document.getElementById('anchorRoadLabel').textContent = "Road 1: Early Childhood";
+        document.getElementById('anchorTierLabel').textContent = "Early Years (2–4 yrs)";
+        document.getElementById('anchorMilestoneLabel').textContent = "Active Goal: Screen-Free Bedtime Story Routine (3/3 Nights)";
+
+        document.getElementById('courseTitle').textContent = "Toddler Meltdowns & Sensory Regulation";
+        document.getElementById('lessonTitle').textContent = "Chapter 2: The Floor Reset Bridge During Big Emotions";
+        document.getElementById('scriptQuote').textContent = '“Your feelings are so big right now. I’m sitting right here on the carpet with you until your breathing slows down.”';
+
+        document.getElementById('radarSectionTitle').textContent = "Leo's Early Screen Boundaries & Meltdown Compass (No Phone Needed!)";
+        document.getElementById('readinessScoreBig').textContent = "95";
+      }
+    }
+  </script>
+
+</body>
+</html>
