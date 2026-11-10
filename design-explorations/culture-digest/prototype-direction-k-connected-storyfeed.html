@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction K — The Connected Storyfeed & Dialogue Studio | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F4F4F0;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% 0%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.03);
+    }
+    .story-bubble {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+    }
+    .story-bubble:hover {
+      transform: translateY(-2px);
+    }
+    .playing .story-wave {
+      animation: storyWave 0.9s ease-in-out infinite alternate;
+    }
+    @keyframes storyWave {
+      0% { height: 4px; }
+      100% { height: 22px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh pb-28">
+  <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+    <!-- Top Navigation Header -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-3.5 gap-2">
+      <div class="flex items-center gap-2.5">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All Prototypes</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction K: Connected Storyfeed</span>
+      </div>
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-0.5 font-mono text-xs text-spruce font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Weekly Story Stream
+      </span>
+    </header>
+
+    <!-- Child Selector Bar & Stream Calibration -->
+    <div class="hairline-card bg-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div>
+        <span class="font-mono text-[11px] uppercase tracking-wider text-mute block">Tailored Story Stream for:</span>
+        <h1 class="font-serif text-xl sm:text-2xl text-ink font-semibold" id="stream-child-name">Julian's World (Age 14)</h1>
+      </div>
+
+      <!-- Child Switcher Buttons -->
+      <div class="flex items-center gap-1.5 bg-canvas-subtle p-1 rounded-xl border border-hairline shrink-0">
+        <button onclick="selectChild('julian')" id="btn-julian" class="px-3 py-1 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs">
+          Julian (14y)
+        </button>
+        <button onclick="selectChild('maya')" id="btn-maya" class="px-3 py-1 rounded-lg text-xs font-medium text-body hover:bg-card transition">
+          Maya (8y)
+        </button>
+        <button onclick="selectChild('mateo')" id="btn-mateo" class="px-3 py-1 rounded-lg text-xs font-medium text-body hover:bg-card transition">
+          Mateo (14m)
+        </button>
+      </div>
+    </div>
+
+    <!-- STORY NAVIGATION CAPSULES (Micro-Highlights Strip) -->
+    <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none font-mono text-xs">
+      <div class="story-bubble flex flex-col items-center gap-1 shrink-0 cursor-pointer" onclick="scrollToCard('card-scene')">
+        <div class="w-14 h-14 rounded-2xl bg-spruce-soft border-2 border-spruce flex items-center justify-center text-xl shadow-xs">
+          💬
+        </div>
+        <span class="text-[11px] text-ink font-medium">The Scene</span>
+      </div>
+
+      <div class="story-bubble flex flex-col items-center gap-1 shrink-0 cursor-pointer" onclick="scrollToCard('card-mirror')">
+        <div class="w-14 h-14 rounded-2xl bg-amber-soft border-2 border-amber flex items-center justify-center text-xl shadow-xs">
+          ⏳
+        </div>
+        <span class="text-[11px] text-ink font-medium">Time Mirror</span>
+      </div>
+
+      <div class="story-bubble flex flex-col items-center gap-1 shrink-0 cursor-pointer" onclick="scrollToCard('card-studio')">
+        <div class="w-14 h-14 rounded-2xl bg-coral-soft border-2 border-coral flex items-center justify-center text-xl shadow-xs">
+          🎭
+        </div>
+        <span class="text-[11px] text-ink font-medium">Sparring Lab</span>
+      </div>
+
+      <div class="story-bubble flex flex-col items-center gap-1 shrink-0 cursor-pointer" onclick="scrollToCard('card-rules')">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-50 border-2 border-emerald-600 flex items-center justify-center text-xl shadow-xs">
+          📜
+        </div>
+        <span class="text-[11px] text-ink font-medium">Social Rules</span>
+      </div>
+    </div>
+
+    <!-- THE STORY STREAM FEED -->
+    <div class="space-y-6">
+
+      <!-- STORY CARD 1: THE SCENE (Simulated Living Window) -->
+      <article id="card-scene" class="hairline-card bg-card rounded-2xl overflow-hidden shadow-xs">
+        <div class="p-4 sm:p-5 border-b border-hairline flex items-center justify-between bg-canvas-subtle">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-spruce text-white flex items-center justify-center font-mono text-xs font-bold">01</span>
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">Live Scene Simulation</span>
+              <h3 class="font-serif text-base sm:text-lg font-semibold text-ink" id="scene-card-title">Inside Julian's Peer Group Chat</h3>
+            </div>
+          </div>
+          <span class="font-mono text-[11px] text-mute" id="scene-card-status">Active Today</span>
+        </div>
+
+        <!-- Chat feed container -->
+        <div class="p-4 sm:p-5 space-y-3 bg-[#FAFAF8]" id="scene-feed-content">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Audio Snippet -->
+        <div class="bg-white border-t border-hairline p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] text-mute flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-coral" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/></svg>
+              <span>Play Authentic Audio Cadence · 0:11</span>
+            </span>
+            <button onclick="toggleStorySound()" id="story-sound-btn" class="px-2.5 py-1 rounded-md bg-spruce text-white font-mono text-[11px] hover:bg-spruce-light transition flex items-center gap-1 shadow-xs">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span id="story-btn-text">Listen</span>
+            </button>
+          </div>
+          <div class="h-6 flex items-center gap-1 bg-canvas-subtle p-1.5 rounded-lg border border-hairline" id="story-waveform">
+            <div class="w-1 bg-spruce rounded-full h-3 story-wave"></div>
+            <div class="w-1 bg-spruce rounded-full h-5 story-wave"></div>
+            <div class="w-1 bg-spruce rounded-full h-2 story-wave"></div>
+            <div class="w-1 bg-coral rounded-full h-6 story-wave"></div>
+            <div class="w-1 bg-coral rounded-full h-4 story-wave"></div>
+            <div class="w-1 bg-spruce rounded-full h-5 story-wave"></div>
+            <div class="w-1 bg-spruce rounded-full h-3 story-wave"></div>
+          </div>
+          <p class="text-[11px] text-body italic" id="scene-audio-sub">"Julian leaving voice note: 'Bro literally Henderson was tweaking over the beaker, I lost 500 aura fr.'"</p>
+        </div>
+      </article>
+
+      <!-- STORY CARD 2: THE GENERATIONAL MIRROR (Then vs. Now) -->
+      <article id="card-mirror" class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between border-b border-hairline pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-amber text-white flex items-center justify-center font-mono text-xs font-bold">02</span>
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber font-bold block">The Generational Mirror</span>
+              <h3 class="font-serif text-base sm:text-lg font-semibold text-ink">You in 1999 vs. Your Child in 2026</h3>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-mute">Timeless Human Needs</span>
+        </div>
+
+        <!-- Side-by-side comparison cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <!-- 1999 Parent Era -->
+          <div class="p-4 rounded-xl border border-hairline bg-[#FAF9F5] space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-amber-900 font-bold uppercase">When You Were Their Age (1999)</span>
+              <span class="font-mono text-[10px] text-mute">Vintage Era</span>
+            </div>
+            <p class="font-serif text-sm font-semibold text-ink" id="mirror-then-title">AIM Away Messages & Burning Mix CDs</p>
+            <p class="text-xs text-body" id="mirror-then-text">Setting passive-aggressive song lyrics as your status so your crush would notice, and waiting for the 56k modem screech to finish.</p>
+          </div>
+
+          <!-- 2026 Child Era -->
+          <div class="p-4 rounded-xl border border-spruce/30 bg-spruce-soft/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-spruce font-bold uppercase">Your Child Today (2026)</span>
+              <span class="font-mono text-[10px] text-spruce font-semibold">Current Era</span>
+            </div>
+            <p class="font-serif text-sm font-semibold text-ink" id="mirror-now-title">Discord Voice Calls & Aura Points</p>
+            <p class="text-xs text-body" id="mirror-now-text">Hanging in muted voice channels together while doing homework, and tracking imaginary social points gained or lost in the hallway.</p>
+          </div>
+        </div>
+
+        <!-- The Pediatric Constant Bridge -->
+        <div class="p-3 bg-canvas-subtle rounded-xl border border-hairline text-xs space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">The Timeless Pediatric Constant:</span>
+          <p class="text-body" id="mirror-pediatric">
+            The tools changed; the human heart did not. Both generations were desperately seeking peer belonging, identity individuation, and privacy outside the family living room.
+          </p>
+        </div>
+      </article>
+
+      <!-- STORY CARD 3: THE DIALOGUE STUDIO (Interactive Branching Rehearsal) -->
+      <article id="card-studio" class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between border-b border-hairline pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-coral text-white flex items-center justify-center font-mono text-xs font-bold">03</span>
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-wider text-coral font-bold block">Dialogue Rehearsal Studio</span>
+              <h3 class="font-serif text-base sm:text-lg font-semibold text-ink" id="studio-headline">Test Your Response Real-Time</h3>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-semibold">Safe Rehearsal</span>
+        </div>
+
+        <div class="space-y-1">
+          <span class="font-mono text-[10px] text-amber uppercase font-semibold" id="studio-context">Scenario: Arriving Home</span>
+          <p class="font-serif text-sm sm:text-base font-semibold text-ink" id="studio-prompt">
+            "Julian drops his backpack, slumps on the counter: 'Bro, I crashed out today. I am so cooked.'"
+          </p>
+        </div>
+
+        <!-- 3 Interactive Choice Buttons -->
+        <div class="space-y-2" id="studio-choices">
+          <!-- Dynamic Buttons -->
+        </div>
+
+        <!-- Real-time Child Emotional Reaction Box -->
+        <div id="studio-feedback" class="p-4 rounded-xl border border-hairline bg-[#FAF9F5] space-y-1.5 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold text-spruce" id="sf-status">Child Simulated Reaction:</span>
+            <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white border border-hairline font-bold" id="sf-score">+500 Aura / Calm Open</span>
+          </div>
+          <p class="text-xs italic text-ink" id="sf-quote">
+            "Julian drops his shoulders, sighs, and pulls up a stool: 'It was 6th period chem, Mom. The beaker cracked and everyone stared.'"
+          </p>
+        </div>
+      </article>
+
+      <!-- STORY CARD 4: SOCIAL STATUS & RULES DECODER -->
+      <article id="card-rules" class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-3.5 shadow-xs">
+        <div class="flex items-center justify-between border-b border-hairline pb-2.5">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-mono text-xs font-bold">04</span>
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-800 font-bold block">Social Currency & Peer Codes</span>
+              <h3 class="font-serif text-base sm:text-lg font-semibold text-ink" id="rules-card-title">How Social Status Works in 8th Grade</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="rules-grid">
+          <!-- Dynamic Rules -->
+        </div>
+
+        <!-- Road Safety & Calm Status -->
+        <div class="pt-2 border-t border-hairline flex items-center justify-between text-xs" id="stream-reassurance">
+          <!-- Injected dynamically -->
+        </div>
+      </article>
+
+    </div>
+
+    <!-- STICKY BOTTOM DINNERTIME PROMPT FOOTER -->
+    <div class="fixed bottom-0 left-0 right-0 bg-[#143D2B] text-white border-t border-white/10 px-4 py-3 z-40 shadow-xl">
+      <div class="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="space-y-0.5 min-w-0">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300 font-bold block flex items-center gap-1.5">
+            <span>🕯️ Tonight's Dinner Spark</span>
+            <span class="text-white/40">·</span>
+            <span class="text-emerald-200 text-[9px] font-normal">Zero Guilt · 1-Click Ready</span>
+          </span>
+          <p class="font-serif text-xs sm:text-sm font-medium text-white truncate sm:whitespace-normal" id="footer-dinner-prompt">
+            "What's one thing an adult or teacher did this week that instantly lost them 1,000 aura points?"
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="copyFooterPrompt()" class="px-3.5 py-1.5 rounded-lg bg-white text-spruce font-mono text-xs font-bold hover:bg-canvas transition flex items-center gap-1.5 shadow-xs">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            <span>Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-20 right-6 hidden bg-ink text-white px-4 py-2.5 rounded-xl font-mono text-xs shadow-lg border border-white/10 z-50 flex items-center gap-2">
+      <span class="text-emerald-400">✓</span>
+      <span id="toast-msg">Copied to clipboard!</span>
+    </div>
+
+  </div>
+
+  <script>
+    let currentChild = 'julian';
+    let isPlaying = false;
+
+    const childData = {
+      julian: {
+        streamName: "Julian's World (Age 14 · Early Adolescence)",
+        sceneTitle: "Inside Julian's Peer Group Chat",
+        sceneFeed: `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-slate-700 text-white font-mono text-xs flex items-center justify-center font-bold">K</div>
+            <div class="bg-white p-2.5 rounded-xl rounded-tl-none border border-hairline max-w-[85%] text-xs space-y-0.5">
+              <span class="font-mono text-[10px] text-mute block">Kaleb · Discord 3:42 PM</span>
+              <p class="text-ink">did anyone start the lab report yet or are we all cooked fr?</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-spruce text-white font-mono text-xs flex items-center justify-center font-bold">J</div>
+            <div class="bg-spruce-soft p-2.5 rounded-xl rounded-tl-none border border-spruce/30 max-w-[85%] text-xs space-y-0.5">
+              <span class="font-mono text-[10px] text-spruce font-semibold block">Julian (Your Teen) · 3:44 PM</span>
+              <p class="text-ink">im so cooked bro, Henderson caught me lacking when the beaker cracked -500 aura fr</p>
+            </div>
+          </div>
+        `,
+        audioSub: '"Julian voice note: \'Bro literally don\'t let Henderson catch you lacking, that test was diabolical fr.\'"',
+        mirrorThenTitle: "AIM Away Messages & Burning Mix CDs (1999)",
+        mirrorThenText: "Setting passive-aggressive song lyrics as your status so your crush would notice, and waiting for the 56k dial-up screech to finish.",
+        mirrorNowTitle: "Discord Voice Calls & Aura Points (2026)",
+        mirrorNowText: "Hanging in muted voice channels together while doing homework, and tracking imaginary social points gained or lost in the hallway.",
+        mirrorPediatric: "The tools changed; the human heart did not. Both generations were desperately seeking peer belonging, identity individuation, and privacy outside the family living room.",
+        studioContext: "Scenario: Returning Home from School",
+        studioPrompt: '"Julian slumps on the couch: \'Bro, I crashed out today. I am so cooked.\'"',
+        studioChoices: [
+          { id: 1, label: 'Option A: Authority / Lecture', risk: 'High Risk (-1000 Aura)', text: '"Don\'t call me \'bro\', and stop with the dramatic slang. What did you do to your teacher?"' },
+          { id: 2, label: 'Option B: Over-Eager Cool Parent', risk: 'High Cringe', text: '"No cap Julian, did you take a massive L? Was the vibe lowkey negative rizz?"' },
+          { id: 3, label: 'Option C: Calm Neurobiology Bridge', risk: 'Optimal Connection', text: '"Whoa. \'Crashed out\' sounds like your nervous system hit a redline. Grab water first—what pushed you over?"' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Defensive Wall Activated', score: '-1000 Aura', quote: '"Julian rolls his eyes, grabs his phone, mutters \'never mind\', and slams his bedroom door."' },
+          2: { status: 'Awkward Cringe Withdrawal', score: '-500 Aura / Awkward', quote: '"Julian cringes visibly: \'Please never say that again, Mom. You sound so weird.\'"' },
+          3: { status: 'Connection Opened & Calmed', score: '+500 Aura / Deep Bridge', quote: '"Julian drops his shoulders, sighs: \'It was 6th period chem, Mom. The beaker cracked and everyone stared.\'"' }
+        },
+        rulesTitle: "Adolescent Peer Rules & Currency",
+        rules: [
+          { term: 'Aura Points (+/- 1000)', def: 'Real-time social prestige. Gained by chill composure, lost by awkward try-hard behavior.' },
+          { term: 'Crashout', def: 'Nervous system overload leading to anger or emotional outbursts.' },
+          { term: 'Cooked', def: 'Completely exhausted or facing an unavoidable consequence.' },
+          { term: 'Locking In', def: 'Intense focus on sports or gaming without distraction.' }
+        ],
+        reassurance: '<span class="font-mono text-[11px] text-mute">Device Curfew Status:</span><span class="font-mono font-bold text-spruce">Curfew Active 9:00 PM (Zero Negotiation Dread)</span>',
+        dinnerPrompt: '"What\'s one thing an adult or teacher did this week that instantly lost them 1,000 aura points?"'
+      },
+      maya: {
+        streamName: "Maya's World (Age 8 · Middle Childhood)",
+        sceneTitle: "Recess Blacktop Trading Desk (Table 4)",
+        sceneFeed: `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-amber-600 text-white font-mono text-xs flex items-center justify-center font-bold">A</div>
+            <div class="bg-white p-2.5 rounded-xl rounded-tl-none border border-hairline max-w-[85%] text-xs space-y-0.5">
+              <span class="font-mono text-[10px] text-mute block">Ava (Classmate) · Recess</span>
+              <p class="text-ink">"I\'ll trade you my Pikachu holographic if you give me your shiny Eevee and your strawberry fruit leather."</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-spruce text-white font-mono text-xs flex items-center justify-center font-bold">M</div>
+            <div class="bg-spruce-soft p-2.5 rounded-xl rounded-tl-none border border-spruce/30 max-w-[85%] text-xs space-y-0.5">
+              <span class="font-mono text-[10px] text-spruce font-semibold block">Maya (Your 8yo) · Recess</span>
+              <p class="text-ink">"No way! Fruit leather is worth at least two ultra-rares. That\'s unfair trade policy!"</p>
+            </div>
+          </div>
+        `,
+        audioSub: '"Maya negotiating: \'If I give you the shiny card you have to promise not to trade it to Liam!\'"',
+        mirrorThenTitle: "Beanie Babies & GameBoy Pokemon Red (1999)",
+        mirrorThenText: "Carrying binder sheets of holographic cards and trading via link cable on the school bus step.",
+        mirrorNowTitle: "Squishmallows & Minecraft Realms (2026)",
+        mirrorNowText: "Organizing sensory plushies and creating mutual anti-griefing treaties on shared co-op server worlds.",
+        mirrorPediatric: "At age 8, organizing physical collectibles satisfies the concrete operational brain's urge to categorize and understand fairness.",
+        studioContext: "Scenario: Recess Friendship Conflict",
+        studioPrompt: '"Maya comes home upset: \'Ava said we aren\'t best friends anymore because I traded cards with Chloe.\'"',
+        studioChoices: [
+          { id: 1, label: 'Option A: Dismissive Minimization', risk: 'Invalidating', text: '"Oh honey, don\'t be silly. You\'ll be friends again tomorrow. It\'s just cards."' },
+          { id: 2, label: 'Option B: Over-Intervention', risk: 'Erodes Confidence', text: '"I\'m emailing Ava\'s mother and your 3rd grade teacher right this second."' },
+          { id: 3, label: 'Option C: Pediatric Empathy Anchor', risk: 'Optimal Emotional Growth', text: '"That really stings. It hurts when a friend makes you feel excluded. Tell me what happened at the trading table."' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Emotion Suppressed', score: 'Low Trust', quote: '"Maya crosses her arms and says \'You don\'t get it!\' and shuts down."' },
+          2: { status: 'Panic Induced', score: 'Anxiety High', quote: '"Maya panics: \'No! Don\'t email her mom! Everyone will hate me!\'"' },
+          3: { status: 'Comfort & Resilience Built', score: 'Secure Attachment', quote: '"Maya leans in for a hug, exhales, and walks you through the whole recess trade drama."' }
+        },
+        rulesTitle: "Playground Barter & Treaty Rules",
+        rules: [
+          { term: 'Barter Equity', def: 'Snack items hold higher market value than paper cards during morning recess.' },
+          { term: 'Minecraft Honor Pact', def: 'Never break a friend\'s build or mine beneath their house without consent.' },
+          { term: 'Best-Friend Treaties', def: 'Rotates weekly; children test allegiance through handshake rituals.' },
+          { term: 'Trade-backs Policy', def: 'Must be explicitly agreed upon before 11:45 AM bell rings.' }
+        ],
+        reassurance: '<span class="font-mono text-[11px] text-mute">Safety Sanctuary:</span><span class="font-mono font-bold text-emerald-700">🌿 100% Pre-Device Sanctuary Verified</span>',
+        dinnerPrompt: '"If you could invent one rule that all kids at recess had to follow, what would it be?"'
+      },
+      mateo: {
+        streamName: "Mateo's World (Age 14 Months · Toddler)",
+        sceneTitle: "High-Chair Physics & Nursery Cadence",
+        sceneFeed: `
+          <div class="p-3 bg-white rounded-xl border border-hairline space-y-1.5 text-xs">
+            <span class="font-mono text-[10px] text-spruce font-bold block">11:35 AM · High-Chair Physics Experiment</span>
+            <p class="text-ink">Mateo dropped his stainless spoon 7 consecutive times onto the tile floor, tracking its trajectory with wide eyes before looking up at Dad\'s face.</p>
+            <span class="text-[11px] text-emerald-800 block">💡 Testing cause-and-effect and verifying whether parental emotional attunement remains steady.</span>
+          </div>
+        `,
+        audioSub: '"Mateo cadence vocalization: \'Ba-ba-ba... da!\' paired with mirror neuron smile."',
+        mirrorThenTitle: "Pat-a-Cake & Wooden Blocks (1999)",
+        mirrorThenText: "Physical sensory touch, clapping hands, and looking at physical board books.",
+        mirrorNowTitle: "Sensory Nursery Cadence (2026)",
+        mirrorNowText: "Real-time eye contact, acoustic lullabies, and zero-screen exploration.",
+        mirrorPediatric: "Human mirror neurons require 3D faces and physical physics to develop emotional empathy; 2D screens bypass this neural bridge.",
+        studioContext: "Scenario: High-Chair Spoon Drop Meltdown",
+        studioPrompt: '"Mateo throws his spoon on the floor for the 8th time and starts whining when you don\'t instantly grab it."',
+        studioChoices: [
+          { id: 1, label: 'Option A: Frustrated Scolding', risk: 'Heightens Amygdala Stress', text: '"Stop throwing your spoon right now! If you throw it again, lunch is over!"' },
+          { id: 2, label: 'Option B: Distract with a Phone', risk: 'Interrupts Brain Wiring', text: 'Pull out your phone and put on a sensory dancing fruit video to quiet him down.' },
+          { id: 3, label: 'Option C: Calm Co-Regulation', risk: 'Optimal Neural Attachment', text: 'Catch his eye with a calm smile: "You made it go boom! Spoon goes on the tray now. All done dropping."' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Cortisol Spike', score: 'Dysregulated', quote: '"Mateo bursts into tears. The loud tone overwhelms his mirror neurons and eating ends in a battle."' },
+          2: { status: 'Passive Stupefaction', score: 'Missed Neural Growth', quote: '"He freezes and stares at the screen. The motor experiment stops, but pre-verbal emotional regulation was bypassed."' },
+          3: { status: 'Smiles & Calms Gently', score: 'Secure Co-Regulation', quote: '"Mateo smiles, mimics Dad\'s gentle \'boom!\' sound, claps his hands, and takes a bite of avocado."' }
+        },
+        rulesTitle: "Infant Developmental Sequences",
+        rules: [
+          { term: 'Object Permanence', def: 'Things that disappear from direct sight continue to exist.' },
+          { term: 'Auditory Cadence', def: 'Repetitive melodic syllables wire bilateral cerebral cortex.' },
+          { term: 'Mirror Attunement', def: 'Infants synchronize heart rate with calm parental facial expressions.' },
+          { term: 'Motor Mapping', def: 'Dropping items teaches distance, gravity, and spatial mechanics.' }
+        ],
+        reassurance: '<span class="font-mono text-[11px] text-mute">Digital Status:</span><span class="font-mono font-bold text-emerald-700">🌿 100% Screen-Free Sanctuary (AAP Recommended)</span>',
+        dinnerPrompt: '"Sensory Dinnertime Ritual: Name 3 textures Mateo touches on his plate (e.g. \'warm squash\', \'cold avocado\', \'crunchy toast\')."'
+      }
+    };
+
+    function selectChild(childKey) {
+      currentChild = childKey;
+      const data = childData[childKey];
+
+      // Update Switcher buttons
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`btn-${k}`);
+        if (k === childKey) {
+          btn.className = 'px-3 py-1 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs';
+        } else {
+          btn.className = 'px-3 py-1 rounded-lg text-xs font-medium text-body hover:bg-card transition';
+        }
+      });
+
+      // Update Stream child name
+      document.getElementById('stream-child-name').textContent = data.streamName;
+
+      // Update Card 1: Scene
+      document.getElementById('scene-card-title').textContent = data.sceneTitle;
+      document.getElementById('scene-feed-content').innerHTML = data.sceneFeed;
+      document.getElementById('scene-audio-sub').textContent = data.audioSub;
+
+      // Update Card 2: Mirror
+      document.getElementById('mirror-then-title').textContent = data.mirrorThenTitle;
+      document.getElementById('mirror-then-text').textContent = data.mirrorThenText;
+      document.getElementById('mirror-now-title').textContent = data.mirrorNowTitle;
+      document.getElementById('mirror-now-text').textContent = data.mirrorNowText;
+      document.getElementById('mirror-pediatric').textContent = data.mirrorPediatric;
+
+      // Update Card 3: Studio
+      document.getElementById('studio-context').textContent = data.studioContext;
+      document.getElementById('studio-prompt').textContent = data.studioPrompt;
+      const choicesBox = document.getElementById('studio-choices');
+      choicesBox.innerHTML = data.studioChoices.map(c => `
+        <button onclick="pickStudioChoice(${c.id})" class="w-full text-left p-3 rounded-xl border border-hairline hover:border-spruce bg-canvas-subtle hover:bg-white transition text-xs space-y-0.5 group">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-semibold text-body group-hover:text-ink">${c.label}</span>
+            <span class="font-mono text-[10px] text-mute px-1.5 py-0.5 rounded bg-white border border-hairline">${c.risk}</span>
+          </div>
+          <p class="text-body">${c.text}</p>
+        </button>
+      `).join('');
+      pickStudioChoice(3);
+
+      // Update Card 4: Rules
+      document.getElementById('rules-card-title').textContent = data.rulesTitle;
+      const rulesGrid = document.getElementById('rules-grid');
+      rulesGrid.innerHTML = data.rules.map(r => `
+        <div class="p-3 bg-canvas-subtle rounded-xl border border-hairline space-y-0.5 text-xs">
+          <span class="font-mono font-bold text-spruce block">${r.term}</span>
+          <p class="text-body">${r.def}</p>
+        </div>
+      `).join('');
+      document.getElementById('stream-reassurance').innerHTML = data.reassurance;
+
+      // Update Footer Dinner Prompt
+      document.getElementById('footer-dinner-prompt').textContent = data.dinnerPrompt;
+    }
+
+    function pickStudioChoice(choiceId) {
+      const fb = childData[currentChild].feedbackOptions[choiceId];
+      if (!fb) return;
+
+      document.getElementById('sf-status').textContent = fb.status;
+      document.getElementById('sf-score').textContent = fb.score;
+      document.getElementById('sf-quote').textContent = fb.quote;
+    }
+
+    function toggleStorySound() {
+      const wf = document.getElementById('story-waveform');
+      const btnText = document.getElementById('story-btn-text');
+      isPlaying = !isPlaying;
+
+      if (isPlaying) {
+        wf.classList.add('playing');
+        btnText.textContent = 'Pause';
+        setTimeout(() => {
+          if (isPlaying) toggleStorySound();
+        }, 3500);
+      } else {
+        wf.classList.remove('playing');
+        btnText.textContent = 'Listen';
+      }
+    }
+
+    function scrollToCard(cardId) {
+      const el = document.getElementById(cardId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function copyFooterPrompt() {
+      const text = document.getElementById('footer-dinner-prompt').textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Dinner Prompt copied to clipboard!');
+      }).catch(() => {
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Init
+    selectChild('julian');
+  </script>
+</body>
+</html>

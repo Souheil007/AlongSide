@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction J — The Interactive Cultural Field Guide & Empathy Lab | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% 0%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.03);
+    }
+    .tear-sheet {
+      background-image: radial-gradient(#E3E3DC 1.5px, transparent 1.5px);
+      background-size: 8px 8px;
+    }
+    .confetti-pop {
+      animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .playing .sound-wave-bar {
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes soundWave {
+      0% { height: 4px; }
+      100% { height: 24px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-6 lg:p-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Header & Navigation Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All Prototypes Hub</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction J: The Interactive Cultural Field Guide</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Pediatric Field Manual · Vol. 44
+        </span>
+      </div>
+    </header>
+
+    <!-- Masthead & Child Calibration Bar -->
+    <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-mute">Field Subject:</span>
+          <span class="font-mono text-[11px] text-spruce bg-spruce-soft px-2.5 py-0.5 rounded-full font-bold" id="calib-tier">Julian (Age 14 · Early Adolescence)</span>
+          <span class="font-mono text-[10px] text-amber bg-amber-soft px-2 py-0.5 rounded-full font-medium" id="calib-archetype">The Independent Navigator</span>
+        </div>
+        <h1 class="font-serif text-2xl sm:text-3xl text-ink font-semibold tracking-tight" id="field-headline">Adolescent Micro-Culture & Linguistic Field Notes</h1>
+        <p class="text-xs sm:text-sm text-body" id="field-sub">Clinically reviewed weekly ethnographic field observations across social codes, status currencies, and dinnertime connection.</p>
+      </div>
+
+      <!-- Child Switcher Buttons -->
+      <div class="flex items-center gap-2 bg-canvas-subtle p-1.5 rounded-xl border border-hairline shrink-0">
+        <button onclick="selectChild('julian')" id="btn-julian" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Julian (14 yrs)</span>
+        </button>
+        <button onclick="selectChild('maya')" id="btn-maya" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span>Maya (8 yrs)</span>
+        </button>
+        <button onclick="selectChild('mateo')" id="btn-mateo" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+          <span>Mateo (14 mo)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- HOOK MODULE: WEEKLY PARENT RADAR CHALLENGE (Interactive Quick Quiz) -->
+    <div class="hairline-card bg-[#FAF9F5] rounded-2xl p-5 sm:p-6 space-y-4 border-l-4 border-l-amber">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-hairline pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🎯</span>
+          <span class="font-mono text-xs uppercase tracking-wider text-amber font-bold">Weekly Parent Radar Challenge (Test Your Intuition)</span>
+        </div>
+        <span class="font-mono text-[10px] text-mute">1-Minute Weekly Knowledge Hook</span>
+      </div>
+
+      <div class="space-y-1">
+        <h3 class="font-serif text-lg sm:text-xl font-semibold text-ink" id="quiz-question">
+          "Julian says: 'Henderson caught me lacking during the chem lab, I lost 500 aura points fr.' What is the pediatric reality?"
+        </h3>
+        <p class="text-xs text-body" id="quiz-context">Select the option that best decodes his nervous system and peer reality:</p>
+      </div>
+
+      <!-- 3 Clickable Quiz Choices -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1" id="quiz-choices-container">
+        <!-- Dynamic Quiz Options -->
+      </div>
+
+      <!-- Interactive Quiz Feedback Container -->
+      <div id="quiz-feedback" class="hidden p-4 rounded-xl border border-hairline bg-white space-y-1.5 confetti-pop">
+        <div class="flex items-center gap-2">
+          <span id="qf-icon" class="text-base">🎉</span>
+          <span id="qf-status" class="font-mono text-xs font-bold text-spruce">Correct! Pediatric Field Radar Certified</span>
+        </div>
+        <p id="qf-explanation" class="text-xs text-body">
+          'Lacking' means being caught off guard or unprepared in front of peers. In adolescence, public evaluation triggers the same brain regions as physical pain.
+        </p>
+      </div>
+    </div>
+
+    <!-- TWO MAIN FIELD OBSERVATION COLUMNS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: Cultural Artifact of the Week & Audio Pronunciation (Col 1-6) -->
+      <div class="lg:col-span-6 space-y-5">
+
+        <!-- Featured Artifact Card with Audio Waveform -->
+        <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold">Featured Cultural Artifact</span>
+              <span class="font-mono text-[10px] text-mute"># 01-LINGUISTIC</span>
+            </div>
+            <span class="font-mono text-[10px] text-coral bg-coral-soft px-2 py-0.5 rounded-full font-semibold" id="artifact-status">Surging This Week</span>
+          </div>
+
+          <!-- Term & Pronunciation Header -->
+          <div class="space-y-1">
+            <div class="flex items-baseline justify-between">
+              <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink" id="artifact-term">"Crashout"</h2>
+              <span class="font-mono text-xs text-mute" id="artifact-ipa">/ˈkræʃ.aʊt/</span>
+            </div>
+            <p class="text-xs text-body" id="artifact-definition">Verb/Noun: An uncontrollable angry outburst or reckless overreaction to perceived social slights, often triggered by chronic peer fatigue.</p>
+          </div>
+
+          <!-- Interactive Playable Audio Player -->
+          <div class="p-3.5 bg-canvas-subtle rounded-xl border border-hairline space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-mute flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-spruce" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/></svg>
+                <span>Natural Peer Cadence & Context</span>
+              </span>
+              <button onclick="toggleSound()" id="sound-btn" class="px-3 py-1 rounded-md bg-spruce text-white font-mono text-[11px] hover:bg-spruce-light transition flex items-center gap-1.5 shadow-xs">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span id="sound-btn-text">Hear Native Pronunciation</span>
+              </button>
+            </div>
+            <!-- Waveform visualizer -->
+            <div class="h-6 flex items-center gap-1 bg-white p-1.5 rounded-lg border border-hairline" id="sound-waveform">
+              <div class="w-1 bg-spruce rounded-full h-3 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-6 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-2 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 sound-wave-bar"></div>
+              <div class="w-1 bg-coral rounded-full h-6 sound-wave-bar"></div>
+              <div class="w-1 bg-coral rounded-full h-4 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-3 sound-wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 sound-wave-bar"></div>
+            </div>
+            <p class="text-[11px] text-body italic" id="artifact-dialogue">"Example: 'I was trying to stay chill but after the third test question I literally crashed out.'"</p>
+          </div>
+
+          <!-- Parental Usage Gauge: Cringe Meter -->
+          <div class="p-3 bg-amber-soft/40 rounded-xl border border-amber-200/60 space-y-1">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-amber-900 font-bold">Parental Usage Protocol:</span>
+              <span class="text-rose-700 font-bold" id="cringe-level">⚠️ DO NOT USE (100% Cringe)</span>
+            </div>
+            <p class="text-[11px] text-amber-900" id="cringe-advice">
+              If a parent uses this word out loud, it immediately triggers peer-distancing. Understand it when heard, but respond with calm adult vocabulary: <em>"Sounds like your nervous system hit a redline."</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- Social Physics Visual Ledger -->
+        <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-hairline pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold">Social Physics & Status Rules</span>
+            </div>
+            <span class="font-mono text-[10px] text-mute" id="ledger-title">The Aura Ledger</span>
+          </div>
+
+          <div class="space-y-2" id="ledger-items">
+            <!-- Dynamic Ledger Items -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: The Sunday Dinner Companion Tear-Sheet (Col 7-12) -->
+      <div class="lg:col-span-6 space-y-5">
+
+        <!-- Perforated Tear-Sheet Card -->
+        <div class="hairline-card bg-card rounded-2xl p-6 sm:p-7 space-y-5 border-t-4 border-t-spruce shadow-sm">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div>
+              <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold block">The Sunday Dinner Tear-Sheet</span>
+              <span class="text-xs text-mute font-mono">3-Course Conversational Menu</span>
+            </div>
+            <button onclick="copyAllMenu()" class="px-3 py-1.5 rounded-lg border border-hairline bg-canvas-subtle hover:bg-white text-ink font-mono text-xs font-medium transition flex items-center gap-1.5 shadow-xs">
+              <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              <span>Copy Full Menu</span>
+            </button>
+          </div>
+
+          <!-- Course 1: Appetizer (Icebreaker) -->
+          <div class="space-y-1.5 p-3.5 rounded-xl bg-canvas-subtle border border-hairline">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber font-bold">Course 01 · Appetizer (Playful Icebreaker)</span>
+              <span class="font-mono text-[10px] text-mute">2 min</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base font-semibold text-ink" id="menu-course-1">
+              "What's one thing an adult or teacher did this week that instantly lost them 1,000 aura points?"
+            </p>
+            <span class="text-[11px] text-mute block" id="menu-sub-1">Invites laughter without putting them under the microscope.</span>
+          </div>
+
+          <!-- Course 2: Main Course (Peer Insight) -->
+          <div class="space-y-1.5 p-3.5 rounded-xl bg-spruce-soft/40 border border-spruce/30">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold">Course 02 · Main Course (Deep Empathy)</span>
+              <span class="font-mono text-[10px] text-spruce font-semibold">Core Connection</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base font-semibold text-ink" id="menu-course-2">
+              "Did anyone in your group hit a point where they felt like 'crashing out' this week? What caused the pressure?"
+            </p>
+            <span class="text-[11px] text-mute block" id="menu-sub-2">Allows them to discuss group stress safely through third-person stories.</span>
+          </div>
+
+          <!-- Course 3: Dessert (Generational Swap) -->
+          <div class="space-y-1.5 p-3.5 rounded-xl bg-canvas-subtle border border-hairline">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-coral font-bold">Course 03 · Dessert (Generational Swap)</span>
+              <span class="font-mono text-[10px] text-mute">Shared Laugh</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base font-semibold text-ink" id="menu-course-3">
+              "Share one piece of slang from 1999 (e.g. 'All that and a bag of chips') and have them grade its cringe factor."
+            </p>
+            <span class="text-[11px] text-mute block" id="menu-sub-3">Normalizes that every generation had embarrassing codes.</span>
+          </div>
+
+          <!-- Road Reassurance Seal at bottom of menu -->
+          <div class="pt-2 border-t border-hairline flex items-center justify-between text-xs" id="field-reassurance">
+            <span class="font-mono text-[11px] text-mute">Bedtime Curfew Enforcement:</span>
+            <span class="font-mono font-bold text-spruce">9:00 PM Bedtime Peace Guaranteed</span>
+          </div>
+        </div>
+
+        <!-- Pediatrician Endorsement Badge -->
+        <div class="hairline-card bg-[#FAF9F5] rounded-xl p-4 flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-full bg-spruce text-white font-mono text-xs flex items-center justify-center font-bold shrink-0">
+            Dr.
+          </div>
+          <div class="space-y-0.5">
+            <p class="text-xs font-semibold text-ink">Pediatric Neurobiology Field Note</p>
+            <p class="text-[11px] text-body" id="doctor-note">
+              "Adolescents do not reject parents; they reject the feeling of interrogation. Dinnertime curiosity builds the prefrontal bridge they need for adulthood."
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-6 right-6 hidden bg-ink text-white px-4 py-2.5 rounded-xl font-mono text-xs shadow-lg border border-white/10 z-50 flex items-center gap-2">
+      <span class="text-emerald-400">✓</span>
+      <span id="toast-msg">Copied to clipboard!</span>
+    </div>
+
+  </div>
+
+  <script>
+    let currentChild = 'julian';
+    let isPlaying = false;
+
+    const childData = {
+      julian: {
+        tier: 'Julian (Age 14 · Early Adolescence)',
+        archetype: 'The Independent Navigator',
+        headline: 'Adolescent Micro-Culture & Linguistic Field Notes',
+        sub: 'Clinically reviewed weekly ethnographic field observations across social codes, status currencies, and dinnertime connection.',
+        quiz: {
+          q: '"Julian says: \'Henderson caught me lacking during the chem lab, I lost 500 aura points fr.\' What is the pediatric reality?"',
+          choices: [
+            { id: 1, text: 'A) He failed his chemistry exam and needs an academic tutor.', correct: false },
+            { id: 2, text: 'B) He felt publicly embarrassed in front of his peers, which his adolescent brain processes like physical pain.', correct: true },
+            { id: 3, text: 'C) He was caught playing mobile games under his laboratory desk.', correct: false }
+          ],
+          explanation: '\'Lacking\' means being caught off guard or unprepared in front of peers. In adolescence, public evaluation triggers the same brain regions as physical pain. Don\'t lecture him; validate his social recovery.'
+        },
+        artifact: {
+          term: '"Crashout"',
+          ipa: '/ˈkræʃ.aʊt/',
+          status: 'Surging This Week',
+          def: 'Verb/Noun: An uncontrollable angry outburst or reckless overreaction to perceived social slights, often triggered by chronic peer fatigue.',
+          dialogue: '"Example: \'I was trying to stay chill but after the third test question I literally crashed out.\'"',
+          cringeLevel: '⚠️ DO NOT USE (100% Cringe)',
+          cringeAdvice: 'If a parent uses this word out loud, it immediately triggers peer-distancing. Understand it when heard, but respond with calm adult vocabulary: "Sounds like your nervous system hit a redline."'
+        },
+        ledgerTitle: 'The Aura Balance Sheet',
+        ledgerItems: [
+          { label: 'Defending a friend publicly in the hallway', change: '+1,000 Aura', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+          { label: 'Parent loudly yelling your nickname at carpool pickup', change: '-1,500 Aura', color: 'text-rose-700 bg-rose-50 border-rose-200' },
+          { label: 'Tripping on the gym bleachers during assembly', change: '-500 Aura', color: 'text-rose-700 bg-rose-50 border-rose-200' },
+          { label: 'Submitting a history project 3 days early effortlessly', change: '+500 Aura', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' }
+        ],
+        menu: {
+          c1: '"What\'s one thing an adult or teacher did this week that instantly lost them 1,000 aura points?"',
+          sub1: 'Invites laughter without putting them under the microscope.',
+          c2: '"Did anyone in your group hit a point where they felt like \'crashing out\' this week? What caused the pressure?"',
+          sub2: 'Allows them to discuss group stress safely through third-person stories.',
+          c3: '"Share one piece of slang from 1999 (e.g. \'All that and a bag of chips\') and have them grade its cringe factor."',
+          sub3: 'Normalizes that every generation had embarrassing codes.'
+        },
+        reassurance: '<span class="font-mono text-[11px] text-mute">Bedtime Curfew Enforcement:</span><span class="font-mono font-bold text-spruce">9:00 PM Bedtime Peace Guaranteed</span>',
+        doctorNote: '"Adolescents do not reject parents; they reject the feeling of interrogation. Dinnertime curiosity builds the prefrontal bridge they need for adulthood."'
+      },
+      maya: {
+        tier: 'Maya (Age 8 · Middle Childhood)',
+        archetype: 'The Blacktop Architect',
+        headline: 'Recess Economics & Concrete Operational Fairness',
+        sub: 'Field observations tracking the 3rd-grade blacktop trading floor, co-op building pacts, and peer justice codes.',
+        quiz: {
+          q: '"Maya says: \'Ava gave away our secret handshake to Chloe! She broke the treaty!\' What is the developmental driver?"',
+          choices: [
+            { id: 1, text: 'A) Concrete operational children view social rules as absolute moral treaties; betrayal feels existential.', correct: true },
+            { id: 2, text: 'B) Maya needs immediate discipline for being overly possessive of her friends.', correct: false },
+            { id: 3, text: 'C) Handshakes have high economic value on the playground blacktop.', correct: false }
+          ],
+          explanation: 'At age 8, Piaget\'s concrete operational stage means contracts and handshakes represent foundational social trust. Validate the feeling of broken fairness before proposing solutions.'
+        },
+        artifact: {
+          term: '"Ultra-Rare Trade"',
+          ipa: '/ˈʌl.trə rɛər treɪd/',
+          status: 'Dominant Staple',
+          def: 'Noun: A high-stakes barter involving holographic Pokemon cards or novelty school erasers, negotiated over lunch periods.',
+          dialogue: '"Example: \'No trade-backs! You verified the card was mint condition before recess ended!\'"',
+          cringeLevel: '✅ Safe to Discuss',
+          cringeAdvice: 'Ask about trade values with genuine curiosity: "What makes a card an ultra-rare? How do kids decide who sets the price?"'
+        },
+        ledgerTitle: 'The Recess Barter Value Hierarchy',
+        ledgerItems: [
+          { label: 'Holographic Charizard (Mint Condition)', change: 'Top Tier Asset', color: 'text-amber-700 bg-amber-50 border-amber-200' },
+          { label: 'Strawberry Fruit Leather Snack', change: 'High Liquidity Currency', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+          { label: 'Standard Energy Cards (Common)', change: 'Zero Trade Value', color: 'text-slate-600 bg-slate-100 border-slate-200' },
+          { label: 'Minecraft Griefing on Shared Realm', change: 'Total Social Sanction', color: 'text-rose-700 bg-rose-50 border-rose-200' }
+        ],
+        menu: {
+          c1: '"If you could invent one rule that all kids at recess had to follow, what would it be?"',
+          sub1: 'Taps into her deep developmental love for justice and fair rules.',
+          c2: '"What was the biggest trade drama on the blacktop this week?"',
+          sub2: 'Lets her explain the playground social hierarchy without feeling evaluated.',
+          c3: '"Tell her about Beanie Babies or Pokemon cards in 1999 and how parents thought they were real investments."',
+          sub3: 'Connects across generations with laughter.'
+        },
+        reassurance: '<span class="font-mono text-[11px] text-mute">Screen Safety Status:</span><span class="font-mono font-bold text-emerald-700">🌿 100% Pre-Device Sanctuary Verified</span>',
+        doctorNote: '"8-year-olds need to experience small playground contract disputes without adult over-policing; it is how the human brain learns bilateral negotiation."'
+      },
+      mateo: {
+        tier: 'Mateo (Age 14 Months · Infancy/Toddler)',
+        archetype: 'The Sensory Explorer',
+        headline: 'Physical Gravity Calibration & Mirror Neuron Field Notes',
+        sub: 'Field observations tracking object permanence, repetitive cadence mimicry, and pre-verbal co-regulation cues.',
+        quiz: {
+          q: '"Mateo drops his spoon off his high-chair tray 10 times in a row. What is occurring in his developing brain?"',
+          choices: [
+            { id: 1, text: 'A) He is acting defiantly to test parental patience and dominance.', correct: false },
+            { id: 2, text: 'B) He is conducting physics experiments on trajectory, sound, and parent facial emotional feedback.', correct: true },
+            { id: 3, text: 'C) He has lost appetite and should be removed from the high-chair immediately.', correct: false }
+          ],
+          explanation: 'Babies use repetition to build neural schemas for gravity, object permanence, and social contingency. Calming your face teaches him emotional security.'
+        },
+        artifact: {
+          term: '"Object Permanence"',
+          ipa: '/ˈɒb.dʒɪkt ˈpɜː.mə.nəns/',
+          status: 'Active Brain Leap',
+          def: 'Noun: The neurological understanding that objects and loved ones continue to exist even when hidden from direct eyesight.',
+          dialogue: '"Observed: Searching behind the napkin for the hidden wooden block with focused gaze."',
+          cringeLevel: '🌱 Pure Development',
+          cringeAdvice: 'Reinforce through physical games: Peek-a-boo, dropping balls through tubes, and narrating when you walk out of the room.'
+        },
+        ledgerTitle: 'The Toddler Dopamine Sequence',
+        ledgerItems: [
+          { label: 'Spoon drops → loud clang on tile floor', change: '+100 Neural Spark', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+          { label: 'Parent smiles and says "Boom! All done."', change: 'Secure Attachment', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+          { label: 'Parent yells in frustration or slams table', change: 'Cortisol Spike', color: 'text-rose-700 bg-rose-50 border-rose-200' },
+          { label: 'Tactile finger-painting in warm oatmeal', change: 'Sensory Integration', color: 'text-amber-700 bg-amber-50 border-amber-200' }
+        ],
+        menu: {
+          c1: '"Sensory Texture Touch: Offer avocado slice vs carrot stick, narrating \'soft vs crunchy\'."',
+          sub1: 'Builds early sensory descriptive vocabulary.',
+          c2: '"Mirror Attunement: Hold eye contact for 5 seconds with a gentle warm smile."',
+          sub2: 'Fosters infant vagal nerve regulation.',
+          c3: '"Sing \'The Wheels on the Bus\' with exaggerated physical hand gestures."',
+          sub3: 'Music and cadence activate bilateral cerebral hemispheres.'
+        },
+        reassurance: '<span class="font-mono text-[11px] text-mute">Digital Status:</span><span class="font-mono font-bold text-emerald-700">🌿 Zero-Screen Sanctuary (AAP Recommended)</span>',
+        doctorNote: '"Toddler mirror neurons require three-dimensional, living human faces to wire empathy. Keep infancy 100% screen-free."'
+      }
+    };
+
+    function selectChild(childKey) {
+      currentChild = childKey;
+      const data = childData[childKey];
+
+      // Update switcher buttons
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`btn-${k}`);
+        if (k === childKey) {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs flex items-center gap-2';
+        } else {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2';
+        }
+      });
+
+      // Update masthead
+      document.getElementById('calib-tier').textContent = data.tier;
+      document.getElementById('calib-archetype').textContent = data.archetype;
+      document.getElementById('field-headline').textContent = data.headline;
+      document.getElementById('field-sub').textContent = data.sub;
+
+      // Update Quiz
+      document.getElementById('quiz-question').textContent = data.quiz.q;
+      const choicesBox = document.getElementById('quiz-choices-container');
+      choicesBox.innerHTML = data.quiz.choices.map(c => `
+        <button onclick="handleQuiz(${c.correct})" class="w-full text-left p-3.5 rounded-xl border border-hairline bg-white hover:border-spruce hover:bg-canvas-subtle transition text-xs text-ink font-medium shadow-xs">
+          ${c.text}
+        </button>
+      `).join('');
+      document.getElementById('quiz-feedback').classList.add('hidden');
+
+      // Update Artifact
+      document.getElementById('artifact-term').textContent = data.artifact.term;
+      document.getElementById('artifact-ipa').textContent = data.artifact.ipa;
+      document.getElementById('artifact-status').textContent = data.artifact.status;
+      document.getElementById('artifact-definition').textContent = data.artifact.def;
+      document.getElementById('artifact-dialogue').textContent = data.artifact.dialogue;
+      document.getElementById('cringe-level').textContent = data.artifact.cringeLevel;
+      document.getElementById('cringe-advice').textContent = data.artifact.cringeAdvice;
+
+      // Update Ledger
+      document.getElementById('ledger-title').textContent = data.ledgerTitle;
+      const ledgerBox = document.getElementById('ledger-items');
+      ledgerBox.innerHTML = data.ledgerItems.map(item => `
+        <div class="flex items-center justify-between p-2.5 rounded-xl border ${item.color} text-xs">
+          <span class="font-medium">${item.label}</span>
+          <span class="font-mono font-bold">${item.change}</span>
+        </div>
+      `).join('');
+
+      // Update Menu
+      document.getElementById('menu-course-1').textContent = data.menu.c1;
+      document.getElementById('menu-sub-1').textContent = data.menu.sub1;
+      document.getElementById('menu-course-2').textContent = data.menu.c2;
+      document.getElementById('menu-sub-2').textContent = data.menu.sub2;
+      document.getElementById('menu-course-3').textContent = data.menu.c3;
+      document.getElementById('menu-sub-3').textContent = data.menu.sub3;
+
+      // Update Reassurance & Doctor
+      document.getElementById('field-reassurance').innerHTML = data.reassurance;
+      document.getElementById('doctor-note').textContent = data.doctorNote;
+    }
+
+    function handleQuiz(isCorrect) {
+      const fb = document.getElementById('quiz-feedback');
+      const icon = document.getElementById('qf-icon');
+      const status = document.getElementById('qf-status');
+      const exp = document.getElementById('qf-explanation');
+
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        icon.textContent = '🎉';
+        status.textContent = 'Correct! Pediatric Radar Certified';
+        status.className = 'font-mono text-xs font-bold text-spruce';
+      } else {
+        icon.textContent = '💡';
+        status.textContent = 'Common Parent Pitfall (Here is the Pediatric Translation)';
+        status.className = 'font-mono text-xs font-bold text-amber';
+      }
+      exp.textContent = childData[currentChild].quiz.explanation;
+    }
+
+    function toggleSound() {
+      const wf = document.getElementById('sound-waveform');
+      const btnText = document.getElementById('sound-btn-text');
+      isPlaying = !isPlaying;
+
+      if (isPlaying) {
+        wf.classList.add('playing');
+        btnText.textContent = 'Playing Audio...';
+        setTimeout(() => {
+          if (isPlaying) toggleSound();
+        }, 3500);
+      } else {
+        wf.classList.remove('playing');
+        btnText.textContent = 'Hear Native Pronunciation';
+      }
+    }
+
+    function copyAllMenu() {
+      const m = childData[currentChild].menu;
+      const text = `Sunday Dinner Conversational Menu:\n1. Appetizer: ${m.c1}\n2. Main Course: ${m.c2}\n3. Dessert: ${m.c3}`;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('3-Course Dinnertime Menu copied to clipboard!');
+      }).catch(() => {
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Init
+    selectChild('julian');
+  </script>
+</body>
+</html>
