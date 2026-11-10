@@ -95,10 +95,14 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('5 core growth categories');
     });
 
-    it('renders all 6 horizon switcher buttons with accessible tab attributes and age badges', () => {
+    it('renders all 6 horizon spectrum rail buttons on a single row (grid-cols-6) without horizontal scroll wheel or multi-line wraps', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
       expect(html).toContain('role="tablist"');
+      expect(html).toContain('grid-cols-6');
+      expect(html).not.toContain('overflow-x-auto');
+
+      // Full stage labels
       expect(html).toContain('Infants &amp; Toddlers');
       expect(html).toContain('Early Childhood');
       expect(html).toContain('Middle Childhood');
@@ -106,22 +110,35 @@ describe('Plan 35: Streamlined Developmental Horizon Courses & Category Advisory
       expect(html).toContain('Early Adolescence');
       expect(html).toContain('Late Adolescence');
 
-      // Age labels
-      expect(html).toContain('Ages 0–3');
-      expect(html).toContain('Ages 4–6');
-      expect(html).toContain('Ages 7–9');
-      expect(html).toContain('Ages 10–12');
-      expect(html).toContain('Ages 13–15');
-      expect(html).toContain('Ages 16–18');
+      // Micro mobile labels
+      expect(html).toContain('Infants');
+      expect(html).toContain('Early');
+      expect(html).toContain('Middle');
+      expect(html).toContain('Tweens');
+      expect(html).toContain('Teens');
+      expect(html).toContain('Launch');
+
+      // Age numbers
+      expect(html).toContain('0–3');
+      expect(html).toContain('4–6');
+      expect(html).toContain('7–9');
+      expect(html).toContain('10–12');
+      expect(html).toContain('13–15');
+      expect(html).toContain('16–18');
     });
 
-    it('renders default active stage banner (Infants & Toddlers) and exploration CTA', () => {
+    it('renders active stage telemetry capsule and exploration curriculum link without redundant banner noise', () => {
       const html = renderToStaticMarkup(React.createElement(LifespanStageSelector));
 
-      expect(html).toContain('HORIZON // Ages 0–3');
-      expect(html).toContain('Physical Health, Milestones &amp; Safe Feeding');
-      expect(html).toContain('Explore Infants &amp; Toddlers Curriculum');
+      expect(html).toContain('Ages 0–3');
+      expect(html).toContain('Infants &amp; Toddlers');
+      expect(html).toContain('Explore all Ages 0–3 curriculum');
       expect(html).toContain('/academy?tier=TIER_0_INFANCY_TODDLER_0_3');
+
+      // Verified absence of redundant clunky banner headers
+      expect(html).not.toContain('HORIZON // Ages 0–3');
+      expect(html).not.toContain('Biological Circadian Delay &amp; Algorithmic Defense');
+      expect(html).not.toContain('Protecting adolescent sleep architecture, sports nutrition, media literacy, and digital reputation.');
     });
 
     it('renders all 5 category badges and course cards for default tier', () => {

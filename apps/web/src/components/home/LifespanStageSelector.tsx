@@ -44,6 +44,7 @@ export interface StageData {
   id: string;
   tier: DevelopmentalTier;
   tabLabel: string;
+  shortLabel: string;
   ageLabel: string;
   title: string;
   subtitle: string;
@@ -62,6 +63,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'infants-toddlers',
     tier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
     tabLabel: 'Infants & Toddlers',
+    shortLabel: 'Infants',
     ageLabel: 'Ages 0–3',
     title: 'Physical Health, Milestones & Safe Feeding',
     subtitle: 'Curated foundational guidance across sleep architecture, allergen introduction, and pre-verbal co-regulation.',
@@ -153,6 +155,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'early-childhood',
     tier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
     tabLabel: 'Early Childhood',
+    shortLabel: 'Early',
     ageLabel: 'Ages 4–6',
     title: 'Emotional Regulation, Picky Eating & Symbolic Play',
     subtitle: 'Mastering Theory of Mind, grocery-store meltdowns, table harmony, and gentle media transitions.',
@@ -244,6 +247,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'middle-childhood',
     tier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
     tabLabel: 'Middle Childhood',
+    shortLabel: 'Middle',
     ageLabel: 'Ages 7–9',
     title: 'Cognitive Brain Games & Social Foundations',
     subtitle: 'Elementary impulse control, sibling dynamic mediation, maker engineering, and healthy gaming readiness.',
@@ -335,6 +339,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'pre-teens',
     tier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
     tabLabel: 'Pre-Teens & Tweens',
+    shortLabel: 'Tweens',
     ageLabel: 'Ages 10–12',
     title: 'Autonomy, Modern Tech & Youth Culture',
     subtitle: 'Navigating adrenarche, pubertal physical leaps, deep flow state hobbies, and bilateral phone agreements.',
@@ -426,6 +431,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'early-adolescence',
     tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
     tabLabel: 'Early Adolescence',
+    shortLabel: 'Teens',
     ageLabel: 'Ages 13–15',
     title: 'Biological Circadian Delay & Algorithmic Defense',
     subtitle: 'Protecting adolescent sleep architecture, sports nutrition, media literacy, and digital reputation.',
@@ -517,6 +523,7 @@ export const CANONICAL_6_LIFESPAN_STAGES: StageData[] = [
     id: 'late-adolescence',
     tier: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
     tabLabel: 'Late Adolescence',
+    shortLabel: 'Launch',
     ageLabel: 'Ages 16–18',
     title: 'Executive Autonomy, Digital Footprint & Launch',
     subtitle: 'Guiding adult sovereignty, lifelong food habits, intellectual strategy, and young adult digital covenants.',
@@ -617,6 +624,7 @@ export const LIFESPAN_STAGES: StageData[] = [
     ...CANONICAL_6_LIFESPAN_STAGES[3]!,
     id: 'preteens-adolescents',
     tabLabel: 'Pre-Teens & Adolescents',
+    shortLabel: 'Teens',
     ageLabel: 'Ages 10–18',
     title: 'Autonomy, Modern Tech & Youth Culture',
   },
@@ -638,6 +646,20 @@ export function LifespanStageSelector() {
 
   const ActiveCategoryIcon = activeCourse.categoryIcon;
 
+  const handleStageKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % CANONICAL_6_LIFESPAN_STAGES.length;
+      setActiveStageId(CANONICAL_6_LIFESPAN_STAGES[nextIndex]!.id);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIndex =
+        (currentIndex - 1 + CANONICAL_6_LIFESPAN_STAGES.length) %
+        CANONICAL_6_LIFESPAN_STAGES.length;
+      setActiveStageId(CANONICAL_6_LIFESPAN_STAGES[prevIndex]!.id);
+    }
+  };
+
   return (
     <section id="stages" className="pt-6 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       {/* Editorial Section Header */}
@@ -655,67 +677,87 @@ export function LifespanStageSelector() {
         </p>
       </div>
 
-      {/* Responsive Horizontal Age Stage Tabs (6 Stages) */}
-      <div
-        role="tablist"
-        aria-label="Developmental Horizons"
-        className="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 pb-3 mb-6 no-scrollbar bg-[#F4F4F0] border border-[#E3E3DC] p-1.5 rounded-[10px]"
-      >
-        {CANONICAL_6_LIFESPAN_STAGES.map((stage) => {
-          const isActive = stage.id === activeStageId;
-          const StageIcon = stage.icon;
-          return (
-            <button
-              key={stage.id}
-              role="tab"
-              aria-selected={isActive}
-              onClick={() => setActiveStageId(stage.id)}
-              className={`flex items-center gap-2 px-3.5 py-2.5 rounded-[8px] text-xs font-bold shrink-0 transition-all cursor-pointer min-h-[44px] ${
-                isActive
-                  ? 'bg-[#143D2B] text-white shadow-[0_2px_8px_rgba(20,61,43,0.2)] border border-[#143D2B]'
-                  : 'bg-transparent text-[#494F4C] hover:text-[#111413] hover:bg-white/80 border border-transparent'
-              }`}
-            >
-              <StageIcon className={`h-4 w-4 ${isActive ? 'text-[#EAF3EE]' : 'text-[#858C88]'}`} />
-              <span>{stage.tabLabel}</span>
-              <span
-                className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                  isActive ? 'bg-white/20 text-white font-semibold' : 'bg-[#E3E3DC]/70 text-[#494F4C]'
+      {/* Calibrated Lifespan Spectrum Rail (Single-Line, Zero-Scroll, Zero-Wrap across all screen sizes) */}
+      <div className="mb-6 space-y-3">
+        <div
+          role="tablist"
+          aria-label="Developmental Horizons (Ages 0 to 18)"
+          className="grid grid-cols-6 gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-[#F4F4F0] border border-[#E3E3DC] rounded-xl shadow-inner w-full"
+        >
+          {CANONICAL_6_LIFESPAN_STAGES.map((stage, idx) => {
+            const isActive = stage.id === activeStageId;
+            const StageIcon = stage.icon;
+
+            return (
+              <button
+                key={stage.id}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveStageId(stage.id)}
+                onKeyDown={(e) => handleStageKeyDown(e, idx)}
+                className={`relative flex flex-col items-center justify-center py-2 px-1 sm:px-2 rounded-lg transition-all duration-200 cursor-pointer min-h-[46px] select-none text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-1 ${
+                  isActive
+                    ? 'bg-[#143D2B] text-white shadow-[0_2px_8px_rgba(20,61,43,0.22)] border border-[#143D2B]'
+                    : 'bg-transparent text-[#494F4C] hover:text-[#111413] hover:bg-white/80 border border-transparent'
                 }`}
               >
-                {stage.ageLabel}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+                {/* Desktop/Tablet Icon */}
+                <StageIcon
+                  className={`hidden md:block h-3.5 w-3.5 mb-0.5 ${
+                    isActive ? 'text-[#EAF3EE]' : 'text-[#858C88]'
+                  }`}
+                />
 
-      {/* Stage Context Banner */}
-      <div className="rounded-[10px] border border-[#E3E3DC] bg-white text-[#111413] p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] mb-6">
-        <div className="space-y-2 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-[#143D2B]/20">
-              HORIZON // {activeStage.ageLabel}
-            </span>
-          </div>
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
-            {activeStage.title}
-          </h3>
-          <p className="text-sm text-[#494F4C] leading-relaxed">
-            {activeStage.subtitle}
-          </p>
+                {/* Primary Age Anchor (Crisp & Legible on All Screens) */}
+                <span
+                  className={`font-mono text-[11px] sm:text-xs font-bold tracking-tight whitespace-nowrap ${
+                    isActive ? 'text-white' : 'text-[#111413]'
+                  }`}
+                >
+                  {stage.ageLabel.replace('Ages ', '')}
+                </span>
+
+                {/* Responsive Label: Micro on Mobile, Full on Desktop */}
+                <span
+                  className={`text-[9px] sm:text-[11px] font-medium leading-tight truncate w-full ${
+                    isActive ? 'text-[#EAF3EE]' : 'text-[#6B726E]'
+                  }`}
+                >
+                  <span className="inline md:hidden">{stage.shortLabel}</span>
+                  <span className="hidden md:inline">{stage.tabLabel}</span>
+                </span>
+
+                {/* Active Indicator Pip */}
+                {isActive && (
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#143D2B] ring-2 ring-white" />
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        <Link href={`/academy?tier=${activeStage.tier}`} className="shrink-0">
-          <Button
-            variant="forest"
-            size="lg"
-            className="gap-2 font-bold min-h-[44px] shadow-sm"
+        {/* Active Horizon Telemetry Capsule */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-1 sm:px-2">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EAF3EE] border border-[#143D2B]/15 text-[#143D2B] text-xs font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#143D2B]" />
+              <span className="font-mono text-[11px] font-bold">{activeStage.ageLabel}</span>
+              <span className="text-[#143D2B]/30">•</span>
+              <span>{activeStage.tabLabel}</span>
+            </span>
+            <span className="text-xs text-[#6B726E] hidden sm:inline">
+              5 clinical growth pillars calibrated for this stage
+            </span>
+          </div>
+
+          <Link
+            href={`/academy?tier=${activeStage.tier}`}
+            className="text-xs font-semibold text-[#143D2B] hover:text-[#0C261B] hover:underline inline-flex items-center gap-1 shrink-0"
           >
-            <span>Explore {activeStage.tabLabel} Curriculum</span>
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </Link>
+            <span>Explore all {activeStage.ageLabel} curriculum</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* WHOLE-CHILD HORIZON COMPASS ARCHITECTURE (DESIGN C.3) */}

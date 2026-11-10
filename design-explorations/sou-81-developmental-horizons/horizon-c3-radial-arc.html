@@ -179,14 +179,17 @@
     .horizon-pill-btn {
       background: transparent;
       border: 1px solid transparent;
-      padding: 10px 12px;
+      padding: 8px 6px;
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
     }
     .horizon-pill-btn:hover {
       background: var(--canvas-subtle);
@@ -199,11 +202,12 @@
       box-shadow: 0 2px 8px rgba(20, 61, 43, 0.2);
     }
     .horizon-pill-name {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      width: 100%;
     }
     .horizon-pill-btn.active .horizon-pill-name {
       color: #ffffff;
@@ -211,11 +215,59 @@
     .horizon-pill-age {
       font-family: var(--font-mono);
       font-size: 11px;
-      opacity: 0.75;
+      font-weight: 700;
+      opacity: 0.9;
     }
     .horizon-pill-btn.active .horizon-pill-age {
-      opacity: 0.95;
-      color: #e5f5ed;
+      color: #ffffff;
+    }
+    .pill-short {
+      display: none;
+    }
+    .pill-full {
+      display: inline;
+    }
+    .horizon-telemetry-capsule {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 0 4px;
+    }
+    .telemetry-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: #EAF3EE;
+      border: 1px solid rgba(20, 61, 43, 0.15);
+      color: var(--accent-forest);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    @media (max-width: 680px) {
+      .pill-short {
+        display: inline;
+      }
+      .pill-full {
+        display: none;
+      }
+      .horizon-pill-btn {
+        padding: 6px 2px;
+        gap: 1px;
+      }
+      .horizon-pill-age {
+        font-size: 10px;
+      }
+      .horizon-pill-name {
+        font-size: 9px;
+      }
+      .horizon-telemetry-capsule {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     /* DESIGN C.3: WHOLE-CHILD COMPASS ARCHITECTURE */
@@ -475,9 +527,6 @@
       }
     }
     @media (max-width: 600px) {
-      .horizon-nav-track {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .domain-node-btn {
         min-width: calc(50% - 6px);
       }
@@ -541,6 +590,9 @@
         <div class="horizon-nav-track" id="horizonNavTrack">
           <!-- Rendered via JS -->
         </div>
+        <div class="horizon-telemetry-capsule" id="horizonTelemetryCapsule">
+          <!-- Rendered via JS -->
+        </div>
       </div>
 
       <!-- DESIGN C.3: WHOLE-CHILD COMPASS CONTAINER -->
@@ -572,6 +624,7 @@
       {
         id: 0,
         name: "Infants & Toddlers",
+        shortName: "Infants",
         age: "Ages 0–3",
         badge: "HORIZON 01 // AGES 0–3",
         domains: [
@@ -655,6 +708,7 @@
       {
         id: 1,
         name: "Early Childhood",
+        shortName: "Early",
         age: "Ages 4–6",
         badge: "HORIZON 02 // AGES 4–6",
         domains: [
@@ -738,6 +792,7 @@
       {
         id: 2,
         name: "Middle Childhood",
+        shortName: "Middle",
         age: "Ages 7–9",
         badge: "HORIZON 03 // AGES 7–9",
         domains: [
@@ -821,6 +876,7 @@
       {
         id: 3,
         name: "Pre-Teens & Tweens",
+        shortName: "Tweens",
         age: "Ages 10–12",
         badge: "HORIZON 04 // AGES 10–12",
         domains: [
@@ -904,6 +960,7 @@
       {
         id: 4,
         name: "Early Adolescence",
+        shortName: "Teens",
         age: "Ages 13–15",
         badge: "HORIZON 05 // AGES 13–15",
         domains: [
@@ -987,6 +1044,7 @@
       {
         id: 5,
         name: "Late Adolescence",
+        shortName: "Launch",
         age: "Ages 16–18",
         badge: "HORIZON 06 // AGES 16–18",
         domains: [
@@ -1081,10 +1139,33 @@
       const track = document.getElementById('horizonNavTrack');
       track.innerHTML = HORIZONS.map((h, i) => `
         <button class="horizon-pill-btn ${i === currentStageIndex ? 'active' : ''}" onclick="selectStage(${i})">
-          <span class="horizon-pill-name">${h.name}</span>
-          <span class="horizon-pill-age">${h.age}</span>
+          <span class="horizon-pill-age">${h.age.replace('Ages ', '')}</span>
+          <span class="horizon-pill-name">
+            <span class="pill-short">${h.shortName || h.name}</span>
+            <span class="pill-full">${h.name}</span>
+          </span>
         </button>
       `).join('');
+
+      const capsule = document.getElementById('horizonTelemetryCapsule');
+      if (capsule) {
+        const horizon = HORIZONS[currentStageIndex];
+        capsule.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="telemetry-chip">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-forest);"></span>
+              <span style="font-family: var(--font-mono); font-weight: 700;">${horizon.age}</span>
+              <span style="opacity: 0.4;">•</span>
+              <span>${horizon.name}</span>
+            </span>
+            <span style="font-size: 12px; color: var(--mute);" class="hidden sm:inline">5 clinical growth pillars calibrated for this stage</span>
+          </div>
+          <a href="#" style="font-size: 12px; font-weight: 700; color: var(--accent-forest); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+            <span>Explore all ${horizon.age} curriculum</span>
+            <span>→</span>
+          </a>
+        `;
+      }
     }
 
     function selectStage(index) {
