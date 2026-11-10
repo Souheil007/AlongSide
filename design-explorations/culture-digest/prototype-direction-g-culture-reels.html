@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction G — Sunday Culture Stories & Micro-Reels | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F4F4F0;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .story-card-shadow {
+      box-shadow: 0 20px 40px -15px rgba(20, 61, 43, 0.12), 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .slide-enter {
+      animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateX(20px) scale(0.98); }
+      100% { opacity: 1; transform: translateX(0) scale(1); }
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-10 flex flex-col items-center justify-center">
+
+  <div class="w-full max-w-xl mx-auto space-y-4">
+
+    <!-- Top Navigation Bar -->
+    <header class="flex items-center justify-between border-b border-hairline pb-3">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="inline-flex items-center gap-1 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 8 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-sm font-semibold text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction G: Culture Reels</span>
+      </div>
+      <span class="font-mono text-xs text-mute">Swipe or Click</span>
+    </header>
+
+    <!-- Child Selector Pills -->
+    <div class="flex items-center justify-center gap-2 bg-white p-1.5 rounded-2xl border border-hairline shadow-2xs">
+      <button onclick="setChild('julian')" id="tab-julian" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-2xs transition">
+        <span class="w-4 h-4 rounded-full bg-spruce text-white flex items-center justify-center text-[9px] font-bold">J</span>
+        <span>Julian · 14 yrs</span>
+      </button>
+      <button onclick="setChild('maya')" id="tab-maya" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+        <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px] font-bold">M</span>
+        <span>Maya · 8 yrs</span>
+      </button>
+      <button onclick="setChild('mateo')" id="tab-mateo" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+        <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px] font-bold">M</span>
+        <span>Mateo · 14 mo</span>
+      </button>
+    </div>
+
+    <!-- Main Mobile-First Story Deck Container -->
+    <div class="w-full bg-card rounded-3xl border border-hairline story-card-shadow overflow-hidden flex flex-col min-h-[580px] relative">
+
+      <!-- Story Progress Bars at Top -->
+      <div class="p-3 bg-white/90 backdrop-blur border-b border-hairline flex items-center gap-1.5 z-20">
+        <div class="h-1 flex-1 bg-slate-200 rounded-full overflow-hidden">
+          <div id="prog-0" class="h-full bg-spruce transition-all duration-300 w-full"></div>
+        </div>
+        <div class="h-1 flex-1 bg-slate-200 rounded-full overflow-hidden">
+          <div id="prog-1" class="h-full bg-spruce transition-all duration-300 w-0"></div>
+        </div>
+        <div class="h-1 flex-1 bg-slate-200 rounded-full overflow-hidden">
+          <div id="prog-2" class="h-full bg-spruce transition-all duration-300 w-0"></div>
+        </div>
+        <div class="h-1 flex-1 bg-slate-200 rounded-full overflow-hidden">
+          <div id="prog-3" class="h-full bg-spruce transition-all duration-300 w-0"></div>
+        </div>
+        <div class="h-1 flex-1 bg-slate-200 rounded-full overflow-hidden">
+          <div id="prog-4" class="h-full bg-spruce transition-all duration-300 w-0"></div>
+        </div>
+      </div>
+
+      <!-- Slide Content Area (Injected dynamically) -->
+      <div id="slide-content" class="flex-1 p-6 sm:p-8 flex flex-col justify-between slide-enter z-10 bg-[#FAF9F6]">
+        <!-- Dynamic story slide HTML -->
+      </div>
+
+      <!-- Bottom Tap Navigation Controls -->
+      <div class="p-4 bg-white border-t border-hairline flex items-center justify-between text-xs font-mono z-20">
+        <button onclick="prevSlide()" id="btn-prev" class="px-3 py-1.5 rounded-xl border border-hairline bg-canvas-subtle hover:bg-white text-mute disabled:opacity-30 transition flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>Back</span>
+        </button>
+
+        <span class="text-mute font-semibold" id="slide-indicator">Story 1 of 5</span>
+
+        <button onclick="nextSlide()" id="btn-next" class="px-3.5 py-1.5 rounded-xl bg-spruce text-white font-semibold hover:bg-spruce-light transition flex items-center gap-1 shadow-xs">
+          <span>Next</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Keyboard Hint -->
+    <p class="text-center font-mono text-[11px] text-mute">
+      Tip: Use <kbd class="px-1.5 py-0.5 rounded bg-white border border-hairline">←</kbd> and <kbd class="px-1.5 py-0.5 rounded bg-white border border-hairline">→</kbd> keys to navigate stories.
+    </p>
+
+  </div>
+
+  <script>
+    const REELS_DATA = {
+      julian: [
+        // Slide 1: Vibe Check
+        {
+          badge: "Story 1 · The Weekly Vibe Check",
+          title: "The Emotional Weather of 8th Grade",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="w-16 h-16 rounded-2xl bg-amber-soft border border-amber/30 text-amber flex items-center justify-center text-3xl shadow-sm">
+                🌪️
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
+                "Extreme Composure vs. Sudden Crashout"
+              </h3>
+              <p class="text-sm text-body leading-relaxed font-sans">
+                Julian's world this week is dominated by unspoken status anxiety. 8th graders are fiercely calculating who is 'composed' under pressure and who loses their cool.
+              </p>
+              <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">Developmental Horizon</span>
+                <p class="text-xs text-body italic">"Prefrontal cortex pruning means emotional regulation feels like walking a tightrope with zero net."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 2: Word on the Street
+        {
+          badge: "Story 2 · Slang on the Street",
+          title: "Word of the Week: 'Aura'",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="flex items-baseline gap-2">
+                <h3 class="font-serif text-3xl font-bold text-ink">Aura</h3>
+                <span class="font-mono text-xs text-mute">/ˈɔː.rə/ · noun</span>
+              </div>
+              <p class="text-sm text-body leading-relaxed">
+                The invisible peer currency of unbothered cool. Smooth recovery = <strong class="text-emerald-700">+1,000 Aura</strong>. Awkward slip = <strong class="text-rose-600">-500 Aura</strong>.
+              </p>
+              <div class="p-3.5 bg-canvas-subtle rounded-xl border border-hairline space-y-1.5">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Overheard in the Hallway:</span>
+                <p class="italic font-serif text-sm text-ink">"Did you see Julian catch that flying basketball with one hand? Bro has infinite aura fr."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 3: Interactive Mini-Quiz
+        {
+          badge: "Story 3 · Parent Intelligence Quiz",
+          title: "Quick Test: What Does 'Crashout' Mean?",
+          content: `
+            <div class="space-y-4 my-auto">
+              <p class="text-sm text-body font-medium">Your kid says: <em>"Bro, I totally crashed out in 5th period."</em> What just happened?</p>
+              <div class="space-y-2 pt-1" id="quiz-options">
+                <button onclick="handleQuiz(1)" id="q-1" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  A) They fell asleep on their desk during science
+                </button>
+                <button onclick="handleQuiz(2)" id="q-2" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  B) They completely lost their temper and yelled or stormed out
+                </button>
+                <button onclick="handleQuiz(3)" id="q-3" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  C) Their phone ran out of battery during lunch
+                </button>
+              </div>
+              <div id="quiz-feedback" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+          `
+        },
+        // Slide 4: Say This / Not That
+        {
+          badge: "Story 4 · The Conversational Flip",
+          title: "Say This, Never Say That",
+          content: `
+            <div class="space-y-3 my-auto">
+              <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1.5">
+                <div class="flex items-center gap-1.5 text-rose-700 font-mono text-[11px] font-bold uppercase tracking-wider">
+                  <span>❌ Never Say This (The Cringe Tell)</span>
+                </div>
+                <p class="text-xs text-rose-950 font-medium">"Julian, are you crashing out right now? That is so negative rizz!"</p>
+                <p class="text-[11px] text-rose-800 italic">Result: Physical cringe recoil, emotional withdrawal.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1.5">
+                <div class="flex items-center gap-1.5 text-emerald-700 font-mono text-[11px] font-bold uppercase tracking-wider">
+                  <span>✨ Say This Instead (The Calm Bridge)</span>
+                </div>
+                <p class="text-xs text-emerald-950 font-medium">"Sounds like that titration lab pushed you right to the redline. What tipped it over?"</p>
+                <p class="text-[11px] text-emerald-800 italic">Result: De-escalates amygdala, opens honest debrief.</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 5: Sunday Dinner Spark
+        {
+          badge: "Story 5 · Dinnertime Action",
+          title: "Tonight's Dinnertime Spark",
+          content: `
+            <div class="space-y-4 my-auto text-center">
+              <div class="w-14 h-14 mx-auto rounded-full bg-spruce-soft text-spruce flex items-center justify-center text-2xl">
+                🍽️
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-ink leading-snug">
+                "If everyone at school had an Aura meter over their head, who gained +1,000 points this week?"
+              </h3>
+              <p class="text-xs text-body">
+                Rule of engagement: Listen with a grin. No lecturing, no grammar policing.
+              </p>
+              <button onclick="copyReelPrompt()" id="btn-reel-copy" class="w-full py-2.5 rounded-xl bg-spruce text-white font-mono text-xs font-semibold hover:bg-spruce-light transition shadow-sm flex items-center justify-center gap-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <span>Copy Question to Phone</span>
+              </button>
+            </div>
+          `
+        }
+      ],
+
+      maya: [
+        // Slide 1: Vibe Check (Maya)
+        {
+          badge: "Story 1 · The Weekly Vibe Check",
+          title: "The Playground Economy of 3rd Grade",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="w-16 h-16 rounded-2xl bg-spruce-soft border border-spruce/30 text-spruce flex items-center justify-center text-3xl shadow-sm">
+                🎴
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
+                "Trading Card Barter & Playground Justice"
+              </h3>
+              <p class="text-sm text-body leading-relaxed font-sans">
+                At 8 years old, Maya's social universe revolves around reciprocal fairness. Who traded what, who broke a pinky promise, and whose Minecraft world got griefed.
+              </p>
+              <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">Developmental Insight</span>
+                <p class="text-xs text-body italic">"Concrete operational morality: Rules are sacred, and uneven trades feel like cosmic betrayal."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 2: Word on the Street (Maya)
+        {
+          badge: "Story 2 · Playground Vernacular",
+          title: "Playground Catchphrase: 'No Fair!'",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="flex items-baseline gap-2">
+                <h3 class="font-serif text-3xl font-bold text-ink">Fair Trade</h3>
+                <span class="font-mono text-xs text-mute">Concrete Operational Barter</span>
+              </div>
+              <p class="text-sm text-body leading-relaxed">
+                The 3rd grade playground has its own stock market: Holographic cards, squishmallow keychains, and lunchbox treats.
+              </p>
+              <div class="p-3.5 bg-canvas-subtle rounded-xl border border-hairline space-y-1.5">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Overheard at the Four-Square Court:</span>
+                <p class="italic font-serif text-sm text-ink">"I gave you two Pikachus and you traded my Mewtwo to Emma? You broke the pinky promise!"</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 3: Quiz (Maya)
+        {
+          badge: "Story 3 · Parent Intelligence Quiz",
+          title: "Quick Test: Why Do 8-Year-Olds Love Secret Clubs?",
+          content: `
+            <div class="space-y-4 my-auto">
+              <p class="text-sm text-body font-medium">Maya comes home with a 'Secret Recess Club Handshake'. What developmental need is being met?</p>
+              <div class="space-y-2 pt-1" id="quiz-options">
+                <button onclick="handleQuiz(2)" id="q-2" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  A) In-group belonging & establishing peer autonomy outside the family
+                </button>
+                <button onclick="handleQuiz(1)" id="q-1" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  B) They are trying to hide bad behavior from the teacher
+                </button>
+              </div>
+              <div id="quiz-feedback" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+          `
+        },
+        // Slide 4: Say This (Maya)
+        {
+          badge: "Story 4 · The Conversational Flip",
+          title: "When Playground Trades Go Wrong",
+          content: `
+            <div class="space-y-3 my-auto">
+              <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
+                <span class="text-rose-700 font-mono text-[11px] font-bold block uppercase tracking-wider">❌ Avoid Saying</span>
+                <p class="text-xs text-rose-950 font-medium">"It's just a silly card, Maya. Stop crying over a piece of cardboard."</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1">
+                <span class="text-emerald-700 font-mono text-[11px] font-bold block uppercase tracking-wider">✨ Say This Instead</span>
+                <p class="text-xs text-emerald-950 font-medium">"When a trade feels unfair, it stings like broken trust. Tell me the whole trade deal from the start."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 5: Dinner Spark (Maya)
+        {
+          badge: "Story 5 · Dinnertime Action",
+          title: "Tonight's Table Spark for Maya",
+          content: `
+            <div class="space-y-4 my-auto text-center">
+              <div class="w-14 h-14 mx-auto rounded-full bg-spruce-soft text-spruce flex items-center justify-center text-2xl">
+                🤝
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-ink leading-snug">
+                "If we had a family trade market tonight, what chore would you trade for an extra 15 minutes of bedtime reading?"
+              </h3>
+              <button onclick="copyReelPrompt()" id="btn-reel-copy" class="w-full py-2.5 rounded-xl bg-spruce text-white font-mono text-xs font-semibold hover:bg-spruce-light transition shadow-sm flex items-center justify-center gap-1.5">
+                <span>Copy Question</span>
+              </button>
+            </div>
+          `
+        }
+      ],
+
+      mateo: [
+        // Slide 1: Vibe Check (Mateo)
+        {
+          badge: "Story 1 · Sensory Weather",
+          title: "Mateo's 14-Month Sensory Orbit",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center text-3xl shadow-sm">
+                🎶
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
+                "The 40-Repeat Melody & Cause-and-Effect"
+              </h3>
+              <p class="text-sm text-body leading-relaxed font-sans">
+                Mateo is running active physics and auditory prediction experiments all day long. Dropping spoons, clapping hands to music, and demanding the same book 20 times.
+              </p>
+              <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold block">Neurobiological Fact</span>
+                <p class="text-xs text-body italic">"Predictable auditory cadence triggers calming dopamine in the infant temporal lobe."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 2: Word / Signal (Mateo)
+        {
+          badge: "Story 2 · Proto-Language",
+          title: "The Emergent Word: 'Uh-Oh!'",
+          content: `
+            <div class="space-y-4 my-auto">
+              <div class="flex items-baseline gap-2">
+                <h3 class="font-serif text-3xl font-bold text-ink">"Uh-Oh!"</h3>
+                <span class="font-mono text-xs text-mute">Vocal Gesture Marker</span>
+              </div>
+              <p class="text-sm text-body leading-relaxed">
+                When Mateo drops his bowl off the high chair and yells 'Uh-oh!', he isn't being naughty—he is marking a physics event and checking your face for safety.
+              </p>
+            </div>
+          `
+        },
+        // Slide 3: Quiz (Mateo)
+        {
+          badge: "Story 3 · Parent Intelligence Quiz",
+          title: "Why Does Mateo Want the Same Book 20 Times?",
+          content: `
+            <div class="space-y-4 my-auto">
+              <p class="text-sm text-body font-medium">Why do toddlers demand the identical story read over and over?</p>
+              <div class="space-y-2 pt-1" id="quiz-options">
+                <button onclick="handleQuiz(2)" id="q-2" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  A) Prediction reduces anxiety: Knowing what comes next wires brain safety
+                </button>
+                <button onclick="handleQuiz(1)" id="q-1" class="w-full text-left p-3 rounded-xl border border-hairline bg-white hover:bg-canvas-subtle text-xs transition font-medium">
+                  B) They simply have a short memory span
+                </button>
+              </div>
+              <div id="quiz-feedback" class="hidden p-3 rounded-xl text-xs"></div>
+            </div>
+          `
+        },
+        // Slide 4: Say This (Mateo)
+        {
+          badge: "Story 4 · High Chair Boundary",
+          title: "When Food Drops on the Floor",
+          content: `
+            <div class="space-y-3 my-auto">
+              <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
+                <span class="text-rose-700 font-mono text-[11px] font-bold block uppercase tracking-wider">❌ Avoid Saying</span>
+                <p class="text-xs text-rose-950 font-medium">"Bad boy! Look at this mess you made!"</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1">
+                <span class="text-emerald-700 font-mono text-[11px] font-bold block uppercase tracking-wider">✨ Say This Instead</span>
+                <p class="text-xs text-emerald-950 font-medium">"Food went splat! Food stays on the tray. If food drops, all done with bowl."</p>
+              </div>
+            </div>
+          `
+        },
+        // Slide 5: High Chair Duet (Mateo)
+        {
+          badge: "Story 5 · Dinnertime Action",
+          title: "Tonight's High Chair Melody",
+          content: `
+            <div class="space-y-4 my-auto text-center">
+              <div class="w-14 h-14 mx-auto rounded-full bg-spruce-soft text-spruce flex items-center justify-center text-2xl">
+                🎶
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-ink leading-snug">
+                "Sing Wheels on the Bus, but pause right before the horn and wait for Mateo to make a sound!"
+              </h3>
+              <button onclick="copyReelPrompt()" id="btn-reel-copy" class="w-full py-2.5 rounded-xl bg-spruce text-white font-mono text-xs font-semibold hover:bg-spruce-light transition shadow-sm flex items-center justify-center gap-1.5">
+                <span>Copy High Chair Duet</span>
+              </button>
+            </div>
+          `
+        }
+      ]
+    };
+
+    let currentChild = 'julian';
+    let currentSlide = 0;
+
+    function setChild(childKey) {
+      currentChild = childKey;
+      currentSlide = 0;
+
+      // Update tabs
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        if (k === childKey) {
+          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-2xs transition";
+        } else {
+          btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition";
+        }
+      });
+
+      renderSlide();
+    }
+
+    function renderSlide() {
+      const slides = REELS_DATA[currentChild];
+      const slide = slides[currentSlide];
+
+      // Update Progress bars
+      for (let i = 0; i < 5; i++) {
+        const bar = document.getElementById(`prog-${i}`);
+        if (i < currentSlide) {
+          bar.style.width = '100%';
+        } else if (i === currentSlide) {
+          bar.style.width = '100%';
+        } else {
+          bar.style.width = '0%';
+        }
+      }
+
+      // Update indicator
+      document.getElementById('slide-indicator').textContent = `Story ${currentSlide + 1} of ${slides.length}`;
+
+      // Update Back / Next buttons
+      document.getElementById('btn-prev').disabled = currentSlide === 0;
+      const nextBtn = document.getElementById('btn-next');
+      if (currentSlide === slides.length - 1) {
+        nextBtn.innerHTML = `<span>Finish</span>`;
+      } else {
+        nextBtn.innerHTML = `<span>Next</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`;
+      }
+
+      // Render content
+      const container = document.getElementById('slide-content');
+      container.className = "flex-1 p-6 sm:p-8 flex flex-col justify-between slide-enter z-10 bg-[#FAF9F6]";
+      container.innerHTML = `
+        <div class="space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-amber font-bold">${slide.badge}</span>
+          <h2 class="font-mono text-xs text-mute uppercase tracking-wider font-semibold">${slide.title}</h2>
+        </div>
+        ${slide.content}
+        <div class="text-[10px] font-mono text-mute pt-2 border-t border-hairline flex items-center justify-between">
+          <span>AlongSide Sunday Culture Reel</span>
+          <span>Calibrated: ${currentChild.toUpperCase()}</span>
+        </div>
+      `;
+    }
+
+    function nextSlide() {
+      const slides = REELS_DATA[currentChild];
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        renderSlide();
+      } else {
+        currentSlide = 0;
+        renderSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderSlide();
+      }
+    }
+
+    function handleQuiz(option) {
+      const fb = document.getElementById('quiz-feedback');
+      fb.classList.remove('hidden');
+      if (option === 2) {
+        fb.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs space-y-1";
+        fb.innerHTML = `<strong>✨ Correct!</strong> You nailed it. Prefrontal impulse control drops in peer situations, triggering emotional eruption.`;
+      } else {
+        fb.className = "p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs space-y-1";
+        fb.innerHTML = `<strong>Close!</strong> The true answer is emotional blowup under acute peer stress.`;
+      }
+    }
+
+    function copyReelPrompt() {
+      const btn = document.getElementById('btn-reel-copy');
+      navigator.clipboard.writeText("Tonight's Sunday Table prompt copied!");
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Default to Julian
+    setChild('julian');
+  </script>
+</body>
+</html>

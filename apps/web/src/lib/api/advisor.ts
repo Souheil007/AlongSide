@@ -47,7 +47,7 @@ export interface FaqSearchResponse {
 }
 
 /**
- * Curated Clinical Parenting FAQ Vault (Used as fallback when API is offline or initial seed)
+ * Curated Parenting FAQ Vault (Used as fallback when API is offline or initial seed)
  */
 export const CURATED_FAQS: FaqItemDTO[] = [
   // --- TIER 0: INFANCY & TODDLER (AGES 0–3) ---

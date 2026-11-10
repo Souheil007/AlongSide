@@ -211,7 +211,7 @@ export function SchoolLunchboxGuide() {
           <span>Body-Neutral Language: How to Talk About Food</span>
         </div>
         <p className="leading-relaxed">
-          Between ages 6 and 12, children absorb cultural messages about body weight, "junk" food, and morality. Clinical pediatric advice emphasizes <strong>neutrality</strong>:
+          Between ages 6 and 12, children absorb cultural messages about body weight, "junk" food, and morality. Pediatric nutrition advice emphasizes <strong>neutrality</strong>:
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-3">

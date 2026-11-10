@@ -158,7 +158,7 @@ export const CANONICAL_MILESTONES: MilestoneDTO[] = [
     title: 'First-Phone Readiness & Impulse Regulation',
     description: 'Demonstrates baseline 10-dimension smartphone maturity: homework timeboxing, bedroom device docking, and honest communication.',
     signsToWatch: 'Unable to disengage from gaming without intense rage; persistent screen sneaks during bedtime hours.',
-    clinicalAuthority: 'Alongside 10-Dimension Clinical Assessment Protocol',
+    clinicalAuthority: 'Alongside 10-Dimension Assessment Protocol',
     sortOrder: 2,
     status: MilestoneStatus.IN_PROGRESS,
   },

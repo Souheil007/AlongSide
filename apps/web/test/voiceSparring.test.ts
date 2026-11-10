@@ -13,7 +13,7 @@ describe('Voice Sparring Simulator Lifespan Upgrade (PLAN-20)', () => {
     expect(sc1.title).toContain('2:00 AM Teething & Fever Panic');
     expect(sc1.lifespanStage).toContain('Infant / Toddler');
     expect(sc1.category).toContain('Pediatric Health');
-    expect(sc1.objective).toContain('Barton Schmitt');
+    expect(sc1.objective).toContain('soothing protocols');
 
     // Scenario 2: Toddler/Preschool (Dinner Plate Resistance)
     const sc2 = SPARRING_SCENARIOS[1]!;

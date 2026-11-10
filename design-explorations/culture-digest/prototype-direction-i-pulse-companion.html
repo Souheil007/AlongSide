@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction I — The Sunday Cultural Pulse & Live Companion | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% 0%, rgba(20, 61, 43, 0.05) 0%, rgba(180, 83, 9, 0.02) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.03);
+    }
+    .wave-bar {
+      transition: height 0.2s ease;
+    }
+    .playing .wave-bar {
+      animation: wave 1s ease-in-out infinite alternate;
+    }
+    @keyframes wave {
+      0% { height: 6px; }
+      100% { height: 26px; }
+    }
+    .toast-animate {
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes toastIn {
+      0% { opacity: 0; transform: translateY(12px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-6 lg:p-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Header & Navigation Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All Prototypes Hub</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction I: The Sunday Cultural Pulse & Live Companion</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Vol. 44 · Live Hybrid Master
+        </span>
+      </div>
+    </header>
+
+    <!-- Child Selector Bar (Calibrated across 3 distinct lifespan stages) -->
+    <div class="hairline-card bg-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-mute">Active Child Profile:</span>
+          <span class="font-mono text-[10px] text-spruce bg-spruce-soft px-2 py-0.5 rounded-full font-semibold" id="tier-badge">Pioneer Tier · Age 14</span>
+        </div>
+        <p class="text-xs text-body">Content, simulated peer feeds, and conversation starters automatically adapt to their real social reality.</p>
+      </div>
+
+      <!-- Child Switcher Buttons -->
+      <div class="flex items-center gap-2 bg-canvas-subtle p-1.5 rounded-xl border border-hairline shrink-0">
+        <button onclick="selectChild('julian')" id="btn-julian" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Julian (14 yrs)</span>
+        </button>
+        <button onclick="selectChild('maya')" id="btn-maya" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span>Maya (8 yrs)</span>
+        </button>
+        <button onclick="selectChild('mateo')" id="btn-mateo" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+          <span>Mateo (14 mo)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ZONE 1: Weekly Emotional Weather & Cultural Velocity Barometer -->
+    <div class="hairline-card bg-card rounded-2xl p-5 sm:p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-4">
+        <div>
+          <span class="font-mono text-[11px] uppercase tracking-wider text-amber font-semibold block">Weekly Vibe & Cultural Weather Check</span>
+          <h2 class="font-serif text-xl sm:text-2xl text-ink font-semibold" id="vibe-title">Adolescent Autonomy Leap & Peer Status Sensitivity</h2>
+        </div>
+        <div class="flex items-center gap-2" id="sanctuary-pill">
+          <!-- Road Reassurance Pill -->
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-slate-100 text-slate-800 border border-slate-200">
+            <span>🛡️ Active-Device Road</span>
+            <span class="text-mute">·</span>
+            <span class="text-spruce font-semibold">Curfew Active 9:00 PM</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- 4 Visual Gauge Bars (Emotional Climate) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-1">
+        <div class="space-y-1.5 p-3 rounded-xl bg-canvas-subtle border border-hairline">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-body font-medium" id="gauge-label-1">Peer Validation Drive</span>
+            <span class="font-mono font-bold text-spruce" id="gauge-val-1">88%</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-2 overflow-hidden">
+            <div class="bg-spruce h-2 rounded-full transition-all duration-500" id="gauge-bar-1" style="width: 88%"></div>
+          </div>
+          <span class="text-[10px] text-mute block leading-tight" id="gauge-sub-1">High sensitivity to peer acceptance</span>
+        </div>
+
+        <div class="space-y-1.5 p-3 rounded-xl bg-canvas-subtle border border-hairline">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-body font-medium" id="gauge-label-2">Autonomy Need</span>
+            <span class="font-mono font-bold text-amber" id="gauge-val-2">92%</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-2 overflow-hidden">
+            <div class="bg-amber h-2 rounded-full transition-all duration-500" id="gauge-bar-2" style="width: 92%"></div>
+          </div>
+          <span class="text-[10px] text-mute block leading-tight" id="gauge-sub-2">Desire for privacy & independent identity</span>
+        </div>
+
+        <div class="space-y-1.5 p-3 rounded-xl bg-canvas-subtle border border-hairline">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-body font-medium" id="gauge-label-3">Social Curiosity</span>
+            <span class="font-mono font-bold text-emerald-700" id="gauge-val-3">75%</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-2 overflow-hidden">
+            <div class="bg-emerald-600 h-2 rounded-full transition-all duration-500" id="gauge-bar-3" style="width: 75%"></div>
+          </div>
+          <span class="text-[10px] text-mute block leading-tight" id="gauge-sub-3">Actively mapping friend groups</span>
+        </div>
+
+        <div class="space-y-1.5 p-3 rounded-xl bg-canvas-subtle border border-hairline">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-body font-medium" id="gauge-label-4">Prefrontal Fatigue</span>
+            <span class="font-mono font-bold text-coral" id="gauge-val-4">84%</span>
+          </div>
+          <div class="w-full bg-hairline rounded-full h-2 overflow-hidden">
+            <div class="bg-coral h-2 rounded-full transition-all duration-500" id="gauge-bar-4" style="width: 84%"></div>
+          </div>
+          <span class="text-[10px] text-mute block leading-tight" id="gauge-sub-4">Prone to emotional overwhelm by 6 PM</span>
+        </div>
+      </div>
+
+      <!-- Velocity Pulse Pills -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-hairline text-xs">
+        <span class="font-mono text-[11px] text-mute uppercase font-semibold">Cultural Velocity Signals:</span>
+        <div id="velocity-chips" class="flex flex-wrap gap-2">
+          <!-- Dynamic Chips -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 2: TWO-COLUMN CORE EXPERIENCE -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: "The Window into Their World" (Col 1-6) -->
+      <div class="lg:col-span-6 space-y-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            <h3 class="font-mono text-xs uppercase tracking-wider font-bold text-ink">Window into Their Living World</h3>
+          </div>
+          <span class="font-mono text-[11px] text-spruce font-semibold" id="window-status">Live Peer Simulation</span>
+        </div>
+
+        <!-- Simulated Environment Card -->
+        <div class="hairline-card bg-card rounded-2xl overflow-hidden border border-hairline shadow-xs">
+          <!-- Viewport Header -->
+          <div class="bg-canvas-subtle border-b border-hairline px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span class="font-mono text-xs text-body font-semibold ml-2" id="feed-header-title"># 8th-grade-hangout (Discord)</span>
+            </div>
+            <span class="font-mono text-[11px] text-mute" id="feed-time">Active 12m ago</span>
+          </div>
+
+          <!-- Feed Content Box -->
+          <div id="sim-feed-container" class="p-4 sm:p-5 space-y-3 bg-[#FAFAF8] min-h-[290px]">
+            <!-- Dynamic Messages/Interactions -->
+          </div>
+
+          <!-- Playable Audio / Sound Snippet Waveform -->
+          <div class="bg-white border-t border-hairline p-3.5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-mute flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-coral" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/></svg>
+                <span id="audio-label">Auditory Cadence Snippet · 0:12</span>
+              </span>
+              <button onclick="toggleAudio()" id="btn-audio-play" class="px-2.5 py-1 rounded-md bg-spruce text-white font-mono text-[11px] hover:bg-spruce-light transition flex items-center gap-1 shadow-xs">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span id="audio-btn-text">Listen</span>
+              </button>
+            </div>
+            <!-- Dynamic Waveform -->
+            <div class="h-6 flex items-center gap-1 bg-canvas-subtle p-1.5 rounded-lg border border-hairline overflow-hidden" id="waveform">
+              <div class="w-1 bg-spruce rounded-full h-3 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-2 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-4 wave-bar"></div>
+              <div class="w-1 bg-coral rounded-full h-6 wave-bar"></div>
+              <div class="w-1 bg-coral rounded-full h-3 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-2 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-4 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-5 wave-bar"></div>
+              <div class="w-1 bg-spruce rounded-full h-3 wave-bar"></div>
+            </div>
+            <p class="text-[11px] text-body italic" id="audio-caption">"Bro literally don't let Henderson catch you lacking, that test was diabolical fr."</p>
+          </div>
+        </div>
+
+        <!-- Decoded Signals Pillbox -->
+        <div class="hairline-card bg-card rounded-xl p-4 space-y-2">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-mute block font-semibold">Decoded Cultural Signals & What They Mean</span>
+          <div class="flex flex-wrap gap-2" id="cultural-signals-tags">
+            <!-- Dynamic signals tags -->
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Generational Bridge & Conversational Sparring (Col 7-12) -->
+      <div class="lg:col-span-6 space-y-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            <h3 class="font-mono text-xs uppercase tracking-wider font-bold text-ink">Generational Time Bridge & Rehearsal</h3>
+          </div>
+          <span class="font-mono text-[11px] text-amber font-semibold">Then vs. Now</span>
+        </div>
+
+        <!-- Interactive Generational Converter Widget -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-hairline pb-2.5">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold">Vintage Era Translator</span>
+            <span class="font-mono text-[10px] text-mute">1999 ↔ 2026</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block font-mono text-[11px] text-body font-medium">Select a phrase you said at their age:</label>
+            <select id="slang-select" onchange="convertSlang()" class="w-full text-xs font-mono p-2.5 rounded-xl border border-hairline bg-canvas-subtle text-ink focus:outline-none focus:border-spruce">
+              <!-- Dynamic Options -->
+            </select>
+          </div>
+
+          <!-- Converter Result Card -->
+          <div class="rounded-xl border border-hairline bg-[#FAF9F5] p-3.5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold">2026 Child Equivalent</span>
+              <span class="font-mono text-[10px] text-mute" id="slang-tone">Casual Peer Lingo</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="font-mono text-lg font-bold text-ink" id="slang-modern">"Cooked"</span>
+              <span class="text-xs text-mute" id="slang-phonetic">/kʊkt/</span>
+            </div>
+            <p class="text-xs text-body" id="slang-explanation">Means beyond recovery or completely exhausted. Fulfills the exact same linguistic purpose as saying "I'm toast" in 1999.</p>
+            <div class="pt-1 border-t border-hairline/60">
+              <span class="font-mono text-[10px] text-amber font-semibold block" id="slang-pediatric">Pediatric Insight: Adolescent lingo builds peer boundaries; don't use it, just acknowledge the emotion.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Scenario Rehearsal / Sparring Sandbox -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-hairline pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-coral"></span>
+              <span class="font-mono text-[11px] uppercase tracking-wider text-ink font-bold">Quick Sparring Rehearsal</span>
+            </div>
+            <span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-semibold">Test Your Tone</span>
+          </div>
+
+          <div class="space-y-1">
+            <span class="font-mono text-[10px] text-amber uppercase font-semibold" id="rehearsal-scenario-tag">Scenario: Returning Home</span>
+            <p class="font-serif text-sm sm:text-base font-semibold text-ink" id="rehearsal-prompt">"Julian slumps on the couch: 'Bro, I crashed out today. I am so cooked.'"</p>
+          </div>
+
+          <!-- 3 Quick Action Buttons -->
+          <div class="space-y-2" id="rehearsal-choices">
+            <!-- Dynamic Choices -->
+          </div>
+
+          <!-- Rehearsal Feedback Output -->
+          <div id="rehearsal-feedback" class="rounded-xl border border-hairline bg-[#FAF9F5] p-3.5 space-y-1.5 transition-all">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] font-bold text-spruce" id="rf-status">Simulated Child Reaction:</span>
+              <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-white border border-hairline" id="rf-score">+500 Aura / Calm Open</span>
+            </div>
+            <p class="text-xs italic text-ink" id="rf-quote">"Julian drops his shoulders, breathes out, and actually explains what went wrong in 6th period."</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ZONE 3: TONIGHT'S DINNER SPARK & COPY BAR -->
+    <div class="hairline-card bg-[#143D2B] text-white rounded-2xl p-5 sm:p-6 space-y-3 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🕯️</span>
+          <span class="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold">Tonight's Dinnertime Connection Spark</span>
+        </div>
+        <span class="font-mono text-[11px] text-emerald-200/80">Zero Surveillance · High Connection</span>
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1 max-w-3xl">
+          <h4 class="font-serif text-lg sm:text-xl font-medium text-white" id="dinner-question">
+            "What is something an adult or teacher did this week that instantly lost them 1,000 aura points?"
+          </h4>
+          <p class="text-xs text-emerald-200/90" id="dinner-sub">
+            Why this works: Shifts the conversation away from interrogating their grades, letting them playfully dissect adult behavior without feeling defensive.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="copyDinnerPrompt()" class="px-4 py-2.5 rounded-xl bg-white text-spruce font-mono text-xs font-bold hover:bg-canvas transition flex items-center gap-2 shadow-xs">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            <span>Copy Question</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-6 right-6 hidden bg-ink text-white px-4 py-2.5 rounded-xl font-mono text-xs shadow-lg border border-white/10 z-50 flex items-center gap-2">
+      <span class="text-emerald-400">✓</span>
+      <span id="toast-msg">Copied to clipboard!</span>
+    </div>
+
+  </div>
+
+  <script>
+    // State
+    let currentChild = 'julian';
+    let isAudioPlaying = false;
+
+    const childData = {
+      julian: {
+        tier: 'Pioneer Tier · Age 14 (Active-Device)',
+        vibeTitle: 'Adolescent Autonomy Leap & Peer Status Sensitivity',
+        sanctuaryHtml: '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-slate-100 text-slate-800 border border-slate-200"><span>🛡️ Active-Device Road</span><span class="text-mute">·</span><span class="text-spruce font-semibold">Curfew Active 9:00 PM</span></span>',
+        gauges: [
+          { label: 'Peer Validation Drive', val: '88%', sub: 'High sensitivity to peer acceptance', color: 'bg-spruce' },
+          { label: 'Autonomy Need', val: '92%', sub: 'Desire for privacy & identity', color: 'bg-amber' },
+          { label: 'Social Curiosity', val: '75%', sub: 'Actively mapping friend groups', color: 'bg-emerald-600' },
+          { label: 'Prefrontal Fatigue', val: '84%', sub: 'Prone to emotional overwhelm by 6 PM', color: 'bg-coral' },
+        ],
+        velocity: [
+          { tag: 'Aura Points (+/- 1000)', status: 'Surging 🔥', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
+          { tag: 'Crashout / Cooked', status: 'Stable ⚡', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+          { tag: 'Skibidi (Toddler cringe)', status: 'Fading ❄️', cls: 'bg-slate-100 text-slate-600 border-slate-200' },
+        ],
+        feedTitle: '# 8th-grade-hangout (Discord)',
+        feedTime: 'Active 12m ago',
+        feedHtml: `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-slate-700 text-white font-mono text-xs flex items-center justify-center font-bold">K</div>
+            <div class="bg-white p-2.5 rounded-xl rounded-tl-none border border-hairline max-w-[85%] text-xs space-y-1">
+              <span class="font-mono text-[10px] text-mute block">Kaleb · 3:42 PM</span>
+              <p class="text-ink">did anyone start the lab report yet or are we all cooked fr?</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-spruce text-white font-mono text-xs flex items-center justify-center font-bold">J</div>
+            <div class="bg-spruce-soft p-2.5 rounded-xl rounded-tl-none border border-spruce/30 max-w-[85%] text-xs space-y-1">
+              <span class="font-mono text-[10px] text-spruce font-semibold block">Julian (Your Teen) · 3:44 PM</span>
+              <p class="text-ink">im so cooked bro, Henderson caught me lacking when the beaker broke -500 aura fr</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 text-mute font-mono text-[10px] pl-9 pt-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-mute animate-ping"></span>
+            <span>Liam is typing...</span>
+          </div>
+        `,
+        audioCaption: '"Bro literally don\'t let Henderson catch you lacking, that test was diabolical fr."',
+        signals: [
+          { term: 'Aura Points', def: 'Imaginary social currency; gained by coolness, lost by cringe or awkwardness.' },
+          { term: 'Crashout', def: 'Losing control from overwhelming social or academic stress.' },
+          { term: 'Cooked', def: 'In deep trouble or completely out of energy.' }
+        ],
+        slangOptions: [
+          { vintage: 'Talk to the hand (1999)', modern: 'Left on read / Ignored', phonetic: '/lɛft ɒn rɛd/', exp: 'Dismissing someone with zero social feedback.', ped: 'Adolescent boundary-drawing; teens prefer silent ghosting over confrontation.' },
+          { vintage: 'I am toast / Fried (1999)', modern: 'Cooked', phonetic: '/kʊkt/', exp: 'Means beyond recovery or completely exhausted.', ped: 'Fulfills the exact same linguistic purpose as saying "I\'m toast" in 1999.' },
+          { vintage: 'All that and a bag of chips (1999)', modern: '+1000 Aura / Peak', phonetic: '/piːk/', exp: 'Ultimate praise for effort or effortless style.', ped: 'Peer status validation remains the dominant currency of early adolescence.' }
+        ],
+        rehearsalScenarioTag: 'Scenario: Returning Home from School',
+        rehearsalPrompt: '"Julian slumps on the couch: \'Bro, I crashed out today. I am so cooked.\'"',
+        rehearsalChoices: [
+          { id: 1, label: 'Option A: Authority / Lecture', risk: 'High Risk (-1000 Aura)', text: '"Don\'t call me \'bro\', and stop with the dramatic slang. What did you do to your teacher?"' },
+          { id: 2, label: 'Option B: Over-Eager Cool Parent', risk: 'High Cringe', text: '"No cap Julian, did you take a massive L? Was the vibe lowkey negative rizz?"' },
+          { id: 3, label: 'Option C: Calm Neurobiology Bridge', risk: 'Optimal Connection', text: '"Whoa. \'Crashed out\' sounds like your nervous system hit a redline. Grab water first—what pushed you over?"' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Defensive Shutdown Triggered', score: '-1000 Aura', icon: '⛔', quote: '"Julian rolls his eyes, grabs his phone, mutters \'never mind\', and slams his bedroom door. Wall goes up."' },
+          2: { status: 'Severe Cringe Withdrawal', score: '-500 Aura / Awkward', icon: '😬', quote: '"Julian stares in disbelief: \'Please never say that again, Mom. You sound so weird.\' Changes topic."' },
+          3: { status: 'Connection Opened & Calmed', score: '+500 Aura / Deep Bridge', icon: '✨', quote: '"Julian drops his shoulders, breathes out: \'It was 6th period chem, Mom. The beaker cracked and everyone stared.\'"' }
+        },
+        dinnerQuestion: '"What is something an adult or teacher did this week that instantly lost them 1,000 aura points?"',
+        dinnerSub: 'Why this works: Shifts the conversation away from interrogating their grades, letting them playfully dissect adult behavior without feeling defensive.'
+      },
+      maya: {
+        tier: 'Trailblazer Tier · Age 8 (Pre-Device Road)',
+        vibeTitle: 'Concrete Operational Fairness & Blacktop Trading Economics',
+        sanctuaryHtml: '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-50 text-emerald-800 border border-emerald-200"><span>🌿 Pre-Device Sanctuary</span><span class="text-mute">·</span><span class="text-emerald-700 font-semibold">100% Screen-Free Playground</span></span>',
+        gauges: [
+          { label: 'Fairness Sensitivity', val: '95%', sub: 'Acute focus on recess trade equity', color: 'bg-emerald-600' },
+          { label: 'Peer Attachment', val: '80%', sub: 'Best-friend exclusivity shifting weekly', color: 'bg-spruce' },
+          { label: 'Creative World-Building', val: '86%', sub: 'Minecraft & Lego imaginary systems', color: 'bg-amber' },
+          { label: 'Sensory Energy', val: '90%', sub: 'Needs physical movement after school', color: 'bg-coral' },
+        ],
+        velocity: [
+          { tag: 'Holographic Pokemon Trades', status: 'Surging 🔥', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
+          { tag: 'Minecraft Bedrock Co-Op', status: 'Stable ⚡', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+          { tag: 'Friendship Bracelet Codes', status: 'Surging 🔥', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+        ],
+        feedTitle: 'Blacktop Recess Trade Desk (Table 4)',
+        feedTime: 'Observed 1:15 PM today',
+        feedHtml: `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-amber-600 text-white font-mono text-xs flex items-center justify-center font-bold">A</div>
+            <div class="bg-white p-2.5 rounded-xl rounded-tl-none border border-hairline max-w-[85%] text-xs space-y-1">
+              <span class="font-mono text-[10px] text-mute block">Ava (Classmate) · Recess</span>
+              <p class="text-ink">"I\'ll trade you my Pikachu holographic if you give me your shiny Eevee and your strawberry fruit leather."</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-spruce text-white font-mono text-xs flex items-center justify-center font-bold">M</div>
+            <div class="bg-spruce-soft p-2.5 rounded-xl rounded-tl-none border border-spruce/30 max-w-[85%] text-xs space-y-1">
+              <span class="font-mono text-[10px] text-spruce font-semibold block">Maya (Your 8yo) · Recess</span>
+              <p class="text-ink">"No way! Fruit leather is worth at least two ultra-rares. That\'s unfair trade policy!"</p>
+            </div>
+          </div>
+          <div class="p-2 bg-amber-50/60 rounded-lg border border-amber-200 text-[11px] text-amber-800">
+            ⚖️ Recess Barter Rule: Concrete operational children treat trading rules with the seriousness of international trade treaties.
+          </div>
+        `,
+        audioCaption: '"Maya negotiating: \'If I give you the shiny card you have to promise not to trade it to Liam at lunch!\'"',
+        signals: [
+          { term: 'Barter Equity', def: 'Snack items hold higher market value than paper cards at 10:30 AM recess.' },
+          { term: 'Co-op Pacts', def: 'In Minecraft builds, breaking one block of a friend\'s house is considered a declaration of war.' },
+          { term: 'Best-Friend Pacts', def: 'Rotates frequently; children require reassurance when alliances shift.' }
+        ],
+        slangOptions: [
+          { vintage: 'Beanie Baby frenzy (1999)', modern: 'Holographic Charizard / Squishmallows', phonetic: '/skwɪʃ.mæ.loʊz/', exp: 'Tactile physical collectibles with high peer status.', ped: 'Elementary kids crave tangible items they can organize, categorize, and trade.' },
+          { vintage: 'That is so unfair! (1999)', modern: 'You\'re scamming me!', phonetic: '/skæm.ɪŋ/', exp: 'Used whenever a peer changes playground rules midway.', ped: 'Piaget\'s concrete operational stage: rules must be immutable and mutually honored.' },
+          { vintage: 'Pinky swear (1999)', modern: 'Minecraft Bedrock Honor Pact', phonetic: '/ɒn.ər pækt/', exp: 'Unbreakable promise between co-op builders.', ped: 'Children use contracts to test social trust before adulthood.' }
+        ],
+        rehearsalScenarioTag: 'Scenario: Recess Conflict Tears',
+        rehearsalPrompt: '"Maya comes home upset: \'Ava said we aren\'t best friends anymore because I traded cards with Chloe.\'"',
+        rehearsalChoices: [
+          { id: 1, label: 'Option A: Dismissive Minimization', risk: 'Invalidating', text: '"Oh honey, don\'t be silly. You\'ll be friends again tomorrow. It\'s just cards."' },
+          { id: 2, label: 'Option B: Over-Intervention', risk: 'Erodes Confidence', text: '"I\'m emailing Ava\'s mother and your 3rd grade teacher right this second."' },
+          { id: 3, label: 'Option C: Pediatric Empathy Anchor', risk: 'Optimal Emotional Growth', text: '"That really stings. It hurts when a friend makes you feel excluded. Tell me what happened at the trading table."' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Emotion Suppressed', score: 'Low Trust', icon: '🌧️', quote: '"Maya crosses her arms and says \'You don\'t get it!\' and stops talking about school."' },
+          2: { status: 'Panic Induced', score: 'Anxiety High', icon: '😟', quote: '"Maya panics: \'No! Don\'t email her mom! Everyone will hate me!\' Shuts down completely."' },
+          3: { status: 'Comfort & Resilience Built', score: 'Secure Attachment', icon: '💖', quote: '"Maya leans in for a hug, exhales, and walks you through the whole recess trade drama."' }
+        },
+        dinnerQuestion: '"If you could invent one new rule for the playground blacktop that everyone had to obey, what would it be?"',
+        dinnerSub: 'Why this works: Taps into the 8-year-old obsession with justice, fairness, and governance without triggering defensiveness.'
+      },
+      mateo: {
+        tier: 'Explorer Tier · Age 14 Months (Infancy / Toddler)',
+        vibeTitle: 'Physical Gravity Calibration & Mirror Neuron Attunement',
+        sanctuaryHtml: '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-50 text-emerald-800 border border-emerald-200"><span>🌿 100% Pre-Device Sanctuary</span><span class="text-mute">·</span><span class="text-emerald-700 font-semibold">Zero Screen Environment</span></span>',
+        gauges: [
+          { label: 'Motor Curiosity', val: '98%', sub: 'Continuous walking & manipulation', color: 'bg-spruce' },
+          { label: 'Object Permanence', val: '90%', sub: 'Testing gravity with dropped toys', color: 'bg-emerald-600' },
+          { label: 'Mirror Neuron Sync', val: '92%', sub: 'Attuned to parent facial expressions', color: 'bg-amber' },
+          { label: 'Sensory Fatigue Window', val: '80%', sub: 'Needs calm wind-down by 6:45 PM', color: 'bg-coral' },
+        ],
+        velocity: [
+          { tag: 'High-Chair Spoon Dropping', status: 'Surging 🔥', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
+          { tag: 'Cadence Repetition ("Wheels on Bus")', status: 'Stable ⚡', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+          { tag: 'Physical Peek-a-boo Resets', status: 'Surging 🔥', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+        ],
+        feedTitle: 'Nursery Soundscape & Sensory Log',
+        feedTime: 'Observed 11:30 AM today',
+        feedHtml: `
+          <div class="p-3 bg-white rounded-xl border border-hairline space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-mono text-[11px] text-spruce font-bold">High-Chair Physics Experiment</span>
+              <span class="font-mono text-[10px] text-mute">11:35 AM</span>
+            </div>
+            <p class="text-xs text-ink">Mateo dropped his stainless spoon 7 consecutive times onto the tile floor, tracking its trajectory with wide eyes before looking up at Dad\'s face.</p>
+            <div class="p-2 bg-emerald-50 rounded-lg text-[11px] text-emerald-800">
+              💡 Pediatric Note: This is not defiance. He is testing cause-and-effect and verifying whether Dad\'s emotional attunement remains steady.
+            </div>
+          </div>
+        `,
+        audioCaption: '"Mateo cadence vocalization: \'Ba-ba-ba... da!\' paired with mirror neuron smile."',
+        signals: [
+          { term: 'Trajectory Tracking', def: 'Testing object permanence: things that disappear from view still exist.' },
+          { term: 'Vocal Mimicry', def: 'Echoing syllable endings ("up", "more", "bye") when paired with hand gestures.' },
+          { term: 'Co-Regulation Cue', def: 'A soft, slow maternal voice drops infant cortisol within 90 seconds.' }
+        ],
+        slangOptions: [
+          { vintage: 'Pat-a-cake physical rhythm (1999)', modern: 'Face-to-Face Sensory Loops', phonetic: '/kəʊ-rɛɡ.jʊˈleɪ.ʃən/', exp: 'Real-time human mimicry without screens.', ped: 'Toddler prefrontal cortex cannot process 2D screen stimuli; requires physical 3D touch.' },
+          { vintage: 'Terrible twos tantrums (1999)', modern: 'Pre-Verbal Amygdala Overload', phonetic: '/əˈmɪɡ.də.lə/', exp: 'Emotional storm before expressive language develops.', ped: 'Tantrums are neurological dysregulation, not behavioral malice.' }
+        ],
+        rehearsalScenarioTag: 'Scenario: High-Chair Spoon Drop Meltdown',
+        rehearsalPrompt: '"Mateo throws his spoon on the floor for the 8th time and starts whining when you don\'t instantly grab it."',
+        rehearsalChoices: [
+          { id: 1, label: 'Option A: Frustrated Scolding', risk: 'Heightens Amygdala Stress', text: '"Stop throwing your spoon right now! If you throw it again, lunch is over!"' },
+          { id: 2, label: 'Option B: Distract with a Screen / Phone', risk: 'Interrupts Brain Wiring', text: 'Pull out your phone and put on a sensory dancing fruit video to quiet him down.' },
+          { id: 3, label: 'Option C: Calm Physical Co-Regulation', risk: 'Optimal Neural Attachment', text: 'Catch his eye with a calm smile: "You made it go boom! Spoon goes on the tray now. All done dropping."' }
+        ],
+        feedbackOptions: {
+          1: { status: 'Cortisol Spike / Full Cry', score: 'Dysregulated', icon: '😭', quote: '"Mateo bursts into tears. The loud tone overwhelms his mirror neurons and eating ends in a battle."' },
+          2: { status: 'Passive Stupefaction', score: 'Missed Neural Growth', icon: '📱', quote: '"He freezes and stares at the screen. The motor experiment stops, but pre-verbal emotional regulation was bypassed."' },
+          3: { status: 'Smiles & Calms Gently', score: 'Secure Mirror Co-Regulation', icon: '🌱', quote: '"Mateo smiles, mimics Dad\'s gentle \'boom!\' sound, claps his hands, and takes a bite of avocado."' }
+        },
+        dinnerQuestion: '"Sensory Dinnertime Ritual: Name 3 textures Mateo touches on his plate (e.g. \'warm squash\', \'cold avocado\', \'crunchy toast\')."',
+        dinnerSub: 'Why this works: Pre-verbal children build sensory vocabulary through repetitive descriptive narration while eating together.'
+      }
+    };
+
+    function selectChild(childKey) {
+      currentChild = childKey;
+      const data = childData[childKey];
+
+      // Update Buttons
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`btn-${k}`);
+        if (k === childKey) {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium bg-spruce text-white transition shadow-xs flex items-center gap-2';
+        } else {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-body hover:bg-card transition flex items-center gap-2';
+        }
+      });
+
+      // Update Header & Barometer
+      document.getElementById('tier-badge').textContent = data.tier;
+      document.getElementById('vibe-title').textContent = data.vibeTitle;
+      document.getElementById('sanctuary-pill').innerHTML = data.sanctuaryHtml;
+
+      // Update 4 Gauges
+      data.gauges.forEach((g, idx) => {
+        const i = idx + 1;
+        document.getElementById(`gauge-label-${i}`).textContent = g.label;
+        document.getElementById(`gauge-val-${i}`).textContent = g.val;
+        document.getElementById(`gauge-bar-${i}`).style.width = g.val;
+        document.getElementById(`gauge-bar-${i}`).className = `${g.color} h-2 rounded-full transition-all duration-500`;
+        document.getElementById(`gauge-sub-${i}`).textContent = g.sub;
+      });
+
+      // Update Velocity Chips
+      const velContainer = document.getElementById('velocity-chips');
+      velContainer.innerHTML = data.velocity.map(v => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-medium ${v.cls}">
+          <span class="font-mono font-semibold">${v.tag}</span>
+          <span class="text-[10px] opacity-75">${v.status}</span>
+        </span>
+      `).join('');
+
+      // Update Feed Viewport
+      document.getElementById('feed-header-title').textContent = data.feedTitle;
+      document.getElementById('feed-time').textContent = data.feedTime;
+      document.getElementById('sim-feed-container').innerHTML = data.feedHtml;
+      document.getElementById('audio-caption').textContent = data.audioCaption;
+
+      // Update Signals
+      const sigContainer = document.getElementById('cultural-signals-tags');
+      sigContainer.innerHTML = data.signals.map(s => `
+        <div class="p-2 bg-canvas-subtle rounded-lg border border-hairline text-xs space-y-0.5">
+          <span class="font-mono font-bold text-spruce">${s.term}:</span>
+          <span class="text-body">${s.def}</span>
+        </div>
+      `).join('');
+
+      // Update Slang Selector
+      const select = document.getElementById('slang-select');
+      select.innerHTML = data.slangOptions.map((opt, i) => `
+        <option value="${i}">${opt.vintage}</option>
+      `).join('');
+      convertSlang();
+
+      // Update Rehearsal
+      document.getElementById('rehearsal-scenario-tag').textContent = data.rehearsalScenarioTag;
+      document.getElementById('rehearsal-prompt').textContent = data.rehearsalPrompt;
+
+      const choiceBox = document.getElementById('rehearsal-choices');
+      choiceBox.innerHTML = data.rehearsalChoices.map(c => `
+        <button onclick="pickChoice(${c.id})" class="w-full text-left p-2.5 rounded-xl border border-hairline hover:border-spruce bg-canvas-subtle hover:bg-white transition space-y-0.5 group">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-semibold text-body group-hover:text-ink">${c.label}</span>
+            <span class="font-mono text-[10px] text-mute px-1.5 py-0.5 rounded bg-white border border-hairline">${c.risk}</span>
+          </div>
+          <p class="text-xs text-body">${c.text}</p>
+        </button>
+      `).join('');
+
+      // Default feedback to Option 3
+      pickChoice(3);
+
+      // Update Dinner
+      document.getElementById('dinner-question').textContent = data.dinnerQuestion;
+      document.getElementById('dinner-sub').textContent = data.dinnerSub;
+    }
+
+    function convertSlang() {
+      const idx = document.getElementById('slang-select').value;
+      const opt = childData[currentChild].slangOptions[idx];
+      if (!opt) return;
+
+      document.getElementById('slang-modern').textContent = `"${opt.modern}"`;
+      document.getElementById('slang-phonetic').textContent = opt.phonetic;
+      document.getElementById('slang-explanation').textContent = opt.exp;
+      document.getElementById('slang-pediatric').textContent = `Pediatric Insight: ${opt.ped}`;
+    }
+
+    function pickChoice(choiceId) {
+      const feedback = childData[currentChild].feedbackOptions[choiceId];
+      if (!feedback) return;
+
+      document.getElementById('rf-status').textContent = feedback.status;
+      document.getElementById('rf-score').textContent = feedback.score;
+      document.getElementById('rf-quote').textContent = feedback.quote;
+    }
+
+    function toggleAudio() {
+      const waveform = document.getElementById('waveform');
+      const btnText = document.getElementById('audio-btn-text');
+      isAudioPlaying = !isAudioPlaying;
+
+      if (isAudioPlaying) {
+        waveform.classList.add('playing');
+        btnText.textContent = 'Pause';
+        setTimeout(() => {
+          if (isAudioPlaying) toggleAudio();
+        }, 4000);
+      } else {
+        waveform.classList.remove('playing');
+        btnText.textContent = 'Listen';
+      }
+    }
+
+    function copyDinnerPrompt() {
+      const text = document.getElementById('dinner-question').textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Question copied to clipboard for dinner!');
+      }).catch(() => {
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('toast-animate');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('toast-animate');
+      }, 3000);
+    }
+
+    // Initialize on load
+    selectChild('julian');
+  </script>
+</body>
+</html>

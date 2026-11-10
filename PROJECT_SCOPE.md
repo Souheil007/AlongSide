@@ -10,7 +10,12 @@
 ## 1. Executive Summary & Positioning Horizon
 
 ### 1.1 One-Line Positioning
-> **Alongside is the comprehensive lifespan child upbringing, health, and family operating system (Ages 0–18): empowering parents to deeply understand and nurture their child’s physical health, pediatric nutrition, motor and speech milestones, cognitive brain play, and emotional behavior, while providing modern cultural mentorship, 24/7 clinical AI guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
+> **Alongside is the comprehensive lifespan child upbringing, development, and family operating system (Ages 0–18): empowering parents to deeply understand and nurture their child’s restorative wellness, pediatric nutrition, motor and speech milestones, cognitive brain play, and emotional behavior, while providing modern cultural mentorship, 24/7 AI parenting guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
+
+### 1.1.1 Strategic Platform Boundary: Non-Clinical Mandate (SOU-86)
+> [!IMPORTANT]
+> **ALONGSIDE IS NOT A CLINICAL PLATFORM:**
+> Alongside has permanently transitioned away from being a clinical symptom triage platform. AlongSide is strictly an educational child upbringing, developmental neurobiology, and family operating system (Ages 0–18). AlongSide does NOT provide medical symptom triage, clinical telephone triage (such as Barton Schmitt algorithms), diagnostic claims, or medication dosing calculators. All medical decision-making remains between parents and licensed healthcare providers.
 
 ---
 

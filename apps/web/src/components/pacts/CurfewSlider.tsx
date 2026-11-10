@@ -84,7 +84,7 @@ export function CurfewSlider() {
         </div>
       </div>
 
-      {/* Neurobiology Clinical Rationale */}
+      {/* Neurobiology Developmental Rationale */}
       <div className="rounded-xl border border-violet-100 bg-gradient-to-r from-violet-50/50 via-cream-50 to-indigo-50/30 p-4 text-xs text-slate-700 space-y-2">
         <div className="flex items-center gap-2 font-bold text-violet-900">
           <Sparkles className="h-4 w-4 text-violet-600 shrink-0" />

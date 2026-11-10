@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction F — The Cultural Ecosystem Map & Constellation Radar | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .radar-grid {
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(20, 61, 43, 0.08) 0%, transparent 60%),
+        linear-gradient(to right, rgba(227, 227, 220, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(227, 227, 220, 0.4) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+    .node-orbit {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .node-active {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 4px rgba(20, 61, 43, 0.15), 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Top Navigation Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 8 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction F: Constellation Radar</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-medium">
+          Spatial Cultural Graph
+        </span>
+      </div>
+    </header>
+
+    <!-- Child Selector Bar & Filter Tabs -->
+    <div class="hairline-card bg-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <span class="font-mono text-[11px] uppercase tracking-wider text-mute block">Active Child Constellation:</span>
+        <div class="flex flex-wrap items-center gap-2" id="child-tabs">
+          <button onclick="setChild('julian')" id="tab-julian" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition">
+            <span class="w-5 h-5 rounded-full bg-spruce text-white flex items-center justify-center text-[10px] font-bold">J</span>
+            <span>Julian · 14 yrs</span>
+          </button>
+          <button onclick="setChild('maya')" id="tab-maya" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px] font-bold">M</span>
+            <span>Maya · 8 yrs</span>
+          </button>
+          <button onclick="setChild('mateo')" id="tab-mateo" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition">
+            <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px] font-bold">M</span>
+            <span>Mateo · 14 mo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Cluster Filter Buttons -->
+      <div class="flex items-center gap-1.5 bg-canvas-subtle p-1 rounded-xl border border-hairline text-xs font-mono">
+        <button onclick="filterCluster('all')" id="flt-all" class="px-2.5 py-1 rounded-lg bg-spruce text-white font-semibold shadow-2xs">All</button>
+        <button onclick="filterCluster('slang')" id="flt-slang" class="px-2.5 py-1 rounded-lg text-body hover:bg-card">Lingo</button>
+        <button onclick="filterCluster('social')" id="flt-social" class="px-2.5 py-1 rounded-lg text-body hover:bg-card">Peer Codes</button>
+        <button onclick="filterCluster('media')" id="flt-media" class="px-2.5 py-1 rounded-lg text-body hover:bg-card">Media</button>
+      </div>
+    </div>
+
+    <!-- Main Spatial Stage: Constellation Canvas + Live Inspector -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Spatial Constellation Canvas (Col 1-7) -->
+      <div class="lg:col-span-7 hairline-card bg-card rounded-2xl p-6 radar-grid relative min-h-[520px] flex flex-col justify-between overflow-hidden shadow-sm">
+        
+        <!-- Canvas Status & Orbit Ring Header -->
+        <div class="flex items-center justify-between z-10">
+          <div>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Cultural Gravitational Field</span>
+            <h3 class="font-serif text-lg font-semibold text-ink" id="canvas-child-title">Julian's Cultural Galaxy</h3>
+          </div>
+          <span class="font-mono text-xs px-2.5 py-1 rounded-full bg-card border border-hairline text-spruce font-semibold shadow-2xs" id="node-count-badge">
+            6 Active Nodes
+          </span>
+        </div>
+
+        <!-- Interactive Node Graph Area (SVG connection lines + floating nodes) -->
+        <div class="relative w-full h-80 my-4 flex items-center justify-center" id="node-stage">
+          <!-- Background SVG Concentric Orbit Rings -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50%" cy="50%" r="90" fill="none" stroke="#E3E3DC" stroke-dasharray="4 4" stroke-width="1.5" />
+            <circle cx="50%" cy="50%" r="140" fill="none" stroke="#E3E3DC" stroke-dasharray="6 6" stroke-width="1.5" />
+          </svg>
+
+          <!-- Central Core Node: Child -->
+          <div class="z-20 w-24 h-24 rounded-full bg-spruce text-white flex flex-col items-center justify-center text-center p-2 shadow-lg border-4 border-white transition">
+            <span class="font-serif text-sm font-bold leading-tight" id="core-child-name">Julian</span>
+            <span class="font-mono text-[10px] opacity-80" id="core-child-tier">Age 14</span>
+          </div>
+
+          <!-- Orbiting Nodes (Positioned absolutely via JS or inline classes) -->
+          <div id="orbit-nodes-container" class="absolute inset-0 w-full h-full">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Legend Bar -->
+        <div class="flex flex-wrap items-center justify-between border-t border-hairline pt-3 text-[11px] font-mono text-mute z-10 gap-2">
+          <div class="flex items-center gap-3">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber"></span> Surging 🔥</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-spruce"></span> Stable Staple ⚡</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span> Fading ❄️</span>
+          </div>
+          <span class="text-mute italic">Click any node to inspect</span>
+        </div>
+
+      </div>
+
+      <!-- Right Inspector & Bridge Panel (Col 8-12) -->
+      <div class="lg:col-span-5 space-y-4">
+
+        <!-- Selected Node Inspector Card -->
+        <div class="hairline-card bg-card rounded-2xl p-6 space-y-4 shadow-sm" id="inspector-card">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <div class="flex items-center gap-2">
+              <span id="inspect-cluster-badge" class="font-mono text-[10px] uppercase tracking-wider text-spruce bg-spruce-soft px-2 py-0.5 rounded font-bold">Lingo & Vernacular</span>
+              <span id="inspect-velocity-badge" class="font-mono text-[10px] text-amber bg-amber-soft px-2 py-0.5 rounded font-semibold">Surging 🔥 (+120%)</span>
+            </div>
+            <span class="font-mono text-xs text-mute" id="inspect-tier-tag">8th Grade</span>
+          </div>
+
+          <div class="space-y-1">
+            <h3 class="font-serif text-2xl font-bold text-ink" id="inspect-title">Crashout</h3>
+            <p class="text-xs text-body font-mono italic" id="inspect-category">Part of speech: Verb / Noun · Emotional reaction</p>
+            <p class="text-xs sm:text-sm text-body leading-relaxed pt-1" id="inspect-desc">
+              To lose emotional composure completely, blow up at a teacher or peer, or recklessly throw away social composure in a high-stress moment.
+            </p>
+          </div>
+
+          <!-- Real Peer Usage Context -->
+          <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-1.5 text-xs">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Authentic Dialogue In The Wild:</span>
+            <p class="italic text-ink font-serif text-sm" id="inspect-dialogue">
+              "Bro literally crashed out during the chem lab when the burner tilted."
+            </p>
+          </div>
+
+          <!-- Pediatric Neurobiology Lens -->
+          <div class="p-3.5 rounded-xl bg-amber-soft/50 border border-amber/20 space-y-1 text-xs">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-amber font-bold flex items-center gap-1">
+              🧠 Clinical Neurobiology Lens
+            </span>
+            <p class="text-amber-900 leading-relaxed" id="inspect-neuro">
+              Adolescent prefrontal cortex capacity for impulse control drops by 40% in peer-heavy public settings. Crashout is peer shorthand for amygdala overwhelm.
+            </p>
+          </div>
+
+          <!-- Parent Bridge Prompt -->
+          <div class="p-4 rounded-xl bg-spruce-soft border border-spruce/30 space-y-2 text-xs">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Parent Calm Connection Script
+            </span>
+            <p class="text-spruce font-serif text-sm font-medium leading-relaxed" id="inspect-bridge">
+              "It sounds like 6th period pushed someone right to the edge of crashing out today. What sparked it?"
+            </p>
+            <button onclick="copyBridge()" id="btn-copy-bridge" class="mt-1 w-full py-1.5 rounded-lg bg-spruce text-white font-mono text-[11px] font-semibold hover:bg-spruce-light transition flex items-center justify-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy Conversation Bridge</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sunday Table Connection Card -->
+        <div class="hairline-card bg-card rounded-2xl p-5 space-y-2">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Tonight's Constellation Spark</span>
+          <p class="font-serif text-base text-ink font-medium" id="constellation-dinner-prompt">
+            "If our family were on a space mission tonight, which chore would get sucked into a black hole first?"
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const ECOSYSTEM_DATA = {
+      julian: {
+        name: "Julian",
+        tier: "Adolescent (14 yrs)",
+        title: "Julian's Cultural Orbit · Age 14",
+        dinner: '"If someone in 8th grade had an aura meter over their head today, who gained +1,000 points without even trying?"',
+        nodes: [
+          {
+            id: "node-crashout",
+            title: "Crashout",
+            cluster: "slang",
+            clusterLabel: "Lingo & Vernacular",
+            velocity: "Surging 🔥 (+120%)",
+            velocityType: "amber",
+            tierTag: "8th Grade",
+            category: "Slang · Emotional state",
+            desc: "To lose emotional composure completely, blow up at a teacher or peer, or recklessly throw away social composure in a high-stress moment.",
+            dialogue: '"Bro literally crashed out during the chem lab when the burner tilted."',
+            neuro: "Adolescent prefrontal cortex capacity for impulse control drops by 40% in peer-heavy public settings. Crashout is peer shorthand for amygdala overwhelm.",
+            bridge: '"It sounds like 6th period pushed someone right to the edge of crashing out today. What sparked it?"',
+            pos: "top-4 left-6"
+          },
+          {
+            id: "node-aura",
+            title: "Aura Points",
+            cluster: "social",
+            clusterLabel: "Peer Codes & Status",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Peer Currency",
+            category: "Social Metric · Unwritten rules",
+            desc: "The invisible scoreboard where awkward slips cost -500 Aura, and effortless composure earns +1,000 Aura.",
+            dialogue: '"Tripping up the stairs in front of everyone is instant -1,000 aura fr."',
+            neuro: "Adolescents experience public embarrassment with the exact same neurological pain receptors as physical injury.",
+            bridge: '"What is the easiest way for someone in your grade to lose 500 aura points without realizing it?"',
+            pos: "top-6 right-8"
+          },
+          {
+            id: "node-cooked",
+            title: "Cooked",
+            cluster: "slang",
+            clusterLabel: "Lingo & Vernacular",
+            velocity: "Stable Staple ⚡",
+            velocityType: "spruce",
+            tierTag: "Everyday Slang",
+            category: "Adjective · Inevitable doom",
+            desc: "Facing unavoidable trouble, failure, or exhaustion (e.g. failing an exam or getting grounded).",
+            dialogue: '"If I get below an 80 on Henderson\'s test my weekend is cooked."',
+            neuro: "Catastrophizing is a hallmark of adolescent cognitive distortion; 'cooked' provides emotional relief through humor.",
+            bridge: '"Does anyone in your squad feel cooked before the math exam, or are you guys feeling solid?"',
+            pos: "bottom-8 left-10"
+          },
+          {
+            id: "node-discord",
+            title: "Discord Comms",
+            cluster: "media",
+            clusterLabel: "Media & Gaming",
+            velocity: "Stable Staple ⚡",
+            velocityType: "spruce",
+            tierTag: "Social Hub",
+            category: "Platform · Voice hanging out",
+            desc: "The digital living room where homework screensharing blends with gaming audio and background silence.",
+            dialogue: '"Join the call tonight at 7 to grind the history slides."',
+            neuro: "Passive presence in voice channels mimics the adolescent drive for shared ambient co-presence.",
+            bridge: '"Is your group call tonight mostly for studying or is everyone just playing games in the background?"',
+            pos: "bottom-6 right-8"
+          },
+          {
+            id: "node-lockin",
+            title: "Lock In",
+            cluster: "slang",
+            clusterLabel: "Lingo & Vernacular",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Focus Trigger",
+            category: "Verb phrase · Intense discipline",
+            desc: "Shutting off notifications, ignoring drama, and entering a flow state of high performance.",
+            dialogue: '"Bro I need to lock in right now or I won\'t finish this paper."',
+            neuro: "Adolescent brains crave self-initiated discipline when framed as personal agency rather than parental command.",
+            bridge: '"When you need to truly lock in, what helps you focus best—music or absolute quiet?"',
+            pos: "top-32 left-2"
+          },
+          {
+            id: "node-bereal",
+            title: "BeReal / Spontaneous",
+            cluster: "media",
+            clusterLabel: "Media & Feeds",
+            velocity: "Fading ❄️",
+            velocityType: "slate",
+            tierTag: "Micro-Trend",
+            category: "Social App · Anti-curation",
+            desc: "The reaction against polished Instagram filters in favor of awkward, uncurated everyday snapshots.",
+            dialogue: '"Wait don\'t post that BeReal yet, let me put my hoodie on."',
+            neuro: "The tension between authentic identity expression and peer surveillance anxiety.",
+            bridge: '"Do people actually post uncurated photos anymore, or does everyone wait until they\'re doing something fun?"',
+            pos: "top-32 right-2"
+          }
+        ]
+      },
+
+      maya: {
+        name: "Maya",
+        tier: "Grade School (8 yrs)",
+        title: "Maya's Playground Constellation · Age 8",
+        dinner: '"If our dinner table had a trading post, what chore would you trade for an extra 15 minutes of bedtime reading?"',
+        nodes: [
+          {
+            id: "node-holo",
+            title: "Pokemon Trade",
+            cluster: "social",
+            clusterLabel: "Playground Economy",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Recess Market",
+            category: "Barter Currency",
+            desc: "The high-stakes exchange of foil holographic cards, duplicate Squishmallow clips, and scented erasers.",
+            dialogue: '"I traded two Pikachu cards for one shiny Mewtwo and a fruit snack!"',
+            neuro: "Concrete operational thinking allows 8-year-olds to understand subjective value and fairness rules.",
+            bridge: '"Walk me through your favorite trade at recess today. Did it feel fair to both of you?"',
+            pos: "top-4 left-8"
+          },
+          {
+            id: "node-minecraft",
+            title: "Minecraft Bedrock",
+            cluster: "media",
+            clusterLabel: "Gaming & Worlds",
+            velocity: "Stable Staple ⚡",
+            velocityType: "spruce",
+            tierTag: "Co-op World",
+            category: "Creative Sandbox",
+            desc: "Building shared towns, horse stables, and the strict peer rule: 'Never grief someone\'s house'.",
+            dialogue: '"Don\'t let the creeper explode near my glass greenhouse!"',
+            neuro: "Collaborative digital building satisfies the developmental desire for competence and territory control.",
+            bridge: '"Show me what you built in your Minecraft world this weekend—did you finish the horse stable?"',
+            pos: "top-6 right-10"
+          },
+          {
+            id: "node-bestfriend",
+            title: "Best Friend Pact",
+            cluster: "social",
+            clusterLabel: "Peer Codes",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Social Schema",
+            category: "Friendship Alliance",
+            desc: "Daily shifting friendship contracts sealed by pinky promises and recess line-up order.",
+            dialogue: '"Emma is my best friend in morning recess, but Chloe is my art buddy."',
+            neuro: "8-year-olds are experimenting with social flexibility while grappling with fear of exclusion.",
+            bridge: '"Who was your favorite person to laugh with at lunch today?"',
+            pos: "bottom-8 left-8"
+          },
+          {
+            id: "node-skibidi",
+            title: "Older Kid Memes",
+            cluster: "slang",
+            clusterLabel: "Lingo & Vernacular",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Playground Catchphrase",
+            category: "Playground Humor",
+            desc: "Catchphrases filtered down from older siblings and YouTube (e.g. 'Skibidi', 'What the sigma').",
+            dialogue: '"That\'s so skibidi toilet!" (giggles uncontrollably)',
+            neuro: "Absurdist humor signals belonging to the big-kid culture, even when the literal meaning is nonsense.",
+            bridge: '"Where did everyone at school first hear that silly word? What makes it so funny?"',
+            pos: "bottom-6 right-10"
+          }
+        ]
+      },
+
+      mateo: {
+        name: "Mateo",
+        tier: "Toddler (14 mo)",
+        title: "Mateo's Sensory & Song Universe · 14 mo",
+        dinner: '"High Chair Duet: Sing the Wheels on the Bus, but pause before the horn and see if Mateo honks!"',
+        nodes: [
+          {
+            id: "node-cadence",
+            title: "Repetitive Song",
+            cluster: "media",
+            clusterLabel: "Auditory Rhythm",
+            velocity: "Anchor ⚡",
+            velocityType: "spruce",
+            tierTag: "Prediction Loop",
+            category: "Nursery Cadence",
+            desc: "Demanding 'The Wheels on the Bus' or Ms. Rachel songs for the 25th time in a row.",
+            dialogue: '"*Claps hands frantically and bounces up and down on rug*"',
+            neuro: "Repetition wires prefrontal prediction circuits. Knowing what sound comes next releases calming dopamine.",
+            bridge: '"Sing with exaggerated rhythm and joyful eye contact."',
+            pos: "top-6 left-10"
+          },
+          {
+            id: "node-drop",
+            title: "Floor Gravity Test",
+            cluster: "social",
+            clusterLabel: "Sensorimotor",
+            velocity: "Active ⚡",
+            velocityType: "spruce",
+            tierTag: "Physics Experiment",
+            category: "Cause & Effect",
+            desc: "Dropping the spoon or bowl off the high chair tray while making intense eye contact.",
+            dialogue: '"Uh-oh! (points to floor with huge grin)"',
+            neuro: "Testing object permanence and parental emotional predictability in a physical environment.",
+            bridge: '"Calmly place food down: Food stays on the tray. All done with the bowl."',
+            pos: "top-8 right-8"
+          },
+          {
+            id: "node-mirror",
+            title: "Mirror Clapping",
+            cluster: "social",
+            clusterLabel: "Motor Mimicry",
+            velocity: "Surging 🔥",
+            velocityType: "amber",
+            tierTag: "Mirror Neurons",
+            category: "Social Attunement",
+            desc: "Clapping when you clap, waving when you wave, copying mouth shapes.",
+            dialogue: '"Ba-ba-ba! (mimics parent lips)"',
+            neuro: "Mirror neurons fire identical motor patterns, laying the foundation for human empathy and language.",
+            bridge: '"Exaggerate your lip movements and smile when speaking."',
+            pos: "bottom-8 left-12"
+          }
+        ]
+      }
+    };
+
+    let currentChild = 'julian';
+    let currentFilter = 'all';
+
+    function setChild(childKey) {
+      currentChild = childKey;
+      const data = ECOSYSTEM_DATA[childKey];
+
+      // Update tabs
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        if (k === childKey) {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-spruce-soft text-spruce font-mono text-xs font-semibold shadow-xs transition";
+        } else {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-canvas-subtle transition";
+        }
+      });
+
+      // Update Canvas Core
+      document.getElementById('canvas-child-title').textContent = data.title;
+      document.getElementById('core-child-name').textContent = data.name;
+      document.getElementById('core-child-tier').textContent = data.tier;
+      document.getElementById('node-count-badge').textContent = `${data.nodes.length} Active Nodes`;
+      document.getElementById('constellation-dinner-prompt').textContent = data.dinner;
+
+      renderNodes();
+      // Select first node
+      if (data.nodes.length > 0) {
+        selectNode(data.nodes[0]);
+      }
+    }
+
+    function renderNodes() {
+      const data = ECOSYSTEM_DATA[currentChild];
+      const container = document.getElementById('orbit-nodes-container');
+      container.innerHTML = '';
+
+      const filtered = data.nodes.filter(n => currentFilter === 'all' || n.cluster === currentFilter);
+
+      filtered.forEach((n, idx) => {
+        const nodeEl = document.createElement('button');
+        nodeEl.id = `btn-${n.id}`;
+        nodeEl.onclick = () => selectNode(n);
+
+        const colorClass = n.velocityType === 'amber' 
+          ? 'border-amber bg-white text-ink hover:border-amber-600' 
+          : 'border-spruce bg-white text-ink hover:border-spruce-light';
+
+        nodeEl.className = `node-orbit absolute ${n.pos} px-3 py-1.5 rounded-xl border-2 ${colorClass} shadow-md flex items-center gap-2 font-mono text-xs font-semibold z-20 transition hover:scale-105`;
+        nodeEl.innerHTML = `
+          <span class="w-2 h-2 rounded-full ${n.velocityType === 'amber' ? 'bg-amber animate-pulse' : 'bg-spruce'}"></span>
+          <span>${n.title}</span>
+        `;
+        container.appendChild(nodeEl);
+      });
+    }
+
+    function selectNode(node) {
+      // Highlight active node
+      const allButtons = document.querySelectorAll('.node-orbit');
+      allButtons.forEach(b => b.classList.remove('node-active'));
+      const activeBtn = document.getElementById(`btn-${node.id}`);
+      if (activeBtn) activeBtn.classList.add('node-active');
+
+      // Update Inspector Panel
+      document.getElementById('inspect-cluster-badge').textContent = node.clusterLabel;
+      document.getElementById('inspect-velocity-badge').textContent = node.velocity;
+      document.getElementById('inspect-tier-tag').textContent = node.tierTag;
+      document.getElementById('inspect-title').textContent = node.title;
+      document.getElementById('inspect-category').textContent = node.category;
+      document.getElementById('inspect-desc').textContent = node.desc;
+      document.getElementById('inspect-dialogue').textContent = node.dialogue;
+      document.getElementById('inspect-neuro').textContent = node.neuro;
+      document.getElementById('inspect-bridge').textContent = node.bridge;
+    }
+
+    function filterCluster(cluster) {
+      currentFilter = cluster;
+      ['all', 'slang', 'social', 'media'].forEach(c => {
+        const btn = document.getElementById(`flt-${c}`);
+        if (c === cluster) {
+          btn.className = "px-2.5 py-1 rounded-lg bg-spruce text-white font-semibold shadow-2xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg text-body hover:bg-card";
+        }
+      });
+      renderNodes();
+    }
+
+    function copyBridge() {
+      const text = document.getElementById('inspect-bridge').textContent.trim();
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btn-copy-bridge');
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+
+    // Default to Julian
+    setChild('julian');
+  </script>
+</body>
+</html>

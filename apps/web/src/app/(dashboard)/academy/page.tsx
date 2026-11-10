@@ -25,7 +25,7 @@ export default function AcademyPage() {
         </h1>
 
         <p className="text-[#494F4C] text-sm sm:text-base max-w-3xl leading-relaxed">
-          Bite-sized, clinically backed lessons covering child neurobiology, sensory co-regulation, purposeful play, and digital transitions across all developmental stages from birth to adulthood (Ages 0–18).
+          Bite-sized, evidence-grounded lessons covering child neurobiology, sensory co-regulation, purposeful play, and digital transitions across all developmental stages from birth to adulthood (Ages 0–18).
         </p>
       </header>
 

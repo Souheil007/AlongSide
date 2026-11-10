@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${formattedTitle} — Academy Reader | AlongSide`,
-    description: 'Distraction-free clinical lesson reader with actionable parent dialogue scripts.',
+    description: 'Distraction-free developmental lesson reader with actionable parent dialogue scripts.',
   };
 }
 

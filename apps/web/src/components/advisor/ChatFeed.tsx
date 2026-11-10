@@ -128,7 +128,7 @@ function MessageBubble({ message }: { message: AiMessageDTO }) {
           <div className="flex items-center justify-between gap-4 mb-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider shadow-sm">
               <AlertTriangle className="h-3.5 w-3.5" />
-              Clinical Safe Harbor Emergency Override
+              Emergency Safety Guidance Override
             </span>
             <span className="text-[10px] text-rose-800 font-semibold">
               {formatMessageTime(message.createdAt)}

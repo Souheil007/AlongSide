@@ -240,7 +240,7 @@ export function FaqCard({
       {/* Expandable Content */}
       {isExpanded && (
         <div className="mt-4 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-150">
-          {/* Neurobiology Clinical Explanation */}
+          {/* Neurobiology Developmental Explanation */}
           <div>
             <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
               <Brain className="h-3.5 w-3.5 text-teal-600" />

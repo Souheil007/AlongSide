@@ -43,8 +43,8 @@ export const DOMAIN_HUBS: DomainHubItem[] = [
     label: 'Health Companion',
     shortLabel: 'Health',
     icon: HeartPulse,
-    badge: 'Safe Resort',
-    description: 'Pediatric 3-zone symptom triage, fever & sleep schedules',
+    badge: 'Sleep & Calm',
+    description: 'Pediatric sleep architecture, bedtime routines & circadian rhythms',
   },
   {
     href: '/nutrition',
@@ -73,7 +73,7 @@ export const DOMAIN_HUBS: DomainHubItem[] = [
     label: '24/7 AI Advisor',
     shortLabel: 'AI Advisor',
     icon: Bot,
-    badge: 'Clinical RAG',
+    badge: 'AI Advisor',
     description: 'Multi-child AI advisor, voice sparring & 250+ FAQ vault',
   },
   {

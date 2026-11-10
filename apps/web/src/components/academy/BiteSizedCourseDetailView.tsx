@@ -179,7 +179,7 @@ export function resolveLessonTakeaway(
 
   // Dynamic fallback for any other lesson
   return {
-    subtitle: `Actionable clinical guidance and communication scripts for ${lesson.title.toLowerCase()}.`,
+    subtitle: `Actionable developmental guidance and communication scripts for ${lesson.title.toLowerCase()}.`,
     script:
       'We are a team figuring this out together. Your wellbeing always comes before any screen or rule.',
   };

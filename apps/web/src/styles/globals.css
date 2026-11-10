@@ -149,7 +149,7 @@
   border-radius: 9999px;
 }
 
-/* Clinical Telemetry Chip */
+/* Telemetry Chip */
 .chip-telemetry {
   display: inline-flex;
   align-items: center;

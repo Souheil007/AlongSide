@@ -57,7 +57,7 @@ export function SparringFeedbackCard({
           {isRecommended ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow-sm">
               <ShieldCheck className="h-4 w-4" />
-              Attuned & Regulated (Clinical Gold Standard)
+              Attuned & Regulated (Recommended Standard)
             </span>
           ) : isEscalating ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-xs font-bold text-white shadow-sm">
@@ -73,7 +73,7 @@ export function SparringFeedbackCard({
         </div>
       </div>
 
-      {/* 4 Clinical Performance Meters */}
+      {/* 4 Performance Meters */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         <div className="rounded-xl border border-slate-200/80 bg-white/90 p-3 shadow-xs">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mb-1">

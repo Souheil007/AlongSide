@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlongSide — Culture Digest UX Exploration Hub (Phase 2)</title>
+  <title>AlongSide — Culture Digest UX Exploration Hub (Phase 2 · 11 Designs)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
             spruce: '#143D2B',
             'spruce-soft': '#EAF3EE',
             amber: '#B45309',
+            'amber-soft': '#FEF3C7',
           },
           fontFamily: {
             serif: ['Newsreader', 'Georgia', 'serif'],
@@ -44,58 +45,94 @@
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
     }
     .tab-active {
-      background-color: #143D2B;
-      color: #FFFFFF;
-      border-color: #143D2B;
+      background-color: #143D2B !important;
+      color: #FFFFFF !important;
+      border-color: #143D2B !important;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col h-screen overflow-hidden">
 
   <!-- Header & Control Bar -->
-  <header class="bg-card border-b border-hairline px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2">
-        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
-        <span class="text-mute font-mono text-xs">/</span>
-        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Phase 2 Exploration</span>
-      </div>
-      <span class="hidden sm:inline-block font-mono text-xs px-2.5 py-0.5 rounded-full bg-spruce-soft text-spruce border border-hairline font-medium">
-        Task SOU-80 · Culture Digest
-      </span>
-    </div>
-
-    <!-- Direction Selector Tabs -->
-    <div class="flex items-center gap-1.5 bg-canvas-subtle p-1 rounded-xl border border-hairline font-mono text-xs">
-      <button onclick="setDirection('a')" id="btn-dir-a" class="tab-active px-3 py-1.5 rounded-lg font-medium transition shadow-sm">
-        Direction A: Minimal
-      </button>
-      <button onclick="setDirection('b')" id="btn-dir-b" class="px-3 py-1.5 rounded-lg text-body hover:bg-card transition font-medium">
-        Direction B: Visual Codex
-      </button>
-      <button onclick="setDirection('c')" id="btn-dir-c" class="px-3 py-1.5 rounded-lg text-body hover:bg-card transition font-medium">
-        Direction C: Guided Ritual
-      </button>
-    </div>
-
-    <!-- Viewport Switcher & New Tab Actions -->
-    <div class="flex items-center gap-2 font-mono text-xs">
-      <div class="hidden md:flex items-center gap-1 bg-canvas-subtle p-1 rounded-lg border border-hairline">
-        <button onclick="setViewport('desktop')" id="vp-desktop" class="px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs">
-          Desktop (100%)
-        </button>
-        <button onclick="setViewport('tablet')" id="vp-tablet" class="px-2 py-1 rounded text-body hover:bg-card">
-          Tablet (768px)
-        </button>
-        <button onclick="setViewport('mobile')" id="vp-mobile" class="px-2 py-1 rounded text-body hover:bg-card">
-          Mobile (390px)
-        </button>
+  <header class="bg-card border-b border-hairline px-4 sm:px-6 py-2.5 flex flex-col gap-2 shrink-0">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
+          <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+          <span class="text-mute font-mono text-xs">/</span>
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Phase 2 Exploration Hub</span>
+        </div>
+        <span class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-spruce-soft text-spruce border border-hairline font-medium">
+          Task SOU-80 · Culture Digest (11 Working Prototypes)
+        </span>
       </div>
 
-      <a id="external-link" href="prototype-direction-a.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-hairline bg-card hover:bg-canvas-subtle text-spruce font-medium transition">
-        <span>Open Tab</span>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </a>
+      <!-- Viewport Switcher & New Tab Actions -->
+      <div class="flex items-center gap-2 font-mono text-xs">
+        <div class="hidden md:flex items-center gap-1 bg-canvas-subtle p-1 rounded-lg border border-hairline">
+          <button onclick="setViewport('desktop')" id="vp-desktop" class="px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs">
+            Desktop (100%)
+          </button>
+          <button onclick="setViewport('tablet')" id="vp-tablet" class="px-2 py-1 rounded text-body hover:bg-card">
+            Tablet (768px)
+          </button>
+          <button onclick="setViewport('mobile')" id="vp-mobile" class="px-2 py-1 rounded text-body hover:bg-card">
+            Mobile (390px)
+          </button>
+        </div>
+
+        <a id="external-link" href="prototype-direction-i-pulse-companion.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-hairline bg-card hover:bg-canvas-subtle text-spruce font-medium transition">
+          <span>Open Direct Tab</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Direction Selector Bar: Split into 3 Tiers (Hybrids I-K, Immersive D-H, Original A-C) -->
+    <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-hairline font-mono text-xs">
+      
+      <!-- Tier 1: 3 Brand-New Synthesized Hybrids (Recommended by User Feedback) -->
+      <div class="flex items-center gap-1 overflow-x-auto py-0.5">
+        <span class="text-[10px] uppercase tracking-wider text-spruce font-bold mr-1 shrink-0 bg-spruce-soft px-2 py-0.5 rounded border border-spruce/20">⭐ 3 New Hybrids:</span>
+        <button onclick="setDirection('i')" id="btn-dir-i" class="tab-active px-2.5 py-1 rounded-lg border border-hairline text-ink font-medium transition shadow-xs shrink-0">
+          Dir I: Pulse Companion
+        </button>
+        <button onclick="setDirection('j')" id="btn-dir-j" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
+          Dir J: Field Guide Lab
+        </button>
+        <button onclick="setDirection('k')" id="btn-dir-k" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
+          Dir K: Connected Storyfeed
+        </button>
+      </div>
+
+      <!-- Tier 2: 5 Immersive Prototypes (D-H) -->
+      <div class="flex items-center gap-1 overflow-x-auto py-0.5">
+        <span class="text-[10px] uppercase tracking-wider text-amber font-bold mr-1 shrink-0">5 Immersive:</span>
+        <button onclick="setDirection('d')" id="btn-dir-d" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir D: Holodeck
+        </button>
+        <button onclick="setDirection('e')" id="btn-dir-e" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir E: Magazine
+        </button>
+        <button onclick="setDirection('f')" id="btn-dir-f" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir F: Radar
+        </button>
+        <button onclick="setDirection('g')" id="btn-dir-g" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir G: Reels
+        </button>
+        <button onclick="setDirection('h')" id="btn-dir-h" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir H: Capsule
+        </button>
+      </div>
+
+      <!-- Tier 3: Original 3 Prototypes (A-C) -->
+      <div class="flex items-center gap-1 opacity-75 hover:opacity-100 transition">
+        <span class="text-[10px] uppercase tracking-wider text-mute font-semibold mr-1">Original:</span>
+        <button onclick="setDirection('a')" id="btn-dir-a" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">A: Minimal</button>
+        <button onclick="setDirection('b')" id="btn-dir-b" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">B: Codex</button>
+        <button onclick="setDirection('c')" id="btn-dir-c" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">C: Ritual</button>
+      </div>
+
     </div>
   </header>
 
@@ -105,166 +142,324 @@
     <!-- Left: Preview Container -->
     <main class="flex-1 bg-[#EDEDEA] p-2 sm:p-4 flex items-center justify-center overflow-auto">
       <div id="frame-container" class="preview-frame w-full h-full bg-white rounded-xl border border-hairline overflow-hidden flex flex-col">
-        <iframe id="preview-iframe" src="prototype-direction-a.html" class="w-full h-full border-0" title="Prototype Preview"></iframe>
+        <iframe id="preview-iframe" src="prototype-direction-i-pulse-companion.html" class="w-full h-full border-0" title="Prototype Preview"></iframe>
       </div>
     </main>
 
     <!-- Right: Architecture & Critique Drawer (Collapsible) -->
     <aside id="info-drawer" class="w-80 lg:w-96 bg-card border-l border-hairline p-5 overflow-y-auto hidden md:block shrink-0 space-y-5 text-xs">
       <div class="border-b border-hairline pb-3">
-        <span class="font-mono uppercase tracking-wider text-[10px] text-mute">Design Philosophy</span>
+        <span class="font-mono uppercase tracking-wider text-[10px] text-spruce font-bold" id="drawer-tag">Synthesized Hybrid Master</span>
         <h2 id="drawer-title" class="font-serif text-xl font-semibold text-ink mt-0.5">
-          Direction A — Minimal & Focused
+          Direction I — The Sunday Cultural Pulse & Live Companion
         </h2>
         <p id="drawer-desc" class="text-body mt-1 leading-relaxed">
-          The 90-second Sunday morning briefing. Ruthlessly curates down to 1 cultural trend, 1 dinner starter, and 1 clinical translation.
+          The balanced weekly parent cockpit: Synthesizes the Weekly Vibe Barometer & Velocity Pulse, the Living Simulated Peer Feed with Audio Waveform, the Generational Time Translator, and an interactive Sparring Rehearsal with a 1-click dinnertime spark.
         </p>
       </div>
 
       <!-- SOU-80 Core Questions Addressed -->
       <div class="space-y-3 bg-canvas-subtle p-3.5 rounded-xl border border-hairline">
         <span class="font-mono text-spruce font-semibold uppercase tracking-wider text-[10px] block">
-          Core SOU-80 Solutions:
+          Tailored Child Tiers in Action:
         </span>
         
         <div class="space-y-1">
-          <strong class="text-ink font-medium block">1. Lifespan Age Calibration:</strong>
+          <strong class="text-ink font-medium block">Adolescent Tier (Julian · 14 yrs):</strong>
           <p class="text-body leading-relaxed text-[11px]">
-            Replaces static teen slang with age-calibrated reality: Sensory gestures for toddlers (Mateo), recess barter for elementary (Maya), and lingo translation for teens (Julian).
+            Live group chat simulation with voice note playback, decoding 'Crashout' & 'Aura', and testing responses to prevent bedroom door shutdowns.
           </p>
         </div>
 
         <div class="space-y-1">
-          <strong class="text-ink font-medium block">2. Exploit Warnings Resolved:</strong>
+          <strong class="text-ink font-medium block">Elementary Tier (Maya · 8 yrs):</strong>
           <p class="text-body leading-relaxed text-[11px]">
-            Purged the 4-card cybersecurity exploit wall. Replaced with a reassuring Pre-Device Sanctuary badge for young kids, and a calm Digital Horizon note for active smartphones.
+            Recess trading table with Pokemon barter dynamics, Minecraft griefing ethics, and repairing broken playground pinky promises.
+          </p>
+        </div>
+
+        <div class="space-y-1">
+          <strong class="text-ink font-medium block">Toddler Tier (Mateo · 14 mo):</strong>
+          <p class="text-body leading-relaxed text-[11px]">
+            Sensory nursery soundboard with rhythmic mirror loops (Wheels on the bus, high chair physics tests, attunement scripts).
           </p>
         </div>
       </div>
 
       <!-- Evaluation Scores -->
       <div class="space-y-2">
-        <span class="font-mono text-mute uppercase tracking-wider text-[10px] block">Scorecard (out of 10):</span>
+        <span class="font-mono text-mute uppercase tracking-wider text-[10px] block">Evaluation Scorecard (out of 10):</span>
         <div class="grid grid-cols-2 gap-2 text-[11px] font-mono">
           <div class="p-2 rounded bg-canvas-subtle border border-hairline">
-            <span class="text-mute block text-[10px]">Clarity:</span>
-            <span id="score-clarity" class="font-bold text-ink">9.8 / 10</span>
+            <span class="text-mute block text-[10px]">Immersion:</span>
+            <span id="score-immersion" class="text-spruce font-bold text-sm">9.9/10</span>
           </div>
           <div class="p-2 rounded bg-canvas-subtle border border-hairline">
-            <span class="text-mute block text-[10px]">Cognitive Calm:</span>
-            <span id="score-calm" class="font-bold text-spruce">9.9 / 10</span>
+            <span class="text-mute block text-[10px]">Visual Appeal:</span>
+            <span id="score-appeal" class="text-spruce font-bold text-sm">9.9/10</span>
           </div>
           <div class="p-2 rounded bg-canvas-subtle border border-hairline">
-            <span class="text-mute block text-[10px]">Mobile Ease:</span>
-            <span id="score-mobile" class="font-bold text-ink">9.7 / 10</span>
+            <span class="text-mute block text-[10px]">Cognitive Load:</span>
+            <span id="score-load" class="text-ink font-bold text-sm">Optimal</span>
           </div>
           <div class="p-2 rounded bg-canvas-subtle border border-hairline">
-            <span class="text-mute block text-[10px]">Interactivity:</span>
-            <span id="score-interact" class="font-bold text-body">8.2 / 10</span>
+            <span class="text-mute block text-[10px]">Actionability:</span>
+            <span id="score-action" class="text-amber font-bold text-sm">9.9/10</span>
           </div>
         </div>
       </div>
 
-      <!-- Documentation Files Quick Links -->
-      <div class="border-t border-hairline pt-3 space-y-1.5 font-mono text-[11px]">
-        <span class="text-mute uppercase tracking-wider text-[10px] block">Exploration Artifacts:</span>
-        <div class="space-y-1">
-          <a href="PAGE_AUDIT.md" class="text-spruce hover:underline block">📄 PAGE_AUDIT.md</a>
-          <a href="DESIGN_ALTERNATIVES.md" class="text-spruce hover:underline block">📄 DESIGN_ALTERNATIVES.md</a>
-          <a href="DESIGN_COMPARISON.md" class="text-spruce hover:underline block">📄 DESIGN_COMPARISON.md</a>
-        </div>
-      </div>
-
-      <div class="p-3 rounded-lg border border-spruce/20 bg-spruce-soft text-spruce text-[11px] font-mono space-y-1">
-        <strong>Status:</strong> Ready for user review & approval gate.
+      <!-- Key Deliverables & Highlights -->
+      <div class="space-y-2 border-t border-hairline pt-3">
+        <span class="font-mono text-mute uppercase tracking-wider text-[10px] block">UX Mechanics & Innovations:</span>
+        <ul id="drawer-bullets" class="space-y-1.5 text-body text-[11px] list-disc list-inside">
+          <!-- Dynamic bullets -->
+        </ul>
       </div>
     </aside>
 
   </div>
 
   <script>
-    const DIRECTION_METADATA = {
+    const PROTOTYPES = {
+      i: {
+        file: 'prototype-direction-i-pulse-companion.html',
+        tag: '⭐ Synthesized Hybrid Master 01',
+        title: 'Direction I — The Sunday Cultural Pulse & Live Companion',
+        desc: 'The balanced weekly parent cockpit: Synthesizes the Weekly Vibe Barometer & Velocity Pulse, the Living Simulated Peer Feed with Audio Waveform, the Generational Time Translator, and an interactive Sparring Rehearsal with a 1-click dinnertime spark.',
+        immersion: '9.9/10',
+        appeal: '9.9/10',
+        load: 'Optimal (Unified Cockpit)',
+        action: '9.9/10',
+        bullets: [
+          'Weekly Emotional Weather Barometer with 4 visual gauges & cultural velocity chips',
+          'Left Column: Simulated Peer Feed (Discord chat / Recess barter / Nursery sounds) with playable audio waveform',
+          'Right Column: Interactive Vintage Translator (1999 ↔ 2026) + Sparring Rehearsal Studio',
+          'Dinnertime Anchor: High-leverage prompt with 1-click clipboard copy and toast notification'
+        ]
+      },
+      j: {
+        file: 'prototype-direction-j-field-guide-lab.html',
+        tag: '⭐ Synthesized Hybrid Master 02',
+        title: 'Direction J — The Interactive Cultural Field Guide & Empathy Lab',
+        desc: 'Archival field manual meets gamified discovery: Hooks parents with an interactive weekly radar quiz, provides authentic audio pronunciation with cringe meters, visualizes social physics ledgers, and outputs a 3-course dinner tear-sheet.',
+        immersion: '9.8/10',
+        appeal: '9.9/10',
+        load: 'Low-Medium (Gamified)',
+        action: '9.8/10',
+        bullets: [
+          'Interactive Weekly Parent Radar Challenge (1-min quiz with instant confetti feedback)',
+          'Cultural Artifact of the Week with native audio pronunciation & Parental Cringe Meter',
+          'Social Physics Visual Ledger (Aura Balance Sheet / Recess Hierarchy / Toddler Dopamine)',
+          'Perforated 3-Course Dinnertime Tear-Sheet with 1-click clipboard copy for the whole menu'
+        ]
+      },
+      k: {
+        file: 'prototype-direction-k-connected-storyfeed.html',
+        tag: '⭐ Synthesized Hybrid Master 03',
+        title: 'Direction K — The Connected Storyfeed & Dialogue Studio',
+        desc: 'Social media rebuilt for family connection: Mobile-first card stream with story highlight bubbles, animated peer chat, a side-by-side Generational Mirror (1999 vs 2026), an interactive dialogue studio, and a sticky dinnertime prompt bar.',
+        immersion: '9.7/10',
+        appeal: '9.8/10',
+        load: 'Lowest (Feed Stream)',
+        action: '9.8/10',
+        bullets: [
+          'Top Story Navigation Strip with quick-jump avatar bubbles',
+          'Card 1: The Live Scene (Simulated chat with audio waveform note)',
+          'Card 2: The Generational Mirror (Then vs. Now side-by-side comparison)',
+          'Card 3: Interactive Dialogue Rehearsal Studio with simulated child emotional reaction',
+          'Sticky Bottom Prompt Bar: Tonight\'s dinner spark always in reach'
+        ]
+      },
+      d: {
+        file: 'prototype-direction-d-dialogue-simulator.html',
+        tag: '5 New Immersive Paradigms',
+        title: 'Direction D — The Peer World Holodeck & Live Sparring Simulator',
+        desc: 'High-immersion two-sided pedagogical sandbox: Left stage renders an interactive simulated device/environment (Discord chat, Recess barter table, Sensory soundboard). Right stage provides live branching conversation sparring with instant simulated child reactions.',
+        immersion: '9.8/10',
+        appeal: '9.6/10',
+        load: 'Medium (High Interactive Depth)',
+        action: '9.9/10',
+        bullets: [
+          'Live simulated environment viewport (Discord chat, Recess barter desk, Nursery soundboard)',
+          'Playable audio note snippet with dynamic animated waveform visualizer',
+          '3-Choice interactive parent conversation simulator (Lecture vs Cringe vs Calm Bridge)',
+          'Live simulated child reaction with real-time Aura Score / attunement calculation'
+        ]
+      },
+      e: {
+        file: 'prototype-direction-e-visual-magazine.html',
+        tag: '5 New Immersive Paradigms',
+        title: 'Direction E — The Sunday Cultural Dossier & Visual Audio Zine',
+        desc: 'Visual luxury and deep editorial storytelling: drop-cap typography, full-bleed archival cover masthead, 3 inspectable cultural artifacts, an interactive Vibe & Emotional Weather Barometer, and a 3-course Sunday Dinner tear-sheet.',
+        immersion: '9.7/10',
+        appeal: '9.9/10',
+        load: 'Medium (Editorial Reading)',
+        action: '9.4/10',
+        bullets: [
+          'Archival edition masthead with custom date & edition calibration',
+          'Emotional Barometer with dynamic gauges for peer pressure, autonomy, and fatigue',
+          'Inspectable tactile/social artifacts with audio waveform player simulation',
+          'Perforated 3-course Sunday dinner companion tear-sheet (Appetizer, Main, Dessert)'
+        ]
+      },
+      f: {
+        file: 'prototype-direction-f-ecosystem-map.html',
+        tag: '5 New Immersive Paradigms',
+        title: 'Direction F — The Cultural Ecosystem Map & Constellation Radar',
+        desc: 'Spatial intelligence and living constellation graph: visual center core for the child with orbiting cultural clusters (Vernacular, Peer Codes, Media, Blacktop). Clicking any node opens an animated inspector with real dialogue and clinical neurobiology.',
+        immersion: '9.5/10',
+        appeal: '9.7/10',
+        load: 'Low (Visual Discovery)',
+        action: '9.2/10',
+        bullets: [
+          'Concentric orbital radar grid with interactive SVG rings',
+          'Floating interactive nodes with velocity indicators (Surging 🔥, Stable ⚡, Fading ❄️)',
+          'Live slide-in Inspector card with authentic dialogue and neurobiology translation',
+          'Cluster filter buttons to isolate lingo, social codes, and media'
+        ]
+      },
+      g: {
+        file: 'prototype-direction-g-culture-reels.html',
+        tag: '5 New Immersive Paradigms',
+        title: 'Direction G — Sunday Culture Stories & Micro-Reels',
+        desc: 'Mobile-first, tap-through story deck inspired by Substack and NYT visual stories: 5 auto-advancing bite-sized cards covering the Weekly Vibe, Word on the Street, an Interactive Parent Quiz, Say This / Not That, and the Dinner Spark.',
+        immersion: '9.6/10',
+        appeal: '9.8/10',
+        load: 'Lowest (Micro-Bites)',
+        action: '9.7/10',
+        bullets: [
+          '5 full-height story cards with top progress bars and keyboard arrow support',
+          'Interactive Parent Quiz with instant celebratory confetti / coaching feedback',
+          'Side-by-side flip cards for Say This / Never Say That',
+          'Ultra-fast completion time (~60 seconds per child)'
+        ]
+      },
+      h: {
+        file: 'prototype-direction-h-generational-capsule.html',
+        tag: '5 New Immersive Paradigms',
+        title: 'Direction H — The Generational Time Capsule & Cultural Bridge',
+        desc: 'Dual-lens generational comparison: side-by-side retrospective of \'When You Were [Age] in 1999\' vs \'[Child] in 2026\'. Reassures parents that kids have not changed—only the technology has. Features an interactive 90s-to-2026 slang converter machine.',
+        immersion: '9.4/10',
+        appeal: '9.5/10',
+        load: 'Low (Humorous & Nostalgic)',
+        action: '9.6/10',
+        bullets: [
+          'Side-by-side dual era cards: Vintage 1999 vs Current 2026 with pediatric equivalence notes',
+          'Interactive Generational Slang Machine (select 90s phrase → converts to 2026 peer term)',
+          'Dinnertime party game rules for a 5-minute Sunday Slang Swap at the kitchen table',
+          'Emotional relief through laughter and shared developmental vulnerability'
+        ]
+      },
       a: {
         file: 'prototype-direction-a.html',
-        title: 'Direction A — Minimal & Focused',
-        desc: 'The 90-second Sunday morning briefing. Ruthlessly curates down to 1 cultural trend, 1 dinner starter, and 1 clinical translation.',
-        clarity: '9.8 / 10',
-        calm: '9.9 / 10',
-        mobile: '9.7 / 10',
-        interact: '8.2 / 10'
+        tag: 'Original Formats',
+        title: 'Direction A — Minimal & Focused: The Sunday Cultural Almanac',
+        desc: 'A calm, 90-second vertical executive briefing organized into 3 scannable cards: Cultural Climate, Featured Linguistic Signal, and Tonight\'s Table Conversation.',
+        immersion: '7.5/10',
+        appeal: '8.2/10',
+        load: 'Lowest',
+        action: '9.0/10',
+        bullets: [
+          'Clean 3-card vertical hierarchy',
+          'Say This vs Never Say That quick-reference badge',
+          'Replaces exploit warnings with calm Pre-Device / Digital Horizon status pill',
+          '78% reduction in total screen words'
+        ]
       },
       b: {
         file: 'prototype-direction-b.html',
-        title: 'Direction B — Visual & Interactive',
-        desc: 'The Age-Calibrated Cultural Codex. Features a 4-quadrant visual radar, interactive Cringe Thermometer, and a shuffleable dinner prompt deck.',
-        clarity: '9.3 / 10',
-        calm: '9.0 / 10',
-        mobile: '9.1 / 10',
-        interact: '9.8 / 10'
+        tag: 'Original Formats',
+        title: 'Direction B — Visual & Interactive: Cultural Codex & Radar',
+        desc: 'An interactive cultural compass featuring a 4-quadrant visual radar, audio pronunciation simulation, dynamic Cringe Thermometer (1-5 flame scale), and an interactive dinner prompt card deck.',
+        immersion: '8.2/10',
+        appeal: '8.8/10',
+        load: 'Medium',
+        action: '8.8/10',
+        bullets: [
+          '4-quadrant visual cultural radar (Language, Media, Playground, Social)',
+          'Interactive Cringe-o-Meter with animated amber flame gauge',
+          'Audio pronunciation button simulation',
+          'Interactive Dinner Card Deck with shuffle action'
+        ]
       },
       c: {
         file: 'prototype-direction-c.html',
-        title: 'Direction C — Structured & Guided',
-        desc: 'A 3-step Sunday family table ritual: Understand their cultural world, Connect at the dinner table, and Guide developmental boundaries.',
-        clarity: '9.6 / 10',
-        calm: '9.5 / 10',
-        mobile: '9.4 / 10',
-        interact: '9.0 / 10'
+        tag: 'Original Formats',
+        title: 'Direction C — Structured & Guided: Sunday Family Table',
+        desc: 'A step-by-step 3-stage Sunday ritual: Step 1 (Understand their world) → Step 2 (Connect at the Sunday table) → Step 3 (Guide developmental & device boundaries).',
+        immersion: '7.8/10',
+        appeal: '8.4/10',
+        load: 'Low-Medium',
+        action: '9.2/10',
+        bullets: [
+          'Sequential 3-step visual progress rail (Understand → Connect → Guide)',
+          'Central focal point on the Sunday Dinner Table conversation card',
+          'Bifurcated Road guide (Pre-Device wonder vs Active-Device curfew)',
+          'Printable Sunday dinner action tear-sheet'
+        ]
       }
     };
 
-    let currentDir = 'a';
+    let currentDir = 'i';
 
     function setDirection(dir) {
       currentDir = dir;
-      const meta = DIRECTION_METADATA[dir];
-      
-      // Update iframe & external link
-      document.getElementById('preview-iframe').src = meta.file;
-      document.getElementById('external-link').href = meta.file;
+      const data = PROTOTYPES[dir];
 
-      // Update button styling
-      ['a', 'b', 'c'].forEach(d => {
-        const btn = document.getElementById('btn-dir-' + d);
-        if (d === dir) {
-          btn.className = 'tab-active px-3 py-1.5 rounded-lg font-medium transition shadow-sm';
-        } else {
-          btn.className = 'px-3 py-1.5 rounded-lg text-body hover:bg-card transition font-medium';
+      // Update iframe & external link
+      document.getElementById('preview-iframe').src = data.file;
+      document.getElementById('external-link').href = data.file;
+
+      // Update all button states
+      ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'].forEach(d => {
+        const btn = document.getElementById(`btn-dir-${d}`);
+        if (btn) {
+          if (d === dir) {
+            btn.className = "tab-active px-2.5 py-1 rounded-lg border border-hairline font-medium transition shadow-xs shrink-0";
+          } else {
+            btn.className = "px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0";
+          }
         }
       });
 
-      // Update sidebar
-      document.getElementById('drawer-title').textContent = meta.title;
-      document.getElementById('drawer-desc').textContent = meta.desc;
-      document.getElementById('score-clarity').textContent = meta.clarity;
-      document.getElementById('score-calm').textContent = meta.calm;
-      document.getElementById('score-mobile').textContent = meta.mobile;
-      document.getElementById('score-interact').textContent = meta.interact;
+      // Update Drawer
+      document.getElementById('drawer-tag').textContent = data.tag;
+      document.getElementById('drawer-title').textContent = data.title;
+      document.getElementById('drawer-desc').textContent = data.desc;
+      document.getElementById('score-immersion').textContent = data.immersion;
+      document.getElementById('score-appeal').textContent = data.appeal;
+      document.getElementById('score-load').textContent = data.load;
+      document.getElementById('score-action').textContent = data.action;
+
+      const bulletsUl = document.getElementById('drawer-bullets');
+      bulletsUl.innerHTML = data.bullets.map(b => `<li>${b}</li>`).join('');
     }
 
     function setViewport(vp) {
-      const fc = document.getElementById('frame-container');
-      
-      ['desktop', 'tablet', 'mobile'].forEach(v => {
-        const btn = document.getElementById('vp-' + v);
-        if (v === vp) {
-          btn.className = 'px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs';
-        } else {
-          btn.className = 'px-2 py-1 rounded text-body hover:bg-card';
-        }
-      });
+      const frame = document.getElementById('frame-container');
+      const bDesktop = document.getElementById('vp-desktop');
+      const bTablet = document.getElementById('vp-tablet');
+      const bMobile = document.getElementById('vp-mobile');
+
+      bDesktop.className = "px-2 py-1 rounded text-body hover:bg-card";
+      bTablet.className = "px-2 py-1 rounded text-body hover:bg-card";
+      bMobile.className = "px-2 py-1 rounded text-body hover:bg-card";
 
       if (vp === 'desktop') {
-        fc.style.width = '100%';
-        fc.style.maxWidth = '100%';
+        frame.style.width = '100%';
+        bDesktop.className = "px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs";
       } else if (vp === 'tablet') {
-        fc.style.width = '768px';
-        fc.style.maxWidth = '768px';
+        frame.style.width = '768px';
+        bTablet.className = "px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs";
       } else if (vp === 'mobile') {
-        fc.style.width = '390px';
-        fc.style.maxWidth = '390px';
+        frame.style.width = '390px';
+        bMobile.className = "px-2 py-1 rounded bg-card text-ink font-semibold shadow-xs";
       }
     }
+
+    // Default to Direction I (First of the new synthesized hybrids)
+    setDirection('i');
   </script>
 </body>
 </html>

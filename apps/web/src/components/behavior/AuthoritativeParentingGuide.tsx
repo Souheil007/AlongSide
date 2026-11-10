@@ -66,7 +66,7 @@ export function AuthoritativeParentingGuide() {
                 variant="outline"
                 className="text-[11px] font-bold text-teal-900 bg-teal-50 border-teal-200"
               >
-                Diana Baumrind Clinical Framework
+                Diana Baumrind Framework
               </Badge>
             </div>
             <span className="text-xs font-semibold text-slate-500">

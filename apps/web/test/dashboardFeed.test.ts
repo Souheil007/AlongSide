@@ -43,15 +43,15 @@ describe('Holistic Family Dashboard & Unified Navigation UI Specification (PLAN-
       }
     });
 
-    it('features designated badges for key clinical anchors (Safe Resort, HALT, Clinical RAG, Pact-as-Code)', () => {
+    it('features designated badges for key advisory anchors (Sleep & Calm, HALT, AI Advisor, Pact-as-Code)', () => {
       const healthHub = DOMAIN_HUBS.find((h) => h.href === '/health');
-      expect(healthHub?.badge).toBe('Safe Resort');
+      expect(healthHub?.badge).toBe('Sleep & Calm');
 
       const behaviorHub = DOMAIN_HUBS.find((h) => h.href === '/behavior');
       expect(behaviorHub?.badge).toBe('HALT');
 
       const advisorHub = DOMAIN_HUBS.find((h) => h.href === '/advisor');
-      expect(advisorHub?.badge).toBe('Clinical RAG');
+      expect(advisorHub?.badge).toBe('AI Advisor');
 
       const devicesHub = DOMAIN_HUBS.find((h) => h.href === '/devices');
       expect(devicesHub?.badge).toBe('Pact-as-Code');

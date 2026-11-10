@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction E — The Sunday Cultural Dossier & Visual Audio Zine | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            terracotta: '#C85A32',
+            'terracotta-soft': '#FDF2EE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBFBF9;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .archival-mesh {
+      background: radial-gradient(circle at 50% 0%, rgba(20, 61, 43, 0.06) 0%, rgba(200, 90, 50, 0.03) 40%, transparent 70%);
+    }
+    .hairline-card {
+      border: 1px solid #E3E3DC;
+      box-shadow: 0 1px 3px rgba(17, 20, 19, 0.02);
+    }
+    .dropcap::first-letter {
+      font-family: 'Newsreader', Georgia, serif;
+      float: left;
+      font-size: 3.5rem;
+      line-height: 0.85;
+      padding-top: 4px;
+      padding-right: 8px;
+      padding-bottom: 2px;
+      color: #143D2B;
+      font-weight: 600;
+    }
+    .perforated-border {
+      background-image: radial-gradient(circle, #E3E3DC 1.5px, transparent 1.5px);
+      background-size: 8px 8px;
+    }
+  </style>
+</head>
+<body class="min-h-screen archival-mesh p-4 sm:p-6 lg:p-12">
+  <div class="max-w-5xl mx-auto space-y-8">
+
+    <!-- Top Navigation Bar -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 8 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction E: Visual Magazine</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-xs text-mute">Sunday Edition · Vol. 42</span>
+        <button onclick="window.print()" class="px-2.5 py-1 rounded-md border border-hairline bg-card hover:bg-canvas-subtle text-spruce font-mono text-xs transition flex items-center gap-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span>Print Almanac</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Magazine Cover Masthead & Child Selector -->
+    <div class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-hairline pb-6 gap-4">
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-amber font-bold">Curated Cultural Almanac</span>
+            <span class="text-mute font-mono text-xs">•</span>
+            <span class="font-mono text-xs text-mute" id="mag-date">Sunday, November 15, 2026</span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-5xl font-semibold text-ink tracking-tight leading-tight" id="mag-headline">
+            The Hidden Currency of Middle School: Deconstructing "Aura" & "Crashout"
+          </h1>
+          <p class="font-serif text-base sm:text-lg text-body italic leading-relaxed max-w-2xl" id="mag-dek">
+            Why 8th graders have turned emotional composure into a gamified ledger, and how parents can bridge the dinner gap without sounding like an alien.
+          </p>
+        </div>
+
+        <!-- Child Switching Dial -->
+        <div class="bg-canvas-subtle p-3 rounded-xl border border-hairline space-y-2 shrink-0 md:w-64">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block font-semibold">Calibrate Almanac For:</span>
+          <div class="space-y-1.5" id="child-mag-tabs">
+            <button onclick="setChild('julian')" id="btn-mag-julian" class="w-full flex items-center justify-between p-2 rounded-lg bg-spruce text-white font-mono text-xs font-semibold shadow-xs transition">
+              <span class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px]">J</span>
+                <span>Julian · 14 yrs</span>
+              </span>
+              <span class="text-[10px] text-emerald-300">Active</span>
+            </button>
+            <button onclick="setChild('maya')" id="btn-mag-maya" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-card text-body font-mono text-xs transition">
+              <span class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px]">M</span>
+                <span>Maya · 8 yrs</span>
+              </span>
+              <span class="text-[10px] text-mute">Recess</span>
+            </button>
+            <button onclick="setChild('mateo')" id="btn-mag-mateo" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-card text-body font-mono text-xs transition">
+              <span class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-200 text-body flex items-center justify-center text-[10px]">M</span>
+                <span>Mateo · 14 mo</span>
+              </span>
+              <span class="text-[10px] text-mute">Sensory</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vibe & Emotional Weather Barometer -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+        <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Peer Validation Pressure</span>
+          <div class="flex items-baseline justify-between">
+            <span class="font-serif text-2xl font-bold text-ink" id="vibe-pressure">85%</span>
+            <span class="font-mono text-[10px] text-amber font-semibold" id="vibe-pressure-status">High / Acute</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-amber h-full rounded-full" id="vibe-bar-pressure" style="width: 85%"></div>
+          </div>
+        </div>
+
+        <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Desire for Autonomy</span>
+          <div class="flex items-baseline justify-between">
+            <span class="font-serif text-2xl font-bold text-ink" id="vibe-autonomy">90%</span>
+            <span class="font-mono text-[10px] text-spruce font-semibold" id="vibe-autonomy-status">Surging</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-spruce h-full rounded-full" id="vibe-bar-autonomy" style="width: 90%"></div>
+          </div>
+        </div>
+
+        <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Playfulness & Humor</span>
+          <div class="flex items-baseline justify-between">
+            <span class="font-serif text-2xl font-bold text-ink" id="vibe-humor">75%</span>
+            <span class="font-mono text-[10px] text-terracotta font-semibold" id="vibe-humor-status">Irony & Memes</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-terracotta h-full rounded-full" id="vibe-bar-humor" style="width: 75%"></div>
+          </div>
+        </div>
+
+        <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-1">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-mute block">Prefrontal Fatigue</span>
+          <div class="flex items-baseline justify-between">
+            <span class="font-serif text-2xl font-bold text-ink" id="vibe-fatigue">80%</span>
+            <span class="font-mono text-[10px] text-rose-600 font-semibold" id="vibe-fatigue-status">Peak Post-School</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-rose-500 h-full rounded-full" id="vibe-bar-fatigue" style="width: 80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editorial Feature Body & 3 Inspectable Cultural Artifacts -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- Left Column: Narrative Feature & Clinical Breakdown (7 Cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <article class="hairline-card bg-card rounded-2xl p-6 sm:p-8 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-spruce"></span>
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold">The Pediatric Field Essay</span>
+          </div>
+          
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink leading-tight" id="essay-title">
+            Why It Feels Like They Started Speaking Another Language Overnight
+          </h2>
+
+          <div class="prose prose-slate max-w-none text-body space-y-4 leading-relaxed font-sans text-sm sm:text-base" id="essay-body">
+            <p class="dropcap" id="essay-p1">
+              Between the ages of 13 and 15, the human brain undergoes an aggressive wave of synaptic pruning in the prefrontal cortex while the limbic reward system surges with dopamine sensitivity. The result is an intense, evolutionary urgency to belong to a peer tribe rather than the domestic family unit.
+            </p>
+            <p id="essay-p2">
+              Words like "Aura points" and "Crashout" are not random nonsense or brain-rot; they are rapid-fire emotional shorthand designed to establish peer hierarchy without parental surveillance. When Julian talks about gaining or losing Aura, he is actively mapping social risk and psychological safety.
+            </p>
+          </div>
+
+          <!-- Pull Quote Card -->
+          <blockquote class="my-4 border-l-2 border-spruce pl-4 py-2 italic font-serif text-lg text-ink bg-canvas-subtle rounded-r-xl" id="essay-quote">
+            "If you mock their slang, you confirm their fear that you belong to an irrelevant past. If you copy their slang, you induce cringe. The only superpower is calm, playful curiosity."
+          </blockquote>
+        </article>
+
+        <!-- Artifact 1: Deep Linguistic Breakdown Card -->
+        <div class="hairline-card bg-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <span class="font-mono text-xs uppercase tracking-wider text-mute font-bold">Artifact 01 · Linguistic Anatomy</span>
+            <span class="font-mono text-xs text-amber bg-amber-soft px-2.5 py-0.5 rounded-full font-semibold" id="artifact-1-velocity">Velocity: Surging 🔥</span>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-baseline gap-3">
+              <h3 class="font-serif text-2xl font-bold text-ink" id="artifact-1-term">Crashout</h3>
+              <span class="font-mono text-xs text-mute" id="artifact-1-ipa">/ˈkræʃ.aʊt/ · verb/noun</span>
+            </div>
+            <p class="text-xs text-body" id="artifact-1-def">To recklessly explode in anger, abandon emotional regulation, or blow up a social situation without regard for consequences.</p>
+          </div>
+
+          <!-- Audio Waveform Player Simulation -->
+          <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline flex items-center justify-between gap-3">
+            <button onclick="playZineAudio()" id="btn-zine-audio" class="w-9 h-9 rounded-full bg-spruce text-white flex items-center justify-center shrink-0 hover:bg-spruce-light transition shadow-xs">
+              <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between text-[11px] font-mono text-mute">
+                <span>Pronunciation & Peer Cadence</span>
+                <span id="audio-zine-duration">0:06</span>
+              </div>
+              <div class="h-4 flex items-center gap-1 bg-white p-1 rounded border border-hairline">
+                <div class="w-1 bg-spruce h-2 rounded-full"></div>
+                <div class="w-1 bg-spruce h-3 rounded-full"></div>
+                <div class="w-1 bg-spruce h-1 rounded-full"></div>
+                <div class="w-1 bg-amber h-3 rounded-full"></div>
+                <div class="w-1 bg-spruce h-2 rounded-full"></div>
+                <div class="w-1 bg-spruce h-3 rounded-full"></div>
+                <div class="w-1 bg-spruce h-1 rounded-full"></div>
+                <div class="w-1 bg-spruce h-2 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Say This / Say That Comparison Table -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+            <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 space-y-1">
+              <span class="font-mono text-[10px] text-rose-700 font-bold block uppercase tracking-wider">Avoid Saying (The Cringe Tell)</span>
+              <p class="text-rose-900" id="artifact-1-avoid">"Are you crashing out right now Julian? That is so not sigma!"</p>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1">
+              <span class="font-mono text-[10px] text-emerald-700 font-bold block uppercase tracking-wider">Try Saying (The Calm Bridge)</span>
+              <p class="text-emerald-900" id="artifact-1-bridge">"Sounds like that test almost pushed you to a total crashout. What happened?"</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Visual Artifacts & Tear-Sheet (5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- Artifact 2: Physical / Social Artifact Card -->
+        <div class="hairline-card bg-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <span class="font-mono text-xs uppercase tracking-wider text-mute font-bold">Artifact 02 · Social Physics</span>
+            <span class="font-mono text-[10px] text-spruce bg-spruce-soft px-2 py-0.5 rounded font-medium" id="artifact-2-type">Cultural Mechanic</span>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="font-serif text-xl font-bold text-ink" id="artifact-2-title">The Aura Points Ledger</h3>
+            <p class="text-xs text-body leading-relaxed" id="artifact-2-desc">
+              Julian's grade maintains an unwritten social score where everyday awkward moments or smooth maneuvers earn instant points:
+            </p>
+          </div>
+
+          <!-- Micro Scoreboard Simulation -->
+          <div class="bg-canvas-subtle p-3.5 rounded-xl border border-hairline space-y-2 text-xs" id="artifact-2-ledger">
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline">
+              <span class="text-body">Tripping on gym stairs and catching yourself smoothly</span>
+              <span class="font-mono text-emerald-600 font-bold">+200 Aura</span>
+            </div>
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline">
+              <span class="text-body">Voice cracking while asking the teacher a question</span>
+              <span class="font-mono text-rose-600 font-bold">-500 Aura</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-body">Making the entire lunch table choke on milk laughing</span>
+              <span class="font-mono text-emerald-600 font-bold">+1000 Aura</span>
+            </div>
+          </div>
+          <p class="font-mono text-[11px] text-mute italic" id="artifact-2-neuro">
+            🧠 Neuro-Takeaway: Aura is how adolescents regulate anxiety over public humiliation.
+          </p>
+        </div>
+
+        <!-- Sunday Dinner Companion Tear-Sheet Card (3 Courses) -->
+        <div class="hairline-card bg-card rounded-2xl p-6 space-y-4 border-2 border-spruce/20 shadow-md">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              Sunday Dinner Tear-Sheet
+            </span>
+            <span class="font-mono text-[10px] text-mute uppercase tracking-widest">3-Course Menu</span>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <!-- Course 1 -->
+            <div class="space-y-1">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber font-bold">1. Appetizer (Warm-Up Laugh)</span>
+              <p class="font-serif text-sm text-ink font-medium" id="menu-appetizer">
+                "What was the single most diabolical thing someone tried to pull off in class this week?"
+              </p>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="space-y-1">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold">2. Main Course (The Peer Economy)</span>
+              <p class="font-serif text-sm text-ink font-medium" id="menu-main">
+                "If everyone at school had an Aura score, who gained +1,000 points this week without even trying?"
+              </p>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="space-y-1">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-terracotta font-bold">3. Dessert (Generational Swap)</span>
+              <p class="font-serif text-sm text-ink font-medium" id="menu-dessert">
+                "I'll teach you one slang word from when I was 14 if you translate one word from your group chat."
+              </p>
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="pt-3 border-t border-hairline flex items-center justify-between gap-2">
+            <button onclick="copyZineMenu()" id="btn-copy-menu" class="w-full py-2 rounded-lg bg-spruce text-white font-mono text-xs font-semibold hover:bg-spruce-light transition flex items-center justify-center gap-1.5 shadow-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy Tear-Sheet</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const ZINE_DATA = {
+      julian: {
+        headline: "The Hidden Currency of Middle School: Deconstructing 'Aura' & 'Crashout'",
+        dek: "Why 8th graders have turned emotional composure into a gamified ledger, and how parents can bridge the dinner gap without sounding like an alien.",
+        date: "Sunday, November 15, 2026",
+        vibe: { pressure: "85%", pStatus: "High / Acute", pWidth: "85%", autonomy: "90%", aStatus: "Surging", aWidth: "90%", humor: "75%", hStatus: "Irony & Memes", hWidth: "75%", fatigue: "80%", fStatus: "Peak Post-School", fWidth: "80%" },
+        essayTitle: "Why It Feels Like They Started Speaking Another Language Overnight",
+        essayP1: "Between the ages of 13 and 15, the human brain undergoes an aggressive wave of synaptic pruning in the prefrontal cortex while the limbic reward system surges with dopamine sensitivity. The result is an intense, evolutionary urgency to belong to a peer tribe rather than the domestic family unit.",
+        essayP2: "Words like 'Aura points' and 'Crashout' are not random nonsense or brain-rot; they are rapid-fire emotional shorthand designed to establish peer hierarchy without parental surveillance. When Julian talks about gaining or losing Aura, he is actively mapping social risk and psychological safety.",
+        essayQuote: "\"If you mock their slang, you confirm their fear that you belong to an irrelevant past. If you copy their slang, you induce cringe. The only superpower is calm, playful curiosity.\"",
+        art1: {
+          velocity: "Velocity: Surging 🔥",
+          term: "Crashout",
+          ipa: "/ˈkræʃ.aʊt/ · verb/noun",
+          def: "To recklessly explode in anger, abandon emotional regulation, or blow up a social situation without regard for consequences.",
+          avoid: '"Are you crashing out right now Julian? That is so not sigma!"',
+          bridge: '"Sounds like that test almost pushed you to a total crashout. What happened?"'
+        },
+        art2: {
+          type: "Social Mechanic",
+          title: "The Aura Points Ledger",
+          desc: "Julian's grade maintains an unwritten social score where everyday awkward moments or smooth maneuvers earn instant points:",
+          ledger: `
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Tripping on gym stairs and catching yourself smoothly</span><span class="font-mono text-emerald-600 font-bold">+200 Aura</span></div>
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Voice cracking while asking the teacher a question</span><span class="font-mono text-rose-600 font-bold">-500 Aura</span></div>
+            <div class="flex items-center justify-between"><span class="text-body">Making the entire lunch table choke on milk laughing</span><span class="font-mono text-emerald-600 font-bold">+1000 Aura</span></div>
+          `,
+          neuro: "🧠 Neuro-Takeaway: Aura is how adolescents regulate anxiety over public humiliation."
+        },
+        menu: {
+          app: '"What was the single most diabolical thing someone tried to pull off in class this week?"',
+          main: '"If everyone at school had an Aura score, who gained +1,000 points this week without even trying?"',
+          des: '"I\'ll teach you one slang word from when I was 14 if you translate one word from your group chat."'
+        }
+      },
+
+      maya: {
+        headline: "The Playground Wall Street: How 3rd Graders Master Contract Law via Pokemon",
+        dek: "Forget Wall Street. The most ruthless, high-stakes bartering takes place on the blacktop between the monkey bars and the four-square court.",
+        date: "Sunday, November 15, 2026",
+        vibe: { pressure: "55%", pStatus: "Emerging Peer Rules", pWidth: "55%", autonomy: "60%", aStatus: "Growing Fast", aWidth: "60%", humor: "90%", hStatus: "Goofy & Rhymes", hWidth: "90%", fatigue: "65%", fStatus: "Recess Exertion", fWidth: "65%" },
+        essayTitle: "The Birth of Reciprocal Fairness: Why Maya Cares Desperately About 'Fair Trades'",
+        essayP1: "At 8 years old, an elementary child shifts from egocentric play to rule-governed peer societies. They care passionately about fairness, justice, and who is allowed into the secret club. This is the cognitive developmental stage known as concrete operational morality.",
+        essayP2: "When Maya comes home crying that Emma traded her holographic card, she isn't crying about a $2 piece of foil. She is experiencing her first breach of informal social contract. The playground economy is where children learn negotiation, remorse, and social consequence.",
+        essayQuote: "\"Playground trades are training wheels for adulthood. Don't ban the cards; teach the negotiation strategy and the power of the walk-away.\"",
+        art1: {
+          velocity: "Velocity: Peak Staple ⚡",
+          term: "Holo Trade",
+          ipa: "/ˈhoʊ.loʊ treɪd/ · noun",
+          def: "High-stakes 3rd grade playground barter involving rare foil cards, Squishmallow clips, or novelty scented erasers.",
+          avoid: '"It\'s just a piece of cardboard Maya, why are you making such a big drama?"',
+          bridge: '"When someone takes back a trade after shaking hands, it feels like a broken promise. Walk me through the trade deal."'
+        },
+        art2: {
+          type: "Playground Physics",
+          title: "The Recess Currency Hierarchy",
+          desc: "How 8-year-olds value goods on the schoolyard trading benches this month:",
+          ledger: `
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Holographic Charizard / Legendary Card</span><span class="font-mono text-emerald-600 font-bold">Gold Tier</span></div>
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Mini Squishmallow Keychain + Fruit Roll-Up</span><span class="font-mono text-emerald-600 font-bold">Silver Tier</span></div>
+            <div class="flex items-center justify-between"><span class="text-body">Common duplicate cards / broken crayons</span><span class="font-mono text-rose-600 font-bold">Trash Tier</span></div>
+          `,
+          neuro: "🧠 Neuro-Takeaway: Physical trading builds early cognitive frameworks for value exchange and emotional resilience."
+        },
+        menu: {
+          app: '"What was the funniest playground rule invented at recess this week?"',
+          main: '"If you could trade our Monday night bedtime for any chore in the house, what would the deal look like?"',
+          des: '"Two Truths and a Silly Lie: Guess which rule at school was totally made up!"'
+        }
+      },
+
+      mateo: {
+        headline: "The Sensory Symphony: Why Mateo Wants the Exact Same Song 40 Times",
+        dek: "To adult ears, hearing 'The Wheels on the Bus' for the 18th time is maddening. To a 14-month-old brain, it is an ecstatic dopamine victory.",
+        date: "Sunday, November 15, 2026",
+        vibe: { pressure: "10%", pStatus: "Zero Peer Stress", pWidth: "10%", autonomy: "40%", aStatus: "First 'NO!' Sparks", aWidth: "40%", humor: "95%", hStatus: "Peek-a-Boo & Giggle", hWidth: "95%", fatigue: "90%", fStatus: "Nap Dependent", fWidth: "90%" },
+        essayTitle: "The Prediction Engine: Why Repetitive Cadence Wires Toddler Neurobiology",
+        essayP1: "A 14-month-old brain generates over 1 million new neural connections every second. But the world is overwhelming, chaotic, and unpredictable. When Mateo hears a song with a predictable rhythm and rhyme, his brain predicts the next word—and when it arrives, it triggers a flood of calming dopamine.",
+        essayP2: "He is not being stubborn when he demands the same board book or gestures for the same clapping game. He is building his brain's internal predictive model of physical and auditory reality. Every repetition cements syntax, phonemes, and emotional security.",
+        essayQuote: "\"Repetition is the toddler's architectural scaffolding. Every repeated melody tells their nervous system: The world is safe, orderly, and knowable.\"",
+        art1: {
+          velocity: "Velocity: Developmental Anchor 🌱",
+          term: "Mirror Loop",
+          ipa: "/ˈmɪr.ər luːp/ · neurological state",
+          def: "The instant attunement between parent facial expression, vocal pitch (Parentese), and toddler physical gesture.",
+          avoid: '"Stop clapping Mateo, we need to hurry up and put your shoes on!"',
+          bridge: '"Clap clap clap! Look at your hands go! Now let\'s see if shoes can clap on your feet!"'
+        },
+        art2: {
+          type: "Sensorimotor Protocol",
+          title: "The Toddler Dopamine Sequence",
+          desc: "How 14-month-olds map cause, effect, and physical boundaries:",
+          ledger: `
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Parent drops spoon: 'Splat!' + Laughs</span><span class="font-mono text-emerald-600 font-bold">+100 Dopamine</span></div>
+            <div class="flex items-center justify-between pb-1.5 border-b border-hairline"><span class="text-body">Peek-a-Boo: Anticipation face → 'Boo!'</span><span class="font-mono text-emerald-600 font-bold">+300 Dopamine</span></div>
+            <div class="flex items-center justify-between"><span class="text-body">Sudden loud angry scolding</span><span class="font-mono text-rose-600 font-bold">Cortisol Spike</span></div>
+          `,
+          neuro: "🧠 Neuro-Takeaway: Predictable cause-and-effect loops are essential for prefrontal sensory integration."
+        },
+        menu: {
+          app: '"High Chair Mirror: Sing \'Twinkle Twinkle\' but pause before the last word and see if Mateo fills it in."',
+          main: '"Sensory Crunch: Introduce one new texture to his high chair tray tonight (steamed broccoli vs. smooth yogurt)."',
+          des: '"Bedtime Wind-Down: The 3-book predictable loop—same story, quiet voice, dim warm lights."'
+        }
+      }
+    };
+
+    function setChild(childKey) {
+      const data = ZINE_DATA[childKey];
+
+      // Update switcher buttons
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById(`btn-mag-${k}`);
+        if (k === childKey) {
+          btn.className = "w-full flex items-center justify-between p-2 rounded-lg bg-spruce text-white font-mono text-xs font-semibold shadow-xs transition";
+        } else {
+          btn.className = "w-full flex items-center justify-between p-2 rounded-lg hover:bg-card text-body font-mono text-xs transition";
+        }
+      });
+
+      // Update Masthead & Dek
+      document.getElementById('mag-headline').textContent = data.headline;
+      document.getElementById('mag-dek').textContent = data.dek;
+      document.getElementById('mag-date').textContent = data.date;
+
+      // Update Barometer
+      const v = data.vibe;
+      document.getElementById('vibe-pressure').textContent = v.pressure;
+      document.getElementById('vibe-pressure-status').textContent = v.pStatus;
+      document.getElementById('vibe-bar-pressure').style.width = v.pWidth;
+
+      document.getElementById('vibe-autonomy').textContent = v.autonomy;
+      document.getElementById('vibe-autonomy-status').textContent = v.aStatus;
+      document.getElementById('vibe-bar-autonomy').style.width = v.aWidth;
+
+      document.getElementById('vibe-humor').textContent = v.humor;
+      document.getElementById('vibe-humor-status').textContent = v.hStatus;
+      document.getElementById('vibe-bar-humor').style.width = v.hWidth;
+
+      document.getElementById('vibe-fatigue').textContent = v.fatigue;
+      document.getElementById('vibe-fatigue-status').textContent = v.fStatus;
+      document.getElementById('vibe-bar-fatigue').style.width = v.fWidth;
+
+      // Update Essay
+      document.getElementById('essay-title').textContent = data.essayTitle;
+      document.getElementById('essay-p1').textContent = data.essayP1;
+      document.getElementById('essay-p2').textContent = data.essayP2;
+      document.getElementById('essay-quote').textContent = data.essayQuote;
+
+      // Update Artifact 1
+      document.getElementById('artifact-1-velocity').textContent = data.art1.velocity;
+      document.getElementById('artifact-1-term').textContent = data.art1.term;
+      document.getElementById('artifact-1-ipa').textContent = data.art1.ipa;
+      document.getElementById('artifact-1-def').textContent = data.art1.def;
+      document.getElementById('artifact-1-avoid').textContent = data.art1.avoid;
+      document.getElementById('artifact-1-bridge').textContent = data.art1.bridge;
+
+      // Update Artifact 2
+      document.getElementById('artifact-2-type').textContent = data.art2.type;
+      document.getElementById('artifact-2-title').textContent = data.art2.title;
+      document.getElementById('artifact-2-desc').textContent = data.art2.desc;
+      document.getElementById('artifact-2-ledger').innerHTML = data.art2.ledger;
+      document.getElementById('artifact-2-neuro').textContent = data.art2.neuro;
+
+      // Update Dinner Tear Sheet
+      document.getElementById('menu-appetizer').textContent = data.menu.app;
+      document.getElementById('menu-main').textContent = data.menu.main;
+      document.getElementById('menu-dessert').textContent = data.menu.des;
+    }
+
+    let isAudioPlaying = false;
+    function playZineAudio() {
+      const btn = document.getElementById('btn-zine-audio');
+      isAudioPlaying = !isAudioPlaying;
+      if (isAudioPlaying) {
+        btn.innerHTML = `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+      } else {
+        btn.innerHTML = `<svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+      }
+    }
+
+    function copyZineMenu() {
+      const app = document.getElementById('menu-appetizer').textContent;
+      const main = document.getElementById('menu-main').textContent;
+      const des = document.getElementById('menu-dessert').textContent;
+      const text = `Sunday Dinner Menu:\n1. Appetizer: ${app}\n2. Main: ${main}\n3. Dessert: ${des}`;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btn-copy-menu');
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<span>Copied to Clipboard!</span>`;
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+
+    // Default to Julian
+    setChild('julian');
+  </script>
+</body>
+</html>
