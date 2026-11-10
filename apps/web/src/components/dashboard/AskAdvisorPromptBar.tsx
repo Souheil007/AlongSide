@@ -3,14 +3,11 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Bot,
   Sparkles,
-  ArrowRight,
-  MessageSquare,
-  HelpCircle,
+  Mic,
 } from 'lucide-react';
 import { type ChildDTO } from '@alongside/shared';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -19,49 +16,51 @@ export interface AskAdvisorPromptBarProps {
   className?: string;
 }
 
-function getContextualPromptChips(child: ChildDTO | null): string[] {
-  const age = child?.age ?? 8;
-  const name = child?.name ?? 'my child';
-
-  if (age <= 3) {
-    return [
-      `How do I handle bedtime protests when putting ${name} down?`,
-      `How do I safely introduce eggs and thinned peanut butter this week?`,
-      `Is it normal if ${name} isn't pointing with an index finger yet?`,
-      `What are gentle co-regulation scripts for 14-month-old tantrums?`,
-    ];
-  }
-
-  if (age <= 9) {
-    return [
-      `What's an empathetic response when ${name} asks for a smartphone like peers?`,
-      `How do I handle after-school meltdowns and big sensory overload?`,
-      `How can we set healthy tablet boundaries without screaming matches?`,
-      `What are good screen-free logic games to play with ${name}?`,
-    ];
-  }
-
-  if (age <= 12) {
-    return [
-      `How do I evaluate if ${name} is truly ready for a first smartphone?`,
-      `How do I talk about algorithm dopamine loops without sounding preachy?`,
-      `What does the current slang in ${name}'s group mean?`,
-      `How do I set up a pre-unboxing agreement before buying a device?`,
-    ];
-  }
-
-  return [
-    `How can we agree on an 8:30 PM device curfew without an explosion?`,
-    `What are signs ${name} might be hiding private or secret accounts?`,
-    `How do we negotiate weekend gaming autonomy collaboratively?`,
-    `What is the neurobiology behind teen circadian rhythm delay?`,
-  ];
+interface AdvisorScenario {
+  id: 'console' | 'phone' | 'silence';
+  label: string;
+  title: string;
+  badge: string;
+  body: string;
 }
 
+const ADVISOR_SCENARIOS: Record<string, AdvisorScenario> = {
+  console: {
+    id: 'console',
+    label: 'Console Meltdown',
+    title: 'De-escalating Screen Shutdown Meltdowns',
+    badge: 'Actionable Guide',
+    body: 'Do not negotiate time while emotions are high. When video games stop abruptly, the prefrontal dopamine drop mimics physical distress. Offer connection before correction: validate the intense fun of the game, take a 10-second breath together, and transition into dinner.',
+  },
+  phone: {
+    id: 'phone',
+    label: 'Peer Phone Pressure',
+    title: 'When They Say “Everyone Else Has a Phone!”',
+    badge: 'Actionable Guide',
+    body: 'Acknowledge the intense desire to belong without wavering on your family values. Say: "I hear that you feel left out, and that must feel really tough. Our priority is protecting your sleep and focus. Let’s figure out how you can call your friends on the home speaker."',
+  },
+  silence: {
+    id: 'silence',
+    label: 'Slammed Bedroom Door',
+    title: 'Responding to a Slammed Bedroom Door',
+    badge: 'Actionable Guide',
+    body: 'A slammed door is an indicator of an overwhelmed nervous system seeking sensory sanctuary. Give them 15 minutes of quiet time. Knock gently, leave a snack outside, and say: "I love you. I am downstairs whenever you are ready."',
+  },
+};
+
 export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarProps) {
-  const router = useRouter();
+  let router: any = null;
+  try {
+    router = useRouter();
+  } catch {
+    router = null;
+  }
+
   const [question, setQuestion] = React.useState('');
-  const chips = React.useMemo(() => getContextualPromptChips(child), [child]);
+  const [activeScenario, setActiveScenario] = React.useState<'console' | 'phone' | 'silence'>('console');
+  const [connectingVoice, setConnectingVoice] = React.useState(false);
+
+  const scenario = ADVISOR_SCENARIOS[activeScenario]!;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,75 +68,131 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
     if (!query) return;
 
     const childParam = child ? `&childId=${child.id}` : '';
-    router.push(`/advisor?prompt=${encodeURIComponent(query)}${childParam}`);
+    const targetUrl = `/advisor?prompt=${encodeURIComponent(query)}${childParam}`;
+    if (router && typeof router.push === 'function') {
+      router.push(targetUrl);
+    } else if (typeof window !== 'undefined') {
+      window.location.href = targetUrl;
+    }
   };
 
-  const handleSelectChip = (chipText: string) => {
+  const handleLaunchVoice = () => {
+    setConnectingVoice(true);
     const childParam = child ? `&childId=${child.id}` : '';
-    router.push(`/advisor?prompt=${encodeURIComponent(chipText)}${childParam}`);
+    const targetUrl = `/advisor?mode=voice&topic=${activeScenario}${childParam}`;
+    setTimeout(() => {
+      if (router && typeof router.push === 'function') {
+        router.push(targetUrl);
+      } else if (typeof window !== 'undefined') {
+        window.location.href = targetUrl;
+      }
+    }, 400);
   };
 
   return (
-    <Card className={cn('border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px]', className)}>
-      <CardContent className="p-4 sm:p-5 space-y-3.5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B]">
-              <Bot className="h-4 w-4" />
+    <Card
+      className={cn(
+        'border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-2xl overflow-hidden transition-all hover:border-[#143D2B]/30',
+        className
+      )}
+    >
+      <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]/70">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
+              Empathetic Co-Pilot
             </span>
-            <div>
-              <h3 className="font-serif font-semibold text-[#111413] text-sm">
-                24/7 AI Child Advisor
-              </h3>
-              <p className="text-[11px] text-[#494F4C]">
-                Calibrated to {child ? `${child.name} (${child.age} yrs)` : 'your child'} • 250+ scenario developmental vault
-              </p>
-            </div>
+            <CardTitle className="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
+              24/7 AI Child Advisor
+            </CardTitle>
           </div>
-
-          <span className="text-[10px] font-mono text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-[#E3E3DC] self-start sm:self-auto">
-            Instant Co-Regulation Scripts
+          <span className="font-mono text-xs text-[#858C88]">
+            Trained on Developmental Neurobiology • Non-Judgmental
           </span>
         </div>
+      </CardHeader>
 
-        {/* Input Bar Form */}
-        <form onSubmit={handleSubmit} className="flex items-center gap-2">
-          <div className="relative flex-1">
+      <CardContent className="p-5 sm:p-6 space-y-5">
+        {/* Quick Ask Input Bar */}
+        <div className="space-y-3">
+          <form onSubmit={handleSubmit} className="flex gap-2">
             <input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Ask anything about behavior, sleep, health, or limits..."
-              className="w-full min-h-[44px] rounded-[5px] border border-[#E3E3DC] bg-[#FBFBF9] px-4 py-2 text-xs sm:text-sm text-[#111413] placeholder-[#858C88] shadow-2xs focus:border-[#143D2B] focus:outline-none focus:ring-1 focus:ring-[#143D2B]"
+              placeholder="Ask anything: 'He refuses to stop Roblox' or 'How to discuss sleepovers'..."
+              className="flex-1 bg-[#FBFBF9] border border-[#E3E3DC] rounded-xl px-4 py-2.5 text-xs text-[#111413] focus:outline-none focus:ring-1 focus:ring-[#143D2B] shadow-2xs"
             />
+            <Button
+              type="submit"
+              className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#143D2B] text-white text-xs font-semibold hover:bg-[#0E2B1E] transition shadow-2xs shrink-0 cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+              <span>Ask Dr. Alongside</span>
+            </Button>
+          </form>
+
+          {/* Frequent Situations Pills */}
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="font-mono text-[10px] text-[#858C88] self-center">
+              Frequent Situations:
+            </span>
+            {(['console', 'phone', 'silence'] as const).map((key) => {
+              const scen = ADVISOR_SCENARIOS[key]!;
+              const isSelected = activeScenario === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setActiveScenario(key)}
+                  className={cn(
+                    'px-2.5 py-1 rounded-lg text-[11px] font-medium transition cursor-pointer border',
+                    isSelected
+                      ? 'bg-[#143D2B] text-white border-[#143D2B]'
+                      : 'bg-[#FBFBF9] border-[#E3E3DC] text-[#111413] hover:border-[#143D2B]'
+                  )}
+                >
+                  {scen.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Advisory Output Container */}
+        <div className="p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="font-serif font-bold text-sm text-[#111413]">
+              {scenario.title}
+            </span>
+            <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-[#EAF3EE] px-2 py-0.5 rounded border border-[#143D2B]/20">
+              {scenario.badge}
+            </span>
           </div>
 
-          <Button
-            type="submit"
-            className="min-h-[44px] gap-1.5 bg-[#111413] hover:bg-[#143D2B] text-white font-medium text-xs px-4 sm:px-5 shrink-0 rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] transition-colors"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-[#EAF3EE]" />
-            <span>Ask AI</span>
-          </Button>
-        </form>
+          <p className="text-xs text-[#494F4C] leading-relaxed">
+            {scenario.body}
+          </p>
 
-        {/* Suggested Contextual Prompt Chips */}
-        <div className="space-y-1.5 pt-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#858C88]">
-            Suggested Questions:
-          </span>
-          <div className="flex flex-wrap items-center gap-1.5">
-            {chips.map((chip) => (
-              <button
-                key={chip}
-                type="button"
-                onClick={() => handleSelectChip(chip)}
-                className="inline-flex min-h-[34px] items-center gap-1.5 rounded-[5px] border border-[#E3E3DC] bg-[#F4F4F0] px-2.5 py-1 text-[11px] font-mono text-[#494F4C] transition-colors hover:border-[#143D2B] hover:bg-[#FFFFFF] hover:text-[#111413] text-left"
-              >
-                <HelpCircle className="h-3 w-3 text-[#143D2B] shrink-0" />
-                <span className="line-clamp-1">{chip}</span>
-              </button>
-            ))}
+          {/* Voice Roleplay Sparring Simulator Button */}
+          <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs text-[#111413] font-medium">
+                Ready to test what to say? Practice out loud with AI voice simulator.
+              </span>
+            </div>
+
+            <Button
+              type="button"
+              onClick={handleLaunchVoice}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-semibold transition shadow-2xs shrink-0 cursor-pointer min-h-[38px]"
+            >
+              <Mic className="w-3.5 h-3.5" />
+              <span>
+                {connectingVoice ? 'Connecting Voice Simulator...' : '🎙️ Practice Voice Sparring (2 Min)'}
+              </span>
+            </Button>
           </div>
         </div>
       </CardContent>

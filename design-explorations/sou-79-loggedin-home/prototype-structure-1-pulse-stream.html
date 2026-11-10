@@ -486,89 +486,70 @@
     </section>
 
     <!-- ========================================================================================= -->
-    <!-- SECTION 4: 24/7 AI CHILD ADVISOR (DYNAMIC, INTERACTIVE CONVERSATIONAL CO-PILOT) -->
+    <!-- SECTION 4: 24/7 AI CHILD ADVISOR (EMPATHETIC CO-PILOT) -->
     <!-- ========================================================================================= -->
     <section aria-label="24/7 AI Child Advisor" class="bg-white rounded-3xl p-6 sm:p-7 border border-hairline space-y-5">
       
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/70 pb-3">
+      <div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-hairline/70 pb-3">
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-mono text-[11px] font-bold text-forest uppercase tracking-wider">Parent Co-Regulation Co-Pilot</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          </div>
-          <h3 class="font-serif text-xl font-bold text-ink mt-0.5">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-forest font-bold">Empathetic Co-Pilot</span>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-ink mt-0.5">
             24/7 AI Child Advisor
           </h3>
         </div>
-        <span class="font-mono text-[11px] text-whisper">
-          Developmental Neurobiology • Zero Judgment
+        <span class="font-mono text-xs text-whisper">
+          Trained on Developmental Neurobiology • Non-Judgmental
         </span>
       </div>
 
-      <!-- Quick Interactive Scenario Triggers -->
+      <!-- Quick Ask Input Bar -->
       <div class="space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="font-mono text-[10px] uppercase font-bold text-whisper tracking-wider">Immediate Situation Help</span>
-          <span class="font-mono text-[10px] text-whisper">Tap a scenario for instant co-regulation script</span>
+        <div class="flex gap-2">
+          <input id="advisorInput" type="text" placeholder="Ask anything: 'He refuses to stop Roblox' or 'How to discuss sleepovers'..." class="flex-1 bg-sandSoft border border-hairline rounded-xl px-4 py-2.5 text-xs text-ink focus:outline-none focus:ring-1 focus:ring-forest" />
+          <button onclick="submitCustomQuestion()" class="px-5 py-2.5 rounded-xl bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs shrink-0">
+            Ask Dr. Alongside
+          </button>
         </div>
 
-        <div class="flex flex-wrap gap-2">
-          <button onclick="selectAdvisorPrompt('fortnite')" id="promptBtn1" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-forest text-white transition shadow-2xs">
-            ⚡ Meltdown when turning off console
+        <!-- Situation Pills -->
+        <div class="flex flex-wrap gap-2 text-xs items-center">
+          <span class="font-mono text-[10px] text-whisper self-center">Frequent Situations:</span>
+          <button onclick="setAdvisorScenario('console')" id="scenBtn1" class="px-2.5 py-1 rounded-lg bg-forest text-white border border-forest text-[11px] font-medium transition">
+            Console Meltdown
           </button>
-          <button onclick="selectAdvisorPrompt('snapchat')" id="promptBtn2" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-sandSoft border border-hairline text-ink hover:border-forest transition">
-            📱 &ldquo;Everyone in 3rd grade has a phone!&rdquo;
+          <button onclick="setAdvisorScenario('phone')" id="scenBtn2" class="px-2.5 py-1 rounded-lg bg-sandSoft border border-hairline text-[11px] text-ink hover:border-forest transition font-medium">
+            Peer Phone Pressure
           </button>
-          <button onclick="selectAdvisorPrompt('silent')" id="promptBtn3" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-sandSoft border border-hairline text-ink hover:border-forest transition">
-            🤐 Went silent &amp; slammed door after school
+          <button onclick="setAdvisorScenario('silence')" id="scenBtn3" class="px-2.5 py-1 rounded-lg bg-sandSoft border border-hairline text-[11px] text-ink hover:border-forest transition font-medium">
+            Slammed Bedroom Door
           </button>
         </div>
       </div>
 
-      <!-- Live Interactive Response Container + Voice Sparring Simulator Launcher -->
-      <div class="p-5 rounded-2xl bg-sandSoft border border-hairline space-y-4">
-        
-        <div class="flex items-start gap-3">
-          <div class="w-8 h-8 rounded-full bg-forest text-white font-serif font-bold text-sm flex items-center justify-center shrink-0">
-            A
-          </div>
-          <div class="space-y-2 flex-1">
-            <div class="flex items-center justify-between">
-              <span class="font-serif text-sm font-bold text-ink" id="advisorResponseTitle">
-                When Facing an Abrupt Console Shutdown Meltdown
-              </span>
-              <span class="font-mono text-[10px] text-forest font-semibold bg-forest-soft px-2 py-0.5 rounded">Neurobiology Insight</span>
-            </div>
-            
-            <p class="text-xs text-inkMuted leading-relaxed" id="advisorResponseText">
-              His emotional explosion is not defiance; it is a neurological dopamine crash. In video games, the brain receives micro-dopamine hits every 4 seconds. When the power button is hit abruptly, the prefrontal cortex experiences real physical withdrawal.
-            </p>
-
-            <div class="p-3 bg-white rounded-xl border border-hairline space-y-1">
-              <span class="font-mono text-[10px] text-whisper uppercase font-bold">Say this right now:</span>
-              <p class="font-serif text-sm text-ink italic leading-snug" id="advisorScriptText">
-                &ldquo;I know that game was intensely fun. It feels terrible when it has to stop. I'm right here with you. Take two big breaths, and let's go get water together.&rdquo;
-              </p>
-            </div>
-          </div>
+      <!-- Advisory Output Container -->
+      <div class="p-5 rounded-2xl bg-sandSoft border border-hairline space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-serif font-bold text-sm text-ink" id="advisorOutputTitle">
+            De-escalating Screen Shutdown Meltdowns
+          </span>
+          <span class="font-mono text-[10px] text-forest font-bold bg-forest-soft px-2 py-0.5 rounded">Actionable Guide</span>
         </div>
 
-        <!-- Voice Sparring Simulator Launcher Bar -->
+        <p class="text-xs text-inkMuted leading-relaxed" id="advisorOutputBody">
+          Do not negotiate time while emotions are high. When video games stop abruptly, the prefrontal dopamine drop mimics physical distress. Offer connection before correction: validate the intense fun of the game, take a 10-second breath together, and transition into dinner.
+        </p>
+
+        <!-- Voice Roleplay Sparring Simulator Button -->
         <div class="pt-2 border-t border-hairline/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2">
-            <span class="text-base">🎙️</span>
-            <div>
-              <span class="text-xs font-bold text-ink block">Voice Sparring Simulator</span>
-              <span class="text-[11px] text-whisper">Practice this roleplay out loud with our AI child voice simulator before entering his room</span>
-            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs text-ink font-medium">Ready to test what to say? Practice out loud with AI voice simulator.</span>
           </div>
 
-          <button onclick="launchVoiceSparring()" id="btnVoiceSparring" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs shrink-0">
-            <span>Start 2-Min Practice Sparring</span>
-            <span>→</span>
+          <button onclick="startVoiceRoleplay()" id="btnVoiceRoleplay" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forest text-white text-xs font-semibold hover:bg-forest-hover transition shadow-2xs shrink-0">
+            <span>🎙️ Practice Voice Sparring (2 Min)</span>
           </button>
         </div>
-
       </div>
 
     </section>
@@ -696,36 +677,46 @@
       }
     };
 
-    function selectAdvisorPrompt(key) {
-      const data = advisorScenarios[key];
-      document.getElementById('advisorResponseTitle').textContent = data.title;
-      document.getElementById('advisorResponseText').textContent = data.text;
-      document.getElementById('advisorScriptText').textContent = data.script;
-
-      // Reset button styles
-      ['promptBtn1', 'promptBtn2', 'promptBtn3'].forEach(id => {
-        const b = document.getElementById(id);
-        b.classList.remove('bg-forest', 'text-white');
-        b.classList.add('bg-sandSoft', 'border', 'border-hairline', 'text-ink');
+    function setAdvisorScenario(type) {
+      const btn1 = document.getElementById('scenBtn1');
+      const btn2 = document.getElementById('scenBtn2');
+      const btn3 = document.getElementById('scenBtn3');
+      [btn1, btn2, btn3].forEach(b => {
+        if (b) {
+          b.className = "px-2.5 py-1 rounded-lg bg-sandSoft border border-hairline text-[11px] text-ink hover:border-forest transition font-medium";
+        }
       });
 
-      if (key === 'fortnite') {
-        document.getElementById('promptBtn1').classList.add('bg-forest', 'text-white');
-      } else if (key === 'snapchat') {
-        document.getElementById('promptBtn2').classList.add('bg-forest', 'text-white');
+      if (type === 'console') {
+        if (btn1) btn1.className = "px-2.5 py-1 rounded-lg bg-forest text-white border border-forest text-[11px] font-medium transition";
+        document.getElementById('advisorOutputTitle').textContent = 'De-escalating Screen Shutdown Meltdowns';
+        document.getElementById('advisorOutputBody').textContent = 'Do not negotiate time while emotions are high. When video games stop abruptly, the prefrontal dopamine drop mimics physical distress. Offer connection before correction: validate the intense fun of the game, take a 10-second breath together, and transition into dinner.';
+      } else if (type === 'phone') {
+        if (btn2) btn2.className = "px-2.5 py-1 rounded-lg bg-forest text-white border border-forest text-[11px] font-medium transition";
+        document.getElementById('advisorOutputTitle').textContent = 'When They Say “Everyone Else Has a Phone!”';
+        document.getElementById('advisorOutputBody').textContent = 'Acknowledge the intense desire to belong without wavering on your family values. Say: "I hear that you feel left out, and that must feel really tough. Our priority is protecting your sleep and focus. Let’s figure out how you can call your friends on the home speaker."';
       } else {
-        document.getElementById('promptBtn3').classList.add('bg-forest', 'text-white');
+        if (btn3) btn3.className = "px-2.5 py-1 rounded-lg bg-forest text-white border border-forest text-[11px] font-medium transition";
+        document.getElementById('advisorOutputTitle').textContent = 'Responding to a Slammed Bedroom Door';
+        document.getElementById('advisorOutputBody').textContent = 'A slammed door is an indicator of an overwhelmed nervous system seeking sensory sanctuary. Give them 15 minutes of quiet time. Knock gently, leave a snack outside, and say: "I love you. I am downstairs whenever you are ready."';
       }
     }
 
-    function launchVoiceSparring() {
-      const btn = document.getElementById('btnVoiceSparring');
-      btn.innerHTML = '<span>🎙️ Connecting Voice Simulator...</span>';
-      btn.classList.add('bg-emerald-700');
+    function submitCustomQuestion() {
+      const input = document.getElementById('advisorInput');
+      const q = input.value.trim();
+      if (!q) return;
+      document.getElementById('advisorOutputTitle').textContent = `Guidance on: "${q.slice(0, 35)}${q.length > 35 ? '...' : ''}"`;
+      document.getElementById('advisorOutputBody').textContent = `When addressing "${q}", keep your emotional energy lower than your child's. Acknowledge their perspective first before introducing structural limits or guidance. Offer connection before correction.`;
+      input.value = '';
+    }
+
+    function startVoiceRoleplay() {
+      const btn = document.getElementById('btnVoiceRoleplay');
+      btn.textContent = 'Connecting Voice Simulator...';
       setTimeout(() => {
-        alert('Voice Sparring Simulator Active! Speak aloud into your microphone to practice the co-regulation script with the simulated child voice.');
-        btn.innerHTML = '<span>Start 2-Min Practice Sparring</span><span>→</span>';
-        btn.classList.remove('bg-emerald-700');
+        alert('Voice Sparring Simulator Active! Speak your response aloud to test de-escalation pacing with the AI Child.');
+        btn.textContent = '🎙️ Practice Voice Sparring (2 Min)';
       }, 700);
     }
 

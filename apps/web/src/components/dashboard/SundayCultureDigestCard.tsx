@@ -11,10 +11,10 @@ import {
   Copy,
   Check,
   AlertTriangle,
-  Volume2,
+  RotateCw,
 } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { getLatestDigest } from '@/lib/api/digest';
@@ -31,25 +31,62 @@ const STATIC_FALLBACK_DIGEST = {
   conversationStarter:
     'Ask your child what the funniest meme or phrase they heard this week was, and why it made them or their friends laugh.',
   wordOfTheWeek: {
-    term: 'Crashout',
-    phonetic: '/ˈkræʃ.aʊt/',
-    definition: 'An explosive overreaction to minor friction or losing a match.',
-    cringeLevel: 4,
+    term: 'Rizz',
+    phonetic: '/rɪz/',
+    definition: 'Short for charisma. The ability to charm someone through conversation or confidence without trying too hard.',
+    cringeLevel: 3,
   },
   topSlang: [
-    { term: 'Crashout', definition: 'Explosive overreaction', cringe: 4 },
     { term: 'Rizz', definition: 'Effortless charisma/charm', cringe: 3 },
+    { term: 'Crashout', definition: 'Explosive overreaction', cringe: 4 },
     { term: 'Cooked', definition: 'Exhausted, in trouble', cringe: 2 },
   ],
   exploitWarning: {
-    appName: 'Disguised Calculator Vault apps',
-    risk: 'Secondary PIN vault concealing unmonitored browsers or group chats behind a working calculator interface.',
-    guidance: 'Have a calm conversation about device transparency rather than sudden punitive phone searches.',
+    appName: 'Roblox Voice Chat & Trading',
+    risk: "Kids are feeling social pressure to trade 'Adopt Me' pets and cosmetics. Unmoderated spatial voice chat can expose younger tweens to older peer profanity.",
+    guidance: 'Enable account PIN to lock trade requests and restrict spatial voice to verified friends.',
   },
 };
 
+const DINNER_QUESTIONS = [
+  {
+    title: 'The "Rose, Thorn & Banana"',
+    prompt: '“What was one funny or bizarre thing that happened at school today that nobody else noticed?”',
+  },
+  {
+    title: 'The Avatar Swap',
+    prompt: '“If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”',
+  },
+  {
+    title: 'The Schoolyard Rumor',
+    prompt: '“What is one game or app that everyone at school is talking about, but you think is completely overrated?”',
+  },
+  {
+    title: 'The Superpower Trade',
+    prompt: '“Would you rather have unlimited Robux for 1 hour, or be able to pause time in real life whenever you want?”',
+  },
+];
+
+const CRINGE_LABELS = [
+  '1/5 (Zero Cringe)',
+  '2/5 (Mild)',
+  '3/5 (Moderate)',
+  '4/5 (Heavy Cringe)',
+  '5/5 (Nuclear Cringe)',
+];
+
+const CRINGE_NOTES = [
+  'Safe to use casually. Kids will find it normal.',
+  'Acceptable to acknowledge, mild chuckles.',
+  'Safe to understand, but do NOT use it out loud in front of their friends!',
+  'Instant eye-roll guaranteed if uttered by a parent.',
+  'Social catastrophe. Never say this in public or school carpool!',
+];
+
 export function SundayCultureDigestCard({ child, className }: SundayCultureDigestCardProps) {
   const [copied, setCopied] = React.useState(false);
+  const [questionIndex, setQuestionIndex] = React.useState(0);
+  const [cringeLevel, setCringeLevel] = React.useState(3);
 
   const { data } = useQuery({
     queryKey: ['sunday-culture-digest-card'],
@@ -59,9 +96,8 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
 
   const digest = data?.digest;
   const issueNumber = digest?.issueNumber ?? STATIC_FALLBACK_DIGEST.issueNumber;
-  const title = digest?.title ?? STATIC_FALLBACK_DIGEST.title;
-  const conversationStarter =
-    digest?.conversationStarter ?? STATIC_FALLBACK_DIGEST.conversationStarter;
+
+  const currentDinnerQuestion = DINNER_QUESTIONS[questionIndex]!;
 
   const wordOfTheWeek = digest?.slangTerms?.[0]
     ? {
@@ -89,10 +125,14 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
       }
     : STATIC_FALLBACK_DIGEST.exploitWarning;
 
+  const handleShuffleQuestion = () => {
+    setQuestionIndex((prev) => (prev + 1) % DINNER_QUESTIONS.length);
+  };
+
   const handleCopyPrompt = async () => {
     try {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
-        await navigator.clipboard.writeText(conversationStarter);
+        await navigator.clipboard.writeText(currentDinnerQuestion.prompt);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }
@@ -104,169 +144,205 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
   return (
     <Card
       className={cn(
-        'border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] transition-all hover:border-[#143D2B]/30',
+        'border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-2xl overflow-hidden transition-all hover:border-[#143D2B]/30',
         className
       )}
     >
-      <CardHeader className="p-5 pb-3 space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] font-bold">
-              <Sparkles className="h-4 w-4" />
-            </span>
-            <span className="text-xs font-mono font-medium text-[#143D2B] uppercase tracking-wider">
+      <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]/70">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[11px] font-bold text-[#C85A32] uppercase tracking-wider">
+                Living Schoolyard Feed
+              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </div>
+            <CardTitle className="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
               Sunday Youth Culture Digest
-            </span>
+            </CardTitle>
           </div>
-          <Badge
-            variant="outline"
-            className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE]"
-          >
-            Issue #{issueNumber}
-          </Badge>
-        </div>
-
-        <div>
-          <CardTitle className="font-serif text-base sm:text-lg font-semibold text-[#111413] leading-snug line-clamp-2">
-            {title}
-          </CardTitle>
-          <CardDescription className="text-xs text-[#494F4C] mt-1 line-clamp-2 leading-relaxed">
-            Stay effortlessly fluent in tween memes, viral trends, and covert app exploits without policing.
-          </CardDescription>
+          <div className="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <Badge
+              variant="outline"
+              className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full"
+            >
+              Issue #{issueNumber}
+            </Badge>
+            <span className="hidden sm:inline">Pre-Teen Slang &amp; Gaming Radar</span>
+          </div>
         </div>
       </CardHeader>
 
-      <CardContent className="p-5 pt-0 space-y-3.5">
-        {/* Word of the Week Spotlight with Cringe Meter */}
-        <div className="rounded-[8px] border border-[#E3E3DC] bg-[#F4F4F0] p-3 space-y-1.5">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#858C88]">
-                Word of the Week:
-              </span>
-              <span className="font-serif font-bold text-sm text-[#111413]">
-                &ldquo;{wordOfTheWeek.term}&rdquo;
-              </span>
-              {wordOfTheWeek.phonetic && (
-                <span className="text-[10px] text-[#858C88] font-mono">
+      <CardContent className="p-5 sm:p-6 space-y-5">
+        {/* 3-Column Responsive Interactive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Column 1: Interactive Slang Decoder with Cringe Meter */}
+          <div className="p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
+                  Slang of the Week
+                </span>
+                <span className="font-mono text-[10px] text-[#858C88]">
                   {wordOfTheWeek.phonetic}
                 </span>
-              )}
+              </div>
+              <div className="flex items-baseline gap-2">
+                <h4 className="font-serif text-xl font-bold text-[#111413]">
+                  &ldquo;{wordOfTheWeek.term}&rdquo;
+                </h4>
+                <span className="text-xs text-[#494F4C] font-mono">noun / verb</span>
+              </div>
+              <p className="text-[11px] text-[#494F4C] leading-snug">
+                {wordOfTheWeek.definition}
+              </p>
             </div>
 
-            {/* Visual Cringe Meter */}
-            <div className="flex items-center gap-1 font-mono" title={`Cringe Meter: ${wordOfTheWeek.cringeLevel}/5`}>
-              <span className="text-[10px] text-[#858C88]">Cringe:</span>
-              <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5].map((lvl) => (
-                  <span
-                    key={lvl}
+            {/* Interactive Cringe Meter */}
+            <div className="pt-2 border-t border-[#E3E3DC] space-y-1.5">
+              <div className="flex items-center justify-between text-[10px] font-mono">
+                <span className="text-[#858C88]">Parent Cringe Meter:</span>
+                <span className="font-bold text-[#B45309]">
+                  {CRINGE_LABELS[cringeLevel - 1]}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {[1, 2, 3, 4, 5].map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => setCringeLevel(level)}
                     className={cn(
-                      'h-2 w-2 rounded-full',
-                      lvl <= wordOfTheWeek.cringeLevel
-                        ? 'bg-[#B45309]'
-                        : 'bg-[#E3E3DC]'
+                      'flex-1 h-2 rounded-full transition cursor-pointer',
+                      level <= cringeLevel
+                        ? level <= 2
+                          ? 'bg-emerald-500'
+                          : level === 3
+                          ? 'bg-amber-500'
+                          : 'bg-[#C85A32]'
+                        : 'bg-[#E3E3DC] hover:opacity-80'
                     )}
+                    title={`Set Cringe Level ${level}/5`}
                   />
                 ))}
               </div>
-              <span className="text-[10px] font-semibold text-[#B45309] ml-0.5">
-                {wordOfTheWeek.cringeLevel}/5
-              </span>
-            </div>
-          </div>
-
-          <p className="text-xs text-[#494F4C] leading-relaxed">
-            {wordOfTheWeek.definition}
-          </p>
-        </div>
-
-        {/* Sunday Dinner Conversation Prompt */}
-        <div className="rounded-[8px] border border-[#E3E3DC] bg-[#FFFFFF] p-3 space-y-1.5">
-          <div className="flex items-center justify-between gap-2 text-[11px] font-mono font-medium text-[#143D2B]">
-            <div className="flex items-center gap-1.5">
-              <MessageSquare className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
-              <span>Sunday Dinner Table Starter</span>
-            </div>
-            <button
-              onClick={handleCopyPrompt}
-              className="inline-flex items-center gap-1 text-[10px] font-mono font-medium text-[#143D2B] hover:text-[#111413] bg-[#F4F4F0] hover:bg-white px-2 py-0.5 rounded-[4px] border border-[#E3E3DC] transition-colors cursor-pointer"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-3 w-3 text-[#143D2B]" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="h-3 w-3" />
-                  <span>Copy Prompt</span>
-                </>
-              )}
-            </button>
-          </div>
-          <p className="font-serif italic text-xs text-[#111413] leading-relaxed pl-5">
-            &ldquo;{conversationStarter}&rdquo;
-          </p>
-        </div>
-
-        {/* Exploit Early Warning Callout */}
-        {topExploit && (
-          <div className="rounded-[8px] border border-[#B45309]/30 bg-[#FFFBEB] p-2.5 flex items-start gap-2 text-xs">
-            <AlertTriangle className="h-3.5 w-3.5 text-[#B45309] shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <span className="font-mono font-semibold text-[#B45309] block text-[11px]">
-                Exploit Alert: {topExploit.appName}
-              </span>
-              <p className="text-[11px] text-[#494F4C] leading-tight">
-                {topExploit.guidance}
+              <p className="text-[10px] text-[#494F4C] italic leading-tight">
+                {CRINGE_NOTES[cringeLevel - 1]}
               </p>
             </div>
           </div>
-        )}
 
-        {/* Slang Radar Chips */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#858C88]">
-            <div className="flex items-center gap-1">
-              <Flame className="h-3.5 w-3.5 text-[#B45309]" />
-              <span>Trending Radar:</span>
+          {/* Column 2: App & Gaming Safety Spotlight */}
+          <div className="p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#C85A32] font-bold">
+                  App Spotlight
+                </span>
+                <span className="font-mono text-[10px] text-[#858C88]">Ages 8–12</span>
+              </div>
+              <h4 className="font-serif text-base font-bold text-[#111413]">
+                {topExploit.appName}
+              </h4>
+              <p className="text-[11px] text-[#494F4C] leading-snug">
+                {topExploit.risk}
+              </p>
             </div>
-            {topExploit && (
-              <span className="text-[10px] text-[#B45309] font-medium truncate max-w-[170px]">
-                Alert: {topExploit.appName}
+
+            <div className="pt-2 border-t border-[#E3E3DC] flex items-center justify-between">
+              <span className="font-mono text-[10px] text-[#858C88]">Recommended Action</span>
+              <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded border border-[#143D2B]/20">
+                Check Account Pin
               </span>
-            )}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {slangTerms.map((item, idx) => (
-              <span
-                key={idx}
-                title={item.definition}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-[#F4F4F0] text-[#111413] border border-[#E3E3DC]"
-              >
-                <span className="font-semibold">&ldquo;{item.term}&rdquo;</span>
-                {item.definition && (
-                  <span className="text-[10px] text-[#858C88] font-normal hidden sm:inline truncate max-w-[110px]">
-                    • {item.definition}
-                  </span>
-                )}
+
+          {/* Column 3: Dynamic Sunday Dinner Table Starter with Shuffle */}
+          <div className="p-5 rounded-xl bg-[#EAF3EE]/60 border border-[#143D2B]/20 flex flex-col justify-between space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-[#143D2B]" />
+                  <span>Sunday Dinner Table Starter</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={handleShuffleQuestion}
+                  className="inline-flex items-center gap-1 font-mono text-[10px] text-[#143D2B] hover:text-[#0E2B1E] font-bold cursor-pointer"
+                >
+                  <RotateCw className="w-3 h-3" />
+                  <span>Shuffle 🎲</span>
+                </button>
+              </div>
+              <h4 className="font-serif text-base font-bold text-[#111413]">
+                {currentDinnerQuestion.title}
+              </h4>
+              <p className="text-xs text-[#111413] italic leading-snug font-serif">
+                {currentDinnerQuestion.prompt}
+              </p>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between gap-2">
+              <span className="text-[10px] text-[#494F4C] leading-tight">
+                Promotes laughter without interrogation.
               </span>
-            ))}
+              <button
+                type="button"
+                onClick={handleCopyPrompt}
+                className="shrink-0 font-mono text-[10px] font-bold text-[#143D2B] hover:text-[#0E2B1E] px-2.5 py-1 rounded-full bg-white border border-[#143D2B]/30 shadow-2xs transition cursor-pointer flex items-center gap-1"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3 h-3 text-emerald-600" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3 h-3 text-[#143D2B]" />
+                    <span>Copy 📱</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* CTA Link to Full Digest */}
-        <Link href="/digest" className="block w-full pt-1">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-1.5 text-xs font-medium border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-[5px] min-h-[44px]"
-          >
-            <span>Explore Slang Radar & Full Digest</span>
-            <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
-          </Button>
-        </Link>
+        {/* Footer: Trending Slang Tags & Link to Full Digest */}
+        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-[#E3E3DC]/70">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-mono text-[11px] text-[#858C88] flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 text-[#B45309]" />
+              <span>Trending Radar:</span>
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {slangTerms.map((item, idx) => (
+                <span
+                  key={idx}
+                  title={item.definition}
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#F4F4F0] text-[#111413] border border-[#E3E3DC]"
+                >
+                  <span className="font-semibold">&ldquo;{item.term}&rdquo;</span>
+                  {item.definition && (
+                    <span className="text-[10px] text-[#858C88] hidden sm:inline">
+                      • {item.definition}
+                    </span>
+                  )}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <Link href="/digest" className="shrink-0 self-end sm:self-center">
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs font-semibold border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-lg min-h-[38px]"
+            >
+              <span>Explore Slang Radar &amp; Full Digest</span>
+              <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
+            </Button>
+          </Link>
+        </div>
       </CardContent>
     </Card>
   );
