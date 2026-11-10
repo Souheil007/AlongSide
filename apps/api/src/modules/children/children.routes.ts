@@ -32,6 +32,9 @@ const childDtoSchema = {
     developmentalTier: {
       type: 'string',
       enum: [
+        'TIER_0A_INFANCY_0_1',
+        'TIER_0B_TODDLER_1_2',
+        'TIER_0C_OLDER_TODDLER_2_3',
         'TIER_0_INFANCY_TODDLER_0_3',
         'TIER_1_EARLY_CHILDHOOD_4_6',
         'TIER_2_MIDDLE_CHILDHOOD_7_9',
@@ -44,6 +47,8 @@ const childDtoSchema = {
         'TIER_4_AGES_14_PLUS',
       ],
     },
+    ageMonths: { type: ['number', 'null'] },
+    earlyChildhoodTranche: { type: ['string', 'null'] },
     birthDate: { type: ['string', 'null'] },
     dietaryStage: { type: 'string' },
     allergies: { type: 'array', items: { type: 'string' } },
@@ -120,6 +125,9 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
             developmentalTier: {
               type: 'string',
               enum: [
+                'TIER_0A_INFANCY_0_1',
+                'TIER_0B_TODDLER_1_2',
+                'TIER_0C_OLDER_TODDLER_2_3',
                 'TIER_0_INFANCY_TODDLER_0_3',
                 'TIER_1_EARLY_CHILDHOOD_4_6',
                 'TIER_2_MIDDLE_CHILDHOOD_7_9',
@@ -248,6 +256,9 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
             developmentalTier: {
               type: 'string',
               enum: [
+                'TIER_0A_INFANCY_0_1',
+                'TIER_0B_TODDLER_1_2',
+                'TIER_0C_OLDER_TODDLER_2_3',
                 'TIER_0_INFANCY_TODDLER_0_3',
                 'TIER_1_EARLY_CHILDHOOD_4_6',
                 'TIER_2_MIDDLE_CHILDHOOD_7_9',

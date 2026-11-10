@@ -1,8 +1,10 @@
 import {
   calculateChildAge,
+  calculateChildAgeMonths,
   calculateDevelopmentalTier,
   calculateLifespanTier,
   calculateReadinessScore,
+  resolveEarlyChildhoodTranche,
   DevelopmentalTier,
   type ChildDTO,
   type CreateChildInput,
@@ -48,10 +50,13 @@ export class ChildrenService {
   constructor(private readonly repository: ChildrenRepository) {}
 
   async createChild(userId: string, input: CreateChildInput): Promise<ChildDTO> {
+    const age = calculateChildAge(input.birthYear, input.birthMonth);
     const developmentalTier =
       input.developmentalTier && Object.values(DevelopmentalTier).includes(input.developmentalTier as DevelopmentalTier)
         ? (input.developmentalTier as DevelopmentalTier)
-        : calculateDevelopmentalTier(input.birthYear, input.birthMonth);
+        : age <= 3
+          ? calculateLifespanTier(input.birthYear, input.birthMonth)
+          : calculateDevelopmentalTier(input.birthYear, input.birthMonth);
 
     const record = await this.repository.create(userId, {
       ...input,
@@ -92,7 +97,11 @@ export class ChildrenService {
     if (input.developmentalTier && Object.values(DevelopmentalTier).includes(input.developmentalTier as DevelopmentalTier)) {
       developmentalTier = input.developmentalTier as DevelopmentalTier;
     } else if (input.birthYear !== undefined || input.birthMonth !== undefined) {
-      developmentalTier = calculateDevelopmentalTier(birthYear, birthMonth);
+      const age = calculateChildAge(birthYear, birthMonth);
+      developmentalTier =
+        age <= 3
+          ? calculateLifespanTier(birthYear, birthMonth)
+          : calculateDevelopmentalTier(birthYear, birthMonth);
     }
 
     const updated = await this.repository.update(childId, userId, {
@@ -175,6 +184,12 @@ export class ChildrenService {
 
   private mapToDTO(record: ChildRecord): ChildDTO {
     const age = calculateChildAge(record.birthYear, record.birthMonth);
+    const birthDate = record.birthDate
+      ? new Date(record.birthDate)
+      : new Date(record.birthYear, record.birthMonth - 1, 1);
+    const ageMonths = calculateChildAgeMonths(birthDate);
+    const earlyChildhoodTranche =
+      ageMonths <= 36 ? resolveEarlyChildhoodTranche(ageMonths) : null;
 
     return {
       id: record.id,
@@ -183,6 +198,8 @@ export class ChildrenService {
       birthYear: record.birthYear,
       birthMonth: record.birthMonth,
       age,
+      ageMonths,
+      earlyChildhoodTranche,
       roadType: record.roadType,
       developmentalTier: record.developmentalTier,
       schoolGrade: record.schoolGrade,

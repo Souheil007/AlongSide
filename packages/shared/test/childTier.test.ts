@@ -1,14 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import {
   calculateChildAge,
+  calculateChildAgeMonths,
   calculateDevelopmentalTier,
+  calculateLifespanTier,
   mapAgeToDevelopmentalTier,
+  mapAgeToLifespanTier,
+  resolveEarlyChildhoodTranche,
 } from '../src/algorithms/childTier.js';
 import {
   calculateReadinessScore,
   READINESS_DIMENSIONS,
 } from '../src/algorithms/readinessScoring.js';
-import { DevelopmentalTier } from '../src/constants/index.js';
+import { DevelopmentalTier, EarlyChildhoodTranche } from '../src/constants/index.js';
 
 describe('childTier algorithm', () => {
   const mockCurrentDate = new Date('2026-11-03T12:00:00Z');
@@ -33,8 +37,86 @@ describe('childTier algorithm', () => {
     });
   });
 
-  describe('mapAgeToDevelopmentalTier', () => {
-    it('maps infancy/toddlerhood (ages 0-3) to TIER_0_INFANCY_TODDLER_0_3', () => {
+  describe('resolveEarlyChildhoodTranche', () => {
+    it('resolves all 7 intra-tier sub-tranches accurately', () => {
+      // 0-3m: Fourth Trimester
+      expect(resolveEarlyChildhoodTranche(0)).toBe(EarlyChildhoodTranche.INFANT_FOURTH_TRIMESTER_0_3M);
+      expect(resolveEarlyChildhoodTranche(2)).toBe(EarlyChildhoodTranche.INFANT_FOURTH_TRIMESTER_0_3M);
+      expect(resolveEarlyChildhoodTranche(3)).toBe(EarlyChildhoodTranche.INFANT_FOURTH_TRIMESTER_0_3M);
+
+      // 4-6m: Awakening & Allergen Window
+      expect(resolveEarlyChildhoodTranche(4)).toBe(EarlyChildhoodTranche.INFANT_AWAKENING_4_6M);
+      expect(resolveEarlyChildhoodTranche(6)).toBe(EarlyChildhoodTranche.INFANT_AWAKENING_4_6M);
+
+      // 7-12m: Mobile Explorer
+      expect(resolveEarlyChildhoodTranche(7)).toBe(EarlyChildhoodTranche.INFANT_MOBILE_EXPLORER_7_12M);
+      expect(resolveEarlyChildhoodTranche(12)).toBe(EarlyChildhoodTranche.INFANT_MOBILE_EXPLORER_7_12M);
+
+      // 12-18m: First Steps & Locomotion
+      expect(resolveEarlyChildhoodTranche(13)).toBe(EarlyChildhoodTranche.TODDLER_FIRST_STEPS_12_18M);
+      expect(resolveEarlyChildhoodTranche(18)).toBe(EarlyChildhoodTranche.TODDLER_FIRST_STEPS_12_18M);
+
+      // 18-24m: Language Burst
+      expect(resolveEarlyChildhoodTranche(19)).toBe(EarlyChildhoodTranche.TODDLER_LANGUAGE_BURST_18_24M);
+      expect(resolveEarlyChildhoodTranche(24)).toBe(EarlyChildhoodTranche.TODDLER_LANGUAGE_BURST_18_24M);
+
+      // 24-30m: Autonomy & Boundaries
+      expect(resolveEarlyChildhoodTranche(25)).toBe(EarlyChildhoodTranche.OLDER_TODDLER_AUTONOMY_24_30M);
+      expect(resolveEarlyChildhoodTranche(30)).toBe(EarlyChildhoodTranche.OLDER_TODDLER_AUTONOMY_24_30M);
+
+      // 30-36m: Preschool Preparation
+      expect(resolveEarlyChildhoodTranche(31)).toBe(EarlyChildhoodTranche.OLDER_TODDLER_PRESCHOOL_PREP_30_36M);
+      expect(resolveEarlyChildhoodTranche(36)).toBe(EarlyChildhoodTranche.OLDER_TODDLER_PRESCHOOL_PREP_30_36M);
+    });
+
+    it('returns null for ages outside 0-36 months', () => {
+      expect(resolveEarlyChildhoodTranche(-1)).toBeNull();
+      expect(resolveEarlyChildhoodTranche(37)).toBeNull();
+      expect(resolveEarlyChildhoodTranche(48)).toBeNull();
+    });
+  });
+
+  describe('mapAgeToLifespanTier', () => {
+    it('decomposes early childhood into 0A, 0B, 0C when ageMonths is provided', () => {
+      expect(mapAgeToLifespanTier(0, 2)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(mapAgeToLifespanTier(1, 12)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(mapAgeToLifespanTier(1, 15)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+      expect(mapAgeToLifespanTier(2, 24)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+      expect(mapAgeToLifespanTier(2, 28)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+      expect(mapAgeToLifespanTier(3, 36)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+    });
+
+    it('decomposes early childhood when only age in years is provided', () => {
+      expect(mapAgeToLifespanTier(0)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(mapAgeToLifespanTier(1)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(mapAgeToLifespanTier(2)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+      expect(mapAgeToLifespanTier(3)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+      expect(mapAgeToLifespanTier(5)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+      expect(mapAgeToLifespanTier(8)).toBe(DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9);
+      expect(mapAgeToLifespanTier(11)).toBe(DevelopmentalTier.TIER_3_PRE_TEEN_10_12);
+      expect(mapAgeToLifespanTier(14)).toBe(DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15);
+      expect(mapAgeToLifespanTier(17)).toBe(DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18);
+    });
+  });
+
+  describe('calculateLifespanTier', () => {
+    it('computes decomposed early childhood tiers from birth year and month', () => {
+      // Born May 2026 -> 6 months in Nov 2026 -> Tier 0A
+      expect(calculateLifespanTier(2026, 5, mockCurrentDate)).toBe(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+
+      // Born Jan 2025 -> 22 months in Nov 2026 -> Tier 0B
+      expect(calculateLifespanTier(2025, 1, mockCurrentDate)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+
+      // Born Nov 2023 -> 36 months in Nov 2026 -> Tier 0C
+      expect(calculateLifespanTier(2023, 11, mockCurrentDate)).toBe(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+
+      // Born Nov 2021 -> age 5 in Nov 2026 -> Tier 1
+      expect(calculateLifespanTier(2021, 11, mockCurrentDate)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
+    });
+  });
+
+  describe('mapAgeToDevelopmentalTier (legacy backward compatibility)', () => {
+    it('maps infancy/toddlerhood (ages 0-3) to TIER_0_INFANCY_TODDLER_0_3 in legacy mode', () => {
       expect(mapAgeToDevelopmentalTier(0)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
       expect(mapAgeToDevelopmentalTier(2)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
       expect(mapAgeToDevelopmentalTier(3)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);

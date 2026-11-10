@@ -55,10 +55,35 @@ describe('Behavioral Translation & De-escalation Scripts API (PLAN-16)', () => {
       expect(payload.success).toBe(true);
       expect(payload.data.guides.length).toBeGreaterThan(0);
 
+      const earlyChildhoodTiers = [
+        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+      ];
       const allMatchTier = payload.data.guides.every(
-        (g: any) => g.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        (g: any) => earlyChildhoodTiers.includes(g.targetTier)
       );
       expect(allMatchTier).toBe(true);
+    });
+
+    it('filters behavioral guides by decomposed tier (TIER_0A_INFANCY_0_1)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: `/api/v1/behavior/guides?tier=${DevelopmentalTier.TIER_0A_INFANCY_0_1}`,
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.guides.length).toBeGreaterThan(0);
+      expect(
+        payload.data.guides.every(
+          (g: any) =>
+            g.targetTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+            g.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        )
+      ).toBe(true);
     });
   });
 

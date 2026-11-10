@@ -25,8 +25,11 @@ export const RoadType = {
 export type RoadType = (typeof RoadType)[keyof typeof RoadType];
 
 export const DevelopmentalTier = {
-  // v2.4 6 Canonical Lifespan Tiers
-  TIER_0_INFANCY_TODDLER_0_3: 'TIER_0_INFANCY_TODDLER_0_3',
+  // v2.6 8 Canonical Lifespan Tiers (Tier 0 decomposed)
+  TIER_0A_INFANCY_0_1: 'TIER_0A_INFANCY_0_1',
+  TIER_0B_TODDLER_1_2: 'TIER_0B_TODDLER_1_2',
+  TIER_0C_OLDER_TODDLER_2_3: 'TIER_0C_OLDER_TODDLER_2_3',
+  TIER_0_INFANCY_TODDLER_0_3: 'TIER_0_INFANCY_TODDLER_0_3', // Preserved for backward compatibility
   TIER_1_EARLY_CHILDHOOD_4_6: 'TIER_1_EARLY_CHILDHOOD_4_6',
   TIER_2_MIDDLE_CHILDHOOD_7_9: 'TIER_2_MIDDLE_CHILDHOOD_7_9',
   TIER_3_PRE_TEEN_10_12: 'TIER_3_PRE_TEEN_10_12',
@@ -40,6 +43,17 @@ export const DevelopmentalTier = {
   TIER_4_AGES_14_PLUS: 'TIER_4_AGES_14_PLUS',
 } as const;
 export type DevelopmentalTier = (typeof DevelopmentalTier)[keyof typeof DevelopmentalTier];
+
+export const EarlyChildhoodTranche = {
+  INFANT_FOURTH_TRIMESTER_0_3M: 'INFANT_FOURTH_TRIMESTER_0_3M',
+  INFANT_AWAKENING_4_6M: 'INFANT_AWAKENING_4_6M',
+  INFANT_MOBILE_EXPLORER_7_12M: 'INFANT_MOBILE_EXPLORER_7_12M',
+  TODDLER_FIRST_STEPS_12_18M: 'TODDLER_FIRST_STEPS_12_18M',
+  TODDLER_LANGUAGE_BURST_18_24M: 'TODDLER_LANGUAGE_BURST_18_24M',
+  OLDER_TODDLER_AUTONOMY_24_30M: 'OLDER_TODDLER_AUTONOMY_24_30M',
+  OLDER_TODDLER_PRESCHOOL_PREP_30_36M: 'OLDER_TODDLER_PRESCHOOL_PREP_30_36M',
+} as const;
+export type EarlyChildhoodTranche = (typeof EarlyChildhoodTranche)[keyof typeof EarlyChildhoodTranche];
 
 export const AcademyCategory = {
   BEHAVIOR_AND_EMOTIONS: 'BEHAVIOR_AND_EMOTIONS',

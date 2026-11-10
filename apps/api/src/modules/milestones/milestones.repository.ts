@@ -4,12 +4,13 @@ import {
   type PrismaClient,
   MILESTONES_SEED_DATA,
 } from '@alongside/database';
-import type {
-  DevelopmentalTier,
-  MilestoneCategory,
-  MilestoneDTO,
-  ChildMilestoneDTO,
-  MilestoneStatus,
+import {
+  type DevelopmentalTier,
+  type MilestoneCategory,
+  type MilestoneDTO,
+  type ChildMilestoneDTO,
+  type MilestoneStatus,
+  getEquivalentTiers,
 } from '@alongside/shared';
 
 export interface MilestoneFilterOptions {
@@ -36,7 +37,10 @@ export class PrismaMilestonesRepository implements MilestonesRepository {
 
   async findMilestones(filter?: MilestoneFilterOptions): Promise<MilestoneDTO[]> {
     const where: any = {};
-    if (filter?.tier) where.targetTier = filter.tier;
+    if (filter?.tier) {
+      const equivalents = getEquivalentTiers(filter.tier);
+      where.targetTier = equivalents.length === 1 ? equivalents[0] : { in: equivalents };
+    }
     if (filter?.category) where.category = filter.category;
     if (filter?.ageMonths !== undefined) where.targetAgeMonths = { lte: filter.ageMonths };
 
@@ -161,7 +165,8 @@ export class InMemoryMilestonesRepository implements MilestonesRepository {
     let result = [...this.milestones];
 
     if (filter?.tier) {
-      result = result.filter((m) => m.targetTier === filter.tier);
+      const equivalents = new Set(getEquivalentTiers(filter.tier));
+      result = result.filter((m) => equivalents.has(m.targetTier));
     }
     if (filter?.category) {
       result = result.filter((m) => m.category === filter.category);

@@ -1,6 +1,6 @@
 import {
   AcademyCategory,
-  type DevelopmentalTier,
+  DevelopmentalTier,
   AcademyCategoryStatsDTO,
   AcademyModuleDTO,
   AcademyModuleDetailDTO,
@@ -56,7 +56,14 @@ export async function getAcademyCategories(params?: {
     if (params?.tier && params.tier !== 'ALL') {
       return Object.values(AcademyCategory).map((cat) => {
         const catModules = MOCK_ACADEMY_MODULES.filter(
-          (m) => m.category === cat && m.developmentalTier === params.tier
+          (m) =>
+            m.category === cat &&
+            (m.developmentalTier === params.tier ||
+              (params.tier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 &&
+                (m.developmentalTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+                  m.developmentalTier === DevelopmentalTier.TIER_0B_TODDLER_1_2 ||
+                  m.developmentalTier === DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3 ||
+                  m.developmentalTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3)))
         );
         const meta = MOCK_ACADEMY_CATEGORIES.find((c) => c.category === cat);
         return {
@@ -101,7 +108,15 @@ export async function getAcademyModules(params?: {
       filtered = filtered.filter((m) => m.category === params.category);
     }
     if (params?.tier && params.tier !== 'ALL') {
-      filtered = filtered.filter((m) => m.developmentalTier === params.tier);
+      filtered = filtered.filter(
+        (m) =>
+          m.developmentalTier === params.tier ||
+          (params.tier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 &&
+            (m.developmentalTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+              m.developmentalTier === DevelopmentalTier.TIER_0B_TODDLER_1_2 ||
+              m.developmentalTier === DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3 ||
+              m.developmentalTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3))
+      );
     }
     return filtered;
   }

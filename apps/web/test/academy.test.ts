@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { DevelopmentalTier } from '@alongside/shared';
 import { getTierBadgeInfo } from '../src/components/academy/ModuleCard';
 import {
@@ -9,6 +9,12 @@ import {
 } from '../src/lib/api/academy';
 
 describe('Parent Intelligence Academy Component & API Specification', () => {
+  const originalFetch = global.fetch;
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    vi.restoreAllMocks();
+  });
   describe('Developmental Tier Badge Mapping', () => {
     it('maps Tier 0 (Ages 0-3) to Infancy & Toddler with rose styling', () => {
       const badge = getTierBadgeInfo(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);

@@ -34,13 +34,18 @@ export function getStoredActiveChildId(): string | null {
 }
 
 /**
- * Pure helper to format a child's age in human-friendly shorthand (e.g., "14 mo", "8 yrs").
+ * Pure helper to format a child's age in human-friendly shorthand (e.g., "4 mo", "14 mo", "8 yrs").
  */
 export function formatChildAge(child: {
   age: number;
   birthYear?: number;
   birthMonth?: number;
+  ageMonths?: number | null;
 }): string {
+  if (typeof child.ageMonths === 'number' && child.ageMonths >= 0 && child.ageMonths < 24) {
+    return `${Math.max(1, child.ageMonths)} mo`;
+  }
+
   if (child.birthYear && child.birthMonth) {
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -51,38 +56,108 @@ export function formatChildAge(child: {
     }
   }
 
-  if (child.age === 0) return '< 1 yr';
+  if (child.age === 0) {
+    if (typeof child.ageMonths === 'number' && child.ageMonths >= 0) {
+      return `${Math.max(1, child.ageMonths)} mo`;
+    }
+    return '< 1 yr';
+  }
   if (child.age === 1) return '1 yr';
   return `${child.age} yrs`;
 }
 
 /**
  * Pure helper to return the developmental horizon, subtitle, and stage by age or tier.
+ * Decomposes early childhood into 0A (0-1), 0B (1-2), 0C (2-3) and maintains full backward compatibility.
  */
 export function getChildDevelopmentalHorizon(
   tierOrAge: string | number | DevelopmentalTier
 ): DevelopmentalHorizonInfo {
+  // Direct matching for canonical decomposed early childhood tiers
+  if (typeof tierOrAge === 'string') {
+    if (
+      tierOrAge === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3 ||
+      tierOrAge === 'TIER_0_INFANCY_TODDLER_0_3' ||
+      tierOrAge === 'TIER_0'
+    ) {
+      return {
+        horizon: 'Speech, Sensory Play & Walking Window',
+        subtitle: 'Sensory exploration, first words, locomotor safety & circadian rhythm foundations.',
+        stage: 'Infancy & Toddlerhood (0–3 yrs)',
+        tierLabel: 'Tier 0: Infancy & Toddler',
+        badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
+      };
+    }
+    if (tierOrAge.includes('TIER_0A') || tierOrAge.endsWith('0_1') || tierOrAge === 'infancy-0-1') {
+      return {
+        horizon: 'Somatic Regulation & Sleep Architecture Window',
+        subtitle: 'Circadian rhythm establishment, exclusive milk/feeding foundations, responsive soothing & secure attachment.',
+        stage: 'Infancy (0–12 mo / Ages 0–1)',
+        tierLabel: 'Tier 0A: Infancy',
+        badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
+      };
+    }
+    if (tierOrAge.includes('TIER_0B') || tierOrAge.endsWith('1_2') || tierOrAge === 'toddler-1-2') {
+      return {
+        horizon: 'Locomotion & Language Burst Window',
+        subtitle: 'Walking agility, first words, pre-verbal amygdala co-regulation & exploratory play boundaries.',
+        stage: 'Younger Toddlerhood (12–24 mo / Ages 1–2)',
+        tierLabel: 'Tier 0B: Younger Toddler',
+        badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
+      };
+    }
+    if (tierOrAge.includes('TIER_0C') || tierOrAge.endsWith('2_3') || tierOrAge === 'older-toddler-2-3') {
+      return {
+        horizon: 'Autonomy, Boundary Testing & Potty Learning Window',
+        subtitle: 'Developing willful autonomy, firm loving limits without shame, emotional labeling & toilet learning.',
+        stage: 'Older Toddlerhood (24–36 mo / Ages 2–3)',
+        tierLabel: 'Tier 0C: Older Toddler',
+        badgeColor: 'bg-orange-100 text-orange-800 border-orange-200',
+      };
+    }
+  }
+
   let age = typeof tierOrAge === 'number' ? tierOrAge : 8;
 
   if (typeof tierOrAge === 'string') {
-    if (tierOrAge.includes('TIER_0') || tierOrAge.includes('0_3')) age = 2;
-    else if (tierOrAge.includes('TIER_1_EARLY') || tierOrAge.includes('4_6')) age = 5;
-    else if (tierOrAge.includes('TIER_2_MIDDLE') || tierOrAge.includes('7_9')) age = 8;
+    if (tierOrAge.includes('TIER_0_') || tierOrAge.endsWith('0_3')) age = 2;
+    else if (tierOrAge.includes('TIER_1_EARLY') || tierOrAge.endsWith('4_6')) age = 5;
+    else if (tierOrAge.includes('TIER_2_MIDDLE') || tierOrAge.endsWith('7_9')) age = 8;
     else if (tierOrAge.includes('TIER_1_AGES_8_9')) age = 8;
-    else if (tierOrAge.includes('TIER_3_PRE_TEEN') || tierOrAge.includes('10_12')) age = 11;
+    else if (tierOrAge.includes('TIER_3_PRE_TEEN') || tierOrAge.endsWith('10_12')) age = 11;
     else if (tierOrAge.includes('TIER_2_AGES_10_11')) age = 11;
-    else if (tierOrAge.includes('TIER_4_EARLY_ADOLESCENCE') || tierOrAge.includes('13_15')) age = 14;
+    else if (tierOrAge.includes('TIER_4_EARLY_ADOLESCENCE') || tierOrAge.endsWith('13_15')) age = 14;
     else if (tierOrAge.includes('TIER_3_AGES_12_13')) age = 13;
-    else if (tierOrAge.includes('TIER_5_LATE') || tierOrAge.includes('16_18') || tierOrAge.includes('TIER_4_AGES_14_PLUS')) age = 16;
+    else if (tierOrAge.includes('TIER_5_LATE') || tierOrAge.endsWith('16_18') || tierOrAge.includes('TIER_4_AGES_14_PLUS')) age = 16;
   }
 
-  if (age <= 3) {
+  if (age <= 1) {
     return {
-      horizon: 'Speech, Sensory Play & Walking Window',
-      subtitle: 'Sensory-motor discovery, first 50 words, safe baby-led weaning & emotional co-regulation.',
-      stage: 'Infancy & Toddlerhood (0–3 yrs)',
-      tierLabel: 'Tier 0: Infancy & Toddler',
+      horizon: 'Somatic Regulation & Sleep Architecture Window',
+      subtitle: 'Circadian rhythm establishment, exclusive milk/feeding foundations, responsive soothing & secure attachment.',
+      stage: 'Infancy (0–12 mo / Ages 0–1)',
+      tierLabel: 'Tier 0A: Infancy',
+      badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
+    };
+  }
+
+  if (age === 2) {
+    return {
+      horizon: 'Locomotion & Language Burst Window',
+      subtitle: 'Walking agility, first words, pre-verbal amygdala co-regulation & exploratory play boundaries.',
+      stage: 'Younger Toddlerhood (12–24 mo / Ages 1–2)',
+      tierLabel: 'Tier 0B: Younger Toddler',
       badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
+    };
+  }
+
+  if (age === 3) {
+    return {
+      horizon: 'Autonomy, Boundary Testing & Potty Learning Window',
+      subtitle: 'Developing willful autonomy, firm loving limits without shame, emotional labeling & toilet learning.',
+      stage: 'Older Toddlerhood (24–36 mo / Ages 2–3)',
+      tierLabel: 'Tier 0C: Older Toddler',
+      badgeColor: 'bg-orange-100 text-orange-800 border-orange-200',
     };
   }
 
@@ -204,7 +279,7 @@ export const DEMO_FAMILY_CHILDREN: ChildDTO[] = [
     birthMonth: (new Date().getMonth() + 11) % 12 || 12, // ~14 months old
     age: 1,
     roadType: RoadType.PRE_DEVICE,
-    developmentalTier: 'TIER_0_INFANCY_TODDLER_0_3' as unknown as DevelopmentalTier,
+    developmentalTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     schoolGrade: 'Infant Daycare',
     latestAssessmentScore: null,
     createdAt: new Date().toISOString(),

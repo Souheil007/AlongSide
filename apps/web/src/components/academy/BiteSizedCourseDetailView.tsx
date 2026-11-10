@@ -206,6 +206,38 @@ export function BiteSizedCourseDetailView({
 }: BiteSizedCourseDetailViewProps) {
   const [isAudioOpen, setIsAudioOpen] = React.useState<boolean>(false);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState<boolean>(false);
+  const [playbackSeconds, setPlaybackSeconds] = React.useState<number>(14);
+  const [playbackRate, setPlaybackRate] = React.useState<number>(1.0);
+  const totalAudioSeconds = 105; // 1:45
+
+  // Interactive audio timer
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+    if (isAudioPlaying) {
+      timer = setInterval(() => {
+        setPlaybackSeconds((prev) => {
+          if (prev >= totalAudioSeconds) {
+            setIsAudioPlaying(false);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000 / playbackRate);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isAudioPlaying, playbackRate]);
+
+  const togglePlaybackRate = () => {
+    setPlaybackRate((prev) => (prev === 1.0 ? 1.5 : prev === 1.5 ? 2.0 : 1.0));
+  };
+
+  const formatSeconds = (sec: number) => {
+    const mins = Math.floor(sec / 60);
+    const remainder = sec % 60;
+    return `${mins}:${remainder.toString().padStart(2, '0')}`;
+  };
 
   const allLessons: AcademyLessonSummaryDTO[] = React.useMemo(() => {
     if (module.lessons && module.lessons.length > 0) {
@@ -327,6 +359,45 @@ export function BiteSizedCourseDetailView({
           <p className="text-body text-sm leading-relaxed">
             {module.summary}
           </p>
+
+          {/* 3 Core Walkaways / Takeaways */}
+          <div
+            data-testid="core-takeaways-card"
+            className="rounded-xl border border-hairline/80 bg-white p-4 space-y-2.5 shadow-2xs"
+          >
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-spruce uppercase tracking-wider">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-spruce/10 text-spruce text-[11px]">
+                ★
+              </span>
+              <span>3 Core Course Takeaways</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs text-body font-sans">
+              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
+                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
+                  1. Biological Root
+                </span>
+                <p className="leading-snug text-ink/90">
+                  Understand the neurobiological cause behind your child&apos;s behavior.
+                </p>
+              </div>
+              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
+                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
+                  2. Verbatim Scripts
+                </span>
+                <p className="leading-snug text-ink/90">
+                  Tested dialogue scripts with tone and posture delivery tips.
+                </p>
+              </div>
+              <div className="rounded-lg bg-linen-subtle/70 p-2.5 border border-hairline/40 space-y-1">
+                <span className="font-mono text-[10px] font-bold text-spruce uppercase tracking-wider block">
+                  3. Action Protocol
+                </span>
+                <p className="leading-snug text-ink/90">
+                  Step-by-step household routines and printable guidelines.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* SECTION 1: TONIGHT'S WINS (The Immediate Focus) */}
@@ -477,12 +548,12 @@ export function BiteSizedCourseDetailView({
                     </button>
                   </div>
 
-                  {/* Simulated Waveform & Progress */}
+                  {/* Interactive Audio Scrubber & Controls */}
                   <div className="flex items-center gap-3 pt-1">
                     <button
                       type="button"
                       onClick={() => setIsAudioPlaying(!isAudioPlaying)}
-                      className="h-8 w-8 rounded-full bg-spruce hover:bg-spruce-hover text-white flex items-center justify-center shrink-0 transition-colors"
+                      className="h-8 w-8 rounded-full bg-spruce hover:bg-spruce-hover text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
                       aria-label={isAudioPlaying ? 'Pause audio' : 'Play audio'}
                     >
                       {isAudioPlaying ? (
@@ -492,20 +563,37 @@ export function BiteSizedCourseDetailView({
                       )}
                     </button>
                     <div className="flex-1 space-y-1">
-                      <div className="h-1.5 w-full bg-linen-subtle rounded-full overflow-hidden">
+                      <div
+                        data-testid="audio-scrubber"
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={totalAudioSeconds}
+                        aria-valuenow={playbackSeconds}
+                        onClick={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const clickPos = (e.clientX - rect.left) / rect.width;
+                          setPlaybackSeconds(Math.round(clickPos * totalAudioSeconds));
+                        }}
+                        className="h-2 w-full bg-linen-subtle rounded-full overflow-hidden cursor-pointer"
+                      >
                         <div
-                          className="h-full bg-spruce transition-all duration-300 rounded-full"
-                          style={{ width: isAudioPlaying ? '45%' : '15%' }}
+                          className="h-full bg-spruce transition-all duration-150 rounded-full"
+                          style={{ width: `${Math.min(100, (playbackSeconds / totalAudioSeconds) * 100)}%` }}
                         />
                       </div>
                       <div className="flex justify-between text-[10px] font-mono text-mute">
-                        <span>{isAudioPlaying ? '0:42' : '0:14'}</span>
-                        <span>1:45</span>
+                        <span>{formatSeconds(playbackSeconds)}</span>
+                        <span>{formatSeconds(totalAudioSeconds)}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-[10px] font-mono bg-linen-subtle px-2 py-1 rounded text-body">
-                      <span>1.0x</span>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={togglePlaybackRate}
+                      className="flex items-center gap-1 text-[10px] font-mono bg-linen-subtle hover:bg-hairline px-2 py-1 rounded text-body cursor-pointer transition-colors"
+                      title="Toggle playback speed"
+                    >
+                      <span>{playbackRate.toFixed(1)}x</span>
+                    </button>
                   </div>
                 </div>
               )}

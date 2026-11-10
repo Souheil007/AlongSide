@@ -110,7 +110,7 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
       });
 
       it('derives normalized tier by age when tier is absent', () => {
-        expect(normalizeChildTier(null, 2)).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+        expect(normalizeChildTier(null, 2)).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
         expect(normalizeChildTier(null, 5)).toBe(DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6);
         expect(normalizeChildTier(null, 8)).toBe(DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9);
         expect(normalizeChildTier(null, 11)).toBe(DevelopmentalTier.TIER_3_PRE_TEEN_10_12);
@@ -221,12 +221,12 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
 
       // Developmental horizon & leap
       const horizon = getChildDevelopmentalHorizon(mateo.developmentalTier);
-      expect(horizon.stage).toContain('Infancy & Toddlerhood');
-      expect(horizon.tierLabel).toContain('Tier 0');
+      expect(horizon.stage).toContain('Younger Toddlerhood');
+      expect(horizon.tierLabel).toContain('Tier 0B');
 
       // Academy curriculum calibration
       const catalogTier = normalizeChildTier(mateo.developmentalTier, mateo.age);
-      expect(catalogTier).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+      expect(catalogTier).toBe(DevelopmentalTier.TIER_0B_TODDLER_1_2);
 
       // Culture Digest calibration (screen-free window)
       const slangTier = resolveChildSlangTier(mateo);

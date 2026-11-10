@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers } from 'lucide-react';
-import { DevelopmentalTier, AcademyCategory, type AcademyModuleDTO } from '@alongside/shared';
+import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers, ChevronDown, Sparkles } from 'lucide-react';
+import { DevelopmentalTier, AcademyCategory, type AcademyModuleDTO, type AcademyLessonSummaryDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Progress } from '@/components/ui/Progress';
@@ -9,12 +9,30 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export interface ModuleCardProps {
-  module: AcademyModuleDTO;
+  module: AcademyModuleDTO & { lessons?: AcademyLessonSummaryDTO[] };
   className?: string;
 }
 
 export function getTierBadgeInfo(tier: DevelopmentalTier) {
   switch (tier) {
+    case DevelopmentalTier.TIER_0A_INFANCY_0_1:
+      return {
+        label: 'Ages 0–1 (Tier 0A: Infancy)',
+        shortLabel: 'Ages 0–1',
+        className: 'bg-rose-50 text-rose-800 border-rose-200',
+      };
+    case DevelopmentalTier.TIER_0B_TODDLER_1_2:
+      return {
+        label: 'Ages 1–2 (Tier 0B: Younger Toddler)',
+        shortLabel: 'Ages 1–2',
+        className: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
+      return {
+        label: 'Ages 2–3 (Tier 0C: Older Toddler)',
+        shortLabel: 'Ages 2–3',
+        className: 'bg-orange-50 text-orange-800 border-orange-200',
+      };
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return {
         label: 'Ages 0–3 (Tier 0: Infancy & Toddler)',
@@ -120,6 +138,8 @@ export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
 }
 
 export function ModuleCard({ module, className }: ModuleCardProps) {
+  const [isSyllabusOpen, setIsSyllabusOpen] = React.useState(false);
+
   const percentComplete =
     module.lessonCount > 0
       ? Math.round((module.completedLessonCount / module.lessonCount) * 100)
@@ -174,9 +194,38 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
             {module.title}
           </CardTitle>
 
+          {module.reliefSubtitle && (
+            <p className="font-serif italic text-sm text-teal-800 leading-snug">
+              {module.reliefSubtitle}
+            </p>
+          )}
+
           <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
             {module.summary}
           </CardDescription>
+
+          {/* Tonight's Quick Win callout strip */}
+          {module.tonightQuickWinTitle && (
+            <div className="rounded-lg bg-emerald-50/80 border border-emerald-200/90 p-2.5 text-xs text-emerald-950 flex items-start gap-2 shadow-2xs">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-emerald-800 shrink-0 mt-0.5 bg-emerald-100 px-1.5 py-0.5 rounded">
+                Tonight&apos;s Win
+              </span>
+              <span className="font-medium line-clamp-1">{module.tonightQuickWinTitle}</span>
+            </div>
+          )}
+
+          {/* Feature format pills */}
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono text-slate-600 pt-0.5">
+            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+              🎧 Audio Memo
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+              💬 Script Vault
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+              🤖 AI Sparring
+            </span>
+          </div>
         </CardHeader>
 
         <CardContent className="space-y-4 pt-1">
@@ -207,6 +256,80 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
             <p className="text-[11px] text-slate-500">
               {module.completedLessonCount} of {module.lessonCount} lessons completed
             </p>
+          </div>
+
+          {/* Expandable Curriculum Syllabus Drawer */}
+          <div className="border-t border-slate-100 pt-3">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsSyllabusOpen(!isSyllabusOpen);
+              }}
+              className="flex items-center justify-between w-full text-xs font-mono font-semibold text-slate-600 hover:text-teal-800 transition-colors cursor-pointer py-1"
+              aria-expanded={isSyllabusOpen}
+              data-testid="syllabus-drawer-toggle"
+            >
+              <span className="flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5 text-slate-500" />
+                Curriculum Syllabus ({module.lessons?.length || module.lessonCount || 4} lessons)
+              </span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-slate-400 transition-transform duration-200',
+                  isSyllabusOpen && 'rotate-180 text-teal-700'
+                )}
+              />
+            </button>
+
+            {isSyllabusOpen && (
+              <div
+                data-testid="syllabus-drawer-content"
+                className="mt-2 space-y-1.5 rounded-lg bg-slate-50 border border-slate-100 p-2.5 text-xs animate-in fade-in duration-150"
+              >
+                {module.lessons && module.lessons.length > 0 ? (
+                  module.lessons.map((lesson: AcademyLessonSummaryDTO) => (
+                    <div
+                      key={lesson.id}
+                      className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
+                    >
+                      <div className="flex items-baseline gap-1.5 min-w-0">
+                        <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
+                          § {lesson.sortOrder}
+                        </span>
+                        <span className="truncate font-medium">{lesson.title}</span>
+                      </div>
+                      <span className="font-mono text-[10px] text-slate-400 shrink-0">
+                        {lesson.readingMinutes} min
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  [
+                    { num: 1, title: module.tonightQuickWinTitle || "Tonight's Immediate Relief Protocol", dur: 4 },
+                    { num: 2, title: 'Neurobiological Root Cause & Amygdala Wiring', dur: 5 },
+                    { num: 3, title: 'Household Routines & Preventative Habits', dur: 4 },
+                    { num: 4, title: 'Long-term Boundaries & Repair Framework', dur: 4 },
+                  ].map((item) => (
+                    <div
+                      key={item.num}
+                      className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
+                    >
+                      <div className="flex items-baseline gap-1.5 min-w-0">
+                        <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
+                          § 0{item.num}
+                        </span>
+                        <span className="truncate font-medium">{item.title}</span>
+                      </div>
+                      <span className="font-mono text-[10px] text-slate-400 shrink-0">
+                        {item.dur} min
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </div>

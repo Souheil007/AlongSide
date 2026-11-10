@@ -28,6 +28,21 @@ export function formatTierBadge(tier?: DevelopmentalTier | string | null): {
   badgeClass: string;
 } {
   switch (tier) {
+    case DevelopmentalTier.TIER_0A_INFANCY_0_1:
+      return {
+        label: 'Ages 0–1 • Infancy (Tier 0A)',
+        badgeClass: 'bg-rose-50 text-rose-800 border-rose-200',
+      };
+    case DevelopmentalTier.TIER_0B_TODDLER_1_2:
+      return {
+        label: 'Ages 1–2 • Younger Toddler (Tier 0B)',
+        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+      };
+    case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
+      return {
+        label: 'Ages 2–3 • Older Toddler (Tier 0C)',
+        badgeClass: 'bg-orange-50 text-orange-800 border-orange-200',
+      };
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return {
         label: 'Ages 0–3 • Infancy & Toddler (Tier 0)',

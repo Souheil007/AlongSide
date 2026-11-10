@@ -14,6 +14,7 @@ import {
   Filter,
   ChevronDown,
 } from 'lucide-react';
+import { DevelopmentalTier } from '@alongside/shared';
 import { useChildContextStore } from '@/stores/useChildContextStore';
 import { useChildAge } from '@/hooks/useChildAge';
 import {
@@ -40,12 +41,15 @@ const ALL_SITUATIONS = [
 
 const TIER_OPTIONS = [
   { id: 'all', label: 'All Ages' },
-  { id: 'TIER_0_INFANCY_TODDLER_0_3', label: '0–3 yrs (Toddler)' },
-  { id: 'TIER_1_EARLY_CHILDHOOD_4_6', label: '4–6 yrs (Preschool)' },
-  { id: 'TIER_2_MIDDLE_CHILDHOOD_7_9', label: '7–9 yrs (Childhood)' },
-  { id: 'TIER_3_PRE_TEEN_10_12', label: '10–12 yrs (Pre-Teen)' },
-  { id: 'TIER_4_EARLY_ADOLESCENCE_13_15', label: '13–15 yrs (Teens)' },
-  { id: 'TIER_5_LATE_ADOLESCENCE_16_18', label: '16–18 yrs (Older Teen)' },
+  { id: DevelopmentalTier.TIER_0A_INFANCY_0_1, label: '0–1 yrs (Infancy)' },
+  { id: DevelopmentalTier.TIER_0B_TODDLER_1_2, label: '1–2 yrs (Younger Toddler)' },
+  { id: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3, label: '2–3 yrs (Older Toddler)' },
+  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: '0–3 yrs (Toddler)' },
+  { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: '4–6 yrs (Preschool)' },
+  { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: '7–9 yrs (Childhood)' },
+  { id: DevelopmentalTier.TIER_3_PRE_TEEN_10_12, label: '10–12 yrs (Pre-Teen)' },
+  { id: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15, label: '13–15 yrs (Teens)' },
+  { id: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18, label: '16–18 yrs (Older Teen)' },
 ];
 
 interface BehaviorDashboardViewProps {

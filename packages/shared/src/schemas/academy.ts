@@ -12,7 +12,10 @@ export const AcademyCategorySchema = z.enum([
 export type AcademyCategoryType = z.infer<typeof AcademyCategorySchema>;
 
 export const AcademyTierSchema = z.enum([
-  // Canonical v2.4 Lifespan Tiers (Ages 0–18)
+  // Canonical v2.6 Lifespan Tiers (Ages 0–18, decomposed Tier 0)
+  DevelopmentalTier.TIER_0A_INFANCY_0_1,
+  DevelopmentalTier.TIER_0B_TODDLER_1_2,
+  DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
   DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
   DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
   DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,

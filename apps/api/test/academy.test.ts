@@ -68,10 +68,12 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const payload = response.json();
       expect(payload.success).toBe(true);
       expect(Array.isArray(payload.data.modules)).toBe(true);
-      expect(payload.data.modules.length).toBe(30);
+      expect(payload.data.modules.length).toBe(40);
 
       const tiers = payload.data.modules.map((m: any) => m.developmentalTier);
-      expect(tiers).toContain('TIER_0_INFANCY_TODDLER_0_3');
+      expect(tiers).toContain('TIER_0A_INFANCY_0_1');
+      expect(tiers).toContain('TIER_0B_TODDLER_1_2');
+      expect(tiers).toContain('TIER_0C_OLDER_TODDLER_2_3');
       expect(tiers).toContain('TIER_1_EARLY_CHILDHOOD_4_6');
       expect(tiers).toContain('TIER_2_MIDDLE_CHILDHOOD_7_9');
       expect(tiers).toContain('TIER_3_PRE_TEEN_10_12');
@@ -88,17 +90,34 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.modules.length).toBe(5);
+      expect(payload.data.modules.length).toBe(15);
 
       const mod = payload.data.modules.find((m: any) =>
         m.slug.includes('infant')
       );
       expect(mod).toBeDefined();
       expect(mod.title).toContain('Infant');
-      expect(mod.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
-      expect(mod.lessonCount).toBe(3);
+      expect(mod.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
+      expect(mod.lessonCount).toBe(4);
       expect(mod.completedLessonCount).toBe(0);
       expect(mod.isCompleted).toBe(false);
+    });
+
+    it('filters modules strictly by decomposed tier (e.g. TIER_0A_INFANCY_0_1)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/modules?tier=TIER_0A_INFANCY_0_1',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.modules.length).toBe(5);
+
+      for (const mod of payload.data.modules) {
+        expect(mod.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
+        expect(mod.lessonCount).toBe(4);
+      }
     });
 
     it('supports backward-compatible legacy tier queries (e.g. TIER_2_AGES_10_11)', async () => {
@@ -118,7 +137,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(mod).toBeDefined();
       expect(mod.title).toContain('Tween');
       expect(mod.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
-      expect(mod.lessonCount).toBe(3);
+      expect(mod.lessonCount).toBe(4);
       expect(mod.completedLessonCount).toBe(0);
       expect(mod.isCompleted).toBe(false);
     });
@@ -150,11 +169,11 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
 
       const mod = payload.data.module;
       expect(mod.slug).toBe('tween-neurobiology-and-adrenarche');
-      expect(mod.lessons).toHaveLength(3);
+      expect(mod.lessons).toHaveLength(4);
       expect(mod.lessons[0].title).toBe(
-        'Adrenarche: The Biological Awakening to Social Standing'
+        'The Non-Reactive Neutral Stance: Neutralizing Sarcasm Instantly'
       );
-      expect(mod.lessons[0].readingMinutes).toBe(5);
+      expect(mod.lessons[0].readingMinutes).toBe(4);
       expect(mod.lessons[0].isCompleted).toBe(false);
     });
 
@@ -174,7 +193,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
   describe('GET /api/v1/academy/lessons/:id', () => {
     it('returns full lesson markdown and parent module metadata', async () => {
       const lessonId =
-        'les-tween-neurobiology-and-adrenarche-adrenarche-and-identity';
+        'les-behavior-tween-adrenarche-tween-non-reactive-neutral-stance';
 
       const response = await app.inject({
         method: 'GET',
@@ -189,12 +208,12 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const lesson = payload.data.lesson;
       expect(lesson.id).toBe(lessonId);
       expect(lesson.title).toBe(
-        'Adrenarche: The Biological Awakening to Social Standing'
+        'The Non-Reactive Neutral Stance: Neutralizing Sarcasm Instantly'
       );
       expect(lesson.contentMarkdown).toContain('adrenarche');
-      expect(lesson.contentMarkdown).toContain('Alongside Empathetic Response');
+      expect(lesson.contentMarkdown).toContain('What to Say Instead');
       expect(lesson.module).toBeDefined();
-      expect(lesson.module.slug).toBe('tween-neurobiology-and-adrenarche');
+      expect(lesson.module.slug).toBe('behavior-tween-adrenarche');
       expect(lesson.module.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
     });
 
@@ -213,10 +232,13 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
 
   describe('POST /api/v1/academy/lessons/:id/complete', () => {
     const lesson1Id =
-      'les-tween-neurobiology-and-adrenarche-adrenarche-and-identity';
-    const lesson2Id = 'les-tween-neurobiology-and-adrenarche-group-chats-fomo';
+      'les-behavior-tween-adrenarche-tween-non-reactive-neutral-stance';
+    const lesson2Id =
+      'les-behavior-tween-adrenarche-tween-adrenarche-and-dhea-neurobiology';
     const lesson3Id =
-      'les-tween-neurobiology-and-adrenarche-calm-tech-conversations';
+      'les-behavior-tween-adrenarche-tween-side-by-side-communication';
+    const lesson4Id =
+      'les-behavior-tween-adrenarche-tween-respectful-repair-contracts';
 
     it('rejects unauthenticated completion attempts with 401 UNAUTHORIZED', async () => {
       const response = await app.inject({
@@ -244,7 +266,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(payload1.data.progress.lessonId).toBe(lesson1Id);
       expect(payload1.data.progress.isCompleted).toBe(true);
       expect(payload1.data.module.completedLessonCount).toBe(1);
-      expect(payload1.data.module.percentComplete).toBe(33);
+      expect(payload1.data.module.percentComplete).toBe(25);
       expect(payload1.data.module.isCompleted).toBe(false);
 
       // Verify module detail now reflects completion for User A
@@ -258,23 +280,29 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(modPayloadA.data.module.lessons[0].isCompleted).toBe(true);
       expect(modPayloadA.data.module.lessons[1].isCompleted).toBe(false);
 
-      // User A completes lessons 2 and 3
+      // User A completes lessons 2, 3, and 4
       await app.inject({
         method: 'POST',
         url: `/api/v1/academy/lessons/${lesson2Id}/complete`,
         headers: { cookie: userACookie },
       });
 
-      const res3 = await app.inject({
+      await app.inject({
         method: 'POST',
         url: `/api/v1/academy/lessons/${lesson3Id}/complete`,
         headers: { cookie: userACookie },
       });
 
-      const payload3 = res3.json();
-      expect(payload3.data.module.completedLessonCount).toBe(3);
-      expect(payload3.data.module.percentComplete).toBe(100);
-      expect(payload3.data.module.isCompleted).toBe(true);
+      const res4 = await app.inject({
+        method: 'POST',
+        url: `/api/v1/academy/lessons/${lesson4Id}/complete`,
+        headers: { cookie: userACookie },
+      });
+
+      const payload4 = res4.json();
+      expect(payload4.data.module.completedLessonCount).toBe(4);
+      expect(payload4.data.module.percentComplete).toBe(100);
+      expect(payload4.data.module.isCompleted).toBe(true);
     });
 
     it('enforces tenant isolation: progress of User A does not affect User B', async () => {

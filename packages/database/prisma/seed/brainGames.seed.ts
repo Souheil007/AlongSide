@@ -14,9 +14,9 @@ export interface BrainGameSeedData {
 }
 
 export const BRAIN_GAMES_SEED: BrainGameSeedData[] = [
-  // TIER 0: INFANCY & TODDLER (0-3)
+  // TIER 0A: INFANCY (0-1)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     category: PlayCategory.PUPPET,
     title: 'Barnyard Animal Puppet Sparring & Echoing',
     summary:
@@ -28,8 +28,10 @@ export const BRAIN_GAMES_SEED: BrainGameSeedData[] = [
     estimatedMinutes: 10,
     isScreenFree: true,
   },
+
+  // TIER 0B: TODDLER (1-2)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     category: PlayCategory.SENSORY,
     title: 'Warm Water & Floating Forest Sensory Tub',
     summary:
@@ -41,8 +43,10 @@ export const BRAIN_GAMES_SEED: BrainGameSeedData[] = [
     estimatedMinutes: 15,
     isScreenFree: true,
   },
+
+  // TIER 0C: OLDER TODDLER (2-3)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
     category: PlayCategory.CONSTRUCTION,
     title: 'Soft Unit Block Tower Demolition',
     summary:

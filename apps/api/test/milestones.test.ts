@@ -53,10 +53,35 @@ describe('Developmental Milestones & Growth API (PLAN-16)', () => {
       expect(payload.success).toBe(true);
       expect(payload.data.milestones.length).toBeGreaterThanOrEqual(20);
 
+      const earlyChildhoodTiers = [
+        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+      ];
       const allMatchTier = payload.data.milestones.every(
-        (m: any) => m.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        (m: any) => earlyChildhoodTiers.includes(m.targetTier)
       );
       expect(allMatchTier).toBe(true);
+    });
+
+    it('filters milestones by decomposed tier (TIER_0A_INFANCY_0_1)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: `/api/v1/milestones?tier=${DevelopmentalTier.TIER_0A_INFANCY_0_1}`,
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.milestones.length).toBeGreaterThan(0);
+      expect(
+        payload.data.milestones.every(
+          (m: any) =>
+            m.targetTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+            m.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        )
+      ).toBe(true);
     });
 
     it('filters milestones by category (e.g. GROSS_MOTOR)', async () => {

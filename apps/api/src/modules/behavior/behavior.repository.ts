@@ -3,7 +3,11 @@ import {
   type PrismaClient,
   BEHAVIOR_GUIDES_SEED,
 } from '@alongside/database';
-import type { DevelopmentalTier, BehaviorGuideDTO } from '@alongside/shared';
+import {
+  type DevelopmentalTier,
+  type BehaviorGuideDTO,
+  getEquivalentTiers,
+} from '@alongside/shared';
 
 export interface BehaviorRepository {
   findGuides(tier?: DevelopmentalTier): Promise<BehaviorGuideDTO[]>;
@@ -15,7 +19,10 @@ export class PrismaBehaviorRepository implements BehaviorRepository {
 
   async findGuides(tier?: DevelopmentalTier): Promise<BehaviorGuideDTO[]> {
     const where: any = {};
-    if (tier) where.targetTier = tier;
+    if (tier) {
+      const equivalents = getEquivalentTiers(tier);
+      where.targetTier = equivalents.length === 1 ? equivalents[0] : { in: equivalents };
+    }
 
     const list = await this.prisma.behaviorGuide.findMany({
       where,
@@ -68,7 +75,8 @@ export class InMemoryBehaviorRepository implements BehaviorRepository {
 
   async findGuides(tier?: DevelopmentalTier): Promise<BehaviorGuideDTO[]> {
     if (tier) {
-      return this.guides.filter((g) => g.targetTier === tier);
+      const equivalents = new Set(getEquivalentTiers(tier));
+      return this.guides.filter((g) => equivalents.has(g.targetTier));
     }
     return [...this.guides];
   }

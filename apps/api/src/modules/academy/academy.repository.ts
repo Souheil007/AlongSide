@@ -18,6 +18,7 @@ import {
   type AcademyLessonDTO,
   type AcademyModuleDetailDTO,
   type AcademyLessonCompletionResponseDTO,
+  getEquivalentTiers,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
@@ -88,25 +89,6 @@ const SLUG_ALIASES: Record<string, string> = {
   'teen-autonomy-and-graduated-privileges': 'behavior-teen-autonomy',
   'how-algorithms-shape-teen-brains': 'digital-adolescent-algorithmic-feeds',
 };
-
-function getEquivalentTiers(tier: string): string[] {
-  switch (tier) {
-    case 'TIER_1_AGES_8_9':
-    case 'TIER_2_MIDDLE_CHILDHOOD_7_9':
-      return ['TIER_1_AGES_8_9', 'TIER_2_MIDDLE_CHILDHOOD_7_9'];
-    case 'TIER_2_AGES_10_11':
-    case 'TIER_3_PRE_TEEN_10_12':
-      return ['TIER_2_AGES_10_11', 'TIER_3_PRE_TEEN_10_12'];
-    case 'TIER_3_AGES_12_13':
-    case 'TIER_4_EARLY_ADOLESCENCE_13_15':
-      return ['TIER_3_AGES_12_13', 'TIER_4_EARLY_ADOLESCENCE_13_15'];
-    case 'TIER_4_AGES_14_PLUS':
-    case 'TIER_5_LATE_ADOLESCENCE_16_18':
-      return ['TIER_4_AGES_14_PLUS', 'TIER_5_LATE_ADOLESCENCE_16_18'];
-    default:
-      return [tier];
-  }
-}
 
 export class PrismaAcademyRepository implements AcademyRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
@@ -216,6 +198,8 @@ export class PrismaAcademyRepository implements AcademyRepository {
         slug: m.slug,
         title: m.title,
         summary: m.summary,
+        reliefSubtitle: m.reliefSubtitle ?? undefined,
+        tonightQuickWinTitle: m.tonightQuickWinTitle ?? undefined,
         coverImageUrl: m.coverImageUrl,
         developmentalTier: m.developmentalTier as DevelopmentalTier,
         sortOrder: m.sortOrder,
@@ -275,6 +259,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
       readingMinutes: l.readingMinutes,
       sortOrder: l.sortOrder,
       isCompleted: completedLessonIds.has(l.id),
+      audioUrl: l.audioUrl ?? undefined,
+      audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+      whatNotToSay: l.whatNotToSay ?? undefined,
+      deliveryTip: l.deliveryTip ?? undefined,
     }));
 
     const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
@@ -287,6 +275,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
         readingMinutes: l.readingMinutes,
         sortOrder: l.sortOrder,
         isCompleted: completedLessonIds.has(l.id),
+        audioUrl: l.audioUrl ?? undefined,
+        audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+        whatNotToSay: l.whatNotToSay ?? undefined,
+        deliveryTip: l.deliveryTip ?? undefined,
       }));
 
       const chLessonCount = chLessons.length;
@@ -318,6 +310,8 @@ export class PrismaAcademyRepository implements AcademyRepository {
       slug: slug === targetSlug ? moduleRecord.slug : slug,
       title: moduleRecord.title,
       summary: moduleRecord.summary,
+      reliefSubtitle: moduleRecord.reliefSubtitle ?? undefined,
+      tonightQuickWinTitle: moduleRecord.tonightQuickWinTitle ?? undefined,
       coverImageUrl: moduleRecord.coverImageUrl,
       developmentalTier: moduleRecord.developmentalTier as DevelopmentalTier,
       sortOrder: moduleRecord.sortOrder,
@@ -383,6 +377,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
       readingMinutes: lesson.readingMinutes,
       sortOrder: lesson.sortOrder,
       isCompleted,
+      audioUrl: lesson.audioUrl ?? undefined,
+      audioDurationSeconds: lesson.audioDurationSeconds ?? undefined,
+      whatNotToSay: lesson.whatNotToSay ?? undefined,
+      deliveryTip: lesson.deliveryTip ?? undefined,
       module: {
         id: lesson.module.id,
         slug: lesson.module.slug,
@@ -491,6 +489,8 @@ interface InMemoryModule {
   slug: string;
   title: string;
   summary: string;
+  reliefSubtitle?: string | null;
+  tonightQuickWinTitle?: string | null;
   coverImageUrl: string | null;
   developmentalTier: DevelopmentalTier;
   sortOrder: number;
@@ -515,6 +515,10 @@ interface InMemoryLesson {
   contentMarkdown: string;
   readingMinutes: number;
   sortOrder: number;
+  audioUrl?: string | null;
+  audioDurationSeconds?: number | null;
+  whatNotToSay?: string | null;
+  deliveryTip?: string | null;
 }
 
 export class InMemoryAcademyRepository implements AcademyRepository {
@@ -538,6 +542,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         slug: mod.slug,
         title: mod.title,
         summary: mod.summary,
+        reliefSubtitle: mod.reliefSubtitle ?? null,
+        tonightQuickWinTitle: mod.tonightQuickWinTitle ?? null,
         coverImageUrl: mod.coverImageUrl ?? null,
         developmentalTier: mod.developmentalTier,
         sortOrder: mod.sortOrder,
@@ -567,6 +573,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
             contentMarkdown: lesson.contentMarkdown,
             readingMinutes: lesson.readingMinutes,
             sortOrder: lesson.sortOrder,
+            audioUrl: lesson.audioUrl ?? null,
+            audioDurationSeconds: lesson.audioDurationSeconds ?? null,
+            whatNotToSay: lesson.whatNotToSay ?? null,
+            deliveryTip: lesson.deliveryTip ?? null,
           };
           this.lessons.set(lessonId, lessonRecord);
         }
@@ -654,6 +664,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         slug: m.slug,
         title: m.title,
         summary: m.summary,
+        reliefSubtitle: m.reliefSubtitle ?? undefined,
+        tonightQuickWinTitle: m.tonightQuickWinTitle ?? undefined,
         coverImageUrl: m.coverImageUrl,
         developmentalTier: m.developmentalTier,
         sortOrder: m.sortOrder,
@@ -703,6 +715,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           readingMinutes: l.readingMinutes,
           sortOrder: l.sortOrder,
           isCompleted,
+          audioUrl: l.audioUrl ?? undefined,
+          audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+          whatNotToSay: l.whatNotToSay ?? undefined,
+          deliveryTip: l.deliveryTip ?? undefined,
         };
       });
 
@@ -740,6 +756,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         readingMinutes: l.readingMinutes,
         sortOrder: l.sortOrder,
         isCompleted,
+        audioUrl: l.audioUrl ?? undefined,
+        audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+        whatNotToSay: l.whatNotToSay ?? undefined,
+        deliveryTip: l.deliveryTip ?? undefined,
       };
     });
 
@@ -753,6 +773,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       slug,
       title: mod.title,
       summary: mod.summary,
+      reliefSubtitle: mod.reliefSubtitle ?? undefined,
+      tonightQuickWinTitle: mod.tonightQuickWinTitle ?? undefined,
       coverImageUrl: mod.coverImageUrl,
       developmentalTier: mod.developmentalTier,
       sortOrder: mod.sortOrder,
@@ -817,6 +839,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       readingMinutes: lesson.readingMinutes,
       sortOrder: lesson.sortOrder,
       isCompleted,
+      audioUrl: lesson.audioUrl ?? undefined,
+      audioDurationSeconds: lesson.audioDurationSeconds ?? undefined,
+      whatNotToSay: lesson.whatNotToSay ?? undefined,
+      deliveryTip: lesson.deliveryTip ?? undefined,
       module: {
         id: mod.id,
         slug: moduleSlug,

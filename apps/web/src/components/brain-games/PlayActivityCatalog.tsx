@@ -32,7 +32,10 @@ const CATEGORY_TABS = [
 
 const TIER_FILTERS = [
   { id: 'all', label: 'All Ages' },
-  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: '0–3 yrs (Infancy)' },
+  { id: DevelopmentalTier.TIER_0A_INFANCY_0_1, label: '0–1 yrs (Infancy)' },
+  { id: DevelopmentalTier.TIER_0B_TODDLER_1_2, label: '1–2 yrs (Younger Toddler)' },
+  { id: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3, label: '2–3 yrs (Older Toddler)' },
+  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: '0–3 yrs (Infancy & Toddler)' },
   { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: '4–6 yrs (Preschool)' },
   { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: '7–9 yrs (Childhood)' },
   { id: DevelopmentalTier.TIER_3_PRE_TEEN_10_12, label: '10–12 yrs (Pre-Teen)' },

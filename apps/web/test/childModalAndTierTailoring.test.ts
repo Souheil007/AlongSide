@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach } from 'vitest';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import * as React from 'react';
 import { DevelopmentalTier, RoadType, type ChildDTO } from '@alongside/shared';
 import {
@@ -23,6 +23,10 @@ import { Dialog, DialogContent } from '../src/components/ui/Dialog';
 describe('SOU-63: Child Profile Modal, Tier Tailoring & Modern FAQ Explorer Specification', () => {
   beforeEach(() => {
     useChildContextStore.getState().reset();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   describe('Bugfix 1: Dialog Component Portaling & Viewport Centering', () => {
@@ -86,6 +90,13 @@ describe('SOU-63: Child Profile Modal, Tier Tailoring & Modern FAQ Explorer Spec
       expect(infantFaqs.faqs.length).toBeGreaterThanOrEqual(2);
       expect(infantFaqs.faqs.some((f) => f.question.toLowerCase().includes('fever') || f.question.toLowerCase().includes('weaning'))).toBe(true);
 
+      // Decomposed Tier 0A / 0B (Infancy & Toddlerhood)
+      const tier0AFaqs = await searchFaqs({ tier: DevelopmentalTier.TIER_0A_INFANCY_0_1 });
+      expect(tier0AFaqs.faqs.length).toBeGreaterThanOrEqual(2);
+
+      const tier0BFaqs = await searchFaqs({ tier: DevelopmentalTier.TIER_0B_TODDLER_1_2 });
+      expect(tier0BFaqs.faqs.length).toBeGreaterThanOrEqual(2);
+
       // Tier 1 (Early Childhood)
       const earlyChildhoodFaqs = await searchFaqs({ tier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6 });
       expect(earlyChildhoodFaqs.faqs.length).toBeGreaterThanOrEqual(1);
@@ -96,10 +107,22 @@ describe('SOU-63: Child Profile Modal, Tier Tailoring & Modern FAQ Explorer Spec
       expect(lateTeenFaqs.faqs.some((f) => f.question.toLowerCase().includes('driving'))).toBe(true);
     });
 
-    it('formats badges accurately for all 6 tiers and canonical categories in FaqCard', () => {
+    it('formats badges accurately for all canonical tiers and categories in FaqCard', () => {
       const tier0Badge = formatTierBadge(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
       expect(tier0Badge.label).toContain('Ages 0–3');
       expect(tier0Badge.badgeClass).toContain('amber');
+
+      const tier0ABadge = formatTierBadge(DevelopmentalTier.TIER_0A_INFANCY_0_1);
+      expect(tier0ABadge.label).toContain('Ages 0–1');
+      expect(tier0ABadge.badgeClass).toContain('rose');
+
+      const tier0BBadge = formatTierBadge(DevelopmentalTier.TIER_0B_TODDLER_1_2);
+      expect(tier0BBadge.label).toContain('Ages 1–2');
+      expect(tier0BBadge.badgeClass).toContain('amber');
+
+      const tier0CBadge = formatTierBadge(DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3);
+      expect(tier0CBadge.label).toContain('Ages 2–3');
+      expect(tier0CBadge.badgeClass).toContain('orange');
 
       const tier5Badge = formatTierBadge(DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18);
       expect(tier5Badge.label).toContain('Ages 16–18');

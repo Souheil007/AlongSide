@@ -31,6 +31,33 @@ interface StaticMasterclassFallback {
 
 function resolveStaticFallback(tier: DevelopmentalTier): StaticMasterclassFallback {
   switch (tier) {
+    case DevelopmentalTier.TIER_0A_INFANCY_0_1:
+      return {
+        slug: 'behavior-infant-coregulation',
+        title: 'Infant Crying & Somatic Co-Regulation: Fourth Trimester Equilibrium',
+        summary:
+          'Master autonomic nervous system co-regulation, infant sensory thresholds, and pre-verbal soothing techniques during the fourth trimester.',
+        readingMinutes: 12,
+        tierLabel: 'Ages 0–1',
+      };
+    case DevelopmentalTier.TIER_0B_TODDLER_1_2:
+      return {
+        slug: 'behavior-toddler-tantrums-co-regulation',
+        title: 'Younger Toddler Meltdowns & Bipedal Autonomy',
+        summary:
+          'Navigate sensory motor exploration, early separation-individuation, and pre-verbal frustration without coercive discipline.',
+        readingMinutes: 12,
+        tierLabel: 'Ages 1–2',
+      };
+    case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
+      return {
+        slug: 'behavior-older-toddler-defiance-boundaries',
+        title: 'Older Toddler Tantrums: Language Bursts & Boundary Testing',
+        summary:
+          'De-escalate frontal-limbic storm meltdowns, hold empathetic physical boundaries, and foster emotional literacy as vocabulary explodes.',
+        readingMinutes: 13,
+        tierLabel: 'Ages 2–3',
+      };
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return {
         slug: 'infant-sensory-milestones-and-coregulation',

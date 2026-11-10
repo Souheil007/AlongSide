@@ -27,6 +27,24 @@ const TIER_OPTIONS: Array<{
     ageSpan: 'Ages 0–18',
   },
   {
+    key: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+    label: 'Tier 0A: Infancy',
+    stageName: 'Infancy & Somatic Regulation',
+    ageSpan: 'Ages 0–1',
+  },
+  {
+    key: DevelopmentalTier.TIER_0B_TODDLER_1_2,
+    label: 'Tier 0B: Toddler',
+    stageName: 'Younger Toddlerhood & Locomotion',
+    ageSpan: 'Ages 1–2',
+  },
+  {
+    key: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+    label: 'Tier 0C: Older Toddler',
+    stageName: 'Older Toddlerhood & Autonomy',
+    ageSpan: 'Ages 2–3',
+  },
+  {
     key: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
     label: 'Tier 0: Infancy & Toddler',
     stageName: 'Infancy & Toddlerhood',
@@ -66,6 +84,12 @@ const TIER_OPTIONS: Array<{
 
 export function getTierStageName(tier: DevelopmentalTier | string | null | undefined): string {
   switch (tier) {
+    case DevelopmentalTier.TIER_0A_INFANCY_0_1:
+      return 'Infancy (Ages 0–1)';
+    case DevelopmentalTier.TIER_0B_TODDLER_1_2:
+      return 'Younger Toddlerhood (Ages 1–2)';
+    case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
+      return 'Older Toddlerhood (Ages 2–3)';
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return 'Infancy & Toddler';
     case DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6:

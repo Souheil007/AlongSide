@@ -11,7 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
-import type { ChildDTO } from '@alongside/shared';
+import { DevelopmentalTier, type ChildDTO } from '@alongside/shared';
 import { cn } from '@/lib/utils';
 
 export interface VocabularyTerm {
@@ -31,7 +31,7 @@ export interface StageVocabularyConfig {
 }
 
 export const STAGE_VOCABULARY_DATA: Record<
-  'INFANT' | 'ELEMENTARY' | 'ADOLESCENT',
+  'INFANT' | 'TODDLER' | 'ELEMENTARY' | 'ADOLESCENT',
   StageVocabularyConfig
 > = {
   ADOLESCENT: {
@@ -136,7 +136,7 @@ export const STAGE_VOCABULARY_DATA: Record<
   },
   INFANT: {
     eligibleForSlang: false,
-    category: 'Pre-Verbal Acoustic Signals & High-Chair Gestures',
+    category: 'Infant Acoustic Signals (0–12m) & Pre-Verbal Cues',
     bannerNotice:
       'Youth internet slang is not applicable to an infant. AlongSide conditionally presents this Stage-Appropriate Pre-Verbal Signal Decoder.',
     terms: [
@@ -147,9 +147,9 @@ export const STAGE_VOCABULARY_DATA: Record<
         definition:
           'Pointing at an object while looking back at your eyes to verify shared attention and mutual discovery.',
         example:
-          'Mateo points at the ceiling fan and makes an excited "Ooo!" sound until you look up.',
+          'Baby points at the mobile or window and makes an excited "Ooo!" sound until you look up.',
         parentResponse:
-          '"Yes, look at the big fan spinning around and around! (Validates his perceptual discovery)."',
+          '"Yes, look at the big fan spinning around! (Validates their perceptual discovery)."',
       },
       {
         word: 'Lip Trills / Raspberries',
@@ -158,7 +158,7 @@ export const STAGE_VOCABULARY_DATA: Record<
         definition:
           'Vibrating lips to experiment with air pressure, oral-motor control, and acoustic echo.',
         example:
-          'Blowing raspberries into his high-chair tray or onto your shoulder during burping.',
+          'Blowing raspberries into high-chair tray or onto your shoulder during burping.',
         parentResponse:
           '"Blow a raspberry right back with a giggle! It reinforces motor vocal play."',
       },
@@ -169,9 +169,72 @@ export const STAGE_VOCABULARY_DATA: Record<
         definition:
           'Canonical babbling practicing bilabial consonants (B, M, P) before true first words emerge.',
         example:
-          'Sitting on the rug repeating "Ba-ba-ba" while holding a wooden block.',
+          'Sitting on the rug repeating "Ba-ba-ba" while holding a soft toy.',
         parentResponse:
           '"Ba-ba! Are you holding your blue ball? That is a blue ball!"',
+      },
+      {
+        word: "Dunstan Acoustic Reflex ('Neh' / Sucking)",
+        phonetic: '[ Tongue pressing palate during pre-cry ]',
+        type: 'Acoustic Signal',
+        definition:
+          'The pre-cry acoustic signal triggered by the physiological sucking reflex signaling hunger before frantic meltdowns.',
+        example:
+          'Baby rhythmically vocalizes "Neh... neh..." while turning head and rooting.',
+        parentResponse:
+          '"I hear your hunger sound. Let\'s get your milk ready right now."',
+      },
+    ],
+  },
+  TODDLER: {
+    eligibleForSlang: false,
+    category: 'Toddler First-Word Explosion (12–36m) & Autonomy Gestures',
+    bannerNotice:
+      'Youth internet slang is not applicable to a toddler. AlongSide presents this Toddler Language Explosion & Autonomy Decoder.',
+    terms: [
+      {
+        word: "Declarative 'No!' ('Mine!')",
+        phonetic: '/ noʊ / maɪn /',
+        type: 'Autonomy Gesture',
+        definition:
+          'Frontal-limbic autonomy surge practicing individuation, self-identity, and personal agency.',
+        example:
+          'Toddler shakes their head and shouts "No coat!" while running across the hallway.',
+        parentResponse:
+          '"You want to choose your clothes yourself! Would you like the blue jacket or the red sweater?"',
+      },
+      {
+        word: "Protoword Jargon ('Wawa')",
+        phonetic: '/ wɑː · wɑː /',
+        type: 'Expressive Milestone',
+        definition:
+          'Consistent phonetic approximation invented by toddler to represent a specific object or desire.',
+        example:
+          'Points to the kitchen sink and repeatedly says "Wawa!".',
+        parentResponse:
+          '"Water! You are thirsty and would like a cool cup of water."',
+      },
+      {
+        word: "Two-Word Combinations ('More Up')",
+        phonetic: '[ Telegraphic Speech ]',
+        type: 'Syntactic Emergence',
+        definition:
+          'Linking two semantic concepts without syntax to express desire or observation.',
+        example:
+          'Reaches both arms up and says "More up, dada!".',
+        parentResponse:
+          '"Up you go! Big lift all the way to the sky!"',
+      },
+      {
+        word: 'Referential Pointing & Gaze Check',
+        phonetic: '[ Pointing + eye contact confirmation ]',
+        type: 'Joint Attention',
+        definition:
+          'Extended index finger accompanied by eye checking to share discoveries with caregiver.',
+        example:
+          'Mateo points at the garbage truck and looks back to confirm you are watching together.',
+        parentResponse:
+          '"Look at that big green truck lifting the bin! So loud and strong!"',
       },
     ],
   },
@@ -179,9 +242,19 @@ export const STAGE_VOCABULARY_DATA: Record<
 
 export function resolveVocabStage(
   child: ChildDTO | null | undefined
-): 'INFANT' | 'ELEMENTARY' | 'ADOLESCENT' {
+): 'INFANT' | 'TODDLER' | 'ELEMENTARY' | 'ADOLESCENT' {
   if (!child) return 'ADOLESCENT';
-  if (child.age <= 3) return 'INFANT';
+  if (child.developmentalTier === DevelopmentalTier.TIER_0A_INFANCY_0_1) return 'INFANT';
+  if (
+    child.developmentalTier === DevelopmentalTier.TIER_0B_TODDLER_1_2 ||
+    child.developmentalTier === DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3
+  ) {
+    return 'TODDLER';
+  }
+  if (typeof child.ageMonths === 'number' && child.ageMonths <= 12) return 'INFANT';
+  if (typeof child.ageMonths === 'number' && child.ageMonths <= 36) return 'TODDLER';
+  if (child.age <= 1) return 'INFANT';
+  if (child.age <= 3) return 'TODDLER';
   if (child.age <= 10) return 'ELEMENTARY';
   return 'ADOLESCENT';
 }

@@ -3,10 +3,11 @@ import {
   type PrismaClient,
   BRAIN_GAMES_SEED,
 } from '@alongside/database';
-import type {
-  DevelopmentalTier,
-  PlayCategory,
-  BrainGameActivityDTO,
+import {
+  type DevelopmentalTier,
+  type PlayCategory,
+  type BrainGameActivityDTO,
+  getEquivalentTiers,
 } from '@alongside/shared';
 
 export interface BrainGameFilterOptions {
@@ -24,7 +25,10 @@ export class PrismaBrainGamesRepository implements BrainGamesRepository {
 
   async findActivities(filter?: BrainGameFilterOptions): Promise<BrainGameActivityDTO[]> {
     const where: any = {};
-    if (filter?.tier) where.targetTier = filter.tier;
+    if (filter?.tier) {
+      const equivalents = getEquivalentTiers(filter.tier);
+      where.targetTier = equivalents.length === 1 ? equivalents[0] : { in: equivalents };
+    }
     if (filter?.category) where.category = filter.category;
 
     const list = await this.prisma.brainGameActivity.findMany({
@@ -89,7 +93,8 @@ export class InMemoryBrainGamesRepository implements BrainGamesRepository {
     let result = [...this.activities];
 
     if (filter?.tier) {
-      result = result.filter((a) => a.targetTier === filter.tier);
+      const equivalents = new Set(getEquivalentTiers(filter.tier));
+      result = result.filter((a) => equivalents.has(a.targetTier));
     }
     if (filter?.category) {
       result = result.filter((a) => a.category === filter.category);
