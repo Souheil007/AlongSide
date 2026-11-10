@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlongSide — Culture Digest UX Exploration Hub (Phase 2 · 11 Designs)</title>
+  <title>AlongSide — Culture Digest UX Exploration Hub (Phase 2 · 14 Designs)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@
           <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Phase 2 Exploration Hub</span>
         </div>
         <span class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-spruce-soft text-spruce border border-hairline font-medium">
-          Task SOU-80 · Culture Digest (11 Working Prototypes)
+          Task SOU-80 · Culture Digest (14 Working Prototypes)
         </span>
       </div>
 
@@ -81,56 +81,60 @@
           </button>
         </div>
 
-        <a id="external-link" href="prototype-direction-i-pulse-companion.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-hairline bg-card hover:bg-canvas-subtle text-spruce font-medium transition">
+        <a id="external-link" href="prototype-direction-l-living-magazine.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-hairline bg-card hover:bg-canvas-subtle text-spruce font-medium transition">
           <span>Open Direct Tab</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Direction Selector Bar: Split into 3 Tiers (Hybrids I-K, Immersive D-H, Original A-C) -->
+    <!-- Direction Selector Bar: Split into 4 Tiers (Reels/Blogs Masters L-N, Hybrids I-K, Immersive D-H, Original A-C) -->
     <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-hairline font-mono text-xs">
       
-      <!-- Tier 1: 3 Brand-New Synthesized Hybrids (Recommended by User Feedback) -->
+      <!-- Tier 1: 3 Brand-New User-Requested Master Paradigms (Reels + Blogs + Time Mirror + Conditional Slang) -->
       <div class="flex items-center gap-1 overflow-x-auto py-0.5">
-        <span class="text-[10px] uppercase tracking-wider text-spruce font-bold mr-1 shrink-0 bg-spruce-soft px-2 py-0.5 rounded border border-spruce/20">⭐ 3 New Hybrids:</span>
-        <button onclick="setDirection('i')" id="btn-dir-i" class="tab-active px-2.5 py-1 rounded-lg border border-hairline text-ink font-medium transition shadow-xs shrink-0">
+        <span class="text-[10px] uppercase tracking-wider text-spruce font-bold mr-1 shrink-0 bg-spruce-soft px-2 py-0.5 rounded border border-spruce/20">⭐ 3 New Master Designs:</span>
+        <button onclick="setDirection('l')" id="btn-dir-l" class="tab-active px-2.5 py-1 rounded-lg border border-hairline text-ink font-medium transition shadow-xs shrink-0">
+          Dir L: Living Magazine
+        </button>
+        <button onclick="setDirection('m')" id="btn-dir-m" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
+          Dir M: Channel Broadcast
+        </button>
+        <button onclick="setDirection('n')" id="btn-dir-n" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
+          Dir N: Field Dossier
+        </button>
+      </div>
+
+      <!-- Tier 2: 3 Synthesized Hybrids (I-K) -->
+      <div class="flex items-center gap-1 overflow-x-auto py-0.5">
+        <span class="text-[10px] uppercase tracking-wider text-spruce font-bold mr-1 shrink-0">3 Hybrids:</span>
+        <button onclick="setDirection('i')" id="btn-dir-i" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
           Dir I: Pulse Companion
         </button>
-        <button onclick="setDirection('j')" id="btn-dir-j" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
+        <button onclick="setDirection('j')" id="btn-dir-j" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
           Dir J: Field Guide Lab
         </button>
-        <button onclick="setDirection('k')" id="btn-dir-k" class="px-2.5 py-1 rounded-lg border border-hairline text-body hover:bg-card transition font-medium shrink-0">
-          Dir K: Connected Storyfeed
+        <button onclick="setDirection('k')" id="btn-dir-k" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
+          Dir K: Storyfeed
         </button>
       </div>
 
-      <!-- Tier 2: 5 Immersive Prototypes (D-H) -->
+      <!-- Tier 3: 5 Immersive Prototypes (D-H) -->
       <div class="flex items-center gap-1 overflow-x-auto py-0.5">
         <span class="text-[10px] uppercase tracking-wider text-amber font-bold mr-1 shrink-0">5 Immersive:</span>
-        <button onclick="setDirection('d')" id="btn-dir-d" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
-          Dir D: Holodeck
-        </button>
-        <button onclick="setDirection('e')" id="btn-dir-e" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
-          Dir E: Magazine
-        </button>
-        <button onclick="setDirection('f')" id="btn-dir-f" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
-          Dir F: Radar
-        </button>
-        <button onclick="setDirection('g')" id="btn-dir-g" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
-          Dir G: Reels
-        </button>
-        <button onclick="setDirection('h')" id="btn-dir-h" class="px-2 py-0.5 rounded text-[11px] text-body hover:bg-card transition font-medium shrink-0">
-          Dir H: Capsule
-        </button>
+        <button onclick="setDirection('d')" id="btn-dir-d" class="px-1.5 py-0.5 rounded text-[10px] text-body hover:bg-card transition font-medium shrink-0">D: Holodeck</button>
+        <button onclick="setDirection('e')" id="btn-dir-e" class="px-1.5 py-0.5 rounded text-[10px] text-body hover:bg-card transition font-medium shrink-0">E: Magazine</button>
+        <button onclick="setDirection('f')" id="btn-dir-f" class="px-1.5 py-0.5 rounded text-[10px] text-body hover:bg-card transition font-medium shrink-0">F: Radar</button>
+        <button onclick="setDirection('g')" id="btn-dir-g" class="px-1.5 py-0.5 rounded text-[10px] text-body hover:bg-card transition font-medium shrink-0">G: Reels</button>
+        <button onclick="setDirection('h')" id="btn-dir-h" class="px-1.5 py-0.5 rounded text-[10px] text-body hover:bg-card transition font-medium shrink-0">H: Capsule</button>
       </div>
 
-      <!-- Tier 3: Original 3 Prototypes (A-C) -->
+      <!-- Tier 4: Original 3 Prototypes (A-C) -->
       <div class="flex items-center gap-1 opacity-75 hover:opacity-100 transition">
         <span class="text-[10px] uppercase tracking-wider text-mute font-semibold mr-1">Original:</span>
-        <button onclick="setDirection('a')" id="btn-dir-a" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">A: Minimal</button>
-        <button onclick="setDirection('b')" id="btn-dir-b" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">B: Codex</button>
-        <button onclick="setDirection('c')" id="btn-dir-c" class="px-1.5 py-0.5 rounded text-[10px] text-mute hover:text-ink">C: Ritual</button>
+        <button onclick="setDirection('a')" id="btn-dir-a" class="px-1 py-0.5 rounded text-[10px] text-mute hover:text-ink">A</button>
+        <button onclick="setDirection('b')" id="btn-dir-b" class="px-1 py-0.5 rounded text-[10px] text-mute hover:text-ink">B</button>
+        <button onclick="setDirection('c')" id="btn-dir-c" class="px-1 py-0.5 rounded text-[10px] text-mute hover:text-ink">C</button>
       </div>
 
     </div>
@@ -142,7 +146,7 @@
     <!-- Left: Preview Container -->
     <main class="flex-1 bg-[#EDEDEA] p-2 sm:p-4 flex items-center justify-center overflow-auto">
       <div id="frame-container" class="preview-frame w-full h-full bg-white rounded-xl border border-hairline overflow-hidden flex flex-col">
-        <iframe id="preview-iframe" src="prototype-direction-i-pulse-companion.html" class="w-full h-full border-0" title="Prototype Preview"></iframe>
+        <iframe id="preview-iframe" src="prototype-direction-l-living-magazine.html" class="w-full h-full border-0" title="Prototype Preview"></iframe>
       </div>
     </main>
 
@@ -222,6 +226,54 @@
 
   <script>
     const PROTOTYPES = {
+      l: {
+        file: 'prototype-direction-l-living-magazine.html',
+        tag: '⭐ 2026 Master Paradigm 01',
+        title: 'Direction L — The Living Cultural Magazine',
+        desc: 'Editorial pediatric prestige meets short-form video: 45-second parent reels with interactive video player simulation, high-density weekly magazine blog dispatches (1 lead + 2 companion features with full-text reader modal), side-by-side archival Generational Time Mirror (1999 vs 2026), and a strictly tier-conditional micro-language decoder.',
+        immersion: '10/10',
+        appeal: '10/10',
+        load: 'Optimal (Structured Editorial)',
+        action: '9.9/10',
+        bullets: [
+          'Pillar 1: 45-Second Parent Reels Carousel with interactive video player modal & parent scripts',
+          'Pillar 2: The Sunday Magazine Dispatches (3 tier-tailored blog articles + full reader modal)',
+          'Pillar 3: Generational Time Mirror (1999 vs 2026 side-by-side with pediatric invariance insight)',
+          'Pillar 4: Stage-Tailored Micro-Language Decoder (active teen/recess slang; excluded for infants)'
+        ]
+      },
+      m: {
+        file: 'prototype-direction-m-channel-broadcast.html',
+        tag: '⭐ 2026 Master Paradigm 02',
+        title: 'Direction M — The Multi-Channel Cultural Broadcast',
+        desc: 'Dynamic broadcast console for media-first parents: Live vertical reel player with real-time video simulation, audio subtitles, and quick commentary, alongside an interactive Era Slider (1999 ↔ 2026), weekly magazine cards with inline accordion insights, and a searchable micro-language matrix.',
+        immersion: '9.9/10',
+        appeal: '9.9/10',
+        load: 'Low-Medium (Studio Flow)',
+        action: '9.9/10',
+        bullets: [
+          'Pillar 1: Live Interactive Reel Player with timeline scrubber, subtitles, and channel queue',
+          'Pillar 2: Weekly Magazine Cards with inline expanding key takeaway accordions',
+          'Pillar 3: Interactive Generational Era Slider (drag from 1999 to 2026 in real time)',
+          'Pillar 4: Dynamic Micro-Language Console with conditional infant pre-verbal guidance'
+        ]
+      },
+      n: {
+        file: 'prototype-direction-n-chronicle-dossier.html',
+        tag: '⭐ 2026 Master Paradigm 03',
+        title: 'Direction N — The Connected Chronicle & Field Dossier',
+        desc: 'Crisp intelligence briefing for parents: Scannable horizontal reel briefing cards, 3 comprehensive field reports, a structured Generational Benchmark table, and a clinical micro-language compass.',
+        immersion: '9.8/10',
+        appeal: '9.8/10',
+        load: 'Lowest (Scannable Intelligence)',
+        action: '9.9/10',
+        bullets: [
+          'Pillar 1: Horizontal Field Reel Cards with instant modal player & clinical takeaways',
+          'Pillar 2: 3 In-depth Pediatric Field Reports with structured takeaways',
+          'Pillar 3: Generational Benchmark comparison with evolutionary invariance principles',
+          'Pillar 4: Micro-Language Compass strictly tailored to child age (slang or infant cues)'
+        ]
+      },
       i: {
         file: 'prototype-direction-i-pulse-companion.html',
         tag: '⭐ Synthesized Hybrid Master 01',
@@ -412,7 +464,7 @@
       document.getElementById('external-link').href = data.file;
 
       // Update all button states
-      ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'].forEach(d => {
+      ['l', 'm', 'n', 'i', 'j', 'k', 'd', 'e', 'f', 'g', 'h', 'a', 'b', 'c'].forEach(d => {
         const btn = document.getElementById(`btn-dir-${d}`);
         if (btn) {
           if (d === dir) {
@@ -458,8 +510,8 @@
       }
     }
 
-    // Default to Direction I (First of the new synthesized hybrids)
-    setDirection('i');
+    // Default to Direction L (First of the 3 user-requested master paradigms)
+    setDirection('l');
   </script>
 </body>
 </html>

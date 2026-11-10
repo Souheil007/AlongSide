@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction M — The Multi-Channel Cultural Broadcast | Culture Digest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-light': '#1E583E',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+            coral: '#C85A32',
+            'coral-soft': '#FDF2EE',
+            violet: '#5B21B6',
+            'violet-soft': '#EDE9FE',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8F8F5;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .broadcast-frame {
+      box-shadow: 0 20px 40px -15px rgba(20, 61, 43, 0.1), 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .slider-track {
+      background: linear-gradient(90deg, #EDE9FE 0%, #EAF3EE 100%);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #143D2B;
+      cursor: pointer;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-12">
+  <div class="max-w-6xl mx-auto space-y-10">
+
+    <!-- Top Navigation Bar & Master Hub Link -->
+    <header class="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-3">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-mute hover:text-spruce transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>All 14 Directions</span>
+        </a>
+        <span class="text-hairline">|</span>
+        <span class="font-serif text-lg font-semibold tracking-tight text-ink">AlongSide</span>
+        <span class="text-mute font-mono text-xs">/</span>
+        <span class="font-mono text-xs uppercase tracking-wider text-spruce font-semibold">Direction M: Multi-Channel Broadcast</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-spruce/30 bg-spruce-soft px-3 py-1 font-mono text-xs text-spruce font-semibold">
+          Broadcast Channel #42 · Live
+        </span>
+      </div>
+    </header>
+
+    <!-- Header Control Bar with Child Calibration -->
+    <div class="bg-card rounded-3xl p-6 sm:p-8 border border-hairline broadcast-frame flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold">Studio Broadcast Console</span>
+          <span class="text-mute font-mono text-xs">·</span>
+          <span class="font-mono text-xs text-mute" id="broadcast-tier-badge">Julian (14y · Pioneer)</span>
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+          The Cultural Channel & Dispatch
+        </h1>
+        <p class="text-body text-sm sm:text-base max-w-2xl" id="broadcast-tier-desc">
+          Interactive reels player, deep magazine essays, generational time slider, and tier-tailored micro-language.
+        </p>
+      </div>
+
+      <!-- Child Channel Selector -->
+      <div class="flex items-center gap-2 bg-canvas-subtle p-2 rounded-2xl border border-hairline shrink-0">
+        <button onclick="switchBroadcastChild('julian')" id="btn-child-julian" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-white text-spruce font-mono text-xs font-bold shadow-2xs transition">
+          <span class="w-4 h-4 rounded-full bg-spruce text-white flex items-center justify-center text-[9px]">J</span>
+          <span>Julian · 14y</span>
+        </button>
+        <button onclick="switchBroadcastChild('maya')" id="btn-child-maya" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]">M</span>
+          <span>Maya · 8y</span>
+        </button>
+        <button onclick="switchBroadcastChild('mateo')" id="btn-child-mateo" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]">M</span>
+          <span>Mateo · 14m</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 1: INTERACTIVE REELS STUDIO (Active Player + Queue) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Pillar 1 · Interactive Reels Studio
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink">Watch & Listen: This Week's Cultural Reels</h2>
+        </div>
+        <span class="text-xs font-mono text-mute">Direct In-Page Playback</span>
+      </div>
+
+      <!-- Main Reels Theater: Active Player (Left) + Pediatric Telemetry (Right) -->
+      <div class="bg-card rounded-3xl border border-hairline broadcast-frame p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Vertical Reel Player Simulation (5 Cols) -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="w-full max-w-xs aspect-[9/16] rounded-3xl bg-slate-900 overflow-hidden relative shadow-xl flex flex-col justify-between p-5 text-white border-2 border-slate-800">
+            <!-- Top Progress & Controls -->
+            <div class="space-y-2 z-10">
+              <div class="w-full bg-white/30 h-1.5 rounded-full overflow-hidden">
+                <div id="player-progress" class="bg-white h-full transition-all duration-300" style="width: 45%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-white/80">
+                <span id="player-timer">0:21 / 0:45</span>
+                <span id="player-category-pill" class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur border border-white/10 uppercase text-[9px] font-bold">Category</span>
+              </div>
+            </div>
+
+            <!-- Simulated Video Motion Centerpiece -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center space-y-3 z-10 py-6">
+              <button onclick="toggleReelPlay()" id="btn-player-play" class="w-16 h-16 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 flex items-center justify-center backdrop-blur transition transform hover:scale-110">
+                <svg id="icon-play" class="w-8 h-8 text-white fill-current translate-x-0.5 hidden" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="icon-pause" class="w-8 h-8 text-white fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <h3 class="font-serif text-lg font-bold text-white px-3 leading-snug" id="player-title">Reel Title</h3>
+            </div>
+
+            <!-- Bottom Subtitles & Sound Toggle -->
+            <div class="space-y-2 z-10">
+              <div class="bg-black/60 backdrop-blur p-3 rounded-xl border border-white/15 space-y-1">
+                <span class="font-mono text-[9px] uppercase tracking-wider text-spruce-soft font-bold block">Live Audio Subtitle</span>
+                <p class="text-xs text-white/95 leading-tight italic" id="player-caption">"..."</p>
+              </div>
+              <div class="flex items-center justify-between text-xs pt-1">
+                <span class="font-mono text-[10px] text-white/60">AlongSide Studio Reel</span>
+                <button onclick="toggleAudioMute()" id="btn-sound" class="px-2 py-1 rounded bg-white/20 hover:bg-white/30 font-mono text-[10px] text-white transition flex items-center gap-1">
+                  <span>Sound ON 🔊</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Pediatric Translation & Conversation Script (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs uppercase tracking-wider text-spruce bg-spruce-soft px-2.5 py-0.5 rounded-full font-bold">Pediatric Breakdown</span>
+              <span class="font-mono text-xs text-mute" id="player-views-count">14.2k parents viewed</span>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-ink" id="player-detail-title">Detailed Title</h3>
+            <p class="text-body text-sm leading-relaxed" id="player-detail-desc">
+              Comprehensive explanation of what is happening...
+            </p>
+          </div>
+
+          <!-- The Script Box -->
+          <div class="p-4 bg-spruce-soft/70 rounded-2xl border border-spruce/20 space-y-2">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1">
+              <svg class="w-3.5 h-3.5 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              Tonight's Casual Dinner Conversation Script:
+            </span>
+            <p class="text-sm font-serif font-bold text-ink italic" id="player-detail-script">
+              "Script line..."
+            </p>
+          </div>
+
+          <!-- Reel Playlist Selector Strip -->
+          <div class="space-y-2 pt-2">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-mute font-bold block">Select Reel to Play:</span>
+            <div class="grid grid-cols-3 gap-2" id="reel-thumbnails-strip">
+              <!-- Injected via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 2: WEEKLY BLOGS & MAGAZINE SECTION (Expandable Accordion Cards) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            Pillar 2 · Weekly Magazine Dispatches
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink">In-Depth Pediatric Analyses</h2>
+        </div>
+        <span class="text-xs font-mono text-mute">Click Card to Expand Key Takeaways</span>
+      </div>
+
+      <!-- 3 Magazine Cards with Inline Expander -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="broadcast-blogs-container">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 3: INTERACTIVE ERA SLIDER ("When You Were X vs. Child at X") -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-violet font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            Pillar 3 · Generational Era Slider
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink" id="era-slider-title">Then (1999) vs. Now (2026)</h2>
+        </div>
+        <span class="text-xs font-mono text-violet bg-violet-soft px-3 py-1 rounded-full font-semibold border border-violet/20">
+          Drag Slider to Shift Eras
+        </span>
+      </div>
+
+      <div class="bg-card rounded-3xl border border-hairline broadcast-frame p-6 sm:p-8 space-y-6">
+        <!-- Interactive Slider Control -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between font-mono text-xs font-bold">
+            <span class="text-violet">1999: Your Childhood Era</span>
+            <span id="slider-era-label" class="text-spruce text-sm">Blended Perspective</span>
+            <span class="text-spruce">2026: Child's World</span>
+          </div>
+          <input type="range" min="0" max="100" value="50" oninput="updateEraSlider(this.value)" class="w-full h-3 rounded-lg slider-track appearance-none cursor-pointer">
+        </div>
+
+        <!-- Dynamic Comparative View -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2" id="era-comparison-cards">
+          <!-- Injected via JavaScript based on slider and tier -->
+        </div>
+
+        <!-- The Shared Reassurance Banner -->
+        <div class="p-4 rounded-2xl bg-canvas-subtle border border-hairline flex items-center justify-between text-xs font-mono text-mute">
+          <span>The Constant: Human developmental milestones (belonging, autonomy, exploration) remain unchanged.</span>
+          <span class="text-spruce font-bold hidden sm:inline">Pediatric Science Verified</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PILLAR 4: DECODE MODERN YOUTH VOCABULARY (Tailored & Conditional) -->
+    <!-- ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <div class="space-y-0.5">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-spruce font-bold flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-spruce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+            Pillar 4 · Micro-Language Console
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink" id="matrix-heading">Decode Modern Youth Vocabulary</h2>
+        </div>
+        <span class="text-xs font-mono" id="matrix-status-pill">Tier Tailored</span>
+      </div>
+
+      <!-- Matrix Container -->
+      <div id="matrix-container" class="space-y-4">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- APPLICATION LOGIC & DATA -->
+  <script>
+    const BROADCAST_DATA = {
+      julian: {
+        childName: "Julian",
+        age: 14,
+        tierBadge: "Julian (14y · Adolescent Pioneer · Active-Device)",
+        desc: "Adolescent peer dynamics, Discord persistent voice lobbies, viral memes, and navigating digital independence.",
+        reels: [
+          {
+            id: "j-r1",
+            title: "What is a 'Crashout' & Why Teens Fear It",
+            duration: "0:45",
+            views: "18.4k parents",
+            category: "Emotional Regulation",
+            caption: "\"Bro had a complete crashout during 4th period...\" Loss of emotional composure in front of peers.",
+            detailTitle: "The Anatomy of a 'Crashout'",
+            detailDesc: "In adolescent social dynamics, emotional armor is perceived as survival. A 'crashout' signifies losing control under stress. When Julian returns home withdrawn, avoid probing questions; validate that social pressure is intense.",
+            script: "\"It felt like everybody was tense today. If you need 30 minutes of zero questions, take your time.\""
+          },
+          {
+            id: "j-r2",
+            title: "Why Discord Voice Calls Last 4+ Hours",
+            duration: "0:38",
+            views: "14.2k parents",
+            category: "Parallel Play",
+            caption: "\"They aren't playing games the whole time; they are co-studying in virtual parallel presence.\"",
+            detailTitle: "Digital Parallel Play",
+            detailDesc: "Persistent audio lobbies serve the same social role that landline phones did in the 1990s: low-demand companionship without conversational pressure. Respect the connection while honoring the 8:30 PM curfew.",
+            script: "\"I see you guys are keeping the call open while doing physics. I'll tap your door at 8:15 before the auto-dock.\""
+          },
+          {
+            id: "j-r3",
+            title: "The Silent Economy of 'Aura Points'",
+            duration: "0:40",
+            views: "21.0k parents",
+            category: "Peer Status",
+            caption: "\"Minus 1,000 aura for tripping in the hallway; plus 500 aura for fixing the teacher's projector calmly.\"",
+            detailTitle: "Charisma Under Pressure",
+            detailDesc: "'Aura' is humorous Gen-Z shorthand for nonchalance, poise, and social grace. Recognizing this vocabulary allows parents to bridge conversations playfully rather than awkwardly.",
+            script: "\"Handling that unexpected soccer rainout without complaining? Definitely plus 500 aura in my book.\""
+          }
+        ],
+        blogs: [
+          {
+            id: "j-b1",
+            title: "The Algorithmic Rage-Bait Trap",
+            author: "Dr. Aris Thorne",
+            readTime: "5 min read",
+            teaser: "Why teen social feeds prioritize high-arousal moral outrage, and how to build immunity without seizing the phone.",
+            takeaway: "Frame outrage feeds as corporate revenue optimization rather than teen entertainment to trigger their natural instinct for autonomy."
+          },
+          {
+            id: "j-b2",
+            title: "The Death of 'How Was School?'",
+            author: "Elena Rostova",
+            readTime: "3 min read",
+            teaser: "Why generic evening interrogation triggers shutdowns, and the power of parallel driving conversations.",
+            takeaway: "Eliminate direct eye-contact inquiries; use side-by-side observation in the car or while cooking."
+          },
+          {
+            id: "j-b3",
+            title: "Late-Night Discord & Sleep Architecture",
+            author: "Dr. Marcus Vance",
+            readTime: "4 min read",
+            teaser: "How the 8:30 PM automated device profile preserves REM sleep without causing adolescent FOMO panic.",
+            takeaway: "Automated neutral enforcement removes the parent from the cop role while safeguarding vital neurogenesis."
+          }
+        ],
+        mirror: {
+          thenYear: "1999 (Age 14)",
+          nowYear: "2026 (Age 14)",
+          thenChat: "AOL Instant Messenger (AIM) with moody lyrics in away messages.",
+          nowChat: "Discord voice channels and disappearing Snapchat streaks.",
+          thenVibe: "Dial-up modem tones, frosted tips, and burning mix CDs on Napster.",
+          nowVibe: "Spotify Blend playlists, viral TikTok sound loops, and Aura points.",
+          thenDread: "\"Video games rot your brain and chatrooms are dangerous!\"",
+          nowDread: "\"Algorithmic doomscrolling and brainrot memes destroy attention!\""
+        },
+        vocabEligible: true,
+        vocabCategory: "Adolescent Peer Lexicon",
+        vocabList: [
+          { term: "Crashout", meaning: "A sudden, reckless loss of emotional composure.", usage: "\"He had a total crashout over the referee's call.\"", calm: "\"Sounds like he lost his cool completely. What triggered it?\"" },
+          { term: "Aura Points", meaning: "Imaginary metric for effortless poise and dignity.", usage: "\"Tripping is -500 aura; helping the teacher is +1000 aura.\"", calm: "\"Maintaining your calm under pressure is high aura in my book.\"" },
+          { term: "Cooked", meaning: "Exhausted, compromised, or facing guaranteed failure.", usage: "\"I didn't study for Spanish; I am completely cooked.\"", calm: "\"Let's take a 10-minute walk and tackle the hardest section first.\"" },
+          { term: "Locked In", meaning: "Total deep-work focus and elimination of distractions.", usage: "\"He put his headphones on and was locked in for 2 hours.\"", calm: "\"I see you locked in on that homework. I'll keep the hallway quiet.\"" }
+        ]
+      },
+
+      maya: {
+        childName: "Maya",
+        age: 8,
+        tierBadge: "Maya (8y · Elementary Trailblazer · Pre-Device)",
+        desc: "Schoolyard barter economics, Pokemon card trading, Minecraft co-op ethics, and early friendship contracts.",
+        reels: [
+          {
+            id: "m-r1",
+            title: "The Recess Pokemon Card Economy",
+            duration: "0:42",
+            views: "9.8k parents",
+            category: "Playground Barter",
+            caption: "\"You broke the pinky promise and traded my shiny Mewtwo!\" Recess contracts and perceived value.",
+            detailTitle: "Concrete Operational Fairness",
+            detailDesc: "At 8 years old, trading cards is a live exercise in contractual fairness and social reciprocity. What looks like cheap cardboard to adults is real currency to children.",
+            script: "\"Tell me about the trade you made today. Did both of you feel good about it when the bell rang?\""
+          },
+          {
+            id: "m-r2",
+            title: "Roblox Obbies & Collaborative Ethics",
+            duration: "0:36",
+            views: "8.2k parents",
+            category: "Digital Co-Op",
+            caption: "\"Don't grief my build!\" The moral codes inside shared virtual sandbox worlds.",
+            detailTitle: "Respecting Digital Architecture",
+            detailDesc: "To an 8-year-old, a digital structure built over 2 hours has the emotional weight of a physical Lego castle. Destroying blocks feels like authentic betrayal.",
+            script: "\"It sounds like someone didn't follow the building rules. How do you want to handle it next time?\""
+          },
+          {
+            id: "m-r3",
+            title: "Why Squishmallows Dominate 3rd Grade",
+            duration: "0:39",
+            views: "7.1k parents",
+            category: "Sensory Anchoring",
+            caption: "\"They aren't just stuffed toys; they are portable tactile grounding anchors in noisy classrooms.\"",
+            detailTitle: "Tactile Emotional Soothing",
+            detailDesc: "Grade school transitions are cognitively exhausting. Having a soft tactile anchor provides soothing sensory regulation during long desk sessions.",
+            script: "\"Which Squishmallow was on duty in your backpack today?\""
+          }
+        ],
+        blogs: [
+          {
+            id: "m-b1",
+            title: "The Blacktop Barter Market",
+            author: "Dr. Claire Moreau",
+            readTime: "4 min read",
+            teaser: "How playground trading of cards, erasers, and plushies teaches real-world negotiation ethics.",
+            takeaway: "Use playground trades as a real-world sandbox to practice negotiation and assertive communication."
+          },
+          {
+            id: "m-b2",
+            title: "Minecraft Co-Op: The Ethics of 'Griefing'",
+            author: "Daniel Hayes",
+            readTime: "3 min read",
+            teaser: "Why breaking someone's virtual building feels like real emotional betrayal to an 8-year-old.",
+            takeaway: "Treat digital creations as authentic emotional labor and enforce collaborative server rules."
+          },
+          {
+            id: "m-b3",
+            title: "The Pre-Device Sanctuary Advantage",
+            author: "Dr. Aris Thorne",
+            readTime: "4 min read",
+            teaser: "Why protecting Maya on Road 1 (Pre-Device) through grade school builds lifelong social resilience.",
+            takeaway: "Road 1 preserves imaginative play, high boredom tolerance, and face-to-face conflict resolution."
+          }
+        ],
+        mirror: {
+          thenYear: "1999 (Age 8)",
+          nowYear: "2026 (Age 8)",
+          thenChat: "Secret lunchbox notes and playground pinky swear contracts.",
+          nowChat: "Minecraft in-game chat signs and Roblox private neighborhood servers.",
+          thenVibe: "Pogs, Slammers, Beanie Babies, and trading stickers in notebooks.",
+          nowVibe: "Holographic Pokemon cards, mini Squishmallows, and scented erasers.",
+          thenDread: "\"Sitting that close to the TV will turn your eyes permanently square!\"",
+          nowDread: "\"Is playing Minecraft on the tablet giving her too much screen time?\""
+        },
+        vocabEligible: true,
+        vocabCategory: "Elementary Schoolyard Lexicon",
+        vocabList: [
+          { term: "Griefing", meaning: "Deliberately destroying another player's digital build.", usage: "\"He came onto our server and started griefing our castle!\"", calm: "\"That feels frustrating when you worked hard. Let's make sure backups are enabled.\"" },
+          { term: "No Backsies", meaning: "Recess law that completed trades are final and non-refundable.", usage: "\"We shook hands on the Pikachu—no backsies!\"", calm: "\"Even with 'no backsies', kind friends check if someone felt pressured.\"" },
+          { term: "Duping", meaning: "Duplicating items through game glitches or shortcuts.", usage: "\"She said she got three Mewtwos from duping.\"", calm: "\"Do you think glitch shortcuts feel as satisfying as finding them honestly?\"" },
+          { term: "Oof / Bruh", meaning: "Vocal reaction to a clumsy stumble or mild mistake.", usage: "\"I dropped my pencil case on the stairs... big oof.\"", calm: "\"Oof indeed! Did everything stay in one piece?\"" }
+        ]
+      },
+
+      mateo: {
+        childName: "Mateo",
+        age: 1.1,
+        tierBadge: "Mateo (14m · Infant Nestling · Pre-Device Sanctuary)",
+        desc: "Auditory cadence loops, high-chair physics, mirror neuron synchronization, and pre-verbal cues.",
+        reels: [
+          {
+            id: "b-r1",
+            title: "Why 'Ms. Rachel' Cadence Captivates Baby Brains",
+            duration: "0:35",
+            views: "22.5k parents",
+            category: "Acoustic Mapping",
+            caption: "\"Exaggerated facial phonemes and rhythmic musical contour light up infant language centers.\"",
+            detailTitle: "Parentese & Vocal Contours",
+            detailDesc: "Infants process speech as musical pitch rather than semantic vocabulary. Speaking in elongated musical vowels helps infant temporal lobes map phonetic boundaries.",
+            script: "\"When talking with Mateo, pause for 3 full seconds after saying a word so his brain can mirror the mouth shape.\""
+          },
+          {
+            id: "b-r2",
+            title: "The High-Chair Gravity Experiment",
+            duration: "0:40",
+            views: "17.9k parents",
+            category: "Empirical Physics",
+            caption: "\"He dropped the spoon 12 times in a row. He's testing gravity and social cause-and-effect.\"",
+            detailTitle: "Object Permanence & Cause-and-Effect",
+            detailDesc: "Dropping objects is an essential developmental milestone testing object permanence: 'Does the spoon still exist when I cannot see it?'",
+            script: "\"Hand the spoon back twice with a smile, then calmly place the bowl on the counter: 'All done dropping for now!'\""
+          },
+          {
+            id: "b-r3",
+            title: "Mirror Neurons & Repetitive Babble",
+            duration: "0:38",
+            views: "15.3k parents",
+            category: "Serve-and-Return",
+            caption: "\"When he babbles 'Ba-ba', echo it right back. That serve-and-return wires empathy.\"",
+            detailTitle: "Conversational Serve-and-Return",
+            detailDesc: "Harvard Child Development studies demonstrate that repeating baby babble builds synaptic connections for future two-way conversation.",
+            script: "\"Look right into Mateo's eyes and echo his exact pitch. Watch his delight when he realizes you're in sync.\""
+          }
+        ],
+        blogs: [
+          {
+            id: "b-b1",
+            title: "The Science of Acoustic Nesting",
+            author: "Dr. Sophie Alverez",
+            readTime: "4 min read",
+            teaser: "Why familiar parental voices settle the infant autonomic nervous system faster than white noise.",
+            takeaway: "Your voice contour and responsive eye contact wire the infant nervous system more deeply than any digital screen."
+          },
+          {
+            id: "b-b2",
+            title: "Pre-Verbal Phonemes: Decoding 'Ah-Da'",
+            author: "Elena Rostova",
+            readTime: "3 min read",
+            teaser: "How referential pointing combined with vocal sounds marks the leap into symbolic human thought.",
+            takeaway: "Always acknowledge pointing gestures with immediate naming and shared eye gaze."
+          },
+          {
+            id: "b-b3",
+            title: "High-Chair Sensory Integration",
+            author: "Dr. Claire Moreau",
+            readTime: "3 min read",
+            teaser: "Why smearing avocado puree on the tray is crucial tactile motor planning before oral acceptance.",
+            takeaway: "Messy mealtime exploration strengthens fine motor grip and sensory acceptance."
+          }
+        ],
+        mirror: {
+          thenYear: "Early 1990s (Toddler)",
+          nowYear: "2026 (14 Months)",
+          thenChat: "Barney cassette tapes and plastic Fisher-Price push phones.",
+          nowChat: "Ms. Rachel melodies and responsive parental serve-and-return.",
+          thenVibe: "Banging pots with wooden spoons and plastic stacking rings.",
+          nowVibe: "Silicone suction bowls and Montessori tactile wooden nesting shapes.",
+          thenDread: "\"Let the baby cry it out in the crib—he has to learn self-reliance!\"",
+          nowDread: "\"Neuroscience debunked cry-it-out: attunement builds secure attachment!\""
+        },
+        vocabEligible: false,
+        vocabCategory: "Pre-Verbal Acoustic Signals & High-Chair Gestures",
+        vocabNotice: "Youth internet slang is not applicable to infants. AlongSide conditionally presents Mateo's Stage-Appropriate Pre-Verbal Signal Decoder.",
+        vocabList: [
+          { term: "Referential Pointing", meaning: "Extending index finger while checking if parent sees it.", usage: "Points to the ceiling fan and vocalizes \"Ooo!\"", calm: "\"Yes, look at the big fan spinning around!\" (Confirms shared attention)." },
+          { term: "Lip Trills / Raspberries", meaning: "Blowing air through closed lips for tactile feedback.", usage: "Blowing raspberries into high-chair tray.", calm: "\"Blow a raspberry right back with a smile to reinforce motor vocal play.\"" },
+          { term: "Repetitive Babble ('Ba-Ba')", meaning: "Canonical babbling practicing bilabial consonants (B, M, P).", usage: "Holding a block and vocalizing \"Ba-ba-ba\".", calm: "\"Ba-ba! Are you holding your blue ball? That is a blue ball!\"" }
+        ]
+      }
+    };
+
+    let activeBroadcastKey = 'julian';
+    let activeReelIndex = 0;
+    let isPlaying = true;
+    let isMuted = false;
+
+    function switchBroadcastChild(key) {
+      activeBroadcastKey = key;
+      activeReelIndex = 0;
+      const data = BROADCAST_DATA[key];
+
+      // Update button styling
+      ['julian', 'maya', 'mateo'].forEach(k => {
+        const btn = document.getElementById('btn-child-' + k);
+        if (k === key) {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-spruce bg-white text-spruce font-mono text-xs font-bold shadow-2xs transition";
+          btn.querySelector('span:first-child').className = "w-4 h-4 rounded-full bg-spruce text-white flex items-center justify-center text-[9px]";
+        } else {
+          btn.className = "flex items-center gap-2 px-3.5 py-2 rounded-xl border border-hairline bg-transparent text-body font-mono text-xs hover:bg-white transition";
+          btn.querySelector('span:first-child').className = "w-4 h-4 rounded-full bg-slate-200 text-body flex items-center justify-center text-[9px]";
+        }
+      });
+
+      // Update Header
+      document.getElementById('broadcast-tier-badge').textContent = data.tierBadge;
+      document.getElementById('broadcast-tier-desc').textContent = data.desc;
+
+      // Render Reel Theater
+      loadReel(0);
+      renderReelThumbnails(data.reels);
+
+      // Render Blogs
+      renderBroadcastBlogs(data.blogs);
+
+      // Render Era Slider
+      updateEraSlider(50);
+
+      // Render Micro-Language Matrix
+      renderVocabMatrix(data);
+    }
+
+    function loadReel(index) {
+      activeReelIndex = index;
+      const data = BROADCAST_DATA[activeBroadcastKey];
+      const reel = data.reels[index];
+
+      document.getElementById('player-title').textContent = reel.title;
+      document.getElementById('player-category-pill').textContent = reel.category;
+      document.getElementById('player-caption').textContent = reel.caption;
+      document.getElementById('player-detail-title').textContent = reel.detailTitle;
+      document.getElementById('player-detail-desc').textContent = reel.detailDesc;
+      document.getElementById('player-detail-script').textContent = reel.script;
+      document.getElementById('player-views-count').textContent = `${reel.views} viewed`;
+      document.getElementById('player-timer').textContent = `0:15 / ${reel.duration}`;
+
+      // Highlight active thumbnail
+      data.reels.forEach((r, idx) => {
+        const thumb = document.getElementById('thumb-' + idx);
+        if (thumb) {
+          if (idx === index) {
+            thumb.className = "p-2.5 rounded-xl border-2 border-spruce bg-spruce-soft text-spruce font-mono text-xs font-bold text-left transition";
+          } else {
+            thumb.className = "p-2.5 rounded-xl border border-hairline bg-canvas-subtle text-body font-mono text-xs text-left hover:bg-white transition";
+          }
+        }
+      });
+    }
+
+    function renderReelThumbnails(reels) {
+      const container = document.getElementById('reel-thumbnails-strip');
+      container.innerHTML = reels.map((r, idx) => `
+        <button onclick="loadReel(${idx})" id="thumb-${idx}" class="p-2.5 rounded-xl border ${idx === activeReelIndex ? 'border-2 border-spruce bg-spruce-soft text-spruce font-bold' : 'border-hairline bg-canvas-subtle text-body'} font-mono text-xs text-left hover:bg-white transition">
+          <span class="block truncate font-semibold">${r.title}</span>
+          <span class="text-[10px] text-mute block">${r.duration} · ${r.category}</span>
+        </button>
+      `).join('');
+    }
+
+    function toggleReelPlay() {
+      isPlaying = !isPlaying;
+      document.getElementById('icon-play').classList.toggle('hidden', isPlaying);
+      document.getElementById('icon-pause').classList.toggle('hidden', !isPlaying);
+      const prog = document.getElementById('player-progress');
+      if (isPlaying) {
+        prog.style.width = "75%";
+      } else {
+        prog.style.width = "45%";
+      }
+    }
+
+    function toggleAudioMute() {
+      isMuted = !isMuted;
+      document.getElementById('btn-sound').innerHTML = isMuted ? "Sound OFF 🔇" : "Sound ON 🔊";
+    }
+
+    function renderBroadcastBlogs(blogs) {
+      const container = document.getElementById('broadcast-blogs-container');
+      container.innerHTML = blogs.map((b, idx) => `
+        <div class="bg-card rounded-2xl border border-hairline broadcast-frame p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono text-mute">
+              <span class="text-spruce font-bold">Article #${idx + 1}</span>
+              <span>${b.readTime}</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-ink leading-snug">${b.title}</h4>
+            <span class="text-[11px] font-mono text-mute block">By ${b.author}</span>
+            <p class="text-xs text-body leading-relaxed">${b.teaser}</p>
+          </div>
+
+          <!-- Expandable Takeaway Box -->
+          <div class="space-y-2 pt-2 border-t border-hairline">
+            <button onclick="toggleBlogAccordion(${idx})" class="w-full flex items-center justify-between text-xs font-mono text-spruce font-semibold hover:underline">
+              <span>View Key Insight</span>
+              <svg id="acc-icon-${idx}" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="acc-content-${idx}" class="hidden p-3 bg-spruce-soft rounded-xl text-xs text-spruce font-medium">
+              ${b.takeaway}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleBlogAccordion(idx) {
+      const content = document.getElementById('acc-content-' + idx);
+      const icon = document.getElementById('acc-icon-' + idx);
+      const isHidden = content.classList.contains('hidden');
+      content.classList.toggle('hidden', !isHidden);
+      icon.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+    }
+
+    function updateEraSlider(val) {
+      const data = BROADCAST_DATA[activeBroadcastKey].mirror;
+      const label = document.getElementById('slider-era-label');
+      const cards = document.getElementById('era-comparison-cards');
+
+      if (val < 40) {
+        label.textContent = "Focusing on Your Childhood (Then)";
+      } else if (val > 60) {
+        label.textContent = "Focusing on Child's World (Now)";
+      } else {
+        label.textContent = "Side-by-Side Equivalence";
+      }
+
+      cards.innerHTML = `
+        <div class="p-5 rounded-2xl bg-canvas-subtle border-l-4 border-l-violet border border-hairline space-y-3 transition-opacity ${val > 70 ? 'opacity-40' : 'opacity-100'}">
+          <span class="font-mono text-xs uppercase tracking-wider text-violet font-bold block">Then: ${data.thenYear}</span>
+          <div class="space-y-2 text-xs">
+            <div><strong class="font-mono text-mute block text-[10px]">Communication:</strong> <span class="text-body font-medium">${data.thenChat}</span></div>
+            <div><strong class="font-mono text-mute block text-[10px]">Culture & Status:</strong> <span class="text-body font-medium">${data.thenVibe}</span></div>
+            <div><strong class="font-mono text-mute block text-[10px]">Parent Dread:</strong> <span class="text-coral font-medium">${data.thenDread}</span></div>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-card border-l-4 border-l-spruce border border-hairline shadow-xs space-y-3 transition-opacity ${val < 30 ? 'opacity-40' : 'opacity-100'}">
+          <span class="font-mono text-xs uppercase tracking-wider text-spruce font-bold block">Now: ${data.nowYear}</span>
+          <div class="space-y-2 text-xs">
+            <div><strong class="font-mono text-spruce block text-[10px]">Communication:</strong> <span class="text-ink font-medium">${data.nowChat}</span></div>
+            <div><strong class="font-mono text-spruce block text-[10px]">Culture & Status:</strong> <span class="text-ink font-medium">${data.nowVibe}</span></div>
+            <div><strong class="font-mono text-spruce block text-[10px]">Parent Dread:</strong> <span class="text-coral font-medium">${data.nowDread}</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderVocabMatrix(data) {
+      const container = document.getElementById('matrix-container');
+      const heading = document.getElementById('matrix-heading');
+      const pill = document.getElementById('matrix-status-pill');
+
+      if (data.vocabEligible) {
+        heading.textContent = `Decode Modern Youth Vocabulary (${data.vocabCategory})`;
+        pill.textContent = "Eligible Tier · Micro-Language Active";
+        pill.className = "text-xs font-mono text-spruce bg-spruce-soft px-3 py-1 rounded-full font-semibold border border-spruce/20";
+
+        container.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            ${data.vocabList.map(v => `
+              <div class="bg-card rounded-2xl border border-hairline broadcast-frame p-5 space-y-3">
+                <div class="flex items-center justify-between border-b border-hairline pb-2">
+                  <span class="font-serif text-xl font-bold text-ink">"${v.term}"</span>
+                  <span class="font-mono text-[10px] text-spruce bg-spruce-soft px-2 py-0.5 rounded-full font-medium">Slang</span>
+                </div>
+                <p class="text-xs text-body">${v.meaning}</p>
+                <div class="p-2.5 bg-canvas-subtle rounded-xl text-xs font-mono text-mute italic">${v.usage}</div>
+                <div class="p-2.5 bg-spruce-soft rounded-xl text-xs text-spruce font-medium">
+                  <span class="font-mono text-[10px] font-bold uppercase block">Calm Response Script:</span>
+                  ${v.calm}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        heading.textContent = "Pre-Verbal Acoustic Signals & High-Chair Gestures";
+        pill.textContent = "Youth Slang Excluded (Not Applicable to Infant)";
+        pill.className = "text-xs font-mono text-amber bg-amber-soft px-3 py-1 rounded-full font-semibold border border-amber/30";
+
+        container.innerHTML = `
+          <div class="p-4 bg-amber-soft/50 border border-amber/30 rounded-2xl flex items-start gap-3">
+            <svg class="w-5 h-5 text-amber shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="space-y-0.5">
+              <span class="font-mono text-[11px] uppercase tracking-wider text-amber font-bold block">Developmentally Calibrated Filter Active</span>
+              <p class="text-xs text-body leading-relaxed">${data.vocabNotice}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            ${data.vocabList.map(v => `
+              <div class="bg-card rounded-2xl border border-hairline broadcast-frame p-5 space-y-2.5">
+                <span class="font-serif text-base font-bold text-ink block">${v.term}</span>
+                <p class="text-xs text-body leading-relaxed">${v.meaning}</p>
+                <div class="p-2 bg-canvas-subtle rounded-xl text-xs font-mono text-mute italic">${v.usage}</div>
+                <div class="p-2 bg-spruce-soft rounded-xl text-xs text-spruce font-medium">
+                  <span class="font-mono text-[10px] font-bold uppercase block">Pediatric Cue:</span>
+                  ${v.calm}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    // Initialize on Julian
+    switchBroadcastChild('julian');
+  </script>
+</body>
+</html>
