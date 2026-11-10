@@ -4,53 +4,47 @@ import * as React from 'react';
 import Link from 'next/link';
 import {
   Smartphone,
-  QrCode,
   ShieldCheck,
+  CheckCircle2,
   Lock,
-  Clock,
-  Sparkles,
-  AlertTriangle,
   ArrowRight,
   FileCheck2,
-  CheckCircle2,
   Compass,
-  Tablet,
-  Watch,
-  Award,
+  Printer,
   Layers,
+  ChevronDown,
+  ChevronUp,
+  Check,
+  Phone,
   Flame,
-  Search,
-  MessageSquare,
 } from 'lucide-react';
 import {
   RoadType,
   DevicePlatform,
-  DeviceProfileStatus,
   type ChildDTO,
-  type SlangTermDTO,
-  type ExploitAlertDTO,
 } from '@alongside/shared';
 import {
   useChildContextStore,
   selectActiveChild,
-  resolveChildDevicesDefaultTab,
-  resolveChildSlangTier,
+  DEMO_FAMILY_CHILDREN,
 } from '@/stores/useChildContextStore';
-import { useChildren } from '@/hooks/useChildren';
-import { usePactStore, formatCurfew12Hour } from '@/stores/usePactStore';
-import { CurfewStatusBadge } from './CurfewStatusBadge';
+import { formatCurfew12Hour } from '@/stores/usePactStore';
 import { EnrollmentModal } from './EnrollmentModal';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
-import { SlangCard } from '@/components/digest/SlangCard';
-import { ExploitAlertCard } from '@/components/digest/ExploitAlertCard';
-import { getLatestDigest } from '@/lib/api/digest';
 import { cn } from '@/lib/utils';
 
 export interface DevicesManagementViewProps {
   initialTab?: string;
+  child?: ChildDTO;
+  children?: ChildDTO[];
 }
 
 /**
@@ -86,824 +80,657 @@ export function getRecommendedCurfew(age: number): {
 }
 
 export function DevicesManagementView({
-  initialTab = 'curfews',
+  initialTab,
+  child: propChild,
+  children: propChildren,
 }: DevicesManagementViewProps) {
-  const normalizedInitialTab = initialTab === 'digest' ? 'culture' : initialTab;
-  const [activeTab, setActiveTab] = React.useState(normalizedInitialTab);
+  const { children: storeChildren, activeChildId, setActiveChild } = useChildContextStore();
 
-  React.useEffect(() => {
-    if (initialTab) {
-      setActiveTab(initialTab === 'digest' ? 'culture' : initialTab);
-    }
-  }, [initialTab]);
+  // Active child resolution with safe fallback and DI support
+  const children = propChildren && propChildren.length > 0
+    ? propChildren
+    : storeChildren && storeChildren.length > 0
+    ? storeChildren
+    : DEMO_FAMILY_CHILDREN;
 
-  const { children, activeChildId, setActiveChild } = useChildContextStore();
-  const { children: queryChildren, isLoading } = useChildren();
-  const pactStore = usePactStore();
+  const activeChild = propChild || selectActiveChild({ children, activeChildId }) || children[0];
+  const activeAge = activeChild?.age ?? 10;
+  const isToddler = activeAge <= 3;
 
+  // Curfew configuration based on child profile
+  const recommendedCurfew = React.useMemo(
+    () => getRecommendedCurfew(activeAge),
+    [activeAge]
+  );
+  const curfewDisplay = recommendedCurfew.time12;
+
+  // Modals state
   const [enrollmentModalOpen, setEnrollmentModalOpen] = React.useState(false);
-  const [selectedChild, setSelectedChild] = React.useState<{
-    id: string;
-    name: string;
-    curfew: string;
-  } | null>(null);
+  const [printModalOpen, setPrintModalOpen] = React.useState(false);
+  const [ladderOpen, setLadderOpen] = React.useState(false);
+  const [callAlert, setCallAlert] = React.useState<string | null>(null);
 
-  // Slang & Exploits state for Tab 4
-  const [slangTerms, setSlangTerms] = React.useState<SlangTermDTO[]>([]);
-  const [exploitAlerts, setExploitAlerts] = React.useState<ExploitAlertDTO[]>([]);
-  const [digestLoading, setDigestLoading] = React.useState(false);
-  const [conversationStarter, setConversationStarter] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    let isCancelled = false;
-    async function loadDigest() {
-      try {
-        setDigestLoading(true);
-        const res = await getLatestDigest();
-        if (!isCancelled && res?.digest) {
-          setSlangTerms(res.digest.slangTerms || []);
-          setExploitAlerts(res.digest.exploitAlerts || []);
-          if (res.digest.conversationStarter) {
-            setConversationStarter(res.digest.conversationStarter);
-          }
-        }
-      } catch {
-        // Fallback demo data
-      } finally {
-        if (!isCancelled) setDigestLoading(false);
-      }
-    }
-    loadDigest();
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  const activeChild = selectActiveChild({ children, activeChildId });
-
-  // Automatically tailor default tab based on active child reactively upon child switch
-  React.useEffect(() => {
-    if (activeChild) {
-      const defaultTab = resolveChildDevicesDefaultTab(activeChild);
-      setActiveTab(defaultTab);
-    }
-  }, [activeChild?.id, activeChild?.roadType, activeChild?.age]);
-
-  // Sort children so active child appears first in device curfew cards
-  const sortedChildren = React.useMemo(() => {
-    if (!activeChild?.id) return children;
-    return [...children].sort((a, b) => {
-      if (a.id === activeChild.id) return -1;
-      if (b.id === activeChild.id) return 1;
-      return 0;
-    });
-  }, [children, activeChild?.id]);
-
-  // Tailored Bilateral Family Pact commitments
-  const childCommitments = React.useMemo(() => {
-    const age = activeChild?.age ?? 8;
-    if (age <= 6) {
-      return [
-        'Docks family tablet or smart speaker in the living room; zero bedroom screens.',
-        'Stops screen play calmly when timer rings after 30-45 minutes of co-viewing.',
-        'Shares screen games with parents, practicing turn-taking and emotional sparring.',
-      ];
-    }
-    if (age <= 12) {
-      return [
-        'Docks device at the central family station by 8:30 PM nightly.',
-        'Completes schoolwork and household contributions before recreational screen time.',
-        'Maintains zero disguised vault apps, private browsing bypasses, or secret accounts.',
-      ];
-    }
-    return [
-      'Docks personal smartphone at the hallway station by 9:30 PM for restorative circadian sleep.',
-      'Practices autonomous executive focus blocks (Pomodoro) during high school study sessions.',
-      'Maintains transparent communication with parents regarding uncomfortable group chat dynamics.',
-    ];
-  }, [activeChild]);
-
-  const parentCommitments = React.useMemo(() => {
-    const age = activeChild?.age ?? 8;
-    if (age <= 6) {
-      return [
-        'Active co-viewing: watches and explores high-quality interactive media alongside child.',
-        'Puts away personal work devices during meals, outdoor play, and bedtime routines.',
-        'Maintains calm, empathetic boundaries when child protests screen transitions.',
-      ];
-    }
-    return [
-      'Zero stealth spyware reading personal text messages or secret surveillance.',
-      'Device-free dinner table: parents put away work laptops and phones too.',
-      'Safe Harbor Guarantee: No punitive confiscation when child reports troubling online encounters.',
-    ];
-  }, [activeChild]);
-
-  // Tailored Sunday dinner conversation starter prompt
-  const dinnerStarterPrompt = React.useMemo(() => {
-    const age = activeChild?.age ?? 8;
-    if (age <= 6) {
-      return {
-        prompt:
-          'How do we balance imaginative physical play with screen limits? What was your favorite pretend game or story we created together this week?',
-        tip: 'Tip: Ask while drawing or playing together; early childhood thrives on playful co-imagination rather than abstract logic.',
-      };
-    }
-    if (age <= 12) {
-      return {
-        prompt:
-          'If someone in your favorite online game asks to trade items for real money or gifts, how do you know if it’s safe? Have you noticed prize spin wheels in Roblox or Fortnite?',
-        tip: 'Tip: Ask with curiosity over Sunday pizza without accusing them of gambling or banning the game.',
-      };
-    }
-    return {
-      prompt:
-        'If an app has a secret calculator code, does that count as healthy personal privacy or covert secrecy? What is the difference between keeping a personal diary vs. hiding an encrypted vault?',
-      tip: 'Tip: Ask with genuine philosophical curiosity during Sunday dinner without accusatory questioning or device confiscation.',
-    };
-  }, [activeChild]);
-
-  // Tailored trending slang terms
-  const tailoredSlangTerms = React.useMemo(() => {
-    const slangTier = resolveChildSlangTier(activeChild);
-    if (slangTier === 'EARLY_CHILDHOOD' || slangTier === 'ALL') {
-      return [
-        {
-          term: 'Skibidi',
-          badge: 'Playful Meme',
-          desc: 'Absurdist YouTube meme humor used as silly conversational filler.',
-          example: 'What the skibidi are you doing?',
-        },
-        {
-          term: 'Fanum Tax',
-          badge: 'Playful Meme',
-          desc: 'Playfully stealing a bite of food from a friend or sibling’s plate.',
-          example: 'Give me a fry, that’s the fanum tax.',
-        },
-        {
-          term: 'Rizz',
-          badge: 'Harmless',
-          desc: 'Short for charisma; the effortless ability to charm and be friendly.',
-          example: 'He has unspoken rizz.',
-        },
-      ];
-    }
-    if (slangTier === 'ELEMENTARY') {
-      return [
-        {
-          term: 'Skibidi',
-          badge: 'Playful Meme',
-          desc: 'Absurdist YouTube meme humor used as silly conversational filler.',
-          example: 'What the skibidi are you doing?',
-        },
-        {
-          term: 'Fanum Tax',
-          badge: 'Playful Meme',
-          desc: 'Playfully stealing a bite of food from a friend or sibling’s plate.',
-          example: 'Give me a fry, that’s the fanum tax.',
-        },
-        {
-          term: 'Sus',
-          badge: 'Harmless',
-          desc: 'Short for suspicious; playful question regarding weird moves in games.',
-          example: 'Why are you hiding your screen? Sus.',
-        },
-      ];
-    }
-    if (slangTier === 'TWEEN') {
-      return [
-        {
-          term: 'Rizz',
-          badge: 'Harmless',
-          desc: 'Short for charisma; the effortless ability to charm or be friendly.',
-          example: 'He’s got unspoken rizz.',
-        },
-        {
-          term: 'Crashout',
-          badge: 'Watch Context',
-          desc: 'An explosive emotional meltdown over a gaming loss or minor frustration.',
-          example: 'Bro had a crashout after the match.',
-        },
-        {
-          term: 'Cap / No Cap',
-          badge: 'Harmless',
-          desc: 'Cap means lie or exaggeration; No Cap signifies absolute truth.',
-          example: 'Hardest math test ever, no cap.',
-        },
-      ];
-    }
-    return [
-      {
-        term: 'Bet',
-        badge: 'Harmless',
-        desc: 'Affirmative agreement meaning "Yes", "Sounds good", or "Deal".',
-        example: 'Parent: "Dinner in 10." Teen: "Bet."',
-      },
-      {
-        term: 'Cooked',
-        badge: 'Distress / Caution',
-        desc: 'Doomed, exhausted, or completely unprepared for an upcoming test.',
-        example: 'I have 3 tests tomorrow, I am cooked.',
-      },
-      {
-        term: 'Mid',
-        badge: 'Harmless',
-        desc: 'Mediocre, underwhelming, or uninspired quality in movies, food, or music.',
-        example: 'That movie was completely mid.',
-      },
-    ];
-  }, [activeChild]);
-
-  const handleOpenEnrollment = (childId: string, childName: string, curfew = '20:30') => {
-    setSelectedChild({
-      id: childId,
-      name: childName,
-      curfew,
-    });
-    setEnrollmentModalOpen(true);
+  const handleSimulateCall = (contact: 'Mom' | 'Dad') => {
+    setCallAlert(`Calling ${contact}... Emergency contact 24/7 unlocked under AlongSide Family Pact.`);
+    setTimeout(() => {
+      setCallAlert(null);
+    }, 4000);
   };
+
+  // Mutual Pledges tailored by child stage
+  const childPledges = React.useMemo(() => {
+    if (activeAge <= 6) {
+      return [
+        `Dock family tablet at the central living station by ${curfewDisplay}; zero bedroom screens.`,
+        'Stop screen co-viewing calmly when family transition timer rings after 30-45 minutes.',
+        'Share screen play with parents, practicing turn-taking and emotional sparring.',
+      ];
+    }
+    if (activeAge <= 12) {
+      return [
+        `Dock phone at hallway station by ${curfewDisplay} nightly; zero bedroom screens during sleep hours.`,
+        'Homework & household tasks completed before recreational YouTube or gaming sessions.',
+        'Zero secret disguise apps (e.g. calculator vaults) or hidden secondary social accounts.',
+      ];
+    }
+    return [
+      `Dock personal smartphone at hallway station by ${curfewDisplay} for restorative circadian sleep.`,
+      'Practice autonomous executive focus blocks (Pomodoro) during high school study sessions.',
+      'Maintain transparent communication with parents regarding uncomfortable group chat dynamics.',
+    ];
+  }, [activeAge, curfewDisplay]);
+
+  const parentPledges = React.useMemo(() => {
+    if (activeAge <= 6) {
+      return [
+        'Active co-viewing: watch and explore high-quality interactive media alongside child.',
+        'Put away personal work devices during shared meals, outdoor play, and bedtime routines.',
+        'Maintain calm, empathetic boundaries when child protests screen transitions.',
+      ];
+    }
+    return [
+      'Zero stealth spyware: Parents will never read private text messages or secretly spy on conversations.',
+      'Device-free dinner table: Adults dock work laptops and phones away during shared family meals.',
+      'Safe Harbor Guarantee: No punitive device confiscation when seeking help about uncomfortable online encounters.',
+    ];
+  }, [activeAge]);
 
   const hasAssessment =
     activeChild?.latestAssessmentScore !== null &&
     activeChild?.latestAssessmentScore !== undefined;
 
+  const score = activeChild?.latestAssessmentScore ?? 84;
+
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* Header */}
+    <div className="space-y-8 max-w-6xl mx-auto px-2 sm:px-4 text-[#111413]">
+      {/* Top Header & Child Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E3E3DC] pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="flex h-6 w-6 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] shadow-xs">
-              <Smartphone className="h-3.5 w-3.5" />
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                'font-mono text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full font-bold border',
+                isToddler
+                  ? 'bg-[#FEF3C7] text-[#B45309] border-[#B45309]/20'
+                  : 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/15'
+              )}
+            >
+              {isToddler
+                ? 'Tier 0: Toddler Habit'
+                : `Tier ${activeAge >= 13 ? '4' : activeAge >= 10 ? '3' : '2'} Milestone Progression`}
             </span>
-            <Badge variant="roadActive" className="text-[10px] font-mono uppercase tracking-wider rounded-full">
-              Modern World & Devices Hub
-            </Badge>
+            <span className="text-xs font-mono text-[#858C88] hidden sm:inline">
+              Pact-as-Code Guided Journey
+            </span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#111413]">
-            Devices, Pacts & Youth Culture
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#111413] tracking-tight">
+            {isToddler
+              ? `${activeChild?.name || 'Child'}'s Screen-Free Sanctuary (Age ${activeAge})`
+              : `${activeChild?.name || 'Child'}'s Digital Independence Roadmap`}
           </h1>
-          <p className="text-xs sm:text-sm text-[#494F4C] mt-1">
-            Readiness diagnostic scoring, bilateral family media treaties, automated 8:30 PM curfews, and Sunday culture intel.
+          <p className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
+            {isToddler
+              ? 'Pacts are not developmentally applicable for toddlers. AlongSide guides your household with pediatric environmental routines.'
+              : 'Step-by-step guidance tailored to child neurodevelopment. Move seamlessly from diagnostic readiness to signed bilateral commitments and neutral automated bedtime locking.'}
           </p>
         </div>
 
-        <Link href="/pacts/builder">
-          <Button className="min-h-[44px] gap-2 text-xs bg-[#111413] hover:bg-[#143D2B] text-white rounded-[5px] shadow-[0_1px_2px_rgba(17,20,19,0.08)] self-start sm:self-auto font-medium transition-colors">
-            <FileCheck2 className="h-4 w-4" />
-            Launch Pact Wizard
-          </Button>
-        </Link>
+        {/* Profile Switcher */}
+        <div className="flex items-center gap-2 self-start sm:self-center">
+          <label htmlFor="child-profile-select" className="text-xs font-mono text-[#858C88] hidden md:inline">
+            Active Child:
+          </label>
+          <select
+            id="child-profile-select"
+            value={activeChild?.id || ''}
+            onChange={(e) => setActiveChild(e.target.value)}
+            className="text-xs font-mono bg-[#F4F4F0] border border-[#E3E3DC] rounded-[6px] px-3 py-2 font-medium text-[#111413] focus:outline-none focus:ring-1 focus:ring-[#143D2B] cursor-pointer shadow-2xs"
+          >
+            {children.map((child) => (
+              <option key={child.id} value={child.id}>
+                {child.name} (Age {child.age} &bull; Tier{' '}
+                {child.age <= 3 ? '0' : child.age <= 9 ? '2' : child.age <= 12 ? '3' : '4'})
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* 4 Canonical Hub Tabs */}
-      <Tabs defaultValue={normalizedInitialTab} value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="w-full justify-start overflow-x-auto no-scrollbar h-auto p-1.5 bg-[#F4F4F0] border border-[#E3E3DC] rounded-[8px] gap-1 font-mono">
-          <TabsTrigger
-            value="readiness"
-            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
-          >
-            <Compass className="h-3.5 w-3.5 text-[#143D2B]" />
-            <span>1. Thinking About a Device?</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="pacts"
-            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
-          >
-            <FileCheck2 className="h-3.5 w-3.5 text-[#143D2B]" />
-            <span>2. Bilateral Family Pact</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="curfews"
-            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
-          >
-            <Lock className="h-3.5 w-3.5 text-[#143D2B]" />
-            <span>3. Active Device Curfews</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="culture"
-            className="min-h-[40px] px-4 py-2 text-xs font-medium gap-1.5 rounded-[5px] shrink-0"
-          >
-            <Flame className="h-3.5 w-3.5 text-[#B45309]" />
-            <span>4. Youth Culture & Slang Radar</span>
-          </TabsTrigger>
-        </TabsList>
-
-        {/* ========================================================================= */}
-        {/* TAB 1: THINKING ABOUT A DEVICE? (READINESS DIAGNOSTIC & BRIDGE DEVICES)  */}
-        {/* ========================================================================= */}
-        <TabsContent value="readiness" className="space-y-6">
-          <Card className="border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden">
-            <CardHeader className="pb-3 border-b border-[#E3E3DC]">
-              <div className="flex items-center justify-between">
-                <Badge variant="roadPre" className="text-xs font-mono uppercase tracking-wider rounded-full">
-                  Pre-Unboxing Protocol
-                </Badge>
-                <span className="text-xs text-[#143D2B] font-mono font-medium">10 Clinical Dimensions</span>
-              </div>
-              <CardTitle className="font-serif text-xl font-semibold text-[#111413]">
-                First-Phone Readiness Pathway: Not &ldquo;No&rdquo;, but &ldquo;When&rdquo;
-              </CardTitle>
-              <CardDescription className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
-                Before purchasing or handing over a personal smartphone, objectively evaluate impulse control, bedtime habits, and online safety awareness without conflict.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-5 sm:p-6 space-y-6">
-              {/* Early Childhood Stage Screen Guidance for ages 0-6 */}
-              {activeChild && activeChild.age <= 6 && (
-                <div className="rounded-[8px] border border-[#E3E3DC] bg-[#EAF3EE] p-4 sm:p-5 flex items-start gap-3.5 shadow-2xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-[5px] bg-[#143D2B] text-white shrink-0 shadow-2xs">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-serif text-sm font-semibold text-[#111413]">
-                      Preschool &amp; Early Childhood Screen Balance (Ages 0–6)
-                    </h4>
-                    <p className="text-xs text-[#494F4C] leading-relaxed max-w-3xl">
-                      Pediatric guidelines (AAP) recommend zero solo screen time under 2 years, and high-quality co-viewing limited to 1 hour daily for ages 2–5. Personal smartphones and social media are not developmentally recommended at this stage.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Readiness Score Status */}
-              {activeChild && hasAssessment ? (
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-[8px] border border-[#E3E3DC] bg-[#F4F4F0] p-5 shadow-xs">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-[8px] bg-[#EAF3EE] text-[#143D2B] font-serif text-2xl font-bold shrink-0">
-                      {activeChild.latestAssessmentScore}
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-serif text-base font-semibold text-[#111413]">
-                          {activeChild.name}&apos;s Readiness Score: {activeChild.latestAssessmentScore}/100
-                        </span>
-                        <Badge
-                          variant={activeChild.latestAssessmentScore! >= 75 ? 'success' : 'accent'}
-                          className="text-[10px] font-mono rounded-full"
-                        >
-                          {activeChild.latestAssessmentScore! >= 75
-                            ? 'Ready for Bilateral Phone'
-                            : 'Scaffolding Recommended'}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-[#494F4C] max-w-lg leading-relaxed">
-                        {activeChild.latestAssessmentScore! >= 75
-                          ? `${activeChild.name} demonstrates solid executive function and safe habits for a supervised smartphone.`
-                          : 'Specific dimensions (bedtime docking, homework transitions) need pre-device scaffolding.'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <Link href={`/children/${activeChild.id}/readiness`}>
-                    <Button className="min-h-[44px] bg-[#111413] hover:bg-[#143D2B] text-white font-medium text-xs gap-1.5 rounded-[5px] transition-colors shadow-2xs">
-                      <span>View 10-Dimension Report</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="rounded-2xl border border-dashed border-emerald-300 bg-emerald-50/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="flex items-start gap-3.5">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 shrink-0">
-                      <Compass className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-emerald-950">
-                        Readiness Assessment Pending
-                      </h4>
-                      <p className="text-xs text-emerald-800 mt-1 max-w-xl leading-relaxed">
-                        Take the 10-dimension assessment (3 minutes) to evaluate impulse control, screen transitions, and social trustworthiness.
-                      </p>
-                    </div>
-                  </div>
-
-                  {activeChild && (
-                    <Link href={`/children/${activeChild.id}/readiness`}>
-                      <Button className="min-h-[44px] bg-emerald-700 hover:bg-emerald-800 text-white font-semibold gap-2 shadow-2xs text-xs">
-                        <span>Start 10-Dimension Audit</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              )}
-
-              {/* 4-Stage Bridge Device Ladder */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <Layers className="h-4 w-4 text-emerald-600" />
-                    The Bridge Device Autonomy Ladder (4 Stages)
-                  </h3>
-                  <span className="text-[11px] text-slate-400">Gradual digital independence</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-emerald-700">Stage 1</span>
-                      <Tablet className="h-4 w-4 text-slate-400" />
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-900">Living Room Shared Tablet</h4>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Used only in common areas. Zero bedroom access permitted.
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-emerald-700">Stage 2</span>
-                      <Watch className="h-4 w-4 text-slate-400" />
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-900">Calling & GPS Watch</h4>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Voice calling & safety tracking with zero addictive social feeds.
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-emerald-700">Stage 3</span>
-                      <Smartphone className="h-4 w-4 text-slate-400" />
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-900">Minimalist Feature Phone</h4>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      SMS and navigation without algorithmic recommendation loops.
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl border border-emerald-300 bg-emerald-50/50 p-4 space-y-1.5 ring-1 ring-emerald-500/20 shadow-2xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase text-emerald-800">Stage 4: Milestone</span>
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-900">Bilateral Smartphone</h4>
-                    <p className="text-[11px] text-slate-700 leading-relaxed">
-                      Full smartphone unlocked under an agreed Day-1 Family Pact.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* ========================================================================= */}
-        {/* TAB 2: BILATERAL FAMILY PACT (PACT-AS-CODE WIZARD & TREATY STUDIO)       */}
-        {/* ========================================================================= */}
-        <TabsContent value="pacts" className="space-y-6">
-          <Card className="border-teal-200/90 bg-white shadow-sm overflow-hidden">
-            <CardHeader className="pb-3 border-b border-slate-100">
-              <div className="flex items-center justify-between">
-                <Badge variant="outline" className="text-xs font-bold text-teal-800 border-teal-200 bg-teal-50">
-                  Bilateral Treaty Studio
-                </Badge>
-                <span className="text-xs text-slate-500">Mutual Commitments</span>
-              </div>
-              <CardTitle className="text-xl font-bold text-slate-900">
-                Co-Created Family Media Agreements
-              </CardTitle>
-              <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                When rules are negotiated bilaterally rather than handed down unilaterally, compliance is 300% higher and defiance disappears.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-5 sm:p-6 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Child Commitments Card */}
-                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-teal-600" />
-                    {activeChild?.name || 'Child'}&apos;s Commitments
-                  </span>
-                  <ul className="space-y-2 text-xs text-slate-700">
-                    {childCommitments.map((commitment, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                        <span>{commitment}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Parent Commitments Card */}
-                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 space-y-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <ShieldCheck className="h-4 w-4 text-teal-600" />
-                    Parent&apos;s Commitments
-                  </span>
-                  <ul className="space-y-2 text-xs text-slate-700">
-                    {parentCommitments.map((commitment, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-teal-600 mt-1.5 shrink-0" />
-                        <span>{commitment}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <Link href={`/pacts/builder${activeChild ? `?childId=${activeChild.id}` : ''}`}>
-                  <Button className="min-h-[44px] bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs gap-2 shadow-2xs">
-                    <FileCheck2 className="h-4 w-4" />
-                    <span>Open Agreement Builder & Sign</span>
-                  </Button>
-                </Link>
-
-                <Link href={`/pacts/${pactStore.agreementId || 'current'}`}>
-                  <Button variant="outline" className="min-h-[44px] text-xs font-semibold gap-1.5">
-                    <span>View / Print Family Treaty (PDF)</span>
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* ========================================================================= */}
-        {/* TAB 3: ACTIVE DEVICE CURFEWS & MDM PROFILES                              */}
-        {/* ========================================================================= */}
-        <TabsContent value="curfews" className="space-y-6">
-          {/* Hero Explainer Card */}
-          <Card className="border-violet-200/90 bg-gradient-to-br from-violet-50/60 via-cream-50 to-purple-50/40 shadow-sm">
-            <CardContent className="p-5 sm:p-6">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-                <div className="space-y-1.5 max-w-2xl">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="h-4.5 w-4.5 text-violet-600" />
-                    <h3 className="text-base font-bold text-slate-900">
-                      How Neutral &ldquo;Pact-as-Code&rdquo; Eliminates Bedtime Screaming
-                    </h3>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Adversarial phone confiscations trigger intense cortisol spikes. AlongSide translates your bilateral pact into an Apple iOS or Android Enterprise configuration profile. At 8:30 PM, the operating system neutrally pauses recreational apps. The phone locks itself—parents never play the villain.
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="p-3 bg-white rounded-xl border border-violet-200 shadow-xs text-center">
-                    <span className="block text-lg font-black text-violet-950">8:30 PM</span>
-                    <span className="block text-[10px] text-violet-700 font-medium">Default Lock</span>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-emerald-200 shadow-xs text-center">
-                    <span className="block text-lg font-black text-emerald-950">100%</span>
-                    <span className="block text-[10px] text-emerald-700 font-medium">Parent Calls Active</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Enrolled Devices List */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-slate-900">
-                Family Devices ({children.length})
-              </h2>
-              <span className="text-xs text-slate-500">
-                Automatic Heartbeat & Tamper Verification
+      {/* ========================================================================= */}
+      {/* TODDLER VIEW: SENSORY HABIT & ADULT ROUTINES (TIER 0: AGES 0–3)          */}
+      {/* ========================================================================= */}
+      {isToddler ? (
+        <div className="space-y-6">
+          <div className="bg-[#FEF3C7]/40 border border-[#B45309]/30 rounded-[12px] p-6 sm:p-7 space-y-3 shadow-2xs">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#B45309] font-bold">
+                Developmental Clarification
+              </span>
+              <span className="font-mono text-[10px] bg-[#B45309]/20 text-[#111413] px-2 py-0.5 rounded font-semibold">
+                Tier 0: Age 0–3
               </span>
             </div>
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#111413]">
+              Why Toddlers Don&apos;t Sign Digital Pacts
+            </h2>
+            <p className="text-xs sm:text-sm text-[#494F4C] leading-relaxed max-w-2xl">
+              At age {activeAge}, prefrontal executive function and bilateral negotiation do not yet exist in child psychology. Giving a toddler a screen pact causes parental confusion. AlongSide instead guides you with <strong>Adult Environmental Routines</strong>:
+            </p>
+          </div>
 
-            {children.length === 0 ? (
-              <Card className="p-8 text-center border-dashed border-slate-300">
-                <p className="text-xs text-slate-500 mb-3">No child profiles found in your household.</p>
-                <Link href="/children/new">
-                  <Button size="sm">Add Child Profile</Button>
-                </Link>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 gap-4">
-                {sortedChildren.map((child) => {
-                  const isRoad1 = child.roadType === RoadType.PRE_DEVICE;
-                  const isActiveSelected = child.id === activeChild?.id;
-                  const recommendedCurfew = getRecommendedCurfew(child.age);
-                  const effectiveCurfew = pactStore.curfewTime || recommendedCurfew.time24;
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
+              <span className="font-mono text-xs text-[#143D2B] font-bold block">
+                Step 1: Environmental Calm
+              </span>
+              <h3 className="font-serif text-base font-bold text-[#111413]">
+                Zero Background TV
+              </h3>
+              <p className="text-xs text-[#494F4C] leading-relaxed">
+                Reduces sensory fragmentation and increases parental conversational word count by 40% during crucial speech development windows.
+              </p>
+            </div>
 
-                  return (
-                    <Card
-                      key={child.id}
-                      data-testid={`device-card-${child.id}`}
+            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
+              <span className="font-mono text-xs text-[#143D2B] font-bold block">
+                Step 2: Co-Viewing Only
+              </span>
+              <h3 className="font-serif text-base font-bold text-[#111413]">
+                Interactive Video Chat
+              </h3>
+              <p className="text-xs text-[#494F4C] leading-relaxed">
+                Grandparent FaceTime is the only recommended screen interaction under AAP pediatric guidelines for infants and toddlers under 2.
+              </p>
+            </div>
+
+            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
+              <span className="font-mono text-xs text-[#143D2B] font-bold block">
+                Step 3: Bedtime Sanctuary
+              </span>
+              <h3 className="font-serif text-base font-bold text-[#111413]">
+                7:30 PM Sleep Routine
+              </h3>
+              <p className="text-xs text-[#494F4C] leading-relaxed">
+                Zero blue light after dinner. Replaced with physical board books, soothing audio lullabies, and dim amber ambient nursery lighting.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* ========================================================================= */
+        /* SEQUENTIAL JOURNEY LADDER & PHONE CANVAS (TIERS 1–5: AGES 4–18)           */
+        /* ========================================================================= */
+        <div className="space-y-6">
+          {/* STEP 1: READINESS DIAGNOSTIC ACCORDION CARD */}
+          <section className="bg-white border border-[#E3E3DC] rounded-[12px] p-5 shadow-2xs transition-all">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div
+                  className={cn(
+                    'w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold shrink-0',
+                    hasAssessment
+                      ? 'bg-[#143D2B] text-white'
+                      : 'bg-[#F4F4F0] border border-[#E3E3DC] text-[#494F4C]'
+                  )}
+                >
+                  {hasAssessment ? '✓' : '1'}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-[#858C88] font-bold">
+                      Step 1 of 3
+                    </span>
+                    <span
                       className={cn(
-                        'border-slate-200/90 hover:border-slate-300 transition-all shadow-xs',
-                        isActiveSelected && 'ring-2 ring-teal-500 bg-teal-50/20 border-teal-300'
+                        'font-mono text-[10px] px-2 py-0.5 rounded-full font-bold',
+                        hasAssessment
+                          ? 'bg-emerald-50 text-emerald-800'
+                          : 'bg-amber-50 text-amber-800'
                       )}
                     >
-                      <CardContent className="p-5 sm:p-6">
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-                          <div className="space-y-2">
-                            <div className="flex flex-wrap items-center gap-2.5">
-                              <h3 className="text-lg font-bold text-slate-900">
-                                {child.name}&apos;s Device Profile
-                              </h3>
-                              {isActiveSelected && (
-                                <Badge
-                                  data-testid="active-child-profile-badge"
-                                  className="border-teal-300 bg-teal-50 text-teal-800 text-[10px] font-bold"
-                                >
-                                  Active Child Profile
-                                </Badge>
-                              )}
-                              <Badge
-                                variant={isRoad1 ? 'roadPre' : 'roadActive'}
-                                className="text-[10px]"
-                              >
-                                {isRoad1 ? 'Road 1: Pre-Device' : 'Road 2: Active Governance'}
-                              </Badge>
-                              <span className="text-xs text-slate-500">
-                                Age {child.age} • Grade {child.schoolGrade || 'N/A'}
-                              </span>
-                            </div>
+                      {hasAssessment ? 'Completed' : 'Assessment Pending'}
+                    </span>
+                  </div>
+                  <h2 className="font-serif text-base sm:text-lg font-bold text-[#111413]">
+                    First-Phone Neuro-Readiness Diagnostic
+                  </h2>
+                </div>
+              </div>
 
-                            <div className="flex flex-wrap items-center gap-2 pt-1">
-                              <CurfewStatusBadge
-                                status={DeviceProfileStatus.ACTIVE}
-                                bedtimeCurfewTime={effectiveCurfew}
-                                platform={DevicePlatform.APPLE_IOS}
-                                tamperDetected={false}
-                              />
-                              <span className="text-[10px] font-bold text-violet-800 bg-violet-50 px-2 py-0.5 rounded-full border border-violet-200">
-                                Calibrated ({recommendedCurfew.time12})
-                              </span>
-                            </div>
-                          </div>
+              <div className="flex items-center gap-4 self-end sm:self-center">
+                <div className="text-right">
+                  <span className="font-mono text-sm font-bold text-[#143D2B] block">
+                    Score: {score}/100
+                  </span>
+                  <span className="text-[10px] font-mono text-[#858C88] block">
+                    {score >= 75 ? 'Passed for Bridge Device' : 'Scaffolding Recommended'}
+                  </span>
+                </div>
+                {activeChild && (
+                  <Link href={`/children/${activeChild.id}/readiness`}>
+                    <Button
+                      variant="outline"
+                      className="text-xs font-mono h-8 px-3 border-[#E3E3DC] hover:border-[#143D2B] hover:text-[#143D2B]"
+                    >
+                      <span>{hasAssessment ? 'View Audit' : 'Start Diagnostic'}</span>
+                      <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </section>
 
-                          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-100">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleOpenEnrollment(child.id, child.name, effectiveCurfew)}
-                              className="min-h-[44px] w-full sm:w-auto gap-1.5 text-xs border-violet-200 text-violet-900 hover:bg-violet-50 font-semibold"
-                            >
-                              <QrCode className="h-4 w-4 text-violet-700" />
-                              Scan QR Enrollment
-                            </Button>
+          {/* STEP 2 & 3: MERGED INTERACTIVE WORKSHOP & LIVE PHONE CANVAS */}
+          <section className="bg-white border border-[#E3E3DC] rounded-[14px] p-6 sm:p-8 shadow-sm space-y-6">
+            {/* Step 2/3 Heading & Actions */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E3E3DC] pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#143D2B] text-white flex items-center justify-center font-mono text-xs font-bold shrink-0">
+                  2
+                </div>
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
+                    Step 2 &amp; 3 &bull; Operational Execution
+                  </span>
+                  <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
+                    Bilateral Treaty &amp; Nightly Phone Enforcement
+                  </h2>
+                </div>
+              </div>
 
-                            <Link href={`/pacts/builder?childId=${child.id}`}>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="min-h-[44px] w-full sm:w-auto gap-1.5 text-xs font-semibold"
-                              >
-                                <FileCheck2 className="h-4 w-4 text-slate-600" />
-                                Edit Curfew
-                              </Button>
-                            </Link>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  onClick={() => setPrintModalOpen(true)}
+                  variant="outline"
+                  className="px-3 py-1.5 rounded-[6px] bg-[#F4F4F0] border-[#E3E3DC] hover:border-[#143D2B] text-xs font-mono font-medium text-[#111413] flex items-center gap-1.5 transition-colors h-9"
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  <span>Print Treaty (PDF)</span>
+                </Button>
+                <Link href="/pacts/builder">
+                  <Button className="h-9 px-3 bg-[#111413] hover:bg-[#143D2B] text-white text-xs font-mono font-bold rounded-[6px]">
+                    <FileCheck2 className="h-3.5 w-3.5 mr-1.5" />
+                    <span>Launch Pact Wizard</span>
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* CANVAS GRID: TREATY LEDGER + PHONE VIEWER */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+              {/* LEFT: THE BILATERAL FAMILY TREATY LEDGER (7 COLS) */}
+              <div className="lg:col-span-7 bg-[#FAF7F2] border border-[#E6DEC9] rounded-[12px] p-6 shadow-2xs space-y-5">
+                <div className="flex items-center justify-between border-b border-[#E6DEC9] pb-3">
+                  <div>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#B45309] font-bold">
+                      Certified Bilateral Agreement
+                    </span>
+                    <h3 className="font-serif text-xl font-bold text-[#111413]">
+                      The Bilateral Family Treaty
+                    </h3>
+                    <p className="text-[11px] text-[#494F4C]">
+                      Co-authored by {activeChild?.name || 'Child'} and Parents &bull; Active &amp; Binding
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-[#143D2B] text-white flex items-center justify-center font-serif text-sm font-bold shadow-2xs">
+                    ✓
+                  </div>
+                </div>
+
+                {/* Child's Mutual Pledges */}
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs uppercase tracking-wider text-[#111413] font-bold flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-[#143D2B] text-white flex items-center justify-center text-[9px]">
+                        {(activeChild?.name || 'C').charAt(0)}
+                      </span>
+                      {activeChild?.name || 'Child'}&apos;s Mutual Pledges (Child)
+                    </span>
+                    <span className="text-[10px] font-mono text-[#143D2B] font-semibold">
+                      3 of 3 Active
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 text-xs text-[#494F4C]">
+                    {childPledges.map((pledge, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-[6px] bg-white/90 border border-[#E6DEC9] flex items-start gap-2.5 shadow-2xs"
+                      >
+                        <Check className="h-4 w-4 text-[#143D2B] shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{pledge}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Parents' Mutual Pledges */}
+                <div className="space-y-2.5 pt-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs uppercase tracking-wider text-[#111413] font-bold flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-[#B45309] text-white flex items-center justify-center text-[9px]">
+                        P
+                      </span>
+                      Parents&apos; Mutual Pledges (Adults)
+                    </span>
+                    <span className="text-[10px] font-mono text-[#B45309] font-semibold">
+                      3 of 3 Active
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 text-xs text-[#494F4C]">
+                    {parentPledges.map((pledge, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-[6px] bg-white/90 border border-[#E6DEC9] flex items-start gap-2.5 shadow-2xs"
+                      >
+                        <Check className="h-4 w-4 text-[#B45309] shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{pledge}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Digital Signatures Footer */}
+                <div className="pt-3 border-t border-[#E6DEC9] grid grid-cols-2 gap-3 text-xs font-mono">
+                  <div className="bg-white/70 p-2.5 rounded border border-[#E6DEC9]">
+                    <span className="text-[9px] text-[#858C88] block">Child Signature</span>
+                    <span className="font-serif italic font-bold text-[#111413] text-sm block">
+                      ✍ {activeChild?.name || 'Child'} Davies
+                    </span>
+                    <span className="text-[9px] text-[#143D2B] font-semibold block">
+                      Verified Digital Seal
+                    </span>
+                  </div>
+                  <div className="bg-white/70 p-2.5 rounded border border-[#E6DEC9]">
+                    <span className="text-[9px] text-[#858C88] block">Parent Signatures</span>
+                    <span className="font-serif italic font-bold text-[#111413] text-sm block">
+                      ✍ Sarah &amp; Michael
+                    </span>
+                    <span className="text-[9px] text-[#143D2B] font-semibold block">
+                      Verified Digital Seal
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT: PHONE PREVIEW & DEVICE ACTIONS (5 COLS) */}
+              <div className="lg:col-span-5 space-y-5">
+                <div className="bg-[#F4F4F0] border border-[#E3E3DC] rounded-[12px] p-5 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-[#111413]">
+                      Lock Screen Preview
+                    </span>
+                    <span className="font-mono text-[10px] text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded font-bold border border-[#143D2B]/15">
+                      Live Simulation
+                    </span>
+                  </div>
+
+                  {/* Toast Alert for Emergency Call Simulation */}
+                  {callAlert && (
+                    <div className="p-2.5 bg-emerald-900 text-white text-xs font-mono rounded-[8px] animate-fade-in shadow-md text-center">
+                      {callAlert}
+                    </div>
+                  )}
+
+                  {/* REALISTIC PHONE MOCKUP */}
+                  <div className="flex justify-center">
+                    <div className="w-[260px] sm:w-[280px] h-[490px] bg-[#0c100e] rounded-[38px] p-3 shadow-2xl relative flex flex-col justify-between text-white overflow-hidden select-none border-4 border-[#242b27]">
+                      {/* Dynamic Island / Notch */}
+                      <div className="w-20 h-3.5 bg-black rounded-full mx-auto z-20"></div>
+
+                      <div className="flex-1 flex flex-col items-center justify-between pt-5 pb-3 px-2 text-center z-10">
+                        {/* Time & Date Display */}
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300">
+                            Tonight &bull; Wednesday
+                          </span>
+                          <div className="font-serif text-4xl font-light text-white tracking-tight">
+                            {curfewDisplay}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+
+                        {/* Lock Screen Notification Card */}
+                        <div className="w-full bg-white/10 backdrop-blur-md rounded-[14px] p-3 border border-white/20 text-left space-y-1.5 shadow-md">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-xs">🌙</span>
+                              <strong className="text-[11px] font-semibold text-white">
+                                Bedtime Peace Active
+                              </strong>
+                            </div>
+                            <span className="text-[8px] font-mono text-slate-300">
+                              AlongSide
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-slate-200 leading-snug">
+                            Recreational apps are paused until 7:00 AM under your AlongSide Family Pact.
+                          </p>
+                        </div>
+
+                        {/* Always Unlocked Emergency Contacts */}
+                        <div className="w-full space-y-1.5">
+                          <span className="text-[9px] font-mono uppercase tracking-wider text-slate-400 block">
+                            Always Unlocked:
+                          </span>
+                          <div className="grid grid-cols-2 gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleSimulateCall('Mom')}
+                              className="py-1.5 px-2 rounded-[8px] bg-emerald-600/80 hover:bg-emerald-600 text-white text-[10px] font-medium flex items-center justify-center gap-1 transition-colors active:scale-95"
+                            >
+                              <Phone className="h-3 w-3" />
+                              <span>Call Mom</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleSimulateCall('Dad')}
+                              className="py-1.5 px-2 rounded-[8px] bg-emerald-600/80 hover:bg-emerald-600 text-white text-[10px] font-medium flex items-center justify-center gap-1 transition-colors active:scale-95"
+                            >
+                              <Phone className="h-3 w-3" />
+                              <span>Call Dad</span>
+                            </button>
+                          </div>
+                          <div className="text-[9px] font-mono text-slate-400">
+                            Emergency 911 &amp; Contacts Always Open
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Home Indicator */}
+                      <div className="w-24 h-1 bg-white/40 rounded-full mx-auto mb-1"></div>
+                    </div>
+                  </div>
+
+                  {/* SCAN QR CODE TRIGGER BUTTON */}
+                  <Button
+                    type="button"
+                    onClick={() => setEnrollmentModalOpen(true)}
+                    className="w-full py-2.5 px-4 rounded-[6px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold transition-all shadow-2xs flex items-center justify-center gap-2 h-10"
+                  >
+                    <Smartphone className="w-4 h-4" />
+                    <span>Scan Device Enrollment QR</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* PROGRESSIVE DISCLOSURE: BRIDGE DEVICE AUTONOMY LADDER */}
+          <div className="border border-[#E3E3DC] rounded-[10px] bg-white overflow-hidden shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setLadderOpen((prev) => !prev)}
+              className="w-full p-4 flex items-center justify-between text-left hover:bg-[#F4F4F0]/50 transition-colors"
+            >
+              <div className="flex items-center gap-2.5">
+                <Layers className="h-4 w-4 text-[#143D2B]" />
+                <span className="font-serif text-sm font-semibold text-[#111413]">
+                  The Bridge Device Autonomy Ladder (4 Stages)
+                </span>
+                <span className="text-[11px] font-mono text-[#858C88] hidden sm:inline">
+                  Gradual digital scaffolding before full smartphone
+                </span>
+              </div>
+              {ladderOpen ? (
+                <ChevronUp className="h-4 w-4 text-[#858C88]" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-[#858C88]" />
+              )}
+            </button>
+
+            {ladderOpen && (
+              <div className="p-5 border-t border-[#E3E3DC] bg-[#FAF7F2]/50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
+                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
+                    Stage 1: Ages 7–9
+                  </span>
+                  <h4 className="font-serif font-bold text-[#111413]">
+                    Smartwatch GPS (Gizmo / Apple Watch)
+                  </h4>
+                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
+                    Voice calls to whitelisted family only, GPS tracking, zero internet browser or social media.
+                  </p>
+                </div>
+                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
+                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
+                    Stage 2: Ages 10–11
+                  </span>
+                  <h4 className="font-serif font-bold text-[#111413]">
+                    Curated Phone (Pinwheel / Gabb)
+                  </h4>
+                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
+                    Texting, maps, family photos, but zero addictive app store, games, or open algorithmic web.
+                  </p>
+                </div>
+                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
+                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
+                    Stage 3: Ages 11–13
+                  </span>
+                  <h4 className="font-serif font-bold text-[#111413]">
+                    Smartphone with Bedtime Pact
+                  </h4>
+                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
+                    Personal smartphone with AlongSide signed bilateral treaty and automated {curfewDisplay} sleep lockout.
+                  </p>
+                </div>
+                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
+                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
+                    Stage 4: Ages 14+
+                  </span>
+                  <h4 className="font-serif font-bold text-[#111413]">
+                    Autonomous Circadian Transition
+                  </h4>
+                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
+                    Independent charging station outside the bedroom, internal executive function self-regulation.
+                  </p>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Safety & Emergency Guarantee Note */}
-          <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-4 flex items-start gap-3">
-            <ShieldCheck className="h-5 w-5 text-teal-700 shrink-0 mt-0.5" />
-            <div className="space-y-1 text-xs text-slate-600">
-              <span className="font-bold text-slate-900 block">
-                Cryptographic Safety & Emergency Guarantee
+          {/* DISCOVERABILITY LINK TO YOUTH CULTURE DIGEST */}
+          <div className="p-4 rounded-[10px] bg-[#F4F4F0] border border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2.5">
+              <Flame className="h-4 w-4 text-[#B45309] shrink-0" />
+              <span className="text-[#494F4C]">
+                Need help deciphering youth slang or gaming exploit risks?
               </span>
-              <p className="text-[11px] leading-relaxed">
-                Every Alongside device profile is cryptographically signed with Apple PKCS#7 certificates. If a profile is removed in device settings, parents receive an immediate tamper webhook. Crucially, <strong>emergency calls to parents and 911 are never locked</strong>.
-              </p>
+            </div>
+            <Link
+              href="/digest"
+              className="font-mono font-medium text-[#143D2B] hover:underline flex items-center gap-1 self-start sm:self-auto shrink-0"
+            >
+              <span>Explore Sunday Youth Culture Digest</span>
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* ENROLLMENT MODAL */}
+      <EnrollmentModal
+        isOpen={enrollmentModalOpen}
+        onClose={() => setEnrollmentModalOpen(false)}
+        enrollmentToken={activeChild?.id || 'demo-token'}
+        childName={activeChild?.name || 'Child'}
+        curfewTime={recommendedCurfew.time24}
+        platform={DevicePlatform.APPLE_IOS}
+      />
+
+      {/* PRINT TREATY CONFIRMATION DIALOG */}
+      <Dialog open={printModalOpen} onOpenChange={setPrintModalOpen}>
+        <DialogContent className="max-w-md bg-white border border-[#E3E3DC] rounded-[14px] p-6 space-y-4">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-lg font-bold text-[#111413]">
+              Print Bilateral Agreement
+            </DialogTitle>
+            <DialogDescription className="text-xs text-[#494F4C] leading-relaxed">
+              Exporting the signed Bilateral Family Treaty between {activeChild?.name || 'Child'} Davies and Parents for physical refrigerator display.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="p-3 bg-[#FAF7F2] border border-[#E6DEC9] rounded-[8px] text-xs space-y-1.5 font-mono text-[#494F4C]">
+            <div className="flex justify-between">
+              <span>Signatures:</span>
+              <span className="text-[#143D2B] font-bold">2 of 2 Verified</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Bedtime Curfew:</span>
+              <span className="font-bold">{curfewDisplay}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Format:</span>
+              <span>Vector PDF / Refrigerator Ready</span>
             </div>
           </div>
-        </TabsContent>
 
-        {/* ========================================================================= */}
-        {/* TAB 4: YOUTH CULTURE & SLANG RADAR                                       */}
-        {/* ========================================================================= */}
-        <TabsContent value="culture" className="space-y-6">
-          <Card className="border-amber-200/90 bg-gradient-to-r from-amber-50/40 via-white to-transparent shadow-xs">
-            <CardHeader className="pb-3 border-b border-amber-100">
-              <div className="flex items-center justify-between">
-                <Badge variant="accent" className="text-[10px] font-bold uppercase">
-                  Youth Culture & Slang Radar
-                </Badge>
-                <Link
-                  href="/digest"
-                  className="text-xs font-semibold text-teal-700 hover:text-teal-800 flex items-center gap-1"
-                >
-                  <span>Open Full Weekly Digest</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-              <CardTitle className="text-xl font-bold text-slate-900">
-                Youth Culture Intel, Slang Decoders & Exploit Warnings
-              </CardTitle>
-              <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Stay effortlessly informed on viral tween memes, secret calculator vault bypasses, and conversational dinner scripts.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-5 sm:p-6 space-y-6">
-              {/* Sunday Dinner Table Conversation Starter */}
-              <div className="rounded-2xl border border-teal-200 bg-teal-50/60 p-5 space-y-2">
-                <div className="flex items-center gap-2 font-bold text-teal-950 text-xs sm:text-sm">
-                  <MessageSquare className="h-4 w-4 text-teal-700" />
-                  <span>Sunday Dinner Table Conversation Starter</span>
-                  {activeChild && (
-                    <Badge variant="outline" className="text-[10px] bg-white text-teal-800 border-teal-200 ml-auto">
-                      Calibrated for {activeChild.name}
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed pl-6">
-                  &ldquo;{dinnerStarterPrompt.prompt}&rdquo;
-                </p>
-                <p className="text-[11px] text-teal-800/80 pl-6 font-medium">
-                  {dinnerStarterPrompt.tip}
-                </p>
-              </div>
-              {/* Exploit Alerts Row */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <AlertTriangle className="h-4 w-4 text-amber-600" />
-                  Active Exploit Early Warnings
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Badge variant="destructive" className="text-[10px]">
-                        Severity: High
-                      </Badge>
-                      <span className="text-[10px] text-slate-500 font-medium">Bypass App</span>
-                    </div>
-                    <h4 className="text-sm font-bold text-slate-900">
-                      Disguised &ldquo;Calculator Vault&rdquo; Apps
-                    </h4>
-                    <p className="text-xs text-slate-700 leading-relaxed">
-                      Functional calculator apps that open a secret encrypted photo vault when a specific passcode is entered. Use our non-accusatory Sunday dinner script to discuss healthy privacy vs. secrecy.
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Badge variant="secondary" className="text-[10px]">
-                        Severity: Medium
-                      </Badge>
-                      <span className="text-[10px] text-slate-500 font-medium">Account Intel</span>
-                    </div>
-                    <h4 className="text-sm font-bold text-slate-900">
-                      Ghost & Spam (Finsta) Accounts
-                    </h4>
-                    <p className="text-xs text-slate-700 leading-relaxed">
-                      Secondary accounts created to escape parental or algorithmic scrutiny. Frame the conversation around algorithmic dopamine exhaustion rather than spying.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Slang Decoders Grid */}
-              <div className="space-y-3 pt-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <Flame className="h-4 w-4 text-amber-600" />
-                  Trending Tween & Teen Slang Decoders
-                </h3>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {tailoredSlangTerms.map((item, idx) => (
-                    <div key={idx} className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-2xs">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-black text-slate-900">&ldquo;{item.term}&rdquo;</h4>
-                        <Badge variant="outline" className="text-[9px] bg-emerald-50 text-emerald-800 border-emerald-200">
-                          {item.badge}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">
-                        {item.desc}
-                      </p>
-                      <span className="text-[10px] text-slate-400 block pt-1 italic">
-                        Example: {item.example}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-
-      {/* QR Code Enrollment Modal */}
-      {selectedChild && (
-        <EnrollmentModal
-          isOpen={enrollmentModalOpen}
-          onClose={() => setEnrollmentModalOpen(false)}
-          enrollmentToken={`tok_${selectedChild.id.substring(0, 8)}`}
-          childName={selectedChild.name}
-          curfewTime={selectedChild.curfew}
-          platform={DevicePlatform.APPLE_IOS}
-        />
-      )}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setPrintModalOpen(false)}
+              className="text-xs font-mono h-9"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                setPrintModalOpen(false);
+                if (typeof window !== 'undefined') {
+                  window.print();
+                }
+              }}
+              className="bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold h-9"
+            >
+              Print (PDF)
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
