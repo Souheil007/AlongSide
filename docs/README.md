@@ -49,6 +49,15 @@ Machine-enforceable rules automatically discovered and loaded into autonomous ag
 
 ### 6. Whole-Child Research & Knowledge Base (`docs/research/`)
 Authored by the Research Engineer to de-risk engineering and ground Alongside in whole-child developmental psychology, neurobiology, and authentic parent sentiment:
+- [**`docs/research/README.md`**](research/README.md) — **Master Index of the 8 Lifespan Developmental Tier Research Vaults** (48 canonical research documents across all ages from 0 to 18).
+- [**`tier-0a-infancy-0-1/`**](research/tier-0a-infancy-0-1/) — Infancy (Ages 0–1 / 0–12m): Somatic Regulation, Sleep Architecture & Feeding Foundations.
+- [**`tier-0b-toddler-1-2/`**](research/tier-0b-toddler-1-2/) — Young Toddler (Ages 1–2 / 12–24m): Locomotion, Receptive/Expressive Gap & Co-Regulation.
+- [**`tier-0c-older-toddler-2-3/`**](research/tier-0c-older-toddler-2-3/) — Older Toddler (Ages 2–3 / 24–36m): Autonomy vs Shame, Potty Learning & Boundary Testing.
+- [**`tier-1-early-childhood-4-6/`**](research/tier-1-early-childhood-4-6/) — Early Childhood (Ages 4–6): Theory of Mind, Cooperative Rules & Screen Introduction.
+- [**`tier-2-middle-childhood-7-9/`**](research/tier-2-middle-childhood-7-9/) — Middle Childhood (Ages 7–9): Adrenarche Awakening, Concrete Operations & Sports.
+- [**`tier-3-pre-teen-10-12/`**](research/tier-3-pre-teen-10-12/) — Pre-Teen / Tweens (Ages 10–12): Gonadarche, Social Brain dACC Pain & Group Chats.
+- [**`tier-4-early-adolescence-13-15/`**](research/tier-4-early-adolescence-13-15/) — Early Adolescence (Ages 13–15): Peak Puberty, +2h Circadian Shift & Digital Amnesties.
+- [**`tier-5-late-adolescence-16-18/`**](research/tier-5-late-adolescence-16-18/) — Late Adolescence / Launch (Ages 16–18+): Executive Maturation & Digital Sovereignty.
 - [**`developmental-milestones-0-18.md`**](research/developmental-milestones-0-18.md) — Comprehensive Lifespan Developmental Milestones (Ages 0–18), CDC 2022 revised 75th percentile benchmarks, month-by-month and year-by-year progression across gross/fine motor, speech bursts, intelligibility percentages, and red-flag screening triggers (ASQ-3 / M-CHAT-R/F).
 - [**`pediatric-nutrition-feeding-science.md`**](research/pediatric-nutrition-feeding-science.md) — Pediatric Nutrition & Feeding Science: infant solids introduction, BLW vs purees, early allergen introduction (LEAP / EAT trials), choking prevention vs gagging reflex, strict infant prohibitions (<1y), and toddler picky eating solutions via Ellyn Satter's Division of Responsibility.
 - [**`brain-games-sensory-play-toys.md`**](research/brain-games-sensory-play-toys.md) — Brain Games, Sensory Play & Early Toys/Puppets: cognitive enrichment, Harvard Serve & Return interaction framework, Montessori sensitive periods, AAP play guidelines, and age-indexed toy/activity matrices from high-contrast puppets to Socratic lateral thinking.

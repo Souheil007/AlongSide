@@ -18,30 +18,30 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
   const sampleLessons: AcademyLessonSummaryDTO[] = [
     {
       id: 'les-test-1',
+      moduleId: 'mod-editorial-test',
       title: 'Neurochemical Surges & The Dopamine Reward Loop',
       slug: 'neurochemical-surges',
       sortOrder: 1,
       readingMinutes: 4,
       isCompleted: true,
-      hasPracticeScenario: true,
     },
     {
       id: 'les-test-2',
+      moduleId: 'mod-editorial-test',
       title: 'The Neutral Empathetic Pause Under Fire',
       slug: 'neutral-empathetic-pause',
       sortOrder: 2,
       readingMinutes: 5,
       isCompleted: false,
-      hasPracticeScenario: true,
     },
     {
       id: 'les-test-3',
+      moduleId: 'mod-editorial-test',
       title: 'Bedtime Curfew Treaties That Hold',
       slug: 'bedtime-curfew-treaties',
       sortOrder: 3,
       readingMinutes: 4,
       isCompleted: false,
-      hasPracticeScenario: false,
     },
   ];
 
