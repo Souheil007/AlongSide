@@ -231,3 +231,53 @@ User feedback identified three critical UX and visual flaws on the live dashboar
   2. `[03:30 PM 🌤️ After-School Connection]` — Word-for-Word Empathy Script for transition friction.
   3. `[08:30 PM 🌙 Evening Wind-Down]` — Device Curfew Lock & Phone Readiness Milestone.
 - **Stage Adaptation:** Dynamically transforms the daily schedule when switched to Leo (3y) (e.g. Naptime zero-screens wind-down and toddler floor meltdown calm).
+
+---
+
+## 8. Iteration on Fluid Design 3: Re-Architecting the Lower Dock (Family Milestones & Digital Pulse)
+
+### 8.1 User Critique & The Problem with "Bedtime Curfew 8:30 PM Lock"
+User feedback on `prototype-fluid-3-flowing-ribbon.html`:
+> *"prototype-fluid-3-flowing-ribbon.html is good , but what do you think the best things we can put in Family Milestones & Digital Pulse ? feels like this is useless : Bedtime Curfew 8:30 PM Lock , we should remove it think through what we can put and give me the design"*
+
+#### Why the "8:30 PM Bedtime Curfew Lock" Was the Wrong Element:
+1. **The Surveillance & MDM Trap:** AlongSide is an **empathetic advisory, teaching, and co-regulation platform** — not an authoritarian device cop, spy app, or screen-time limiter. Showing a static hardware lock pill sounded like a router setting rather than supportive parenting.
+2. **Completely Irrelevant for Pre-Device & Younger Children (Road 1):** For Souheil (8 yrs) or Leo (3 yrs), who do not have personal smartphones, a "bedtime device lock" makes zero sense.
+3. **Dead UI Weight:** A static curfew time does not change day-to-day. Once configured, seeing "8:30 PM Lock" every single day delivers zero actionable value or parental reassurance.
+
+---
+
+### 8.2 What Parents Actually Need in the Living Room Dock
+Parents logging into AlongSide need **daily actionable connection, stage-adaptive milestone progression, and relief from parenting anxiety**.
+
+We re-architected the section into **"Living Room Rhythm & Family Milestones"** with **3 High-Value Pillars**:
+
+```mermaid
+graph TD
+    Dock["Living Room Rhythm & Family Milestones"]
+    
+    Dock --> P1["Pillar 1: Stage-Adaptive Autonomy Milestone<br/>• Souheil (8y): First-Phone Readiness 78/100 (Day 9 of 14 Alarm Autonomy)<br/>• Leo (3y): Screen-Free Bedtime Rhythm (3/3 Nights Calm Story)"]
+    Dock --> P2["Pillar 2: Tonight's 5-Minute Connection (Replaces Curfew Lock!)<br/>• Souheil (8y): 'Rose, Thorn & Banana' Dinner Table Starter<br/>• Leo (3y): 'Blow Out the Candle' Floor Breathing Ritual"]
+    Dock --> P3["Pillar 3: Schoolyard & Culture Radar<br/>• Souheil (8y): Roblox In-Game Trading Peer Pressure & Validation<br/>• Leo (3y): Fast-Cut Video Stimulus vs. Calm Storybooks"]
+```
+
+---
+
+### 8.3 Three Interactive Dock Alternatives Implemented in Prototype 3
+To give full design choice, `prototype-fluid-3-flowing-ribbon.html` now includes a live 3-way segmented control in the dock header:
+
+1. **Option 1: Connection & Table Starters (Recommended Winner):**
+   - **Pillar 1:** Stage-adaptive milestone progression (Alarm autonomy vs. toddler sensory sleep).
+   - **Pillar 2:** **Tonight's 5-Minute Connection** with a 1-click `"Mark Tried ✓"` interaction. Replaces the cold curfew lock with a warm dinner/bedtime prompt that sparks real family conversation without feeling like an interrogation.
+   - **Pillar 3:** **Schoolyard & Media Radar** demystifying peer trends (Roblox skins, YouTube memes, or toddler sensory pacing).
+
+2. **Option 2: Shared Family Pact Rhythm:**
+   - **Pillar 1:** Autonomy milestone progress.
+   - **Pillar 2:** **The Kitchen Charging Basket** (A collaborative family ritual: *"All devices sleep in the hallway wicker basket at 9:00 PM — parents included!"*). Frames bedtime tech boundaries as a shared team culture rather than punitive surveillance.
+   - **Pillar 3:** **Weekly Slang Decoder** (*"No Cap"* / *"Rizz"* explained with a 1/5 Cringe Meter rating).
+
+3. **Option 3: 60-Second Parent Calm Check-in:**
+   - **Pillar 1:** Developmental horizon focus.
+   - **Pillar 2:** **60-Second Parent Reset** with 3 interactive mood buttons: `[🌿 Smooth]`, `[⚡ Friction]`, `[💥 Stormy]`. Clicking provides instant coaching reassurance tailored to the parent's current emotional energy.
+   - **Pillar 3:** **Parent Compass** reassurance note (*"A calm repair after friction teaches your child more about emotional safety than never making a mistake"*).
+
