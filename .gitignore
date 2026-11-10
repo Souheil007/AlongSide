@@ -48,3 +48,6 @@ playwright-report/
 # Paperclip local run context
 .paperclip-task.md
 scratch/
+
+# Design Previews
+previews/
