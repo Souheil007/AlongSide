@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlongSide — Phase 2 Hub: 5 Fluid Non-Boxed Dashboard Designs (SOU-79)</title>
+  <title>AlongSide — Phase 2 Hub: 3 Streamlined Structured Designs (SOU-79)</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,30 +69,38 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="font-serif text-base font-bold text-white tracking-tight">AlongSide</span>
-            <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Fluid River Ribbon</span>
+            <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Structured Dynamic Stream</span>
           </div>
-          <p class="font-mono text-xs text-white/60">Selected: Design 3 River Ribbon • Zero Curfew Locks • Daily Connection &amp; Milestones</p>
+          <p class="font-mono text-xs text-white/60">3 New Designs: Academy Track ➔ Culture Digest ➔ Phone Radar ➔ AI Advisor</p>
         </div>
       </div>
 
-      <!-- 5 NEW FLUID DESIGNS SELECTOR -->
-      <div class="flex flex-wrap items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10 text-xs">
-        <button id="btnF3" onclick="switchPrototype('prototype-fluid-3-flowing-ribbon.html', 'F3')" class="px-2.5 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5">
+      <!-- 3 NEW STRUCTURED DESIGNS SELECTOR -->
+      <div class="flex flex-wrap items-center gap-1.5 bg-black/50 p-1.5 rounded-xl border border-white/10 text-xs">
+        <button id="btnS1" onclick="switchPrototype('prototype-structure-1-pulse-stream.html', 'S1')" class="px-3 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span>★ 3. River Ribbon (Selected)</span>
+          <span>★ 1. Dynamic Pulse Stream</span>
         </button>
-        <button id="btnF1" onclick="switchPrototype('prototype-fluid-1-editorial-journal.html', 'F1')" class="px-2.5 py-1.5 rounded-lg text-white/70 hover:text-white transition">
-          1. Editorial Almanac
+        <button id="btnS2" onclick="switchPrototype('prototype-structure-2-magazine-horizon.html', 'S2')" class="px-3 py-1.5 rounded-lg text-white/70 hover:text-white transition">
+          2. Editorial Horizon
         </button>
-        <button id="btnF2" onclick="switchPrototype('prototype-fluid-2-split-canvas.html', 'F2')" class="px-2.5 py-1.5 rounded-lg text-white/70 hover:text-white transition">
-          2. Split Sheet
+        <button id="btnS3" onclick="switchPrototype('prototype-structure-3-living-canvas.html', 'S3')" class="px-3 py-1.5 rounded-lg text-white/70 hover:text-white transition">
+          3. Living Canvas
         </button>
-        <button id="btnF4" onclick="switchPrototype('prototype-fluid-4-minimal-dossier.html', 'F4')" class="px-2.5 py-1.5 rounded-lg text-white/70 hover:text-white transition">
-          4. Minimal Dossier
-        </button>
-        <button id="btnF5" onclick="switchPrototype('prototype-fluid-5-chronological-dayflow.html', 'F5')" class="px-2.5 py-1.5 rounded-lg text-white/70 hover:text-white transition">
-          5. Day-Flow
-        </button>
+        
+        <!-- Older Designs Dropdown -->
+        <div class="relative inline-block ml-1 pl-1 border-l border-white/10">
+          <select onchange="if(this.value) switchPrototype(this.value, 'OLD')" class="bg-black/60 text-white/60 text-[11px] rounded-md px-2 py-1 border border-white/10 focus:outline-none focus:text-white">
+            <option value="">Previous Iterations...</option>
+            <option value="prototype-fluid-3-flowing-ribbon.html">Fluid 3: Flowing Ribbon</option>
+            <option value="prototype-fluid-1-editorial-journal.html">Fluid 1: Editorial Almanac</option>
+            <option value="prototype-fluid-2-split-canvas.html">Fluid 2: Split Sheet</option>
+            <option value="prototype-fluid-4-minimal-dossier.html">Fluid 4: Minimal Dossier</option>
+            <option value="prototype-fluid-5-chronological-dayflow.html">Fluid 5: Day-Flow</option>
+            <option value="prototype-b1-learning-sanctuary.html">Direction B.1: Learning Sanctuary</option>
+            <option value="prototype-a-minimal-focused.html">Direction A: Minimal Focused</option>
+          </select>
+        </div>
       </div>
 
       <!-- VIEWPORT DEVICE CONTROLS -->
@@ -103,7 +111,7 @@
           <button id="btnTablet" onclick="setViewport('768px')" class="px-2.5 py-1 rounded text-white/60 hover:text-white transition">Tablet (768px)</button>
           <button id="btnMobile" onclick="setViewport('390px')" class="px-2.5 py-1 rounded text-white/60 hover:text-white transition">Mobile (390px)</button>
         </div>
-        <a id="btnExternal" href="prototype-fluid-3-flowing-ribbon.html" target="_blank" class="p-1.5 rounded-lg bg-white/10 text-white/80 hover:text-white border border-white/10 transition" title="Open in new window">
+        <a id="btnExternal" href="prototype-structure-1-pulse-stream.html" target="_blank" class="p-1.5 rounded-lg bg-white/10 text-white/80 hover:text-white border border-white/10 transition" title="Open in new window">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </div>
@@ -111,18 +119,18 @@
     </div>
   </header>
 
-  <!-- USER FEEDBACK BANNER (SHOWING DIRECT ANSWERS TO FEEDBACK) -->
+  <!-- USER FEEDBACK BANNER (DIRECTLY REFLECTING THE USER'S EXACT MANDATE) -->
   <aside class="bg-[#1D2421] border-b border-forest/30 px-4 py-2.5 text-xs text-white/90">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <span class="font-mono font-bold text-emerald-400 bg-forest px-2 py-0.5 rounded text-[10px] uppercase">User Mandates Solved:</span>
-        <span class="text-white/80">✓ Purged useless "8:30 PM Curfew Lock"</span>
-        <span class="text-white/40">•</span>
-        <span class="text-white/80">✓ Replaced with Tonight's 5-Min Connection (Dinner/Floor rituals)</span>
-        <span class="text-white/40">•</span>
-        <span class="text-white/80">✓ Stage-adaptive milestones (Readiness for 8y, Sensory Sleep for 3y)</span>
-        <span class="text-white/40">•</span>
-        <span class="text-white/80">✓ 3 Interactive dock views switchable live inside the prototype</span>
+        <span class="font-mono font-bold text-emerald-400 bg-forest px-2 py-0.5 rounded text-[10px] uppercase">Mandated Sequence:</span>
+        <span class="text-white/90 font-medium">1. Active Academy Track</span>
+        <span class="text-emerald-400">➔</span>
+        <span class="text-white/90 font-medium">2. Sunday Youth Culture Digest</span>
+        <span class="text-emerald-400">➔</span>
+        <span class="text-white/90 font-medium">3. Souheil's First-Phone Assessment &amp; Radar</span>
+        <span class="text-emerald-400">➔</span>
+        <span class="text-white/90 font-medium">4. 24/7 AI Child Advisor</span>
       </div>
       <div class="flex items-center gap-3 font-mono text-[11px] text-white/60">
         <a href="DESIGN_ALTERNATIVES.md" class="hover:text-emerald-300 underline">Read Alternatives Spec</a>
@@ -135,44 +143,35 @@
   <!-- LIVE PROTOTYPE EMBED PREVIEW -->
   <main class="flex-1 flex flex-col items-center justify-start p-4 bg-[#0A0D0C] overflow-hidden">
     <div id="viewportContainer" class="viewport-frame w-full h-[calc(100vh-140px)] rounded-xl border border-white/15 overflow-hidden shadow-2xl bg-[#FDFBF7]">
-      <iframe id="prototypeFrame" src="prototype-fluid-3-flowing-ribbon.html" class="w-full h-full border-0" title="AlongSide UX Exploration Preview"></iframe>
+      <iframe id="prototypeFrame" src="prototype-structure-1-pulse-stream.html" class="w-full h-full border-0" title="AlongSide UX Exploration Preview"></iframe>
     </div>
   </main>
 
-  <!-- FOOTER REFERENCE -->
-  <footer class="bg-[#181C1B] border-t border-white/10 px-4 py-2 text-xs text-white/60">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 font-mono text-[11px]">
-      <div>
-        <span>Design System: </span>
-        <strong class="text-emerald-400">Taste 2: Editorial Pediatric Almanac</strong>
-        <span class="text-white/40"> (Cardless editorial typography &amp; whisper hairlines)</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <span class="text-white/40">Earlier Boxed Iterations:</span>
-        <a href="prototype-b1-learning-sanctuary.html" class="hover:text-white underline">B.1 Sanctuary</a>
-        <a href="prototype-b2-milestone-horizon.html" class="hover:text-white underline">B.2 Horizon</a>
-        <a href="prototype-b3-operating-compass.html" class="hover:text-white underline">B.3 Compass</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- CONTROLLER SCRIPT -->
   <script>
-    function switchPrototype(file, code) {
-      document.getElementById('prototypeFrame').src = file;
-      document.getElementById('btnExternal').href = file;
+    let activeKey = 'S1';
 
-      const buttons = ['btnF1', 'btnF2', 'btnF3', 'btnF4', 'btnF5'];
-      buttons.forEach(id => {
-        const b = document.getElementById(id);
-        if (b) {
-          b.className = "px-2.5 py-1.5 rounded-lg text-white/70 hover:text-white transition";
+    function switchPrototype(fileName, key) {
+      document.getElementById('prototypeFrame').src = fileName;
+      document.getElementById('btnExternal').href = fileName;
+      activeKey = key;
+
+      // Update button visual states
+      ['btnS1', 'btnS2', 'btnS3'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = "px-3 py-1.5 rounded-lg text-white/70 hover:text-white transition";
         }
       });
 
-      const activeBtn = document.getElementById('btn' + code);
-      if (activeBtn) {
-        activeBtn.className = "px-2.5 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      if (key === 'S1') {
+        const b = document.getElementById('btnS1');
+        b.className = "px-3 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      } else if (key === 'S2') {
+        const b = document.getElementById('btnS2');
+        b.className = "px-3 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
+      } else if (key === 'S3') {
+        const b = document.getElementById('btnS3');
+        b.className = "px-3 py-1.5 rounded-lg font-semibold bg-forest text-white shadow-xs transition flex items-center gap-1.5";
       }
     }
 
@@ -180,18 +179,21 @@
       const container = document.getElementById('viewportContainer');
       container.style.width = width;
 
-      const btnD = document.getElementById('btnDesktop');
-      const btnT = document.getElementById('btnTablet');
-      const btnM = document.getElementById('btnMobile');
-
-      [btnD, btnT, btnM].forEach(b => {
-        b.className = "px-2.5 py-1 rounded text-white/60 hover:text-white transition";
+      // Update button styles
+      ['btnDesktop', 'btnTablet', 'btnMobile'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.className = "px-2.5 py-1 rounded text-white/60 hover:text-white transition";
       });
 
-      if (width === '100%') btnD.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
-      else if (width === '768px') btnT.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
-      else btnM.className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      if (width === '100%') {
+        document.getElementById('btnDesktop').className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      } else if (width === '768px') {
+        document.getElementById('btnTablet').className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      } else if (width === '390px') {
+        document.getElementById('btnMobile').className = "px-2.5 py-1 rounded bg-white/20 text-white font-bold transition";
+      }
     }
   </script>
+
 </body>
 </html>
