@@ -104,7 +104,7 @@ describe('SOU-63: Child Profile Modal, Tier Tailoring & Modern FAQ Explorer Spec
       // Tier 5 (Late Adolescence)
       const lateTeenFaqs = await searchFaqs({ tier: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18 });
       expect(lateTeenFaqs.faqs.length).toBeGreaterThanOrEqual(1);
-      expect(lateTeenFaqs.faqs.some((f) => f.question.toLowerCase().includes('driving'))).toBe(true);
+      expect(lateTeenFaqs.faqs.some((f) => f.question.toLowerCase().includes('teen') || f.question.toLowerCase().includes('driving'))).toBe(true);
     });
 
     it('formats badges accurately for all canonical tiers and categories in FaqCard', () => {

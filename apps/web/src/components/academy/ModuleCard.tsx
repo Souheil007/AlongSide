@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers, ChevronDown, Sparkles } from 'lucide-react';
-import { DevelopmentalTier, AcademyCategory, type AcademyModuleDTO, type AcademyLessonSummaryDTO } from '@alongside/shared';
+import { DevelopmentalTier, AcademyCategory, formatCourseTitle, type AcademyModuleDTO, type AcademyLessonSummaryDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Progress } from '@/components/ui/Progress';
@@ -149,8 +149,16 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
   const tierInfo = getTierBadgeInfo(module.developmentalTier);
   const categoryInfo = getCategoryBadgeInfo(module.category);
 
-  // Approximate prioritized chapters count (canonical structure is 3 prioritized chapters)
-  const estimatedChapterCount = 3;
+  // Real prioritized chapters count from backend DTO or lessons set
+  const actualChapterCount =
+    module.chapterCount ??
+    (module.lessons && module.lessons.length > 0
+      ? new Set(module.lessons.map((l) => l.chapterId).filter(Boolean)).size || 3
+      : 3);
+
+  const displayTitle = formatCourseTitle(module.title);
+  const actualLessons = module.lessons && module.lessons.length > 0 ? module.lessons : [];
+  const syllabusLessonCount = actualLessons.length > 0 ? actualLessons.length : module.lessonCount;
 
   return (
     <Card
@@ -191,7 +199,7 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
           </div>
 
           <CardTitle className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-teal-900 transition-colors leading-snug">
-            {module.title}
+            {displayTitle}
           </CardTitle>
 
           {module.reliefSubtitle && (
@@ -213,19 +221,6 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
               <span className="font-medium line-clamp-1">{module.tonightQuickWinTitle}</span>
             </div>
           )}
-
-          {/* Feature format pills */}
-          <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono text-slate-600 pt-0.5">
-            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
-              🎧 Audio Memo
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
-              💬 Script Vault
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
-              🤖 AI Sparring
-            </span>
-          </div>
         </CardHeader>
 
         <CardContent className="space-y-4 pt-1">
@@ -233,7 +228,7 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1 text-slate-700 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">
               <Layers className="h-3 w-3 text-slate-500" />
-              {estimatedChapterCount} Prioritized Chapters
+              {actualChapterCount} {actualChapterCount === 1 ? 'Prioritized Chapter' : 'Prioritized Chapters'}
             </span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="h-3.5 w-3.5 text-slate-400" />
@@ -273,7 +268,7 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
             >
               <span className="flex items-center gap-1.5">
                 <BookOpen className="h-3.5 w-3.5 text-slate-500" />
-                Curriculum Syllabus ({module.lessons?.length || module.lessonCount || 4} lessons)
+                Curriculum Syllabus ({syllabusLessonCount} {syllabusLessonCount === 1 ? 'lesson' : 'lessons'})
               </span>
               <ChevronDown
                 className={cn(
@@ -288,8 +283,8 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
                 data-testid="syllabus-drawer-content"
                 className="mt-2 space-y-1.5 rounded-lg bg-slate-50 border border-slate-100 p-2.5 text-xs animate-in fade-in duration-150"
               >
-                {module.lessons && module.lessons.length > 0 ? (
-                  module.lessons.map((lesson: AcademyLessonSummaryDTO) => (
+                {actualLessons.length > 0 ? (
+                  actualLessons.map((lesson: AcademyLessonSummaryDTO) => (
                     <div
                       key={lesson.id}
                       className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
@@ -306,27 +301,9 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
                     </div>
                   ))
                 ) : (
-                  [
-                    { num: 1, title: module.tonightQuickWinTitle || "Tonight's Immediate Relief Protocol", dur: 4 },
-                    { num: 2, title: 'Neurobiological Root Cause & Amygdala Wiring', dur: 5 },
-                    { num: 3, title: 'Household Routines & Preventative Habits', dur: 4 },
-                    { num: 4, title: 'Long-term Boundaries & Repair Framework', dur: 4 },
-                  ].map((item) => (
-                    <div
-                      key={item.num}
-                      className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
-                    >
-                      <div className="flex items-baseline gap-1.5 min-w-0">
-                        <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
-                          § 0{item.num}
-                        </span>
-                        <span className="truncate font-medium">{item.title}</span>
-                      </div>
-                      <span className="font-mono text-[10px] text-slate-400 shrink-0">
-                        {item.dur} min
-                      </span>
-                    </div>
-                  ))
+                  <div className="py-2 text-center text-slate-500 font-sans">
+                    {module.lessonCount} lessons available in this course roadmap.
+                  </div>
                 )}
               </div>
             )}

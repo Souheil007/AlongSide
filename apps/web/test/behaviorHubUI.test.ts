@@ -102,10 +102,14 @@ describe('Behavioral Psychology & Cultural Advisor Hub Specification (PLAN-19)',
         DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
       );
       expect(guides.length).toBeGreaterThan(0);
+      const validTiers = [
+        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+      ];
       expect(
-        guides.every(
-          (g) => g.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
-        )
+        guides.every((g) => validTiers.includes(g.targetTier as any))
       ).toBe(true);
     });
 

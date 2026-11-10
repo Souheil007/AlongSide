@@ -19,7 +19,11 @@ import {
   ShieldCheck,
   Award,
 } from 'lucide-react';
-import type { AcademyLessonDTO, AcademyLessonSummaryDTO } from '@alongside/shared';
+import {
+  formatCourseTitle,
+  type AcademyLessonDTO,
+  type AcademyLessonSummaryDTO,
+} from '@alongside/shared';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { markLessonComplete } from '@/lib/api/academy';
@@ -35,6 +39,51 @@ export interface LessonReaderViewProps {
   prevLesson?: AcademyLessonSummaryDTO | null;
   onLessonComplete?: () => void;
   className?: string;
+}
+
+/**
+ * Renders inline markdown: bold (**...**), italic (*...* or _..._), code (`...`), and links ([...](...)).
+ */
+export function renderInlineMarkdown(text: string): React.ReactNode {
+  if (!text) return null;
+
+  const tokens = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\([^)]+\))/g);
+  return tokens.map((token, i) => {
+    if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
+      return (
+        <strong key={i} className="font-bold text-slate-900">
+          {token.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (
+      ((token.startsWith('*') && token.endsWith('*')) ||
+        (token.startsWith('_') && token.endsWith('_'))) &&
+      token.length >= 2
+    ) {
+      return (
+        <em key={i} className="italic text-slate-800">
+          {token.slice(1, -1)}
+        </em>
+      );
+    }
+    if (token.startsWith('`') && token.endsWith('`') && token.length >= 2) {
+      return (
+        <code key={i} className="rounded bg-slate-100 px-1 py-0.5 font-mono text-xs text-teal-800">
+          {token.slice(1, -1)}
+        </code>
+      );
+    }
+    const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      return (
+        <Link key={i} href={linkMatch[2]!} className="text-teal-700 underline hover:text-teal-900">
+          {linkMatch[1]}
+        </Link>
+      );
+    }
+    return token;
+  });
 }
 
 export function LessonReaderView({
@@ -94,17 +143,27 @@ export function LessonReaderView({
   };
 
   /**
-   * Intelligently parses markdown into structured, semantic UI callouts:
+   * Intelligently parses markdown into structured, semantic UI elements:
    * 1. Developmental / Clinical Insight Callout Card
-   * 2. What to Say Dialogue Speech Bubble
-   * 3. Interactive Action Protocol Checklists
-   * 4. Semantic headers and text
+   * 2. Interactive Action Protocol Checklists
+   * 3. Compiled Headers and Lists with Inline Formatting
+   * 4. Semantic paragraphs with bold, italics, code, and links
    */
   const renderFormattedContent = (markdown: string) => {
     const blocks = markdown.split(/\n\n+/);
 
     return blocks.map((block, idx) => {
       const trimmed = block.trim();
+      if (!trimmed) return null;
+
+      // Omit Comparative Dialogue entirely per user request
+      if (
+        trimmed.toLowerCase().includes('comparative dialogue') ||
+        trimmed.includes('| What NOT to Say |') ||
+        trimmed.toLowerCase().startsWith('## part 3: comparative dialogue')
+      ) {
+        return null;
+      }
 
       // 1. Developmental / Clinical Insight Callout Card
       if (
@@ -135,146 +194,17 @@ export function LessonReaderView({
               <span>Pediatric Neurobiology · Developmental Insight</span>
             </div>
             <p className="text-slate-800 text-sm sm:text-base leading-relaxed font-medium">
-              {cleanText}
+              {renderInlineMarkdown(cleanText)}
             </p>
           </aside>
         );
       }
 
-      // 2. Comparative Dialogue Table (What NOT to Say vs What to Say Instead)
-      if (
-        trimmed.toLowerCase().includes('what not to say') ||
-        trimmed.toLowerCase().includes('what to say') ||
-        trimmed.toLowerCase().includes('comparative dialogue') ||
-        trimmed.toLowerCase().includes('alongside empathetic response') ||
-        (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-        trimmed.startsWith('> "')
-      ) {
-        let notToSay =
-          lesson.whatNotToSay ||
-          'Stop overreacting! You are making a huge deal out of nothing.';
-        let toSay = trimmed;
-        const deliveryTip =
-          lesson.deliveryTip ||
-          'Lower your voice tone, unhurried cadence, and match eye level before speaking.';
-
-        if (
-          trimmed.toLowerCase().includes('what not to say') &&
-          trimmed.toLowerCase().includes('what to say')
-        ) {
-          const parts = trimmed.split(/what to say(?:\s+instead)?:?/i);
-          if (parts.length >= 2) {
-            notToSay = parts[0]!
-              .replace(/^#+\s*/, '')
-              .replace(/what not to say:?/i, '')
-              .replace(/[*_"`]/g, '')
-              .trim();
-            toSay = parts[1]!
-              .replace(/[*_`]/g, '')
-              .trim();
-          }
-        }
-
-        const cleanDialogue = toSay
-          .replace(/^#+\s*/, '')
-          .replace(/^>\s*/, '')
-          .replace(/^\*\*What to Say:?\*\*:?\s*/i, '')
-          .replace(/^What to Say(?:\s+Instead)?:?\s*/i, '')
-          .replace(/^Alongside Empathetic Response:?\s*/i, '')
-          .replace(/^"/, '')
-          .replace(/"$/, '')
-          .trim();
-
-        const isCurrentlyCopied = copiedScript === cleanDialogue;
-
-        return (
-          <aside
-            key={`comparative-dialogue-${idx}`}
-            aria-label="Comparative Dialogue Table"
-            data-testid="comparative-dialogue-table"
-            className="my-6 rounded-2xl border border-slate-200 overflow-hidden shadow-xs bg-white"
-          >
-            <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex items-center justify-between">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                <MessageCircle className="h-4 w-4 text-teal-700" />
-                Comparative Dialogue · What NOT to Say vs What to Say Instead
-              </span>
-              <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
-                Verbatim Script Vault
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-              {/* Red-tinted: What NOT to Say */}
-              <div
-                data-testid="what-not-to-say-box"
-                className="bg-rose-50/50 p-5 space-y-2.5"
-              >
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-800">
-                  <span className="h-2 w-2 rounded-full bg-rose-600 shrink-0" />
-                  <span>What NOT to Say (Instinctive Reaction)</span>
-                </div>
-                <blockquote className="border-l-3 border-rose-400 pl-3 italic text-sm text-rose-950 font-medium leading-relaxed">
-                  &ldquo;{notToSay}&rdquo;
-                </blockquote>
-                <p className="text-[11px] text-rose-800/80 leading-relaxed font-sans">
-                  ⚠️ Why this backfires: Escalates limbic defensiveness or triggers internal shame in an already overwhelmed nervous system.
-                </p>
-              </div>
-
-              {/* Green/Amber-tinted: What to Say Instead */}
-              <div
-                data-testid="what-to-say-instead-box"
-                className="bg-emerald-50/50 p-5 space-y-2.5"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800">
-                    <span className="h-2 w-2 rounded-full bg-emerald-600 shrink-0" />
-                    <span>What to Say Instead (Co-Regulation)</span>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleCopyScript(cleanDialogue)}
-                    className="h-7 text-xs text-emerald-800 hover:bg-emerald-100 font-semibold gap-1.5 shrink-0"
-                    aria-label="Copy dialogue script to clipboard"
-                    data-testid="copy-script-btn"
-                  >
-                    {isCurrentlyCopied ? (
-                      <>
-                        <Check className="h-3.5 w-3.5 text-emerald-600" />
-                        <span className="text-emerald-700 font-semibold">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3.5 w-3.5 text-emerald-700" />
-                        <span>Copy Script</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
-                <blockquote className="border-l-3 border-emerald-500 pl-3 italic text-sm text-emerald-950 font-semibold leading-relaxed">
-                  &ldquo;{cleanDialogue}&rdquo;
-                </blockquote>
-                <div
-                  data-testid="delivery-tip-badge"
-                  className="rounded-lg bg-white border border-emerald-200/80 p-2 text-[11px] text-emerald-900 flex items-start gap-1.5 shadow-2xs"
-                >
-                  <span className="font-bold shrink-0">💡 Delivery Tip (Vocal Cadence &amp; Posture):</span>
-                  <span>{deliveryTip}</span>
-                </div>
-              </div>
-            </div>
-          </aside>
-        );
-      }
-
-      // 3. Interactive Action Checklist Protocols
+      // 2. Interactive Action Checklist Protocols
       if (
         trimmed.startsWith('- [ ]') ||
         trimmed.startsWith('- [x]') ||
-        (trimmed.toLowerCase().includes('action protocol') && trimmed.includes('- '))
+        (trimmed.toLowerCase().includes('action protocol') && trimmed.includes('- ['))
       ) {
         const lines = trimmed.split('\n');
         return (
@@ -316,7 +246,7 @@ export function LessonReaderView({
                       )}
                     </span>
                     <span className={cn('text-xs sm:text-sm leading-relaxed', isChecked && 'line-through text-slate-500')}>
-                      {lineClean}
+                      {renderInlineMarkdown(lineClean)}
                     </span>
                   </button>
                 );
@@ -326,14 +256,74 @@ export function LessonReaderView({
         );
       }
 
-      // 4. Standard Markdown Headers
+      // 3. Header combined with inline numbered list
+      // e.g. "#### Recommended Action Protocol: 1. **Notice...** 2. **De-escalate...**"
+      const headerWithListMatch = trimmed.match(/^(#{1,5})\s+([^:\n]+(?::|\n))?\s*(\d+\.\s+.*)$/s);
+      if (headerWithListMatch) {
+        const hashes = headerWithListMatch[1]!;
+        const headingText = (headerWithListMatch[2] || '').replace(/[:\n]+$/, '').trim();
+        const listText = headerWithListMatch[3]!;
+        const items = listText
+          .split(/(?:^|\s+)(?=\d+\.\s+)/)
+          .map((item) => item.replace(/^\d+\.\s+/, '').trim())
+          .filter(Boolean);
+
+        return (
+          <div key={`head-list-${idx}`} className="my-5 space-y-2.5">
+            {headingText && (
+              hashes.length >= 4 ? (
+                <h4 className="text-base sm:text-lg font-bold text-slate-900 mt-4 tracking-tight">
+                  {renderInlineMarkdown(headingText)}
+                </h4>
+              ) : hashes.length === 3 ? (
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mt-5 tracking-tight">
+                  {renderInlineMarkdown(headingText)}
+                </h3>
+              ) : (
+                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-6 tracking-tight">
+                  {renderInlineMarkdown(headingText)}
+                </h2>
+              )
+            )}
+            <ol className="list-decimal pl-6 space-y-2.5 my-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              {items.map((it, itemIdx) => (
+                <li key={`it-${itemIdx}`} className="leading-relaxed">
+                  {renderInlineMarkdown(it)}
+                </li>
+              ))}
+            </ol>
+          </div>
+        );
+      }
+
+      // 4. Standard Markdown Headers (#, ##, ###, ####, #####)
+      if (trimmed.startsWith('##### ')) {
+        return (
+          <h5
+            key={`h5-${idx}`}
+            className="text-sm sm:text-base font-bold text-slate-900 mt-4 mb-2 tracking-tight"
+          >
+            {renderInlineMarkdown(trimmed.replace(/^#####\s+/, ''))}
+          </h5>
+        );
+      }
+      if (trimmed.startsWith('#### ')) {
+        return (
+          <h4
+            key={`h4-${idx}`}
+            className="text-base sm:text-lg font-bold text-slate-900 mt-5 mb-2.5 tracking-tight"
+          >
+            {renderInlineMarkdown(trimmed.replace(/^####\s+/, ''))}
+          </h4>
+        );
+      }
       if (trimmed.startsWith('### ')) {
         return (
           <h3
             key={`h3-${idx}`}
             className="text-lg sm:text-xl font-bold text-slate-900 mt-6 mb-3 tracking-tight"
           >
-            {trimmed.replace(/^###\s+/, '')}
+            {renderInlineMarkdown(trimmed.replace(/^###\s+/, ''))}
           </h3>
         );
       }
@@ -343,7 +333,7 @@ export function LessonReaderView({
             key={`h2-${idx}`}
             className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-8 mb-4 tracking-tight"
           >
-            {trimmed.replace(/^##\s+/, '')}
+            {renderInlineMarkdown(trimmed.replace(/^##\s+/, ''))}
           </h2>
         );
       }
@@ -353,33 +343,72 @@ export function LessonReaderView({
             key={`h1-${idx}`}
             className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-6 mb-4 tracking-tight"
           >
-            {trimmed.replace(/^#\s+/, '')}
+            {renderInlineMarkdown(trimmed.replace(/^#\s+/, ''))}
           </h1>
         );
       }
 
-      // 5. Standard Markdown Unordered List
+      // 5. Ordered list block (e.g. "1. First\n2. Second" or "1. ... 2. ...")
+      if (/^\d+\.\s+/.test(trimmed)) {
+        const rawItems = trimmed.includes('\n')
+          ? trimmed.split(/\n(?=\d+\.\s+)/)
+          : trimmed.split(/(?=\d+\.\s+)/);
+        const items = rawItems
+          .map((item) => item.replace(/^\d+\.\s+/, '').trim())
+          .filter(Boolean);
+
+        return (
+          <ol
+            key={`ol-${idx}`}
+            className="my-4 list-decimal pl-6 space-y-2 text-slate-700 text-sm sm:text-base leading-relaxed"
+          >
+            {items.map((it, itemIdx) => (
+              <li key={`it-${itemIdx}`} className="leading-relaxed">
+                {renderInlineMarkdown(it)}
+              </li>
+            ))}
+          </ol>
+        );
+      }
+
+      // 6. Standard Markdown Unordered List
       if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-        const items = trimmed.split(/\n[-*]\s+/).map((item) => item.replace(/^[-*]\s+/, '').trim());
+        const items = trimmed
+          .split(/\n[-*]\s+/)
+          .map((item) => item.replace(/^[-*]\s+/, '').trim())
+          .filter(Boolean);
         return (
           <ul
             key={`list-${idx}`}
             className="my-4 list-disc pl-6 space-y-2 text-slate-700 text-sm sm:text-base leading-relaxed"
           >
             {items.map((it, itemIdx) => (
-              <li key={`it-${itemIdx}`}>{it}</li>
+              <li key={`it-${itemIdx}`}>{renderInlineMarkdown(it)}</li>
             ))}
           </ul>
         );
       }
 
-      // 6. Regular Paragraph
+      // 7. Blockquote (> ...)
+      if (trimmed.startsWith('> ')) {
+        const quoteText = trimmed.replace(/^>\s*/gm, '').trim();
+        return (
+          <blockquote
+            key={`quote-${idx}`}
+            className="my-4 border-l-4 border-teal-500 pl-4 italic text-slate-700 text-sm sm:text-base leading-relaxed bg-teal-50/20 py-2 rounded-r-lg"
+          >
+            {renderInlineMarkdown(quoteText)}
+          </blockquote>
+        );
+      }
+
+      // 8. Regular Paragraph
       return (
         <p
           key={`p-${idx}`}
           className="my-4 text-slate-700 text-sm sm:text-base leading-relaxed font-normal"
         >
-          {trimmed}
+          {renderInlineMarkdown(trimmed)}
         </p>
       );
     });
@@ -409,7 +438,7 @@ export function LessonReaderView({
           className="flex items-center gap-1.5 text-slate-600 hover:text-teal-700 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to {moduleTitle || 'Curriculum'}</span>
+          <span>Back to {formatCourseTitle(moduleTitle || '') || 'Curriculum'}</span>
         </Link>
 
         <div className="flex items-center gap-2">
@@ -491,15 +520,6 @@ export function LessonReaderView({
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <Link
-              href={`/advisor?prompt=${encodeURIComponent(`I want to roleplay practicing the communication script from the lesson "${lesson.title}". Can you play the role of the child so I can practice my empathetic response?`)}`}
-              data-testid="practice-with-ai-advisor-btn"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-teal-600/40 bg-teal-50 hover:bg-teal-100 text-teal-900 px-4 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-2xs"
-            >
-              <Sparkles className="h-4 w-4 text-teal-700" />
-              <span>Practice with AI Advisor</span>
-            </Link>
-
             <Button
               type="button"
               size="lg"
@@ -525,7 +545,7 @@ export function LessonReaderView({
               ) : (
                 <>
                   <CheckCircle2 className="h-4 w-4" />
-                  <span>Complete Lesson & Continue</span>
+                  <span>Complete Lesson</span>
                 </>
               )}
             </Button>

@@ -115,8 +115,8 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
     });
   });
 
-  describe('3. Masthead & Child Calibration', () => {
-    it('renders Newsreader serif title and outcome summary', () => {
+  describe('3. Masthead Decluttering & Redundancy Removal', () => {
+    it('renders Newsreader serif title without age mention and concise outcome summary', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -128,7 +128,7 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       expect(html).toContain(MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.summary);
     });
 
-    it('displays inline calibration badge when child matches developmental tier', () => {
+    it('does not display redundant child calibration info or stage match line', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -136,21 +136,24 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
         />
       );
 
-      expect(html).toContain('data-testid="active-child-stage-match"');
-      expect(html).toContain('data-testid="stage-match-calibrated"');
-      expect(html).toContain('Calibrated for Maya');
+      expect(html).not.toContain('data-testid="active-child-stage-match"');
+      expect(html).not.toContain('Calibrated for Maya');
+      expect(html).not.toContain('Tier 3: Pathfinder');
     });
 
-    it('displays stage note when child tier does not match module tier', () => {
+    it('does not display redundant 3 Core Course Takeaways card', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
-          activeChild={activeChildMismatch}
+          activeChild={activeChildCalibrated}
         />
       );
 
-      expect(html).toContain('data-testid="stage-match-mismatch"');
-      expect(html).toContain('Active child: Sammy (Early Childhood)');
+      expect(html).not.toContain('data-testid="core-takeaways-card"');
+      expect(html).not.toContain('3 Core Course Takeaways');
+      expect(html).not.toContain('1. Biological Root');
+      expect(html).not.toContain('2. Verbatim Scripts');
+      expect(html).not.toContain('3. Action Protocol');
     });
   });
 

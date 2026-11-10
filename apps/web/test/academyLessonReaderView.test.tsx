@@ -61,8 +61,8 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
     },
   };
 
-  describe('1. Comparative Dialogue Table (What NOT to Say vs What to Say Instead)', () => {
-    it('renders the comparative dialogue table with distinctive side-by-side containers', () => {
+  describe('1. Removal of Overwhelming Comparative Dialogue', () => {
+    it('does not render the comparative dialogue table to keep the lesson calm and focused', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: editorialLesson,
@@ -71,28 +71,14 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
         })
       );
 
-      // Verify table wrapper is present with data-testid
-      expect(html).toContain('data-testid="comparative-dialogue-table"');
-
-      // Header label
-      expect(html).toContain('Comparative Dialogue');
-      expect(html).toContain('Verbatim Script Vault');
-
-      // What NOT to Say box (red-tinted)
-      expect(html).toContain('data-testid="what-not-to-say-box"');
-      expect(html).toContain('What NOT to Say (Instinctive Reaction)');
-      expect(html).toContain('Calm down right now or you are losing your phone for a week!');
-      expect(html).toContain('bg-rose-50/50');
-      expect(html).toContain('border-rose-400');
-
-      // What to Say Instead box (green/emerald-tinted)
-      expect(html).toContain('data-testid="what-to-say-instead-box"');
-      expect(html).toContain('What to Say Instead (Co-Regulation)');
-      expect(html).toContain('bg-emerald-50/50');
-      expect(html).toContain('border-emerald-500');
+      // Verify comparative dialogue table and script vault are removed to prevent overwhelm
+      expect(html).not.toContain('data-testid="comparative-dialogue-table"');
+      expect(html).not.toContain('Verbatim Script Vault');
+      expect(html).not.toContain('data-testid="what-not-to-say-box"');
+      expect(html).not.toContain('data-testid="what-to-say-instead-box"');
     });
 
-    it('falls back to canonical defaults when lesson does not specify whatNotToSay', () => {
+    it('does not render comparative dialogue even with fallback lesson data', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: MOCK_LESSON_DETAIL_ADRENARCHE,
@@ -101,13 +87,12 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
         })
       );
 
-      expect(html).toContain('data-testid="comparative-dialogue-table"');
-      expect(html).toContain('Stop overreacting! You are making a huge deal out of nothing.');
+      expect(html).not.toContain('data-testid="comparative-dialogue-table"');
     });
   });
 
-  describe('2. Delivery Tip Badge & Vocal Posture Guidance', () => {
-    it('renders delivery tip badge with vocal cadence and posture guidance', () => {
+  describe('2. Decluttering: Removal of Practice with AI Advisor Button', () => {
+    it('does not render "Practice with AI Advisor" button to eliminate user overwhelm', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: editorialLesson,
@@ -116,32 +101,13 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
         })
       );
 
-      // Delivery tip badge with testid
-      expect(html).toContain('data-testid="delivery-tip-badge"');
-      expect(html).toContain('Delivery Tip (Vocal Cadence &amp; Posture)');
-      expect(html).toContain(
-        'Drop voice pitch 20%, unhurried 3-second pause, and sit down to remove perceived towering dominance.'
-      );
-    });
-
-    it('renders default delivery tip when deliveryTip is unspecified', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: MOCK_LESSON_DETAIL_ADRENARCHE,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
-        })
-      );
-
-      expect(html).toContain('data-testid="delivery-tip-badge"');
-      expect(html).toContain(
-        'Lower your voice tone, unhurried cadence, and match eye level before speaking.'
-      );
+      expect(html).not.toContain('data-testid="practice-with-ai-advisor-btn"');
+      expect(html).not.toContain('Practice with AI Advisor');
     });
   });
 
-  describe('3. Copy Dialogue Script Action', () => {
-    it('renders copy script button with accessibility label and icon', () => {
+  describe('3. Action Footer & Navigation Buttons', () => {
+    it('renders "Complete Lesson" button without "& Continue"', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: editorialLesson,
@@ -150,35 +116,46 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
         })
       );
 
-      expect(html).toContain('data-testid="copy-script-btn"');
-      expect(html).toContain('aria-label="Copy dialogue script to clipboard"');
-      expect(html).toContain('Copy Script');
+      expect(html).toContain('Complete Lesson');
+      expect(html).not.toContain('&amp; Continue');
+      expect(html).not.toContain('& Continue');
     });
-  });
 
-  describe('4. Practice with AI Advisor Integration', () => {
-    it('renders "Practice with AI Advisor" button with pre-populated prompt parameter', () => {
+    it('renders next and previous navigation buttons in the footer', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: editorialLesson,
           moduleSlug: 'behavior-tween-adrenarche',
           moduleTitle: 'Tween Adrenarche & Emotional Volatility',
+          prevLesson: {
+            id: 'les-prev',
+            moduleId: 'mod-behavior-tween',
+            slug: 'previous-lesson',
+            title: 'Foundational Somatic Regulation',
+            readingMinutes: 3,
+            sortOrder: 0,
+            isCompleted: true,
+          },
+          nextLesson: {
+            id: 'les-next',
+            moduleId: 'mod-behavior-tween',
+            slug: 'next-lesson',
+            title: 'Repairing Ruptures Calmly',
+            readingMinutes: 4,
+            sortOrder: 2,
+            isCompleted: false,
+          },
         })
       );
 
-      expect(html).toContain('data-testid="practice-with-ai-advisor-btn"');
-      expect(html).toContain('Practice with AI Advisor');
-      expect(html).toContain('/advisor?prompt=');
-
-      // Verify the link includes the lesson title in the roleplay prompt
-      const expectedEncodedTitle = encodeURIComponent(
-        `I want to roleplay practicing the communication script from the lesson "${editorialLesson.title}". Can you play the role of the child so I can practice my empathetic response?`
-      );
-      expect(html).toContain(expectedEncodedTitle);
+      expect(html).toContain('Previous Lesson');
+      expect(html).toContain('Foundational Somatic Regulation');
+      expect(html).toContain('Next Prioritized Lesson');
+      expect(html).toContain('Repairing Ruptures Calmly');
     });
   });
 
-  describe('5. Semantic Markdown Parsing (Clinical Insights & Action Checklist)', () => {
+  describe('4. Semantic Markdown Compilation (Headers, Lists, and Inline Bold)', () => {
     it('renders Developmental / Clinical Insight callout card with pediatric neurobiology styling', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
@@ -210,16 +187,29 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
       expect(html).toContain('Postpone analytical problem-solving for at least 20 minutes.');
     });
 
-    it('renders complete lesson and continue button', () => {
+    it('compiles markdown headers and inline bold text in action protocols without showing raw markdown syntax', () => {
+      const rawMarkdownLesson: AcademyLessonDTO = {
+        ...editorialLesson,
+        id: 'les-raw-md-test',
+        contentMarkdown: `#### Recommended Action Protocol: 1. **Notice the Physical Baseline:** Observe autonomic nervous system indicators (breathing rate, posture, muscle tone). 2. **De-escalate Before Reasoning:** Do not offer logical debate or explanations while emotional arousal is elevated. 3. **Establish Clear, Calm Boundaries:** Pair unwavering physical boundaries with unconditional emotional warmth.`,
+      };
+
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
+          lesson: rawMarkdownLesson,
           moduleSlug: 'behavior-tween-adrenarche',
           moduleTitle: 'Tween Adrenarche & Emotional Volatility',
         })
       );
 
-      expect(html).toContain('Complete Lesson &amp; Continue');
+      // Verify raw markdown is compiled and not displayed raw
+      expect(html).not.toContain('####');
+      expect(html).not.toContain('**Notice');
+      expect(html).toContain('Recommended Action Protocol');
+      expect(html).toContain('<strong class="font-bold text-slate-900">Notice the Physical Baseline:</strong>');
+      expect(html).toContain('<strong class="font-bold text-slate-900">De-escalate Before Reasoning:</strong>');
+      expect(html).toContain('<strong class="font-bold text-slate-900">Establish Clear, Calm Boundaries:</strong>');
+      expect(html).toContain('<ol class="list-decimal');
     });
   });
 });
