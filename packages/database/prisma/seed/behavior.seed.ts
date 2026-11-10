@@ -11,20 +11,33 @@ export interface BehaviorGuideSeedData {
 }
 
 export const BEHAVIOR_GUIDES_SEED: BehaviorGuideSeedData[] = [
-  // TIER 0: INFANCY & TODDLER (0-3)
+  // TIER 0A: INFANCY (0-1)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
-    slug: 'toddler-grocery-store-meltdown',
-    triggerSituation: 'Explosive tantrum in the supermarket checkout aisle over a forbidden candy or toy.',
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+    slug: 'infant-purple-crying-soothing',
+    triggerSituation: 'Inconsolable evening crying spell (Period of PURPLE Crying) where infant cries for 1-2 hours despite being fed, changed, and held.',
     underlyingNeed:
-      'HALT vulnerability (Hungry, Anxious, Lonely, or Tired) combined with sensory overload and an immature prefrontal cortex unable to modulate acute disappointment.',
+      'Autonomic nervous system overload and neurodevelopmental developmental transition; baby is not in pain or rejecting parent, but experiencing physiological evening discharge.',
     coRegulationScript:
-      '"You really, really wanted that candy. It looks sweet and colorful, and it is so hard to hear no when you want something right now. I hear you, sweetie. I am right here with you."',
+      '"I am right here with you, little one. You are safe in my arms. Your body feels loud and stormy, but my heart is beating calm and steady for you."',
     authoritativeLimit:
-      'Gently place a protective hand on child shoulder or hold them calmly in your arms. "We are not buying the candy today. It is okay to be mad and cry. I will hold you while you let that out."',
+      'Hold baby securely against your bare chest (skin-to-skin) or in a supportive baby wrap. Lower lights, eliminate background screens, and hum in a deep, rhythmic frequency. If overwhelmed: gently place baby safely in crib on their back and take 2 minutes to reset.',
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+    slug: 'infant-sensory-overload-containment',
+    triggerSituation: 'Infant arches back, turns head away repeatedly from faces, flails limbs, and fusses during family gatherings or bright environments.',
+    underlyingNeed:
+      'Sensory saturation and gaze aversion; nascent thalamus and visual cortex cannot filter excessive social stimuli or ambient noise.',
+    coRegulationScript:
+      '"It is too loud and bright right now, sweetheart. I see you turning away. Let us step into the quiet dark together."',
+    authoritativeLimit:
+      'Immediately remove infant to a quiet, dimly lit room. Wrap snugly in a light swaddle or swaddle blanket, hold firmly upright against caregiver shoulder, and offer quiet white noise until autonomic indicators settle.',
+  },
+
+  // TIER 0B: TODDLER (1-2)
+  {
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     slug: 'toddler-hitting-or-biting-frustration',
     triggerSituation: 'Child hits, bites, or throws a toy when an adult or playmate takes something away.',
     underlyingNeed:
@@ -33,6 +46,19 @@ export const BEHAVIOR_GUIDES_SEED: BehaviorGuideSeedData[] = [
       '"You were so mad when that toy was taken! Your body felt like exploding. It is okay to feel furious."',
     authoritativeLimit:
       'Gently but firmly hold child hands down: "I will not let you hit or bite. Hitting hurts. You can stomp your feet or squeeze my hands tight, but hitting stops now."',
+  },
+
+  // TIER 0C: OLDER TODDLER (2-3)
+  {
+    targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+    slug: 'toddler-grocery-store-meltdown',
+    triggerSituation: 'Explosive tantrum in the supermarket checkout aisle over a forbidden candy or toy.',
+    underlyingNeed:
+      'HALT vulnerability (Hungry, Anxious, Lonely, or Tired) combined with sensory overload and an immature prefrontal cortex unable to modulate acute disappointment.',
+    coRegulationScript:
+      '"You really, really wanted that candy. It looks sweet and colorful, and it is so hard to hear no when you want something right now. I hear you, sweetie. I am right here with you."',
+    authoritativeLimit:
+      'Gently place a protective hand on child shoulder or hold them calmly in your arms. "We are not buying the candy today. It is okay to be mad and cry. I will hold you while you let that out."',
   },
 
   // TIER 1: EARLY CHILDHOOD (4-6)

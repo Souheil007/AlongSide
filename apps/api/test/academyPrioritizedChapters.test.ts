@@ -85,8 +85,8 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
         expect(cat.title.length).toBeGreaterThan(0);
         expect(cat.description).toBeDefined();
         expect(cat.description.length).toBeGreaterThan(0);
-        expect(cat.moduleCount).toBe(6);
-        expect(cat.lessonCount).toBe(18);
+        expect(cat.moduleCount).toBe(8);
+        expect(cat.lessonCount).toBe(32);
       }
     });
 
@@ -117,17 +117,40 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
         (acc: number, cat: any) => acc + cat.moduleCount,
         0
       );
-      expect(totalModules).toBe(5);
+      expect(totalModules).toBe(15);
 
       const behavior = payload.data.categories.find(
         (c: any) => c.category === AcademyCategory.BEHAVIOR_AND_EMOTIONS
       );
-      expect(behavior?.moduleCount).toBe(1);
+      expect(behavior?.moduleCount).toBe(3);
 
       const digital = payload.data.categories.find(
         (c: any) => c.category === AcademyCategory.DIGITAL_AND_DEVICES
       );
-      expect(digital?.moduleCount).toBe(1);
+      expect(digital?.moduleCount).toBe(3);
+    });
+
+    it('filters category course counts by decomposed tier (TIER_0A_INFANCY_0_1)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/categories?tier=TIER_0A_INFANCY_0_1',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.categories).toHaveLength(5);
+
+      const totalModules = payload.data.categories.reduce(
+        (acc: number, cat: any) => acc + cat.moduleCount,
+        0
+      );
+      expect(totalModules).toBe(5);
+
+      for (const cat of payload.data.categories) {
+        expect(cat.moduleCount).toBe(1);
+        expect(cat.lessonCount).toBe(4);
+      }
     });
   });
 
@@ -141,18 +164,18 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.modules.length).toBe(6);
+      expect(payload.data.modules.length).toBe(8);
 
       for (const mod of payload.data.modules) {
         expect(mod.category).toBe(AcademyCategory.BEHAVIOR_AND_EMOTIONS);
-        expect(mod.lessonCount).toBe(3);
+        expect(mod.lessonCount).toBe(4);
       }
     });
 
     it('filters courses by both category and developmental tier', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: '/api/v1/academy/modules?category=HEALTH_AND_WELLNESS&tier=TIER_0_INFANCY_TODDLER_0_3',
+        url: '/api/v1/academy/modules?category=HEALTH_AND_WELLNESS&tier=TIER_0A_INFANCY_0_1',
       });
 
       expect(response.statusCode).toBe(200);
@@ -163,12 +186,12 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       const mod = payload.data.modules[0];
       expect(mod.slug).toBe('health-infant-sleep-foundations');
       expect(mod.category).toBe(AcademyCategory.HEALTH_AND_WELLNESS);
-      expect(mod.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
-      expect(mod.title).toContain('Infant Health Foundations');
-      expect(mod.lessonCount).toBe(3);
+      expect(mod.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
+      expect(mod.title).toContain('Infant Sleep');
+      expect(mod.lessonCount).toBe(4);
     });
 
-    it('returns all 30 courses when no filter is provided (backward compatibility)', async () => {
+    it('returns all 40 courses when no filter is provided (backward compatibility)', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/academy/modules',
@@ -177,7 +200,7 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       expect(response.statusCode).toBe(200);
       const payload = response.json();
       expect(payload.success).toBe(true);
-      expect(payload.data.modules.length).toBe(30);
+      expect(payload.data.modules.length).toBe(40);
     });
 
     it('rejects invalid category query parameter with 400 Validation Error', async () => {
@@ -212,19 +235,19 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
 
       // Verify strict priority ascending order: 1 -> 2 -> 3
       expect(mod.chapters[0].priority).toBe(ChapterPriority.PRIORITY_1_CRITICAL);
-      expect(mod.chapters[0].title).toContain('Safe Early Allergen Exposure');
+      expect(mod.chapters[0].title).toContain('Critical Win');
       expect(mod.chapters[0].lessons).toHaveLength(1);
 
       expect(mod.chapters[1].priority).toBe(ChapterPriority.PRIORITY_2_ROUTINES);
-      expect(mod.chapters[1].title).toContain('Baby-Led Weaning vs Purées');
-      expect(mod.chapters[1].lessons).toHaveLength(1);
+      expect(mod.chapters[1].title).toContain('Biological Root & Routines');
+      expect(mod.chapters[1].lessons).toHaveLength(2);
 
       expect(mod.chapters[2].priority).toBe(ChapterPriority.PRIORITY_3_SCAFFOLDING);
-      expect(mod.chapters[2].title).toContain('Toddler Food Strikes');
+      expect(mod.chapters[2].title).toContain('Scaffolding & Long-Term Repair');
       expect(mod.chapters[2].lessons).toHaveLength(1);
 
       // Backward compatibility: verify flat lessons array also exists
-      expect(mod.lessons).toHaveLength(3);
+      expect(mod.lessons).toHaveLength(4);
     });
 
     it('ensures lesson content includes clinical insights and What to Say script blocks', async () => {
@@ -240,7 +263,7 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       const lesson = payload.data.lesson;
       expect(lesson.title).toContain('The Critical 4-11 Month Window');
       expect(lesson.contentMarkdown).toContain('> **Clinical Insight:**');
-      expect(lesson.contentMarkdown).toContain('**What to Say:** "');
+      expect(lesson.contentMarkdown).toContain('What to Say');
       expect(lesson.module).toBeDefined();
       expect(lesson.module.category).toBe(AcademyCategory.NUTRITION_AND_FEEDING);
       expect(lesson.chapter).toBeDefined();
@@ -263,7 +286,7 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
   describe('Tenant Isolation & Progress Tracking with Prioritized Chapters', () => {
     it('completing a lesson updates both chapter and module completion statistics', async () => {
       const lessonId =
-        'les-play-preschool-executive-function-fast-media-vs-deep-play';
+        'les-play-preschool-executive-function-preschool-freeze-dance-inhibitory-control';
 
       // Verify User A initial state
       const beforeRes = await app.inject({

@@ -13,10 +13,10 @@ export interface MilestoneSeedData {
 }
 
 export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
-  // TIER 0: INFANCY & TODDLER (0-3 Years / 0-36 Months)
+  // TIER 0A: INFANCY (0-1 Years / 0-12 Months)
   // 2 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 2,
     category: MilestoneCategory.SOCIAL_EMOTIONAL,
     title: 'Social Smile',
@@ -26,7 +26,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 1,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 2,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Tummy Time Head Lift',
@@ -36,7 +36,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 2,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 2,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'Coos and Gurgles',
@@ -47,7 +47,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
   },
   // 4 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 4,
     category: MilestoneCategory.SOCIAL_EMOTIONAL,
     title: 'Spontaneous Chuckling & Smiling',
@@ -57,7 +57,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 4,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 4,
     category: MilestoneCategory.FINE_MOTOR,
     title: 'Hands to Mouth & Toy Grasp',
@@ -67,7 +67,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 5,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 4,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Steady Head Control',
@@ -78,7 +78,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
   },
   // 6 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 6,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Tripod Sitting & Rolling',
@@ -88,7 +88,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 7,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 6,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'Babbling Consonants (Ba-ba, Da-da)',
@@ -98,7 +98,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 8,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 6,
     category: MilestoneCategory.COGNITIVE,
     title: 'Object Transfer & Curious Exploration',
@@ -109,7 +109,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
   },
   // 9 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 9,
     category: MilestoneCategory.SOCIAL_EMOTIONAL,
     title: 'Stranger Wariness & Attachment',
@@ -119,7 +119,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 10,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 9,
     category: MilestoneCategory.FINE_MOTOR,
     title: 'Pincer Grasp Development',
@@ -129,7 +129,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 11,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 9,
     category: MilestoneCategory.COGNITIVE,
     title: 'Object Permanence & Peek-a-Boo',
@@ -140,7 +140,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
   },
   // 12 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 12,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Cruising & Independent Standing',
@@ -150,7 +150,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 13,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 12,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'First Meaningful Words & Waving',
@@ -160,7 +160,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 14,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
     targetAgeMonths: 12,
     category: MilestoneCategory.COGNITIVE,
     title: 'Functional Object Use',
@@ -169,9 +169,10 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     clinicalAuthority: 'CDC / AAP Bright Futures',
     sortOrder: 15,
   },
+  // TIER 0B: TODDLER (1-2 Years / 12-24 Months)
   // 18 Months
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 18,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Independent Walking & Climbing',
@@ -181,7 +182,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 16,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 18,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'Word Spurt (10+ Words & Pointing)',
@@ -191,7 +192,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 17,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 18,
     category: MilestoneCategory.SOCIAL_EMOTIONAL,
     title: 'Simple Pretend Play',
@@ -202,7 +203,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
   },
   // 24 Months (2 Years)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 24,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'Two-Word Phrases (More milk, Big truck)',
@@ -212,7 +213,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 19,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 24,
     category: MilestoneCategory.GROSS_MOTOR,
     title: 'Running & Kicking a Ball',
@@ -222,7 +223,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 20,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
     targetAgeMonths: 24,
     category: MilestoneCategory.COGNITIVE,
     title: 'Two-Step Directions & Sorting',
@@ -231,9 +232,10 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     clinicalAuthority: 'CDC / AAP Bright Futures',
     sortOrder: 21,
   },
+  // TIER 0C: OLDER TODDLER (2-3 Years / 24-36 Months)
   // 36 Months (3 Years)
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
     targetAgeMonths: 36,
     category: MilestoneCategory.SPEECH_LANGUAGE,
     title: 'Conversational Turn-Taking (3+ Word Sentences)',
@@ -243,7 +245,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 22,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
     targetAgeMonths: 36,
     category: MilestoneCategory.SOCIAL_EMOTIONAL,
     title: 'Parallel to Cooperative Play & Emotion Recognition',
@@ -253,7 +255,7 @@ export const MILESTONES_SEED_DATA: MilestoneSeedData[] = [
     sortOrder: 23,
   },
   {
-    targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+    targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
     targetAgeMonths: 36,
     category: MilestoneCategory.FINE_MOTOR,
     title: 'Draws a Circle & Uses Child Scissors',

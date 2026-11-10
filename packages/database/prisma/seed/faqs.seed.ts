@@ -29,7 +29,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "When is a fever considered a true medical emergency in an infant under 3 months?",
         "answerMarkdown": "In infants under 90 days (and especially neonates under 28 days), a rectal temperature of 100.4°F (38.0°C) or higher is an acute medical emergency requiring immediate evaluation in an Emergency Department. Immature neonatal blood-brain barriers and nascent immune systems carry high risks of invasive bacterial infections (GBS, Listeria, E. coli). Do not administer fever medication prior to emergency evaluation.",
         "deEscalationScript": "\"Take a deep breath. Because baby is under 3 months old, hospital protocol requires immediate in-person evaluation by a pediatric team. We are going to pack a diaper bag and head to the nearest pediatric emergency room right now. You are doing the right thing by getting them checked.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -37,7 +37,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What is the Barton Schmitt 3-zone model for pediatric fever and respiratory triage?",
         "answerMarkdown": "The Barton Schmitt protocol categorizes symptoms into Red Zone (immediate 911/ER evaluation: retractions, cyanosis, infant fever <90d, lethargy), Yellow Zone (same-day pediatrician appointment within 24h: persistent fever >72h, ear pain, moderate dehydration), and Green Zone (supportive home care: hydration, weight-based antipyretics, comfort measures).",
         "deEscalationScript": "\"Right now, your child is in the Green Zone: alert, hydrated, and consolable between fever peaks. Our goal is child comfort, not forcing the thermometer to 98.6°F. Let's offer sips of fluids and keep them in breathable clothing.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -45,7 +45,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "How do I identify inward chest retractions and severe respiratory distress in a toddler?",
         "answerMarkdown": "Inward chest retractions occur when a child uses accessory neck, chest, and abdominal muscles to breathe. Look for the skin pulling tightly between the ribs (intercostal), beneath the rib cage (subcostal), or at the base of the throat (suprasternal notch) with each breath. If accompanied by rhythmic grunting, nasal flaring, or pale/blue lips, call 911 immediately.",
         "deEscalationScript": "\"Look closely at your toddler's bare chest. If you see the skin sucking deeply beneath their ribcage with every single breath, do not wait. That is respiratory distress. Call 911 or head to the pediatric ER right away.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -53,7 +53,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What is croup and how can I distinguish a barking seal cough from an airway emergency?",
         "answerMarkdown": "Croup (laryngotracheobronchitis) typically causes a harsh, barking seal-like cough and hoarseness due to subglottic airway swelling. Green/Yellow zone croup responds well to 15 minutes of cool night mist or a steamy bathroom. If stridor (high-pitched crowing sound) occurs while the child is resting quietly, or if you observe retractions, immediate medical care or oral dexamethasone is required.",
         "deEscalationScript": "\"Croup sounds frightening because of the barking noise, but staying calm keeps their airway relaxed. Let's sit in the bathroom with the hot shower running steam for 10 minutes, or wrap them in a blanket and step out into the cool night air.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -75,28 +75,28 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What should I do during a pediatric febrile seizure?",
         "answerMarkdown": "Febrile seizures occur in 2–5% of young children when body temperature rises rapidly. While terrifying to witness, simple febrile seizures (lasting <15 minutes without focal symptoms) do not cause brain damage or cognitive disability. Place the child on their side on a soft surface, keep their airway clear, never place anything in their mouth, time the seizure, and seek urgent medical evaluation.",
         "deEscalationScript": "\"Stay by their side and place them gently on their side so they can breathe freely. Do not hold them down and do not put anything in their mouth. Look at the clock to time the seizure, and call 911 if it lasts longer than 5 minutes.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "How can I tell if my vomiting child is becoming dehydrated?",
         "answerMarkdown": "Mild dehydration (3-5% deficit) presents with normal tears and slightly decreased urine. Moderate-to-severe dehydration (Yellow to Red zone) shows dry, tacky tongue and cracked lips, no wet diaper or urination in 8+ hours, deeply sunken eyes with zero tears when crying, a sunken fontanelle in infants, and extreme lethargy. Use the teaspoon method with Oral Rehydration Salts (5 mL Pedialyte every 5 minutes).",
         "deEscalationScript": "\"Do not give large cups of water or juice; that triggers stomach spasms. Use a medicine syringe to give just one teaspoon (5 mL) of Pedialyte every 5 minutes. If no vomiting occurs after 30 minutes, increase to two teaspoons.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "What causes the 4-month infant sleep regression?",
         "answerMarkdown": "At around 4 months, infant neurological architecture permanently transitions from newborn 2-stage sleep to adult-like 4-stage cyclical sleep. Infants begin waking fully at the end of each 45-minute cycle. If they relied on rocking or feeding to initiate sleep, they cannot self-soothe back to sleep upon waking between cycles.",
         "deEscalationScript": "\"Your baby's brain is undergoing an incredible neurodevelopmental milestone. Their sleep cycles are maturing. Try putting them down drowsy but awake, allowing their nervous system to practice linking sleep cycles independently.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "How do I handle middle-of-the-night teething panics in a 14-month-old?",
         "answerMarkdown": "Teething causes mild gum soreness, low-grade temperature elevations (<101°F), and increased salivation, but does not cause high fevers (>101°F), diarrhea, or systemic lethargy. Offer chilled (not frozen) silicone teething rings, a cool damp washcloth for counter-pressure, and weight-based acetaminophen if discomfort prevents rest.",
         "deEscalationScript": "\"Teething pain feels acute in the dark of night. Let's offer a chilled washcloth for them to chew on and keep the room dim and calm. Reassure them with your steady presence without turning on harsh overhead lights.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -125,7 +125,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What are the clinical indicators for tympanostomy ear tubes in young children?",
         "answerMarkdown": "Clinical guidelines recommend ear tube consideration if a child experiences 3 episodes of acute otitis media in 6 months, 4 episodes in 12 months, or persistent bilateral middle ear fluid (effusion) lasting >3 months with associated speech or hearing delays. Ear tubes restore ventilation and prevent speech delays.",
         "deEscalationScript": "\"If ear infections are recurring every few weeks and affecting speech development, ask your pediatrician for an ENT referral. Ear tubes are a 10-minute outpatient procedure that can provide tremendous relief.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -146,21 +146,21 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Why can honey never be given to an infant under 12 months of age?",
         "answerMarkdown": "Honey may contain spores of Clostridium botulinum bacteria. In an infant's immature gastrointestinal tract, these spores can germinate and produce botulinum neurotoxin, causing Infant Botulism (floppy infant syndrome, constipation, weak cry, respiratory arrest). Honey is strictly contraindicated prior to the first birthday.",
         "deEscalationScript": "\"Honey is strictly forbidden for infants under 1 year due to botulism spores. For infant nasal congestion, use sterile saline drops and a gentle nasal aspirator instead.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "How do I manage Hand, Foot, and Mouth Disease (HFMD) blisters and pain?",
         "answerMarkdown": "HFMD caused by Coxsackievirus causes painful vesicular sores in the mouth and blisters on palms and soles. The primary danger is dehydration from refusing to swallow fluids due to oral pain. Provide cold foods (fruit popsicles, cold milk, smooth yogurt) and weight-based ibuprofen/acetaminophen. Avoid acidic citrus or salty foods.",
         "deEscalationScript": "\"Those mouth ulcers make swallowing feel like swallowing glass. Focus entirely on cold, soothing fluids: frozen fruit popsicles, cold smoothies, and ice chips. Keep pain medication consistent so they stay hydrated.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "When should a head bump in a toddler be evaluated in the Emergency Room?",
         "answerMarkdown": "Apply the PECARN pediatric head trauma rule. Immediate ER evaluation is required if: loss of consciousness >5 seconds, vomiting >2 times, severe escalating headache, acting abnormally or lethargic, fall from >3 feet, or a soft boggy scalp hematoma in infants. Minor forehead goose-eggs that ice down in alert, smiling toddlers can be monitored at home.",
         "deEscalationScript": "\"If your toddler cried immediately, is making direct eye contact, smiling, and returned to playing within 15 minutes, apply a cold pack. Watch them closely for the next 24 hours for repetitive vomiting or unusual drowsiness.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -174,7 +174,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #21: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #21. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -188,7 +188,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #23: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #23. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -202,7 +202,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #25: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #25. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -216,7 +216,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #27: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #27. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -230,7 +230,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #29: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #29. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -244,7 +244,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #31: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #31. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -258,7 +258,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #33: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #33. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -272,7 +272,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #35: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #35. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -286,7 +286,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #37: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #37. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -300,7 +300,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #39: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #39. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -314,7 +314,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #41: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #41. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -328,7 +328,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #43: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #43. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -342,7 +342,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #45: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #45. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -356,7 +356,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #47: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #47. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -370,7 +370,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #49: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #49. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -384,7 +384,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #51: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #51. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -398,7 +398,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #53: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #53. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -412,7 +412,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Pediatric Health Clinical Guideline Scenario #55: Managing common childhood ailments safely",
         "answerMarkdown": "Clinical triage standard for pediatric condition #55. Always prioritize child airway, breathing, circulation, and hydration status according to Barton Schmitt protocols. Document temperature readings, symptom onset times, and medication administration in the Alongside health log.",
         "deEscalationScript": "\"We are observing their symptoms carefully and following clinical triage steps. If anything changes or you notice increased distress, we will consult your pediatrician immediately.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       }
     ]
@@ -427,7 +427,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "When is a baby developmentally ready to start solid foods?",
         "answerMarkdown": "Signs of developmental readiness typically converge around 6 months: sitting upright with minimal support, holding head steady, losing the tongue-thrust (extrusion) reflex that automatically pushes food out, and bringing objects or hands accurately to the mouth with curiosity.",
         "deEscalationScript": "\"Do not rush the calendar date. Wait until baby sits upright stably in their high chair and reaches for food with curiosity. Starting around 6 months protects their developing digestive tract and makes feeding enjoyable.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -435,7 +435,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What is Baby-Led Weaning (BLW) and how does it compare to purees?",
         "answerMarkdown": "Baby-Led Weaning encourages self-feeding with whole, graspable pieces of soft food from 6 months onward, bypassing spoon-fed purees. BLW promotes oral motor coordination, pincer grasp, and appetite self-regulation. Research shows choking rates in BLW are identical to traditional spoon-feeding when safe preparation rules are observed.",
         "deEscalationScript": "\"Offer soft, finger-length spears (like steamed sweet potato or avocado) that your baby can hold in their fist. Let them explore the textures at their own pace without spoon-forcing.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -443,7 +443,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "How do I tell the difference between normal infant gagging and true choking?",
         "answerMarkdown": "Gagging is a protective neurological reflex with a forward-placed trigger in infants: the baby turns red, makes coughing/retching noises, and pushes food forward with their tongue. True choking is SILENT: the airway is blocked, the baby cannot vocalize or cough, and may turn pale or blue. Remember: \"Loud and red, let them shed. Silent and blue, 911 is due.\"",
         "deEscalationScript": "\"Gagging looks scary, but it is your baby's natural safety mechanism pushing food out of danger. Stay calm, smile encouragingly, and resist the urge to stick your finger in their mouth, which can push food further back.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -451,7 +451,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "How should I introduce peanut allergen to prevent childhood peanut allergy?",
         "answerMarkdown": "The landmark LEAP (Learning Early About Peanut) trial proved that early introduction of peanut protein between 4 and 6 months reduces peanut allergy by over 80%. Never offer whole peanuts or thick spoonfuls of peanut butter (choking hazards). Mix 2 teaspoons of smooth peanut butter with warm water or breastmilk into a thin puree, or use peanut powder/puffs.",
         "deEscalationScript": "\"Mix a small dab of smooth peanut butter with warm breastmilk or applesauce on a weekday morning when you can observe them for 2 hours. Early and consistent exposure builds immune tolerance.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -489,14 +489,14 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What foods are top choking hazards to avoid or modify before age 4?",
         "answerMarkdown": "Round, firm, slippery foods that match the diameter of a young child's trachea (approx. size of a drinking straw) are high choking hazards: whole grapes (must be quartered lengthwise), hot dogs (must be sliced lengthwise into sticks), whole nuts, hard raw carrots, popcorn, and spoonfuls of sticky peanut butter.",
         "deEscalationScript": "\"Let's slice these grapes into long quarters together! Slicing them makes them safe for your airway while your teeth learn how to chew thoroughly.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "Why does my 18-month-old toddler suddenly eat almost nothing compared to infancy?",
         "answerMarkdown": "Between birth and age 1, infants triple their birth weight. After age 1, growth velocity sharply decelerates to 4-5 lbs per year. A toddler's metabolic caloric requirement plummets accordingly. Appetite naturally fluctuates wildly based on daily growth spurts.",
         "deEscalationScript": "\"Toddler appetites are like rollercoasters—some days they eat three bowls of pasta, and some days they live on air and two blueberries. Look at their intake across an entire week rather than a single meal.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -791,7 +791,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "What should I do if my 18-month-old is not yet speaking words?",
         "answerMarkdown": "By 18 months, CDC and AAP milestones expect at least 10–20 words and consistent non-verbal gestures (pointing, waving, bringing objects to show you). If expressive words are absent, evaluate receptive language (do they understand and follow simple commands?) and schedule a free state Early Intervention developmental screening.",
         "deEscalationScript": "\"Early Intervention is a wonderful, playful support system, not a diagnosis. Requesting an evaluation today gives your toddler tools to communicate before frustration turns into tantrums.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -799,7 +799,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "When is a baby expected to walk independently, and when should I worry?",
         "answerMarkdown": "The normal window for independent walking is wide: anywhere between 9 and 18 months. Walking requires gross motor coordination, core strength, vestibular balance, and temperament. If a child is not walking unassisted by 18 months, or exhibits persistent asymmetry, consult your pediatrician.",
         "deEscalationScript": "\"There is a 9-month window of normal for walking. If they are cruising furniture and standing upright with confidence, their gross motor neural pathways are firing right on schedule.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -807,14 +807,14 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "How do speech bursts and language explosions happen around age 2?",
         "answerMarkdown": "Around 20–24 months, many toddlers experience a sudden vocabulary explosion, jumping from 20 words to over 100 words and pairing two words together (\"more milk\", \"car go\"). This reflects rapid synaptic myelination in the left cerebral hemisphere and Broca's speech area.",
         "deEscalationScript": "\"Narrate your daily routines out loud like a sports commentator: 'I am pouring the milk into the blue cup.' Hearing rich natural language is the greatest catalyst for speech bursts.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
         "question": "What is object permanence and why does it trigger 8-month separation anxiety?",
         "answerMarkdown": "Object permanence is the cognitive realization (around 6–8 months) that people and objects continue to exist even when out of sight. Because baby now understands parent exists elsewhere when they walk away, but lacks time perception to know when you will return, intense separation anxiety peaks.",
         "deEscalationScript": "\"Play peek-a-boo and hide-and-seek with blankets! It teaches their brain that what disappears always returns with joy, easing their separation panic.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -828,7 +828,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #6: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #6. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -849,7 +849,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #9: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #9. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -870,7 +870,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #12: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #12. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -891,7 +891,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #15: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #15. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -912,7 +912,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #18: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #18. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -933,7 +933,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #21: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #21. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -954,7 +954,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #24: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #24. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -975,7 +975,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #27: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #27. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -996,7 +996,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #30: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #30. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1017,7 +1017,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #33: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #33. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1038,7 +1038,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #36: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #36. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1059,7 +1059,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #39: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #39. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1080,7 +1080,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #42: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #42. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1101,7 +1101,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #45: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #45. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1122,7 +1122,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Developmental Growth & Milestone Scenario #48: Tracking child physical and cognitive milestones",
         "answerMarkdown": "Evidence-based developmental guideline for milestone #48. Growth occurs in dynamic spurts across gross motor, fine motor, speech, and social-emotional domains. Celebrate progress over perfection.",
         "deEscalationScript": "\"Every child follows their own unique developmental timeline. Notice the small steps forward they make every week.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE
       },
       {
@@ -1151,7 +1151,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "Why do time-outs fail during acute emotional meltdowns, and what is a \"time-in\"?",
         "answerMarkdown": "During a full meltdown, the child's amygdala is in acute fight-or-flight while their immature prefrontal cortex goes completely offline. Isolating a dysregulated child in a time-out activates evolutionary panic (fear of abandonment). A \"time-in\" provides calm parental presence: staying close, co-regulating their breathing, and offering safety until the storm passes.",
         "deEscalationScript": "\"I can see how huge your anger feels right now. It is too big for your body to hold alone. I am sitting right here with you until you feel calm. You are safe.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },
@@ -1159,7 +1159,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
         "question": "How do I stop my toddler from hitting when they are angry without yelling?",
         "answerMarkdown": "Physical aggression in toddlers is an impulse-control issue, not a moral defect. The developing brain cannot suppress motor action when flooded with big emotion. Block the hand physically with gentle firmness, validate the feeling, and state the immovable boundary: \"I won't let you hit. You are angry.\"",
         "deEscalationScript": "\"(Holding their wrists gently) I won't let you hit. Hitting hurts. You are very mad that it was time to leave the park. You can stomp your feet or squeeze my hands hard, but I will keep us safe.\"",
-        targetTier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE,
         "isFeatured": true
       },

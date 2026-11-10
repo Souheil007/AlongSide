@@ -48,6 +48,9 @@ const categoryEnum = [
 ];
 
 const tierEnum = [
+  'TIER_0A_INFANCY_0_1',
+  'TIER_0B_TODDLER_1_2',
+  'TIER_0C_OLDER_TODDLER_2_3',
   'TIER_0_INFANCY_TODDLER_0_3',
   'TIER_1_EARLY_CHILDHOOD_4_6',
   'TIER_2_MIDDLE_CHILDHOOD_7_9',
@@ -80,6 +83,8 @@ const academyModuleDtoSchema = {
     slug: { type: 'string' },
     title: { type: 'string' },
     summary: { type: 'string' },
+    reliefSubtitle: { type: ['string', 'null'] },
+    tonightQuickWinTitle: { type: ['string', 'null'] },
     coverImageUrl: { type: ['string', 'null'] },
     developmentalTier: {
       type: 'string',
@@ -115,6 +120,10 @@ const academyLessonSummarySchema = {
     readingMinutes: { type: 'number' },
     sortOrder: { type: 'number' },
     isCompleted: { type: 'boolean' },
+    audioUrl: { type: ['string', 'null'] },
+    audioDurationSeconds: { type: ['number', 'null'] },
+    whatNotToSay: { type: ['string', 'null'] },
+    deliveryTip: { type: ['string', 'null'] },
   },
   required: [
     'id',
@@ -188,6 +197,10 @@ const academyLessonDtoSchema = {
     readingMinutes: { type: 'number' },
     sortOrder: { type: 'number' },
     isCompleted: { type: 'boolean' },
+    audioUrl: { type: ['string', 'null'] },
+    audioDurationSeconds: { type: ['number', 'null'] },
+    whatNotToSay: { type: ['string', 'null'] },
+    deliveryTip: { type: ['string', 'null'] },
     module: {
       type: 'object',
       properties: {

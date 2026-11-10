@@ -8,6 +8,7 @@ import type {
   DevicePlatform,
   DeviceProfileStatus,
   DietaryStage,
+  EarlyChildhoodTranche,
   ExploitSeverity,
   MessageRole,
   MilestoneCategory,
@@ -22,6 +23,8 @@ import type {
   NutritionStage,
   AntipyreticMedication,
 } from '../constants/index.js';
+
+export type { EarlyChildhoodTranche };
 
 export interface ApiResponse<T> {
   success: true;
@@ -69,6 +72,7 @@ export interface ChildDTO {
   birthDate?: string | null;
   age: number;
   ageMonths?: number | null;
+  earlyChildhoodTranche?: EarlyChildhoodTranche | null;
   roadType: RoadType;
   developmentalTier: DevelopmentalTier;
   dietaryStage?: DietaryStage | string | null;
@@ -247,6 +251,8 @@ export interface AcademyModuleDTO {
   slug: string;
   title: string;
   summary: string;
+  reliefSubtitle?: string;
+  tonightQuickWinTitle?: string;
   coverImageUrl?: string | null;
   developmentalTier: DevelopmentalTier;
   sortOrder: number;
@@ -264,6 +270,10 @@ export interface AcademyLessonSummaryDTO {
   readingMinutes: number;
   sortOrder: number;
   isCompleted: boolean;
+  audioUrl?: string;
+  audioDurationSeconds?: number;
+  whatNotToSay?: string;
+  deliveryTip?: string;
 }
 
 export interface AcademyLessonDTO {
@@ -276,6 +286,10 @@ export interface AcademyLessonDTO {
   readingMinutes: number;
   sortOrder: number;
   isCompleted: boolean;
+  audioUrl?: string;
+  audioDurationSeconds?: number;
+  whatNotToSay?: string;
+  deliveryTip?: string;
   module?: {
     id: string;
     slug: string;

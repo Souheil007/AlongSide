@@ -30,7 +30,10 @@ enum RoadType {
 }
 
 enum DevelopmentalTier {
-  TIER_0_INFANCY_TODDLER_0_3   // Ages 0–3: Teething, First Words, Motor, BLW, Puppets
+  TIER_0A_INFANCY_0_1          // Ages 0–1 / 0–12m: Somatic Regulation, Sleep Architecture & Feeding Foundations
+  TIER_0B_TODDLER_1_2          // Ages 1–2 / 12–24m: Locomotion, First Words & Amygdala Co-Regulation
+  TIER_0C_OLDER_TODDLER_2_3    // Ages 2–3 / 24–36m: Autonomy, Language Burst, Boundary Testing & Potty Learning
+  TIER_0_INFANCY_TODDLER_0_3   // Preserved for backward compatibility (Ages 0–3)
   TIER_1_EARLY_CHILDHOOD_4_6   // Ages 4–6: Preschool, Theory of Mind, Blocks, Picky Eating
   TIER_2_MIDDLE_CHILDHOOD_7_9  // Ages 7–9: Elementary, Logic Puzzles, Sports, Sleep
   TIER_3_PRE_TEEN_10_12        // Ages 10–12: Adrenarche, Device Readiness, Slang, Peers
@@ -380,6 +383,8 @@ model AcademyModule {
   slug               String             @unique
   title              String
   summary            String
+  reliefSubtitle     String?
+  tonightQuickWinTitle String?
   coverImageUrl      String?
   sortOrder          Int                @default(0)
   createdAt          DateTime           @default(now())
@@ -421,6 +426,10 @@ model AcademyLesson {
   contentMarkdown    String
   readingMinutes     Int                @default(4)
   sortOrder          Int                @default(0)
+  audioUrl           String?
+  audioDurationSeconds Int?
+  whatNotToSay       String?
+  deliveryTip        String?
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 

@@ -60,10 +60,35 @@ describe('Brain Games & Purposeful Play API (PLAN-16)', () => {
       expect(payload.success).toBe(true);
       expect(payload.data.activities.length).toBeGreaterThan(0);
 
+      const earlyChildhoodTiers = [
+        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+      ];
       const allMatchTier = payload.data.activities.every(
-        (a: any) => a.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        (a: any) => earlyChildhoodTiers.includes(a.targetTier)
       );
       expect(allMatchTier).toBe(true);
+    });
+
+    it('filters brain games by decomposed tier (TIER_0A_INFANCY_0_1)', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: `/api/v1/brain-games?tier=${DevelopmentalTier.TIER_0A_INFANCY_0_1}`,
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.activities.length).toBeGreaterThan(0);
+      expect(
+        payload.data.activities.every(
+          (a: any) =>
+            a.targetTier === DevelopmentalTier.TIER_0A_INFANCY_0_1 ||
+            a.targetTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        )
+      ).toBe(true);
     });
 
     it('filters brain games by play category (e.g. PUPPET)', async () => {

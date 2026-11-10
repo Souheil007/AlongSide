@@ -10,6 +10,7 @@ import type {
   FaqItemDTO,
   RoadType,
 } from '@alongside/shared';
+import { getEquivalentTiers } from '@alongside/shared';
 
 export interface FaqFilterOptions {
   q?: string;
@@ -89,9 +90,13 @@ export class PrismaFaqRepository implements FaqRepository {
     }
 
     if (tier) {
+      const equivalents = getEquivalentTiers(tier);
+      const tierClauses = [...equivalents.map((t) => ({ targetTier: t })), { targetTier: null }];
       where.OR = where.OR
-        ? where.OR.map((clause: any) => ({ ...clause, targetTier: tier }))
-        : [{ targetTier: tier }, { targetTier: null }];
+        ? where.OR.flatMap((clause: any) =>
+            equivalents.map((t) => ({ ...clause, targetTier: t })).concat({ ...clause, targetTier: null })
+          )
+        : tierClauses;
     }
 
     if (road) {
@@ -182,7 +187,10 @@ export class PrismaFaqRepository implements FaqRepository {
       .filter((t) => t.length > 2);
 
     const where: any = {};
-    if (tier) where.targetTier = { in: [tier, null] };
+    if (tier) {
+      const equivalents = getEquivalentTiers(tier);
+      where.targetTier = { in: [...equivalents, null] };
+    }
     if (road) where.targetRoad = { in: [road, null] };
 
     const candidates = await this.prisma.faqItem.findMany({
@@ -293,7 +301,8 @@ export class InMemoryFaqRepository implements FaqRepository {
     }
 
     if (tier) {
-      results = results.filter((f) => f.targetTier === null || f.targetTier === tier);
+      const equivalents = new Set(getEquivalentTiers(tier));
+      results = results.filter((f) => !f.targetTier || equivalents.has(f.targetTier));
     }
 
     if (road) {
@@ -339,7 +348,8 @@ export class InMemoryFaqRepository implements FaqRepository {
 
     let candidates = [...this.faqs];
     if (tier) {
-      candidates = candidates.filter((f) => f.targetTier === null || f.targetTier === tier);
+      const equivalents = new Set(getEquivalentTiers(tier));
+      candidates = candidates.filter((f) => !f.targetTier || equivalents.has(f.targetTier));
     }
     if (road) {
       candidates = candidates.filter((f) => f.targetRoad === null || f.targetRoad === road);

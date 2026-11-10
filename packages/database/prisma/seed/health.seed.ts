@@ -20,6 +20,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Age-stratified fever triage protocol distinguishing benign immune response from potential neonatal sepsis or hyperpyrexia.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
       DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
@@ -62,6 +65,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Work of breathing (WOB) assessment identifying acute airway obstruction, intercostal retractions, and bronchiolitis.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
     ],
@@ -97,6 +103,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Acute subglottic swelling triage with distinctive seal-like barking cough and inspiratory stridor management.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
     ],
@@ -129,6 +138,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Guidance for unilateral ear pulling, nighttime crying, Eustachian tube dysfunction, and watchful waiting protocols.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
       DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
@@ -163,6 +175,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Fluid volume monitoring, oral rehydration therapy (ORT) protocols, and urine output thresholds for stomach illnesses.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
       DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
@@ -200,6 +215,9 @@ export const SYMPTOM_PROTOCOLS_SEED: SymptomProtocolSeedData[] = [
     summary:
       'Glass test / blanching assessment distinguishing benign viral exanthems from petechial purpura and anaphylaxis.',
     targetTiers: [
+      DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      DevelopmentalTier.TIER_0B_TODDLER_1_2,
+      DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
       DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
       DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
       DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,

@@ -161,14 +161,14 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
       expect(payload.data.child.developmentalTier).toBe('TIER_1_EARLY_CHILDHOOD_4_6');
     });
 
-    it('correctly assigns TIER_0_INFANCY_TODDLER_0_3 for infants (ages 0-3)', async () => {
+    it('correctly assigns TIER_0B_TODDLER_1_2 for toddlers (and computes ageMonths)', async () => {
       const response = await app.inject({
         method: 'POST',
         url: '/api/v1/children',
         headers: { cookie: userACookie },
         payload: {
           name: 'Noah',
-          birthYear: 2024,
+          birthYear: 2025,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
         },
@@ -176,7 +176,52 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
 
       expect(response.statusCode).toBe(201);
       const payload = response.json();
-      expect(payload.data.child.developmentalTier).toBe('TIER_0_INFANCY_TODDLER_0_3');
+      expect(payload.data.child.developmentalTier).toBe('TIER_0B_TODDLER_1_2');
+      expect(payload.data.child.ageMonths).toBeGreaterThan(11);
+      expect(payload.data.child.ageMonths).toBeLessThanOrEqual(24);
+      expect(payload.data.child.earlyChildhoodTranche).toBeDefined();
+    });
+
+    it('correctly assigns TIER_0A_INFANCY_0_1 for infants under 1 year', async () => {
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1;
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Baby Mia',
+          birthYear: currentYear,
+          birthMonth: currentMonth,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+
+      expect(response.statusCode).toBe(201);
+      const payload = response.json();
+      expect(payload.data.child.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
+      expect(payload.data.child.ageMonths).toBe(0);
+      expect(payload.data.child.earlyChildhoodTranche).toBe('INFANT_FOURTH_TRIMESTER_0_3M');
+    });
+
+    it('correctly assigns TIER_0C_OLDER_TODDLER_2_3 for older toddlers', async () => {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Liam',
+          birthYear: 2023,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+
+      expect(response.statusCode).toBe(201);
+      const payload = response.json();
+      expect(payload.data.child.developmentalTier).toBe('TIER_0C_OLDER_TODDLER_2_3');
+      expect(payload.data.child.ageMonths).toBeGreaterThan(24);
+      expect(payload.data.child.earlyChildhoodTranche).toBeDefined();
     });
 
     it('honors explicitly provided canonical lifespan developmentalTier', async () => {

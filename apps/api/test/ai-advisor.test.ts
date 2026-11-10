@@ -243,6 +243,40 @@ describe('24/7 AI Child Advisor & Multi-LLM Fallback Engine API (PLAN-10)', () =
       expect(contextEvent!.childContext.roadType).toBe(RoadType.PRE_DEVICE);
     });
 
+    it('injects early childhood neurobiology context for Tier 0A infant', async () => {
+      const childRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Baby Liam',
+          birthYear: 2026,
+          birthMonth: 8,
+          roadType: RoadType.PRE_DEVICE,
+          developmentalTier: 'TIER_0A_INFANCY_0_1',
+        },
+      });
+      expect(childRes.statusCode).toBe(201);
+      const childId = childRes.json().data.child.id;
+
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/v1/ai-advisor/chat',
+        headers: { cookie: userACookie },
+        payload: {
+          childId,
+          message: 'My baby is crying uncontrollably and cannot be soothed.',
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+      const events = parseSseEvents(response.body);
+      const contextEvent = events.find((e) => e.type === 'context');
+      expect(contextEvent).toBeDefined();
+      expect(contextEvent!.childContext).toBeDefined();
+      expect(contextEvent!.childContext.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
+    });
+
     it('enforces cross-user tenant isolation on conversation retrieval', async () => {
       // Parent A creates conversation
       const chatRes = await app.inject({
