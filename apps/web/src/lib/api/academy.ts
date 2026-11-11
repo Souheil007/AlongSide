@@ -191,10 +191,59 @@ export async function getAcademyModuleBySlug(
     } else {
       const foundModule = MOCK_ACADEMY_MODULES.find((m) => m.slug === slug);
       if (foundModule) {
+        const lessons = foundModule.lessons || [];
+        const ch1Lessons = lessons.slice(0, 1);
+        const ch2Lessons = lessons.slice(1, 3);
+        const ch3Lessons = lessons.slice(3, 4);
+
         mod = {
           ...foundModule,
-          chapters: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.chapters,
-          lessons: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.lessons,
+          chapterCount: 3,
+          lessonCount: lessons.length,
+          completedLessonCount: 0,
+          isCompleted: false,
+          chapters: [
+            {
+              id: `ch-${foundModule.id}-p1`,
+              moduleId: foundModule.id,
+              slug: `${foundModule.slug}-p1-critical`,
+              title: 'Priority 1: Critical Win',
+              summary: "Master tonight's immediate de-escalation quick win and somatic reset.",
+              priority: 1,
+              sortOrder: 1,
+              lessonCount: ch1Lessons.length,
+              completedLessonCount: 0,
+              isCompleted: false,
+              lessons: ch1Lessons,
+            },
+            {
+              id: `ch-${foundModule.id}-p2`,
+              moduleId: foundModule.id,
+              slug: `${foundModule.slug}-p2-routines`,
+              title: 'Priority 2: Biological Root & Routines',
+              summary: 'Unpack the neurobiology and install predictable daily household routines.',
+              priority: 2,
+              sortOrder: 2,
+              lessonCount: ch2Lessons.length,
+              completedLessonCount: 0,
+              isCompleted: false,
+              lessons: ch2Lessons,
+            },
+            {
+              id: `ch-${foundModule.id}-p3`,
+              moduleId: foundModule.id,
+              slug: `${foundModule.slug}-p3-scaffolding`,
+              title: 'Priority 3: Scaffolding & Long-Term Repair',
+              summary: 'Long-term developmental scaffolding, emotional repair, and resilience building.',
+              priority: 3,
+              sortOrder: 3,
+              lessonCount: ch3Lessons.length,
+              completedLessonCount: 0,
+              isCompleted: false,
+              lessons: ch3Lessons,
+            },
+          ],
+          lessons,
         };
       } else {
         throw err;

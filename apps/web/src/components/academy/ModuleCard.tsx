@@ -144,12 +144,16 @@ export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
 export function ModuleCard({ module, showFormatPills = false, className }: ModuleCardProps) {
   const [isSyllabusOpen, setIsSyllabusOpen] = React.useState(false);
 
+  const displayTitle = formatCourseTitle(module.title);
+  const actualLessons = module.lessons && module.lessons.length > 0 ? module.lessons : [];
+  const syllabusLessonCount = actualLessons.length > 0 ? actualLessons.length : module.lessonCount;
+
   const percentComplete =
-    module.lessonCount > 0
-      ? Math.round((module.completedLessonCount / module.lessonCount) * 100)
+    syllabusLessonCount > 0
+      ? Math.round((module.completedLessonCount / syllabusLessonCount) * 100)
       : 0;
 
-  const estimatedMinutes = module.lessonCount * 4;
+  const estimatedMinutes = syllabusLessonCount * 4;
   const tierInfo = getTierBadgeInfo(module.developmentalTier);
   const categoryInfo = getCategoryBadgeInfo(module.category);
 
@@ -159,10 +163,6 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
     (module.lessons && module.lessons.length > 0
       ? new Set(module.lessons.map((l) => l.chapterId).filter(Boolean)).size || 3
       : 3);
-
-  const displayTitle = formatCourseTitle(module.title);
-  const actualLessons = module.lessons && module.lessons.length > 0 ? module.lessons : [];
-  const syllabusLessonCount = actualLessons.length > 0 ? actualLessons.length : module.lessonCount;
 
   const hasMasterLecture = Boolean(
     module.hasMasterLecture ||
@@ -280,7 +280,7 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
             </span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="h-3.5 w-3.5 text-slate-400" />
-              {module.lessonCount} {module.lessonCount === 1 ? 'lesson' : 'lessons'}
+              {syllabusLessonCount} {syllabusLessonCount === 1 ? 'lesson' : 'lessons'}
             </span>
             <span className="text-slate-300">•</span>
             <span className="flex items-center gap-1.5">
@@ -297,7 +297,7 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
             </div>
             <Progress value={percentComplete} className="h-2" />
             <p className="text-[11px] text-slate-500">
-              {module.completedLessonCount} of {module.lessonCount} lessons completed
+              {module.completedLessonCount} of {syllabusLessonCount} lessons completed
             </p>
           </div>
 

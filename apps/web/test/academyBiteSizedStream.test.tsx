@@ -5,6 +5,7 @@ import { DevelopmentalTier } from '@alongside/shared';
 import {
   BiteSizedCourseDetailView,
   resolveLessonTakeaway,
+  formatSeconds,
 } from '../src/components/academy/BiteSizedCourseDetailView';
 import {
   MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR,
@@ -37,19 +38,12 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro-Stream', () => {
+describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-Sized Micro-Stream', () => {
   const activeChildCalibrated = {
     id: 'child-1',
     name: 'Maya',
     age: 11,
     developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
-  };
-
-  const activeChildMismatch = {
-    id: 'child-2',
-    name: 'Sammy',
-    age: 5,
-    developmentalTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
   };
 
   describe('1. Takeaway & Empathetic Script Resolution', () => {
@@ -97,6 +91,13 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       expect(takeaway.subtitle).toContain('gentle potty transitions');
       expect(takeaway.script).toContain('We are a team figuring this out together');
     });
+
+    it('formats seconds into clean M:SS representation', () => {
+      expect(formatSeconds(0)).toBe('0:00');
+      expect(formatSeconds(35)).toBe('0:35');
+      expect(formatSeconds(105)).toBe('1:45');
+      expect(formatSeconds(110)).toBe('1:50');
+    });
   });
 
   describe('2. Header Bar & Progress Telemetry', () => {
@@ -109,9 +110,9 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       );
 
       expect(html).toContain('Parent Academy');
-      // 2 completed lessons out of 6 in MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR
-      expect(html).toContain('2 of 6 done');
-      expect(html).toContain('~16m left');
+      // 1 completed lesson out of 4 in canonical MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR
+      expect(html).toContain('1 of 4 done');
+      expect(html).toContain('~12m left');
     });
   });
 
@@ -157,8 +158,8 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
     });
   });
 
-  describe('4. Part 1 · Quick Wins for Tonight (Hero Card & Completed Checklist)', () => {
-    it('renders completed lessons in the compact checklist box with review links', () => {
+  describe('4. Unified Course Curriculum Stream & In-Place Focus Card (Zero Parts)', () => {
+    it('renders unified curriculum list without artificial Part 1 or Part 2 sections', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -166,13 +167,15 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
         />
       );
 
-      expect(html).toContain('data-testid="completed-checklist"');
-      expect(html).toContain('1. Adrenarche: The Biological Awakening to Peer Status');
-      expect(html).toContain('2. De-escalating Amygdala Spikes: The 3-Step Pause');
-      expect(html).toContain('Review');
+      expect(html).toContain('Course Curriculum');
+      expect(html).toContain('3 lessons remaining');
+      expect(html).toContain('data-testid="curriculum-lessons-list"');
+      expect(html).not.toContain('Part 1');
+      expect(html).not.toContain('Part 2');
+      expect(html).not.toContain('Open in box');
     });
 
-    it('elevates next active lesson into the Tonight Focus Hero Card', () => {
+    it('elevates next active lesson in place with hero focus card details', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -182,12 +185,12 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
 
       expect(html).toContain('data-testid="hero-focus-card"');
       expect(html).toContain("Tonight&#x27;s Objective");
-      expect(html).toContain('3. Neutralizing Eye-Rolls: The Non-Defensive Dialogue');
+      expect(html).toContain('2. Adrenarche &amp; DHEA: The Hidden Hormonal Engine of Mood Swings');
       expect(html).toContain('Empathetic Script to Use');
-      expect(html).toContain('Start Lesson 3 (4 min)');
+      expect(html).toContain('Start Lesson 2 (4 min)');
     });
 
-    it('renders audio briefing button with audio icon and duration', () => {
+    it('renders dynamic audio briefing button with dynamic duration', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -196,12 +199,10 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       );
 
       expect(html).toContain('data-testid="audio-briefing-toggle"');
-      expect(html).toContain('Audio (1:45)');
+      expect(html).toMatch(/Audio \(\d+:\d{2}\)/);
     });
-  });
 
-  describe('5. Part 2 · Habits for this Weekend', () => {
-    it('renders fluid, borderless/clean rows for upcoming lessons', () => {
+    it('renders all course lessons sequentially in the stream', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -209,15 +210,14 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
         />
       );
 
-      expect(html).toContain('Part 2 · Habits for this Weekend');
-      // Lessons 4, 5, 6 in Part 2
-      expect(html).toContain('The Post-School Decompression Sanctuary');
-      expect(html).toContain('Group Chat Friction &amp; The Agony of Unread Messages');
-      expect(html).toContain('The Non-Punitive Relational Repair Blueprint');
+      expect(html).toContain('1. The Non-Reactive Neutral Stance');
+      expect(html).toContain('2. Adrenarche &amp; DHEA');
+      expect(html).toContain('3. The Car-Ride Protocol');
+      expect(html).toContain('4. Respectful Repair Contracts');
     });
   });
 
-  describe('6. Edge Cases & Reassurance Footer', () => {
+  describe('5. Edge Cases & Reassurance Footer', () => {
     it('renders pediatric evidence reassurance footer', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
@@ -235,7 +235,7 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       const completedModule = {
         ...MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR,
         isCompleted: true,
-        completedLessonCount: 6,
+        completedLessonCount: 4,
         lessons: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.lessons.map((l) => ({
           ...l,
           isCompleted: true,
@@ -251,9 +251,10 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
 
       expect(html).toContain('Course Completed · Review');
       expect(html).toContain('Review Lesson');
+      expect(html).toContain('All complete');
     });
 
-    it('handles fresh unstarted course (0 completed lessons) without showing empty checklist', () => {
+    it('handles fresh unstarted course (0 completed lessons)', () => {
       const unstartedModule = {
         ...MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR,
         isCompleted: false,
@@ -271,9 +272,9 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
         />
       );
 
-      expect(html).not.toContain('data-testid="completed-checklist"');
       expect(html).toContain("Tonight&#x27;s Objective");
       expect(html).toContain('Start Lesson 1');
+      expect(html).toContain('4 lessons remaining');
     });
 
     it('displays dynamic progress telemetry and remaining count matching actual course state', () => {
@@ -331,8 +332,8 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       // 1 of 4 done • ~12m left
       expect(html).toContain('1 of 4 done');
       expect(html).toContain('~12m left');
-      // In Part 1, 2 uncompleted lessons remaining (les-2 and les-3)
-      expect(html).toContain('2 lessons remaining');
+      // 3 uncompleted lessons remaining across the course
+      expect(html).toContain('3 lessons remaining');
       // Hero card opens for first uncompleted lesson (Lesson 2)
       expect(html).toContain('2. Second Step');
       expect(html).toContain('Start Lesson 2');
