@@ -190,7 +190,7 @@ describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-S
       expect(html).toContain('Start Lesson 2 (4 min)');
     });
 
-    it('renders dynamic audio briefing button with dynamic duration', () => {
+    it('removes audio toggle from course detail view per decluttering mandate', () => {
       const html = renderToStaticMarkup(
         <BiteSizedCourseDetailView
           module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
@@ -198,8 +198,23 @@ describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-S
         />
       );
 
-      expect(html).toContain('data-testid="audio-briefing-toggle"');
-      expect(html).toMatch(/Audio \(\d+:\d{2}\)/);
+      // Audio briefing removed from course detail view; placed inside lesson reader directly
+      expect(html).not.toContain('data-testid="audio-briefing-toggle"');
+      expect(html).not.toContain('spoken-audio-briefing-panel');
+    });
+
+    it('renders completed lessons with muted grey styling and reduced visibility', () => {
+      const html = renderToStaticMarkup(
+        <BiteSizedCourseDetailView
+          module={MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR}
+          activeChild={activeChildCalibrated}
+        />
+      );
+
+      // Lesson 1 is completed in MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR
+      expect(html).toContain('opacity-60');
+      expect(html).toContain('line-through');
+      expect(html).toContain('Completed');
     });
 
     it('renders all course lessons sequentially in the stream', () => {

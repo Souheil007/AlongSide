@@ -18,6 +18,7 @@ export interface AudioMemoPlayerProps {
   title?: string;
   isNightstandMode?: boolean;
   className?: string;
+  textToSpeak?: string;
 }
 
 export function formatTime(seconds: number): string {
@@ -32,6 +33,7 @@ export function AudioMemoPlayer({
   title = '90s Clinician Voice Briefing',
   isNightstandMode = false,
   className,
+  textToSpeak,
 }: AudioMemoPlayerProps) {
   const effectiveDuration = audioDurationSeconds || 92;
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
@@ -70,10 +72,30 @@ export function AudioMemoPlayer({
   const speakFallback = () => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const textToSpeak = `${title}. Evidence-based clinical guidance from AlongSide Pediatric Academy. Remember: your calm regulated presence is the single most powerful medicine your child will ever receive.`;
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const narrationText =
+        textToSpeak ||
+        `${title}. Evidence-based clinical guidance from AlongSide Pediatric Academy. Remember: your calm regulated presence is the single most powerful medicine your child will ever receive.`;
+      const utterance = new SpeechSynthesisUtterance(narrationText);
       utterance.rate = playbackRate;
       utterance.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const naturalVoice =
+        voices.find(
+          (v) =>
+            v.lang.startsWith('en') &&
+            (v.name.includes('Natural') ||
+              v.name.includes('Samantha') ||
+              v.name.includes('Google'))
+        ) || voices.find((v) => v.lang.startsWith('en'));
+      if (naturalVoice) utterance.voice = naturalVoice;
+
+      utterance.onboundary = (e) => {
+        if (e.charIndex) {
+          const ratio = e.charIndex / Math.max(1, narrationText.length);
+          setCurrentTime(Math.min(effectiveDuration, Math.round(ratio * effectiveDuration)));
+        }
+      };
       utterance.onend = () => {
         setIsPlaying(false);
         setCurrentTime(0);
