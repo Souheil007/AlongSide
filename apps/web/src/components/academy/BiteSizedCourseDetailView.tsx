@@ -8,6 +8,7 @@ import {
   type AcademyLessonSummaryDTO,
   type AcademyModuleDetailDTO,
 } from '@alongside/shared';
+import { getLocalCompletedLessonIds } from '@/lib/api/academy';
 import { getTierStageName } from '@/components/academy/ActiveChildCalibrationBanner';
 import { normalizeChildTier } from '@/components/academy/AcademyCatalogClient';
 import { getTierBadgeInfo } from '@/components/academy/ModuleCard';
@@ -205,13 +206,172 @@ export function BiteSizedCourseDetailView({
   activeChild,
   className,
 }: BiteSizedCourseDetailViewProps) {
+  const [selectedLessonId, setSelectedLessonId] = React.useState<string | null>(null);
+  const heroFocusCardRef = React.useRef<HTMLDivElement | null>(null);
+
   const [isAudioOpen, setIsAudioOpen] = React.useState<boolean>(false);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState<boolean>(false);
-  const [playbackSeconds, setPlaybackSeconds] = React.useState<number>(14);
+  const [playbackSeconds, setPlaybackSeconds] = React.useState<number>(0);
   const [playbackRate, setPlaybackRate] = React.useState<number>(1.0);
   const totalAudioSeconds = 105; // 1:45
 
-  // Interactive audio timer
+  // Local storage completion sync on mount
+  const [localCompletedSet, setLocalCompletedSet] = React.useState<Set<string>>(new Set());
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const ids = getLocalCompletedLessonIds();
+      setLocalCompletedSet(ids);
+    }
+  }, []);
+
+  const allLessons: AcademyLessonSummaryDTO[] = React.useMemo(() => {
+    let list: AcademyLessonSummaryDTO[] = [];
+    if (module.lessons && module.lessons.length > 0) {
+      list = [...module.lessons];
+    } else if (module.chapters && module.chapters.length > 0) {
+      list = module.chapters.flatMap((c) => c.lessons || []);
+    }
+    return list
+      .map((l) => ({
+        ...l,
+        isCompleted: l.isCompleted || localCompletedSet.has(l.id),
+      }))
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+  }, [module.lessons, module.chapters, localCompletedSet]);
+
+  const totalLessons = allLessons.length;
+  const completedLessons = allLessons.filter((l) => l.isCompleted);
+  const completedCount = completedLessons.length;
+  const isModuleCompleted =
+    module.isCompleted || (totalLessons > 0 && completedCount === totalLessons);
+
+  // The hero lesson is the first uncompleted lesson, or the first lesson if none or all completed
+  const heroLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
+
+  // The currently focused/opened lesson in the hero card box
+  const activeFocusLesson =
+    (selectedLessonId ? allLessons.find((l) => l.id === selectedLessonId) : null) ||
+    heroLesson ||
+    allLessons[0];
+
+  // Calculate remaining reading minutes across uncompleted lessons
+  const remainingMinutes = allLessons
+    .filter((l) => !l.isCompleted)
+    .reduce((sum, l) => sum + (l.readingMinutes || 3), 0);
+
+  // Chunking into Part 1 (Tonight) vs Part 2 (Weekend)
+  const part1Threshold = Math.max(3, heroLesson ? heroLesson.sortOrder : 3);
+  const part1Lessons = allLessons.filter((l) => l.sortOrder <= part1Threshold);
+  const part2Lessons = allLessons.filter((l) => l.sortOrder > part1Threshold);
+
+  // In Part 1, completed lessons can be clicked to reopen that lesson in the focus card
+  const completedInPart1 = part1Lessons.filter(
+    (l) => l.isCompleted && (!activeFocusLesson || l.id !== activeFocusLesson.id)
+  );
+  const remainingInPart1 = part1Lessons.filter((l) => !l.isCompleted).length;
+
+  const part2ReadingMinutes = part2Lessons.reduce(
+    (acc, l) => acc + (l.readingMinutes || 3),
+    0
+  );
+
+  // Child calibration check
+  const activeChildTier = activeChild
+    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
+    : null;
+  const moduleNormalizedTier = normalizeChildTier(module.developmentalTier);
+  const isTierMatch = Boolean(activeChild && activeChildTier === moduleNormalizedTier);
+  const tierInfo = getTierBadgeInfo(module.developmentalTier);
+
+  // Resolve takeaway for the active focused lesson
+  const activeTakeaway = activeFocusLesson
+    ? resolveLessonTakeaway(activeFocusLesson, module.title)
+    : {
+        subtitle: module.summary,
+        script:
+          'We protect your sleep because we love your growing brain. The dock is for all phones, including mine.',
+      };
+
+  // Handler to select and open any lesson in the hero focus card
+  const handleSelectLesson = (lessonId: string) => {
+    setSelectedLessonId(lessonId);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsAudioPlaying(false);
+    setPlaybackSeconds(0);
+    heroFocusCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  // Real SpeechSynthesis Audio Engine
+  const audioText = React.useMemo(() => {
+    if (!activeFocusLesson) return '';
+    return `Pediatrician executive briefing for lesson ${activeFocusLesson.sortOrder}: ${activeFocusLesson.title}. ${activeTakeaway.subtitle}. Script to remember: ${activeTakeaway.script}`;
+  }, [activeFocusLesson, activeTakeaway]);
+
+  const toggleAudioPlay = () => {
+    if (typeof window === 'undefined') return;
+
+    if (!('speechSynthesis' in window)) {
+      // Fallback timer simulation
+      setIsAudioPlaying((prev) => !prev);
+      return;
+    }
+
+    if (isAudioPlaying) {
+      window.speechSynthesis.pause();
+      setIsAudioPlaying(false);
+    } else {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        setIsAudioPlaying(true);
+      } else {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(audioText);
+        utterance.rate = playbackRate;
+        utterance.pitch = 1.0;
+
+        const voices = window.speechSynthesis.getVoices();
+        const naturalVoice =
+          voices.find(
+            (v) =>
+              v.lang.startsWith('en') &&
+              (v.name.includes('Natural') ||
+                v.name.includes('Samantha') ||
+                v.name.includes('Google'))
+          ) || voices.find((v) => v.lang.startsWith('en'));
+        if (naturalVoice) utterance.voice = naturalVoice;
+
+        utterance.onend = () => {
+          setIsAudioPlaying(false);
+          setPlaybackSeconds(0);
+        };
+        utterance.onerror = () => {
+          setIsAudioPlaying(false);
+        };
+        utterance.onboundary = (e) => {
+          if (e.charIndex) {
+            const ratio = e.charIndex / Math.max(1, audioText.length);
+            setPlaybackSeconds(Math.min(totalAudioSeconds, Math.round(ratio * totalAudioSeconds)));
+          }
+        };
+
+        window.speechSynthesis.speak(utterance);
+        setIsAudioPlaying(true);
+      }
+    }
+  };
+
+  // Stop speech on unmount
+  React.useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  // Timer simulation fallback if speech synthesis is not emitting boundaries
   React.useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
     if (isAudioPlaying) {
@@ -231,7 +391,13 @@ export function BiteSizedCourseDetailView({
   }, [isAudioPlaying, playbackRate]);
 
   const togglePlaybackRate = () => {
-    setPlaybackRate((prev) => (prev === 1.0 ? 1.5 : prev === 1.5 ? 2.0 : 1.0));
+    const nextRate = playbackRate === 1.0 ? 1.5 : playbackRate === 1.5 ? 2.0 : 1.0;
+    setPlaybackRate(nextRate);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window && isAudioPlaying) {
+      window.speechSynthesis.cancel();
+      setIsAudioPlaying(false);
+      setPlaybackSeconds(0);
+    }
   };
 
   const formatSeconds = (sec: number) => {
@@ -239,67 +405,6 @@ export function BiteSizedCourseDetailView({
     const remainder = sec % 60;
     return `${mins}:${remainder.toString().padStart(2, '0')}`;
   };
-
-  const allLessons: AcademyLessonSummaryDTO[] = React.useMemo(() => {
-    if (module.lessons && module.lessons.length > 0) {
-      return [...module.lessons].sort((a, b) => a.sortOrder - b.sortOrder);
-    }
-    if (module.chapters && module.chapters.length > 0) {
-      return module.chapters
-        .flatMap((c) => c.lessons || [])
-        .sort((a, b) => a.sortOrder - b.sortOrder);
-    }
-    return [];
-  }, [module.lessons, module.chapters]);
-
-  const totalLessons = allLessons.length;
-  const completedLessons = allLessons.filter((l) => l.isCompleted);
-  const completedCount = completedLessons.length;
-  const isModuleCompleted =
-    module.isCompleted || (totalLessons > 0 && completedCount === totalLessons);
-
-  // The hero lesson is the first uncompleted lesson, or the first lesson if none or all completed
-  const heroLesson =
-    allLessons.find((l) => !l.isCompleted) || allLessons[0];
-
-  // Calculate remaining reading minutes
-  const remainingMinutes = allLessons
-    .filter((l) => !l.isCompleted)
-    .reduce((sum, l) => sum + (l.readingMinutes || 3), 0);
-
-  // Chunking into Part 1 (Tonight) vs Part 2 (Weekend):
-  // If <= 6 lessons, Part 1 is the first 3 lessons (or up to the hero lesson if deeper).
-  // If > 6 lessons, Part 1 is the first half or up to the hero lesson.
-  const part1Threshold = Math.max(3, heroLesson ? heroLesson.sortOrder : 3);
-  const part1Lessons = allLessons.filter((l) => l.sortOrder <= part1Threshold);
-  const part2Lessons = allLessons.filter((l) => l.sortOrder > part1Threshold);
-
-  const completedInPart1 = part1Lessons.filter(
-    (l) => l.isCompleted && (!heroLesson || l.id !== heroLesson.id)
-  );
-  const remainingInPart1 = part1Lessons.filter((l) => !l.isCompleted).length;
-
-  const part2ReadingMinutes = part2Lessons.reduce(
-    (acc, l) => acc + (l.readingMinutes || 3),
-    0
-  );
-
-  // Child calibration check
-  const activeChildTier = activeChild
-    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
-    : null;
-  const moduleNormalizedTier = normalizeChildTier(module.developmentalTier);
-  const isTierMatch = Boolean(activeChild && activeChildTier === moduleNormalizedTier);
-  const tierInfo = getTierBadgeInfo(module.developmentalTier);
-
-  // Resolve takeaway for the hero lesson
-  const heroTakeaway = heroLesson
-    ? resolveLessonTakeaway(heroLesson, module.title)
-    : {
-        subtitle: module.summary,
-        script:
-          'We protect your sleep because we love your growing brain. The dock is for all phones, including mine.',
-      };
 
   return (
     <div
@@ -355,55 +460,68 @@ export function BiteSizedCourseDetailView({
             </span>
           </div>
 
-          {/* Quick Checklist of Completed Lessons in Part 1 */}
+          {/* Quick Checklist of Completed Lessons in Part 1 - Clickable to open in hero focus card */}
           {completedInPart1.length > 0 && (
             <div
               data-testid="completed-checklist"
               className="rounded-xl border border-hairline/80 bg-white divide-y divide-hairline/50 overflow-hidden shadow-2xs"
             >
-              {completedInPart1.map((lesson) => (
-                <div
-                  key={lesson.id}
-                  className="px-4 py-2.5 flex items-center justify-between text-xs font-mono text-mute hover:bg-linen-subtle/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                    <span className="text-spruce font-bold shrink-0">✓</span>
-                    <span className="line-through decoration-hairline text-mute truncate">
-                      {lesson.sortOrder}. {lesson.title}
+              {completedInPart1.map((lesson) => {
+                const isSelected = activeFocusLesson?.id === lesson.id;
+                return (
+                  <div
+                    key={lesson.id}
+                    onClick={() => handleSelectLesson(lesson.id)}
+                    role="button"
+                    tabIndex={0}
+                    className={cn(
+                      'px-4 py-2.5 flex items-center justify-between text-xs font-mono transition-colors cursor-pointer',
+                      isSelected
+                        ? 'bg-spruce-soft/50 font-semibold text-spruce'
+                        : 'text-mute hover:bg-linen-subtle/50'
+                    )}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                      <span className="text-spruce font-bold shrink-0">✓</span>
+                      <span className="line-through decoration-hairline text-mute truncate">
+                        {lesson.sortOrder}. {lesson.title}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-spruce hover:underline shrink-0 font-sans">
+                      {isSelected ? 'Open in box ↑' : 'Review'}
                     </span>
                   </div>
-                  <Link
-                    href={`/academy/${module.slug}/${lesson.slug}`}
-                    className="text-[11px] text-spruce hover:underline shrink-0"
-                  >
-                    Review
-                  </Link>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 
-          {/* THE TONIGHT HERO FOCUS CARD */}
-          {heroLesson && (
+          {/* THE TONIGHT HERO FOCUS CARD (Dynamic for any opened/selected lesson) */}
+          {activeFocusLesson && (
             <div
+              ref={heroFocusCardRef}
               data-testid="hero-focus-card"
-              className="rounded-2xl border-2 border-spruce/30 bg-spruce-soft/40 p-5 sm:p-6 space-y-4 shadow-xs"
+              className="rounded-2xl border-2 border-spruce/30 bg-spruce-soft/40 p-5 sm:p-6 space-y-4 shadow-xs transition-all"
             >
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="px-2 py-0.5 rounded-full bg-spruce text-white text-[10px] font-semibold tracking-wide uppercase">
-                  {isModuleCompleted ? 'Course Completed · Review' : "Tonight's Objective"}
+                  {activeFocusLesson.isCompleted
+                    ? 'Course Completed · Review'
+                    : activeFocusLesson.id === heroLesson?.id && !isModuleCompleted
+                      ? "Tonight's Objective"
+                      : `Lesson ${activeFocusLesson.sortOrder} Objective`}
                 </span>
                 <span className="text-spruce font-medium">
-                  {heroLesson.readingMinutes || 3} min read
+                  {activeFocusLesson.readingMinutes || 3} min read
                 </span>
               </div>
 
               <div>
                 <h2 className="text-lg sm:text-xl font-serif font-bold text-ink leading-tight">
-                  {heroLesson.sortOrder}. {heroLesson.title}
+                  {activeFocusLesson.sortOrder}. {activeFocusLesson.title}
                 </h2>
                 <p className="text-xs sm:text-sm text-body leading-relaxed mt-1.5">
-                  {heroTakeaway.subtitle}
+                  {activeTakeaway.subtitle}
                 </p>
               </div>
 
@@ -413,19 +531,19 @@ export function BiteSizedCourseDetailView({
                   Empathetic Script to Use
                 </span>
                 <p className="font-serif italic text-ink text-sm">
-                  &ldquo;{heroTakeaway.script}&rdquo;
+                  &ldquo;{activeTakeaway.script}&rdquo;
                 </p>
               </div>
 
               {/* Action Bar */}
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <Link
-                  href={`/academy/${module.slug}/${heroLesson.slug}`}
+                  href={`/academy/${module.slug}/${activeFocusLesson.slug}`}
                   className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-spruce hover:bg-spruce-hover text-white text-xs font-semibold transition-all shadow-xs"
                 >
                   <span>
-                    {heroLesson.isCompleted ? 'Review' : 'Start'} Lesson {heroLesson.sortOrder} (
-                    {heroLesson.readingMinutes || 3} min)
+                    {activeFocusLesson.isCompleted ? 'Review' : 'Start'} Lesson {activeFocusLesson.sortOrder} (
+                    {activeFocusLesson.readingMinutes || 3} min)
                   </span>
                   <svg
                     className="w-3.5 h-3.5"
@@ -445,8 +563,15 @@ export function BiteSizedCourseDetailView({
                 <button
                   type="button"
                   data-testid="audio-briefing-toggle"
-                  onClick={() => setIsAudioOpen(!isAudioOpen)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-linen-subtle border border-hairline text-xs font-mono text-body transition-colors shadow-2xs"
+                  onClick={() => {
+                    const next = !isAudioOpen;
+                    setIsAudioOpen(next);
+                    if (!next && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                      window.speechSynthesis.cancel();
+                      setIsAudioPlaying(false);
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-linen-subtle border border-hairline text-xs font-mono text-body transition-colors shadow-2xs cursor-pointer"
                 >
                   <svg
                     className="w-3.5 h-3.5 text-spruce"
@@ -481,8 +606,14 @@ export function BiteSizedCourseDetailView({
                     </div>
                     <button
                       type="button"
-                      onClick={() => setIsAudioOpen(false)}
-                      className="text-mute hover:text-ink text-xs p-1"
+                      onClick={() => {
+                        setIsAudioOpen(false);
+                        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                          window.speechSynthesis.cancel();
+                          setIsAudioPlaying(false);
+                        }
+                      }}
+                      className="text-mute hover:text-ink text-xs p-1 cursor-pointer"
                       aria-label="Close audio player"
                     >
                       <X className="h-4 w-4" />
@@ -493,7 +624,7 @@ export function BiteSizedCourseDetailView({
                   <div className="flex items-center gap-3 pt-1">
                     <button
                       type="button"
-                      onClick={() => setIsAudioPlaying(!isAudioPlaying)}
+                      onClick={toggleAudioPlay}
                       className="h-8 w-8 rounded-full bg-spruce hover:bg-spruce-hover text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
                       aria-label={isAudioPlaying ? 'Pause audio' : 'Play audio'}
                     >
@@ -542,7 +673,7 @@ export function BiteSizedCourseDetailView({
           )}
         </section>
 
-        {/* SECTION 2: HABITS FOR THIS WEEKEND (Progressive & Fluid) */}
+        {/* SECTION 2: HABITS FOR THIS WEEKEND (Progressive & Fluid) - Clicking opens that lesson in focus box */}
         {part2Lessons.length > 0 && (
           <section
             className="space-y-3 pt-4 border-t border-hairline"
@@ -561,11 +692,19 @@ export function BiteSizedCourseDetailView({
             <div className="space-y-2">
               {part2Lessons.map((lesson) => {
                 const takeaway = resolveLessonTakeaway(lesson, module.title);
+                const isSelected = activeFocusLesson?.id === lesson.id;
                 return (
-                  <Link
+                  <div
                     key={lesson.id}
-                    href={`/academy/${module.slug}/${lesson.slug}`}
-                    className="rounded-xl border border-hairline bg-white p-3.5 flex items-center justify-between gap-3 group hover:border-spruce/40 transition-colors shadow-2xs"
+                    onClick={() => handleSelectLesson(lesson.id)}
+                    role="button"
+                    tabIndex={0}
+                    className={cn(
+                      'rounded-xl border p-3.5 flex items-center justify-between gap-3 group transition-colors shadow-2xs cursor-pointer',
+                      isSelected
+                        ? 'border-spruce bg-spruce-soft/30 ring-1 ring-spruce/40'
+                        : 'border-hairline bg-white hover:border-spruce/40'
+                    )}
                   >
                     <div className="flex items-center gap-3 min-w-0 pr-2">
                       <span
@@ -573,7 +712,9 @@ export function BiteSizedCourseDetailView({
                           'h-6 w-6 rounded-full text-xs font-mono flex items-center justify-center shrink-0 transition-colors',
                           lesson.isCompleted
                             ? 'bg-spruce text-white font-bold'
-                            : 'bg-linen-subtle text-mute group-hover:bg-spruce-soft group-hover:text-spruce'
+                            : isSelected
+                              ? 'bg-spruce text-white font-semibold'
+                              : 'bg-linen-subtle text-mute group-hover:bg-spruce-soft group-hover:text-spruce'
                         )}
                       >
                         {lesson.isCompleted ? '✓' : lesson.sortOrder}
@@ -588,9 +729,9 @@ export function BiteSizedCourseDetailView({
                       </div>
                     </div>
                     <span className="text-xs font-mono text-mute shrink-0 group-hover:text-spruce transition-colors">
-                      {lesson.readingMinutes || 3}m →
+                      {lesson.readingMinutes || 3}m {isSelected ? '• Open in box ↑' : '→'}
                     </span>
-                  </Link>
+                  </div>
                 );
               })}
             </div>

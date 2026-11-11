@@ -5349,6 +5349,14 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] =
 export async function seedAcademy(prisma: PrismaClient): Promise<void> {
   console.log('[Seed] Seeding Parent Intelligence Academy modules & lessons...');
 
+  // Remove any legacy modules not in the 40 canonical modules
+  const validModuleSlugs = ACADEMY_SEED_MODULES.map((m) => m.slug);
+  await prisma.academyModule.deleteMany({
+    where: {
+      slug: { notIn: validModuleSlugs },
+    },
+  });
+
   for (const mod of ACADEMY_SEED_MODULES) {
     const moduleRecord = await prisma.academyModule.upsert({
       where: { slug: mod.slug },
@@ -5372,6 +5380,24 @@ export async function seedAcademy(prisma: PrismaClient): Promise<void> {
         coverImageUrl: mod.coverImageUrl,
         developmentalTier: mod.developmentalTier,
         sortOrder: mod.sortOrder,
+      },
+    });
+
+    // Clean up any legacy or orphaned lessons and chapters for this module
+    const validChapterSlugs = mod.chapters.map((c) => c.slug);
+    const validLessonSlugs = mod.chapters.flatMap((c) => c.lessons.map((l) => l.slug));
+
+    await prisma.academyLesson.deleteMany({
+      where: {
+        moduleId: moduleRecord.id,
+        slug: { notIn: validLessonSlugs },
+      },
+    });
+
+    await prisma.academyChapter.deleteMany({
+      where: {
+        moduleId: moduleRecord.id,
+        slug: { notIn: validChapterSlugs },
       },
     });
 
