@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { AcademyCategory, type AdaptiveModuleType } from '@alongside/shared';
+import { AcademyCategory, DevelopmentalTier, type AdaptiveModuleType } from '@alongside/shared';
 import { SomaticBreathWidget } from './SomaticBreathWidget';
 import { CircadianTimelineWidget } from './CircadianTimelineWidget';
 import { FeedingResponsibilityWidget } from './FeedingResponsibilityWidget';
@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 export interface LessonAdaptiveModuleRendererProps {
   adaptiveModuleType?: AdaptiveModuleType | string | null;
   category?: AcademyCategory | string | null;
+  tier?: DevelopmentalTier | string | null;
   isNightstandMode?: boolean;
   className?: string;
 }
@@ -19,6 +20,7 @@ export interface LessonAdaptiveModuleRendererProps {
 export function LessonAdaptiveModuleRenderer({
   adaptiveModuleType,
   category,
+  tier,
   isNightstandMode = false,
   className,
 }: LessonAdaptiveModuleRendererProps) {
@@ -52,19 +54,19 @@ export function LessonAdaptiveModuleRenderer({
       className={cn('my-6', className)}
     >
       {effectiveType === 'SOMATIC_RESET' && (
-        <SomaticBreathWidget isNightstandMode={isNightstandMode} />
+        <SomaticBreathWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
       {effectiveType === 'CIRCADIAN_TIMELINE' && (
-        <CircadianTimelineWidget isNightstandMode={isNightstandMode} />
+        <CircadianTimelineWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
       {effectiveType === 'FEEDING_LADDER' && (
-        <FeedingResponsibilityWidget isNightstandMode={isNightstandMode} />
+        <FeedingResponsibilityWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
       {effectiveType === 'PLAY_BLUEPRINT' && (
-        <PurposefulPlayBlueprintWidget isNightstandMode={isNightstandMode} />
+        <PurposefulPlayBlueprintWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
       {effectiveType === 'PACT_CLAUSE' && (
-        <PactClauseBridgeWidget isNightstandMode={isNightstandMode} />
+        <PactClauseBridgeWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
     </div>
   );

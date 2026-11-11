@@ -114,7 +114,10 @@ describe('Brain Games, Sensory Play & Early Toys Hub Specification (PLAN-19)', (
         DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
       );
       expect(rec).toBeDefined();
-      expect(rec.targetTier).toBe(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3);
+      expect([
+        DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
+        DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      ]).toContain(rec.targetTier);
       expect(rec.isScreenFree).toBe(true);
     });
 

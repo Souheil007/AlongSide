@@ -260,6 +260,7 @@ export interface AcademyModuleDTO {
   lessonCount: number;
   completedLessonCount: number;
   isCompleted: boolean;
+  hasMasterLecture?: boolean;
   lessons?: AcademyLessonSummaryDTO[];
 }
 
@@ -285,6 +286,17 @@ export interface DialogueCardDTO {
 }
 export type DialogueCardItem = DialogueCardDTO;
 
+export interface MasterVideoLectureDTO {
+  videoUrl: string;
+  title: string;
+  presenter: string;
+  channel: string;
+  durationMinutes: number;
+  parentHook?: string;
+  keyTakeaways?: string[];
+  actionPrompt?: string;
+}
+
 export interface ActionProtocolItem {
   id: string;
   label: string;
@@ -305,6 +317,7 @@ export interface AcademyLessonSummaryDTO {
   reliefTagline?: string;
   whatNotToSay?: string;
   deliveryTip?: string;
+  videoLecture?: MasterVideoLectureDTO | null;
 }
 
 export interface AcademyLessonDTO {
@@ -327,6 +340,7 @@ export interface AcademyLessonDTO {
   adaptiveModulePayload?: Record<string, unknown> | null;
   whatNotToSay?: string;
   deliveryTip?: string;
+  videoLecture?: MasterVideoLectureDTO | null;
   module?: {
     id: string;
     slug: string;

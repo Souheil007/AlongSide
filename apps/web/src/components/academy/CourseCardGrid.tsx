@@ -12,6 +12,7 @@ export interface CourseCardGridProps {
   isLoading?: boolean;
   isError?: boolean;
   error?: unknown;
+  showFormatPills?: boolean;
   onRetry?: () => void;
   onResetFilters?: () => void;
   className?: string;
@@ -22,6 +23,7 @@ export function CourseCardGrid({
   isLoading = false,
   isError = false,
   error,
+  showFormatPills = false,
   onRetry,
   onResetFilters,
   className,
@@ -102,7 +104,7 @@ export function CourseCardGrid({
   return (
     <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6', className)}>
       {modules.map((mod) => (
-        <ModuleCard key={mod.id} module={mod} />
+        <ModuleCard key={mod.id} module={mod} showFormatPills={showFormatPills} />
       ))}
     </div>
   );

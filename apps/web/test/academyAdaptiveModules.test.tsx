@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { AcademyCategory } from '@alongside/shared';
+import { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
 import {
   SomaticBreathWidget,
   CircadianTimelineWidget,
@@ -193,6 +193,128 @@ describe('Plan 38: Category-Specific Adaptive Lesson Modules', () => {
         })
       );
       expect(htmlCategory).toContain('data-testid="pact-clause-bridge-widget"');
+    });
+  });
+
+  describe('7. Tier Calibration for Adaptive Interactive Widgets (Plan 39)', () => {
+    it('calibrates SomaticBreathWidget for Tier 0A Infancy and Tier 4 Adolescence', () => {
+      const htmlInfancy = renderToStaticMarkup(
+        React.createElement(SomaticBreathWidget, {
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+      expect(htmlInfancy).toContain('data-testid="infant-coregulation-banner"');
+      expect(htmlInfancy).toContain('Infant autonomic co-regulation rhythm');
+
+      const htmlAdolescent = renderToStaticMarkup(
+        React.createElement(SomaticBreathWidget, {
+          tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        })
+      );
+      expect(htmlAdolescent).toContain('data-testid="adolescent-deescalation-banner"');
+      expect(htmlAdolescent).toContain('Box Breathing');
+      expect(htmlAdolescent).toContain('Neutral non-defensive response');
+    });
+
+    it('calibrates CircadianTimelineWidget for Tier 0A, 0B, and 4', () => {
+      const html0A = renderToStaticMarkup(
+        React.createElement(CircadianTimelineWidget, {
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+      expect(html0A).toContain('Wake Window 1 Close (45–90m)');
+
+      const html0B = renderToStaticMarkup(
+        React.createElement(CircadianTimelineWidget, {
+          tier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
+        })
+      );
+      expect(html0B).toContain('1-Nap Rhythm (12:30–2:30 PM)');
+
+      const html4 = renderToStaticMarkup(
+        React.createElement(CircadianTimelineWidget, {
+          tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        })
+      );
+      expect(html4).toContain('+2h Biological Sleep Onset');
+    });
+
+    it('calibrates FeedingResponsibilityWidget for Tier 0A Infancy and Tier 5 Late Adolescence', () => {
+      const html0A = renderToStaticMarkup(
+        React.createElement(FeedingResponsibilityWidget, {
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+      expect(html0A).toContain('data-testid="infant-feeding-banner"');
+      expect(html0A).toContain('Infant Feeding Blueprint (0–12m)');
+
+      const html5 = renderToStaticMarkup(
+        React.createElement(FeedingResponsibilityWidget, {
+          tier: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18,
+        })
+      );
+      expect(html5).toContain('data-testid="independent-kitchen-banner"');
+      expect(html5).toContain('The Independent Kitchen Blueprint (16–18+)');
+    });
+
+    it('calibrates PurposefulPlayBlueprintWidget for Tier 0A, 1, and 2', () => {
+      const html0A = renderToStaticMarkup(
+        React.createElement(PurposefulPlayBlueprintWidget, {
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+      expect(html0A).toContain('High-Contrast Tracking &amp; Mirror Serve-and-Return');
+      expect(html0A).toContain('High-contrast black-and-white cards');
+
+      const html1 = renderToStaticMarkup(
+        React.createElement(PurposefulPlayBlueprintWidget, {
+          tier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+        })
+      );
+      expect(html1).toContain('Cooperative Play &amp; Growth Mindset Scaffolding');
+
+      const html2 = renderToStaticMarkup(
+        React.createElement(PurposefulPlayBlueprintWidget, {
+          tier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+        })
+      );
+      expect(html2).toContain('Maker Exploration, Chess &amp; Robotics Logic');
+    });
+
+    it('calibrates PactClauseBridgeWidget for Tier 0A/0B, Tier 3, and Tier 4', () => {
+      const html0A = renderToStaticMarkup(
+        React.createElement(PactClauseBridgeWidget, {
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+      expect(html0A).toContain('Screen-Free Sanctuary: Zero screens in nursery and feeding zones');
+
+      const html3 = renderToStaticMarkup(
+        React.createElement(PactClauseBridgeWidget, {
+          tier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        })
+      );
+      expect(html3).toContain('First Smartphone Treaty: 8:30 PM Kitchen Charging Dock');
+
+      const html4 = renderToStaticMarkup(
+        React.createElement(PactClauseBridgeWidget, {
+          tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+        })
+      );
+      expect(html4).toContain('Digital Amnesty Clause: Zero confiscation when seeking safety support');
+    });
+
+    it('propagates tier through LessonAdaptiveModuleRenderer to child widgets', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonAdaptiveModuleRenderer, {
+          category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
+          tier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+        })
+      );
+
+      expect(html).toContain('data-testid="somatic-breath-widget"');
+      expect(html).toContain('data-testid="infant-coregulation-banner"');
+      expect(html).toContain('Infant autonomic co-regulation rhythm');
     });
   });
 });

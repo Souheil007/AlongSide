@@ -1,10 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { Moon, Sun, AlertCircle, Clock, ShieldAlert } from 'lucide-react';
+import { Moon, Sun, AlertCircle, Clock, ShieldAlert, Baby } from 'lucide-react';
+import { DevelopmentalTier } from '@alongside/shared';
 import { cn } from '@/lib/utils';
 
 export interface CircadianTimelineWidgetProps {
+  tier?: DevelopmentalTier | string | null;
   isNightstandMode?: boolean;
   className?: string;
 }
@@ -17,39 +19,136 @@ interface TimelineSlot {
 }
 
 export function CircadianTimelineWidget({
+  tier,
   isNightstandMode = false,
   className,
 }: CircadianTimelineWidgetProps) {
   const [selectedSlot, setSelectedSlot] = React.useState<number>(2);
 
-  const slots: TimelineSlot[] = [
-    {
-      time: '07:00 AM',
-      phase: 'Cortisol Awakening Surge',
-      description:
-        'Natural light exposure suppresses remaining melatonin and sets the 14-hour biological timer for evening sleepiness.',
-    },
-    {
-      time: '02:30 PM',
-      phase: 'Post-Lunch Dip & Reset',
-      description:
-        'Core body temperature experiences a natural midday dip. Keep activities calm; avoid caffeine or high sugar for older kids.',
-    },
-    {
-      time: '07:15 PM',
-      phase: 'Melatonin Window Opens',
-      description:
-        'Pineal gland begins releasing melatonin. Blue light exposure here pushes the sleep window back by 90 minutes.',
-      isOptimalBedtime: true,
-    },
-    {
-      time: '08:30 PM',
-      phase: 'Optimal Deep NREM Target',
-      description:
-        'Optimal sleep onset. Prefrontal growth hormone release peaks during the first 3 hours of deep NREM sleep.',
-      isOptimalBedtime: true,
-    },
-  ];
+  const slots: TimelineSlot[] = React.useMemo(() => {
+    if (tier === DevelopmentalTier.TIER_0A_INFANCY_0_1) {
+      return [
+        {
+          time: '07:00 AM',
+          phase: 'Morning Light & Feeding Sync',
+          description:
+            'Natural morning light exposure suppresses remaining melatonin and synchronizes infant suprachiasmatic nucleus for daytime wake windows.',
+        },
+        {
+          time: '08:30 AM',
+          phase: 'Wake Window 1 Close (45–90m)',
+          description:
+            'Infant sleep pressure peaks rapidly. Place down drowsy but awake before overtired cortisol surge triggers purple crying.',
+        },
+        {
+          time: '01:00 PM',
+          phase: 'Midday Nap & Tummy Time Reset',
+          description:
+            'Post-feeding wakefulness window. Gentle floor exploration and face-to-face vocal echoing before consolidated afternoon nap.',
+        },
+        {
+          time: '07:00 PM',
+          phase: 'Nighttime Sleep Consolidation',
+          description:
+            'Consistent bedtime cues (swaddle, white noise, dark room) stimulate melatonin synthesis for first 3–4 hour consolidated sleep cycle.',
+          isOptimalBedtime: true,
+        },
+      ];
+    }
+
+    if (tier === DevelopmentalTier.TIER_0B_TODDLER_1_2) {
+      return [
+        {
+          time: '07:00 AM',
+          phase: 'Morning Rise & Cortisol Pulse',
+          description:
+            'Toddler waking rhythm. Outdoor light and high-protein breakfast anchor the master clock for afternoon nap consolidation.',
+        },
+        {
+          time: '12:30 PM',
+          phase: '1-Nap Rhythm (12:30–2:30 PM)',
+          description:
+            'Single consolidated afternoon nap (90–120 mins). Avoid late naps past 3:30 PM to preserve night sleep pressure.',
+        },
+        {
+          time: '05:30 PM',
+          phase: 'Sensory Wind-Down & Dinner',
+          description:
+            'Calm family dinner rhythm with dim indoor lighting prevents evening sensory overstimulation and limbic reactivity.',
+        },
+        {
+          time: '07:30 PM',
+          phase: 'Toddler Bedtime Boundary',
+          description:
+            'Predictable 4-step sequence (bath, pajamas, two books, lullaby) triggers parasympathetic sleep transition without negotiation.',
+          isOptimalBedtime: true,
+        },
+      ];
+    }
+
+    if (
+      tier === DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15 ||
+      tier === DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18
+    ) {
+      return [
+        {
+          time: '07:00 AM',
+          phase: 'Alarm vs. Melatonin Lag',
+          description:
+            'Adolescent biological delay causes grogginess; melatonin remains elevated until 8:00 AM. Bright natural light and hydration assist awakening.',
+        },
+        {
+          time: '03:30 PM',
+          phase: 'Post-School Cognitive Recharge',
+          description:
+            'Peak pubertal fatigue window. 30 minutes of low-cognitive rest, physical movement, or screen-free snack resets emotional stability.',
+        },
+        {
+          time: '09:30 PM',
+          phase: 'Digital Sunset & Blue Light Gate',
+          description:
+            'Screen blue light suppresses pubertal melatonin 2x more aggressively than adults. Dock devices outside bedroom.',
+        },
+        {
+          time: '11:00 PM',
+          phase: '+2h Biological Sleep Onset',
+          description:
+            'Dr. Mary Carskadon clinical finding: Adolescent circadian phase shifts 2 hours later naturally. Optimal target is 9.25 hours total sleep.',
+          isOptimalBedtime: true,
+        },
+      ];
+    }
+
+    // Default canonical chronobiology slots
+    return [
+      {
+        time: '07:00 AM',
+        phase: 'Cortisol Awakening Surge',
+        description:
+          'Natural light exposure suppresses remaining melatonin and sets the 14-hour biological timer for evening sleepiness.',
+      },
+      {
+        time: '02:30 PM',
+        phase: 'Post-Lunch Dip & Reset',
+        description:
+          'Core body temperature experiences a natural midday dip. Keep activities calm; avoid caffeine or high sugar for older kids.',
+      },
+      {
+        time: '07:15 PM',
+        phase: 'Melatonin Window Opens',
+        description:
+          'Pineal gland begins releasing melatonin. Blue light exposure here pushes the sleep window back by 90 minutes.',
+        isOptimalBedtime: true,
+      },
+      {
+        time: '08:30 PM',
+        phase: 'Optimal Deep NREM Target',
+        description:
+          'Optimal sleep onset. Prefrontal growth hormone release peaks during the first 3 hours of deep NREM sleep.',
+        isOptimalBedtime: true,
+      },
+    ];
+  }, [tier]);
 
   return (
     <div
@@ -79,11 +178,11 @@ export function CircadianTimelineWidget({
           const isSelected = selectedSlot === idx;
           return (
             <button
-              key={slot.time}
+              key={`${slot.time}-${slot.phase}`}
               type="button"
               onClick={() => setSelectedSlot(idx)}
               className={cn(
-                'p-3 rounded-xl border text-left transition-all',
+                'p-3 rounded-xl border text-left transition-all cursor-pointer',
                 isSelected
                   ? isNightstandMode
                     ? 'bg-indigo-950/60 border-indigo-500 text-indigo-100 shadow-sm'

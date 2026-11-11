@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers, ChevronDown, Sparkles } from 'lucide-react';
+import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers, ChevronDown, Sparkles, Video } from 'lucide-react';
 import { DevelopmentalTier, AcademyCategory, formatCourseTitle, type AcademyModuleDTO, type AcademyLessonSummaryDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -9,7 +9,11 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export interface ModuleCardProps {
-  module: AcademyModuleDTO & { lessons?: AcademyLessonSummaryDTO[] };
+  module: AcademyModuleDTO & {
+    lessons?: AcademyLessonSummaryDTO[];
+    hasMasterLecture?: boolean;
+  };
+  showFormatPills?: boolean;
   className?: string;
 }
 
@@ -137,7 +141,7 @@ export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
   }
 }
 
-export function ModuleCard({ module, className }: ModuleCardProps) {
+export function ModuleCard({ module, showFormatPills = false, className }: ModuleCardProps) {
   const [isSyllabusOpen, setIsSyllabusOpen] = React.useState(false);
 
   const percentComplete =
@@ -159,6 +163,14 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
   const displayTitle = formatCourseTitle(module.title);
   const actualLessons = module.lessons && module.lessons.length > 0 ? module.lessons : [];
   const syllabusLessonCount = actualLessons.length > 0 ? actualLessons.length : module.lessonCount;
+
+  const hasMasterLecture = Boolean(
+    module.hasMasterLecture ||
+      (module.lessons &&
+        module.lessons.some(
+          (l) => Boolean(l.videoLecture || (l as any).hasVideoLecture)
+        ))
+  );
 
   return (
     <Card
@@ -188,6 +200,15 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
               >
                 {tierInfo.shortLabel}
               </span>
+              {hasMasterLecture && (
+                <span
+                  data-testid="master-lecture-pill"
+                  className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-900"
+                >
+                  <span aria-hidden="true">🎬</span>
+                  <span>Master Lecture</span>
+                </span>
+              )}
             </div>
 
             {module.isCompleted && (
@@ -219,6 +240,33 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
                 Tonight&apos;s Win
               </span>
               <span className="font-medium line-clamp-1">{module.tonightQuickWinTitle}</span>
+            </div>
+          )}
+
+          {/* Format pills strip */}
+          {showFormatPills && (
+            <div
+              data-testid="format-pills-strip"
+              className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono text-slate-600 pt-0.5"
+            >
+              {hasMasterLecture && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-0.5 border border-amber-200 font-semibold text-amber-900">
+                  <span aria-hidden="true">🎬</span>
+                  <span>Master Lecture</span>
+                </span>
+              )}
+              <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+                <span aria-hidden="true">🎧</span>
+                <span>Audio Memo</span>
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+                <span aria-hidden="true">💬</span>
+                <span>Script Vault</span>
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
+                <span aria-hidden="true">🤖</span>
+                <span>AI Sparring</span>
+              </span>
             </div>
           )}
         </CardHeader>
@@ -284,22 +332,37 @@ export function ModuleCard({ module, className }: ModuleCardProps) {
                 className="mt-2 space-y-1.5 rounded-lg bg-slate-50 border border-slate-100 p-2.5 text-xs animate-in fade-in duration-150"
               >
                 {actualLessons.length > 0 ? (
-                  actualLessons.map((lesson: AcademyLessonSummaryDTO) => (
-                    <div
-                      key={lesson.id}
-                      className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
-                    >
-                      <div className="flex items-baseline gap-1.5 min-w-0">
-                        <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
-                          § {lesson.sortOrder}
+                  actualLessons.map((lesson: AcademyLessonSummaryDTO) => {
+                    const hasLessonVideo = Boolean(
+                      lesson.videoLecture || (lesson as any).hasVideoLecture
+                    );
+                    return (
+                      <div
+                        key={lesson.id}
+                        className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
+                      >
+                        <div className="flex items-baseline gap-1.5 min-w-0">
+                          <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
+                            § {lesson.sortOrder}
+                          </span>
+                          <span className="truncate font-medium">{lesson.title}</span>
+                          {hasLessonVideo && (
+                            <span
+                              data-testid={`syllabus-video-badge-${lesson.id}`}
+                              title="Includes Master Video Lecture"
+                              className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-800 bg-amber-100/90 px-1.5 py-0.5 rounded border border-amber-200/80 shrink-0"
+                            >
+                              <Video className="h-2.5 w-2.5" />
+                              <span>Master Lecture</span>
+                            </span>
+                          )}
+                        </div>
+                        <span className="font-mono text-[10px] text-slate-400 shrink-0">
+                          {lesson.readingMinutes} min
                         </span>
-                        <span className="truncate font-medium">{lesson.title}</span>
                       </div>
-                      <span className="font-mono text-[10px] text-slate-400 shrink-0">
-                        {lesson.readingMinutes} min
-                      </span>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <div className="py-2 text-center text-slate-500 font-sans">
                     {module.lessonCount} lessons available in this course roadmap.

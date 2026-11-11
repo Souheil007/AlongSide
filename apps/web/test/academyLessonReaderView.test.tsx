@@ -297,4 +297,87 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain('Borrowing Your Nervous System');
     });
   });
+
+  describe('8. Master Video Lecture Player & Masthead Badge Integration (Plan 39)', () => {
+    const videoLectureLesson: AcademyLessonDTO = {
+      ...multiModalLesson,
+      id: 'les-video-test',
+      videoLecture: {
+        videoUrl: 'https://www.youtube.com/watch?v=XT_6Lvkhxvo',
+        title: 'Protocols for Excellent Parenting & Nervous System Regulation',
+        presenter: 'Dr. Andrew Huberman & Dr. Becky Kennedy',
+        channel: 'Huberman Lab',
+        durationMinutes: 18,
+        parentHook:
+          'When parents learn to regulate their own nervous system first, children naturally down-regulate without coercive discipline.',
+        keyTakeaways: [
+          'Autonomic nervous system contagion: Children detect parental dysregulation through heart-rate variability and vocal pitch.',
+          'The Repair Protocol: The most powerful parenting intervention is the repair that happens after a rupture.',
+          'Somatic pause before speech: Taking 3 physiological sighs shifts the parent from sympathetic panic to parasympathetic calm.',
+        ],
+        actionPrompt:
+          'Practice a 3-breath physiological sigh before responding to your child the next time tension spikes.',
+      },
+    };
+
+    it('renders [ 🎬 Master Lecture ] badge in LessonReliefMasthead when videoLecture is present', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonReliefMasthead, {
+          lesson: videoLectureLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+        })
+      );
+
+      expect(html).toContain('data-testid="master-lecture-badge"');
+      expect(html).toContain('Master Lecture');
+    });
+
+    it('omits [ 🎬 Master Lecture ] badge in LessonReliefMasthead when videoLecture is absent', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonReliefMasthead, {
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+        })
+      );
+
+      expect(html).not.toContain('data-testid="master-lecture-badge"');
+    });
+
+    it('embeds LessonVideoPlayer seamlessly between masthead and thirty-second glance in LessonReaderView', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonReaderView, {
+          lesson: videoLectureLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+        })
+      );
+
+      expect(html).toContain('data-testid="lesson-video-player"');
+      expect(html).toContain('Dr. Andrew Huberman &amp; Dr. Becky Kennedy');
+      expect(html).toContain('Huberman Lab');
+      expect(html).toContain('18 min');
+      expect(html).toContain('Clinical Video Hook');
+      expect(html).toContain('Clinical Key Takeaways (3 Core Concepts)');
+      expect(html).toContain('Practice with AI Advisor');
+
+      // Verify sequence order: ReliefMasthead -> LessonVideoPlayer -> ThirtySecondGlance
+      const mastheadIdx = html.indexOf('data-testid="lesson-relief-masthead"');
+      const videoIdx = html.indexOf('data-testid="lesson-video-player"');
+      const glanceIdx = html.indexOf('data-testid="thirty-second-glance"');
+
+      expect(mastheadIdx).toBeGreaterThan(-1);
+      expect(videoIdx).toBeGreaterThan(mastheadIdx);
+      expect(glanceIdx).toBeGreaterThan(videoIdx);
+    });
+
+    it('omits LessonVideoPlayer in LessonReaderView when lesson has no videoLecture', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonReaderView, {
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+        })
+      );
+
+      expect(html).not.toContain('data-testid="lesson-video-player"');
+    });
+  });
 });
