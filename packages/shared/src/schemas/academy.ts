@@ -55,3 +55,88 @@ export const AcademyLessonIdParamsSchema = z.object({
 });
 
 export type AcademyLessonIdParams = z.infer<typeof AcademyLessonIdParamsSchema>;
+
+export const AdaptiveModuleTypeSchema = z.enum([
+  'SOMATIC_RESET',
+  'CIRCADIAN_TIMELINE',
+  'FEEDING_LADDER',
+  'PLAY_BLUEPRINT',
+  'PACT_CLAUSE',
+]);
+
+export type AdaptiveModuleTypeSchemaType = z.infer<typeof AdaptiveModuleTypeSchema>;
+
+export const ThirtySecondGlanceSchema = z.object({
+  coreProblem: z.string(),
+  immediateShift: z.string(),
+  exactWords: z.string(),
+});
+
+export type ThirtySecondGlanceType = z.infer<typeof ThirtySecondGlanceSchema>;
+
+export const DialogueCardSchema = z.object({
+  instinctiveMistake: z.string(),
+  whyItBackfires: z.string(),
+  empatheticScript: z.string(),
+  deliveryTip: z.string(),
+});
+
+export type DialogueCardType = z.infer<typeof DialogueCardSchema>;
+
+export const AcademyLessonSummarySchema = z.object({
+  id: z.string(),
+  moduleId: z.string(),
+  chapterId: z.string().nullable().optional(),
+  slug: z.string(),
+  title: z.string(),
+  readingMinutes: z.number(),
+  sortOrder: z.number(),
+  isCompleted: z.boolean(),
+  audioUrl: z.string().optional(),
+  audioDurationSeconds: z.number().optional(),
+  reliefTagline: z.string().optional(),
+  whatNotToSay: z.string().optional(),
+  deliveryTip: z.string().optional(),
+});
+
+export type AcademyLessonSummaryType = z.infer<typeof AcademyLessonSummarySchema>;
+
+export const AcademyLessonSchema = z.object({
+  id: z.string(),
+  moduleId: z.string(),
+  chapterId: z.string().nullable().optional(),
+  slug: z.string(),
+  title: z.string(),
+  contentMarkdown: z.string(),
+  readingMinutes: z.number(),
+  sortOrder: z.number(),
+  isCompleted: z.boolean(),
+  audioUrl: z.string().optional(),
+  audioDurationSeconds: z.number().optional(),
+  reliefTagline: z.string().optional(),
+  thirtySecondGlance: ThirtySecondGlanceSchema.optional(),
+  adaptiveModuleType: AdaptiveModuleTypeSchema.optional(),
+  dialogueCards: z.array(DialogueCardSchema).optional(),
+  whatNotToSay: z.string().optional(),
+  deliveryTip: z.string().optional(),
+  module: z
+    .object({
+      id: z.string(),
+      slug: z.string(),
+      title: z.string(),
+      developmentalTier: AcademyTierSchema,
+      category: AcademyCategorySchema.optional(),
+    })
+    .optional(),
+  chapter: z
+    .object({
+      id: z.string(),
+      slug: z.string(),
+      title: z.string(),
+      priority: z.number(),
+    })
+    .nullable()
+    .optional(),
+});
+
+export type AcademyLessonType = z.infer<typeof AcademyLessonSchema>;

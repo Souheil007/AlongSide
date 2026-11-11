@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
@@ -8,7 +8,17 @@ import {
   type AcademyLessonDTO,
 } from '@alongside/shared';
 import { LessonReaderView } from '../src/components/academy/LessonReaderView';
-import { MOCK_LESSON_DETAIL_ADRENARCHE } from '../src/lib/api/mocks';
+import {
+  LessonReliefMasthead,
+  LessonThirtySecondGlance,
+  LessonDialogueDeck,
+  LessonActionChecklist,
+  LessonToolBridges,
+  LessonFooterNav,
+  NightstandModeToggle,
+  AudioMemoPlayer,
+  ScrollProgressBar,
+} from '../src/components/academy/reader';
 
 // Mock Next.js navigation hooks
 vi.mock('next/navigation', () => ({
@@ -18,129 +28,253 @@ vi.mock('next/navigation', () => ({
     prefetch: vi.fn(),
   }),
   useSearchParams: () => new URLSearchParams(),
-  usePathname: () => '/academy/behavior-tween-adrenarche/adrenarche-neurobiology',
+  usePathname: () => '/academy/behavior-toddler-tantrums/amygdala-surge',
 }));
 
-describe('Plan 37: Parent Intelligence Academy LessonReaderView Editorial UI Specification', () => {
-  const editorialLesson: AcademyLessonDTO = {
-    id: 'les-comparative-dialogue-test',
-    moduleId: 'mod-behavior-tween',
-    chapterId: 'ch-tween-p1',
-    slug: 'comparative-dialogue-mastery',
-    title: 'De-escalating the Meltdown with Co-Regulation',
-    readingMinutes: 4,
+describe('Plan 38: Multi-Modal Lesson Reader & Cognitive Ergonomics Architecture', () => {
+  const multiModalLesson: AcademyLessonDTO = {
+    id: 'les-plan-38-multi-modal',
+    moduleId: 'mod-behavior-toddler',
+    chapterId: 'ch-toddler-coregulation',
+    slug: 'amygdala-surge',
+    title: 'The Immature Amygdala: Why Toddlers Melt Down & How to Anchor Calm',
+    readingMinutes: 3,
     sortOrder: 1,
     isCompleted: false,
-    whatNotToSay: 'Calm down right now or you are losing your phone for a week!',
-    deliveryTip: 'Drop voice pitch 20%, unhurried 3-second pause, and sit down to remove perceived towering dominance.',
-    contentMarkdown: `When a tween nervous system is in acute dysregulation, instinctive parental corrections invariably trigger defiance.
+    reliefTagline: '💡 Why this is 100% normal at 24 months, not a discipline failure',
+    audioUrl: 'https://cdn.alongside.care/audio/toddler-amygdala-briefing.mp3',
+    audioDurationSeconds: 92,
+    thirtySecondGlance: {
+      coreProblem:
+        'Amygdala surge with zero prefrontal cortical regulation. Logical debate inflames the storm.',
+      immediateShift:
+        'Drop below child eye level. Silence explanations. Speak under 8 words.',
+      exactWords:
+        'Your body feels big and stormy right now. I am right here. You are safe.',
+    },
+    dialogueCards: [
+      {
+        instinctiveMistake: 'Stop crying right now! It is just a blue cup!',
+        whyItBackfires:
+          'Shames the child’s somatic reality and confirms that big feelings overwhelm parents.',
+        empatheticScript:
+          'Your body feels so big and stormy right now. It is hard when we wanted the yellow cup. I am right here. You are completely safe.',
+        deliveryTip:
+          'Drop voice 2 octaves. Sit 3 feet away at eye level. Relax your shoulders.',
+      },
+    ],
+    actionProtocolItems: [
+      {
+        id: 'step-1',
+        label: 'Somatic Eye-Level Drop',
+        detail: 'Kneel or sit before speaking to remove towering dominance.',
+      },
+      {
+        id: 'step-2',
+        label: 'The 8-Word Limit',
+        detail: 'Silence explanations until heart rate slows.',
+      },
+      {
+        id: 'step-3',
+        label: 'The Cold Water Reset',
+        detail: 'Offer a sip of cold water after the storm breaks.',
+      },
+    ],
+    contentMarkdown: `When a toddler body arches in rage over a cup color, parents experience acute anxiety.
+    
+> **Clinical Insight:** At age two, prefrontal cortex neural pathways connecting logic to emotional braking are essentially unpaved dirt roads. Toddlers borrow your nervous system through neuroception.
 
-> **Clinical Insight:** The prefrontal cortex temporarily decouples from limbic command during adrenarche emotional surges. Correcting facts while adrenaline is elevated forces the autonomic nervous system into fight-or-flight defense.
-
-### Comparative Dialogue Protocol
-
-What NOT to Say: "Calm down right now or you are losing your phone for a week!"
-What to Say Instead: "I can see how overwhelming this is right now. You are safe. We will pause and figure this out together once your nervous system feels calm."
-
-### Action Protocol Checklist
-- [ ] Drop physical eye level below the child's line of sight.
-- [ ] Take a slow 2-part physiological sigh before responding.
-- [ ] Postpone analytical problem-solving for at least 20 minutes.`,
+Take a breath. You are not a bad parent, and your child is not broken.`,
     module: {
-      id: 'mod-behavior-tween',
-      slug: 'behavior-tween-adrenarche',
-      title: 'Tween Adrenarche & Emotional Volatility',
-      developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+      id: 'mod-behavior-toddler',
+      slug: 'behavior-toddler-tantrums',
+      title: 'Toddler Emotional Storms & Co-Regulation',
+      developmentalTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
       category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
     },
     chapter: {
-      id: 'ch-tween-p1',
-      slug: 'adrenarche-and-mood-friction',
-      title: 'Chapter 1: The Adrenarche Biological Shift',
+      id: 'ch-toddler-coregulation',
+      slug: 'toddler-brain-foundations',
+      title: 'Chapter 1: The Immature Brain',
       priority: ChapterPriority.PRIORITY_1_CRITICAL,
     },
   };
 
-  describe('1. Removal of Overwhelming Comparative Dialogue', () => {
-    it('does not render the comparative dialogue table to keep the lesson calm and focused', () => {
+  describe('1. The 10-Second Relief Masthead & 90s Spoken Audio Memo Bar', () => {
+    it('renders breadcrumb navigation, chapter title, and reading timer', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
+        React.createElement(LessonReliefMasthead, {
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+          moduleTitle: 'Toddler Emotional Storms & Co-Regulation',
         })
       );
 
-      // Verify comparative dialogue table and script vault are removed to prevent overwhelm
-      expect(html).not.toContain('data-testid="comparative-dialogue-table"');
-      expect(html).not.toContain('Verbatim Script Vault');
-      expect(html).not.toContain('data-testid="what-not-to-say-box"');
-      expect(html).not.toContain('data-testid="what-to-say-instead-box"');
+      expect(html).toContain('Back to Toddler Emotional Storms');
+      expect(html).toContain('Chapter 1: The Immature Brain');
+      expect(html).toContain('Lesson 1');
+      expect(html).toContain('3 min read');
+      expect(html).toContain(
+        'The Immature Amygdala: Why Toddlers Melt Down &amp; How to Anchor Calm'
+      );
     });
 
-    it('does not render comparative dialogue even with fallback lesson data', () => {
+    it('renders the guilt-release tagline disarming parental anxiety', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: MOCK_LESSON_DETAIL_ADRENARCHE,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
+        React.createElement(LessonReliefMasthead, {
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
         })
       );
 
-      expect(html).not.toContain('data-testid="comparative-dialogue-table"');
+      expect(html).toContain('data-testid="relief-tagline"');
+      expect(html).toContain(
+        '💡 Why this is 100% normal at 24 months, not a discipline failure'
+      );
+      expect(html).toContain('Guilt-Release Pediatric Anchor');
+    });
+
+    it('renders native HTML5 audio memo player with hands-free controls', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(AudioMemoPlayer, {
+          audioUrl: multiModalLesson.audioUrl,
+          audioDurationSeconds: multiModalLesson.audioDurationSeconds,
+          title: '90s Clinician Voice Briefing',
+        })
+      );
+
+      expect(html).toContain('data-testid="audio-memo-player"');
+      expect(html).toContain('data-testid="audio-play-toggle"');
+      expect(html).toContain('data-testid="audio-skip-back"');
+      expect(html).toContain('data-testid="audio-skip-forward"');
+      expect(html).toContain('data-testid="audio-speed-toggle"');
+      expect(html).toContain('Hands-Free');
+      expect(html).toContain('1:32');
     });
   });
 
-  describe('2. Decluttering: Removal of Practice with AI Advisor Button', () => {
-    it('does not render "Practice with AI Advisor" button to eliminate user overwhelm', () => {
+  describe('2. The 30-Second Crisis Summary Drawer', () => {
+    it('renders 10-second protocol with core problem, immediate shift, and exact words', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
+        React.createElement(LessonThirtySecondGlance, {
+          glance: multiModalLesson.thirtySecondGlance,
         })
       );
 
-      expect(html).not.toContain('data-testid="practice-with-ai-advisor-btn"');
-      expect(html).not.toContain('Practice with AI Advisor');
+      expect(html).toContain('data-testid="thirty-second-glance"');
+      expect(html).toContain('data-testid="thirty-second-glance-toggle"');
+      expect(html).toContain('The Biological Trap (Core Problem)');
+      expect(html).toContain('Immediate Mindset Pivot');
+      expect(html).toContain('Exact Words to Say Right Now');
+      expect(html).toContain(
+        'Amygdala surge with zero prefrontal cortical regulation'
+      );
+      expect(html).toContain('Drop below child eye level. Silence explanations.');
+      expect(html).toContain(
+        'Your body feels big and stormy right now. I am right here. You are safe.'
+      );
     });
   });
 
-  describe('3. Action Footer & Navigation Buttons', () => {
-    it('renders "Complete Lesson" button without "& Continue"', () => {
+  describe('3. Tactile Dialogue Deck & 1-Click Script Copier', () => {
+    it('renders comparative script cards with What NOT to Say and Empathetic Script', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
+        React.createElement(LessonDialogueDeck, {
+          cards: multiModalLesson.dialogueCards,
         })
       );
 
-      expect(html).toContain('Complete Lesson');
-      expect(html).not.toContain('&amp; Continue');
-      expect(html).not.toContain('& Continue');
+      expect(html).toContain('data-testid="dialogue-deck"');
+      expect(html).toContain('What We Instinctively Say (Why It Fails)');
+      expect(html).toContain('Alongside Empathetic Script');
+      expect(html).toContain('Stop crying right now! It is just a blue cup!');
+      expect(html).toContain(
+        'Your body feels so big and stormy right now. It is hard when we wanted the yellow cup.'
+      );
+      expect(html).toContain('data-testid="copy-script-btn"');
+      expect(html).toContain('Copy Script');
+      expect(html).toContain('Save to Vault');
+      expect(html).toContain('Vocal &amp; Physical Delivery Tip:');
+    });
+  });
+
+  describe('4. Interactive 3-Step Action Checklist', () => {
+    it('renders checklist items with interactive checkboxes', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonActionChecklist, {
+          lessonId: multiModalLesson.id,
+          items: multiModalLesson.actionProtocolItems,
+        })
+      );
+
+      expect(html).toContain('data-testid="action-checklist"');
+      expect(html).toContain('Tonight&#x27;s 3-Step Action Checklist');
+      expect(html).toContain('1. Somatic Eye-Level Drop');
+      expect(html).toContain('2. The 8-Word Limit');
+      expect(html).toContain('3. The Cold Water Reset');
+      expect(html).toContain('0 of 3 completed');
+    });
+  });
+
+  describe('5. Active Tool Action Bridges', () => {
+    it('renders launcher buttons for AI Sparring, Family Pact, and Pocket Vault', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonToolBridges, {
+          scenarioPrompt: multiModalLesson.title,
+        })
+      );
+
+      expect(html).toContain('data-testid="tool-bridges"');
+      expect(html).toContain('data-testid="practice-with-ai-advisor-btn"');
+      expect(html).toContain('Practice with AI');
+      expect(html).toContain('data-testid="add-clause-pact-btn"');
+      expect(html).toContain('Add to Family Pact');
+      expect(html).toContain('data-testid="save-to-vault-btn"');
+      expect(html).toContain('Save to Vault');
+    });
+  });
+
+  describe('6. Nightstand Dim Reading Mode Toggle', () => {
+    it('renders toggle button with accessible label and state', () => {
+      const onToggle = vi.fn();
+      const html = renderToStaticMarkup(
+        React.createElement(NightstandModeToggle, {
+          isNightstandMode: false,
+          onToggle,
+        })
+      );
+
+      expect(html).toContain('data-testid="nightstand-toggle"');
+      expect(html).toContain('🌙 Nightstand Dim');
+      expect(html).toContain('aria-pressed="false"');
     });
 
-    it('renders next and previous navigation buttons in the footer', () => {
+    it('renders Normal Calm state when nightstand mode is active', () => {
+      const onToggle = vi.fn();
+      const html = renderToStaticMarkup(
+        React.createElement(NightstandModeToggle, {
+          isNightstandMode: true,
+          onToggle,
+        })
+      );
+
+      expect(html).toContain('Normal Calm');
+      expect(html).toContain('aria-pressed="true"');
+    });
+  });
+
+  describe('7. Master LessonReaderView Assembly', () => {
+    it('assembles all 8 multi-modal elements into a cohesive reader experience', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
-          prevLesson: {
-            id: 'les-prev',
-            moduleId: 'mod-behavior-tween',
-            slug: 'previous-lesson',
-            title: 'Foundational Somatic Regulation',
-            readingMinutes: 3,
-            sortOrder: 0,
-            isCompleted: true,
-          },
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+          moduleTitle: 'Toddler Emotional Storms & Co-Regulation',
           nextLesson: {
             id: 'les-next',
-            moduleId: 'mod-behavior-tween',
-            slug: 'next-lesson',
-            title: 'Repairing Ruptures Calmly',
+            moduleId: 'mod-behavior-toddler',
+            slug: 'co-regulation-anchor',
+            title: 'Borrowing Your Nervous System',
             readingMinutes: 4,
             sortOrder: 2,
             isCompleted: false,
@@ -148,68 +282,19 @@ What to Say Instead: "I can see how overwhelming this is right now. You are safe
         })
       );
 
-      expect(html).toContain('Previous Lesson');
-      expect(html).toContain('Foundational Somatic Regulation');
-      expect(html).toContain('Next Prioritized Lesson');
-      expect(html).toContain('Repairing Ruptures Calmly');
-    });
-  });
-
-  describe('4. Semantic Markdown Compilation (Headers, Lists, and Inline Bold)', () => {
-    it('renders Developmental / Clinical Insight callout card with pediatric neurobiology styling', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
-        })
-      );
-
-      expect(html).toContain('aria-label="Developmental Insight Callout"');
-      expect(html).toContain('Pediatric Neurobiology · Developmental Insight');
-      expect(html).toContain(
-        'The prefrontal cortex temporarily decouples from limbic command'
-      );
-    });
-
-    it('renders interactive action protocol checklist items', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: editorialLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
-        })
-      );
-
-      expect(html).toContain('Action Protocol Checklist');
-      expect(html).toContain("Drop physical eye level below the child&#x27;s line of sight.");
-      expect(html).toContain('Take a slow 2-part physiological sigh before responding.');
-      expect(html).toContain('Postpone analytical problem-solving for at least 20 minutes.');
-    });
-
-    it('compiles markdown headers and inline bold text in action protocols without showing raw markdown syntax', () => {
-      const rawMarkdownLesson: AcademyLessonDTO = {
-        ...editorialLesson,
-        id: 'les-raw-md-test',
-        contentMarkdown: `#### Recommended Action Protocol: 1. **Notice the Physical Baseline:** Observe autonomic nervous system indicators (breathing rate, posture, muscle tone). 2. **De-escalate Before Reasoning:** Do not offer logical debate or explanations while emotional arousal is elevated. 3. **Establish Clear, Calm Boundaries:** Pair unwavering physical boundaries with unconditional emotional warmth.`,
-      };
-
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: rawMarkdownLesson,
-          moduleSlug: 'behavior-tween-adrenarche',
-          moduleTitle: 'Tween Adrenarche & Emotional Volatility',
-        })
-      );
-
-      // Verify raw markdown is compiled and not displayed raw
-      expect(html).not.toContain('####');
-      expect(html).not.toContain('**Notice');
-      expect(html).toContain('Recommended Action Protocol');
-      expect(html).toContain('<strong class="font-bold text-slate-900">Notice the Physical Baseline:</strong>');
-      expect(html).toContain('<strong class="font-bold text-slate-900">De-escalate Before Reasoning:</strong>');
-      expect(html).toContain('<strong class="font-bold text-slate-900">Establish Clear, Calm Boundaries:</strong>');
-      expect(html).toContain('<ol class="list-decimal');
+      // Verify all canonical components exist
+      expect(html).toContain('data-testid="lesson-reader-view"');
+      expect(html).toContain('data-testid="reading-progress-bar"');
+      expect(html).toContain('data-testid="lesson-relief-masthead"');
+      expect(html).toContain('data-testid="thirty-second-glance"');
+      expect(html).toContain('data-testid="adaptive-module-container"');
+      expect(html).toContain('data-testid="dialogue-deck"');
+      expect(html).toContain('data-testid="action-checklist"');
+      expect(html).toContain('data-testid="tool-bridges"');
+      expect(html).toContain('data-testid="lesson-footer-nav"');
+      expect(html).toContain('data-testid="complete-lesson-btn"');
+      expect(html).toContain('Up Next');
+      expect(html).toContain('Borrowing Your Nervous System');
     });
   });
 });
