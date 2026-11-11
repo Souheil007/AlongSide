@@ -439,4 +439,78 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(payload.error.code).toBe('NOT_FOUND');
     });
   });
+
+  describe('Master Video Lecture Multi-Modal Integration (PLAN-39 / SOU-103)', () => {
+    it('returns videoLecture with YouTube URL, presenter, duration, and takeaways in lesson detail by ID', async () => {
+      const lessonRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/infant-somatic-soothing-sequence',
+      });
+
+      expect(lessonRes.statusCode).toBe(200);
+      const payload = lessonRes.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.lesson).toBeDefined();
+      expect(payload.data.lesson.videoLecture).toBeDefined();
+
+      const video = payload.data.lesson.videoLecture;
+      expect(video.title).toBe("The Calming Reflex & The 5 S's");
+      expect(video.presenter).toBe('Dr. Harvey Karp, MD, FAAP');
+      expect(video.channel).toBe('Happiest Baby');
+      expect(video.videoUrl).toBe('https://www.youtube.com/watch?v=f-m2YcdMdFw');
+      expect(video.durationMinutes).toBe(12);
+      expect(video.parentHook).toContain('Babies are born 3 months too soon');
+      expect(Array.isArray(video.keyTakeaways)).toBe(true);
+      expect(video.keyTakeaways.length).toBe(3);
+      expect(video.actionPrompt).toBeDefined();
+    });
+
+    it('returns videoLecture in lesson summary within module detail response', async () => {
+      const moduleRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/modules/behavior-infant-coregulation',
+      });
+
+      expect(moduleRes.statusCode).toBe(200);
+      const payload = moduleRes.json();
+      expect(payload.success).toBe(true);
+
+      const flagshipLesson = payload.data.module.lessons.find(
+        (l: any) => l.slug === 'infant-somatic-soothing-sequence'
+      );
+      expect(flagshipLesson).toBeDefined();
+      expect(flagshipLesson.videoLecture).toBeDefined();
+      expect(flagshipLesson.videoLecture.title).toBe("The Calming Reflex & The 5 S's");
+    });
+
+    it('returns videoLecture for adolescent master lecture (Dr. Matthew Walker sleep shift)', async () => {
+      const lessonRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/adolescent-tech-free-nightstand',
+      });
+
+      expect(lessonRes.statusCode).toBe(200);
+      const payload = lessonRes.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.lesson.videoLecture).toBeDefined();
+
+      const video = payload.data.lesson.videoLecture;
+      expect(video.title).toBe('How Do Teenagers Sleep Differently?');
+      expect(video.presenter).toBe('Dr. Matthew Walker, PhD');
+      expect(video.videoUrl).toBe('https://www.youtube.com/watch?v=5MuIMqhT8DM');
+      expect(video.keyTakeaways.length).toBe(3);
+    });
+
+    it('returns null/undefined videoLecture for lessons without master lectures', async () => {
+      const lessonRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/infant-temperature-and-fever-triage',
+      });
+
+      expect(lessonRes.statusCode).toBe(200);
+      const payload = lessonRes.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.lesson.videoLecture).toBeFalsy();
+    });
+  });
 });

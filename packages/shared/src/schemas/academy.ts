@@ -83,6 +83,19 @@ export const DialogueCardSchema = z.object({
 
 export type DialogueCardType = z.infer<typeof DialogueCardSchema>;
 
+export const MasterVideoLectureSchema = z.object({
+  videoUrl: z.string().url(),
+  title: z.string(),
+  presenter: z.string(),
+  channel: z.string(),
+  durationMinutes: z.number(),
+  parentHook: z.string().optional(),
+  keyTakeaways: z.array(z.string()).optional(),
+  actionPrompt: z.string().optional(),
+});
+
+export type MasterVideoLectureType = z.infer<typeof MasterVideoLectureSchema>;
+
 export const AcademyLessonSummarySchema = z.object({
   id: z.string(),
   moduleId: z.string(),
@@ -97,6 +110,7 @@ export const AcademyLessonSummarySchema = z.object({
   reliefTagline: z.string().optional(),
   whatNotToSay: z.string().optional(),
   deliveryTip: z.string().optional(),
+  videoLecture: MasterVideoLectureSchema.nullable().optional(),
 });
 
 export type AcademyLessonSummaryType = z.infer<typeof AcademyLessonSummarySchema>;
@@ -119,6 +133,7 @@ export const AcademyLessonSchema = z.object({
   dialogueCards: z.array(DialogueCardSchema).optional(),
   whatNotToSay: z.string().optional(),
   deliveryTip: z.string().optional(),
+  videoLecture: MasterVideoLectureSchema.nullable().optional(),
   module: z
     .object({
       id: z.string(),
