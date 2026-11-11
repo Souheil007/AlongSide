@@ -337,15 +337,23 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
                       lesson.videoLecture || (lesson as any).hasVideoLecture
                     );
                     return (
-                      <div
+                      <Link
                         key={lesson.id}
-                        className="flex items-baseline justify-between gap-2 py-1 border-b border-slate-200/50 last:border-0 text-slate-700"
+                        href={`/academy/${module.slug}/${lesson.slug}`}
+                        className="flex items-baseline justify-between gap-2 py-1.5 px-2 rounded hover:bg-white hover:shadow-2xs transition-all border-b border-slate-200/50 last:border-0 text-slate-700 group cursor-pointer"
                       >
                         <div className="flex items-baseline gap-1.5 min-w-0">
-                          <span className="font-mono text-[11px] font-bold text-teal-700 shrink-0">
-                            § {lesson.sortOrder}
+                          <span
+                            className={cn(
+                              'font-mono text-[11px] font-bold shrink-0',
+                              lesson.isCompleted ? 'text-emerald-700' : 'text-teal-700'
+                            )}
+                          >
+                            {lesson.isCompleted ? '✓' : `§ ${lesson.sortOrder}`}
                           </span>
-                          <span className="truncate font-medium">{lesson.title}</span>
+                          <span className="truncate font-medium group-hover:text-teal-900">
+                            {lesson.title}
+                          </span>
                           {hasLessonVideo && (
                             <span
                               data-testid={`syllabus-video-badge-${lesson.id}`}
@@ -357,10 +365,10 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
                             </span>
                           )}
                         </div>
-                        <span className="font-mono text-[10px] text-slate-400 shrink-0">
-                          {lesson.readingMinutes} min
+                        <span className="font-mono text-[10px] text-slate-400 shrink-0 group-hover:text-teal-700">
+                          {lesson.readingMinutes} min →
                         </span>
-                      </div>
+                      </Link>
                     );
                   })
                 ) : (

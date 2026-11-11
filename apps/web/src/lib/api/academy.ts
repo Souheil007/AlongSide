@@ -80,6 +80,35 @@ export async function getAcademyCategories(params?: {
   }
 }
 
+const LOCAL_STORAGE_COMPLETED_KEY = 'alongside-completed-lessons';
+
+export function getLocalCompletedLessonIds(): Set<string> {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return new Set<string>();
+  }
+  try {
+    const raw = window.localStorage.getItem(LOCAL_STORAGE_COMPLETED_KEY);
+    if (!raw) return new Set<string>();
+    const parsed = JSON.parse(raw);
+    return new Set(Array.isArray(parsed) ? parsed : []);
+  } catch {
+    return new Set<string>();
+  }
+}
+
+export function saveLocalCompletedLessonId(lessonId: string): void {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+  try {
+    const set = getLocalCompletedLessonIds();
+    set.add(lessonId);
+    window.localStorage.setItem(LOCAL_STORAGE_COMPLETED_KEY, JSON.stringify(Array.from(set)));
+  } catch {
+    // silent fallback
+  }
+}
+
 /**
  * Fetch all academy modules, optionally filtered by category and/or developmental tier.
  */
@@ -87,6 +116,7 @@ export async function getAcademyModules(params?: {
   category?: AcademyCategory | string;
   tier?: DevelopmentalTier | string;
 }): Promise<AcademyModuleDTO[]> {
+  let modules: AcademyModuleDTO[] = [];
   try {
     const queryParams: Record<string, string | undefined> = {};
     if (params?.category && params.category !== 'ALL') {
@@ -100,7 +130,7 @@ export async function getAcademyModules(params?: {
       method: 'GET',
       params: queryParams,
     });
-    return res.modules ?? [];
+    modules = res.modules ?? [];
   } catch (err) {
     // Offline fallback filtering
     let filtered = [...MOCK_ACADEMY_MODULES];
@@ -118,8 +148,29 @@ export async function getAcademyModules(params?: {
               m.developmentalTier === DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3))
       );
     }
-    return filtered;
+    modules = filtered;
   }
+
+  // Merge locally completed lessons into module list
+  const localCompleted = getLocalCompletedLessonIds();
+  if (localCompleted.size > 0 && modules.length > 0) {
+    modules = modules.map((m) => {
+      if (!m.lessons || m.lessons.length === 0) return m;
+      const updatedLessons = m.lessons.map((l) => ({
+        ...l,
+        isCompleted: l.isCompleted || localCompleted.has(l.id),
+      }));
+      const completedCount = updatedLessons.filter((l) => l.isCompleted).length;
+      return {
+        ...m,
+        lessons: updatedLessons,
+        completedLessonCount: Math.max(m.completedLessonCount, completedCount),
+        isCompleted: m.lessonCount > 0 && completedCount === m.lessonCount,
+      };
+    });
+  }
+
+  return modules;
 }
 
 /**
@@ -128,25 +179,56 @@ export async function getAcademyModules(params?: {
 export async function getAcademyModuleBySlug(
   slug: string
 ): Promise<AcademyModuleDetailDTO> {
+  let mod: AcademyModuleDetailDTO;
   try {
     const res = await apiClient<ModuleDetailResponse>(`/api/v1/academy/modules/${slug}`, {
       method: 'GET',
     });
-    return res.module;
+    mod = res.module;
   } catch (err) {
     if (slug === MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.slug) {
-      return MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR;
+      mod = MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR;
+    } else {
+      const foundModule = MOCK_ACADEMY_MODULES.find((m) => m.slug === slug);
+      if (foundModule) {
+        mod = {
+          ...foundModule,
+          chapters: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.chapters,
+          lessons: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.lessons,
+        };
+      } else {
+        throw err;
+      }
     }
-    const foundModule = MOCK_ACADEMY_MODULES.find((m) => m.slug === slug);
-    if (foundModule) {
-      return {
-        ...foundModule,
-        chapters: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.chapters,
-        lessons: MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR.lessons,
-      };
-    }
-    throw err;
   }
+
+  // Merge locally completed lessons into module detail
+  const localCompleted = getLocalCompletedLessonIds();
+  if (localCompleted.size > 0 && mod.lessons) {
+    mod.lessons = mod.lessons.map((l) => ({
+      ...l,
+      isCompleted: l.isCompleted || localCompleted.has(l.id),
+    }));
+    mod.completedLessonCount = mod.lessons.filter((l) => l.isCompleted).length;
+    mod.isCompleted = mod.lessonCount > 0 && mod.completedLessonCount === mod.lessonCount;
+    if (mod.chapters) {
+      mod.chapters = mod.chapters.map((ch) => {
+        const chLessons = (ch.lessons || []).map((l) => ({
+          ...l,
+          isCompleted: l.isCompleted || localCompleted.has(l.id),
+        }));
+        const chCompleted = chLessons.filter((l) => l.isCompleted).length;
+        return {
+          ...ch,
+          lessons: chLessons,
+          completedLessonCount: chCompleted,
+          isCompleted: chLessons.length > 0 && chCompleted === chLessons.length,
+        };
+      });
+    }
+  }
+
+  return mod;
 }
 
 /**
@@ -175,29 +257,62 @@ export async function getModuleBySlug(
 export async function getLesson(
   id: string
 ): Promise<LessonDetailResponse> {
+  let res: LessonDetailResponse;
   try {
-    return await apiClient<LessonDetailResponse>(`/api/v1/academy/lessons/${id}`, {
+    res = await apiClient<LessonDetailResponse>(`/api/v1/academy/lessons/${id}`, {
       method: 'GET',
     });
   } catch (err) {
     if (id === MOCK_LESSON_DETAIL_ADRENARCHE.id) {
-      return { lesson: MOCK_LESSON_DETAIL_ADRENARCHE };
+      res = { lesson: MOCK_LESSON_DETAIL_ADRENARCHE };
+    } else {
+      throw err;
     }
-    throw err;
   }
+
+  const localCompleted = getLocalCompletedLessonIds();
+  if (localCompleted.has(res.lesson.id)) {
+    res.lesson.isCompleted = true;
+  }
+  return res;
 }
 
 /**
- * Mark a lesson complete for the authenticated parent.
+ * Mark a lesson complete for the authenticated parent (with local storage fallback).
  */
 export async function markLessonComplete(
   id: string
 ): Promise<AcademyLessonCompletionResponseDTO> {
-  return await apiClient<AcademyLessonCompletionResponseDTO>(
-    `/api/v1/academy/lessons/${id}/complete`,
-    {
-      method: 'POST',
-      body: JSON.stringify({}),
-    }
-  );
+  // Always mark completed in local storage for instant optimistic persistence
+  saveLocalCompletedLessonId(id);
+
+  try {
+    return await apiClient<AcademyLessonCompletionResponseDTO>(
+      `/api/v1/academy/lessons/${id}/complete`,
+      {
+        method: 'POST',
+        body: JSON.stringify({}),
+      }
+    );
+  } catch (err) {
+    // If guest, offline, or session expired, return successful optimistic response
+    return {
+      progress: {
+        id: `local-progress-${id}`,
+        userId: 'local-parent',
+        lessonId: id,
+        isCompleted: true,
+        completedAt: new Date().toISOString(),
+      },
+      module: {
+        id: 'local-module',
+        slug: 'current-course',
+        title: 'Current Course',
+        lessonCount: 4,
+        completedLessonCount: 1,
+        percentComplete: 25,
+        isCompleted: false,
+      },
+    };
+  }
 }

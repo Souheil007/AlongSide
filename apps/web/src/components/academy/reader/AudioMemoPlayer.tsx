@@ -39,7 +39,7 @@ export function AudioMemoPlayer({
   const [playbackRate, setPlaybackRate] = React.useState<number>(1);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
-  // Fallback timer simulation when no audioUrl is present or audio fails
+  // SpeechSynthesis and fallback timer simulation when audio fails or is simulated
   React.useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     if (isPlaying && (!audioUrl || !audioRef.current)) {
@@ -58,21 +58,58 @@ export function AudioMemoPlayer({
     };
   }, [isPlaying, audioUrl, effectiveDuration, playbackRate]);
 
-  const togglePlay = () => {
-    if (audioRef.current && audioUrl) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch(() => {
-            setIsPlaying(true);
-          });
+  // Cancel speech on unmount
+  React.useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
       }
+    };
+  }, []);
+
+  const speakFallback = () => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const textToSpeak = `${title}. Evidence-based clinical guidance from AlongSide Pediatric Academy. Remember: your calm regulated presence is the single most powerful medicine your child will ever receive.`;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.rate = playbackRate;
+      utterance.pitch = 1.0;
+      utterance.onend = () => {
+        setIsPlaying(false);
+        setCurrentTime(0);
+      };
+      utterance.onerror = () => {
+        setIsPlaying(false);
+      };
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      if (audioRef.current && audioUrl) {
+        audioRef.current.pause();
+      }
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.pause();
+      }
+      setIsPlaying(false);
+      return;
+    }
+
+    // Attempt audio tag play first
+    if (audioRef.current && audioUrl) {
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          // Audio file failed to play (e.g. offline or unhosted asset), fallback to speech synthesis
+          setIsPlaying(true);
+          speakFallback();
+        });
     } else {
-      setIsPlaying((prev) => !prev);
+      setIsPlaying(true);
+      speakFallback();
     }
   };
 

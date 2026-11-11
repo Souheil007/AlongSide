@@ -75,40 +75,6 @@ const academyCategoryStatsSchema = {
   required: ['category', 'title', 'description', 'moduleCount', 'lessonCount'],
 };
 
-const academyModuleDtoSchema = {
-  type: 'object',
-  properties: {
-    id: { type: 'string' },
-    category: { type: 'string', enum: categoryEnum },
-    slug: { type: 'string' },
-    title: { type: 'string' },
-    summary: { type: 'string' },
-    reliefSubtitle: { type: ['string', 'null'] },
-    tonightQuickWinTitle: { type: ['string', 'null'] },
-    coverImageUrl: { type: ['string', 'null'] },
-    developmentalTier: {
-      type: 'string',
-      enum: tierEnum,
-    },
-    sortOrder: { type: 'number' },
-    lessonCount: { type: 'number' },
-    completedLessonCount: { type: 'number' },
-    isCompleted: { type: 'boolean' },
-  },
-  required: [
-    'id',
-    'category',
-    'slug',
-    'title',
-    'summary',
-    'developmentalTier',
-    'sortOrder',
-    'lessonCount',
-    'completedLessonCount',
-    'isCompleted',
-  ],
-};
-
 const masterVideoLectureSchema = {
   type: ['object', 'null'],
   properties: {
@@ -152,6 +118,46 @@ const academyLessonSummarySchema = {
     'title',
     'readingMinutes',
     'sortOrder',
+    'isCompleted',
+  ],
+};
+
+const academyModuleDtoSchema = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    category: { type: 'string', enum: categoryEnum },
+    slug: { type: 'string' },
+    title: { type: 'string' },
+    summary: { type: 'string' },
+    reliefSubtitle: { type: ['string', 'null'] },
+    tonightQuickWinTitle: { type: ['string', 'null'] },
+    coverImageUrl: { type: ['string', 'null'] },
+    developmentalTier: {
+      type: 'string',
+      enum: tierEnum,
+    },
+    sortOrder: { type: 'number' },
+    chapterCount: { type: 'number' },
+    lessonCount: { type: 'number' },
+    completedLessonCount: { type: 'number' },
+    isCompleted: { type: 'boolean' },
+    hasMasterLecture: { type: 'boolean' },
+    lessons: {
+      type: 'array',
+      items: academyLessonSummarySchema,
+    },
+  },
+  required: [
+    'id',
+    'category',
+    'slug',
+    'title',
+    'summary',
+    'developmentalTier',
+    'sortOrder',
+    'lessonCount',
+    'completedLessonCount',
     'isCompleted',
   ],
 };

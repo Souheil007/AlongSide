@@ -275,5 +275,67 @@ describe('SOU-85: Parent Academy Course Detail — Direction A2 Bite-Sized Micro
       expect(html).toContain("Tonight&#x27;s Objective");
       expect(html).toContain('Start Lesson 1');
     });
+
+    it('displays dynamic progress telemetry and remaining count matching actual course state', () => {
+      const partialModule = {
+        ...MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR,
+        isCompleted: false,
+        completedLessonCount: 1,
+        lessons: [
+          {
+            id: 'les-1',
+            moduleId: 'mod-1',
+            slug: 'lesson-1',
+            title: 'First Step',
+            readingMinutes: 4,
+            sortOrder: 1,
+            isCompleted: true,
+          },
+          {
+            id: 'les-2',
+            moduleId: 'mod-1',
+            slug: 'lesson-2',
+            title: 'Second Step',
+            readingMinutes: 5,
+            sortOrder: 2,
+            isCompleted: false,
+          },
+          {
+            id: 'les-3',
+            moduleId: 'mod-1',
+            slug: 'lesson-3',
+            title: 'Third Step',
+            readingMinutes: 3,
+            sortOrder: 3,
+            isCompleted: false,
+          },
+          {
+            id: 'les-4',
+            moduleId: 'mod-1',
+            slug: 'lesson-4',
+            title: 'Fourth Step',
+            readingMinutes: 4,
+            sortOrder: 4,
+            isCompleted: false,
+          },
+        ],
+      };
+
+      const html = renderToStaticMarkup(
+        <BiteSizedCourseDetailView
+          module={partialModule}
+          activeChild={activeChildCalibrated}
+        />
+      );
+
+      // 1 of 4 done • ~12m left
+      expect(html).toContain('1 of 4 done');
+      expect(html).toContain('~12m left');
+      // In Part 1, 2 uncompleted lessons remaining (les-2 and les-3)
+      expect(html).toContain('2 lessons remaining');
+      // Hero card opens for first uncompleted lesson (Lesson 2)
+      expect(html).toContain('2. Second Step');
+      expect(html).toContain('Start Lesson 2');
+    });
   });
 });
