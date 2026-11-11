@@ -1,19 +1,25 @@
 'use client';
 
 import * as React from 'react';
-import { Utensils, Apple, Check, ShieldCheck } from 'lucide-react';
+import { Utensils, Apple, Check, ShieldCheck, ShoppingBag, Baby } from 'lucide-react';
+import { DevelopmentalTier } from '@alongside/shared';
 import { cn } from '@/lib/utils';
 
 export interface FeedingResponsibilityWidgetProps {
+  tier?: DevelopmentalTier | string | null;
   isNightstandMode?: boolean;
   className?: string;
 }
 
 export function FeedingResponsibilityWidget({
+  tier,
   isNightstandMode = false,
   className,
 }: FeedingResponsibilityWidgetProps) {
   const [activeStep, setActiveStep] = React.useState<number>(1);
+
+  const isInfancy = tier === DevelopmentalTier.TIER_0A_INFANCY_0_1;
+  const isLateAdolescent = tier === DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18;
 
   const ladderSteps = [
     { step: 1, title: 'See & Tolerate', desc: 'Child allows food on table or plate without distress.' },
@@ -44,6 +50,31 @@ export function FeedingResponsibilityWidget({
           Zero-Pressure Mealtime
         </span>
       </div>
+
+      {/* Tier-Specific Context Banners */}
+      {isInfancy && (
+        <div
+          data-testid="infant-feeding-banner"
+          className="rounded-xl bg-amber-50/90 border border-amber-200/80 p-3.5 text-xs text-amber-950 flex items-start gap-2.5"
+        >
+          <Baby className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
+          <p className="leading-relaxed">
+            <strong className="font-semibold text-amber-900">Infant Feeding Blueprint (0–12m):</strong> Feeding on demand vs. solid introduction at 6 months. Maintain responsive breastfeeding or formula volumes, introducing high-risk allergens (peanut, egg) early during the 4–6 month immunological window.
+          </p>
+        </div>
+      )}
+
+      {isLateAdolescent && (
+        <div
+          data-testid="independent-kitchen-banner"
+          className="rounded-xl bg-emerald-50/90 border border-emerald-200/80 p-3.5 text-xs text-emerald-950 flex items-start gap-2.5"
+        >
+          <ShoppingBag className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+          <p className="leading-relaxed">
+            <strong className="font-semibold text-emerald-900">The Independent Kitchen Blueprint (16–18+):</strong> Food sovereignty before leaving home. Equip emerging adults with budgeting, grocery planning, and mastering 10 reliable wholesome meals for adult life independence.
+          </p>
+        </div>
+      )}
 
       {/* 2x2 Responsibility Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,7 +149,7 @@ export function FeedingResponsibilityWidget({
               type="button"
               onClick={() => setActiveStep(item.step)}
               className={cn(
-                'p-2.5 rounded-xl border text-left transition-all',
+                'p-2.5 rounded-xl border text-left transition-all cursor-pointer',
                 activeStep === item.step
                   ? isNightstandMode
                     ? 'bg-amber-950/60 border-amber-500 text-amber-100'

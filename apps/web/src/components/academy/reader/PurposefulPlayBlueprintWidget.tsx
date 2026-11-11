@@ -2,30 +2,89 @@
 
 import * as React from 'react';
 import { Gamepad2, CheckSquare, Square, MessageCircle, Sparkles } from 'lucide-react';
+import { DevelopmentalTier } from '@alongside/shared';
 import { cn } from '@/lib/utils';
 
 export interface PurposefulPlayBlueprintWidgetProps {
+  tier?: DevelopmentalTier | string | null;
   isNightstandMode?: boolean;
   className?: string;
 }
 
 export function PurposefulPlayBlueprintWidget({
+  tier,
   isNightstandMode = false,
   className,
 }: PurposefulPlayBlueprintWidgetProps) {
   const [checkedItems, setCheckedItems] = React.useState<Record<number, boolean>>({});
 
-  const materials = [
-    'Empty cardboard box or shoe box',
-    '2 wooden kitchen spoons or spatulas',
-    '3 different textured household items (sponge, soft cloth, dry pasta)',
-  ];
+  const { materials, languagePrompts, subtitle } = React.useMemo(() => {
+    if (tier === DevelopmentalTier.TIER_0A_INFANCY_0_1) {
+      return {
+        subtitle: 'High-Contrast Tracking & Mirror Serve-and-Return',
+        materials: [
+          'High-contrast black-and-white cards or geometric patterns',
+          'Unbreakable floor mirror (~12 inches away for tummy time)',
+          'Soft vocal turn-taking with reciprocal pauses',
+        ],
+        languagePrompts: [
+          '“Look at these bold lines! Your eyes are tracking back and forth so smoothly.”',
+          '“Who is that in the mirror? That’s you! Hello!”',
+          '“I hear your soft coo. Ooooh! Tell me more.”',
+        ],
+      };
+    }
 
-  const languagePrompts = [
-    '“Look how this surface feels bumpy compared to this smooth one! What does your hand think?”',
-    '“What do you predict will happen if we slide the spoon down the ramp?”',
-    '“Let’s test your theory together!”',
-  ];
+    if (
+      tier === DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6 ||
+      tier === DevelopmentalTier.TIER_1_AGES_8_9
+    ) {
+      return {
+        subtitle: 'Cooperative Play & Growth Mindset Scaffolding',
+        materials: [
+          'Cooperative board game or card matching set (e.g., Peaceable Kingdom)',
+          'Timer or hourglass for playful turn-taking',
+          'Growth mindset token or cheer jar',
+        ],
+        languagePrompts: [
+          '“We’re on the same team! What move helps both of us reach the goal?”',
+          '“You worked so hard trying that puzzle piece three different ways before it fit!”',
+          '“Mistakes mean our brain is growing a brand-new pathway.”',
+        ],
+      };
+    }
+
+    if (tier === DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9) {
+      return {
+        subtitle: 'Maker Exploration, Chess & Robotics Logic',
+        materials: [
+          'Standard chess board or strategic logic puzzle deck',
+          'Recycled cardboard, rubber bands & wooden skewers for maker engineering',
+          'Graph paper for game design or maze blueprints',
+        ],
+        languagePrompts: [
+          '“What do you predict will happen two moves ahead?”',
+          '“If this cardboard axle bends under load, how can we reinforce the triangular base?”',
+          '“Let’s test your hypothesis with a quick 30-second stress test!”',
+        ],
+      };
+    }
+
+    // Default baseline materials and prompts
+    return {
+      subtitle: 'Household Materials Only',
+      materials: [
+        'Empty cardboard box or shoe box',
+        '2 wooden kitchen spoons or spatulas',
+        '3 different textured household items (sponge, soft cloth, dry pasta)',
+      ],
+      languagePrompts: [
+        '“Look how this surface feels bumpy compared to this smooth one! What does your hand think?”',
+        '“What do you predict will happen if we slide the spoon down the ramp?”',
+        '“Let’s test your theory together!”',
+      ],
+    };
+  }, [tier]);
 
   const toggleMaterial = (idx: number) => {
     setCheckedItems((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -49,7 +108,7 @@ export function PurposefulPlayBlueprintWidget({
           <span>Purposeful Play · 5-Minute Low-Prep Developmental Lab</span>
         </div>
         <span className="text-xs text-teal-600 dark:text-teal-400 font-medium">
-          Household Materials Only
+          {subtitle}
         </span>
       </div>
 
@@ -72,7 +131,7 @@ export function PurposefulPlayBlueprintWidget({
                 key={i}
                 type="button"
                 onClick={() => toggleMaterial(i)}
-                className="flex items-start gap-2.5 w-full text-left text-xs leading-snug"
+                className="flex items-start gap-2.5 w-full text-left text-xs leading-snug cursor-pointer"
               >
                 <span className="text-teal-600 mt-0.5 shrink-0">
                   {checkedItems[i] ? (

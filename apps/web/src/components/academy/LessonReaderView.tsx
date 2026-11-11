@@ -11,6 +11,7 @@ import { markLessonComplete } from '@/lib/api/academy';
 import {
   ScrollProgressBar,
   LessonReliefMasthead,
+  LessonVideoPlayer,
   LessonThirtySecondGlance,
   LessonDialogueDeck,
   LessonActionChecklist,
@@ -390,6 +391,14 @@ export function LessonReaderView({
         onToggleNightstandMode={toggleNightstandMode}
       />
 
+      {/* 1.5 Master Video Lecture Player (When present) */}
+      {lesson.videoLecture && (
+        <LessonVideoPlayer
+          video={lesson.videoLecture}
+          isNightstandMode={isNightstandMode}
+        />
+      )}
+
       {/* 2. 30-Second Crisis Summary Drawer */}
       <LessonThirtySecondGlance
         glance={lesson.thirtySecondGlance}
@@ -412,6 +421,7 @@ export function LessonReaderView({
       <LessonAdaptiveModuleRenderer
         adaptiveModuleType={lesson.adaptiveModuleType}
         category={lesson.module?.category}
+        tier={lesson.module?.developmentalTier}
         isNightstandMode={isNightstandMode}
       />
 

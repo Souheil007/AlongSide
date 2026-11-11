@@ -95,6 +95,16 @@ export function LessonReliefMasthead({
             </span>
           )}
 
+          {lesson.videoLecture && (
+            <span
+              data-testid="master-lecture-badge"
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-200"
+            >
+              <span aria-hidden="true">🎬</span>
+              <span>Master Lecture</span>
+            </span>
+          )}
+
           {onToggleNightstandMode && (
             <NightstandModeToggle
               isNightstandMode={isNightstandMode}
