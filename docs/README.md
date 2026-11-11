@@ -27,7 +27,11 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`culture-digest/`**](design/culture-digest/) — Sunday Youth Culture Digest visual designs, interactive HTML prototypes (Directions A–N), and comparison matrices.
 - [**`docs/design/`**](design/) — Visual architecture benchmarks (Subframe, Vercel, Wise, Linear, Stripe).
 
-### 4. Engineering Standards (`docs/engineering-standards/`)
+### 4. Product Launch & Media Production
+- [**`launch-demo-video-production-prompt-suite.md`**](launch-demo-video-production-prompt-suite.md) — Canonical AlongSide Launch Demo Video Production Prompt Suite, Cinematographic Storyboard & Claude MCP Specification (SOU-101).
+- [**`launch-demo-video-quick-prompts.md`**](launch-demo-video-quick-prompts.md) — Quick-copy prompt cheat sheet for Claude MCP, Midjourney, Flux, and TTS audio synthesis (SOU-101).
+
+### 5. Engineering Standards (`docs/engineering-standards/`)
 Canonical human and agent engineering standards:
 - [**`codebase-design.md`**](engineering-standards/codebase-design.md) — Deep module architecture, seam catalog (7 canonical seams), test fake adapters, and leverage principles.
 - [**`frontend-skill-matrix.md`**](engineering-standards/frontend-skill-matrix.md) — Frontend autonomous skill dispatch matrix, invocation rules, and quality gates.
@@ -38,7 +42,7 @@ Canonical human and agent engineering standards:
 - [**`naming-conventions.md`**](engineering-standards/naming-conventions.md) — File, variable, database, and API route naming standards.
 - [**`documentation-standards.md`**](engineering-standards/documentation-standards.md) — Canonical rules for code comments, PR descriptions, and markdown documentation.
 
-### 5. Active AI Agent Rules (`.agents/rules/`)
+### 6. Active AI Agent Rules (`.agents/rules/`)
 Machine-enforceable rules automatically discovered and loaded into autonomous agent system prompts:
 - [**`01-plan-standards.md`**](../.agents/rules/01-plan-standards.md) — Plan syntax & mandatory structure.
 - [**`02-git-commits.md`**](../.agents/rules/02-git-commits.md) — Conventional commit rules & banned anti-patterns.
@@ -48,7 +52,7 @@ Machine-enforceable rules automatically discovered and loaded into autonomous ag
 - [**`06-codebase-design.md`**](../.agents/rules/06-codebase-design.md) — Deep modules, seam catalog, dependency acceptance, and the Deletion Test.
 - [**`07-backend-skill-matrix.md`**](../.agents/rules/07-backend-skill-matrix.md) — Backend autonomous skill invocation matrix, Fastify plugin encapsulation, schema serialization, Node.js v22 runtime patterns, and `.inject()` testing.
 
-### 6. Whole-Child Research & Knowledge Base (`docs/research/`)
+### 7. Whole-Child Research & Knowledge Base (`docs/research/`)
 Authored by the Research Engineer to de-risk engineering and ground Alongside in whole-child developmental psychology, neurobiology, and authentic parent sentiment:
 - [**`docs/research/README.md`**](research/README.md) — **Master Index of the 8 Lifespan Developmental Tier Research Vaults** (48 canonical research documents across all ages from 0 to 18).
 - [**`tier-0a-infancy-0-1/`**](research/tier-0a-infancy-0-1/) — Infancy (Ages 0–1 / 0–12m): Somatic Regulation, Sleep Architecture & Feeding Foundations.
