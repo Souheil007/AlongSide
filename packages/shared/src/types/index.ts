@@ -263,6 +263,34 @@ export interface AcademyModuleDTO {
   lessons?: AcademyLessonSummaryDTO[];
 }
 
+export type AdaptiveModuleType =
+  | 'SOMATIC_RESET'
+  | 'CIRCADIAN_TIMELINE'
+  | 'FEEDING_LADDER'
+  | 'PLAY_BLUEPRINT'
+  | 'PACT_CLAUSE';
+
+export interface ThirtySecondGlanceDTO {
+  coreProblem: string;
+  immediateShift: string;
+  exactWords: string;
+}
+export type ThirtySecondGlance = ThirtySecondGlanceDTO;
+
+export interface DialogueCardDTO {
+  instinctiveMistake: string;
+  whyItBackfires: string;
+  empatheticScript: string;
+  deliveryTip: string;
+}
+export type DialogueCardItem = DialogueCardDTO;
+
+export interface ActionProtocolItem {
+  id: string;
+  label: string;
+  detail?: string;
+}
+
 export interface AcademyLessonSummaryDTO {
   id: string;
   moduleId: string;
@@ -274,6 +302,7 @@ export interface AcademyLessonSummaryDTO {
   isCompleted: boolean;
   audioUrl?: string;
   audioDurationSeconds?: number;
+  reliefTagline?: string;
   whatNotToSay?: string;
   deliveryTip?: string;
 }
@@ -290,6 +319,12 @@ export interface AcademyLessonDTO {
   isCompleted: boolean;
   audioUrl?: string;
   audioDurationSeconds?: number;
+  reliefTagline?: string;
+  thirtySecondGlance?: ThirtySecondGlanceDTO;
+  adaptiveModuleType?: AdaptiveModuleType;
+  dialogueCards?: DialogueCardDTO[];
+  actionProtocolItems?: ActionProtocolItem[];
+  adaptiveModulePayload?: Record<string, unknown> | null;
   whatNotToSay?: string;
   deliveryTip?: string;
   module?: {
