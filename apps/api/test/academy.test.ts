@@ -215,6 +215,21 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(lesson.module).toBeDefined();
       expect(lesson.module.slug).toBe('behavior-tween-adrenarche');
       expect(lesson.module.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
+
+      // PLAN-38 / SOU-99 Enriched DTO Fields
+      expect(typeof lesson.reliefTagline).toBe('string');
+      expect(lesson.reliefTagline.length).toBeGreaterThan(0);
+      expect(lesson.adaptiveModuleType).toBe('SOMATIC_RESET');
+      expect(lesson.thirtySecondGlance).toBeDefined();
+      expect(typeof lesson.thirtySecondGlance.coreProblem).toBe('string');
+      expect(typeof lesson.thirtySecondGlance.immediateShift).toBe('string');
+      expect(typeof lesson.thirtySecondGlance.exactWords).toBe('string');
+      expect(Array.isArray(lesson.dialogueCards)).toBe(true);
+      expect(lesson.dialogueCards.length).toBeGreaterThan(0);
+      expect(lesson.dialogueCards[0]).toHaveProperty('instinctiveMistake');
+      expect(lesson.dialogueCards[0]).toHaveProperty('whyItBackfires');
+      expect(lesson.dialogueCards[0]).toHaveProperty('empatheticScript');
+      expect(lesson.dialogueCards[0]).toHaveProperty('deliveryTip');
     });
 
     it('returns 404 NOT_FOUND for non-existent lesson id', async () => {
@@ -227,6 +242,90 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const payload = response.json();
       expect(payload.success).toBe(false);
       expect(payload.error.code).toBe('NOT_FOUND');
+    });
+
+    it('resolves category-specific adaptive module types across all 5 canonical categories', async () => {
+      // 1. Behavior -> SOMATIC_RESET
+      const resBehavior = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/infant-somatic-soothing-sequence',
+      });
+      expect(resBehavior.statusCode).toBe(200);
+      expect(resBehavior.json().data.lesson.adaptiveModuleType).toBe('SOMATIC_RESET');
+
+      // 2. Health & Sleep -> CIRCADIAN_TIMELINE
+      const resHealth = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/infant-safe-sleep-and-circadian-reset',
+      });
+      expect(resHealth.statusCode).toBe(200);
+      expect(resHealth.json().data.lesson.adaptiveModuleType).toBe('CIRCADIAN_TIMELINE');
+
+      // 3. Nutrition -> FEEDING_LADDER
+      const resNutrition = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/early-allergen-introduction-science',
+      });
+      expect(resNutrition.statusCode).toBe(200);
+      expect(resNutrition.json().data.lesson.adaptiveModuleType).toBe('FEEDING_LADDER');
+
+      // 4. Play & Development -> PLAY_BLUEPRINT
+      const resPlay = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/tummy-time-without-tears',
+      });
+      expect(resPlay.statusCode).toBe(200);
+      expect(resPlay.json().data.lesson.adaptiveModuleType).toBe('PLAY_BLUEPRINT');
+
+      // 5. Digital Health -> PACT_CLAUSE
+      const resDigital = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/background-tv-and-acoustic-smog',
+      });
+      expect(resDigital.statusCode).toBe(200);
+      expect(resDigital.json().data.lesson.adaptiveModuleType).toBe('PACT_CLAUSE');
+    });
+
+    it('GET /api/v1/academy/lessons/by-slug/:slug retrieves enriched lesson by slug', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/tween-non-reactive-neutral-stance',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      expect(payload.data.lesson.slug).toBe('tween-non-reactive-neutral-stance');
+      expect(payload.data.lesson.reliefTagline).toBeDefined();
+      expect(payload.data.lesson.thirtySecondGlance).toBeDefined();
+      expect(payload.data.lesson.dialogueCards.length).toBeGreaterThan(0);
+    });
+
+    it('GET /api/v1/academy/lessons/by-slug/:slug returns 404 for unknown slug', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/non-existent-slug-xyz',
+      });
+
+      expect(response.statusCode).toBe(404);
+      expect(response.json().success).toBe(false);
+      expect(response.json().error.code).toBe('NOT_FOUND');
+    });
+
+    it('GET /api/v1/academy/modules/:slug includes reliefTagline in lesson summaries', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/modules/tween-neurobiology-and-adrenarche',
+      });
+
+      expect(response.statusCode).toBe(200);
+      const payload = response.json();
+      expect(payload.success).toBe(true);
+      const lessons = payload.data.module.lessons;
+      expect(Array.isArray(lessons)).toBe(true);
+      expect(lessons.length).toBeGreaterThan(0);
+      expect(typeof lessons[0].reliefTagline).toBe('string');
+      expect(lessons[0].reliefTagline.length).toBeGreaterThan(0);
     });
   });
 

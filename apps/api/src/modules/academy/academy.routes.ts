@@ -122,6 +122,7 @@ const academyLessonSummarySchema = {
     isCompleted: { type: 'boolean' },
     audioUrl: { type: ['string', 'null'] },
     audioDurationSeconds: { type: ['number', 'null'] },
+    reliefTagline: { type: ['string', 'null'] },
     whatNotToSay: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
   },
@@ -185,6 +186,40 @@ const academyModuleDetailDtoSchema = {
   required: [...academyModuleDtoSchema.required, 'chapters', 'lessons'],
 };
 
+const adaptiveModuleTypeEnum = [
+  'SOMATIC_RESET',
+  'CIRCADIAN_TIMELINE',
+  'FEEDING_LADDER',
+  'PLAY_BLUEPRINT',
+  'PACT_CLAUSE',
+];
+
+const dialogueCardSchema = {
+  type: 'object',
+  properties: {
+    instinctiveMistake: { type: 'string' },
+    whyItBackfires: { type: 'string' },
+    empatheticScript: { type: 'string' },
+    deliveryTip: { type: 'string' },
+  },
+  required: [
+    'instinctiveMistake',
+    'whyItBackfires',
+    'empatheticScript',
+    'deliveryTip',
+  ],
+};
+
+const thirtySecondGlanceSchema = {
+  type: 'object',
+  properties: {
+    coreProblem: { type: 'string' },
+    immediateShift: { type: 'string' },
+    exactWords: { type: 'string' },
+  },
+  required: ['coreProblem', 'immediateShift', 'exactWords'],
+};
+
 const academyLessonDtoSchema = {
   type: 'object',
   properties: {
@@ -199,6 +234,20 @@ const academyLessonDtoSchema = {
     isCompleted: { type: 'boolean' },
     audioUrl: { type: ['string', 'null'] },
     audioDurationSeconds: { type: ['number', 'null'] },
+    reliefTagline: { type: ['string', 'null'] },
+    thirtySecondGlance: {
+      type: ['object', 'null'],
+      properties: thirtySecondGlanceSchema.properties,
+      required: thirtySecondGlanceSchema.required,
+    },
+    adaptiveModuleType: {
+      type: ['string', 'null'],
+      enum: adaptiveModuleTypeEnum,
+    },
+    dialogueCards: {
+      type: ['array', 'null'],
+      items: dialogueCardSchema,
+    },
     whatNotToSay: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
     module: {
@@ -414,6 +463,41 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
       },
     },
     controller.getModuleBySlug.bind(controller)
+  );
+
+  // GET /lessons/by-slug/:slug - Get Lesson Content by Slug
+  fastify.get<{ Params: { slug: string } }>(
+    '/lessons/by-slug/:slug',
+    {
+      preHandler: [optionalAuth],
+      schema: {
+        params: {
+          type: 'object',
+          required: ['slug'],
+          properties: {
+            slug: { type: 'string', minLength: 1 },
+          },
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean', enum: [true] },
+              data: {
+                type: 'object',
+                properties: {
+                  lesson: academyLessonDtoSchema,
+                },
+                required: ['lesson'],
+              },
+            },
+            required: ['success', 'data'],
+          },
+          404: errorResponseSchema,
+        },
+      },
+    },
+    controller.getLessonBySlug.bind(controller)
   );
 
   // GET /lessons/:id - Get Lesson Content by ID

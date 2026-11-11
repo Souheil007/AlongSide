@@ -79,6 +79,25 @@ export class AcademyController {
     });
   }
 
+  async getLessonBySlug(
+    request: FastifyRequest<{
+      Params: { slug: string };
+    }>,
+    reply: FastifyReply
+  ): Promise<void> {
+    const { slug } = request.params;
+    const userId = request.user?.id;
+
+    const lesson = await this.service.getLessonBySlug(slug, userId);
+
+    return reply.status(200).send({
+      success: true,
+      data: {
+        lesson,
+      },
+    });
+  }
+
   async markLessonComplete(
     request: FastifyRequest<{
       Params: { id: string };

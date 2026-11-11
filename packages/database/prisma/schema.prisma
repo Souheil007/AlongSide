@@ -430,6 +430,10 @@ model AcademyLesson {
   audioDurationSeconds Int?
   whatNotToSay       String?
   deliveryTip        String?
+  reliefTagline      String?
+  thirtySecondGlance Json?
+  adaptiveModuleType String?
+  dialogueCards      Json?
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 

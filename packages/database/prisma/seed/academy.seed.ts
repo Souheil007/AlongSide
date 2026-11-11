@@ -1,5 +1,16 @@
 import type { PrismaClient } from '@prisma/client';
-import { AcademyCategory, ChapterPriority, DevelopmentalTier } from '@alongside/shared';
+import {
+  AcademyCategory,
+  ChapterPriority,
+  DevelopmentalTier,
+  type AdaptiveModuleType,
+  type DialogueCardDTO,
+  type ThirtySecondGlanceDTO,
+  resolveAdaptiveModuleType,
+  resolveReliefTagline,
+  parseDialogueCards,
+  parseThirtySecondGlance,
+} from '@alongside/shared';
 
 export interface AcademyLessonSeedData {
   slug: string;
@@ -9,6 +20,10 @@ export interface AcademyLessonSeedData {
   sortOrder: number;
   audioUrl?: string | null;
   audioDurationSeconds?: number | null;
+  reliefTagline?: string | null;
+  thirtySecondGlance?: ThirtySecondGlanceDTO | null;
+  adaptiveModuleType?: AdaptiveModuleType | null;
+  dialogueCards?: DialogueCardDTO[] | null;
   whatNotToSay?: string | null;
   deliveryTip?: string | null;
 }
@@ -36,7 +51,47 @@ export interface AcademyModuleSeedData {
   lessons: AcademyLessonSeedData[];
 }
 
-export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
+export function enrichAcademySeedModules(
+  modules: AcademyModuleSeedData[]
+): AcademyModuleSeedData[] {
+  for (const mod of modules) {
+    for (const chapter of mod.chapters) {
+      for (const lesson of chapter.lessons) {
+        if (!lesson.adaptiveModuleType) {
+          lesson.adaptiveModuleType = resolveAdaptiveModuleType(mod.category);
+        }
+        if (!lesson.reliefTagline) {
+          lesson.reliefTagline = resolveReliefTagline(
+            lesson.title,
+            mod.category
+          );
+        }
+        if (!lesson.dialogueCards || lesson.dialogueCards.length === 0) {
+          lesson.dialogueCards = parseDialogueCards(
+            lesson.contentMarkdown,
+            lesson.deliveryTip
+          );
+        }
+        if (!lesson.thirtySecondGlance) {
+          lesson.thirtySecondGlance = parseThirtySecondGlance(
+            lesson.contentMarkdown,
+            lesson.dialogueCards,
+            lesson.title
+          );
+        }
+        if (!lesson.whatNotToSay && lesson.dialogueCards[0]) {
+          lesson.whatNotToSay = lesson.dialogueCards[0].instinctiveMistake;
+        }
+        if (!lesson.deliveryTip && lesson.dialogueCards[0]) {
+          lesson.deliveryTip = lesson.dialogueCards[0].deliveryTip;
+        }
+      }
+    }
+  }
+  return modules;
+}
+
+const RAW_ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   {
     slug: "behavior-infant-coregulation",
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
@@ -5239,6 +5294,9 @@ export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] = [
   }
 ];
 
+export const ACADEMY_SEED_MODULES: AcademyModuleSeedData[] =
+  enrichAcademySeedModules(RAW_ACADEMY_SEED_MODULES);
+
 export async function seedAcademy(prisma: PrismaClient): Promise<void> {
   console.log('[Seed] Seeding Parent Intelligence Academy modules & lessons...');
 
@@ -5308,6 +5366,14 @@ export async function seedAcademy(prisma: PrismaClient): Promise<void> {
             sortOrder: lesson.sortOrder,
             audioUrl: lesson.audioUrl ?? null,
             audioDurationSeconds: lesson.audioDurationSeconds ?? null,
+            reliefTagline: lesson.reliefTagline ?? null,
+            thirtySecondGlance: lesson.thirtySecondGlance
+              ? (lesson.thirtySecondGlance as any)
+              : null,
+            adaptiveModuleType: lesson.adaptiveModuleType ?? null,
+            dialogueCards: lesson.dialogueCards
+              ? (lesson.dialogueCards as any)
+              : null,
             whatNotToSay: lesson.whatNotToSay ?? null,
             deliveryTip: lesson.deliveryTip ?? null,
           },
@@ -5321,6 +5387,14 @@ export async function seedAcademy(prisma: PrismaClient): Promise<void> {
             sortOrder: lesson.sortOrder,
             audioUrl: lesson.audioUrl ?? null,
             audioDurationSeconds: lesson.audioDurationSeconds ?? null,
+            reliefTagline: lesson.reliefTagline ?? null,
+            thirtySecondGlance: lesson.thirtySecondGlance
+              ? (lesson.thirtySecondGlance as any)
+              : null,
+            adaptiveModuleType: lesson.adaptiveModuleType ?? null,
+            dialogueCards: lesson.dialogueCards
+              ? (lesson.dialogueCards as any)
+              : null,
             whatNotToSay: lesson.whatNotToSay ?? null,
             deliveryTip: lesson.deliveryTip ?? null,
           },
