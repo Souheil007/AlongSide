@@ -6,11 +6,15 @@ import {
   type AdaptiveModuleType,
   type DialogueCardDTO,
   type ThirtySecondGlanceDTO,
+  type MasterVideoLectureDTO,
   resolveAdaptiveModuleType,
   resolveReliefTagline,
   parseDialogueCards,
   parseThirtySecondGlance,
 } from '@alongside/shared';
+import { MASTER_VIDEO_LECTURES_BY_LESSON_SLUG } from './academyVideos.seed.js';
+
+export { MASTER_VIDEO_LECTURES_BY_LESSON_SLUG } from './academyVideos.seed.js';
 
 export interface AcademyLessonSeedData {
   slug: string;
@@ -26,6 +30,7 @@ export interface AcademyLessonSeedData {
   dialogueCards?: DialogueCardDTO[] | null;
   whatNotToSay?: string | null;
   deliveryTip?: string | null;
+  videoLecture?: MasterVideoLectureDTO | null;
 }
 
 export interface AcademyChapterSeedData {
@@ -85,6 +90,50 @@ export function enrichAcademySeedModules(
         if (!lesson.deliveryTip && lesson.dialogueCards[0]) {
           lesson.deliveryTip = lesson.dialogueCards[0].deliveryTip;
         }
+        if (
+          !lesson.videoLecture &&
+          MASTER_VIDEO_LECTURES_BY_LESSON_SLUG[lesson.slug]
+        ) {
+          lesson.videoLecture =
+            MASTER_VIDEO_LECTURES_BY_LESSON_SLUG[lesson.slug];
+        }
+      }
+    }
+    for (const lesson of mod.lessons) {
+      if (!lesson.adaptiveModuleType) {
+        lesson.adaptiveModuleType = resolveAdaptiveModuleType(mod.category);
+      }
+      if (!lesson.reliefTagline) {
+        lesson.reliefTagline = resolveReliefTagline(
+          lesson.title,
+          mod.category
+        );
+      }
+      if (!lesson.dialogueCards || lesson.dialogueCards.length === 0) {
+        lesson.dialogueCards = parseDialogueCards(
+          lesson.contentMarkdown,
+          lesson.deliveryTip
+        );
+      }
+      if (!lesson.thirtySecondGlance) {
+        lesson.thirtySecondGlance = parseThirtySecondGlance(
+          lesson.contentMarkdown,
+          lesson.dialogueCards,
+          lesson.title
+        );
+      }
+      if (!lesson.whatNotToSay && lesson.dialogueCards[0]) {
+        lesson.whatNotToSay = lesson.dialogueCards[0].instinctiveMistake;
+      }
+      if (!lesson.deliveryTip && lesson.dialogueCards[0]) {
+        lesson.deliveryTip = lesson.dialogueCards[0].deliveryTip;
+      }
+      if (
+        !lesson.videoLecture &&
+        MASTER_VIDEO_LECTURES_BY_LESSON_SLUG[lesson.slug]
+      ) {
+        lesson.videoLecture =
+          MASTER_VIDEO_LECTURES_BY_LESSON_SLUG[lesson.slug];
       }
     }
   }
@@ -5376,6 +5425,9 @@ export async function seedAcademy(prisma: PrismaClient): Promise<void> {
               : null,
             whatNotToSay: lesson.whatNotToSay ?? null,
             deliveryTip: lesson.deliveryTip ?? null,
+            videoLecture: lesson.videoLecture
+              ? (lesson.videoLecture as any)
+              : null,
           },
           create: {
             moduleId: moduleRecord.id,
@@ -5397,6 +5449,9 @@ export async function seedAcademy(prisma: PrismaClient): Promise<void> {
               : null,
             whatNotToSay: lesson.whatNotToSay ?? null,
             deliveryTip: lesson.deliveryTip ?? null,
+            videoLecture: lesson.videoLecture
+              ? (lesson.videoLecture as any)
+              : null,
           },
         });
       }

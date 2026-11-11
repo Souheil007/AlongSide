@@ -21,6 +21,7 @@ import {
   type AdaptiveModuleType,
   type DialogueCardDTO,
   type ThirtySecondGlanceDTO,
+  type MasterVideoLectureDTO,
   getEquivalentTiers,
   formatCourseTitle,
   resolveAdaptiveModuleType,
@@ -195,6 +196,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
             audioDurationSeconds: true,
             whatNotToSay: true,
             deliveryTip: true,
+            videoLecture: true,
           },
         },
       },
@@ -235,6 +237,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
           audioDurationSeconds: l.audioDurationSeconds ?? undefined,
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
+          videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
         }));
 
       return {
@@ -310,6 +313,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       audioDurationSeconds: l.audioDurationSeconds ?? undefined,
       whatNotToSay: l.whatNotToSay ?? undefined,
       deliveryTip: l.deliveryTip ?? undefined,
+      videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
     }));
 
     const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
@@ -326,6 +330,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         audioDurationSeconds: l.audioDurationSeconds ?? undefined,
         whatNotToSay: l.whatNotToSay ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
+        videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
       }));
 
       const chLessonCount = chLessons.length;
@@ -508,6 +513,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         (dialogueCards[0]?.instinctiveMistake || undefined),
       deliveryTip:
         lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || undefined),
+      videoLecture: (lesson.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
       module: {
         id: lesson.module.id,
         slug: lesson.module.slug,
@@ -650,6 +656,7 @@ interface InMemoryLesson {
   dialogueCards?: DialogueCardDTO[] | null;
   whatNotToSay?: string | null;
   deliveryTip?: string | null;
+  videoLecture?: MasterVideoLectureDTO | null;
 }
 
 export class InMemoryAcademyRepository implements AcademyRepository {
@@ -731,6 +738,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
               (dialogueCards[0]?.instinctiveMistake || null),
             deliveryTip:
               lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || null),
+            videoLecture: (lesson.videoLecture as MasterVideoLectureDTO) ?? null,
           };
           this.lessons.set(lessonId, lessonRecord);
         }
@@ -828,6 +836,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           audioDurationSeconds: l.audioDurationSeconds ?? undefined,
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
+          videoLecture: l.videoLecture ?? undefined,
         };
       });
 
@@ -898,6 +907,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
             l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
+          videoLecture: l.videoLecture ?? undefined,
         };
       });
 
@@ -941,6 +951,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
         whatNotToSay: l.whatNotToSay ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
+        videoLecture: l.videoLecture ?? undefined,
       };
     });
 
@@ -1056,6 +1067,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         (dialogueCards[0]?.instinctiveMistake || undefined),
       deliveryTip:
         lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || undefined),
+      videoLecture: (lesson.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
       module: {
         id: mod.id,
         slug: moduleSlug,

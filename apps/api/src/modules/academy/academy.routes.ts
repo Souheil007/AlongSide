@@ -109,6 +109,24 @@ const academyModuleDtoSchema = {
   ],
 };
 
+const masterVideoLectureSchema = {
+  type: ['object', 'null'],
+  properties: {
+    videoUrl: { type: 'string' },
+    title: { type: 'string' },
+    presenter: { type: 'string' },
+    channel: { type: 'string' },
+    durationMinutes: { type: 'number' },
+    parentHook: { type: ['string', 'null'] },
+    keyTakeaways: {
+      type: ['array', 'null'],
+      items: { type: 'string' },
+    },
+    actionPrompt: { type: ['string', 'null'] },
+  },
+  required: ['videoUrl', 'title', 'presenter', 'channel', 'durationMinutes'],
+};
+
 const academyLessonSummarySchema = {
   type: 'object',
   properties: {
@@ -125,6 +143,7 @@ const academyLessonSummarySchema = {
     reliefTagline: { type: ['string', 'null'] },
     whatNotToSay: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
+    videoLecture: masterVideoLectureSchema,
   },
   required: [
     'id',
@@ -250,6 +269,7 @@ const academyLessonDtoSchema = {
     },
     whatNotToSay: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
+    videoLecture: masterVideoLectureSchema,
     module: {
       type: 'object',
       properties: {
