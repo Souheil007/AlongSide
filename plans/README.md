@@ -57,6 +57,7 @@ graph TD
         P36["36: Early Childhood Tier 0 Decomposition & Sub-Tranches (Joint)"]
         P37["37: Academy Editorial Course Content & Rich Preview Architecture (Joint)"]
         P38["38: Academy Lesson Experience & Multi-Modal Reader Architecture (Joint)"]
+        P39["39: Academy 8-Tier Curriculum Synthesis & Video Integration (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -124,7 +125,8 @@ graph TD
     P35 --> P36
     P36 --> P37
     P37 --> P38
-    P38 --> P14
+    P38 --> P39
+    P39 --> P14
     P36 --> P14
     P35 --> P14
     P33 --> P14
@@ -176,6 +178,7 @@ graph TD
 | [**`36-early-childhood-tier-decomposition-and-sub-tranches.md`**](36-early-childhood-tier-decomposition-and-sub-tranches.md) | Early Childhood Tier 0 Decomposition & Sub-Tranche Engine | **Joint (FE & BE)** | PLAN-30, PLAN-33, PLAN-35 | Approved (Ready for Delegation) |
 | [**`37-parent-intelligence-academy-course-editorial-and-preview-architecture.md`**](37-parent-intelligence-academy-course-editorial-and-preview-architecture.md) | Academy Editorial Course Content & Rich Preview Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-35 | Approved (Ready for Delegation) |
 | [**`38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md`**](38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md) | Academy Lesson Experience & Multi-Modal Reader Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-37 | Approved (Ready for Delegation) |
+| [**`39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md`**](39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md) | Academy 8-Tier Curriculum Synthesis & Master Video Lecture Integration | **Joint (FE & BE)** | PLAN-36, PLAN-37, PLAN-38 | Approved (Ready for Delegation) |
 
 ---
 
