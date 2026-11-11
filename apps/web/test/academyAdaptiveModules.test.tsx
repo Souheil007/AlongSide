@@ -131,20 +131,21 @@ describe('Plan 38: Category-Specific Adaptive Lesson Modules', () => {
       expect(htmlCategory).toContain('data-testid="somatic-breath-widget"');
     });
 
-    it('dispatches CircadianTimelineWidget for CIRCADIAN_TIMELINE or HEALTH_AND_WELLNESS', () => {
+    it('omits CircadianTimelineWidget for CIRCADIAN_TIMELINE or HEALTH_AND_WELLNESS per user mandate', () => {
       const htmlExplicit = renderToStaticMarkup(
         React.createElement(LessonAdaptiveModuleRenderer, {
           adaptiveModuleType: 'CIRCADIAN_TIMELINE',
         })
       );
-      expect(htmlExplicit).toContain('data-testid="circadian-timeline-widget"');
+      // CircadianTimelineWidget permanently retired from lesson courses
+      expect(htmlExplicit).toBe('');
 
       const htmlCategory = renderToStaticMarkup(
         React.createElement(LessonAdaptiveModuleRenderer, {
           category: AcademyCategory.HEALTH_AND_WELLNESS,
         })
       );
-      expect(htmlCategory).toContain('data-testid="circadian-timeline-widget"');
+      expect(htmlCategory).toBe('');
     });
 
     it('dispatches FeedingResponsibilityWidget for FEEDING_LADDER or NUTRITION_AND_FEEDING', () => {

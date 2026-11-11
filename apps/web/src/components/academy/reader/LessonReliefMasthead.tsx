@@ -14,7 +14,6 @@ import {
 } from '@alongside/shared';
 import { getCategoryBadgeInfo } from '../ModuleCard';
 import { getPriorityTheme } from '../ChapterRoadmapView';
-import { AudioMemoPlayer } from './AudioMemoPlayer';
 import { NightstandModeToggle } from './NightstandModeToggle';
 import { cn } from '@/lib/utils';
 
@@ -45,9 +44,6 @@ export function LessonReliefMasthead({
     ? getPriorityTheme(lesson.chapter.priority)
     : null;
 
-  const effectiveTagline =
-    lesson.reliefTagline ||
-    'Why this behavioral reaction is 100% normal developmental biology, not a parenting failure.';
 
   return (
     <div
@@ -165,35 +161,6 @@ export function LessonReliefMasthead({
         >
           {lesson.title}
         </h1>
-
-        {/* Guilt-Release Tagline Banner */}
-        <div
-          data-testid="relief-tagline"
-          className={cn(
-            'flex items-start gap-2.5 rounded-xl border p-3.5 text-xs sm:text-sm font-medium leading-relaxed transition-colors',
-            isNightstandMode
-              ? 'bg-amber-950/30 border-amber-900/60 text-amber-200/90'
-              : 'bg-gradient-to-r from-emerald-50/90 via-teal-50/70 to-emerald-50/50 border-emerald-200/80 text-emerald-900'
-          )}
-        >
-          <span className="mt-0.5 shrink-0 text-base">💡</span>
-          <div>
-            <span className="font-bold uppercase tracking-wider text-[11px] block mb-0.5 text-emerald-700 dark:text-amber-400">
-              Guilt-Release Pediatric Anchor
-            </span>
-            <p className={cn(isNightstandMode ? 'text-amber-100/90' : 'text-slate-800')}>
-              {effectiveTagline}
-            </p>
-          </div>
-        </div>
-
-        {/* Embedded Native Audio Memo Player */}
-        <AudioMemoPlayer
-          audioUrl={lesson.audioUrl}
-          audioDurationSeconds={lesson.audioDurationSeconds}
-          title={`Listen: 90s Spoken Memo for Lesson ${lesson.sortOrder}`}
-          isNightstandMode={isNightstandMode}
-        />
       </header>
     </div>
   );

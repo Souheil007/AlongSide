@@ -119,7 +119,7 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       );
     });
 
-    it('renders the guilt-release tagline disarming parental anxiety', () => {
+    it('does not display redundant guilt-release banner in the masthead', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReliefMasthead, {
           lesson: multiModalLesson,
@@ -127,11 +127,9 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
         })
       );
 
-      expect(html).toContain('data-testid="relief-tagline"');
-      expect(html).toContain(
-        '💡 Why this is 100% normal at 24 months, not a discipline failure'
-      );
-      expect(html).toContain('Guilt-Release Pediatric Anchor');
+      // Decluttered masthead: guilt-release anchor removed per user direction
+      expect(html).not.toContain('data-testid="relief-tagline"');
+      expect(html).not.toContain('Guilt-Release Pediatric Anchor');
     });
 
     it('renders native HTML5 audio memo player with hands-free controls', () => {
@@ -287,6 +285,8 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain('data-testid="reading-progress-bar"');
       expect(html).toContain('data-testid="lesson-relief-masthead"');
       expect(html).toContain('data-testid="thirty-second-glance"');
+      expect(html).toContain('data-testid="lesson-editorial-section"');
+      expect(html).toContain('data-testid="lesson-narration-player"');
       expect(html).toContain('data-testid="adaptive-module-container"');
       expect(html).toContain('data-testid="dialogue-deck"');
       expect(html).toContain('data-testid="action-checklist"');

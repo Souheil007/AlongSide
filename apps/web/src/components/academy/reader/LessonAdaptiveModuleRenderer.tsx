@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { AcademyCategory, DevelopmentalTier, type AdaptiveModuleType } from '@alongside/shared';
 import { SomaticBreathWidget } from './SomaticBreathWidget';
-import { CircadianTimelineWidget } from './CircadianTimelineWidget';
 import { FeedingResponsibilityWidget } from './FeedingResponsibilityWidget';
 import { PurposefulPlayBlueprintWidget } from './PurposefulPlayBlueprintWidget';
 import { PactClauseBridgeWidget } from './PactClauseBridgeWidget';
@@ -25,15 +24,20 @@ export function LessonAdaptiveModuleRenderer({
   className,
 }: LessonAdaptiveModuleRendererProps) {
   // Determine effective module type by explicit type first, then by category
-  const effectiveType: AdaptiveModuleType | string = React.useMemo(() => {
-    if (adaptiveModuleType) return adaptiveModuleType;
+  // Note: Per user direction, CircadianTimelineWidget / Pediatric Red Flags is removed from courses
+  const effectiveType: AdaptiveModuleType | string | null = React.useMemo(() => {
+    if (adaptiveModuleType) {
+      if (adaptiveModuleType === 'CIRCADIAN_TIMELINE') return null;
+      return adaptiveModuleType;
+    }
 
     if (category) {
       switch (category) {
         case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
           return 'SOMATIC_RESET';
         case AcademyCategory.HEALTH_AND_WELLNESS:
-          return 'CIRCADIAN_TIMELINE';
+          // Circadian timeline & red flags permanently retired from lesson courses
+          return null;
         case AcademyCategory.NUTRITION_AND_FEEDING:
           return 'FEEDING_LADDER';
         case AcademyCategory.DEVELOPMENT_AND_PLAY:
@@ -41,12 +45,16 @@ export function LessonAdaptiveModuleRenderer({
         case AcademyCategory.DIGITAL_AND_DEVICES:
           return 'PACT_CLAUSE';
         default:
-          return 'SOMATIC_RESET';
+          return null;
       }
     }
 
-    return 'SOMATIC_RESET';
+    return null;
   }, [adaptiveModuleType, category]);
+
+  if (!effectiveType) {
+    return null;
+  }
 
   return (
     <div
@@ -55,9 +63,6 @@ export function LessonAdaptiveModuleRenderer({
     >
       {effectiveType === 'SOMATIC_RESET' && (
         <SomaticBreathWidget tier={tier} isNightstandMode={isNightstandMode} />
-      )}
-      {effectiveType === 'CIRCADIAN_TIMELINE' && (
-        <CircadianTimelineWidget tier={tier} isNightstandMode={isNightstandMode} />
       )}
       {effectiveType === 'FEEDING_LADDER' && (
         <FeedingResponsibilityWidget tier={tier} isNightstandMode={isNightstandMode} />
