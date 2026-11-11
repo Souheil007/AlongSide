@@ -1,5 +1,6 @@
 import { AcademyCategory } from '../constants/index.js';
 import type {
+  ActionProtocolItem,
   AdaptiveModuleType,
   DialogueCardDTO,
   ThirtySecondGlanceDTO,
@@ -145,3 +146,43 @@ export function parseThirtySecondGlance(
     exactWords,
   };
 }
+
+/**
+ * Extracts structured action checklist protocol items from lesson markdown (Part 4).
+ * Returns array of { id, label, detail } items.
+ */
+export function parseActionProtocolItems(
+  contentMarkdown: string
+): ActionProtocolItem[] {
+  if (!contentMarkdown) return [];
+
+  const part4Match = contentMarkdown.match(
+    /## Part 4:[^\n]*\n([\s\S]*?)(?=###|##|$)/i
+  );
+  if (!part4Match || !part4Match[1]) return [];
+
+  const lines = part4Match[1].split('\n').map((l) => l.trim()).filter(Boolean);
+  const items: ActionProtocolItem[] = [];
+
+  for (const line of lines) {
+    const match = line.match(/^\d+\.\s*(?:\*\*)?([^:\n*]+)(?:\*\*)?:\s*([\s\S]+)$/);
+    if (match && match[1] && match[2]) {
+      items.push({
+        id: `step-${items.length + 1}`,
+        label: match[1].replace(/^\*\*|\*\*$/g, '').trim(),
+        detail: match[2].trim(),
+      });
+    } else {
+      const simpleMatch = line.match(/^\d+\.\s*(.+)$/);
+      if (simpleMatch && simpleMatch[1]) {
+        items.push({
+          id: `step-${items.length + 1}`,
+          label: simpleMatch[1].trim(),
+        });
+      }
+    }
+  }
+
+  return items;
+}
+

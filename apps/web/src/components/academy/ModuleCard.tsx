@@ -233,16 +233,6 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
             {module.summary}
           </CardDescription>
 
-          {/* Tonight's Quick Win callout strip */}
-          {module.tonightQuickWinTitle && (
-            <div className="rounded-lg bg-emerald-50/80 border border-emerald-200/90 p-2.5 text-xs text-emerald-950 flex items-start gap-2 shadow-2xs">
-              <span className="font-bold uppercase tracking-wider text-[10px] text-emerald-800 shrink-0 mt-0.5 bg-emerald-100 px-1.5 py-0.5 rounded">
-                Tonight&apos;s Win
-              </span>
-              <span className="font-medium line-clamp-1">{module.tonightQuickWinTitle}</span>
-            </div>
-          )}
-
           {/* Format pills strip */}
           {showFormatPills && (
             <div

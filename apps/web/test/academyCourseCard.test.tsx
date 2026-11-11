@@ -120,35 +120,15 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
     });
   });
 
-  describe("3. Tonight's Quick Win Callout Strip", () => {
-    it("renders Tonight's Quick Win callout strip with emerald calm styling and badge", () => {
+  describe("3. Clean Course Card Layout (Omission of Tonight's Win Strip)", () => {
+    it("declutters course cards by omitting Tonight's Win strip per user directive", () => {
       const html = renderToStaticMarkup(
         React.createElement(ModuleCard, { module: editorialModule })
       );
 
-      // Callout title (HTML escaped apostrophe in renderToStaticMarkup)
-      expect(html).toContain("Tonight&#x27;s 3-Minute De-escalation Neutral Response Hold");
-
-      // Badge label
-      expect(html).toContain("Tonight&#x27;s Win");
-
-      // Emerald calm design system styling
-      expect(html).toContain('bg-emerald-50/80');
-      expect(html).toContain('border-emerald-200/90');
-      expect(html).toContain('text-emerald-950');
-    });
-
-    it("omits Tonight's Quick Win callout strip when tonightQuickWinTitle is absent", () => {
-      const moduleWithoutQuickWin = {
-        ...editorialModule,
-        tonightQuickWinTitle: undefined,
-      };
-
-      const html = renderToStaticMarkup(
-        React.createElement(ModuleCard, { module: moduleWithoutQuickWin })
-      );
-
+      // Verify Tonight's Win is cleanly omitted
       expect(html).not.toContain("Tonight&#x27;s Win");
+      expect(html).not.toContain('Tonight&apos;s Win');
     });
   });
 

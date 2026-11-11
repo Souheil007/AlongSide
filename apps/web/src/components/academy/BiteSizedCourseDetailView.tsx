@@ -30,8 +30,68 @@ export function resolveLessonTakeaway(
   lesson: AcademyLessonSummaryDTO,
   _moduleTitle?: string
 ): { subtitle: string; script: string } {
+  // If lesson summary already contains its authored empathetic script, prioritize it
+  if (lesson.empatheticScript && lesson.empatheticScript.trim().length > 0) {
+    return {
+      subtitle:
+        lesson.reliefTagline ||
+        `Actionable developmental neurobiology and communication scripts for ${lesson.title.toLowerCase()}.`,
+      script: lesson.empatheticScript.trim(),
+    };
+  }
+
   const titleLower = lesson.title.toLowerCase();
   const slugLower = lesson.slug.toLowerCase();
+
+  // 1. Feeding & Nutrition Topics
+  if (slugLower.includes('dessert') || titleLower.includes('dessert') || titleLower.includes('sweet')) {
+    return {
+      subtitle: 'De-weaponizing sweets by neutral dessert pairing alongside nutritious foods.',
+      script: 'You can enjoy your dessert alongside dinner. All foods have a neutral, safe place on our table.',
+    };
+  }
+
+  if (
+    slugLower.includes('picky') ||
+    titleLower.includes('picky') ||
+    slugLower.includes('exposure') ||
+    titleLower.includes('exposure') ||
+    titleLower.includes('vegetable')
+  ) {
+    return {
+      subtitle: 'Rewiring gustatory neuroplasticity through unforced sensory food exposures.',
+      script: "You don't have to eat the unfamiliar food tonight; it can just sit on your learning plate. We have bread and noodles so your belly feels satisfied.",
+    };
+  }
+
+  if (slugLower.includes('division-of-responsibility') || titleLower.includes('division of responsibility') || titleLower.includes('table')) {
+    return {
+      subtitle: 'Installing the Ellyn Satter Division of Responsibility to eliminate mealtime power struggles.',
+      script: 'My job as your parent is to decide what we serve and when. Your job is to decide whether and how much your body needs.',
+    };
+  }
+
+  if (slugLower.includes('allergen') || titleLower.includes('allergen')) {
+    return {
+      subtitle: 'Evidence-based pediatric allergen micro-dosing and nutritional scaffolding.',
+      script: 'We are introducing tiny, safe tastes together so your immune system learns to be calm and strong.',
+    };
+  }
+
+  // 2. Health & Sleep Topics
+  if (slugLower.includes('growing-pains') || titleLower.includes('growing pains') || titleLower.includes('growth spurt')) {
+    return {
+      subtitle: 'Decoding nocturnal musculoskeletal growth spurts and soothing evening limb aches.',
+      script: "Your legs did so much running and growing today. Let's do a gentle warm massage so your muscles can rest.",
+    };
+  }
+
+  if (slugLower.includes('outdoor') || titleLower.includes('outdoor') || titleLower.includes('vision')) {
+    return {
+      subtitle: 'Installing 60 minutes of daily outdoor light exposure for dopamine, mood, and myopia prevention.',
+      script: 'Fresh air and natural sunlight reset our circadian clock. Let’s step outside for a 15-minute neighborhood walk together.',
+    };
+  }
 
   if (slugLower.includes('bedtime-dock') || titleLower.includes('bedtime dock')) {
     return {
@@ -42,6 +102,37 @@ export function resolveLessonTakeaway(
     };
   }
 
+  if (
+    slugLower.includes('convalescence') ||
+    titleLower.includes('convalescence') ||
+    slugLower.includes('recovery') ||
+    titleLower.includes('recovery') ||
+    titleLower.includes('viral')
+  ) {
+    return {
+      subtitle:
+        'Rebuilding immune vitality and nervous system energy without rushing back into high-demand schedules.',
+      script:
+        'Healing takes biological time. Rest is not lost time; it is your body actively rebuilding strength.',
+    };
+  }
+
+  if (
+    slugLower.includes('sleep') ||
+    titleLower.includes('sleep') ||
+    slugLower.includes('circadian') ||
+    titleLower.includes('circadian') ||
+    titleLower.includes('nap')
+  ) {
+    return {
+      subtitle:
+        'Protecting restorative sleep architecture and circadian biology against modern evening overstimulation.',
+      script:
+        'We protect your sleep because we love your growing brain. Lights out lets your cells repair and recharge.',
+    };
+  }
+
+  // 3. Behavior & Emotional Co-Regulation Topics
   if (slugLower.includes('adrenarche') || titleLower.includes('adrenarche')) {
     return {
       subtitle:
@@ -54,7 +145,9 @@ export function resolveLessonTakeaway(
   if (
     slugLower.includes('amygdala') ||
     titleLower.includes('amygdala') ||
-    titleLower.includes('meltdown')
+    titleLower.includes('meltdown') ||
+    titleLower.includes('tantrum') ||
+    titleLower.includes('crying')
   ) {
     return {
       subtitle:
@@ -67,13 +160,21 @@ export function resolveLessonTakeaway(
   if (
     slugLower.includes('snark') ||
     titleLower.includes('snark') ||
-    titleLower.includes('eye-roll')
+    titleLower.includes('eye-roll') ||
+    titleLower.includes('sarcasm')
   ) {
     return {
       subtitle:
         'Transforming sarcastic comebacks and eye-rolls into low-defensiveness connection moments.',
       script:
         "That sounded sharp, but I know school was exhausting today. I'm right here whenever you want a snack.",
+    };
+  }
+
+  if (slugLower.includes('autonomy') || titleLower.includes('autonomy') || titleLower.includes('potty') || titleLower.includes('no!')) {
+    return {
+      subtitle: 'Channeling the developing drive for autonomy into healthy cooperative choices.',
+      script: 'You have a strong voice and I respect that. You can decide whether we put on boots first or zip your jacket first.',
     };
   }
 
@@ -89,6 +190,16 @@ export function resolveLessonTakeaway(
     };
   }
 
+  if (slugLower.includes('repair') || titleLower.includes('repair')) {
+    return {
+      subtitle:
+        'Repairing parent-child ruptures without shame, preserving mutual trust and respect.',
+      script:
+        "I reacted out of frustration earlier and raised my voice. I'm sorry. Can we restart this conversation calmly?",
+    };
+  }
+
+  // 4. Digital & Screens Topics
   if (
     slugLower.includes('group-chat') ||
     titleLower.includes('group chat') ||
@@ -102,18 +213,10 @@ export function resolveLessonTakeaway(
     };
   }
 
-  if (slugLower.includes('repair') || titleLower.includes('repair')) {
-    return {
-      subtitle:
-        'Repairing parent-child ruptures without shame, preserving mutual trust and respect.',
-      script:
-        "I reacted out of frustration earlier and raised my voice. I'm sorry. Can we restart this conversation calmly?",
-    };
-  }
-
   if (
     slugLower.includes('dopamine') ||
-    titleLower.includes('dopamine')
+    titleLower.includes('dopamine') ||
+    titleLower.includes('scroll')
   ) {
     return {
       subtitle:
@@ -176,37 +279,33 @@ export function resolveLessonTakeaway(
     };
   }
 
-  if (
-    slugLower.includes('convalescence') ||
-    titleLower.includes('convalescence') ||
-    slugLower.includes('recovery') ||
-    titleLower.includes('recovery')
-  ) {
+  // 5. Development & Play Topics
+  if (slugLower.includes('homework') || titleLower.includes('homework') || titleLower.includes('focus')) {
     return {
-      subtitle:
-        'Rebuilding immune vitality and nervous system energy without rushing back into high-demand schedules.',
-      script:
-        'Healing takes biological time. Rest is not lost time; it is your body actively rebuilding strength.',
+      subtitle: 'Scaffolding working memory and breaking overwhelming tasks into low-friction steps.',
+      script: "This task feels heavy, but you don't have to carry it alone. Let's just spend 5 calm minutes on the first step together.",
     };
   }
 
-  if (
-    slugLower.includes('sleep') ||
-    titleLower.includes('sleep')
-  ) {
+  if (slugLower.includes('sports') || titleLower.includes('sports') || titleLower.includes('grit')) {
     return {
-      subtitle:
-        'Protecting restorative sleep architecture and circadian biology against modern evening overstimulation.',
-      script:
-        'We protect your sleep because we love your growing brain. Lights out lets your cells repair and recharge.',
+      subtitle: 'Fostering athletic resilience and post-game decompression without critical sideline coaching.',
+      script: 'I loved watching you play today. Hard games are where our resilience muscles grow the fastest.',
     };
   }
 
-  // Dynamic fallback for any other lesson
+  if (slugLower.includes('boredom') || titleLower.includes('boredom') || titleLower.includes('play')) {
+    return {
+      subtitle: 'Unlocking creative synaptic arborization by allowing healthy, unstructured boredom.',
+      script: "It's okay to feel bored. Boredom is just your brain clearing space for a brand new idea to arrive.",
+    };
+  }
+
+  // Dynamic fallback tailored to the lesson
   return {
-    subtitle: `Actionable developmental guidance and communication scripts for ${lesson.title.toLowerCase()}.`,
+    subtitle: `Actionable developmental neurobiology and parent dialogue for ${lesson.title.toLowerCase()}.`,
     script:
-      'We are a team figuring this out together. Your wellbeing always comes before any screen or rule.',
+      "I see how hard this moment is. We don't have to figure it all out at once—let's take one calm breath and work through it together.",
   };
 }
 
