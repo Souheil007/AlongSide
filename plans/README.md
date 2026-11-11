@@ -56,6 +56,7 @@ graph TD
         P35["35: Streamlined Developmental Horizon Courses UI (FE)"]
         P36["36: Early Childhood Tier 0 Decomposition & Sub-Tranches (Joint)"]
         P37["37: Academy Editorial Course Content & Rich Preview Architecture (Joint)"]
+        P38["38: Academy Lesson Experience & Multi-Modal Reader Architecture (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -121,6 +122,9 @@ graph TD
     P32 --> P33
     P33 --> P35
     P35 --> P36
+    P36 --> P37
+    P37 --> P38
+    P38 --> P14
     P36 --> P14
     P35 --> P14
     P33 --> P14
@@ -171,6 +175,7 @@ graph TD
 | [**`35-streamlined-developmental-horizon-courses-ui.md`**](35-streamlined-developmental-horizon-courses-ui.md) | Streamlined Developmental Horizon Courses & Category Advisory UI | **Frontend Agent** | PLAN-30, PLAN-33 | Complete (PR #67) |
 | [**`36-early-childhood-tier-decomposition-and-sub-tranches.md`**](36-early-childhood-tier-decomposition-and-sub-tranches.md) | Early Childhood Tier 0 Decomposition & Sub-Tranche Engine | **Joint (FE & BE)** | PLAN-30, PLAN-33, PLAN-35 | Approved (Ready for Delegation) |
 | [**`37-parent-intelligence-academy-course-editorial-and-preview-architecture.md`**](37-parent-intelligence-academy-course-editorial-and-preview-architecture.md) | Academy Editorial Course Content & Rich Preview Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-35 | Approved (Ready for Delegation) |
+| [**`38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md`**](38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md) | Academy Lesson Experience & Multi-Modal Reader Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-37 | Approved (Ready for Delegation) |
 
 ---
 

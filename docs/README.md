@@ -17,6 +17,7 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`system-design-tier-0-decomposition.md`**](system-design-tier-0-decomposition.md) — Early Childhood Tier 0 Decomposition and Sub-Tranche Engine Architecture (Ages 0–3).
 - [**`platform-advisory-rearchitecture-and-academy-chapters-spec.md`**](platform-advisory-rearchitecture-and-academy-chapters-spec.md) — Advisory Platform Rearchitecture, Navigation Streamlining, and Prioritized Academy Curriculum Specification.
 - [**`parent-intelligence-academy-course-content-and-format-specification.md`**](parent-intelligence-academy-course-content-and-format-specification.md) — Parent Intelligence Academy: Course Content, Length, Format & Multi-Modal Architecture Specification (SOU-92).
+- [**`parent-intelligence-academy-lesson-experience-and-ux-specification.md`**](parent-intelligence-academy-lesson-experience-and-ux-specification.md) — Parent Intelligence Academy: Lesson Experience, Content Format & Multi-Modal UX Specification (SOU-98).
 - [**`tech-stack-decision.md`**](tech-stack-decision.md) — Technology stack choices, rationale, and monorepo structure. Authored by the CTO.
 - [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
 - [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
