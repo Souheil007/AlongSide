@@ -146,7 +146,8 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain('data-testid="audio-skip-back"');
       expect(html).toContain('data-testid="audio-skip-forward"');
       expect(html).toContain('data-testid="audio-speed-toggle"');
-      expect(html).toContain('Hands-Free');
+      expect(html).not.toContain('Hands-Free');
+      expect(html).toContain('Listen');
       expect(html).toContain('1:32');
     });
   });

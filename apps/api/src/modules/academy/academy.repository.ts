@@ -22,12 +22,14 @@ import {
   type DialogueCardDTO,
   type ThirtySecondGlanceDTO,
   type MasterVideoLectureDTO,
+  type ActionProtocolItem,
   getEquivalentTiers,
   formatCourseTitle,
   resolveAdaptiveModuleType,
   resolveReliefTagline,
   parseDialogueCards,
   parseThirtySecondGlance,
+  parseActionProtocolItems,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
@@ -312,6 +314,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       audioUrl: l.audioUrl ?? undefined,
       audioDurationSeconds: l.audioDurationSeconds ?? undefined,
       whatNotToSay: l.whatNotToSay ?? undefined,
+      empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
       deliveryTip: l.deliveryTip ?? undefined,
       videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
     }));
@@ -329,6 +332,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         audioUrl: l.audioUrl ?? undefined,
         audioDurationSeconds: l.audioDurationSeconds ?? undefined,
         whatNotToSay: l.whatNotToSay ?? undefined,
+        empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
         videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
       }));
@@ -508,6 +512,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       thirtySecondGlance,
       adaptiveModuleType,
       dialogueCards,
+      actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??
         (dialogueCards[0]?.instinctiveMistake || undefined),
@@ -1062,6 +1067,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       thirtySecondGlance,
       adaptiveModuleType,
       dialogueCards,
+      actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??
         (dialogueCards[0]?.instinctiveMistake || undefined),

@@ -108,6 +108,7 @@ const academyLessonSummarySchema = {
     audioDurationSeconds: { type: ['number', 'null'] },
     reliefTagline: { type: ['string', 'null'] },
     whatNotToSay: { type: ['string', 'null'] },
+    empatheticScript: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
   },
@@ -273,7 +274,20 @@ const academyLessonDtoSchema = {
       type: ['array', 'null'],
       items: dialogueCardSchema,
     },
+    actionProtocolItems: {
+      type: ['array', 'null'],
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          label: { type: 'string' },
+          detail: { type: ['string', 'null'] },
+        },
+        required: ['id', 'label'],
+      },
+    },
     whatNotToSay: { type: ['string', 'null'] },
+    empatheticScript: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
     module: {

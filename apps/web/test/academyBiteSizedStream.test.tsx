@@ -77,19 +77,34 @@ describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-S
       expect(takeaway.script).toContain("I see you're overwhelmed right now");
     });
 
+    it('resolves explicit empatheticScript when present on lesson summary', () => {
+      const takeaway = resolveLessonTakeaway({
+        id: 'l-explicit',
+        moduleId: 'm-1',
+        slug: 'explicit-script-lesson',
+        title: 'Explicit Script Lesson',
+        readingMinutes: 3,
+        sortOrder: 2,
+        isCompleted: false,
+        empatheticScript: 'I am right here with you through every bump.',
+      });
+
+      expect(takeaway.script).toBe('I am right here with you through every bump.');
+    });
+
     it('generates a graceful clinical fallback script for arbitrary custom lessons', () => {
       const takeaway = resolveLessonTakeaway({
         id: 'l-custom',
         moduleId: 'm-1',
-        slug: 'custom-potty-training-routine',
-        title: 'Gentle Potty Transitions',
+        slug: 'custom-household-logistics',
+        title: 'Calm Household Logistics',
         readingMinutes: 3,
         sortOrder: 2,
         isCompleted: false,
       });
 
-      expect(takeaway.subtitle).toContain('gentle potty transitions');
-      expect(takeaway.script).toContain('We are a team figuring this out together');
+      expect(takeaway.subtitle).toContain('calm household logistics');
+      expect(takeaway.script).toContain('one calm breath and work through it together');
     });
 
     it('formats seconds into clean M:SS representation', () => {

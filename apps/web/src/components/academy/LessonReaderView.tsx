@@ -5,7 +5,9 @@ import Link from 'next/link';
 import type {
   AcademyLessonDTO,
   AcademyLessonSummaryDTO,
+  ActionProtocolItem,
 } from '@alongside/shared';
+import { parseActionProtocolItems } from '@alongside/shared';
 import { getCategoryBadgeInfo } from './ModuleCard';
 import { markLessonComplete } from '@/lib/api/academy';
 import {
@@ -89,6 +91,7 @@ export interface ParsedLessonParts {
   neurobiologyText: string;
   clinicalInsight: string;
   groundingText: string;
+  actionItems: ActionProtocolItem[];
   hasStructuredParts: boolean;
 }
 
@@ -98,6 +101,7 @@ export interface ParsedLessonParts {
  * - Part 2: The Developmental Neurobiology Behind It
  * - Clinical / Developmental Insight callout
  * - Clinical Implementation & Parental Grounding anchor
+ * - Part 4: 3-Step Action Protocol items
  */
 export function parseLessonContentParts(markdown: string): ParsedLessonParts {
   if (!markdown) {
@@ -106,6 +110,7 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
       neurobiologyText: '',
       clinicalInsight: '',
       groundingText: '',
+      actionItems: [],
       hasStructuredParts: false,
     };
   }
@@ -132,6 +137,7 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
   const scenarioText = part1Match ? part1Match[1]!.trim() : '';
   const neurobiologyText = rawPart2;
   const groundingText = groundingMatch ? groundingMatch[1]!.trim() : '';
+  const actionItems = parseActionProtocolItems(markdown);
   const hasStructuredParts = Boolean(scenarioText || neurobiologyText);
 
   return {
@@ -139,6 +145,7 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
     neurobiologyText,
     clinicalInsight,
     groundingText,
+    actionItems,
     hasStructuredParts,
   };
 }
@@ -747,7 +754,13 @@ export function LessonReaderView({
       {/* 6. Tonight's 3-Step Action Checklist */}
       <LessonActionChecklist
         lessonId={lesson.id}
-        items={lesson.actionProtocolItems}
+        items={
+          lesson.actionProtocolItems && lesson.actionProtocolItems.length > 0
+            ? lesson.actionProtocolItems
+            : parsedParts.actionItems
+        }
+        category={lesson.module?.category}
+        lessonTitle={lesson.title}
         isNightstandMode={isNightstandMode}
       />
 

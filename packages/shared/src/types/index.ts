@@ -316,6 +316,7 @@ export interface AcademyLessonSummaryDTO {
   audioDurationSeconds?: number;
   reliefTagline?: string;
   whatNotToSay?: string;
+  empatheticScript?: string;
   deliveryTip?: string;
   videoLecture?: MasterVideoLectureDTO | null;
 }

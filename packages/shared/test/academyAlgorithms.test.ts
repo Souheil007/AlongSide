@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { AcademyCategory } from '../src/constants/index.js';
 import {
+  parseActionProtocolItems,
   parseDialogueCards,
   parseThirtySecondGlance,
   resolveAdaptiveModuleType,
@@ -102,6 +103,37 @@ describe('Academy Algorithms & Pure Resolvers (PLAN-38)', () => {
       expect(glance.coreProblem).toBe('Inability to inhibit impulse before age 4 due to ongoing myelination.');
       expect(glance.immediateShift).toBe('Drop below child eye level, breathe slowly, and state the neutral boundary.');
       expect(glance.exactWords).toBe('Teeth are not for biting people.');
+    });
+  });
+
+  describe('parseActionProtocolItems', () => {
+    it('extracts structured 3-step action protocol items from markdown Part 4', () => {
+      const markdown = `
+# The Sensory Reset
+
+## Part 1: Scenario
+Story text here.
+
+## Part 4: Tonight's 3-Step Action Protocol
+1. The Sensory Dark Reset: Dim overhead lights to near-blackness and turn off television screens.
+2. The 6-Breaths-Per-Minute Anchor: Sit in a stable chair with your feet flat on the floor.
+3. The Rhythmic Sacral Pat: Cup your palm and provide gentle rhythmic pats at 60 bpm.
+
+### Clinical Implementation & Parental Grounding
+Grounding text here.
+      `;
+
+      const items = parseActionProtocolItems(markdown);
+      expect(items.length).toBe(3);
+      expect(items[0]?.id).toBe('step-1');
+      expect(items[0]?.label).toBe('The Sensory Dark Reset');
+      expect(items[0]?.detail).toBe('Dim overhead lights to near-blackness and turn off television screens.');
+      expect(items[1]?.label).toBe('The 6-Breaths-Per-Minute Anchor');
+      expect(items[2]?.label).toBe('The Rhythmic Sacral Pat');
+    });
+
+    it('returns empty array when markdown lacks Part 4', () => {
+      expect(parseActionProtocolItems('No part 4 here')).toEqual([]);
     });
   });
 });

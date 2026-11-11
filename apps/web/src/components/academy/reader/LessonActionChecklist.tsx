@@ -9,6 +9,8 @@ export interface LessonActionChecklistProps {
   lessonId: string;
   items?: ActionProtocolItem[];
   rawMarkdownItems?: string[];
+  category?: string;
+  lessonTitle?: string;
   isNightstandMode?: boolean;
   className?: string;
 }
@@ -17,6 +19,8 @@ export function LessonActionChecklist({
   lessonId,
   items,
   rawMarkdownItems,
+  category,
+  lessonTitle,
   isNightstandMode = false,
   className,
 }: LessonActionChecklistProps) {
@@ -30,27 +34,145 @@ export function LessonActionChecklist({
         label: text,
       }));
     }
+
+    const catUpper = (category || '').toUpperCase();
+    const titleLower = (lessonTitle || '').toLowerCase();
+
+    if (
+      catUpper.includes('NUTRITION') ||
+      titleLower.includes('food') ||
+      titleLower.includes('eat') ||
+      titleLower.includes('snack') ||
+      titleLower.includes('sweet')
+    ) {
+      return [
+        {
+          id: 'step-1',
+          label: 'The Safe Anchor Food',
+          detail:
+            'Always place one familiar, non-threatening safe food on the table to reduce mealtime fight-or-flight arousal.',
+        },
+        {
+          id: 'step-2',
+          label: 'Division of Responsibility',
+          detail:
+            'You decide what and when to serve; allow your child to decide whether and how much to eat with zero commentary.',
+        },
+        {
+          id: 'step-3',
+          label: 'Neutral Meal Conclusion',
+          detail:
+            'Conclude dinner without forced clean-plate rules, dessert leverage, or pressure to try extra bites.',
+        },
+      ];
+    }
+
+    if (
+      catUpper.includes('HEALTH') ||
+      titleLower.includes('sleep') ||
+      titleLower.includes('bedtime') ||
+      titleLower.includes('nap')
+    ) {
+      return [
+        {
+          id: 'step-1',
+          label: 'The 60-Minute Dim Shift',
+          detail:
+            'Dim overhead lighting and lower room luminescence 60 minutes before bed to stimulate endogenous melatonin.',
+        },
+        {
+          id: 'step-2',
+          label: 'The Cool Sleep Sanctuary',
+          detail:
+            'Set bedroom temperature to 65–68°F and keep ambient sound low for restorative deep sleep cycles.',
+        },
+        {
+          id: 'step-3',
+          label: 'The Neutral Return Protocol',
+          detail:
+            'Guide bedtime stallers back to bed with gentle silence and zero stimulating verbal negotiations.',
+        },
+      ];
+    }
+
+    if (
+      catUpper.includes('DIGITAL') ||
+      titleLower.includes('screen') ||
+      titleLower.includes('phone') ||
+      titleLower.includes('gaming') ||
+      titleLower.includes('device')
+    ) {
+      return [
+        {
+          id: 'step-1',
+          label: 'The Central Charging Station',
+          detail:
+            'Dock all household phones and tablets in a shared living room station 60 minutes before bedtime.',
+        },
+        {
+          id: 'step-2',
+          label: 'The Tactile Transition Buffer',
+          detail:
+            'Set out kinetic sand, drawing markers, or a quick card game before screen time expires to eliminate the transition void.',
+        },
+        {
+          id: 'step-3',
+          label: 'Collaborative Pact Check-In',
+          detail:
+            'Review digital boundaries together as cooperative teammates rather than adversaries.',
+        },
+      ];
+    }
+
+    if (
+      catUpper.includes('DEVELOPMENT') ||
+      catUpper.includes('PLAY') ||
+      titleLower.includes('play') ||
+      titleLower.includes('game')
+    ) {
+      return [
+        {
+          id: 'step-1',
+          label: 'High-Presence Floor Time',
+          detail:
+            'Spend 10 uninterrupted minutes entering your child’s imaginative play without directing or correcting.',
+        },
+        {
+          id: 'step-2',
+          label: 'Open-Ended Material Setup',
+          detail:
+            'Provide unstructured building materials (blocks, boxes, loose parts) with no predetermined right way.',
+        },
+        {
+          id: 'step-3',
+          label: 'Effort & Persistence Praise',
+          detail:
+            'Praise their curiosity, problem-solving, and resilience rather than final product perfection.',
+        },
+      ];
+    }
+
     return [
       {
         id: 'step-1',
-        label: 'Somatic Eye-Level Drop',
+        label: 'Somatic Co-Regulation Pause',
         detail:
-          'Kneel or sit so your eyes are below the child’s before addressing the emotional storm.',
+          'Drop your shoulders and take 3 slow diaphragmatic breaths before responding to the storm.',
       },
       {
         id: 'step-2',
-        label: 'The 8-Word Limit',
+        label: 'Validate the Emotional Storm',
         detail:
-          'Silence rational explanations until breathing slows. Keep verbal statements under 8 words.',
+          'Acknowledge what they are feeling in under 8 words before attempting any logical explanation.',
       },
       {
         id: 'step-3',
-        label: 'Postpone Problem-Solving',
+        label: 'Reconnect Before Problem-Solving',
         detail:
-          'Wait at least 20 minutes before discussing boundaries, chores, or consequences.',
+          'Wait until physiological baseline returns before discussing household boundaries or solutions.',
       },
     ];
-  }, [items, rawMarkdownItems]);
+  }, [items, rawMarkdownItems, category, lessonTitle]);
 
   const [checkedState, setCheckedState] = React.useState<Record<string, boolean>>({});
 
