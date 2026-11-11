@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Sparkles, ShieldCheck, Headphones, BookOpen } from 'lucide-react';
 import type {
   AcademyLessonDTO,
   AcademyLessonSummaryDTO,
 } from '@alongside/shared';
+import { getCategoryBadgeInfo } from './ModuleCard';
 import { markLessonComplete } from '@/lib/api/academy';
 import {
   ScrollProgressBar,
@@ -143,6 +143,102 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
   };
 }
 
+/**
+ * Assembles speech text strictly in the sequential order in which it is displayed on screen:
+ * 1. Title
+ * 2. Part 1 · Kitchen-Table Scenario
+ * 3. Part 2 · Developmental Neurobiology
+ * 4. Clinical & Neurobiological Insight
+ * 5. Empathetic Dialogue Script
+ * 6. Parental Grounding Anchor
+ */
+export function buildSequentialLessonSpokenText(
+  lesson: AcademyLessonDTO,
+  parsedParts: ParsedLessonParts
+): string {
+  const chunks: string[] = [];
+
+  // 1. Title
+  chunks.push(`Lesson ${lesson.sortOrder}: ${lesson.title}.`);
+
+  // 2. Scenario
+  if (parsedParts.scenarioText) {
+    const cleanScenario = parsedParts.scenarioText
+      .replace(/^#+\s*[^\n]*\n?/gm, '')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    if (cleanScenario) {
+      chunks.push(`The Kitchen-Table Scenario: ${cleanScenario}`);
+    }
+  }
+
+  // 3. Neurobiology
+  if (parsedParts.neurobiologyText) {
+    const cleanNeuro = parsedParts.neurobiologyText
+      .replace(/^#+\s*[^\n]*\n?/gm, '')
+      .replace(/>\s*\*\*(?:Clinical|Developmental) Insight:?\*\*:?[\s\S]*?(?=(?:\n\n|\n##|$))/gi, '')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    if (cleanNeuro) {
+      chunks.push(`Developmental Neurobiology: ${cleanNeuro}`);
+    }
+  }
+
+  // 4. Clinical Insight
+  if (parsedParts.clinicalInsight) {
+    const cleanInsight = parsedParts.clinicalInsight
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      .trim();
+    chunks.push(`Clinical Insight: ${cleanInsight}`);
+  }
+
+  // 5. Empathetic Script
+  if (lesson.dialogueCards?.[0]?.empatheticScript) {
+    chunks.push(`Empathetic script to use: ${lesson.dialogueCards[0].empatheticScript}`);
+  } else if (lesson.thirtySecondGlance?.exactWords) {
+    chunks.push(`Words to say: ${lesson.thirtySecondGlance.exactWords}`);
+  }
+
+  // 6. Parental Grounding Anchor
+  if (parsedParts.groundingText) {
+    const cleanGrounding = parsedParts.groundingText
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    chunks.push(`Parental Grounding: ${cleanGrounding}`);
+  } else if (!parsedParts.hasStructuredParts && lesson.contentMarkdown) {
+    // Fallback for non-structured markdown
+    const cleanFallback = lesson.contentMarkdown
+      .replace(/^#+\s*[^\n]*\n?/gm, '')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/\n+/g, ' ')
+      .trim();
+    chunks.push(cleanFallback);
+  }
+
+  return chunks.join(' ');
+}
+
 export function LessonReaderView({
   lesson,
   moduleSlug,
@@ -162,34 +258,9 @@ export function LessonReaderView({
     [lesson.contentMarkdown]
   );
 
+  // Generates sequential audio text strictly matching the displayed blog article
   const audioNarrationText = React.useMemo(() => {
-    const parts = [
-      `Pediatric clinical lesson ${lesson.sortOrder}: ${lesson.title}.`,
-    ];
-    if (lesson.thirtySecondGlance?.coreProblem) {
-      parts.push(`The core scenario: ${lesson.thirtySecondGlance.coreProblem}`);
-    } else if (parsedParts.scenarioText) {
-      const sentences = parsedParts.scenarioText.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
-      parts.push(`Scenario: ${sentences}`);
-    }
-
-    if (parsedParts.clinicalInsight) {
-      parts.push(`Clinical insight: ${parsedParts.clinicalInsight}`);
-    }
-
-    if (lesson.thirtySecondGlance?.exactWords) {
-      parts.push(`Script to say: ${lesson.thirtySecondGlance.exactWords}`);
-    } else if (lesson.dialogueCards?.[0]?.empatheticScript) {
-      parts.push(`Empathetic script to remember: ${lesson.dialogueCards[0].empatheticScript}`);
-    } else if (lesson.deliveryTip) {
-      parts.push(`Guidance: ${lesson.deliveryTip}`);
-    }
-
-    if (lesson.thirtySecondGlance?.immediateShift) {
-      parts.push(`Tonight's shift: ${lesson.thirtySecondGlance.immediateShift}`);
-    }
-
-    return parts.join(' ');
+    return buildSequentialLessonSpokenText(lesson, parsedParts);
   }, [lesson, parsedParts]);
 
   // Synchronize completion state on prop update
@@ -246,10 +317,10 @@ export function LessonReaderView({
   };
 
   /**
-   * Intelligently parses editorial markdown into structured, semantic UI elements:
-   * 1. Developmental / Clinical Insight Callout Card
-   * 2. Compiled Headers and Lists with Inline Formatting
-   * 3. Blockquotes and semantic paragraphs
+   * Intelligently parses editorial markdown into clean, high-credibility blog formatting:
+   * - Clean editorial headings
+   * - Restrained pull-quotes and callouts
+   * - Comfortable, readable paragraphs without decorative clutter
    */
   const renderFormattedEditorialBody = (markdown: string) => {
     if (!markdown) return null;
@@ -277,7 +348,7 @@ export function LessonReaderView({
         return null;
       }
 
-      // 1. Developmental / Clinical Insight Callout Card
+      // 1. Clinical / Developmental Insight Pullquote Callout
       if (
         trimmed.toLowerCase().includes('developmental insight') ||
         trimmed.toLowerCase().includes('clinical insight') ||
@@ -296,21 +367,19 @@ export function LessonReaderView({
         return (
           <aside
             key={`insight-${idx}`}
+            data-testid="lesson-clinical-insight"
             aria-label="Developmental Insight Callout"
             className={cn(
-              'my-6 rounded-2xl border p-5 sm:p-6 shadow-xs transition-colors',
+              'my-8 rounded-2xl border-l-4 border-l-teal-600 dark:border-l-teal-400 border border-stone-200/80 dark:border-stone-800 p-6 sm:p-7 shadow-2xs transition-colors',
               isNightstandMode
-                ? 'border-teal-900/80 bg-teal-950/20 text-stone-200'
-                : 'border-teal-200/90 bg-gradient-to-br from-teal-50/80 via-[#F7FCFA] to-white text-slate-800'
+                ? 'bg-stone-850/80 text-stone-200'
+                : 'bg-stone-50/80 text-slate-800'
             )}
           >
-            <div className="flex items-center gap-2.5 text-teal-800 dark:text-teal-300 font-bold text-xs uppercase tracking-wider mb-2.5">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-teal-700 text-white shadow-xs">
-                <Sparkles className="h-3.5 w-3.5" />
-              </span>
-              <span>Pediatric Neurobiology · Developmental Insight</span>
+            <div className="text-xs font-mono uppercase tracking-wider font-bold text-teal-800 dark:text-teal-300 mb-2">
+              Clinical Neurobiology Takeaway
             </div>
-            <p className="text-sm sm:text-base leading-relaxed font-medium">
+            <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-800 dark:text-stone-200">
               {renderInlineMarkdown(cleanText)}
             </p>
           </aside>
@@ -323,7 +392,7 @@ export function LessonReaderView({
           <h5
             key={`h5-${idx}`}
             className={cn(
-              'text-sm sm:text-base font-bold mt-4 mb-2 tracking-tight',
+              'text-sm sm:text-base font-bold mt-6 mb-2 tracking-tight',
               isNightstandMode ? 'text-amber-100' : 'text-slate-900'
             )}
           >
@@ -336,7 +405,7 @@ export function LessonReaderView({
           <h4
             key={`h4-${idx}`}
             className={cn(
-              'text-base sm:text-lg font-bold mt-5 mb-2.5 tracking-tight',
+              'text-base sm:text-lg font-bold mt-7 mb-2.5 tracking-tight',
               isNightstandMode ? 'text-amber-100' : 'text-slate-900'
             )}
           >
@@ -349,7 +418,7 @@ export function LessonReaderView({
           <h3
             key={`h3-${idx}`}
             className={cn(
-              'text-lg sm:text-xl font-bold mt-6 mb-3 tracking-tight',
+              'font-serif text-lg sm:text-xl font-bold mt-8 mb-3 tracking-tight',
               isNightstandMode ? 'text-amber-100' : 'text-slate-900'
             )}
           >
@@ -362,7 +431,7 @@ export function LessonReaderView({
           <h2
             key={`h2-${idx}`}
             className={cn(
-              'text-xl sm:text-2xl font-extrabold mt-8 mb-4 tracking-tight',
+              'font-serif text-xl sm:text-2xl font-bold mt-10 mb-4 tracking-tight pt-6 border-t border-stone-100 dark:border-stone-800/80 first:border-0 first:pt-0 first:mt-0',
               isNightstandMode ? 'text-amber-100' : 'text-slate-900'
             )}
           >
@@ -375,7 +444,7 @@ export function LessonReaderView({
           <h1
             key={`h1-${idx}`}
             className={cn(
-              'text-2xl sm:text-3xl font-extrabold mt-6 mb-4 tracking-tight',
+              'font-serif text-2xl sm:text-3xl font-bold mt-6 mb-4 tracking-tight',
               isNightstandMode ? 'text-amber-100' : 'text-slate-900'
             )}
           >
@@ -397,7 +466,7 @@ export function LessonReaderView({
           <ol
             key={`ol-${idx}`}
             className={cn(
-              'my-4 list-decimal pl-6 space-y-2 text-sm sm:text-base leading-relaxed',
+              'my-4 list-decimal pl-6 space-y-2 text-base sm:text-lg leading-relaxed',
               isNightstandMode ? 'text-stone-300' : 'text-slate-700'
             )}
           >
@@ -420,7 +489,7 @@ export function LessonReaderView({
           <ul
             key={`list-${idx}`}
             className={cn(
-              'my-4 list-disc pl-6 space-y-2 text-sm sm:text-base leading-relaxed',
+              'my-4 list-disc pl-6 space-y-2 text-base sm:text-lg leading-relaxed',
               isNightstandMode ? 'text-stone-300' : 'text-slate-700'
             )}
           >
@@ -438,10 +507,8 @@ export function LessonReaderView({
           <blockquote
             key={`quote-${idx}`}
             className={cn(
-              'my-4 border-l-4 border-teal-500 pl-4 italic text-sm sm:text-base leading-relaxed py-2 rounded-r-lg',
-              isNightstandMode
-                ? 'bg-teal-950/20 text-stone-300'
-                : 'bg-teal-50/20 text-slate-700'
+              'my-6 border-l-4 border-stone-300 dark:border-stone-700 pl-5 italic font-serif text-base sm:text-lg leading-relaxed py-2',
+              isNightstandMode ? 'text-stone-300' : 'text-slate-700'
             )}
           >
             {renderInlineMarkdown(quoteText)}
@@ -449,12 +516,12 @@ export function LessonReaderView({
         );
       }
 
-      // 6. Regular Paragraph
+      // 6. Regular Editorial Paragraph
       return (
         <p
           key={`p-${idx}`}
           className={cn(
-            'my-4 text-sm sm:text-base leading-relaxed font-normal',
+            'my-4 text-base sm:text-lg leading-relaxed sm:leading-loose font-normal',
             isNightstandMode ? 'text-stone-300' : 'text-slate-700'
           )}
         >
@@ -463,6 +530,10 @@ export function LessonReaderView({
       );
     });
   };
+
+  const categoryInfo = lesson.module?.category
+    ? getCategoryBadgeInfo(lesson.module.category)
+    : null;
 
   return (
     <article
@@ -476,7 +547,7 @@ export function LessonReaderView({
       {/* 0. Fixed Scroll Progress Indicator */}
       <ScrollProgressBar />
 
-      {/* 1. Relief Masthead & 90s Audio Memo Bar */}
+      {/* 1. Relief Masthead */}
       <LessonReliefMasthead
         lesson={lesson}
         moduleSlug={moduleSlug}
@@ -500,193 +571,161 @@ export function LessonReaderView({
         isNightstandMode={isNightstandMode}
       />
 
-      {/* 3. Dedicated Reading & Listening Experience */}
+      {/* 3. Dedicated Blog-Style Lesson Reading Article (Single Unified Box) */}
       <section
         data-testid="lesson-editorial-section"
-        className="space-y-6"
-        aria-label="Lesson Reading and Spoken Audio"
+        aria-label="Lesson Reading Article and Narration"
+        className="space-y-4"
       >
-        {/* 3.1 Integrated Audio Narration Bar: Read or Listen */}
         <div
-          data-testid="lesson-narration-player"
+          data-testid="lesson-article-container"
           className={cn(
-            'rounded-2xl border p-4 sm:p-5 shadow-xs transition-colors space-y-3',
+            'rounded-2xl sm:rounded-3xl border shadow-sm transition-colors overflow-hidden',
             isNightstandMode
-              ? 'border-teal-900/80 bg-teal-950/20 text-stone-200'
-              : 'border-teal-200/90 bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-teal-50/60 text-slate-800'
+              ? 'bg-stone-900 border-stone-800 text-stone-200'
+              : 'bg-white border-stone-200/90 text-slate-900'
           )}
         >
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <span
-                className={cn(
-                  'flex h-8 w-8 items-center justify-center rounded-full shrink-0 shadow-xs',
-                  isNightstandMode
-                    ? 'bg-amber-950 text-amber-300'
-                    : 'bg-teal-700 text-white'
-                )}
-              >
-                <Headphones className="h-4 w-4" />
-              </span>
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3
+          {/* Blog Article Header */}
+          <header className="px-6 pt-8 pb-6 sm:px-10 sm:pt-10 sm:pb-8 border-b border-stone-100 dark:border-stone-800/80 space-y-4">
+            {/* Editorial Eyebrow & Meta */}
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="font-mono uppercase font-bold text-teal-800 dark:text-teal-300 tracking-wider">
+                  {categoryInfo ? categoryInfo.label : 'Curriculum'}
+                </span>
+                <span className="text-stone-300 dark:text-stone-700">•</span>
+                <span className="text-stone-500 dark:text-stone-400 font-medium">
+                  Lesson {lesson.sortOrder}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400 font-mono text-xs">
+                <span>~{lesson.readingMinutes || 4} min read</span>
+                <span>•</span>
+                <span>Evidence-Based</span>
+              </div>
+            </div>
+
+            {/* Editorial Blog Headline */}
+            <h1
+              className={cn(
+                'text-2xl sm:text-3xl md:text-4xl font-serif font-bold tracking-tight leading-tight',
+                isNightstandMode ? 'text-amber-100' : 'text-slate-900'
+              )}
+            >
+              {lesson.title}
+            </h1>
+
+            {/* Minimalist Wave Audio Player Docked in Blog Header */}
+            <div data-testid="lesson-narration-player" className="pt-2">
+              <AudioMemoPlayer
+                audioUrl={lesson.audioUrl}
+                audioDurationSeconds={
+                  lesson.audioDurationSeconds ||
+                  (lesson.readingMinutes ? lesson.readingMinutes * 60 : null)
+                }
+                title={`Lesson ${lesson.sortOrder}: ${lesson.title}`}
+                isNightstandMode={isNightstandMode}
+                textToSpeak={audioNarrationText}
+              />
+            </div>
+          </header>
+
+          {/* Blog Article Body - Seamless, unbroken reading experience */}
+          <div className="px-6 py-8 sm:px-10 sm:py-10 space-y-8">
+            {/* 3.1 Part 1: The Kitchen-Table Scenario */}
+            {parsedParts.scenarioText && (
+              <section className="space-y-4">
+                <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                  <h2
                     className={cn(
-                      'text-xs sm:text-sm font-bold tracking-tight',
+                      'font-serif text-xl sm:text-2xl font-bold tracking-tight',
                       isNightstandMode ? 'text-amber-100' : 'text-slate-900'
                     )}
                   >
-                    Read or Listen to Lesson {lesson.sortOrder}
-                  </h3>
-                  <span
+                    The Kitchen-Table Scenario
+                  </h2>
+                  <p className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-semibold mt-1">
+                    Real Family Friction
+                  </p>
+                </div>
+                <div className="space-y-4 text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-700 dark:text-stone-300 font-normal">
+                  {renderFormattedEditorialBody(parsedParts.scenarioText)}
+                </div>
+              </section>
+            )}
+
+            {/* 3.2 Part 2: Developmental Neurobiology Behind It */}
+            {parsedParts.neurobiologyText && (
+              <section className="space-y-4 pt-4 border-t border-stone-100 dark:border-stone-800/60">
+                <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                  <h2
                     className={cn(
-                      'text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full',
-                      isNightstandMode
-                        ? 'bg-stone-800 text-amber-300'
-                        : 'bg-teal-100 text-teal-800'
+                      'font-serif text-xl sm:text-2xl font-bold tracking-tight',
+                      isNightstandMode ? 'text-amber-100' : 'text-slate-900'
                     )}
                   >
-                    Hands-Free Narration
-                  </span>
+                    Developmental Neurobiology
+                  </h2>
+                  <p className="text-xs font-mono uppercase tracking-wider text-teal-800 dark:text-teal-300 font-semibold mt-1">
+                    Inside Your Child&apos;s Brain
+                  </p>
                 </div>
-                <p
-                  className={cn(
-                    'text-[11px] leading-tight mt-0.5',
-                    isNightstandMode ? 'text-stone-400' : 'text-slate-500'
-                  )}
-                >
-                  Listen hands-free while holding your child (~{lesson.readingMinutes || 4} min) or read the structured breakdown below.
+                <div className="space-y-4 text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-700 dark:text-stone-300 font-normal">
+                  {renderFormattedEditorialBody(parsedParts.neurobiologyText)}
+                </div>
+              </section>
+            )}
+
+            {/* 3.3 Clinical / Developmental Insight Callout (Pullquote Style) */}
+            {parsedParts.clinicalInsight && (
+              <aside
+                data-testid="lesson-clinical-insight"
+                aria-label="Clinical and Developmental Insight"
+                className={cn(
+                  'my-6 rounded-2xl border-l-4 border-l-teal-600 dark:border-l-teal-400 border border-stone-200/80 dark:border-stone-800 p-6 sm:p-7 shadow-2xs transition-colors',
+                  isNightstandMode
+                    ? 'bg-stone-850/80 text-stone-200'
+                    : 'bg-stone-50/80 text-slate-800'
+                )}
+              >
+                <div className="text-xs font-mono uppercase tracking-wider font-bold text-teal-800 dark:text-teal-300 mb-2">
+                  Clinical Neurobiology Takeaway
+                </div>
+                <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-800 dark:text-stone-200">
+                  {renderInlineMarkdown(parsedParts.clinicalInsight)}
                 </p>
+              </aside>
+            )}
+
+            {/* Fallback if unstructured markdown */}
+            {!parsedParts.hasStructuredParts && (
+              <div className="space-y-4 text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-700 dark:text-stone-300 font-normal">
+                {renderFormattedEditorialBody(lesson.contentMarkdown)}
               </div>
-            </div>
-          </div>
+            )}
 
-          <AudioMemoPlayer
-            audioUrl={lesson.audioUrl}
-            audioDurationSeconds={
-              lesson.audioDurationSeconds ||
-              (lesson.readingMinutes ? lesson.readingMinutes * 60 : 180)
-            }
-            title={`Lesson ${lesson.sortOrder}: ${lesson.title}`}
-            isNightstandMode={isNightstandMode}
-            textToSpeak={audioNarrationText}
-          />
+            {/* 3.4 Clinical Implementation & Parental Grounding Anchor */}
+            {parsedParts.groundingText && (
+              <section
+                data-testid="lesson-grounding-anchor"
+                className={cn(
+                  'rounded-2xl border p-6 sm:p-7 transition-colors space-y-2',
+                  isNightstandMode
+                    ? 'border-stone-800 bg-stone-850/60 text-stone-200'
+                    : 'border-stone-200/90 bg-stone-50/60 text-slate-800'
+                )}
+              >
+                <div className="text-xs font-mono uppercase tracking-wider font-bold text-stone-700 dark:text-stone-300 mb-1">
+                  Parental Grounding · Tonight&apos;s Anchor
+                </div>
+                <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-700 dark:text-stone-300">
+                  {renderInlineMarkdown(parsedParts.groundingText)}
+                </p>
+              </section>
+            )}
+          </div>
         </div>
-
-        {/* 3.2 Part 1: The Kitchen-Table Scenario */}
-        {parsedParts.scenarioText && (
-          <div
-            data-testid="lesson-part-1-card"
-            className={cn(
-              'rounded-2xl border p-6 sm:p-8 shadow-xs leading-relaxed transition-colors space-y-4',
-              isNightstandMode
-                ? 'bg-stone-900 border-stone-800 text-stone-200'
-                : 'bg-gradient-to-br from-[#FCFBF9] via-white to-amber-50/20 border-amber-200/70 text-slate-800'
-            )}
-          >
-            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 shadow-2xs">
-                <BookOpen className="h-3.5 w-3.5" />
-              </span>
-              <span>Part 1 · The Kitchen-Table Scenario</span>
-              <span className="text-slate-300 dark:text-stone-700 hidden sm:inline">•</span>
-              <span className="font-mono text-[11px] font-normal text-amber-700 dark:text-amber-300/80 hidden sm:inline">
-                Real Family Friction
-              </span>
-            </div>
-
-            <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-              {renderFormattedEditorialBody(parsedParts.scenarioText)}
-            </div>
-          </div>
-        )}
-
-        {/* 3.3 Part 2: Developmental Neurobiology */}
-        {parsedParts.neurobiologyText && (
-          <div
-            data-testid="lesson-part-2-card"
-            className={cn(
-              'rounded-2xl border p-6 sm:p-8 shadow-xs leading-relaxed transition-colors space-y-4',
-              isNightstandMode
-                ? 'bg-stone-900 border-stone-800 text-stone-200'
-                : 'bg-gradient-to-br from-[#F7FCFA] via-white to-teal-50/20 border-teal-200/80 text-slate-800'
-            )}
-          >
-            <div className="flex items-center gap-2 text-teal-800 dark:text-teal-300 font-bold text-xs uppercase tracking-wider">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-teal-700 text-white shadow-2xs">
-                <Sparkles className="h-3.5 w-3.5" />
-              </span>
-              <span>Part 2 · Developmental Neurobiology</span>
-              <span className="text-slate-300 dark:text-stone-700 hidden sm:inline">•</span>
-              <span className="font-mono text-[11px] font-normal text-teal-700 dark:text-teal-400 hidden sm:inline">
-                Inside Your Child's Brain
-              </span>
-            </div>
-
-            <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-              {renderFormattedEditorialBody(parsedParts.neurobiologyText)}
-            </div>
-          </div>
-        )}
-
-        {/* 3.4 Clinical / Developmental Insight Callout */}
-        {parsedParts.clinicalInsight && (
-          <aside
-            data-testid="lesson-clinical-insight"
-            aria-label="Developmental Insight Callout"
-            className={cn(
-              'rounded-2xl border p-5 sm:p-6 shadow-xs transition-colors',
-              isNightstandMode
-                ? 'border-teal-900/80 bg-teal-950/20 text-stone-200'
-                : 'border-teal-200/90 bg-gradient-to-br from-teal-50/80 via-[#F7FCFA] to-white text-slate-800'
-            )}
-          >
-            <div className="flex items-center gap-2.5 text-teal-800 dark:text-teal-300 font-bold text-xs uppercase tracking-wider mb-2.5">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-teal-700 text-white shadow-xs">
-                <Sparkles className="h-3.5 w-3.5" />
-              </span>
-              <span>Pediatric Neurobiology · Clinical Takeaway</span>
-            </div>
-            <p className="text-sm sm:text-base leading-relaxed font-medium">
-              {renderInlineMarkdown(parsedParts.clinicalInsight)}
-            </p>
-          </aside>
-        )}
-
-        {/* Fallback if no parts detected */}
-        {!parsedParts.hasStructuredParts && (
-          <div
-            className={cn(
-              'rounded-2xl border p-6 sm:p-10 shadow-xs leading-relaxed transition-colors',
-              isNightstandMode
-                ? 'bg-stone-900 border-stone-800 text-stone-200'
-                : 'bg-white border-slate-200/90 text-slate-800'
-            )}
-          >
-            {renderFormattedEditorialBody(lesson.contentMarkdown)}
-          </div>
-        )}
-
-        {/* 3.5 Clinical Implementation & Parental Grounding */}
-        {parsedParts.groundingText && (
-          <div
-            data-testid="lesson-grounding-anchor"
-            className={cn(
-              'rounded-2xl border p-5 sm:p-6 shadow-xs transition-colors space-y-2',
-              isNightstandMode
-                ? 'border-emerald-900/70 bg-emerald-950/20 text-stone-200'
-                : 'border-emerald-200/80 bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 text-slate-800'
-            )}
-          >
-            <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider">
-              <ShieldCheck className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
-              <span>Parental Grounding · Tonight's Anchor</span>
-            </div>
-            <p className="text-sm sm:text-base leading-relaxed italic font-serif">
-              {renderInlineMarkdown(parsedParts.groundingText)}
-            </p>
-          </div>
-        )}
       </section>
 
       {/* 4. Category-Specific Adaptive Widget */}
