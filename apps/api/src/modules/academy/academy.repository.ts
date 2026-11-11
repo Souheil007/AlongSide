@@ -18,8 +18,15 @@ import {
   type AcademyLessonDTO,
   type AcademyModuleDetailDTO,
   type AcademyLessonCompletionResponseDTO,
+  type AdaptiveModuleType,
+  type DialogueCardDTO,
+  type ThirtySecondGlanceDTO,
   getEquivalentTiers,
   formatCourseTitle,
+  resolveAdaptiveModuleType,
+  resolveReliefTagline,
+  parseDialogueCards,
+  parseThirtySecondGlance,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
@@ -37,6 +44,10 @@ export interface AcademyRepository {
   ): Promise<AcademyModuleDetailDTO | null>;
   findLessonById(
     lessonId: string,
+    userId?: string
+  ): Promise<AcademyLessonDTO | null>;
+  findLessonBySlug(
+    slug: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null>;
   markLessonComplete(
@@ -363,8 +374,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
     lessonId: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null> {
-    const lesson = await this.prisma.academyLesson.findUnique({
-      where: { id: lessonId },
+    const lesson = await this.prisma.academyLesson.findFirst({
+      where: {
+        OR: [{ id: lessonId }, { slug: lessonId }],
+      },
       include: {
         module: {
           select: {
@@ -396,12 +409,83 @@ export class PrismaAcademyRepository implements AcademyRepository {
         where: {
           userId_lessonId: {
             userId,
-            lessonId,
+            lessonId: lesson.id,
           },
         },
       });
       isCompleted = progress?.isCompleted ?? false;
     }
+
+    return this.mapPrismaLessonToDTO(lesson, isCompleted);
+  }
+
+  async findLessonBySlug(
+    slug: string,
+    userId?: string
+  ): Promise<AcademyLessonDTO | null> {
+    const lesson = await this.prisma.academyLesson.findFirst({
+      where: { slug },
+      include: {
+        module: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            developmentalTier: true,
+            category: true,
+          },
+        },
+        chapter: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            priority: true,
+          },
+        },
+      },
+    });
+
+    if (!lesson) {
+      return null;
+    }
+
+    let isCompleted = false;
+    if (userId) {
+      const progress = await this.prisma.academyProgress.findUnique({
+        where: {
+          userId_lessonId: {
+            userId,
+            lessonId: lesson.id,
+          },
+        },
+      });
+      isCompleted = progress?.isCompleted ?? false;
+    }
+
+    return this.mapPrismaLessonToDTO(lesson, isCompleted);
+  }
+
+  private mapPrismaLessonToDTO(
+    lesson: any,
+    isCompleted: boolean
+  ): AcademyLessonDTO {
+    const category = lesson.module.category as AcademyCategory;
+    const adaptiveModuleType =
+      (lesson.adaptiveModuleType as AdaptiveModuleType) ||
+      resolveAdaptiveModuleType(category);
+    const reliefTagline =
+      lesson.reliefTagline || resolveReliefTagline(lesson.title, category);
+    const dialogueCards =
+      (lesson.dialogueCards as DialogueCardDTO[]) ||
+      parseDialogueCards(lesson.contentMarkdown, lesson.deliveryTip);
+    const thirtySecondGlance =
+      (lesson.thirtySecondGlance as ThirtySecondGlanceDTO) ||
+      parseThirtySecondGlance(
+        lesson.contentMarkdown,
+        dialogueCards,
+        lesson.title
+      );
 
     return {
       id: lesson.id,
@@ -415,14 +499,21 @@ export class PrismaAcademyRepository implements AcademyRepository {
       isCompleted,
       audioUrl: lesson.audioUrl ?? undefined,
       audioDurationSeconds: lesson.audioDurationSeconds ?? undefined,
-      whatNotToSay: lesson.whatNotToSay ?? undefined,
-      deliveryTip: lesson.deliveryTip ?? undefined,
+      reliefTagline,
+      thirtySecondGlance,
+      adaptiveModuleType,
+      dialogueCards,
+      whatNotToSay:
+        lesson.whatNotToSay ??
+        (dialogueCards[0]?.instinctiveMistake || undefined),
+      deliveryTip:
+        lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || undefined),
       module: {
         id: lesson.module.id,
         slug: lesson.module.slug,
         title: lesson.module.title,
         developmentalTier: lesson.module.developmentalTier as DevelopmentalTier,
-        category: lesson.module.category as AcademyCategory,
+        category,
       },
       chapter: lesson.chapter
         ? {
@@ -553,6 +644,10 @@ interface InMemoryLesson {
   sortOrder: number;
   audioUrl?: string | null;
   audioDurationSeconds?: number | null;
+  reliefTagline?: string | null;
+  thirtySecondGlance?: ThirtySecondGlanceDTO | null;
+  adaptiveModuleType?: AdaptiveModuleType | null;
+  dialogueCards?: DialogueCardDTO[] | null;
   whatNotToSay?: string | null;
   deliveryTip?: string | null;
 }
@@ -600,6 +695,22 @@ export class InMemoryAcademyRepository implements AcademyRepository {
 
         for (const lesson of chapter.lessons) {
           const lessonId = `les-${mod.slug}-${lesson.slug}`;
+          const category = mod.category;
+          const adaptiveModuleType =
+            lesson.adaptiveModuleType ?? resolveAdaptiveModuleType(category);
+          const reliefTagline =
+            lesson.reliefTagline ?? resolveReliefTagline(lesson.title, category);
+          const dialogueCards =
+            lesson.dialogueCards ??
+            parseDialogueCards(lesson.contentMarkdown, lesson.deliveryTip);
+          const thirtySecondGlance =
+            lesson.thirtySecondGlance ??
+            parseThirtySecondGlance(
+              lesson.contentMarkdown,
+              dialogueCards,
+              lesson.title
+            );
+
           const lessonRecord: InMemoryLesson = {
             id: lessonId,
             moduleId,
@@ -611,8 +722,15 @@ export class InMemoryAcademyRepository implements AcademyRepository {
             sortOrder: lesson.sortOrder,
             audioUrl: lesson.audioUrl ?? null,
             audioDurationSeconds: lesson.audioDurationSeconds ?? null,
-            whatNotToSay: lesson.whatNotToSay ?? null,
-            deliveryTip: lesson.deliveryTip ?? null,
+            reliefTagline,
+            thirtySecondGlance,
+            adaptiveModuleType,
+            dialogueCards,
+            whatNotToSay:
+              lesson.whatNotToSay ??
+              (dialogueCards[0]?.instinctiveMistake || null),
+            deliveryTip:
+              lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || null),
           };
           this.lessons.set(lessonId, lessonRecord);
         }
@@ -776,6 +894,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           isCompleted,
           audioUrl: l.audioUrl ?? undefined,
           audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+          reliefTagline:
+            l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
         };
@@ -817,6 +937,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         isCompleted,
         audioUrl: l.audioUrl ?? undefined,
         audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+        reliefTagline:
+          l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
         whatNotToSay: l.whatNotToSay ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
       };
@@ -861,6 +983,15 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     }
 
     if (!lesson) {
+      for (const l of this.lessons.values()) {
+        if (l.slug === lessonId) {
+          lesson = l;
+          break;
+        }
+      }
+    }
+
+    if (!lesson) {
       return null;
     }
 
@@ -888,8 +1019,24 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       }
     }
 
+    const category = mod.category;
+    const adaptiveModuleType =
+      lesson.adaptiveModuleType ?? resolveAdaptiveModuleType(category);
+    const reliefTagline =
+      lesson.reliefTagline ?? resolveReliefTagline(lesson.title, category);
+    const dialogueCards =
+      lesson.dialogueCards ??
+      parseDialogueCards(lesson.contentMarkdown, lesson.deliveryTip);
+    const thirtySecondGlance =
+      lesson.thirtySecondGlance ??
+      parseThirtySecondGlance(
+        lesson.contentMarkdown,
+        dialogueCards,
+        lesson.title
+      );
+
     return {
-      id: lessonId,
+      id: lesson.id,
       moduleId: lesson.moduleId,
       chapterId: lesson.chapterId,
       slug: lesson.slug,
@@ -900,8 +1047,15 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       isCompleted,
       audioUrl: lesson.audioUrl ?? undefined,
       audioDurationSeconds: lesson.audioDurationSeconds ?? undefined,
-      whatNotToSay: lesson.whatNotToSay ?? undefined,
-      deliveryTip: lesson.deliveryTip ?? undefined,
+      reliefTagline,
+      thirtySecondGlance,
+      adaptiveModuleType,
+      dialogueCards,
+      whatNotToSay:
+        lesson.whatNotToSay ??
+        (dialogueCards[0]?.instinctiveMistake || undefined),
+      deliveryTip:
+        lesson.deliveryTip ?? (dialogueCards[0]?.deliveryTip || undefined),
       module: {
         id: mod.id,
         slug: moduleSlug,
@@ -918,6 +1072,18 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           }
         : null,
     };
+  }
+
+  async findLessonBySlug(
+    slug: string,
+    userId?: string
+  ): Promise<AcademyLessonDTO | null> {
+    for (const l of this.lessons.values()) {
+      if (l.slug === slug) {
+        return this.findLessonById(l.id, userId);
+      }
+    }
+    return null;
   }
 
   async markLessonComplete(

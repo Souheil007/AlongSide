@@ -85,6 +85,19 @@ export class AcademyService {
     return lesson;
   }
 
+  async getLessonBySlug(
+    slug: string,
+    userId?: string
+  ): Promise<AcademyLessonDTO> {
+    const lesson = await this.repository.findLessonBySlug(slug, userId);
+    if (!lesson) {
+      throw new AcademyLessonNotFoundError(
+        `Academy lesson not found with slug: ${slug}`
+      );
+    }
+    return lesson;
+  }
+
   async markLessonComplete(
     userId: string,
     lessonId: string
