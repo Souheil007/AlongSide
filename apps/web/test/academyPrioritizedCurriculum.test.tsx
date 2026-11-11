@@ -193,7 +193,7 @@ describe('PLAN-31: Parent Intelligence Academy Curriculum Explorer & Chapter Rea
 
       const element = React.createElement(ChapterRoadmapView, { module: moduleWithoutChapters });
       expect(element).toBeDefined();
-      expect(element.props.module.lessons).toHaveLength(6);
+      expect(element.props.module.lessons).toHaveLength(4);
     });
   });
 

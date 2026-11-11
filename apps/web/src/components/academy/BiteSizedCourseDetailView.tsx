@@ -2,16 +2,13 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Pause, X } from 'lucide-react';
+import { ArrowLeft, Play, Pause, X, ChevronDown } from 'lucide-react';
 import {
   formatCourseTitle,
   type AcademyLessonSummaryDTO,
   type AcademyModuleDetailDTO,
 } from '@alongside/shared';
 import { getLocalCompletedLessonIds } from '@/lib/api/academy';
-import { getTierStageName } from '@/components/academy/ActiveChildCalibrationBanner';
-import { normalizeChildTier } from '@/components/academy/AcademyCatalogClient';
-import { getTierBadgeInfo } from '@/components/academy/ModuleCard';
 import { cn } from '@/lib/utils';
 
 export interface BiteSizedCourseDetailViewProps {
@@ -31,7 +28,7 @@ export interface BiteSizedCourseDetailViewProps {
  */
 export function resolveLessonTakeaway(
   lesson: AcademyLessonSummaryDTO,
-  moduleTitle?: string
+  _moduleTitle?: string
 ): { subtitle: string; script: string } {
   const titleLower = lesson.title.toLowerCase();
   const slugLower = lesson.slug.toLowerCase();
@@ -179,6 +176,32 @@ export function resolveLessonTakeaway(
     };
   }
 
+  if (
+    slugLower.includes('convalescence') ||
+    titleLower.includes('convalescence') ||
+    slugLower.includes('recovery') ||
+    titleLower.includes('recovery')
+  ) {
+    return {
+      subtitle:
+        'Rebuilding immune vitality and nervous system energy without rushing back into high-demand schedules.',
+      script:
+        'Healing takes biological time. Rest is not lost time; it is your body actively rebuilding strength.',
+    };
+  }
+
+  if (
+    slugLower.includes('sleep') ||
+    titleLower.includes('sleep')
+  ) {
+    return {
+      subtitle:
+        'Protecting restorative sleep architecture and circadian biology against modern evening overstimulation.',
+      script:
+        'We protect your sleep because we love your growing brain. Lights out lets your cells repair and recharge.',
+    };
+  }
+
   // Dynamic fallback for any other lesson
   return {
     subtitle: `Actionable developmental guidance and communication scripts for ${lesson.title.toLowerCase()}.`,
@@ -188,33 +211,30 @@ export function resolveLessonTakeaway(
 }
 
 /**
+ * Format seconds as M:SS
+ */
+export function formatSeconds(sec: number): string {
+  const mins = Math.floor(sec / 60);
+  const remainder = Math.floor(sec % 60);
+  return `${mins}:${remainder.toString().padStart(2, '0')}`;
+}
+
+/**
  * Direction A2: Bite-Sized Micro-Stream Course Detail View
- * Codified from prototype-a2-bite-sized-stream.html (Taste 2: Editorial Pediatric Almanac)
  *
- * Replaces academic taxonomy with Tonight vs. Weekend chunking:
- * - Masthead with Newsreader serif typography & quiet child calibration tag
- * - Part 1 · Quick Wins for Tonight:
- *   - Compact checklist of completed lessons
- *   - Elevated "Tonight's Objective" hero focus card with clinician script
- *   - 1-click launch CTA & interactive 90-second spoken audio briefing player
- * - Part 2 · Habits for this Weekend:
- *   - Clean, fluid lesson rows with micro-durations
+ * Streamlined single-course layout:
+ * - Newsreader serif typography & quiet child calibration tag
+ * - Unified, sequential curriculum stream (no artificial "Parts" dividing the course)
+ * - In-place expanded focus card: clicking ANY lesson expands its details right in its place
+ * - Empathetic Script Box & Start Lesson CTA
+ * - Accurate dynamic spoken audio briefing with real duration calculation
  * - Evidence-based pediatric reassurance footer
  */
 export function BiteSizedCourseDetailView({
   module,
-  activeChild,
+  activeChild: _activeChild,
   className,
 }: BiteSizedCourseDetailViewProps) {
-  const [selectedLessonId, setSelectedLessonId] = React.useState<string | null>(null);
-  const heroFocusCardRef = React.useRef<HTMLDivElement | null>(null);
-
-  const [isAudioOpen, setIsAudioOpen] = React.useState<boolean>(false);
-  const [isAudioPlaying, setIsAudioPlaying] = React.useState<boolean>(false);
-  const [playbackSeconds, setPlaybackSeconds] = React.useState<number>(0);
-  const [playbackRate, setPlaybackRate] = React.useState<number>(1.0);
-  const totalAudioSeconds = 105; // 1:45
-
   // Local storage completion sync on mount
   const [localCompletedSet, setLocalCompletedSet] = React.useState<Set<string>>(new Set());
   React.useEffect(() => {
@@ -242,92 +262,98 @@ export function BiteSizedCourseDetailView({
   const totalLessons = allLessons.length;
   const completedLessons = allLessons.filter((l) => l.isCompleted);
   const completedCount = completedLessons.length;
+  const remainingLessonsCount = allLessons.filter((l) => !l.isCompleted).length;
   const isModuleCompleted =
     module.isCompleted || (totalLessons > 0 && completedCount === totalLessons);
 
   // The hero lesson is the first uncompleted lesson, or the first lesson if none or all completed
   const heroLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
 
-  // The currently focused/opened lesson in the hero card box
-  const activeFocusLesson =
-    (selectedLessonId ? allLessons.find((l) => l.id === selectedLessonId) : null) ||
-    heroLesson ||
-    allLessons[0];
+  // In-place accordion expansion state: default to hero lesson
+  const [expandedLessonId, setExpandedLessonId] = React.useState<string | null>(
+    heroLesson ? heroLesson.id : null
+  );
+
+  // Keep expanded lesson in sync if initial load or lesson completion updates
+  React.useEffect(() => {
+    if (!expandedLessonId && heroLesson) {
+      setExpandedLessonId(heroLesson.id);
+    }
+  }, [heroLesson, expandedLessonId]);
+
+  // Audio player state
+  const [audioOpenLessonId, setAudioOpenLessonId] = React.useState<string | null>(null);
+  const [playingLessonId, setPlayingLessonId] = React.useState<string | null>(null);
+  const [playbackSeconds, setPlaybackSeconds] = React.useState<number>(0);
+  const [playbackRate, setPlaybackRate] = React.useState<number>(1.0);
 
   // Calculate remaining reading minutes across uncompleted lessons
   const remainingMinutes = allLessons
     .filter((l) => !l.isCompleted)
-    .reduce((sum, l) => sum + (l.readingMinutes || 3), 0);
+    .reduce((sum, l) => sum + (l.readingMinutes || 4), 0);
 
-  // Chunking into Part 1 (Tonight) vs Part 2 (Weekend)
-  const part1Threshold = Math.max(3, heroLesson ? heroLesson.sortOrder : 3);
-  const part1Lessons = allLessons.filter((l) => l.sortOrder <= part1Threshold);
-  const part2Lessons = allLessons.filter((l) => l.sortOrder > part1Threshold);
-
-  // In Part 1, completed lessons can be clicked to reopen that lesson in the focus card
-  const completedInPart1 = part1Lessons.filter(
-    (l) => l.isCompleted && (!activeFocusLesson || l.id !== activeFocusLesson.id)
-  );
-  const remainingInPart1 = part1Lessons.filter((l) => !l.isCompleted).length;
-
-  const part2ReadingMinutes = part2Lessons.reduce(
-    (acc, l) => acc + (l.readingMinutes || 3),
-    0
-  );
-
-  // Child calibration check
-  const activeChildTier = activeChild
-    ? normalizeChildTier(activeChild.developmentalTier, activeChild.age)
-    : null;
-  const moduleNormalizedTier = normalizeChildTier(module.developmentalTier);
-  const isTierMatch = Boolean(activeChild && activeChildTier === moduleNormalizedTier);
-  const tierInfo = getTierBadgeInfo(module.developmentalTier);
-
-  // Resolve takeaway for the active focused lesson
-  const activeTakeaway = activeFocusLesson
-    ? resolveLessonTakeaway(activeFocusLesson, module.title)
-    : {
-        subtitle: module.summary,
-        script:
-          'We protect your sleep because we love your growing brain. The dock is for all phones, including mine.',
-      };
-
-  // Handler to select and open any lesson in the hero focus card
-  const handleSelectLesson = (lessonId: string) => {
-    setSelectedLessonId(lessonId);
+  // Stop speech when switching lessons or unmounting
+  const stopAudio = React.useCallback(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
-    setIsAudioPlaying(false);
+    setPlayingLessonId(null);
     setPlaybackSeconds(0);
-    heroFocusCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      stopAudio();
+    };
+  }, [stopAudio]);
+
+  // Handler to toggle in-place accordion expansion
+  const handleToggleLesson = (lessonId: string) => {
+    if (expandedLessonId === lessonId) {
+      setExpandedLessonId(null);
+    } else {
+      setExpandedLessonId(lessonId);
+    }
+    stopAudio();
+    setAudioOpenLessonId(null);
   };
 
-  // Real SpeechSynthesis Audio Engine
-  const audioText = React.useMemo(() => {
-    if (!activeFocusLesson) return '';
-    return `Pediatrician executive briefing for lesson ${activeFocusLesson.sortOrder}: ${activeFocusLesson.title}. ${activeTakeaway.subtitle}. Script to remember: ${activeTakeaway.script}`;
-  }, [activeFocusLesson, activeTakeaway]);
+  // Handler to toggle audio briefing panel
+  const handleToggleAudio = (lessonId: string) => {
+    if (audioOpenLessonId === lessonId) {
+      setAudioOpenLessonId(null);
+      stopAudio();
+    } else {
+      setAudioOpenLessonId(lessonId);
+      stopAudio();
+    }
+  };
 
-  const toggleAudioPlay = () => {
+  // Handler to play/pause audio via Web Speech API
+  const handlePlayPauseAudio = (
+    lesson: AcademyLessonSummaryDTO,
+    takeaway: { subtitle: string; script: string },
+    totalAudioSeconds: number
+  ) => {
     if (typeof window === 'undefined') return;
 
     if (!('speechSynthesis' in window)) {
-      // Fallback timer simulation
-      setIsAudioPlaying((prev) => !prev);
+      // Fallback: toggle simulated playing
+      setPlayingLessonId((prev) => (prev === lesson.id ? null : lesson.id));
       return;
     }
 
-    if (isAudioPlaying) {
+    if (playingLessonId === lesson.id) {
       window.speechSynthesis.pause();
-      setIsAudioPlaying(false);
+      setPlayingLessonId(null);
     } else {
       if (window.speechSynthesis.paused) {
         window.speechSynthesis.resume();
-        setIsAudioPlaying(true);
+        setPlayingLessonId(lesson.id);
       } else {
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(audioText);
+        const speechText = `Pediatrician executive briefing for lesson ${lesson.sortOrder}: ${lesson.title}. ${takeaway.subtitle}. Script to remember: ${takeaway.script}`;
+        const utterance = new SpeechSynthesisUtterance(speechText);
         utterance.rate = playbackRate;
         utterance.pitch = 1.0;
 
@@ -343,42 +369,42 @@ export function BiteSizedCourseDetailView({
         if (naturalVoice) utterance.voice = naturalVoice;
 
         utterance.onend = () => {
-          setIsAudioPlaying(false);
+          setPlayingLessonId(null);
           setPlaybackSeconds(0);
         };
         utterance.onerror = () => {
-          setIsAudioPlaying(false);
+          setPlayingLessonId(null);
         };
         utterance.onboundary = (e) => {
           if (e.charIndex) {
-            const ratio = e.charIndex / Math.max(1, audioText.length);
+            const ratio = e.charIndex / Math.max(1, speechText.length);
             setPlaybackSeconds(Math.min(totalAudioSeconds, Math.round(ratio * totalAudioSeconds)));
           }
         };
 
         window.speechSynthesis.speak(utterance);
-        setIsAudioPlaying(true);
+        setPlayingLessonId(lesson.id);
       }
     }
   };
 
-  // Stop speech on unmount
-  React.useEffect(() => {
-    return () => {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
-
-  // Timer simulation fallback if speech synthesis is not emitting boundaries
+  // Timer simulation fallback for audio progress
   React.useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
-    if (isAudioPlaying) {
+    if (playingLessonId) {
+      const activeLesson = allLessons.find((l) => l.id === playingLessonId);
+      const takeaway = activeLesson ? resolveLessonTakeaway(activeLesson, module.title) : null;
+      const speechText = activeLesson && takeaway
+        ? `Pediatrician executive briefing for lesson ${activeLesson.sortOrder}: ${activeLesson.title}. ${takeaway.subtitle}. Script to remember: ${takeaway.script}`
+        : '';
+      const wordCount = speechText.trim().split(/\s+/).filter(Boolean).length;
+      const speechDuration = Math.max(15, Math.round(wordCount / 2.25));
+      const totalSecs = activeLesson?.audioDurationSeconds || speechDuration;
+
       timer = setInterval(() => {
         setPlaybackSeconds((prev) => {
-          if (prev >= totalAudioSeconds) {
-            setIsAudioPlaying(false);
+          if (prev >= totalSecs) {
+            setPlayingLessonId(null);
             return 0;
           }
           return prev + 1;
@@ -388,22 +414,12 @@ export function BiteSizedCourseDetailView({
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [isAudioPlaying, playbackRate]);
+  }, [playingLessonId, playbackRate, allLessons, module.title]);
 
   const togglePlaybackRate = () => {
     const nextRate = playbackRate === 1.0 ? 1.5 : playbackRate === 1.5 ? 2.0 : 1.0;
     setPlaybackRate(nextRate);
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window && isAudioPlaying) {
-      window.speechSynthesis.cancel();
-      setIsAudioPlaying(false);
-      setPlaybackSeconds(0);
-    }
-  };
-
-  const formatSeconds = (sec: number) => {
-    const mins = Math.floor(sec / 60);
-    const remainder = sec % 60;
-    return `${mins}:${remainder.toString().padStart(2, '0')}`;
+    stopAudio();
   };
 
   return (
@@ -446,265 +462,62 @@ export function BiteSizedCourseDetailView({
           </p>
         </section>
 
-        {/* SECTION 1: TONIGHT'S WINS (The Immediate Focus) */}
-        <section className="space-y-3" aria-label="Part 1 · Quick Wins for Tonight">
+        {/* UNIFIED COURSE CURRICULUM STREAM (Single sequential list - no artificial Parts) */}
+        <section className="space-y-4" aria-label="Course Curriculum">
           <div className="flex items-center justify-between text-xs font-mono">
             <span className="font-bold text-ink uppercase tracking-wider flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-spruce shrink-0" />
-              Part 1 · Quick Wins for Tonight
+              Course Curriculum
             </span>
             <span className="text-spruce font-medium">
-              {remainingInPart1 > 0
-                ? `${remainingInPart1} lesson${remainingInPart1 === 1 ? '' : 's'} remaining`
+              {remainingLessonsCount > 0
+                ? `${remainingLessonsCount} lesson${remainingLessonsCount === 1 ? '' : 's'} remaining`
                 : 'All complete'}
             </span>
           </div>
 
-          {/* Quick Checklist of Completed Lessons in Part 1 - Clickable to open in hero focus card */}
-          {completedInPart1.length > 0 && (
-            <div
-              data-testid="completed-checklist"
-              className="rounded-xl border border-hairline/80 bg-white divide-y divide-hairline/50 overflow-hidden shadow-2xs"
-            >
-              {completedInPart1.map((lesson) => {
-                const isSelected = activeFocusLesson?.id === lesson.id;
-                return (
-                  <div
-                    key={lesson.id}
-                    onClick={() => handleSelectLesson(lesson.id)}
-                    role="button"
-                    tabIndex={0}
-                    className={cn(
-                      'px-4 py-2.5 flex items-center justify-between text-xs font-mono transition-colors cursor-pointer',
-                      isSelected
-                        ? 'bg-spruce-soft/50 font-semibold text-spruce'
-                        : 'text-mute hover:bg-linen-subtle/50'
-                    )}
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                      <span className="text-spruce font-bold shrink-0">✓</span>
-                      <span className="line-through decoration-hairline text-mute truncate">
-                        {lesson.sortOrder}. {lesson.title}
-                      </span>
-                    </div>
-                    <span className="text-[11px] text-spruce hover:underline shrink-0 font-sans">
-                      {isSelected ? 'Open in box ↑' : 'Review'}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          {/* Lessons List: Clicking any lesson row expands its focus card in place */}
+          <div className="space-y-3" data-testid="curriculum-lessons-list">
+            {allLessons.map((lesson) => {
+              const isExpanded = expandedLessonId === lesson.id;
+              const isAudioOpen = audioOpenLessonId === lesson.id;
+              const isPlayingThis = playingLessonId === lesson.id;
+              const takeaway = resolveLessonTakeaway(lesson, module.title);
 
-          {/* THE TONIGHT HERO FOCUS CARD (Dynamic for any opened/selected lesson) */}
-          {activeFocusLesson && (
-            <div
-              ref={heroFocusCardRef}
-              data-testid="hero-focus-card"
-              className="rounded-2xl border-2 border-spruce/30 bg-spruce-soft/40 p-5 sm:p-6 space-y-4 shadow-xs transition-all"
-            >
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="px-2 py-0.5 rounded-full bg-spruce text-white text-[10px] font-semibold tracking-wide uppercase">
-                  {activeFocusLesson.isCompleted
-                    ? 'Course Completed · Review'
-                    : activeFocusLesson.id === heroLesson?.id && !isModuleCompleted
-                      ? "Tonight's Objective"
-                      : `Lesson ${activeFocusLesson.sortOrder} Objective`}
-                </span>
-                <span className="text-spruce font-medium">
-                  {activeFocusLesson.readingMinutes || 3} min read
-                </span>
-              </div>
+              // Real dynamic audio briefing duration calculation
+              const briefingText = `Pediatrician executive briefing for lesson ${lesson.sortOrder}: ${lesson.title}. ${takeaway.subtitle}. Script to remember: ${takeaway.script}`;
+              const wordCount = briefingText.trim().split(/\s+/).filter(Boolean).length;
+              // Average speech synthesis speed is ~135 words per minute (~2.25 words per second)
+              const estimatedSpeechSeconds = Math.max(15, Math.round(wordCount / 2.25));
+              const totalAudioSeconds = lesson.audioDurationSeconds || estimatedSpeechSeconds;
 
-              <div>
-                <h2 className="text-lg sm:text-xl font-serif font-bold text-ink leading-tight">
-                  {activeFocusLesson.sortOrder}. {activeFocusLesson.title}
-                </h2>
-                <p className="text-xs sm:text-sm text-body leading-relaxed mt-1.5">
-                  {activeTakeaway.subtitle}
-                </p>
-              </div>
-
-              {/* Empathetic / Clinician Script Box */}
-              <div className="bg-white/90 rounded-xl p-3 border border-spruce/20 text-xs shadow-2xs">
-                <span className="text-[10px] font-mono font-semibold uppercase text-spruce tracking-wider block mb-1">
-                  Empathetic Script to Use
-                </span>
-                <p className="font-serif italic text-ink text-sm">
-                  &ldquo;{activeTakeaway.script}&rdquo;
-                </p>
-              </div>
-
-              {/* Action Bar */}
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <Link
-                  href={`/academy/${module.slug}/${activeFocusLesson.slug}`}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-spruce hover:bg-spruce-hover text-white text-xs font-semibold transition-all shadow-xs"
-                >
-                  <span>
-                    {activeFocusLesson.isCompleted ? 'Review' : 'Start'} Lesson {activeFocusLesson.sortOrder} (
-                    {activeFocusLesson.readingMinutes || 3} min)
-                  </span>
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Link>
-
-                <button
-                  type="button"
-                  data-testid="audio-briefing-toggle"
-                  onClick={() => {
-                    const next = !isAudioOpen;
-                    setIsAudioOpen(next);
-                    if (!next && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-                      window.speechSynthesis.cancel();
-                      setIsAudioPlaying(false);
-                    }
-                  }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-linen-subtle border border-hairline text-xs font-mono text-body transition-colors shadow-2xs cursor-pointer"
-                >
-                  <svg
-                    className="w-3.5 h-3.5 text-spruce"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                  </svg>
-                  <span>{isAudioOpen ? 'Hide Audio' : 'Audio (1:45)'}</span>
-                </button>
-              </div>
-
-              {/* Spoken Audio Briefing Panel */}
-              {isAudioOpen && (
+              return (
                 <div
-                  data-testid="spoken-audio-briefing-panel"
-                  className="rounded-xl border border-spruce/20 bg-white p-4 space-y-3 shadow-xs animate-in fade-in duration-200"
+                  key={lesson.id}
+                  data-testid={`lesson-card-${lesson.id}`}
+                  className={cn(
+                    'rounded-2xl border transition-all duration-200 overflow-hidden shadow-2xs',
+                    isExpanded
+                      ? 'border-spruce/40 bg-spruce-soft/30 ring-1 ring-spruce/30 shadow-xs'
+                      : 'border-hairline bg-white hover:border-spruce/30'
+                  )}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-spruce text-white">
-                        <Play className="h-3 w-3 fill-white" />
-                      </span>
-                      <div>
-                        <h4 className="text-xs font-bold text-ink">
-                          Pediatrician Spoken Executive Briefing
-                        </h4>
-                        <p className="text-[10px] font-mono text-mute">
-                          Dr. Aris Thorne, MD · 90-Second Micro-Briefing
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsAudioOpen(false);
-                        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-                          window.speechSynthesis.cancel();
-                          setIsAudioPlaying(false);
-                        }
-                      }}
-                      className="text-mute hover:text-ink text-xs p-1 cursor-pointer"
-                      aria-label="Close audio player"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-
-                  {/* Interactive Audio Scrubber & Controls */}
-                  <div className="flex items-center gap-3 pt-1">
-                    <button
-                      type="button"
-                      onClick={toggleAudioPlay}
-                      className="h-8 w-8 rounded-full bg-spruce hover:bg-spruce-hover text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
-                      aria-label={isAudioPlaying ? 'Pause audio' : 'Play audio'}
-                    >
-                      {isAudioPlaying ? (
-                        <Pause className="h-3.5 w-3.5" />
-                      ) : (
-                        <Play className="h-3.5 w-3.5 fill-white" />
-                      )}
-                    </button>
-                    <div className="flex-1 space-y-1">
-                      <div
-                        data-testid="audio-scrubber"
-                        role="progressbar"
-                        aria-valuemin={0}
-                        aria-valuemax={totalAudioSeconds}
-                        aria-valuenow={playbackSeconds}
-                        onClick={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const clickPos = (e.clientX - rect.left) / rect.width;
-                          setPlaybackSeconds(Math.round(clickPos * totalAudioSeconds));
-                        }}
-                        className="h-2 w-full bg-linen-subtle rounded-full overflow-hidden cursor-pointer"
-                      >
-                        <div
-                          className="h-full bg-spruce transition-all duration-150 rounded-full"
-                          style={{ width: `${Math.min(100, (playbackSeconds / totalAudioSeconds) * 100)}%` }}
-                        />
-                      </div>
-                      <div className="flex justify-between text-[10px] font-mono text-mute">
-                        <span>{formatSeconds(playbackSeconds)}</span>
-                        <span>{formatSeconds(totalAudioSeconds)}</span>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={togglePlaybackRate}
-                      className="flex items-center gap-1 text-[10px] font-mono bg-linen-subtle hover:bg-hairline px-2 py-1 rounded text-body cursor-pointer transition-colors"
-                      title="Toggle playback speed"
-                    >
-                      <span>{playbackRate.toFixed(1)}x</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </section>
-
-        {/* SECTION 2: HABITS FOR THIS WEEKEND (Progressive & Fluid) - Clicking opens that lesson in focus box */}
-        {part2Lessons.length > 0 && (
-          <section
-            className="space-y-3 pt-4 border-t border-hairline"
-            aria-label="Part 2 · Habits for this Weekend"
-          >
-            <div className="flex items-center justify-between text-xs font-mono text-mute">
-              <span className="font-bold text-ink uppercase tracking-wider">
-                Part 2 · Habits for this Weekend
-              </span>
-              <span>
-                {part2Lessons.length} {part2Lessons.length === 1 ? 'lesson' : 'lessons'} · ~
-                {part2ReadingMinutes}m
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {part2Lessons.map((lesson) => {
-                const takeaway = resolveLessonTakeaway(lesson, module.title);
-                const isSelected = activeFocusLesson?.id === lesson.id;
-                return (
+                  {/* Clickable Lesson Row Header: Click whole box to toggle focus card in place */}
                   <div
-                    key={lesson.id}
-                    onClick={() => handleSelectLesson(lesson.id)}
+                    onClick={() => handleToggleLesson(lesson.id)}
                     role="button"
                     tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleToggleLesson(lesson.id);
+                      }
+                    }}
                     className={cn(
-                      'rounded-xl border p-3.5 flex items-center justify-between gap-3 group transition-colors shadow-2xs cursor-pointer',
-                      isSelected
-                        ? 'border-spruce bg-spruce-soft/30 ring-1 ring-spruce/40'
-                        : 'border-hairline bg-white hover:border-spruce/40'
+                      'p-4 sm:p-4.5 flex items-center justify-between gap-3 cursor-pointer select-none transition-colors',
+                      isExpanded ? 'bg-spruce-soft/40' : 'hover:bg-linen-subtle/40'
                     )}
+                    aria-expanded={isExpanded}
                   >
                     <div className="flex items-center gap-3 min-w-0 pr-2">
                       <span
@@ -712,31 +525,223 @@ export function BiteSizedCourseDetailView({
                           'h-6 w-6 rounded-full text-xs font-mono flex items-center justify-center shrink-0 transition-colors',
                           lesson.isCompleted
                             ? 'bg-spruce text-white font-bold'
-                            : isSelected
+                            : isExpanded
                               ? 'bg-spruce text-white font-semibold'
-                              : 'bg-linen-subtle text-mute group-hover:bg-spruce-soft group-hover:text-spruce'
+                              : 'bg-linen-subtle text-mute'
                         )}
                       >
                         {lesson.isCompleted ? '✓' : lesson.sortOrder}
                       </span>
                       <div className="min-w-0">
-                        <h3 className="text-xs sm:text-sm font-medium text-ink group-hover:text-spruce transition-colors truncate">
-                          {lesson.title}
+                        <h3
+                          className={cn(
+                            'text-xs sm:text-sm font-semibold transition-colors truncate',
+                            isExpanded ? 'text-spruce font-bold' : 'text-ink'
+                          )}
+                        >
+                          {lesson.sortOrder}. {lesson.title}
                         </h3>
-                        <p className="text-[11px] text-mute line-clamp-1">
+                        {!isExpanded && (
+                          <p className="text-[11px] text-mute line-clamp-1 mt-0.5">
+                            {takeaway.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 shrink-0">
+                      <span className="text-xs font-mono text-mute">
+                        {lesson.readingMinutes || 4}m
+                      </span>
+                      <ChevronDown
+                        className={cn(
+                          'w-4 h-4 text-mute transition-transform duration-200',
+                          isExpanded && 'rotate-180 text-spruce'
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  {/* IN-PLACE EXPANDED FOCUS BOX (Opens directly in its place under the clicked lesson) */}
+                  {isExpanded && (
+                    <div
+                      data-testid="hero-focus-card"
+                      className="border-t border-spruce/20 bg-white/70 p-5 sm:p-6 space-y-4 animate-in fade-in duration-200"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="px-2 py-0.5 rounded-full bg-spruce text-white text-[10px] font-semibold tracking-wide uppercase">
+                          {lesson.isCompleted
+                            ? 'Course Completed · Review'
+                            : lesson.id === heroLesson?.id && !isModuleCompleted
+                              ? "Tonight's Objective"
+                              : `Lesson ${lesson.sortOrder} Objective`}
+                        </span>
+                        <span className="text-spruce font-medium">
+                          {lesson.readingMinutes || 4} min read
+                        </span>
+                      </div>
+
+                      <div>
+                        <h2 className="text-lg sm:text-xl font-serif font-bold text-ink leading-tight">
+                          {lesson.sortOrder}. {lesson.title}
+                        </h2>
+                        <p className="text-xs sm:text-sm text-body leading-relaxed mt-1.5">
                           {takeaway.subtitle}
                         </p>
                       </div>
+
+                      {/* Empathetic / Clinician Script Box */}
+                      <div className="bg-white rounded-xl p-3.5 border border-spruce/20 text-xs shadow-2xs">
+                        <span className="text-[10px] font-mono font-semibold uppercase text-spruce tracking-wider block mb-1">
+                          Empathetic Script to Use
+                        </span>
+                        <p className="font-serif italic text-ink text-sm">
+                          &ldquo;{takeaway.script}&rdquo;
+                        </p>
+                      </div>
+
+                      {/* Action Bar */}
+                      <div className="flex flex-wrap items-center gap-3 pt-1">
+                        <Link
+                          href={`/academy/${module.slug}/${lesson.slug}`}
+                          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-spruce hover:bg-spruce-hover text-white text-xs font-semibold transition-all shadow-xs"
+                        >
+                          <span>
+                            {lesson.isCompleted ? 'Review' : 'Start'} Lesson {lesson.sortOrder} (
+                            {lesson.readingMinutes || 4} min)
+                          </span>
+                          <svg
+                            className="w-3.5 h-3.5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                          </svg>
+                        </Link>
+
+                        <button
+                          type="button"
+                          data-testid="audio-briefing-toggle"
+                          onClick={() => handleToggleAudio(lesson.id)}
+                          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-linen-subtle border border-hairline text-xs font-mono text-body transition-colors shadow-2xs cursor-pointer"
+                        >
+                          <svg
+                            className="w-3.5 h-3.5 text-spruce"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                          </svg>
+                          <span>
+                            {isAudioOpen
+                              ? 'Hide Audio'
+                              : `Audio (${formatSeconds(totalAudioSeconds)})`}
+                          </span>
+                        </button>
+                      </div>
+
+                      {/* Spoken Audio Briefing Panel */}
+                      {isAudioOpen && (
+                        <div
+                          data-testid="spoken-audio-briefing-panel"
+                          className="rounded-xl border border-spruce/20 bg-white p-4 space-y-3 shadow-xs animate-in fade-in duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-spruce text-white">
+                                <Play className="h-3 w-3 fill-white" />
+                              </span>
+                              <div>
+                                <h4 className="text-xs font-bold text-ink">
+                                  Pediatrician Spoken Executive Briefing
+                                </h4>
+                                <p className="text-[10px] font-mono text-mute">
+                                  Dr. Aris Thorne, MD · Lesson {lesson.sortOrder} Audio Memo
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleToggleAudio(lesson.id)}
+                              className="text-mute hover:text-ink text-xs p-1 cursor-pointer"
+                              aria-label="Close audio player"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
+
+                          {/* Interactive Audio Scrubber & Controls */}
+                          <div className="flex items-center gap-3 pt-1">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handlePlayPauseAudio(lesson, takeaway, totalAudioSeconds)
+                              }
+                              className="h-8 w-8 rounded-full bg-spruce hover:bg-spruce-hover text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+                              aria-label={isPlayingThis ? 'Pause audio' : 'Play audio'}
+                            >
+                              {isPlayingThis ? (
+                                <Pause className="h-3.5 w-3.5" />
+                              ) : (
+                                <Play className="h-3.5 w-3.5 fill-white" />
+                              )}
+                            </button>
+                            <div className="flex-1 space-y-1">
+                              <div
+                                data-testid="audio-scrubber"
+                                role="progressbar"
+                                aria-valuemin={0}
+                                aria-valuemax={totalAudioSeconds}
+                                aria-valuenow={playbackSeconds}
+                                onClick={(e) => {
+                                  const rect = e.currentTarget.getBoundingClientRect();
+                                  const clickPos = (e.clientX - rect.left) / rect.width;
+                                  setPlaybackSeconds(
+                                    Math.round(clickPos * totalAudioSeconds)
+                                  );
+                                }}
+                                className="h-2 w-full bg-linen-subtle rounded-full overflow-hidden cursor-pointer"
+                              >
+                                <div
+                                  className="h-full bg-spruce transition-all duration-150 rounded-full"
+                                  style={{
+                                    width: `${Math.min(
+                                      100,
+                                      (playbackSeconds / Math.max(1, totalAudioSeconds)) * 100
+                                    )}%`,
+                                  }}
+                                />
+                              </div>
+                              <div className="flex justify-between text-[10px] font-mono text-mute">
+                                <span>{formatSeconds(playbackSeconds)}</span>
+                                <span>{formatSeconds(totalAudioSeconds)}</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={togglePlaybackRate}
+                              className="flex items-center gap-1 text-[10px] font-mono bg-linen-subtle hover:bg-hairline px-2 py-1 rounded text-body cursor-pointer transition-colors"
+                              title="Toggle playback speed"
+                            >
+                              <span>{playbackRate.toFixed(1)}x</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <span className="text-xs font-mono text-mute shrink-0 group-hover:text-spruce transition-colors">
-                      {lesson.readingMinutes || 3}m {isSelected ? '• Open in box ↑' : '→'}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
         {/* Calming Footer Reassurance */}
         <footer className="pt-4 border-t border-hairline text-center text-xs font-mono text-mute">
