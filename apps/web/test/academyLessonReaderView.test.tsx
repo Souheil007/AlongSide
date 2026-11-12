@@ -196,7 +196,7 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
       );
 
       expect(html).toContain('data-testid="action-checklist"');
-      expect(html).toContain('Tonight&#x27;s 3-Step Action Checklist');
+      expect(html).toContain('Your 3-Step Checklist');
       expect(html).toContain('1. Somatic Eye-Level Drop');
       expect(html).toContain('2. The 8-Word Limit');
       expect(html).toContain('3. The Cold Water Reset');

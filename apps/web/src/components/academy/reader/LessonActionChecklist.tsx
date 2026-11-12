@@ -11,6 +11,7 @@ export interface LessonActionChecklistProps {
   rawMarkdownItems?: string[];
   category?: string;
   lessonTitle?: string;
+  title?: string;
   isNightstandMode?: boolean;
   className?: string;
 }
@@ -21,6 +22,7 @@ export function LessonActionChecklist({
   rawMarkdownItems,
   category,
   lessonTitle,
+  title = 'Your 3-Step Checklist',
   isNightstandMode = false,
   className,
 }: LessonActionChecklistProps) {
@@ -220,7 +222,7 @@ export function LessonActionChecklist({
   return (
     <section
       data-testid="action-checklist"
-      aria-label="Tonight's Action Checklist"
+      aria-label={title}
       className={cn(
         'rounded-2xl border p-5 sm:p-6 space-y-4 my-8 shadow-xs transition-colors',
         isNightstandMode
@@ -232,7 +234,7 @@ export function LessonActionChecklist({
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
           <ShieldCheck className="h-4 w-4 text-teal-600" />
-          <span>Tonight&apos;s 3-Step Action Checklist</span>
+          <span>{title}</span>
         </div>
 
         <div className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-stone-400">
