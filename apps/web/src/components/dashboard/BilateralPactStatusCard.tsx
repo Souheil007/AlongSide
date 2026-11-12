@@ -452,7 +452,7 @@ export function BilateralPactStatusCard({
                 {isPreDevice
                   ? (score !== null
                       ? 'Objective developmental readiness before buying or handing over a smartphone.'
-                      : 'A progressive 3-milestone roadmap based on sleep habits, task focus, and peer impulse control.')
+                      : '10-dimension developmental evaluation of bedtime sleep, impulse control, and digital boundaries.')
                   : 'Zero spyware, bilateral trust, and automated hardware curfew enforcement.'}
               </CardDescription>
             </CardHeader>
@@ -608,114 +608,88 @@ export function BilateralPactStatusCard({
                     </div>
                   </div>
                 ) : (
-                  /* Pre-Device UNASSESSED: 3-Tier Smartphone Milestone Passport (Concept 3) */
+                  /* Pre-Device UNASSESSED: Dynamic Live Radar Awaiting Calibration */
                   <div className="space-y-4">
-                    <div className="rounded-xl border border-[#E3E3DC] bg-[#FBFBF9] p-4 sm:p-5 space-y-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E3E3DC]/70 pb-3">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC]">
+                      {/* Left: Animated Radial Radar Gauge (Awaiting Baseline) */}
+                      <div className="md:col-span-4 flex flex-col items-center justify-center p-4 rounded-xl bg-white border border-[#E3E3DC] text-center space-y-3 shadow-2xs">
+                        <div className="relative w-28 h-28 flex items-center justify-center">
+                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="6" fill="transparent" />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              stroke="#10B981"
+                              strokeWidth="6"
+                              strokeDasharray="14 10"
+                              fill="transparent"
+                              className="animate-[spin_16s_linear_infinite]"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <Compass className="w-6 h-6 text-[#143D2B] animate-pulse" />
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#858C88] font-bold mt-1">
+                              Radar Ready
+                            </span>
+                          </div>
+                        </div>
                         <div>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EE] text-[#143D2B] text-[10px] font-mono font-bold border border-[#143D2B]/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Awaiting Baseline
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Right: Low-Text, High-Action Diagnostic Panel */}
+                      <div className="md:col-span-8 flex flex-col justify-between space-y-3.5">
+                        <div className="space-y-1">
                           <span className="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
-                            Developmental Privilege Passport
+                            Developmental Baseline
                           </span>
-                          <h4 className="font-serif text-base font-bold text-[#111413]">
-                            3 Milestones to Smartphone Sovereignty
+                          <h4 className="font-serif text-base sm:text-lg font-bold text-[#111413]">
+                            Evaluate {childName}&apos;s First-Phone Readiness
                           </h4>
-                        </div>
-                        <span className="font-mono text-[11px] text-[#858C88]">
-                          Scaffolds Prefrontal Autonomy
-                        </span>
-                      </div>
-
-                      {/* The 3 Visual Milestone Steps */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        {/* Step 1: Baseline */}
-                        <div className="p-3.5 rounded-xl bg-white border-2 border-[#143D2B]/30 shadow-2xs flex flex-col justify-between space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="w-6 h-6 rounded-full bg-[#EAF3EE] text-[#143D2B] font-mono text-[11px] font-bold flex items-center justify-center">
-                                1
-                              </span>
-                              <span className="font-serif font-bold text-xs text-[#111413]">
-                                Audio Watch / Talk
-                              </span>
-                            </div>
-                            <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EAF3EE] text-[#143D2B]">
-                              Current Tier
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[#494F4C] leading-snug">
-                            Calling, SMS &amp; GPS coordinates. Zero algorithmic feeds or group chat alerts.
+                          <p className="text-xs text-[#494F4C] leading-relaxed">
+                            10 real-world scenarios evaluating bedtime sleep, impulse control, and digital boundaries before getting a personal phone.
                           </p>
-                          <div className="pt-2 border-t border-[#E3E3DC]/60 text-[10px] font-mono text-[#858C88]">
-                            Baseline Starting Point
-                          </div>
                         </div>
 
-                        {/* Step 2: Curfew-Locked First Phone */}
-                        <div className="p-3.5 rounded-xl bg-white border border-[#E3E3DC] shadow-2xs flex flex-col justify-between space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="w-6 h-6 rounded-full bg-[#F4F4F0] text-[#494F4C] font-mono text-[11px] font-bold flex items-center justify-center">
-                                2
-                              </span>
-                              <span className="font-serif font-bold text-xs text-[#111413]">
-                                Curfew First Phone
-                              </span>
-                            </div>
-                            <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FEF3C7] text-[#B45309]">
-                              70% Target
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[#494F4C] leading-snug">
-                            Dedicated smartphone with automatic 8:30 PM hardware curfew &amp; curated contacts.
-                          </p>
-                          <div className="pt-2 border-t border-[#E3E3DC]/60 text-[10px] font-mono text-[#858C88]">
-                            Requires Sleep &amp; Task Habits
-                          </div>
-                        </div>
-
-                        {/* Step 3: Sovereign Smartphone */}
-                        <div className="p-3.5 rounded-xl bg-white border border-[#E3E3DC] shadow-2xs flex flex-col justify-between space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="w-6 h-6 rounded-full bg-[#F4F4F0] text-[#494F4C] font-mono text-[11px] font-bold flex items-center justify-center">
-                                3
-                              </span>
-                              <span className="font-serif font-bold text-xs text-[#111413]">
-                                Sovereign Smartphone
-                              </span>
-                            </div>
-                            <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#494F4C]">
-                              85% Target
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[#494F4C] leading-snug">
-                            Full app store privileges with bilateral trust reviews &amp; self-governed curfew.
-                          </p>
-                          <div className="pt-2 border-t border-[#E3E3DC]/60 text-[10px] font-mono text-[#858C88]">
-                            Requires Peer Impulse Defense
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Live Action Launch Bar */}
-                      <div className="pt-3 border-t border-[#E3E3DC]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div className="space-y-0.5">
-                          <span className="font-serif text-sm font-bold text-[#111413] block">
-                            Where does {childName} unlock their starting tier?
+                        {/* 4 Quadrants as Clean Visual Chips */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>🌙</span>
+                            <span>Sleep Independence</span>
                           </span>
-                          <p className="text-xs text-[#494F4C]">
-                            Evaluate 10 scenarios across Sleep Independence, Task Responsibility, Peer Impulse Control, and Emotional Reset.
-                          </p>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>📚</span>
+                            <span>Task Responsibility</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>👥</span>
+                            <span>Peer Impulse Control</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>🧘</span>
+                            <span>Emotional Reset</span>
+                          </span>
                         </div>
 
-                        <Link href={`/children/${childId}/readiness`} className="shrink-0">
-                          <Button
-                            className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#0E2B1E] text-white rounded-xl min-h-[44px] px-5 shadow-2xs cursor-pointer"
-                          >
-                            <span>Reveal Starting Tier (3 mins)</span>
-                            <ArrowRight className="h-4 w-4" />
-                          </Button>
-                        </Link>
+                        {/* Primary Action Button */}
+                        <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <Link href={`/children/${childId}/readiness`} className="shrink-0">
+                            <Button
+                              className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#0E2B1E] text-white rounded-xl min-h-[44px] px-6 shadow-2xs cursor-pointer"
+                            >
+                              <span>Start Readiness Assessment</span>
+                              <ArrowRight className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <span className="font-mono text-[11px] text-[#858C88]">
+                            Takes ~3 mins • 10 questions
+                          </span>
+                        </div>
                       </div>
                     </div>
 
