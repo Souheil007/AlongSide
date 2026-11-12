@@ -66,11 +66,28 @@ export function BilateralPactStatusCard({
   className,
 }: BilateralPactStatusCardProps) {
   const childAge = child?.age ?? 10;
-  const isToddler = childAge <= 3 || String(child?.developmentalTier || '').includes('TIER_0');
+  const isInfant = childAge <= 1;
+  const isToddler = (childAge >= 2 && childAge <= 3) || String(child?.developmentalTier || '').includes('TIER_0');
   const isEarlyChildhood = (childAge >= 4 && childAge <= 6) || String(child?.developmentalTier || '').includes('TIER_1');
+  const isEarlyTier = isInfant || isToddler || isEarlyChildhood;
   const isPreDevice = child?.roadType === RoadType.PRE_DEVICE;
   const childName = child?.name ?? 'Child';
   const childId = child?.id ?? 'default';
+
+  // Age-calibrated pediatric media guidance (AAP standards)
+  let mediaLimitBadge = 'Max 30 min/day';
+  let mediaLimitLabel = 'Pediatric Guideline: Max 30 min/day';
+  let mediaInsight = 'Handheld screens emit short-wavelength blue light that suppresses melatonin. Screens off 45 mins before bedtime protects deep REM restorative sleep.';
+
+  if (isInfant) {
+    mediaLimitBadge = 'Screen-Free Zone';
+    mediaLimitLabel = 'AAP Guideline: Screen-Free (0 min/day)';
+    mediaInsight = 'Infant visual cortex and circadian clocks develop best through direct eye contact, responsive vocal play, and natural lighting. Video calls with family are the only recommended screen exposure.';
+  } else if (isEarlyChildhood) {
+    mediaLimitBadge = 'Max 60 min/day';
+    mediaLimitLabel = 'Pediatric Guideline: Max 60 min/day';
+    mediaInsight = 'Predictable media routines prevent transition struggles and protect evening cortisol drop before sleep. Always co-view high-quality interactive content and turn screens off 45 mins before bedtime.';
+  }
 
   const hasAssessment = typeof child?.latestAssessmentScore === 'number' && !Number.isNaN(child.latestAssessmentScore);
   const score = hasAssessment ? Math.min(100, Math.max(0, Math.round(child!.latestAssessmentScore!))) : null;
@@ -89,7 +106,7 @@ export function BilateralPactStatusCard({
     <div className={cn('space-y-4', className)}>
       <Card className="border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-2xl overflow-hidden transition-all hover:border-[#143D2B]/30">
         {/* TODDLER & EARLY CHILDHOOD: Early Screen Boundaries & Meltdown Coping Kit (NO PHONE READINESS) */}
-        {isToddler || isEarlyChildhood ? (
+        {isEarlyTier ? (
           <>
             <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]">
               <div className="flex items-center justify-between gap-2">
@@ -111,26 +128,23 @@ export function BilateralPactStatusCard({
                   variant="outline"
                   className="text-[10px] font-mono border-[#E3E3DC] bg-[#EAF3EE] text-[#143D2B] rounded-full"
                 >
-                  Max 30 min/day
+                  {mediaLimitBadge}
                 </Badge>
               </div>
               <CardDescription className="text-xs text-[#494F4C] leading-relaxed">
-                Developmentally calibrated screen caps and nervous system co-regulation for toddlers and young children.
+                Developmentally calibrated screen caps and nervous system co-regulation for young children.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="p-5 sm:p-6 space-y-4">
-              {/* Visual Dial for Screen Limit */}
+              {/* Clean Pediatric Standard (No Fake Usage Telemetry) */}
               <div className="p-4 bg-[#FBFBF9] rounded-xl border border-[#E3E3DC] space-y-2">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-medium text-[#111413]">Today&apos;s Screen Usage:</span>
-                  <span className="font-mono font-bold text-[#143D2B]">20 / 30m (10 min remaining)</span>
+                  <span className="font-semibold text-[#111413]">{mediaLimitLabel}</span>
+                  <span className="font-mono text-[11px] text-[#143D2B] font-bold">Co-Viewing Standard</span>
                 </div>
-                <div className="w-full bg-[#E3E3DC] rounded-full h-2 overflow-hidden">
-                  <div className="bg-[#143D2B] h-2 rounded-full w-[66%]" />
-                </div>
-                <p className="text-[11px] text-[#858C88] leading-tight">
-                  Handheld screens emit short-wavelength blue light that suppresses melatonin. Screens off 45 mins before bedtime protects deep REM restorative sleep.
+                <p className="text-[11px] text-[#494F4C] leading-relaxed">
+                  {mediaInsight}
                 </p>
               </div>
 
@@ -161,19 +175,23 @@ export function BilateralPactStatusCard({
                 </div>
               </div>
 
-              {/* Screen-Free Play Dock */}
-              <div className="p-3 bg-[#EAF3EE]/50 rounded-xl border border-[#143D2B]/20 flex items-center justify-between gap-3 text-xs">
-                <div className="flex items-center gap-2.5">
-                  <Palette className="w-4 h-4 text-[#143D2B] shrink-0" />
-                  <div>
-                    <span className="font-semibold text-[#111413] block">Today&apos;s Sensory Activity</span>
-                    <span className="text-[11px] text-[#858C88]">15 min outdoor water &amp; leaf play</span>
+              {/* Screen-Free Play Dock linked to Brain Games */}
+              <Link href={`/brain-games?childId=${childId}`} className="block group">
+                <div className="p-3 bg-[#EAF3EE]/50 hover:bg-[#EAF3EE] transition rounded-xl border border-[#143D2B]/20 flex items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <Palette className="w-4 h-4 text-[#143D2B] shrink-0" />
+                    <div>
+                      <span className="font-semibold text-[#111413] group-hover:text-[#143D2B] transition block">
+                        Today&apos;s Sensory Activity
+                      </span>
+                      <span className="text-[11px] text-[#494F4C]">15 min outdoor water &amp; leaf play • Explore all activities</span>
+                    </div>
                   </div>
+                  <Badge variant="outline" className="font-mono text-[10px] text-[#143D2B] bg-white border-[#143D2B]/20 shrink-0">
+                    Explore →
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="font-mono text-[10px] text-[#143D2B] bg-white border-[#143D2B]/20">
-                  Suggested
-                </Badge>
-              </div>
+              </Link>
             </CardContent>
           </>
         ) : (
