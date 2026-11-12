@@ -28,6 +28,8 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`docs/design/`**](design/) — Visual architecture benchmarks (Subframe, Vercel, Wise, Linear, Stripe).
 
 ### 4. Product Launch & Media Production
+- [**`higgsfield-seedance-demo-video-prompts.md`**](higgsfield-seedance-demo-video-prompts.md) — Canonical AlongSide Demo Videos: Higgsfield Seedance 2.5 Production Prompts, Motion Choreography & Native Audio Specification (SOU-111).
+- [**`higgsfield-seedance-demo-video-prompts-cheat-sheet.md`**](higgsfield-seedance-demo-video-prompts-cheat-sheet.md) — Quick-copy prompt cheat sheet and 1-click Higgsfield CLI / MCP runner for Seedance 2.5 480p 30s demo videos (SOU-111).
 - [**`launch-demo-video-production-prompt-suite.md`**](launch-demo-video-production-prompt-suite.md) — Canonical AlongSide Launch Demo Video Production Prompt Suite, Cinematographic Storyboard & Claude MCP Specification (SOU-101).
 - [**`launch-demo-video-quick-prompts.md`**](launch-demo-video-quick-prompts.md) — Quick-copy prompt cheat sheet for Claude MCP, Midjourney, Flux, and TTS audio synthesis (SOU-101).
 
