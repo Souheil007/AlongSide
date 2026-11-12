@@ -280,8 +280,55 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Get low to eye level (sit on floor)');
       expect(html).toContain('Offer physical bridge');
       expect(html).toContain('Today&#x27;s Sensory Activity');
-      expect(html).toContain('15 min outdoor water &amp; leaf play');
       expect(html).toContain('/brain-games?childId=child-leo');
+    });
+
+    it('calibrates calming steps and screen-free standard for an infant (age 0-1)', () => {
+      const mockInfant: ChildDTO = {
+        ...mockToddlerLeo,
+        id: 'child-infant',
+        name: 'Noah',
+        age: 1,
+        developmentalTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      };
+
+      const html = renderToStaticMarkup(
+        <BilateralPactStatusCard child={mockInfant} />
+      );
+
+      expect(html).toContain('Early Screen Boundaries');
+      expect(html).toContain('Noah&#x27;s Daily Media Boundary');
+      expect(html).toContain('Screen-Free Zone');
+      expect(html).toContain('AAP Guideline: Screen-Free (0 min/day)');
+      expect(html).toContain('Infant Overstimulation Calming Steps:');
+      expect(html).toContain('Lower ambient input');
+      expect(html).toContain('Chest-to-chest somatic anchor');
+      expect(html).toContain('Today&#x27;s Sensory Activity');
+      expect(html).toContain('/brain-games?childId=child-infant');
+    });
+
+    it('calibrates regulation steps and 60-min cap for early childhood (age 4-6)', () => {
+      const mockPreschooler: ChildDTO = {
+        ...mockToddlerLeo,
+        id: 'child-preschool',
+        name: 'Emma',
+        age: 5,
+        developmentalTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+      };
+
+      const html = renderToStaticMarkup(
+        <BilateralPactStatusCard child={mockPreschooler} />
+      );
+
+      expect(html).toContain('Early Screen Boundaries');
+      expect(html).toContain('Emma&#x27;s Daily Media Boundary');
+      expect(html).toContain('Max 60 min/day');
+      expect(html).toContain('Pediatric Guideline: Max 60 min/day');
+      expect(html).toContain('Preschool Regulation &amp; Agency Steps:');
+      expect(html).toContain('Validate without negotiating');
+      expect(html).toContain('Provide 2 agency choices');
+      expect(html).toContain('Today&#x27;s Sensory Activity');
+      expect(html).toContain('/brain-games?childId=child-preschool');
     });
   });
 

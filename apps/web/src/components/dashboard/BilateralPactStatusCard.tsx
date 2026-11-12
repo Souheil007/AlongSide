@@ -60,6 +60,214 @@ function getReadinessTier(score: number) {
   };
 }
 
+export interface ResetGuideStep {
+  num: number;
+  title: string;
+  description: string;
+}
+
+export interface ResetGuide {
+  title: string;
+  steps: ResetGuideStep[];
+}
+
+export const RESET_GUIDES: Record<'infant' | 'toddler' | 'earlyChildhood', ResetGuide> = {
+  infant: {
+    title: 'Infant Overstimulation Calming Steps:',
+    steps: [
+      {
+        num: 1,
+        title: 'Lower ambient input',
+        description: 'Dim bright overhead lights, quiet devices, and soften your tone.',
+      },
+      {
+        num: 2,
+        title: 'Chest-to-chest somatic anchor',
+        description: 'Hold baby firmly upright against your chest so they feel your steady heartbeat.',
+      },
+      {
+        num: 3,
+        title: 'Rhythmic shushing & slow sway',
+        description: 'Auditory white-noise shushing paired with gentle swaying resets the vagal nerve.',
+      },
+    ],
+  },
+  toddler: {
+    title: 'Toddler Meltdown Reset Steps:',
+    steps: [
+      {
+        num: 1,
+        title: 'Get low to eye level (sit on floor)',
+        description: 'Sit on the floor so your body is below theirs, instantly reducing perceived threat.',
+      },
+      {
+        num: 2,
+        title: 'Acknowledge feelings: “You wanted to keep watching”',
+        description: 'Name the reality: “You wanted to keep watching. It is hard to stop.”',
+      },
+      {
+        num: 3,
+        title: 'Offer physical bridge: “Come blow out the candle with me”',
+        description: 'Introduce a physical breath bridge: “Come blow out the imaginary candle with me.”',
+      },
+    ],
+  },
+  earlyChildhood: {
+    title: 'Preschool Regulation & Agency Steps:',
+    steps: [
+      {
+        num: 1,
+        title: 'Validate without negotiating',
+        description: 'Acknowledge disappointment: “I hear you. It feels frustrating when fun pauses.”',
+      },
+      {
+        num: 2,
+        title: 'Firm, loving boundary container',
+        description: 'Reassure certainty: “Our media window is closed for today. Tomorrow is a new day.”',
+      },
+      {
+        num: 3,
+        title: 'Provide 2 agency choices',
+        description: 'Offer real power: “Do you want to press the power button, or choose our bedtime book?”',
+      },
+    ],
+  },
+};
+
+export interface SensoryActivity {
+  title: string;
+  duration: string;
+  description: string;
+}
+
+export const INFANT_SENSORY_ACTIVITIES: SensoryActivity[] = [
+  {
+    title: 'High-Contrast Card Tracking',
+    duration: '10 min',
+    description: 'Black-and-white visual tracking to stimulate optic nerve myelination.',
+  },
+  {
+    title: 'Tummy Time Mirror Reflection Play',
+    duration: '10 min',
+    description: 'Strengthens cervical neck extensor muscles and self-recognition.',
+  },
+  {
+    title: 'Textured Fabric Sensory Grasp',
+    duration: '15 min',
+    description: 'Silk, cotton, and knitted ribbons for tactile palmar grasp reflex.',
+  },
+  {
+    title: 'Warm Water Sponge Dabbing',
+    duration: '15 min',
+    description: 'Gentle temperature contrast on hands and feet for somatosensory grounding.',
+  },
+  {
+    title: 'Rhythmic Bell & Soft Chime Localization',
+    duration: '10 min',
+    description: 'Moving soft sounds side-to-side to train binaural auditory orientation.',
+  },
+  {
+    title: 'Gentle Foot Massage & Bicycle Legs',
+    duration: '10 min',
+    description: 'Stimulates vestibular proprioception and eases infant abdominal tension.',
+  },
+  {
+    title: 'Crinkle Paper Grasp & Release',
+    duration: '10 min',
+    description: 'Auditory cause-and-effect feedback with safe tactile resistance.',
+  },
+];
+
+export const TODDLER_SENSORY_ACTIVITIES: SensoryActivity[] = [
+  {
+    title: '15 min outdoor water & leaf play',
+    duration: '15 min',
+    description: 'Pouring, scooping, and floating natural elements for bilateral hand coordination.',
+  },
+  {
+    title: 'Dry Oatmeal & Spoon Scoop Bin',
+    duration: '15 min',
+    description: 'Deep proprioceptive hand burying and transferring without overstimulation.',
+  },
+  {
+    title: 'Painter’s Tape Floor Animal Rescue',
+    duration: '20 min',
+    description: 'Peeling tape off toy animals builds pincer grasp and focused persistence.',
+  },
+  {
+    title: 'Warm & Cool Ice Cube Sensory Melt',
+    duration: '15 min',
+    description: 'Thermal discovery as colored ice cubes melt in warm water.',
+  },
+  {
+    title: 'Texture Trail: Carpet, Tile & Soft Blankets',
+    duration: '15 min',
+    description: 'Barefoot navigation across contrasting surfaces for vestibular grounding.',
+  },
+  {
+    title: 'Cardboard Box Tunnel Crawl',
+    duration: '20 min',
+    description: 'Full-body spatial awareness and proprioceptive joint compression.',
+  },
+  {
+    title: 'Herbal Scent Jar Sniff & Match',
+    duration: '10 min',
+    description: 'Rosemary, cinnamon, and mint olfactory exploration calming the limbic system.',
+  },
+];
+
+export const EARLY_CHILDHOOD_SENSORY_ACTIVITIES: SensoryActivity[] = [
+  {
+    title: 'Hallway Painter’s Tape Laser Maze',
+    duration: '20 min',
+    description: 'Crawling over and under taped lines for motor planning and balance.',
+  },
+  {
+    title: 'Cardboard Gravity Marble Run',
+    duration: '25 min',
+    description: 'Assembling tubes with tape to explore kinetic momentum and physics.',
+  },
+  {
+    title: 'Sunlight Shadow Animal Tracing',
+    duration: '20 min',
+    description: 'Drawing chalk silhouettes around toy shadows outside or near windows.',
+  },
+  {
+    title: 'Living Room Pillow Lava Obstacle Course',
+    duration: '25 min',
+    description: 'Dynamic balance and motor agility burning excess late-afternoon cortisol.',
+  },
+  {
+    title: 'Playdough Scent & Texture Sculpting',
+    duration: '20 min',
+    description: 'Deep hand squeezing and rolling for emotional down-regulation.',
+  },
+  {
+    title: 'Secret Sound Shaker Matching Game',
+    duration: '15 min',
+    description: 'Pairing sealed containers filled with rice, beans, or coins by sound alone.',
+  },
+  {
+    title: 'Floating Paperclip Surface Tension Lab',
+    duration: '15 min',
+    description: 'Gentle science exploration training fine motor stillness and focus.',
+  },
+];
+
+export function getEarlyTierResetGuide(isInfant: boolean, isToddler: boolean): ResetGuide {
+  if (isInfant) return RESET_GUIDES.infant;
+  if (isToddler) return RESET_GUIDES.toddler;
+  return RESET_GUIDES.earlyChildhood;
+}
+
+export function getDailySensoryActivity(isInfant: boolean, isToddler: boolean, customDate?: Date): SensoryActivity {
+  const date = customDate ?? new Date();
+  const startOfYear = new Date(date.getFullYear(), 0, 1);
+  const dayOfYear = Math.floor((date.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24));
+  const pool = isInfant ? INFANT_SENSORY_ACTIVITIES : isToddler ? TODDLER_SENSORY_ACTIVITIES : EARLY_CHILDHOOD_SENSORY_ACTIVITIES;
+  return pool[dayOfYear % pool.length]!;
+}
+
 export function BilateralPactStatusCard({
   child,
   className,
@@ -87,6 +295,9 @@ export function BilateralPactStatusCard({
     mediaLimitLabel = 'Pediatric Guideline: Max 60 min/day';
     mediaInsight = 'Predictable media routines prevent transition struggles and protect evening cortisol drop before sleep. Always co-view high-quality interactive content and turn screens off 45 mins before bedtime.';
   }
+
+  const resetGuide = getEarlyTierResetGuide(isInfant, isToddler);
+  const sensoryActivity = getDailySensoryActivity(isInfant, isToddler);
 
   const hasAssessment = typeof child?.latestAssessmentScore === 'number' && !Number.isNaN(child.latestAssessmentScore);
   const score = hasAssessment ? Math.min(100, Math.max(0, Math.round(child!.latestAssessmentScore!))) : null;
@@ -147,30 +358,23 @@ export function BilateralPactStatusCard({
                 </p>
               </div>
 
-              {/* Toddler Meltdown Reset Guide */}
+              {/* Stage-Calibrated Reset Guide */}
               <div className="space-y-2">
                 <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider block">
-                  Toddler Meltdown Reset Steps:
+                  {resetGuide.title}
                 </span>
                 <div className="space-y-1.5">
-                  <div className="p-2.5 rounded-lg bg-[#F4F4F0] border border-[#E3E3DC] text-xs flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-[#143D2B] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">
-                      1
-                    </span>
-                    <span className="text-[#111413]">Get low to eye level (sit on floor)</span>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#F4F4F0] border border-[#E3E3DC] text-xs flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-[#143D2B] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">
-                      2
-                    </span>
-                    <span className="text-[#111413]">Acknowledge feelings: &ldquo;You wanted to keep watching&rdquo;</span>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#F4F4F0] border border-[#E3E3DC] text-xs flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-[#143D2B] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">
-                      3
-                    </span>
-                    <span className="text-[#111413]">Offer physical bridge: &ldquo;Come blow out the candle with me&rdquo;</span>
-                  </div>
+                  {resetGuide.steps.map((s) => (
+                    <div
+                      key={s.num}
+                      className="p-2.5 rounded-lg bg-[#F4F4F0] border border-[#E3E3DC] text-xs flex items-center gap-2.5"
+                    >
+                      <span className="w-5 h-5 rounded-full bg-[#143D2B] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">
+                        {s.num}
+                      </span>
+                      <span className="text-[#111413]">{s.title}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -181,9 +385,11 @@ export function BilateralPactStatusCard({
                     <Palette className="w-4 h-4 text-[#143D2B] shrink-0" />
                     <div>
                       <span className="font-semibold text-[#111413] group-hover:text-[#143D2B] transition block">
-                        Today&apos;s Sensory Activity
+                        Today&apos;s Sensory Activity ({sensoryActivity.duration})
                       </span>
-                      <span className="text-[11px] text-[#494F4C]">15 min outdoor water &amp; leaf play • Explore all activities</span>
+                      <span className="text-[11px] text-[#494F4C]">
+                        {sensoryActivity.title} • {sensoryActivity.description}
+                      </span>
                     </div>
                   </div>
                   <Badge variant="outline" className="font-mono text-[10px] text-[#143D2B] bg-white border-[#143D2B]/20 shrink-0">
