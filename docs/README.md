@@ -18,6 +18,8 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`platform-advisory-rearchitecture-and-academy-chapters-spec.md`**](platform-advisory-rearchitecture-and-academy-chapters-spec.md) — Advisory Platform Rearchitecture, Navigation Streamlining, and Prioritized Academy Curriculum Specification.
 - [**`parent-intelligence-academy-course-content-and-format-specification.md`**](parent-intelligence-academy-course-content-and-format-specification.md) — Parent Intelligence Academy: Course Content, Length, Format & Multi-Modal Architecture Specification (SOU-92).
 - [**`parent-intelligence-academy-lesson-experience-and-ux-specification.md`**](parent-intelligence-academy-lesson-experience-and-ux-specification.md) — Parent Intelligence Academy: Lesson Experience, Content Format & Multi-Modal UX Specification (SOU-98).
+- [**`parent-intelligence-academy-8-tier-curriculum-synthesis-spec.md`**](parent-intelligence-academy-8-tier-curriculum-synthesis-spec.md) — Parent Intelligence Academy: 8-Tier Curriculum Synthesis, 40-Course Taxonomy & Master Video Lecture Integration Specification (SOU-102 / PLAN-39).
+- [**`parent-intelligence-academy-lesson-content-audit-and-architecture.md`**](parent-intelligence-academy-lesson-content-audit-and-architecture.md) — Parent Intelligence Academy: Lesson Content Audit, 3 Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization Specification (SOU-113 / PLAN-40).
 - [**`tech-stack-decision.md`**](tech-stack-decision.md) — Technology stack choices, rationale, and monorepo structure. Authored by the CTO.
 - [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
 - [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
@@ -25,6 +27,7 @@ This directory contains the canonical product, architecture, standards, and eval
 ### 3. Design System & Design Explorations (`docs/design-system/` & `docs/design/`)
 - [**`MASTER.md`**](design-system/MASTER.md) — Canonical AlongSide Master Design System (Taste 2: Editorial Pediatric Almanac, 3-layer tokens, typography scales, component rules).
 - [**`culture-digest/`**](design/culture-digest/) — Sunday Youth Culture Digest visual designs, interactive HTML prototypes (Directions A–N), and comparison matrices.
+- [**`design/academy-lesson-before-after/index.html`**](design/academy-lesson-before-after/index.html) — Interactive Before/After Visual Architecture: Unified Blog Reader, Archetypes, and Friction Purge (SOU-113 / PLAN-40).
 - [**`docs/design/`**](design/) — Visual architecture benchmarks (Subframe, Vercel, Wise, Linear, Stripe).
 
 ### 4. Product Launch & Media Production
