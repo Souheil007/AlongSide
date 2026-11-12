@@ -11,7 +11,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help dev dev-all dev-frontend dev-backend frontend backend web api \
         install build test lint typecheck clean \
-        db-up db-down db-logs db-generate db-validate db-studio
+        db-up db-down db-logs db-generate db-validate db-push db-seed db-setup db-studio
 
 # -----------------------------------------------------------------------------
 # Configuration & Binary Detection
@@ -39,6 +39,9 @@ help: ## Display available make targets
 	@echo "    make db-logs        Follow PostgreSQL container logs"
 	@echo "    make db-generate    Generate Prisma Client (@alongside/database)"
 	@echo "    make db-validate    Validate Prisma Schema"
+	@echo "    make db-push        Push Prisma schema to PostgreSQL"
+	@echo "    make db-seed        Seed database with courses, lessons, and guides"
+	@echo "    make db-setup       Run generate, push schema, and seed database"
 	@echo "    make db-studio      Open Prisma Studio database browser"
 	@echo ""
 	@echo "  Quality & CI Verification:"
@@ -89,6 +92,14 @@ db-generate: ## Generate Prisma Client
 
 db-validate: ## Validate Prisma Schema
 	@$(NPM) run db:validate
+
+db-push: ## Push Prisma schema to PostgreSQL
+	@$(NPX) --workspace=@alongside/database prisma db push
+
+db-seed: ## Seed database with courses, lessons, and guides
+	@$(NPM) run db:seed
+
+db-setup: db-generate db-push db-seed ## Run generate, push schema, and seed database
 
 db-studio: ## Open Prisma Studio
 	@$(NPX) prisma studio --schema packages/database/prisma/schema.prisma
