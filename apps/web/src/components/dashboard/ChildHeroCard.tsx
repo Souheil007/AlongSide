@@ -264,40 +264,26 @@ export function ChildHeroCard({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {/* Welcoming Value Banner & Habit Streak */}
+      {/* Welcoming Value Banner & Habit Streak (Direction A: Minimalist Sanctuary) */}
       <section
         aria-label="Welcome & Purpose"
         className="bg-white rounded-2xl border border-[#E3E3DC] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4"
       >
-        <div className="space-y-2">
+        <div className="space-y-1.5 max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="font-mono text-xs text-[#143D2B] font-semibold uppercase tracking-wider">
-              Your Family&apos;s Calm Daily Headquarters
-            </span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+            <h1 className="font-serif text-xl sm:text-2xl font-bold text-[#111413] tracking-tight">
+              Welcome home, {parentName}.
+            </h1>
           </div>
-          <h1 className="font-serif text-xl sm:text-2xl font-bold text-[#111413] tracking-tight">
-            Welcome home, {parentName}. Here is today&apos;s guidance for {child.name}.
-          </h1>
-          <p className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
-            {isToddler
-              ? 'Toddlerhood is about emotional co-regulation and clear, gentle boundaries. You are your child’s calm anchor.'
-              : 'You’re building healthy habits and emotional trust, one small conversation at a time. No perfection required—just 4 minutes of intentional learning today.'}
-          </p>
 
-          {/* Daily Parent Compass Micro-Reflection */}
-          <div className="pt-2 border-t border-[#E3E3DC]/70 flex items-start sm:items-center gap-2 text-xs text-[#494F4C]">
-            <Compass className="w-3.5 h-3.5 text-[#143D2B] shrink-0 mt-0.5 sm:mt-0" />
-            <p className="font-serif italic text-xs text-[#111413] leading-relaxed">
-              <span className="font-mono not-italic text-[10px] uppercase font-bold text-[#143D2B] tracking-wider mr-1.5">
-                Daily Compass:
-              </span>
-              &ldquo;{compassReflection.quote}&rdquo;
-              <span className="font-mono not-italic text-[10px] text-[#858C88] ml-2 inline-block">
-                — {compassReflection.author}
-              </span>
-            </p>
-          </div>
+          {/* Daily Compass Micro-Reflection as the Single Calm Subtitle */}
+          <p className="font-serif italic text-xs sm:text-sm text-[#494F4C] leading-relaxed">
+            &ldquo;{compassReflection.quote}&rdquo;
+            <span className="font-mono not-italic text-[10px] sm:text-[11px] text-[#858C88] ml-2 inline-block">
+              — {compassReflection.author}
+            </span>
+          </p>
         </div>
 
         {/* Weekly Habit Streak Badge */}

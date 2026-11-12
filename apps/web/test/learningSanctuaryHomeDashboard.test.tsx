@@ -68,12 +68,12 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         />
       );
 
-      expect(html).toContain("Your Family&#x27;s Calm Daily Headquarters");
-      expect(html).toContain('Welcome home, Sarah. Here is today&#x27;s guidance for Maya.');
-      expect(html).toContain('building healthy habits and emotional trust');
+      expect(html).toContain('Welcome home, Sarah.');
       expect(html).toContain('4-Day Streak');
       expect(html).toContain('18 mins learned this week');
-      expect(html).toContain('Daily Compass:');
+      expect(html).not.toContain("Your Family&#x27;s Calm Daily Headquarters");
+      expect(html).not.toContain('Here is today&#x27;s guidance for');
+      expect(html).not.toContain('Daily Compass:');
     });
 
     it('renders 0-Day Streak and Start Today when parent has not completed lessons yet', () => {
@@ -98,6 +98,8 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).not.toContain('Why this leap matters');
       expect(html).not.toContain('Advisory Horizon:');
       expect(html).not.toContain('Active Leap:');
+      expect(html).not.toContain("Your Family&#x27;s Calm Daily Headquarters");
+      expect(html).not.toContain('Here is today&#x27;s guidance for');
     });
 
     it('renders dynamic greeting for connected user Souheil and child Lina (SOU-89)', () => {
@@ -115,7 +117,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         />
       );
 
-      expect(html).toContain('Welcome home, Souheil. Here is today&#x27;s guidance for Lina.');
+      expect(html).toContain('Welcome home, Souheil.');
       expect(html).toContain('6-Day Streak');
       expect(html).toContain('24 mins learned this week');
     });
@@ -125,7 +127,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         <ChildHeroCard child={mockTweenMaya} />
       );
 
-      expect(html).toContain('Welcome home, Parent. Here is today&#x27;s guidance for Maya.');
+      expect(html).toContain('Welcome home, Parent.');
       expect(html).not.toContain('Welcome home, Sarah.');
     });
 
@@ -134,10 +136,10 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         <ChildHeroCard child={mockToddlerLeo} parentName="Sarah" />
       );
 
-      expect(html).toContain('Welcome home, Sarah. Here is today&#x27;s guidance for Leo.');
-      expect(html).toContain('Toddlerhood is about emotional co-regulation');
+      expect(html).toContain('Welcome home, Sarah.');
       expect(html).not.toContain('Leo&#x27;s Advisory Horizon');
       expect(html).not.toContain('Active Leap:');
+      expect(html).not.toContain('Here is today&#x27;s guidance for');
     });
 
     it('renders empty welcoming state when no child profile exists', () => {
