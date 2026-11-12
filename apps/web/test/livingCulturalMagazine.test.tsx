@@ -1,4 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { renderToStaticMarkup } from 'react-dom/server';
+import React from 'react';
 import {
   DevelopmentalTier,
   RoadType,
@@ -19,6 +21,8 @@ import {
 import {
   STAGE_VOCABULARY_DATA,
   resolveVocabStage,
+  StageTailoredVocabularyView,
+  VOCABULARY_PAGE_SIZE,
 } from '../src/components/digest/StageTailoredVocabularyView';
 
 describe('Culture Digest: Direction L Living Cultural Magazine Specification', () => {
@@ -157,31 +161,81 @@ describe('Culture Digest: Direction L Living Cultural Magazine Specification', (
   });
 
   describe('4. Pillar 4: Stage-Tailored Micro-Language Decoder (StageTailoredVocabularyView)', () => {
-    it('marks adolescents eligible for slang with modern peer vocabulary', () => {
+    it('marks adolescents eligible for slang with modern peer vocabulary (12 extended terms)', () => {
       const teenConfig = STAGE_VOCABULARY_DATA.ADOLESCENT;
       expect(teenConfig.eligibleForSlang).toBe(true);
+      expect(teenConfig.terms.length).toBe(12);
       expect(teenConfig.terms.some((t) => t.word === 'Crashout')).toBe(true);
       expect(teenConfig.terms.some((t) => t.word === 'Aura Points')).toBe(true);
       expect(teenConfig.terms.some((t) => t.word === 'Cooked')).toBe(true);
       expect(teenConfig.terms.some((t) => t.word === 'Locked In')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Rizz')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Mewing')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Sigma')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Delulu')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Side Eye')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Main Character')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Rent Free')).toBe(true);
+      expect(teenConfig.terms.some((t) => t.word === 'Valid')).toBe(true);
     });
 
-    it('marks elementary eligible for playground and gaming vernacular', () => {
+    it('marks elementary eligible for playground and gaming vernacular (12 extended terms)', () => {
       const elemConfig = STAGE_VOCABULARY_DATA.ELEMENTARY;
       expect(elemConfig.eligibleForSlang).toBe(true);
+      expect(elemConfig.terms.length).toBe(12);
       expect(elemConfig.terms.some((t) => t.word === 'Griefing')).toBe(true);
       expect(elemConfig.terms.some((t) => t.word === 'No Backsies')).toBe(true);
       expect(elemConfig.terms.some((t) => t.word === 'Duping')).toBe(true);
       expect(elemConfig.terms.some((t) => t.word === 'Bruh / Oof')).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word.includes('Nerfed'))).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word === 'Spawn Camping')).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word === 'NPC')).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word.includes('Clutched'))).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word === 'Sus')).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word.includes('Cap'))).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word === 'Jinx')).toBe(true);
+      expect(elemConfig.terms.some((t) => t.word === 'Tryhard')).toBe(true);
     });
 
-    it('strictly marks infants NOT eligible for slang and displays pre-verbal signal decoder', () => {
+    it('strictly marks infants NOT eligible for slang and displays pre-verbal signal decoder (8 extended terms)', () => {
       const infantConfig = STAGE_VOCABULARY_DATA.INFANT;
       expect(infantConfig.eligibleForSlang).toBe(false);
+      expect(infantConfig.terms.length).toBe(8);
       expect(infantConfig.bannerNotice).toContain('Youth internet slang is not applicable to an infant');
       expect(infantConfig.terms.some((t) => t.word === 'Referential Pointing')).toBe(true);
       expect(infantConfig.terms.some((t) => t.word === 'Lip Trills / Raspberries')).toBe(true);
       expect(infantConfig.terms.some((t) => t.word.includes('Ba-Ba'))).toBe(true);
+      expect(infantConfig.terms.some((t) => t.word.includes('Dunstan'))).toBe(true);
+    });
+
+    it('renders clean 4-per-page pagination with Previous and Next controls (Option 1)', () => {
+      const mockElemChild: ChildDTO = {
+        ...mockJulian,
+        id: 'child-elem',
+        name: 'Sam',
+        age: 8,
+        developmentalTier: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9,
+      };
+
+      const html = renderToStaticMarkup(
+        <StageTailoredVocabularyView child={mockElemChild} />
+      );
+
+      // Verify page 1 shows terms 1 to 4 of 12
+      expect(html).toContain('Showing 1–4 of 12 terms');
+      expect(html).toContain('Previous 4');
+      expect(html).toContain('Next 4');
+      expect(html).toContain('Page 1 of 3');
+
+      // Verify Page 1 terms are rendered
+      expect(html).toContain('Griefing');
+      expect(html).toContain('No Backsies');
+      expect(html).toContain('Duping');
+      expect(html).toContain('Bruh / Oof');
+
+      // Verify Page 2 terms are sliced out of initial page 1 markup
+      expect(html).not.toContain('Spawn Camping');
+      expect(html).not.toContain('Tryhard');
     });
   });
 });
