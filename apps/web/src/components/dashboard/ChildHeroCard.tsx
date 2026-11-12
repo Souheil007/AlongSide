@@ -226,23 +226,23 @@ export function ChildHeroCard({
     return (
       <Card
         className={cn(
-          'border-dashed border-2 border-[#143D2B]/30 bg-[#EAF3EE]/40 p-6 sm:p-8 text-center shadow-xs rounded-[10px]',
+          'border-dashed border-2 border-[#143D2B]/30 bg-white/70 backdrop-blur-xl p-8 sm:p-12 text-center shadow-xs rounded-[2.5rem]',
           className
         )}
       >
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-3">
-          <Shield className="h-6 w-6" />
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-4 shadow-sm">
+          <Shield className="h-7 w-7" />
         </div>
-        <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413]">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
           Welcome to Your Family Learning Sanctuary
         </h2>
-        <p className="text-xs sm:text-sm text-[#494F4C] max-w-md mx-auto mt-1 leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#494F4C] max-w-md mx-auto mt-2 leading-relaxed">
           Add your first child profile to personalize your daily conversation scripts, prioritized developmental academy chapters, and evidence-based habit rhythms.
         </p>
-        <div className="mt-4">
+        <div className="mt-5">
           <Button
             onClick={onOpenOnboarding}
-            className="min-h-[44px] gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-6 rounded-[5px]"
+            className="min-h-[46px] gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-6 rounded-full shadow-sm cursor-pointer"
           >
             Add First Child Profile
           </Button>
@@ -264,51 +264,56 @@ export function ChildHeroCard({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {/* Welcoming Value Banner & Habit Streak (Direction A: Minimalist Sanctuary) */}
+      {/* Floating Atmospheric Sanctuary Hero */}
       <section
         aria-label="Welcome & Purpose"
-        className="bg-white rounded-2xl border border-[#E3E3DC] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4"
+        className="rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] p-6 sm:p-10 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6"
       >
-        <div className="space-y-1.5 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-            <h1 className="font-serif text-xl sm:text-2xl font-bold text-[#111413] tracking-tight">
-              Welcome home, {parentName}.
-            </h1>
+        {/* Ambient Glow Behind Title */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+
+        <div className="relative z-10 space-y-3 max-w-2xl">
+          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/90 text-xs font-mono text-[#143D2B] font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Daily Family Calibration</span>
           </div>
 
+          <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-[#111815] tracking-tight leading-tight">
+            Welcome home, {parentName}.
+          </h1>
+
           {/* Daily Compass Micro-Reflection as the Single Calm Subtitle */}
-          <p className="font-serif italic text-xs sm:text-sm text-[#494F4C] leading-relaxed">
+          <p className="font-serif italic text-sm sm:text-lg text-[#3E4540] leading-relaxed pt-1">
             &ldquo;{compassReflection.quote}&rdquo;
-            <span className="font-mono not-italic text-[10px] sm:text-[11px] text-[#858C88] ml-2 inline-block">
-              — {compassReflection.author}
-            </span>
           </p>
+          <span className="font-mono text-xs text-[#858C88] block">
+            — {compassReflection.author}
+          </span>
         </div>
 
         {/* Weekly Habit Streak Badge */}
-        <div className="shrink-0 flex items-center gap-3 bg-[#FBFBF9] px-4 py-3 rounded-xl border border-[#E3E3DC] self-start md:self-auto">
+        <div className="relative z-10 shrink-0 flex items-center gap-3.5 bg-white/80 backdrop-blur-md px-5 py-4 rounded-2xl border border-white shadow-sm self-start md:self-auto">
           <div
             className={cn(
-              'w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-colors',
+              'w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold transition-colors shadow-2xs',
               streakDays > 0 ? 'bg-[#FEF3C7] text-[#B45309]' : 'bg-stone-100 text-stone-400'
             )}
           >
             <Flame className={cn('w-5 h-5', streakDays > 0 ? 'text-[#B45309]' : 'text-stone-400')} />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-serif text-base font-bold text-[#111413]">{streakDays}-Day Streak</span>
+            <div className="flex items-center gap-2">
+              <span className="font-serif text-base sm:text-lg font-bold text-[#111413]">{streakDays}-Day Streak</span>
               <span
                 className={cn(
-                  'font-mono text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors',
+                  'font-mono text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors',
                   streakDays > 0 ? 'bg-[#EAF3EE] text-[#143D2B]' : 'bg-stone-100 text-stone-500'
                 )}
               >
                 {streakDays > 0 ? 'Active' : 'Start Today'}
               </span>
             </div>
-            <p className="font-mono text-[11px] text-[#858C88]">{minsLearnedThisWeek} mins learned this week</p>
+            <p className="font-mono text-xs text-[#858C88] mt-0.5">{minsLearnedThisWeek} mins learned this week</p>
           </div>
         </div>
       </section>

@@ -144,11 +144,11 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
   return (
     <Card
       className={cn(
-        'border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-2xl overflow-hidden transition-all hover:border-[#143D2B]/30',
+        'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] overflow-hidden transition-all hover:border-[#143D2B]/30 flex flex-col justify-between',
         className
       )}
     >
-      <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]/70">
+      <CardHeader className="p-6 sm:p-7 pb-3 space-y-2 border-b border-black/5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
@@ -164,7 +164,7 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
           <div className="flex items-center gap-2 font-mono text-xs text-[#858C88]">
             <Badge
               variant="outline"
-              className="text-[10px] font-mono border-[#E3E3DC] text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full"
+              className="text-[10px] font-mono border-emerald-900/10 text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full"
             >
               Issue #{issueNumber}
             </Badge>
@@ -173,11 +173,11 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
         </div>
       </CardHeader>
 
-      <CardContent className="p-5 sm:p-6 space-y-5">
-        {/* 3-Column Responsive Interactive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <CardContent className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
+        {/* 3-Column / Responsive Interactive Grid */}
+        <div className="grid grid-cols-1 gap-4">
           {/* Column 1: Interactive Slang Decoder with Cringe Meter */}
-          <div className="p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-white/80 border border-white shadow-2xs flex flex-col justify-between space-y-3">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
@@ -193,13 +193,13 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
                 </h4>
                 <span className="text-xs text-[#494F4C] font-mono">noun / verb</span>
               </div>
-              <p className="text-[11px] text-[#494F4C] leading-snug">
+              <p className="text-xs text-[#494F4C] leading-snug">
                 {wordOfTheWeek.definition}
               </p>
             </div>
 
             {/* Interactive Cringe Meter */}
-            <div className="pt-2 border-t border-[#E3E3DC] space-y-1.5">
+            <div className="pt-2 border-t border-stone-200/60 space-y-1.5">
               <div className="flex items-center justify-between text-[10px] font-mono">
                 <span className="text-[#858C88]">Parent Cringe Meter:</span>
                 <span className="font-bold text-[#B45309]">
@@ -220,7 +220,7 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
                           : level === 3
                           ? 'bg-amber-500'
                           : 'bg-[#C85A32]'
-                        : 'bg-[#E3E3DC] hover:opacity-80'
+                        : 'bg-stone-200 hover:opacity-80'
                     )}
                     title={`Set Cringe Level ${level}/5`}
                   />
@@ -233,7 +233,7 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
           </div>
 
           {/* Column 2: App & Gaming Safety Spotlight */}
-          <div className="p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-white/80 border border-white shadow-2xs flex flex-col justify-between space-y-3">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#C85A32] font-bold">
@@ -244,21 +244,21 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
               <h4 className="font-serif text-base font-bold text-[#111413]">
                 {topExploit.appName}
               </h4>
-              <p className="text-[11px] text-[#494F4C] leading-snug">
+              <p className="text-xs text-[#494F4C] leading-snug">
                 {topExploit.risk}
               </p>
             </div>
 
-            <div className="pt-2 border-t border-[#E3E3DC] flex items-center justify-between">
+            <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between">
               <span className="font-mono text-[10px] text-[#858C88]">Recommended Action</span>
-              <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded border border-[#143D2B]/20">
+              <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded border border-emerald-900/10">
                 Check Account Pin
               </span>
             </div>
           </div>
 
           {/* Column 3: Dynamic Sunday Dinner Table Starter with Shuffle */}
-          <div className="p-5 rounded-xl bg-[#EAF3EE]/60 border border-[#143D2B]/20 flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-[#F6FAF7] border border-emerald-900/10 shadow-2xs flex flex-col justify-between space-y-3">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold flex items-center gap-1">

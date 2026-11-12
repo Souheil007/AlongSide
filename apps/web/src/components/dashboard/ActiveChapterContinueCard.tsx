@@ -305,15 +305,15 @@ export function ActiveChapterContinueCard({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-[#E3E3DC] bg-[#FBFBF9] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-5 transition-all hover:border-[#143D2B]/30',
+        'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] p-6 sm:p-10 space-y-7 transition-all hover:border-[#143D2B]/30',
         className
       )}
     >
       {/* 1. Top Header: Course Identification & Real-Time Progress Badge */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E3E3DC] pb-4">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#143D2B] text-white font-bold shadow-xs">
-            <BookOpen className="h-4 w-4" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 pb-5">
+        <div className="flex items-center gap-3.5">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-sm">
+            <BookOpen className="h-5 w-5" />
           </span>
           <div className="min-w-0">
             <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
@@ -321,40 +321,40 @@ export function ActiveChapterContinueCard({
             </span>
             <Link
               href={`/academy/${moduleSlug}`}
-              className="font-serif text-lg sm:text-xl font-bold text-[#111413] leading-snug hover:text-[#143D2B] hover:underline transition-colors block truncate"
+              className="font-serif text-lg sm:text-2xl font-bold text-[#111815] leading-snug hover:text-[#143D2B] hover:underline transition-colors block truncate"
             >
               {courseTitle}
             </Link>
           </div>
         </div>
 
-        <div className="shrink-0 self-start sm:self-auto font-mono">
-          <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/15 px-3 py-1 rounded-full">
+        <div className="shrink-0 self-start sm:self-auto font-mono text-xs">
+          <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-emerald-900/10 px-3.5 py-1.5 rounded-full shadow-2xs">
             {progressPercent}% Completed ({completedLessons} of {totalLessons} Lessons)
           </span>
         </div>
       </div>
 
       {/* 2. Fully Dynamic Visual Curriculum Roadmap */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-xs">
-          <span className="font-mono font-bold text-[#111413] uppercase tracking-wider text-[11px]">
+      <div className="space-y-4 pt-1">
+        <div className="flex items-center justify-between text-xs font-mono">
+          <span className="font-bold text-[#143D2B] uppercase tracking-wider text-[11px]">
             Curriculum Roadmap
           </span>
-          <span className="text-[#858C88] font-mono text-[11px]">
+          <span className="text-[#858C88] text-[11px]">
             Next Lesson: {readingMinutes} min read
           </span>
         </div>
 
         {/* Dynamic Connected Node Track */}
-        <div className="relative pt-1 pb-2 overflow-x-auto">
-          <div className="min-w-[480px] flex items-center justify-between relative px-4 sm:px-6">
+        <div className="relative pt-2 pb-3 overflow-x-auto">
+          <div className="min-w-[520px] flex items-center justify-between relative px-6 sm:px-8">
             {/* Background Grey Track Line */}
-            <div className="absolute left-6 right-6 top-4 h-1 bg-[#E3E3DC] -z-0" />
+            <div className="absolute left-8 right-8 top-5 h-1 bg-stone-200/80 -z-0" />
             {/* Real Progress Fill Line */}
             <div
-              className="absolute left-6 top-4 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
-              style={{ width: `${Math.min(94, Math.max(0, (completedLessons / Math.max(1, totalLessons)) * 94))}%` }}
+              className="absolute left-8 top-5 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
+              style={{ width: `${Math.min(92, Math.max(0, (completedLessons / Math.max(1, totalLessons)) * 92))}%` }}
             />
 
             {roadmapNodes.map((node) => {
@@ -363,10 +363,10 @@ export function ActiveChapterContinueCard({
                   <Link
                     key={node.id}
                     href={`/academy/${moduleSlug}/${node.slug}`}
-                    className="flex flex-col items-center gap-1.5 z-10 group/node cursor-pointer"
+                    className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer"
                   >
-                    <span className="w-8 h-8 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-xs transition-transform group-hover/node:scale-110">
-                      <Check className="w-4 h-4" />
+                    <span className="w-10 h-10 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-md ring-4 ring-[#EAF3EE] transition-transform group-hover/node:scale-110">
+                      <Check className="w-4 h-4 text-emerald-300" />
                     </span>
                     <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate group-hover/node:underline">
                       {node.title}
@@ -381,15 +381,15 @@ export function ActiveChapterContinueCard({
                   <Link
                     key={node.id}
                     href={`/academy/${moduleSlug}/${node.slug}`}
-                    className="flex flex-col items-center gap-1.5 z-10 group/node cursor-pointer"
+                    className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer"
                   >
-                    <span className="w-9 h-9 rounded-full bg-[#143D2B] text-white font-mono text-xs font-black flex items-center justify-center ring-4 ring-[#EAF3EE] shadow-md animate-pulse transition-transform group-hover/node:scale-105">
-                      {node.id}
+                    <span className="w-11 h-11 -mt-0.5 rounded-full bg-[#143D2B] text-white font-mono text-sm font-black flex items-center justify-center shadow-xl ring-4 ring-emerald-300/80 animate-pulse transition-transform group-hover/node:scale-105">
+                      <span className="text-emerald-300">{node.id}</span>
                     </span>
                     <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate group-hover/node:underline">
                       {node.title}
                     </span>
-                    <span className="font-mono text-[9px] text-[#B45309] font-bold bg-[#FEF3C7] px-1.5 py-0.2 rounded">Active Now</span>
+                    <span className="font-mono text-[9px] text-[#B45309] font-bold bg-[#FEF3C7] px-2 py-0.5 rounded-full shadow-2xs">Active Now</span>
                   </Link>
                 );
               }
@@ -398,9 +398,9 @@ export function ActiveChapterContinueCard({
                 <Link
                   key={node.id}
                   href={`/academy/${moduleSlug}/${node.slug}`}
-                  className="flex flex-col items-center gap-1.5 z-10 opacity-60 hover:opacity-90 transition-opacity cursor-pointer"
+                  className="flex flex-col items-center gap-2 z-10 opacity-60 hover:opacity-90 transition-opacity cursor-pointer"
                 >
-                  <span className="w-8 h-8 rounded-full bg-white border-2 border-[#E3E3DC] text-[#858C88] font-mono text-xs font-bold flex items-center justify-center">
+                  <span className="w-10 h-10 rounded-full bg-white border-2 border-stone-300 text-stone-600 font-mono text-xs font-bold flex items-center justify-center shadow-2xs">
                     {node.id}
                   </span>
                   <span className="font-mono text-[10px] text-[#858C88] text-center whitespace-nowrap max-w-[120px] truncate">
@@ -415,17 +415,17 @@ export function ActiveChapterContinueCard({
       </div>
 
       {/* 3. Today's Active Incomplete Lesson & Read Action */}
-      <div className="p-4 sm:p-5 rounded-xl bg-[#EAF3EE]/80 border border-[#143D2B]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-gradient-to-br from-white/95 to-white/70 p-6 sm:p-7 rounded-3xl border border-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-5">
         <div className="space-y-1.5 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-white px-2 py-0.5 rounded border border-[#143D2B]/20 uppercase tracking-wider">
+            <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-emerald-900/10 uppercase tracking-wider">
               Today&apos;s Active Lesson
             </span>
             <span className="font-mono text-xs text-[#858C88] font-medium">
               {readingMinutes} min read • Audio &amp; Text
             </span>
           </div>
-          <h3 className="font-serif text-base sm:text-lg font-bold text-[#111413] leading-snug">
+          <h3 className="font-serif text-base sm:text-xl font-bold text-[#111815] leading-snug">
             {lessonTitle}
           </h3>
           <p className="text-xs text-[#494F4C] leading-relaxed max-w-2xl line-clamp-2">
@@ -436,7 +436,7 @@ export function ActiveChapterContinueCard({
         <div className="shrink-0 self-end sm:self-auto pt-1 sm:pt-0">
           <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
             <Button
-              className="min-h-[42px] px-5 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer hover:shadow"
+              className="min-h-[44px] px-6 py-3 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-sm transition-all flex items-center gap-2 cursor-pointer hover:shadow"
             >
               <span>Read Lesson</span>
               <ArrowRight className="h-3.5 w-3.5" />
