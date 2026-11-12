@@ -276,6 +276,39 @@ When triggering directly via an MCP agent or HTTP POST with `Authorization: Bear
 - **Workspace Selection Requirement:** The MCP requires selecting the active user workspace (via `select_workspace`) before submitting jobs.
 - **Trial & Credit Gating:** If the account has an expired or cancelled trial, the backend returns HTTP 403 `only_mcp_usage_on_trial_is_available`. Accounts must have sufficient credits (top-up available at `https://higgsfield.ai/mcp-pricing`) or an active unmetered MCP trial pass.
 
+### 6.4 Direct Higgsfield CLI Execution Engine
+In addition to the MCP protocol runner, a dedicated direct CLI execution script is provided in the repository:
+```bash
+node scripts/execute-higgsfield-cli-demo-videos.mjs
+```
+
+#### Host CLI Execution Verification Transcript:
+```text
+================================================================================
+  AlongSide — Higgsfield CLI Demo Video Direct Execution Engine
+================================================================================
+
+🔍 Checking Higgsfield CLI Installation & Account Status...
+   • CLI Version: higgsfield 1.2.3 (4cdfcbdbc9972c1092f9d8fcb93a00c3a97de84f)
+   • Account: mouradmaker@gmail.com — ultra plan, 10 credits
+   • Active Workspace: Private — ultra plan, 10 credits
+
+🚀 Executing CLI Generation for [Video 1: The 3 Pillars of Alongside — Guided Lifespan Tour]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3 (0.73s)
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+
+🚀 Executing CLI Generation for [Video 2: From Profile to Pact — An Interactive Parent Journey]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3 (0.53s)
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+```
+
+### 6.5 Live Completed Seedance 2.5 Video Assets on Account
+The account previously generated two 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
+1. [**Launch Trailer Part 1 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_125709_9de81a3e-c2f3-4d32-8e46-036b21613fec.mp4) (`9de81a3e-c2f3-4d32-8e46-036b21613fec`): Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
+2. [**Launch Trailer Part 2 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_173740_ffae18d9-dba0-48dc-87fa-898bc433fdb6.mp4) (`ffae18d9-dba0-48dc-87fa-898bc433fdb6`): Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
+
 ---
 
 ## 7. Non-Negotiable Brand & Regulatory Guardrails

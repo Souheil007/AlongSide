@@ -10,7 +10,15 @@
 
 ## ⚡ Quick-Start Execution
 
-### Option A: Automated Higgsfield MCP Script Runner (Recommended)
+### Option A: Automated Direct CLI Runner Script (1-Click)
+```bash
+# Execute direct CLI commands for both Video 1 and Video 2 with automated error capture:
+node scripts/execute-higgsfield-cli-demo-videos.mjs
+```
+
+---
+
+### Option B: Automated Higgsfield MCP Script Runner
 ```bash
 # Preflight cost and workspace verification:
 node scripts/generate-higgsfield-demo-videos.mjs --preflight
@@ -21,7 +29,7 @@ node scripts/generate-higgsfield-demo-videos.mjs
 
 ---
 
-### Option B: Higgsfield CLI 1-Click Commands
+### Option C: Manual Higgsfield CLI Commands
 
 #### Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour" (Platform Experience)
 ```bash
@@ -83,3 +91,49 @@ An interactive 30-second mobile UI product demo video showcasing the AlongSide p
 | `--aspect_ratio` | `16:9` | Landscape widescreen video aspect ratio |
 | `--generate_audio` | `true` | Synthesizes synchronized voiceover narration, musical score, and UI SFX |
 | `--wait` | *(flag)* | Holds process until rendering completes and outputs the final media URL |
+
+---
+
+## 📊 Live CLI Execution Diagnostics & Account Status
+
+Direct terminal execution of the CLI commands via `node scripts/execute-higgsfield-cli-demo-videos.mjs` was executed on the host:
+
+```text
+================================================================================
+  AlongSide — Higgsfield CLI Demo Video Direct Execution Engine
+================================================================================
+
+🔍 Checking Higgsfield CLI Installation & Account Status...
+   • CLI Version: higgsfield 1.2.3 (4cdfcbdbc9972c1092f9d8fcb93a00c3a97de84f)
+   • Account: mouradmaker@gmail.com — ultra plan, 10 credits
+   • Active Workspace: Private — ultra plan, 10 credits
+
+🚀 Executing CLI Generation for [Video 1: The 3 Pillars of Alongside — Guided Lifespan Tour]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+
+🚀 Executing CLI Generation for [Video 2: From Profile to Pact — An Interactive Parent Journey]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+```
+
+### Root Cause & Unlock Step:
+- **Root Cause:** Both the CLI and MCP endpoints enforce credit checks. The account has **10 credits** (each 30s `seedance_2_5` generation costs 90 credits = 180 credits total), and the earlier MCP trial was marked `cancelled_by_user` with `0` trial credits.
+- **Immediate Resolution:**
+  1. Visit [Higgsfield MCP Pricing](https://higgsfield.ai/mcp-pricing?new_price_id=price_1TDRhfCmk0pn4HuHdZEyd8mB&seats=1&dry_run=True&source=mcp) to reactivate the trial or top up credits.
+  2. Run `node scripts/execute-higgsfield-cli-demo-videos.mjs`.
+
+---
+
+## 🎥 Completed Seedance 2.5 Demo Video References (Generated on Account)
+
+The account previously generated two 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
+
+1. [**Launch Trailer Part 1 (Shot 1–3, 30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_125709_9de81a3e-c2f3-4d32-8e46-036b21613fec.mp4):
+   - ID: `9de81a3e-c2f3-4d32-8e46-036b21613fec`
+   - Features: Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
+2. [**Launch Trailer Part 2 (Shot 4–6, 30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_173740_ffae18d9-dba0-48dc-87fa-898bc433fdb6.mp4):
+   - ID: `ffae18d9-dba0-48dc-87fa-898bc433fdb6`
+   - Features: Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
