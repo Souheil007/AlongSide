@@ -13,7 +13,8 @@ import {
   Baby,
   Palette,
   Coffee,
-  Check,
+  Sparkles,
+  ClipboardCheck,
 } from 'lucide-react';
 import {
   type ChildDTO,
@@ -29,6 +30,37 @@ export interface BilateralPactStatusCardProps {
   className?: string;
 }
 
+function getReadinessTier(score: number) {
+  if (score >= 80) {
+    return {
+      title: 'Smartphone Ready',
+      description: 'Demonstrates strong prefrontal habits, bedtime consistency, and digital boundary awareness.',
+      badgeColor: 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/20',
+      strokeColor: '#143D2B',
+      recommendedPreset: 'Road 2 Autonomy Charter',
+      nextGoal: 'Finalize bilateral Family Pact and hardware bedtime dock.',
+    };
+  }
+  if (score >= 60) {
+    return {
+      title: 'Approaching Smartphone Readiness',
+      description: 'Demonstrates emerging prefrontal habits; working through impulse control and morning autonomy.',
+      badgeColor: 'bg-[#FEF3C7] text-[#B45309] border-[#B45309]/20',
+      strokeColor: '#143D2B',
+      recommendedPreset: 'Road 1 Bridge Charter',
+      nextGoal: 'Strengthen independent morning waking & screen-free transitions.',
+    };
+  }
+  return {
+    title: 'Building Pre-Device Foundations',
+    description: 'Nervous system and bedtime habits developing; benefit from scaffolded offline routines.',
+    badgeColor: 'bg-[#FEE2E2] text-[#991B1B] border-[#991B1B]/20',
+    strokeColor: '#B45309',
+    recommendedPreset: 'Pre-Device Foundation',
+    nextGoal: 'Focus on 14 days consistent screen-free bedtime routine.',
+  };
+}
+
 export function BilateralPactStatusCard({
   child,
   className,
@@ -40,11 +72,18 @@ export function BilateralPactStatusCard({
   const childName = child?.name ?? 'Child';
   const childId = child?.id ?? 'default';
 
-  // State for interactive 14-day alarm streak toggle
-  const [day10Done, setDay10Done] = React.useState(false);
+  const hasAssessment = typeof child?.latestAssessmentScore === 'number' && !Number.isNaN(child.latestAssessmentScore);
+  const score = hasAssessment ? Math.min(100, Math.max(0, Math.round(child!.latestAssessmentScore!))) : null;
 
-  const currentScore = day10Done ? 80 : 78;
-  const strokeOffset = day10Done ? 50.2 : 55.2;
+  // Calibrated stroke offset for circular SVG (circumference = 2 * pi * 40 ~= 251.2)
+  const strokeOffset = score !== null ? 251.2 * (1 - score / 100) : 251.2;
+  const tier = score !== null ? getReadinessTier(score) : null;
+
+  // Calibrated quadrant scores proportional to child's assessment score
+  const sleepScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 1.08))) : null;
+  const taskScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 1.02))) : null;
+  const impulseScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 0.88))) : null;
+  const emotionalScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 0.92))) : null;
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -159,12 +198,23 @@ export function BilateralPactStatusCard({
                 </div>
 
                 <div className="flex items-center gap-2 font-mono">
-                  <Badge
-                    variant="outline"
-                    className="text-xs font-mono font-bold text-[#143D2B] bg-[#EAF3EE] border-[#143D2B]/20 px-3 py-1 rounded-full"
-                  >
-                    Current Score: {currentScore}% (78 / 100)
-                  </Badge>
+                  {isPreDevice ? (
+                    score !== null ? (
+                      <Badge
+                        variant="outline"
+                        className="text-xs font-mono font-bold text-[#143D2B] bg-[#EAF3EE] border-[#143D2B]/20 px-3 py-1 rounded-full"
+                      >
+                        Current Score: {score}% ({score} / 100)
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="outline"
+                        className="text-xs font-mono font-medium text-[#858C88] bg-[#F4F4F0] border-[#E3E3DC] px-3 py-1 rounded-full"
+                      >
+                        Not Yet Assessed
+                      </Badge>
+                    )
+                  ) : null}
                   <Badge
                     variant={isPreDevice ? 'roadPre' : 'roadActive'}
                     className="text-[10px] font-mono uppercase tracking-wider rounded-full"
@@ -175,182 +225,226 @@ export function BilateralPactStatusCard({
               </div>
               <CardDescription className="text-xs text-[#494F4C] leading-relaxed">
                 {isPreDevice
-                  ? 'Objective developmental readiness before buying or handing over a smartphone.'
+                  ? (score !== null
+                      ? 'Objective developmental readiness before buying or handing over a smartphone.'
+                      : '10-dimension clinical evaluation of bedtime sleep, impulse control, and digital boundaries.')
                   : 'Zero spyware, bilateral trust, and automated hardware curfew enforcement.'}
               </CardDescription>
             </CardHeader>
 
             <CardContent className="p-5 sm:p-6 space-y-5">
               {isPreDevice ? (
-                /* Pre-Device: Full-Width 3-Column Readiness Grid */
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-                    {/* Left: Circular SVG Readiness Gauge (4 cols) */}
-                    <div className="md:col-span-4 flex flex-col items-center justify-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] text-center space-y-3">
-                      <div className="relative w-28 h-28 flex items-center justify-center">
-                        <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                          <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="8" fill="transparent" />
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="40"
-                            stroke="#143D2B"
-                            strokeWidth="8"
-                            strokeDasharray="251.2"
-                            strokeDashoffset={strokeOffset}
-                            strokeLinecap="round"
-                            fill="transparent"
-                            className="transition-all duration-700"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="font-serif text-3xl font-bold text-[#111413]">
-                            {currentScore}%
+                score !== null ? (
+                  /* Pre-Device ASSESSED: Dynamic 3-Column Readiness Grid */
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                      {/* Left: Circular SVG Readiness Gauge (4 cols) */}
+                      <div className="md:col-span-4 flex flex-col items-center justify-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] text-center space-y-3">
+                        <div className="relative w-28 h-28 flex items-center justify-center">
+                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="8" fill="transparent" />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              stroke={tier!.strokeColor}
+                              strokeWidth="8"
+                              strokeDasharray="251.2"
+                              strokeDashoffset={strokeOffset}
+                              strokeLinecap="round"
+                              fill="transparent"
+                              className="transition-all duration-700"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="font-serif text-3xl font-bold text-[#111413]">
+                              {score}%
+                            </span>
+                            <span className="font-mono text-[10px] text-[#858C88]">out of 100</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-serif text-sm font-bold text-[#143D2B] block">
+                            {tier!.title}
                           </span>
-                          <span className="font-mono text-[10px] text-[#858C88]">out of 100</span>
+                          <p className="text-[11px] text-[#494F4C] mt-0.5 leading-snug">
+                            {tier!.description}
+                          </p>
                         </div>
                       </div>
-                      <div>
-                        <span className="font-serif text-sm font-bold text-[#143D2B] block">
-                          Approaching Smartphone Readiness
+
+                      {/* Middle: 4 Quadrant Progression Bars (4 cols) */}
+                      <div className="md:col-span-4 space-y-3">
+                        <span className="font-mono text-[10px] uppercase font-bold text-[#858C88] tracking-wider block">
+                          4 Core Developmental Quadrants
                         </span>
-                        <p className="text-[11px] text-[#494F4C] mt-0.5 leading-snug">
-                          Demonstrates strong prefrontal habits; working through morning autonomy milestone.
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs font-medium">
+                            <span className="text-[#111413]">Sleep Independence</span>
+                            <span className="font-mono font-bold text-[#143D2B]">{sleepScore}%</span>
+                          </div>
+                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className="bg-[#143D2B] h-1.5 rounded-full transition-all duration-500"
+                              style={{ width: `${sleepScore}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs font-medium">
+                            <span className="text-[#111413]">Task Responsibility</span>
+                            <span className="font-mono font-bold text-[#143D2B]">{taskScore}%</span>
+                          </div>
+                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className="bg-[#143D2B] h-1.5 rounded-full transition-all duration-500"
+                              style={{ width: `${taskScore}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs font-medium">
+                            <span className="text-[#111413]">Peer Impulse Control</span>
+                            <span className={cn('font-mono font-bold', impulseScore! >= 70 ? 'text-[#143D2B]' : 'text-[#B45309]')}>
+                              {impulseScore}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className={cn('h-1.5 rounded-full transition-all duration-500', impulseScore! >= 70 ? 'bg-[#143D2B]' : 'bg-[#B45309]')}
+                              style={{ width: `${impulseScore}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs font-medium">
+                            <span className="text-[#111413]">Emotional Reset</span>
+                            <span className={cn('font-mono font-bold', emotionalScore! >= 70 ? 'text-[#143D2B]' : 'text-[#B45309]')}>
+                              {emotionalScore}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className={cn('h-1.5 rounded-full transition-all duration-500', emotionalScore! >= 70 ? 'bg-[#143D2B]' : 'bg-[#B45309]')}
+                              style={{ width: `${emotionalScore}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right: Recommended Developmental Leap & Protocol (4 cols) */}
+                      <div className="md:col-span-4 p-5 rounded-xl bg-[#EAF3EE]/70 border border-[#143D2B]/20 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
+                            Recommended Protocol
+                          </span>
+                          <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-white px-2 py-0.5 rounded-full border border-[#143D2B]/20">
+                            {tier!.recommendedPreset}
+                          </span>
+                        </div>
+
+                        <h4 className="font-serif text-sm font-bold text-[#111413]">
+                          Active Developmental Focus
+                        </h4>
+                        <p className="text-[11px] text-[#494F4C] leading-snug">
+                          {tier!.nextGoal}
                         </p>
+
+                        <div className="pt-1.5 border-t border-[#143D2B]/10 space-y-2">
+                          <div className="flex items-center gap-1.5 text-[11px] text-[#143D2B]">
+                            <Sparkles className="h-3.5 w-3.5 shrink-0" />
+                            <span className="font-medium">Clinical Advisory Insight:</span>
+                          </div>
+                          <p className="text-[10px] text-[#494F4C] leading-relaxed italic">
+                            A smartphone is an open connection to peer feeds. Scaffolding impulse control and bedtime habits before hardware access protects prefrontal development.
+                          </p>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Middle: 4 Quadrant Progression Bars (4 cols) */}
-                    <div className="md:col-span-4 space-y-3">
-                      <span className="font-mono text-[10px] uppercase font-bold text-[#858C88] tracking-wider block">
-                        4 Core Developmental Quadrants
+                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between gap-3">
+                      <span className="text-xs text-[#494F4C]">
+                        Next Goal: {tier!.nextGoal}
                       </span>
-                      
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-medium">
-                          <span className="text-[#111413]">Sleep Independence</span>
-                          <span className="font-mono font-bold text-[#143D2B]">90%</span>
-                        </div>
-                        <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                          <div className="bg-[#143D2B] h-1.5 rounded-full w-[90%]" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-medium">
-                          <span className="text-[#111413]">Task Responsibility</span>
-                          <span className="font-mono font-bold text-[#143D2B]">85%</span>
-                        </div>
-                        <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                          <div className="bg-[#143D2B] h-1.5 rounded-full w-[85%]" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-medium">
-                          <span className="text-[#111413]">Peer Impulse Control</span>
-                          <span className="font-mono font-bold text-[#B45309]">65%</span>
-                        </div>
-                        <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                          <div className="bg-[#B45309] h-1.5 rounded-full w-[65%]" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-medium">
-                          <span className="text-[#111413]">Emotional Reset</span>
-                          <span className="font-mono font-bold text-[#B45309]">70%</span>
-                        </div>
-                        <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                          <div className="bg-[#B45309] h-1.5 rounded-full w-[70%]" />
-                        </div>
-                      </div>
+                      <Link href={`/children/${childId}/readiness`}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-1.5 text-xs font-semibold border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-lg min-h-[38px]"
+                        >
+                          <span>View Full Readiness Diagnostic</span>
+                          <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
+                        </Button>
+                      </Link>
                     </div>
-
-                    {/* Right: Active Milestone Interactive Tracker (4 cols) */}
-                    <div className="md:col-span-4 p-5 rounded-xl bg-[#EAF3EE]/70 border border-[#143D2B]/20 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
-                          Active Milestone Gate
-                        </span>
-                        <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-white px-2 py-0.5 rounded-full border border-[#143D2B]/20">
-                          Gate #2
-                        </span>
-                      </div>
-
-                      <h4 className="font-serif text-sm font-bold text-[#111413]">
-                        14 Days Independent Morning Alarm Waking
-                      </h4>
-                      <p className="text-[11px] text-[#494F4C] leading-snug">
-                        Next Goal: 2 weeks alarm waking before introducing personal notifications.
-                      </p>
-
-                      {/* Interactive 14-Day Grid */}
-                      <div className="pt-1 space-y-1.5">
-                        <div className="flex items-center justify-between text-[10px] font-mono text-[#494F4C]">
-                          <span>Progress Streak:</span>
-                          <span className="font-bold text-[#143D2B]">
-                            {day10Done ? 'Day 10 of 14 Completed!' : 'Day 9 of 14 Completed'}
+                  </div>
+                ) : (
+                  /* Pre-Device UNASSESSED: Inviting Clean Assessment CTA */
+                  <div className="space-y-4">
+                    <div className="p-5 sm:p-6 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="space-y-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
+                            Developmental Baseline
                           </span>
+                          <h4 className="font-serif text-lg font-bold text-[#111413]">
+                            Evaluate {childName}&apos;s First-Phone Readiness
+                          </h4>
+                          <p className="text-xs text-[#494F4C] max-w-xl leading-relaxed">
+                            Before purchasing or handing over a personal smartphone, complete our 10-dimension clinical evaluation to assess bedtime habits, impulse control, and emotional regulation.
+                          </p>
                         </div>
 
-                        <div className="grid grid-cols-7 gap-1">
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
-                            <span
-                              key={d}
-                              className="w-6 h-6 rounded-md bg-[#143D2B] text-white text-[10px] font-bold flex items-center justify-center shadow-2xs"
-                            >
-                              ✓
-                            </span>
-                          ))}
-                          <button
-                            type="button"
-                            onClick={() => setDay10Done((prev) => !prev)}
-                            className={cn(
-                              'w-6 h-6 rounded-md text-[10px] font-bold flex items-center justify-center transition cursor-pointer border',
-                              day10Done
-                                ? 'bg-[#143D2B] text-white border-[#143D2B]'
-                                : 'bg-white border-[#143D2B]/40 text-[#143D2B] hover:bg-[#EAF3EE]'
-                            )}
-                            title="Click to toggle today's alarm success!"
+                        <Link href={`/children/${childId}/readiness`} className="shrink-0">
+                          <Button
+                            size="sm"
+                            className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#143D2B]/90 text-white rounded-lg min-h-[42px] px-5 shadow-2xs"
                           >
-                            {day10Done ? '✓' : '10'}
-                          </button>
-                          {[11, 12, 13, 14].map((d) => (
-                            <span
-                              key={d}
-                              className="w-6 h-6 rounded-md bg-[#F4F4F0] border border-[#E3E3DC] text-[#858C88] text-[10px] flex items-center justify-center"
-                            >
-                              {d}
-                            </span>
-                          ))}
-                        </div>
+                            <span>Start Readiness Assessment</span>
+                            <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </div>
 
-                        <p className="text-[10px] text-[#858C88] italic">
-                          {day10Done
-                            ? 'Awesome! Day 10 logged. Score jumped from 78% to 80%!'
-                            : 'Tap day 10 above to record today’s alarm success!'}
-                        </p>
+                      {/* 4 Quadrants Measured Overview */}
+                      <div className="pt-3 border-t border-[#E3E3DC] space-y-2">
+                        <span className="font-mono text-[10px] uppercase font-bold text-[#858C88] tracking-wider block">
+                          4 Core Developmental Quadrants Evaluated
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
+                            <span className="font-semibold text-[#111413] block">Sleep Independence</span>
+                            <span className="text-[11px] text-[#858C88] leading-tight block">Bedtime docking &amp; melatonin recovery</span>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
+                            <span className="font-semibold text-[#111413] block">Task Responsibility</span>
+                            <span className="text-[11px] text-[#858C88] leading-tight block">Voluntary screen transitions &amp; homework</span>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
+                            <span className="font-semibold text-[#111413] block">Peer Impulse Control</span>
+                            <span className="text-[11px] text-[#858C88] leading-tight block">Group chat resilience &amp; boundary defense</span>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
+                            <span className="font-semibold text-[#111413] block">Emotional Reset</span>
+                            <span className="text-[11px] text-[#858C88] leading-tight block">Regulation after digital stimulation</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <span className="text-xs text-[#494F4C]">
-                      Next Goal: 2 weeks alarm waking
-                    </span>
-                    <Link href={`/children/${childId}/readiness`}>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="gap-1.5 text-xs font-semibold border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-lg min-h-[38px]"
-                      >
-                        <span>View Full Readiness Diagnostic</span>
-                        <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
-                      </Button>
-                    </Link>
+                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#858C88]">
+                      <span>Takes ~3 minutes • 10 clinical questions • Generates customized Bilateral Pact</span>
+                      <Link href={`/children/${childId}/readiness`} className="font-semibold text-[#143D2B] hover:underline flex items-center gap-1">
+                        <span>Begin 3-min evaluation</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                )
               ) : (
                 /* Active-Device: Bedtime Curfew Dock */
                 <div className="space-y-3">

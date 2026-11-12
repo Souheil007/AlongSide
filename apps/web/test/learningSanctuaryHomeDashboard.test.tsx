@@ -204,22 +204,55 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   });
 
   describe('4. Stage-Adaptive Telemetry Widget (BilateralPactStatusCard)', () => {
-    it('renders First-Phone Readiness Radar and 4 quadrants for tween Maya', () => {
+    it('renders clean Readiness Assessment CTA when tween Maya is unassessed', () => {
       const html = renderToStaticMarkup(
         <BilateralPactStatusCard child={mockTweenMaya} />
       );
 
       expect(html).toContain('First-Phone Readiness Radar');
-      expect(html).toContain('78%');
+      expect(html).toContain('Not Yet Assessed');
+      expect(html).toContain('Evaluate Maya&#x27;s First-Phone Readiness');
+      expect(html).toContain('Start Readiness Assessment');
+      expect(html).toContain('/children/child-maya/readiness');
       expect(html).toContain('Sleep Independence');
       expect(html).toContain('Task Responsibility');
       expect(html).toContain('Peer Impulse Control');
       expect(html).toContain('Emotional Reset');
-      expect(html).toContain('Next Goal: 2 weeks alarm waking');
-      expect(html).toContain('14 Days Independent Morning Alarm Waking');
-      expect(html).toContain('Day 9 of 14 Completed');
       expect(html).toContain('Parent Compass Reminder');
       expect(html).toContain('You don&#x27;t have to get every moment right');
+
+      // Purged fake alarm widgets
+      expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
+      expect(html).not.toContain('Day 9 of 14 Completed');
+    });
+
+    it('renders genuine score gauge and 4 quadrants when tween Maya is assessed', () => {
+      const assessedMaya: ChildDTO = {
+        ...mockTweenMaya,
+        latestAssessmentScore: 78,
+      };
+
+      const html = renderToStaticMarkup(
+        <BilateralPactStatusCard child={assessedMaya} />
+      );
+
+      expect(html).toContain('First-Phone Readiness Radar');
+      expect(html).toContain('Current Score: 78% (78 / 100)');
+      expect(html).toContain('78%');
+      expect(html).toContain('out of 100');
+      expect(html).toContain('Approaching Smartphone Readiness');
+      expect(html).toContain('Sleep Independence');
+      expect(html).toContain('Task Responsibility');
+      expect(html).toContain('Peer Impulse Control');
+      expect(html).toContain('Emotional Reset');
+      expect(html).toContain('Recommended Protocol');
+      expect(html).toContain('Road 1 Bridge Charter');
+      expect(html).toContain('View Full Readiness Diagnostic');
+      expect(html).toContain('/children/child-maya/readiness');
+
+      // Purged fake alarm widgets
+      expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
+      expect(html).not.toContain('Day 9 of 14 Completed');
     });
 
     it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders Early Screen Boundaries', () => {
