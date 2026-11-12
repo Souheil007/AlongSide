@@ -227,7 +227,7 @@ export function BilateralPactStatusCard({
                 {isPreDevice
                   ? (score !== null
                       ? 'Objective developmental readiness before buying or handing over a smartphone.'
-                      : '10-dimension clinical evaluation of bedtime sleep, impulse control, and digital boundaries.')
+                      : '10-dimension developmental evaluation of bedtime sleep, impulse control, and digital boundaries.')
                   : 'Zero spyware, bilateral trust, and automated hardware curfew enforcement.'}
               </CardDescription>
             </CardHeader>
@@ -357,7 +357,7 @@ export function BilateralPactStatusCard({
                         <div className="pt-1.5 border-t border-[#143D2B]/10 space-y-2">
                           <div className="flex items-center gap-1.5 text-[11px] text-[#143D2B]">
                             <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                            <span className="font-medium">Clinical Advisory Insight:</span>
+                            <span className="font-medium">Advisory Insight:</span>
                           </div>
                           <p className="text-[10px] text-[#494F4C] leading-relaxed italic">
                             A smartphone is an open connection to peer feeds. Scaffolding impulse control and bedtime habits before hardware access protects prefrontal development.
@@ -395,7 +395,7 @@ export function BilateralPactStatusCard({
                             Evaluate {childName}&apos;s First-Phone Readiness
                           </h4>
                           <p className="text-xs text-[#494F4C] max-w-xl leading-relaxed">
-                            Before purchasing or handing over a personal smartphone, complete our 10-dimension clinical evaluation to assess bedtime habits, impulse control, and emotional regulation.
+                            Before purchasing or handing over a personal smartphone, complete our 10-dimension developmental evaluation to assess bedtime habits, impulse control, and emotional regulation.
                           </p>
                         </div>
 
@@ -436,12 +436,9 @@ export function BilateralPactStatusCard({
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#858C88]">
-                      <span>Takes ~3 minutes • 10 clinical questions • Generates customized Bilateral Pact</span>
-                      <Link href={`/children/${childId}/readiness`} className="font-semibold text-[#143D2B] hover:underline flex items-center gap-1">
-                        <span>Begin 3-min evaluation</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
+                    <div className="pt-2 border-t border-[#E3E3DC] flex items-center justify-between text-xs text-[#858C88]">
+                      <span>Takes ~3 minutes • 10 developmental questions • Generates customized Bilateral Pact</span>
+                      <span className="hidden sm:inline font-mono text-[11px] text-[#494F4C]">Zero surveillance • Bilateral collaboration</span>
                     </div>
                   </div>
                 )

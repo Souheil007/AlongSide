@@ -220,10 +220,13 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Emotional Reset');
       expect(html).toContain('Parent Compass Reminder');
       expect(html).toContain('You don&#x27;t have to get every moment right');
+      expect(html).toContain('10 developmental questions');
 
-      // Purged fake alarm widgets
+      // Purged fake alarm widgets and redundant/clinical wording
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
       expect(html).not.toContain('Day 9 of 14 Completed');
+      expect(html).not.toContain('Begin 3-min evaluation');
+      expect(html).not.toContain('clinical');
     });
 
     it('renders genuine score gauge and 4 quadrants when tween Maya is assessed', () => {
@@ -250,9 +253,11 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('View Full Readiness Diagnostic');
       expect(html).toContain('/children/child-maya/readiness');
 
-      // Purged fake alarm widgets
+      // Purged fake alarm widgets and redundant/clinical wording
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
       expect(html).not.toContain('Day 9 of 14 Completed');
+      expect(html).not.toContain('Begin 3-min evaluation');
+      expect(html).not.toContain('clinical');
     });
 
     it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders Early Screen Boundaries', () => {
