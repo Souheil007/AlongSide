@@ -50,7 +50,7 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
     slug: 'tween-neurobiology-deep-dive',
     title: 'Tween Adrenarche & Executive Function Mastery',
     reliefSubtitle: 'Why hormonal storms look like personal defiance, and how to stay anchored in calm authority.',
-    summary: 'A 3-part clinical deep dive into adrenarche biology, prefrontal synaptic pruning, and de-escalation protocols.',
+    summary: 'A 3-part developmental deep dive into adrenarche biology, prefrontal synaptic pruning, and de-escalation protocols.',
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
     developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
     sortOrder: 1,

@@ -66,7 +66,7 @@ describe('Pediatric Nutrition, Feeding Hub & BLW Specification (PLAN-18)', () =>
   });
 
   describe('Safe Early Allergen Introduction Tracker (LEAP & EAT Trials)', () => {
-    it('catalogs the top 8 major food allergens with high-trust clinical trial citations', () => {
+    it('catalogs the top 8 major food allergens with high-trust pediatric trial citations', () => {
       expect(CANONICAL_ALLERGEN_SCHEDULE.length).toBe(8);
 
       const allergens = CANONICAL_ALLERGEN_SCHEDULE.map((a) => a.allergen);

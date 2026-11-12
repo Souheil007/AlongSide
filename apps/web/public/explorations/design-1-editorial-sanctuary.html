@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 1: The Editorial Living Sanctuary | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            parchment: '#FAF7F2',
+            forest: '#0F291E',
+            sage: '#1E4A38',
+            sand: '#EFEBE4',
+            warmgray: '#78736B',
+            ink: '#1A1815',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #FAF7F2; color: #1A1815; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .editorial-border { border-color: rgba(120, 115, 107, 0.2); }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-[#EAF3EE] selection:text-[#0F291E]">
+
+  <!-- Top Floating Switcher & Breadcrumb (No heavy navbar box) -->
+  <header class="max-w-5xl mx-auto px-6 pt-8 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b editorial-border">
+    <div class="flex items-center gap-3">
+      <span class="font-serif italic text-2xl font-bold tracking-tight text-forest">alongside</span>
+      <span class="text-warmgray/40">/</span>
+      <span class="font-mono text-xs text-warmgray uppercase tracking-wider">Vol. III • Issue 42</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-white/70 px-3 py-1.5 rounded-full border editorial-border text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-medium text-ink">Maya</span>
+        <span class="font-mono text-[10px] text-warmgray">Age 11 • Pre-Teen</span>
+      </div>
+      <div class="flex items-center gap-1.5 font-mono text-xs text-warmgray bg-white/50 px-3 py-1.5 rounded-full border editorial-border">
+        <span>🔥 4-Day Streak</span>
+        <span class="text-warmgray/30">•</span>
+        <span>18m this week</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+
+    <!-- 1. EDITORIAL SANCTUARY HERO (No box, rich typography, serene whitespace) -->
+    <section class="space-y-6">
+      <div class="flex items-baseline justify-between">
+        <span class="font-mono text-xs uppercase tracking-widest text-sage font-semibold">
+          Daily Parental Orientation
+        </span>
+        <span class="font-mono text-xs text-warmgray">Sunday, Nov 12</span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-5xl font-light tracking-tight text-ink leading-tight max-w-3xl">
+        Welcome home, Souheil. <br />
+        <span class="italic font-normal text-forest">A calm repair teaches more than perfection ever could.</span>
+      </h1>
+
+      <div class="pt-4 flex items-center gap-4 text-xs text-warmgray">
+        <div class="w-8 h-[1px] bg-forest/40"></div>
+        <p class="font-serif italic text-sm text-warmgray">
+          “You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.”
+          <span class="not-italic font-mono text-[11px] text-warmgray/80 ml-2">— Dr. Chen, Advisory Team</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. THE EDITORIAL CHAPTER SPREAD (Magazine Feature, Seamless Flow) -->
+    <section class="pt-8 border-t-2 border-forest/15 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Left Column: Chapter Meta & Curriculum Sequence -->
+      <div class="lg:col-span-4 space-y-6">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-widest font-bold text-sage">
+            Current Developmental Focus
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-ink mt-1">
+            Tween Adrenarche &amp; Neurobiology Shift
+          </h2>
+          <p class="text-xs text-warmgray mt-2 leading-relaxed">
+            Why middle school emotional storms are biological, not bad behavior, and how to maintain empathetic connection during pubertal changes.
+          </p>
+        </div>
+
+        <!-- Sleek Chapter Progression Line (No bulky badges) -->
+        <div class="space-y-2.5 pt-2">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-warmgray font-semibold block">
+            Chapter Sequence (2 of 5 Complete)
+          </span>
+          <div class="space-y-1.5 font-mono text-xs">
+            <div class="flex items-center gap-2 text-warmgray/60 line-through">
+              <span>01</span>
+              <span>The Adrenarche Biological Shift</span>
+            </div>
+            <div class="flex items-center gap-2 text-warmgray/60 line-through">
+              <span>02</span>
+              <span>Why Peer Validation Suddenly Dominates</span>
+            </div>
+            <div class="flex items-center gap-2 text-forest font-bold bg-[#EAF3EE] px-2.5 py-1.5 rounded-lg border border-forest/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-forest animate-pulse"></span>
+              <span>03</span>
+              <span class="truncate">Exclusion Anxiety (Tonight)</span>
+              <span class="ml-auto text-[10px] font-normal text-forest">3:45</span>
+            </div>
+            <div class="flex items-center gap-2 text-warmgray/50">
+              <span>04</span>
+              <span>Screen Pacts Without War</span>
+            </div>
+            <div class="flex items-center gap-2 text-warmgray/50">
+              <span>05</span>
+              <span>Bedtime Melatonin Protection</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Tonight's Script Broadside (Editorial Open Book) -->
+      <div class="lg:col-span-8 bg-white/80 rounded-3xl p-8 border editorial-border shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex flex-col justify-between space-y-6">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] text-forest font-semibold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-full">
+              Tonight's 4-Minute Co-Regulation Script
+            </span>
+            <span class="font-mono text-xs text-warmgray">Chapter 3 of 5</span>
+          </div>
+
+          <h3 class="font-serif text-xl sm:text-2xl font-normal text-ink">
+            When Maya feels excluded from the school group chat
+          </h3>
+
+          <!-- The Script Callout -->
+          <blockquote class="my-4 pl-6 border-l-2 border-forest text-base sm:text-lg font-serif italic text-forest leading-relaxed bg-[#FAF7F2]/60 py-4 pr-4 rounded-r-2xl">
+            “I notice you felt left out of that Minecraft realm today. It really hurts when friends don't include you, and it makes complete sense that you feel angry. I am right here with you.”
+          </blockquote>
+
+          <p class="text-xs text-warmgray leading-relaxed">
+            <strong>The Neurobiology:</strong> During adrenarche, the brain's social pain network processes peer exclusion with the same intensity as physical tissue injury. Validating the sensation before offering advice lowers cortisol immediately.
+          </p>
+        </div>
+
+        <div class="pt-4 border-t editorial-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <button class="w-10 h-10 rounded-full bg-forest text-white flex items-center justify-center hover:bg-forest/90 transition shadow-sm">
+              ▶
+            </button>
+            <div class="font-mono text-xs">
+              <span class="text-ink font-semibold">Listen to Audio Guide</span>
+              <span class="text-warmgray block text-[10px]">Narrated by Dr. Chen • 3:45</span>
+            </div>
+          </div>
+
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-forest hover:bg-forest/90 text-white font-serif text-sm font-medium px-6 py-3 rounded-full transition shadow-sm">
+            <span>Open Chapter Reader</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SPLIT HORIZON: Cultural Digest (Left) & Biometric Readiness Radar (Right) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8 border-t editorial-border">
+      
+      <!-- Youth Culture Digest (Editorial Column) -->
+      <div class="lg:col-span-6 space-y-6">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] uppercase tracking-widest font-bold text-sage">
+              Schoolyard Living Digest
+            </span>
+            <span class="font-mono text-xs text-warmgray">Issue #42</span>
+          </div>
+          <h2 class="font-serif text-2xl font-bold text-ink mt-1">
+            Sunday Culture &amp; Slang Pulse
+          </h2>
+        </div>
+
+        <!-- Word of the Week (Dictionary Style) -->
+        <div class="bg-white/70 p-6 rounded-2xl border editorial-border space-y-3">
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif font-bold text-xl text-ink">Rizz</span>
+              <span class="font-mono text-xs text-warmgray">/rɪz/</span>
+              <span class="font-serif italic text-xs text-warmgray">noun</span>
+            </div>
+            <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded-full">
+              Cringe: 3/5 (Moderate)
+            </span>
+          </div>
+          <p class="text-xs text-warmgray leading-relaxed">
+            Short for charisma. The ability to charm or connect through effortless confidence. Safe to acknowledge casually without parent embarrassment.
+          </p>
+
+          <!-- Slang Pills Row -->
+          <div class="pt-2 flex flex-wrap gap-1.5 font-mono text-[11px]">
+            <span class="px-2.5 py-1 rounded-md bg-sand/60 text-ink">Crashout (4/5 Cringe)</span>
+            <span class="px-2.5 py-1 rounded-md bg-sand/60 text-ink">Cooked (2/5)</span>
+            <span class="px-2.5 py-1 rounded-md bg-sand/60 text-ink">Gyatt (5/5 Nuclear)</span>
+          </div>
+        </div>
+
+        <!-- Sunday Dinner Table Starter -->
+        <div class="border-l-2 border-forest pl-4 py-1 space-y-1">
+          <span class="font-mono text-[10px] uppercase font-bold text-forest tracking-wider">
+            Tonight's Dinner Starter
+          </span>
+          <p class="font-serif italic text-sm text-ink leading-relaxed">
+            “If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door against creepers?”
+          </p>
+        </div>
+      </div>
+
+      <!-- First-Phone Readiness Radar (Architectural Diagnostic) -->
+      <div class="lg:col-span-6 space-y-6">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] uppercase tracking-widest font-bold text-sage">
+              Bilateral Agreement Horizon
+            </span>
+            <span class="font-mono text-xs text-forest bg-forest/10 px-2.5 py-0.5 rounded-full font-bold">
+              Road 1: Pre-Device
+            </span>
+          </div>
+          <h2 class="font-serif text-2xl font-bold text-ink mt-1">
+            Maya's First-Phone Readiness Radar
+          </h2>
+        </div>
+
+        <div class="bg-white/70 p-6 rounded-2xl border editorial-border flex flex-col sm:flex-row items-center gap-6">
+          <!-- Animated Radar Orbit Gauge -->
+          <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke="#E5DFD5" stroke-width="5" fill="transparent" />
+              <circle cx="50" cy="50" r="40" stroke="#10B981" stroke-width="5" stroke-dasharray="12 8" fill="transparent" class="animate-spin" style="animation-duration: 20s;" />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span class="text-lg">🧭</span>
+              <span class="font-mono text-[9px] uppercase tracking-wider text-warmgray font-bold">Ready</span>
+            </div>
+          </div>
+
+          <div class="space-y-3 flex-1 text-center sm:text-left">
+            <h4 class="font-serif font-bold text-base text-ink">
+              Evaluate Smartphone Readiness
+            </h4>
+            <p class="text-xs text-warmgray leading-relaxed">
+              10 real-world scenarios evaluating bedtime sleep, impulse control, and group chat boundaries.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 justify-center sm:justify-start">
+              <span class="text-[10px] font-mono bg-sand/60 px-2 py-0.5 rounded text-ink">🌙 Sleep</span>
+              <span class="text-[10px] font-mono bg-sand/60 px-2 py-0.5 rounded text-ink">📚 Task Focus</span>
+              <span class="text-[10px] font-mono bg-sand/60 px-2 py-0.5 rounded text-ink">👥 Peer Impulse</span>
+              <span class="text-[10px] font-mono bg-sand/60 px-2 py-0.5 rounded text-ink">🧘 Reset</span>
+            </div>
+
+            <div class="pt-2">
+              <a href="#" class="inline-flex items-center gap-2 bg-forest text-white font-serif text-xs font-semibold px-5 py-2.5 rounded-full hover:bg-forest/90 transition shadow-sm">
+                <span>Start Readiness Assessment</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <p class="font-mono text-[10px] text-warmgray text-center sm:text-left">
+          Takes ~3 mins • Generates customized Bilateral Pact • Zero surveillance
+        </p>
+      </div>
+
+    </section>
+
+    <!-- 4. SEAMLESS ADVISOR OMNIBAR (Conversational Footer Dialogue) -->
+    <section class="pt-12 border-t-2 border-forest/15">
+      <div class="max-w-3xl mx-auto space-y-4 text-center">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-sage font-bold">
+          24/7 pediatric &amp; Developmental Sparring
+        </span>
+        <h2 class="font-serif text-3xl font-light text-ink">
+          Ask Dr. Alongside anything about Maya.
+        </h2>
+
+        <!-- The Dialogue Omnibar -->
+        <div class="pt-2">
+          <form class="flex items-center gap-2 bg-white rounded-full p-2 pl-6 border-2 border-forest/20 shadow-md focus-within:border-forest transition">
+            <input 
+              type="text" 
+              placeholder="e.g. 'She won't get off Roblox' or 'How to discuss sleepovers without friction'..." 
+              class="w-full bg-transparent text-sm text-ink placeholder:text-warmgray/60 focus:outline-none"
+            />
+            <button type="button" class="shrink-0 bg-forest hover:bg-forest/90 text-white font-serif text-xs px-6 py-3 rounded-full font-medium transition">
+              Ask Advisor
+            </button>
+          </form>
+        </div>
+
+        <!-- 1-Tap Quick Situations -->
+        <div class="flex items-center justify-center gap-2 pt-2 flex-wrap text-xs text-warmgray font-mono">
+          <span class="text-[10px] uppercase">Acute Moments:</span>
+          <button class="px-3 py-1 rounded-full bg-white/70 border editorial-border hover:border-forest text-ink text-[11px] transition">
+            🎮 Console Meltdown
+          </button>
+          <button class="px-3 py-1 rounded-full bg-white/70 border editorial-border hover:border-forest text-ink text-[11px] transition">
+            📱 Peer Phone Pressure
+          </button>
+          <button class="px-3 py-1 rounded-full bg-white/70 border editorial-border hover:border-forest text-ink text-[11px] transition">
+            🚪 Slammed Bedroom Door
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="max-w-5xl mx-auto px-6 py-12 border-t editorial-border text-center text-xs text-warmgray font-mono">
+    AlongSide Parent Intelligence System • Formulated on Developmental Neurobiology • Non-Judgmental
+  </footer>
+
+</body>
+</html>

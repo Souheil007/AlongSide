@@ -1,5 +1,5 @@
 /**
- * @deprecated RETIRED IN SOU-86: AlongSide is a non-clinical developmental parenting platform.
+ * @deprecated RETIRED IN SOU-86: AlongSide is a developmental parenting platform.
  * Symptom triage runners, fever calculators, and emergency diagnostic flows have been purged
  * from active UI routes. Pediatric wellness has been refocused into restorative sleep architecture,
  * circadian rhythm routines, and soothing scripts inside the Parent Intelligence Academy.
@@ -70,7 +70,7 @@ export const CANONICAL_HEALTH_PROTOCOLS: SymptomProtocolDTO[] = [
       'Keep child elevated slightly during restful periods.',
     ],
     immediateActionRed: 'Call 911 immediately. Keep child upright and quiet in your arms. Do not force fluids or oral medicine.',
-    primarySources: ['AAP Clinical Practice Guideline: Bronchiolitis', 'WHO IMCI Protocols'],
+    primarySources: ['AAP Practice Guideline: Bronchiolitis', 'WHO IMCI Protocols'],
   },
   {
     id: 'proto-croup',
@@ -120,7 +120,7 @@ export const CANONICAL_HEALTH_PROTOCOLS: SymptomProtocolDTO[] = [
       'Schedule an in-person otoscopic exam with your pediatrician within 24 hours for accurate middle ear inspection.',
     ],
     immediateActionRed: 'Seek emergency care immediately if there is redness/swelling behind the ear or lethargy.',
-    primarySources: ['AAP Clinical Practice Guideline: Acute Otitis Media'],
+    primarySources: ['AAP Practice Guideline: Acute Otitis Media'],
   },
   {
     id: 'proto-vomiting',
@@ -128,7 +128,7 @@ export const CANONICAL_HEALTH_PROTOCOLS: SymptomProtocolDTO[] = [
     title: 'Viral Gastroenteritis, Vomiting & Pediatric Dehydration',
     category: 'GASTROINTESTINAL',
     summary:
-      'Stomach bug causing gastric emptying dysfunction and fluid loss. The primary clinical danger in pediatric vomiting is rapid dehydration.',
+      'Stomach bug causing gastric emptying dysfunction and fluid loss. The primary health risk in pediatric vomiting is rapid dehydration.',
     redZoneCriteria: [
       'Vomiting bright green (bilious) fluid or vomit containing coffee-ground dark blood',
       'Signs of severe dehydration: no urination/wet diaper in 12 hours, dry sticky mouth, no tears when crying, sunken fontanelle',

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 2: The Organic Atmospheric Canvas | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 15% 10%, #EBF4EE 0%, transparent 45%),
+                  radial-gradient(circle at 85% 25%, #F7F5EE 0%, transparent 50%),
+                  radial-gradient(circle at 50% 85%, #EAF0EC 0%, transparent 55%),
+                  #F4F6F3;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #111815;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 40px -10px rgba(20, 61, 43, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased py-8 px-4 sm:px-6">
+
+  <!-- Top Floating Sanctuary Island -->
+  <header class="max-w-5xl mx-auto mb-10 flex items-center justify-between glass-pill px-6 py-3.5 rounded-full shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-[#143D2B] text-white flex items-center justify-center font-serif italic font-bold">
+        A
+      </div>
+      <span class="font-serif text-lg font-bold tracking-tight text-[#143D2B]">AlongSide</span>
+      <span class="text-xs font-mono text-[#858C88] hidden sm:inline">• The Calm Family Operating System</span>
+    </div>
+
+    <!-- Active Profile & Streaks -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-white/80 px-3.5 py-1.5 rounded-full border border-white text-xs font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Maya (11)</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FEF3C7]/80 text-[#B45309] font-mono text-xs font-bold border border-amber-200/50">
+        <span>🔥 4-Day Streak</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto space-y-8">
+
+    <!-- 1. FLOATING ATMOSPHERIC SANCTUARY HERO -->
+    <section class="glass-card rounded-[2.5rem] p-8 sm:p-10 relative overflow-hidden">
+      <!-- Ambient Glow Behind Title -->
+      <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+      <div class="relative z-10 space-y-4 max-w-2xl">
+        <div class="inline-flex items-center gap-2 glass-pill px-3 py-1 rounded-full text-xs font-mono text-[#143D2B] font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span>Daily Family Calibration</span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl font-normal text-[#111815] tracking-tight leading-tight">
+          Welcome home, Souheil.
+        </h1>
+
+        <!-- The Calm Compass Micro-Reflection -->
+        <p class="font-serif italic text-base sm:text-lg text-[#3E4540] leading-relaxed pt-1">
+          “You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.”
+        </p>
+        <span class="font-mono text-xs text-[#858C88] block">
+          — Dr. Chen, AlongSide Neurobiology Advisory
+        </span>
+      </div>
+    </section>
+
+    <!-- 2. THE HERO CENTERPIECE: ACADEMY JOURNEY & VERBATIM SCRIPT -->
+    <section class="glass-card rounded-[2.5rem] p-8 sm:p-10 space-y-8">
+      
+      <!-- Track Meta & Progress Indicator -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 pb-6">
+        <div>
+          <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
+            Active Developmental Curriculum
+          </span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#111815] mt-1">
+            Tween Adrenarche &amp; Neurobiology Shift
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3 self-start sm:self-auto font-mono text-xs">
+          <span class="bg-[#EAF3EE] text-[#143D2B] font-bold px-3 py-1.5 rounded-full border border-emerald-900/10">
+            Chapter 3 of 5 Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Roadmap Ribbon with Visual Nodes -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div class="bg-white/60 p-3 rounded-2xl border border-white text-xs opacity-60">
+          <div class="flex items-center justify-between font-mono text-[10px] text-emerald-800 font-bold mb-1">
+            <span>Ch 1</span>
+            <span>✓</span>
+          </div>
+          <span class="font-medium text-xs block text-slate-700">The Shift</span>
+        </div>
+        <div class="bg-white/60 p-3 rounded-2xl border border-white text-xs opacity-60">
+          <div class="flex items-center justify-between font-mono text-[10px] text-emerald-800 font-bold mb-1">
+            <span>Ch 2</span>
+            <span>✓</span>
+          </div>
+          <span class="font-medium text-xs block text-slate-700">Peer Validation</span>
+        </div>
+        <div class="bg-[#143D2B] text-white p-3.5 rounded-2xl shadow-md text-xs relative col-span-2 sm:col-span-1">
+          <div class="flex items-center justify-between font-mono text-[10px] text-emerald-300 font-bold mb-1">
+            <span>Ch 3 (Today)</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </div>
+          <span class="font-bold text-xs block text-white">Exclusion Anxiety</span>
+        </div>
+        <div class="bg-white/60 p-3 rounded-2xl border border-white text-xs opacity-40 hidden sm:block">
+          <span class="font-mono text-[10px] text-slate-400 block mb-1">Ch 4</span>
+          <span class="font-medium text-xs block text-slate-600">Screen Pacts</span>
+        </div>
+        <div class="bg-white/60 p-3 rounded-2xl border border-white text-xs opacity-40 hidden sm:block">
+          <span class="font-mono text-[10px] text-slate-400 block mb-1">Ch 5</span>
+          <span class="font-medium text-xs block text-slate-600">Bedtime Trust</span>
+        </div>
+      </div>
+
+      <!-- Tonight's Script Audio Card -->
+      <div class="bg-gradient-to-br from-white/90 to-white/50 p-6 sm:p-8 rounded-3xl border border-white shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider">
+            Tonight's Verbatim Co-Regulation Script
+          </span>
+          <span class="font-mono text-xs text-[#858C88]">4-Minute Practice</span>
+        </div>
+
+        <blockquote class="font-serif italic text-lg sm:text-2xl text-[#143D2B] leading-relaxed">
+          “I notice you felt left out of that Minecraft realm today. It really hurts when friends don't include you, and it makes complete sense that you feel angry. I am right here with you.”
+        </blockquote>
+
+        <!-- Audio Player Wave Bar -->
+        <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <button class="w-12 h-12 rounded-full bg-[#143D2B] text-white flex items-center justify-center hover:scale-105 transition shadow-md">
+              <span class="text-sm">▶</span>
+            </button>
+            <div>
+              <span class="font-serif font-bold text-sm text-[#111815] block">
+                Chapter 3: Peer Group Validation &amp; Exclusion Anxiety
+              </span>
+              <span class="font-mono text-xs text-[#858C88]">
+                Audio Narrative (3:45) • Dr. Chen
+              </span>
+            </div>
+          </div>
+
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-6 py-3 rounded-full transition shadow-sm">
+            <span>Start Tonight's Lesson (4m)</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DUAL SPATIAL TILES: Sunday Culture Digest & Live Radar -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Youth Culture Pulse -->
+      <section class="glass-card rounded-[2.5rem] p-8 space-y-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🎒</span>
+              <h3 class="font-serif text-xl font-bold text-[#111815]">Sunday Youth Culture Digest</h3>
+            </div>
+            <span class="font-mono text-xs text-[#858C88]">Issue #42</span>
+          </div>
+
+          <!-- Term of the Week Card -->
+          <div class="bg-white/80 p-5 rounded-2xl border border-white space-y-2">
+            <div class="flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-serif font-bold text-xl text-[#143D2B]">Rizz</span>
+                <span class="font-mono text-xs text-[#858C88]">/rɪz/</span>
+              </div>
+              <span class="font-mono text-[10px] font-bold bg-[#FEF3C7] text-[#B45309] px-2.5 py-0.5 rounded-full">
+                Cringe: 3/5 (Moderate)
+              </span>
+            </div>
+            <p class="text-xs text-[#494F4C] leading-relaxed">
+              Charisma. The ability to charm someone through conversation or confidence without trying too hard.
+            </p>
+          </div>
+
+          <!-- Dinner Table Starter -->
+          <div class="bg-[#F6FAF7] p-5 rounded-2xl border border-emerald-900/10 space-y-1">
+            <span class="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
+              🍽️ Dinner Conversation Starter
+            </span>
+            <p class="font-serif italic text-sm text-[#111815]">
+              “If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between text-xs text-[#858C88] font-mono border-t border-black/5">
+          <span>Slang: Crashout • Cooked</span>
+          <span class="text-[#143D2B] font-bold">Read Full Digest →</span>
+        </div>
+      </section>
+
+      <!-- First-Phone Readiness Radar -->
+      <section class="glass-card rounded-[2.5rem] p-8 space-y-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🧭</span>
+              <h3 class="font-serif text-xl font-bold text-[#111815]">First-Phone Readiness Radar</h3>
+            </div>
+            <span class="font-mono text-xs text-[#143D2B] font-bold bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-emerald-900/10">
+              Road 1: Pre-Device
+            </span>
+          </div>
+
+          <div class="flex items-center gap-5 bg-white/80 p-5 rounded-2xl border border-white">
+            <!-- Animated Radial Ring -->
+            <div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="38" stroke="#E3E3DC" stroke-width="6" fill="transparent" />
+                <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="6" stroke-dasharray="12 8" fill="transparent" class="animate-spin" style="animation-duration: 16s;" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span class="font-serif font-bold text-sm text-[#143D2B]">Pending</span>
+                <span class="font-mono text-[9px] text-[#858C88]">Baseline</span>
+              </div>
+            </div>
+
+            <div class="space-y-1.5 flex-1">
+              <h4 class="font-serif font-bold text-sm text-[#111815]">
+                Evaluate Maya's Readiness
+              </h4>
+              <p class="text-xs text-[#494F4C] leading-snug">
+                10 real-world scenarios across bedtime sleep, impulse defense, and group chat boundaries.
+              </p>
+              <div class="flex flex-wrap gap-1 pt-1 font-mono text-[10px]">
+                <span class="bg-[#F4F6F3] px-2 py-0.5 rounded text-[#494F4C]">🌙 Sleep</span>
+                <span class="bg-[#F4F6F3] px-2 py-0.5 rounded text-[#494F4C]">📚 Habits</span>
+                <span class="bg-[#F4F6F3] px-2 py-0.5 rounded text-[#494F4C]">👥 Peers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-black/5">
+          <span class="font-mono text-[11px] text-[#858C88]">~3 mins • Bilateral Pact</span>
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-5 py-2.5 rounded-full transition shadow-sm">
+            <span>Start Readiness Assessment</span>
+            <span>→</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- 4. FLOATING 24/7 AI ADVISOR SANCTUARY CONSOLE -->
+    <section class="glass-card rounded-[2.5rem] p-8 sm:p-10 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#111815]">
+            24/7 AI Child Advisor
+          </h3>
+        </div>
+        <span class="font-mono text-xs text-[#858C88]">
+          Trained on pediatric Neurobiology • Non-Judgmental
+        </span>
+      </div>
+
+      <!-- Omnibar -->
+      <form class="flex flex-col sm:flex-row gap-2.5">
+        <input 
+          type="text" 
+          placeholder="Ask anything: 'Refuses to stop Roblox' or 'How to discuss sleepovers without drama'..."
+          class="flex-1 bg-white/90 border border-white rounded-2xl px-5 py-3.5 text-xs sm:text-sm text-[#111815] shadow-inner focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
+        />
+        <button class="bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-7 py-3.5 rounded-2xl transition shadow-md shrink-0 flex items-center justify-center gap-2">
+          <span>✨</span>
+          <span>Ask Dr. Alongside</span>
+        </button>
+      </form>
+
+      <!-- Quick Situation Pills -->
+      <div class="flex items-center gap-2 flex-wrap text-xs pt-1">
+        <span class="font-mono text-[10px] uppercase font-bold text-[#858C88]">Quick Prompts:</span>
+        <button class="px-3 py-1 rounded-full bg-white/80 border border-white text-xs text-[#111815] hover:bg-[#143D2B] hover:text-white transition">
+          🎮 Console Meltdown
+        </button>
+        <button class="px-3 py-1 rounded-full bg-white/80 border border-white text-xs text-[#111815] hover:bg-[#143D2B] hover:text-white transition">
+          📱 Peer Phone Pressure
+        </button>
+        <button class="px-3 py-1 rounded-full bg-white/80 border border-white text-xs text-[#111815] hover:bg-[#143D2B] hover:text-white transition">
+          🚪 Slammed Bedroom Door
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="max-w-5xl mx-auto mt-12 text-center text-xs font-mono text-[#858C88]">
+    AlongSide Sanctuary • Zero Spyware • Bilateral Trust Architecture
+  </footer>
+
+</body>
+</html>

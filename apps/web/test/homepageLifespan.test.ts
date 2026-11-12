@@ -8,8 +8,10 @@ import {
   FIVE_BALANCED_PILLARS,
   DeviceActionHubSpotlight,
   DEVICE_HUB_STEPS,
-  ClinicalAuthorityTestimonials,
-  CLINICAL_TESTIMONIALS,
+  PediatricAuthorityTestimonials,
+  PediatricAuthorityTestimonials as ClinicalAuthorityTestimonials,
+  PEDIATRIC_TESTIMONIALS,
+  PEDIATRIC_TESTIMONIALS as CLINICAL_TESTIMONIALS,
   PricingSection,
   PRICING_PLANS,
   FaqSection,
@@ -127,7 +129,7 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
   });
 
   describe('The 5 Balanced Pillars Architecture Showcase', () => {
-    it('defines exactly the 5 canonical pillars with dedicated routing and clinical anchors', () => {
+    it('defines exactly the 5 canonical pillars with dedicated routing and expert anchors', () => {
       expect(FIVE_BALANCED_PILLARS).toHaveLength(5);
 
       const categories = FIVE_BALANCED_PILLARS.map((p) => p.category);
@@ -148,7 +150,7 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
         expect(pillar.title.length).toBeGreaterThan(5);
         expect(pillar.description.length).toBeGreaterThan(20);
         expect(pillar.highlights.length).toBeGreaterThanOrEqual(3);
-        expect(pillar.clinicalAnchor.length).toBeGreaterThan(15);
+        expect((pillar.expertAnchor || pillar.clinicalAnchor || '').length).toBeGreaterThan(15);
       }
     });
   });
@@ -173,21 +175,21 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
     });
   });
 
-  describe('Clinical Authority Testimonials & Accreditations', () => {
+  describe('Pediatric Authority Testimonials & Accreditations', () => {
     it('features verified credentials from pediatric medicine, psychology, and speech therapy', () => {
-      expect(CLINICAL_TESTIMONIALS).toHaveLength(3);
+      expect(PEDIATRIC_TESTIMONIALS).toHaveLength(3);
 
-      const authors = CLINICAL_TESTIMONIALS.map((t) => t.author);
+      const authors = PEDIATRIC_TESTIMONIALS.map((t) => t.author);
       expect(authors).toContain('Dr. Sarah Jenkins, MD, FAAP');
       expect(authors).toContain('Dr. Marcus Vance, PhD');
       expect(authors).toContain('Elena Rostova, MS, CCC-SLP');
 
-      const roles = CLINICAL_TESTIMONIALS.map((t) => t.role);
+      const roles = PEDIATRIC_TESTIMONIALS.map((t) => t.role);
       expect(roles.some((r) => r.includes('Pediatric Development Specialist'))).toBe(true);
       expect(roles.some((r) => r.includes('Developmental Neurobiologist'))).toBe(true);
       expect(roles.some((r) => r.includes('Milestone Specialist'))).toBe(true);
 
-      for (const t of CLINICAL_TESTIMONIALS) {
+      for (const t of PEDIATRIC_TESTIMONIALS) {
         expect(t.quote.length).toBeGreaterThan(40);
         expect(t.institution.length).toBeGreaterThan(5);
       }
@@ -214,7 +216,7 @@ describe('Holistic Lifespan Family OS Homepage Specification (PLAN-23)', () => {
     });
   });
 
-  describe('Clinical & Operational FAQs', () => {
+  describe('Parenting & Operational FAQs', () => {
     it('answers key parent questions regarding 0–18 scope, Barton Schmitt, and zero-spyware pledge', () => {
       expect(FAQS.length).toBeGreaterThanOrEqual(6);
 

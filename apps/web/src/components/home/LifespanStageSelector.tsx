@@ -35,7 +35,8 @@ export interface StageCourse {
   slug: string;
   lessonCount: number;
   durationMinutes: number;
-  clinicalNote: string;
+  guidanceNote: string;
+  clinicalNote?: string;
   lessons: StageLesson[];
 }
 
@@ -77,7 +78,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-infant-coregulation',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Infant limbic system, crying curves & vagal tone co-regulation.',
+        guidanceNote: 'Focus: Infant limbic system, crying curves & vagal tone co-regulation.',
         lessons: [
           { num: '01', title: 'Infant Limbic System & The Crying Curve', dur: '4 min' },
           { num: '02', title: 'Vagal Tone & Physical Soothing Cadence', dur: '5 min' },
@@ -93,7 +94,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-infant-sleep-foundations',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Cortisol cycles, wake window tracking & neonatal fever thresholds.',
+        guidanceNote: 'Focus: Cortisol cycles, wake window tracking & neonatal fever thresholds.',
         lessons: [
           { num: '01', title: 'Circadian Rhythms & 4-Month Sleep Regression', dur: '4 min' },
           { num: '02', title: 'Safe Sleep Guidelines & Swaddle Transition', dur: '4 min' },
@@ -109,7 +110,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-infant-first-foods',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: The 4-6 month immunological window for peanut and egg tolerance.',
+        guidanceNote: 'Focus: The 4-6 month immunological window for peanut and egg tolerance.',
         lessons: [
           { num: '01', title: 'Feeding Cues vs Tired Signs in Early Infancy', dur: '4 min' },
           { num: '02', title: 'The 4–6 Month Critical Allergen Window', dur: '5 min' },
@@ -125,7 +126,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-infant-sensory-language',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Serve-and-return synaptogenesis & tummy-time motor milestones.',
+        guidanceNote: 'Focus: Serve-and-return synaptogenesis & tummy-time motor milestones.',
         lessons: [
           { num: '01', title: 'The Science of Serve-and-Return Interaction', dur: '4 min' },
           { num: '02', title: 'Tummy Time Milestones & Gross Motor Scaffolding', dur: '4 min' },
@@ -141,7 +142,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-infant-zero-screens',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: AAP zero-screen mandate & infant gaze attachment buffers.',
+        guidanceNote: 'Focus: AAP zero-screen mandate & infant gaze attachment buffers.',
         lessons: [
           { num: '01', title: 'Why Developing Neural Paths Require Zero Screens', dur: '4 min' },
           { num: '02', title: 'Parent Phubbing and Infant Eye-Contact Delay', dur: '4 min' },
@@ -169,7 +170,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-toddler-biting-tantrums',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Amygdala limbic overflow & sensory containment without punitive isolation.',
+        guidanceNote: 'Focus: Amygdala limbic overflow & sensory containment without punitive isolation.',
         lessons: [
           { num: '01', title: 'Why 1-Year-Olds Hit, Bite, and Drop to the Floor', dur: '4 min' },
           { num: '02', title: 'The External Nervous System: Parent Co-Regulation', dur: '5 min' },
@@ -185,7 +186,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-toddler-nap-transitions',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Sleep consolidation cycles & cortisol stabilization during nap transitions.',
+        guidanceNote: 'Focus: Sleep consolidation cycles & cortisol stabilization during nap transitions.',
         lessons: [
           { num: '01', title: 'The 2-to-1 Nap Transition Signs & Schedule', dur: '4 min' },
           { num: '02', title: 'Separation Anxiety at Bedtime: Calming Anchors', dur: '5 min' },
@@ -201,7 +202,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-toddler-table-transition',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Hypopharyngeal choking vs gagging reflexes and division of mealtime responsibility.',
+        guidanceNote: 'Focus: Hypopharyngeal choking vs gagging reflexes and division of mealtime responsibility.',
         lessons: [
           { num: '01', title: 'Choking vs Gagging: The Hypopharyngeal Reflex', dur: '4 min' },
           { num: '02', title: 'Transitioning to Whole Milk & Water Cups', dur: '4 min' },
@@ -217,7 +218,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'development-toddler-locomotion-play',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: First 50 words threshold and vestibular proprioception in upright locomotion.',
+        guidanceNote: 'Focus: First 50 words threshold and vestibular proprioception in upright locomotion.',
         lessons: [
           { num: '01', title: 'First 50 Words & Language Burst Milestones', dur: '4 min' },
           { num: '02', title: 'Gross Motor Locomotion & Fall-Safe Exploration', dur: '4 min' },
@@ -233,7 +234,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-toddler-background-screens',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Auditory processing fragmentation from background media ("technoference").',
+        guidanceNote: 'Focus: Auditory processing fragmentation from background media ("technoference").',
         lessons: [
           { num: '01', title: 'The Hidden Cognitive Cost of Background Screens', dur: '4 min' },
           { num: '02', title: 'Ambient Noise vs Toddler Deep Focus Play', dur: '4 min' },
@@ -261,7 +262,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-older-toddler-grocery-tantrum',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Eriksonian autonomy development & boundary containment without shame.',
+        guidanceNote: 'Focus: Eriksonian autonomy development & boundary containment without shame.',
         lessons: [
           { num: '01', title: 'Autonomy vs Shame: The Neurobiology of "No!"', dur: '4 min' },
           { num: '02', title: 'Loving Limits: Holding Firm Without Yelling', dur: '5 min' },
@@ -277,7 +278,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-older-toddler-potty-learning',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Autonomic bladder control myelination & stress-free toilet protocols.',
+        guidanceNote: 'Focus: Autonomic bladder control myelination & stress-free toilet protocols.',
         lessons: [
           { num: '01', title: 'Readiness Signs: When the Nervous System is Ready', dur: '4 min' },
           { num: '02', title: 'Child-Led Potty Routine Without Coercion', dur: '5 min' },
@@ -293,7 +294,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-older-toddler-picky-eating',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Evolutionary food neophobia & eliminating mealtime power struggles.',
+        guidanceNote: 'Focus: Evolutionary food neophobia & eliminating mealtime power struggles.',
         lessons: [
           { num: '01', title: 'Developmental Food Neophobia Explained', dur: '4 min' },
           { num: '02', title: 'The "One Safe Food" Plate Architecture', dur: '4 min' },
@@ -309,7 +310,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'development-older-toddler-constructive-play',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Pre-operational symbolic play & delay-of-gratification scaffolding.',
+        guidanceNote: 'Focus: Pre-operational symbolic play & delay-of-gratification scaffolding.',
         lessons: [
           { num: '01', title: 'Parallel to Associative Play Transitions', dur: '4 min' },
           { num: '02', title: 'Block Towers & Spatial Problem Solving', dur: '4 min' },
@@ -325,7 +326,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-older-toddler-co-viewing',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Dopaminergic transition crashes & tactile sensory bridge rituals.',
+        guidanceNote: 'Focus: Dopaminergic transition crashes & tactile sensory bridge rituals.',
         lessons: [
           { num: '01', title: 'Why Ending Screen Time Causes Severe Dysregulation', dur: '4 min' },
           { num: '02', title: 'Visual Timers & Tactile Transition Bridges', dur: '4 min' },
@@ -353,7 +354,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-preschool-feelings',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Frontal lobe maturation & verbal naming of emotional states.',
+        guidanceNote: 'Focus: Frontal lobe maturation & verbal naming of emotional states.',
         lessons: [
           { num: '01', title: 'Prefrontal Development & Overwhelm Triggers', dur: '4 min' },
           { num: '02', title: 'Scripting Co-Regulation in the Storm', dur: '5 min' },
@@ -369,7 +370,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-preschool-immunity',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Delta-wave sleep transitions & parasomnias.',
+        guidanceNote: 'Focus: Delta-wave sleep transitions & parasomnias.',
         lessons: [
           { num: '01', title: 'Daycare Illness Cycles & Natural Immunity', dur: '4 min' },
           { num: '02', title: 'Night Terrors vs Nightmares Differences', dur: '4 min' },
@@ -385,7 +386,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-preschool-picky-eating',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Ellyn Satter Division of Responsibility protocol.',
+        guidanceNote: 'Focus: Ellyn Satter Division of Responsibility protocol.',
         lessons: [
           { num: '01', title: 'The Division of Responsibility in Feeding', dur: '4 min' },
           { num: '02', title: 'Sensory Sensitivities to Textures', dur: '4 min' },
@@ -401,7 +402,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-preschool-executive-function',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Theory of Mind development & cooperative play.',
+        guidanceNote: 'Focus: Theory of Mind development & cooperative play.',
         lessons: [
           { num: '01', title: 'The Cognitive Architecture of Pretend Play', dur: '4 min' },
           { num: '02', title: 'Sharing & Turn-Taking Conflict', dur: '4 min' },
@@ -417,7 +418,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-preschool-media-curation',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Dopamine saturation in high-BPM preschool animations.',
+        guidanceNote: 'Focus: Dopamine saturation in high-BPM preschool animations.',
         lessons: [
           { num: '01', title: 'Fast-Paced vs Slow Animation Overstimulation', dur: '4 min' },
           { num: '02', title: 'Co-Viewing Strategies for Media Literacy', dur: '4 min' },
@@ -445,7 +446,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-elementary-impulses',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Executive function scaffolding & metacognition.',
+        guidanceNote: 'Focus: Executive function scaffolding & metacognition.',
         lessons: [
           { num: '01', title: 'Scaffolding Working Memory in Grade School', dur: '4 min' },
           { num: '02', title: 'Teaching Self-Advocacy in the Classroom', dur: '4 min' },
@@ -461,7 +462,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-elementary-wellness',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Growth plate protection & deep REM sleep cycles.',
+        guidanceNote: 'Focus: Growth plate protection & deep REM sleep cycles.',
         lessons: [
           { num: '01', title: 'Recognizing Growth Spurts & Needs', dur: '4 min' },
           { num: '02', title: 'Youth Athletics: Injury Prevention', dur: '4 min' },
@@ -477,7 +478,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-elementary-fuel',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Body image formation & glycemic stability.',
+        guidanceNote: 'Focus: Body image formation & glycemic stability.',
         lessons: [
           { num: '01', title: 'Fostering Intuitive Eating Cues', dur: '4 min' },
           { num: '02', title: 'Neutral Body Language at Home', dur: '4 min' },
@@ -493,7 +494,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-elementary-logic-maker',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Peer validation & reciprocal social play.',
+        guidanceNote: 'Focus: Peer validation & reciprocal social play.',
         lessons: [
           { num: '01', title: 'The Shift Toward Peer Validation', dur: '4 min' },
           { num: '02', title: 'Navigating Cliques & Playground Politics', dur: '4 min' },
@@ -509,7 +510,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-elementary-first-gaming',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Variable ratio schedules in sandbox gaming.',
+        guidanceNote: 'Focus: Variable ratio schedules in sandbox gaming.',
         lessons: [
           { num: '01', title: 'Deconstructing Video Game Dopamine Loops', dur: '5 min' },
           { num: '02', title: 'The Living Room Open-Screen Rule', dur: '5 min' },
@@ -537,7 +538,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-tween-adrenarche',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Limbic system sensitivity & puberty gonadotropins.',
+        guidanceNote: 'Focus: Limbic system sensitivity & puberty gonadotropins.',
         lessons: [
           { num: '01', title: 'The Amygdala-Prefrontal Gap in Tweens', dur: '5 min' },
           { num: '02', title: 'From Co-Regulation to Guided Autonomy', dur: '5 min' },
@@ -553,7 +554,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-tween-circadian-leaps',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Circadian phase delay & pubertal skin changes.',
+        guidanceNote: 'Focus: Circadian phase delay & pubertal skin changes.',
         lessons: [
           { num: '01', title: 'The Melatonin Shift: Why Tweens Resist Sleep', dur: '5 min' },
           { num: '02', title: 'Puberty Physical Changes & Body Odor', dur: '5 min' },
@@ -569,7 +570,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-tween-growth-spurts',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Bone mineral accretion & macronutrient density.',
+        guidanceNote: 'Focus: Bone mineral accretion & macronutrient density.',
         lessons: [
           { num: '01', title: 'Nutritional Surges During Peak Growth', dur: '4 min' },
           { num: '02', title: 'Snack Autonomy: Teaching Balanced Choices', dur: '4 min' },
@@ -585,7 +586,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-tween-flow-hobbies',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Intrinsic motivation & identity development.',
+        guidanceNote: 'Focus: Intrinsic motivation & identity development.',
         lessons: [
           { num: '01', title: 'Fostering Authentic Passions Beyond School', dur: '4 min' },
           { num: '02', title: 'Creative Outlets as Stress Buffers', dur: '5 min' },
@@ -601,7 +602,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-tween-smartphone-pacts',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Bilateral family agreements & neutral sleep docks.',
+        guidanceNote: 'Focus: Bilateral family agreements & neutral sleep docks.',
         lessons: [
           { num: '01', title: 'Group Chat Dynamics, FOMO & Peer Pressure', dur: '5 min' },
           { num: '02', title: 'Drafting the Bilateral Family Agreement', dur: '5 min' },
@@ -629,7 +630,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-adolescent-identity',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Synaptic pruning in the prefrontal cortex & individuation.',
+        guidanceNote: 'Focus: Synaptic pruning in the prefrontal cortex & individuation.',
         lessons: [
           { num: '01', title: 'Individuation: Why Teens Pull Away', dur: '4 min' },
           { num: '02', title: 'Mental Health Triage: Anxiety vs Stress', dur: '5 min' },
@@ -645,7 +646,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-adolescent-sleep-protection',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Sleep debt accumulation & mood vulnerability.',
+        guidanceNote: 'Focus: Sleep debt accumulation & mood vulnerability.',
         lessons: [
           { num: '01', title: 'The 2-Hour Circadian Phase Delay in Teens', dur: '4 min' },
           { num: '02', title: 'Melatonin Suppression & Late-Night Screens', dur: '5 min' },
@@ -661,7 +662,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-adolescent-sports-fuel',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Orthorexia prevention & adolescent body neutrality.',
+        guidanceNote: 'Focus: Orthorexia prevention & adolescent body neutrality.',
         lessons: [
           { num: '01', title: 'Empowering Healthy Cooking & Independence', dur: '5 min' },
           { num: '02', title: 'Guarding Against Social Media Diet Fads', dur: '5 min' },
@@ -677,7 +678,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-adolescent-critical-thinking',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Positive Youth Development (PYD) framework.',
+        guidanceNote: 'Focus: Positive Youth Development (PYD) framework.',
         lessons: [
           { num: '01', title: 'Youth Leadership, Volunteering & Social Connection', dur: '4 min' },
           { num: '02', title: 'Physical Expression as Emotional Anchors', dur: '5 min' },
@@ -693,7 +694,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-adolescent-algorithmic-feeds',
         lessonCount: 3,
         durationMinutes: 14,
-        clinicalNote: 'Focus: Algorithmic social comparison & digital privacy.',
+        guidanceNote: 'Focus: Algorithmic social comparison & digital privacy.',
         lessons: [
           { num: '01', title: 'Deconstructing Algorithmic Attention Feeds', dur: '5 min' },
           { num: '02', title: 'Digital Permanence, Sexting & Legal Facts', dur: '5 min' },
@@ -721,7 +722,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'behavior-teen-autonomy',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Prefrontal myelination & adult executive agency.',
+        guidanceNote: 'Focus: Prefrontal myelination & adult executive agency.',
         lessons: [
           { num: '01', title: 'Scaffolding Long-Term Time Management', dur: '4 min' },
           { num: '02', title: 'Managing High Stakes Academic Transition Stress', dur: '5 min' },
@@ -737,7 +738,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'health-young-adult-wellness',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Healthcare transition readiness & adult health literacy.',
+        guidanceNote: 'Focus: Healthcare transition readiness & adult health literacy.',
         lessons: [
           { num: '01', title: 'Transitioning to Independent Medical Care', dur: '4 min' },
           { num: '02', title: 'Recognizing Burnout & Depression Symptoms', dur: '4 min' },
@@ -753,7 +754,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'nutrition-teen-food-sovereignty',
         lessonCount: 3,
         durationMinutes: 12,
-        clinicalNote: 'Focus: Lifelong metabolic resilience & nutritional budgeting.',
+        guidanceNote: 'Focus: Lifelong metabolic resilience & nutritional budgeting.',
         lessons: [
           { num: '01', title: 'Grocery Shopping, Nutritional Labels & Budgeting', dur: '4 min' },
           { num: '02', title: 'Caffeine, Supplements & Alcohol Facts', dur: '4 min' },
@@ -769,7 +770,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'play-teen-intellectual-mastery',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Purpose-driven vocational identity & adult resilience.',
+        guidanceNote: 'Focus: Purpose-driven vocational identity & adult resilience.',
         lessons: [
           { num: '01', title: 'Discovering Core Values & Purpose Pathways', dur: '4 min' },
           { num: '02', title: 'Deep Friendships vs Acquaintance Networks', dur: '5 min' },
@@ -785,7 +786,7 @@ export const CANONICAL_8_LIFESPAN_STAGES: StageData[] = [
         slug: 'digital-teen-digital-independence',
         lessonCount: 3,
         durationMinutes: 13,
-        clinicalNote: 'Focus: Autonomous digital citizenship & cybersecurity defenses.',
+        guidanceNote: 'Focus: Autonomous digital citizenship & cybersecurity defenses.',
         lessons: [
           { num: '01', title: 'Professional Digital Reputation Management', dur: '4 min' },
           { num: '02', title: 'Guarding Against Cyber Fraud & Identity Theft', dur: '5 min' },
@@ -1045,7 +1046,7 @@ export function LifespanStageSelector() {
               <strong className="font-bold text-[#111413] block sm:inline">
                 Why This Matters:{' '}
               </strong>
-              <span>{activeCourse.clinicalNote}</span>
+              <span>{activeCourse.guidanceNote}</span>
             </div>
 
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">

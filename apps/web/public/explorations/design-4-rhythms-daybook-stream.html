@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 4: The Daily Rhythms Timeline | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #FBFBF9; color: #141816; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .timeline-spine {
+      background: linear-gradient(to bottom, #10B981, #143D2B, #3B82F6, #8B5CF6, #143D2B);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased py-10 px-4 sm:px-6">
+
+  <!-- Header -->
+  <header class="max-w-4xl mx-auto mb-12 flex items-center justify-between border-b border-[#E3E3DC] pb-5">
+    <div>
+      <span class="font-serif italic text-2xl font-bold text-[#143D2B]">AlongSide</span>
+      <span class="font-mono text-xs text-[#858C88] block">Sunday Family Rhythm Stream • Nov 12</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-[#EAF3EE] text-[#143D2B] px-3.5 py-1.5 rounded-full text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Maya (11 • Pre-Teen)</span>
+      </div>
+      <span class="font-mono text-xs bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-full font-bold">
+        🔥 4-Day Streak
+      </span>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto relative">
+    
+    <!-- The Continuous Vertical Timeline Spine -->
+    <div class="absolute left-6 sm:left-8 top-4 bottom-10 w-0.5 timeline-spine opacity-30"></div>
+
+    <div class="space-y-12 relative z-10">
+
+      <!-- STEP 1: 07:30 AM — MORNING ANCHOR & DAILY COMPASS -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-emerald-100 border-4 border-[#FBFBF9] text-emerald-800 flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-sm">
+          🌅
+        </div>
+
+        <!-- Content Flow -->
+        <div class="flex-1 space-y-2 pt-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <span class="font-bold text-[#143D2B]">07:30 AM</span>
+            <span>•</span>
+            <span class="uppercase tracking-wider">Morning Anchor &amp; Parental Compass</span>
+          </div>
+
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#111413]">
+            Welcome home, Souheil.
+          </h2>
+
+          <blockquote class="font-serif italic text-base sm:text-lg text-[#494F4C] leading-relaxed border-l-2 border-[#143D2B] pl-4 py-1 my-2">
+            “You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.”
+            <span class="block not-italic font-mono text-xs text-[#858C88] mt-1">— Dr. Chen, AlongSide Advisory</span>
+          </blockquote>
+        </div>
+      </div>
+
+      <!-- STEP 2: 03:30 PM — SCHOOLYARD CULTURE & SLANG PULSE -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-amber-100 border-4 border-[#FBFBF9] text-amber-800 flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-sm">
+          🎒
+        </div>
+
+        <div class="flex-1 space-y-3 pt-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <span class="font-bold text-amber-800">03:30 PM</span>
+            <span>•</span>
+            <span class="uppercase tracking-wider">Schoolyard Culture &amp; Slang Pulse</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-5 border border-[#E3E3DC] shadow-2xs space-y-3">
+            <div class="flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-serif font-bold text-xl text-[#111413]">Word of the Week: Rizz</span>
+                <span class="font-mono text-xs text-[#858C88]">/rɪz/</span>
+              </div>
+              <span class="font-mono text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
+                Cringe: 3/5 Moderate
+              </span>
+            </div>
+            <p class="text-xs text-[#494F4C] leading-relaxed">
+              Effortless charm and charisma. Kids use it affectionately. Safe to casually acknowledge.
+            </p>
+            <div class="flex gap-2 font-mono text-[11px] text-[#494F4C]">
+              <span class="bg-[#FBFBF9] px-2 py-1 rounded border border-[#E3E3DC]">Crashout (4/5)</span>
+              <span class="bg-[#FBFBF9] px-2 py-1 rounded border border-[#E3E3DC]">Cooked (2/5)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: 06:45 PM — DINNER TABLE STARTER -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-rose-100 border-4 border-[#FBFBF9] text-rose-800 flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-sm">
+          🍽️
+        </div>
+
+        <div class="flex-1 space-y-2 pt-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <span class="font-bold text-rose-800">06:45 PM</span>
+            <span>•</span>
+            <span class="uppercase tracking-wider">Dinner Table Family Connection</span>
+          </div>
+
+          <div class="bg-gradient-to-r from-rose-50/60 to-amber-50/40 p-5 rounded-2xl border border-rose-200/50 space-y-1">
+            <span class="font-mono text-[10px] font-bold text-rose-900 uppercase tracking-wider block">Tonight's Dinner Challenge:</span>
+            <p class="font-serif italic text-base text-[#111413]">
+              “If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: 08:00 PM — 4-MIN PARENT ACADEMY CHAPTER -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-emerald-600 border-4 border-[#FBFBF9] text-white flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-md">
+          📖
+        </div>
+
+        <div class="flex-1 space-y-3 pt-1">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-[#143D2B]">08:00 PM</span>
+              <span>•</span>
+              <span class="uppercase tracking-wider">Tonight's 4-Minute Lesson</span>
+            </div>
+            <span class="text-[#143D2B] font-bold">Chapter 3 of 5</span>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-7 border border-[#E3E3DC] shadow-sm space-y-4">
+            <div>
+              <span class="font-mono text-[10px] font-bold text-[#143D2B] uppercase">Tween Adrenarche &amp; Neurobiology</span>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
+                Peer Group Validation &amp; Exclusion Anxiety
+              </h3>
+            </div>
+
+            <blockquote class="font-serif italic text-base text-[#143D2B] bg-[#EAF3EE]/60 p-4 rounded-xl border border-[#143D2B]/10">
+              “I notice you felt left out of that Minecraft realm today. It really hurts when friends don't include you, and it makes complete sense that you feel angry. I am right here with you.”
+            </blockquote>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+              <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+                <span>🎧 3:45 Audio Guide • Dr. Chen</span>
+              </div>
+              <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition">
+                <span>Start Tonight's Lesson (4m)</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: 08:30 PM — BEDTIME & READINESS RADAR -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-indigo-100 border-4 border-[#FBFBF9] text-indigo-800 flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-sm">
+          🌙
+        </div>
+
+        <div class="flex-1 space-y-3 pt-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <span class="font-bold text-indigo-800">08:30 PM</span>
+            <span>•</span>
+            <span class="uppercase tracking-wider">Bedtime Dock &amp; Smartphone Radar</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-5 border border-[#E3E3DC] shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div class="space-y-1 text-center sm:text-left">
+              <h4 class="font-serif font-bold text-base text-[#111413]">
+                Evaluate Maya's First-Phone Readiness
+              </h4>
+              <p class="text-xs text-[#494F4C]">
+                10 real-world scenarios evaluating bedtime sleep, impulse control, and group chat boundaries.
+              </p>
+              <div class="flex flex-wrap gap-1 pt-1 font-mono text-[10px] justify-center sm:justify-start">
+                <span class="bg-[#FBFBF9] px-2 py-0.5 rounded border border-[#E3E3DC]">🌙 Sleep</span>
+                <span class="bg-[#FBFBF9] px-2 py-0.5 rounded border border-[#E3E3DC]">📚 Habits</span>
+                <span class="bg-[#FBFBF9] px-2 py-0.5 rounded border border-[#E3E3DC]">👥 Peers</span>
+                <span class="bg-[#FBFBF9] px-2 py-0.5 rounded border border-[#E3E3DC]">🧘 Reset</span>
+              </div>
+            </div>
+
+            <a href="#" class="inline-flex items-center gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-5 py-3 rounded-xl transition shrink-0">
+              <span>Start Readiness Assessment</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: 09:15 PM — NIGHT OWL SPARRING WITH AI ADVISOR -->
+      <div class="flex items-start gap-5 sm:gap-8 group">
+        <!-- Node Marker -->
+        <div class="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-stone-900 border-4 border-[#FBFBF9] text-white flex items-center justify-center font-mono font-bold text-lg shrink-0 shadow-md">
+          🦉
+        </div>
+
+        <div class="flex-1 space-y-3 pt-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-[#858C88]">
+            <span class="font-bold text-stone-900">09:15 PM</span>
+            <span>•</span>
+            <span class="uppercase tracking-wider">Night Owl 24/7 AI Child Advisor</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-5 border border-[#E3E3DC] shadow-2xs space-y-3">
+            <form class="flex gap-2">
+              <input 
+                type="text" 
+                placeholder="Ask Dr. Alongside anything about Maya (bedtime resistance, Roblox limits, slammed doors)..."
+                class="flex-1 bg-[#FBFBF9] border border-[#E3E3DC] rounded-xl px-4 py-2.5 text-xs text-[#111413] focus:outline-none focus:ring-1 focus:ring-[#143D2B]"
+              />
+              <button class="bg-[#143D2B] text-white text-xs font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0E2B1E] transition shrink-0">
+                Ask Dr. Alongside
+              </button>
+            </form>
+
+            <div class="flex items-center gap-2 text-xs flex-wrap font-mono text-[11px]">
+              <span class="text-[#858C88]">Acute Moments:</span>
+              <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E3E3DC] hover:border-[#143D2B] text-[#111413]">
+                Console Meltdown
+              </button>
+              <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E3E3DC] hover:border-[#143D2B] text-[#111413]">
+                Peer Phone Pressure
+              </button>
+              <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E3E3DC] hover:border-[#143D2B] text-[#111413]">
+                Slammed Door
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="max-w-4xl mx-auto mt-16 pt-8 border-t border-[#E3E3DC] text-center text-xs font-mono text-[#858C88]">
+    AlongSide Daily Rhythm Stream • Connected Family Operating System
+  </footer>
+
+</body>
+</html>

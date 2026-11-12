@@ -58,7 +58,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.PRE_DEVICE,
     question: 'When is a fever considered a true emergency in an infant under 3 months?',
     answerMarkdown:
-      'In infants under 90 days (and especially neonates under 28 days), a rectal temperature of 100.4°F (38.0°C) or higher is an acute medical emergency requiring immediate evaluation in an Emergency Department. Nascent neonatal immune systems carry high risks of invasive bacterial infections. Do not administer fever reducers prior to clinical evaluation.',
+      'In infants under 90 days (and especially neonates under 28 days), a rectal temperature of 100.4°F (38.0°C) or higher is an acute medical emergency requiring immediate evaluation in an Emergency Department. Nascent neonatal immune systems carry high risks of invasive bacterial infections. Do not administer fever reducers prior to emergency evaluation.',
     deEscalationScript:
       '"Take a slow breath. Because baby is under 90 days old, hospital protocol requires immediate in-person evaluation by a pediatric team. We are going to pack a diaper bag and head to the nearest pediatric emergency room right now."',
     isFeatured: true,
@@ -394,7 +394,7 @@ function findSimulatedResponse(message: string): {
       matchedFaqs: ['faq-first-phone-plea'],
       tokens: [
         'Take a deep breath—your 10-year-old’s plea is fueled by **adrenarche**, an evolutionary shift where peer approval suddenly triggers the brain’s social survival circuit.\n\n',
-        'When they scream *"Everyone else has it!"*, their limbic system genuinely feels the terror of being ostracized. However, algorithmic social feeds are clinically proven to trigger social comparison loops in brains that have not yet developed prefrontal executive filters.\n\n',
+        'When they scream *"Everyone else has it!"*, their limbic system genuinely feels the terror of being ostracized. However, algorithmic social feeds are empirically proven to trigger social comparison loops in brains that have not yet developed prefrontal executive filters.\n\n',
         '### Recommended De-Escalation Script:\n\n',
         '> "I hear how much staying connected with your friends matters to you, and I promise I am not trying to isolate you. Our family policy is that algorithmic social media waits until 8th grade because science shows young brains deserve time to grow without online popularity metrics. Let\'s host Maya and Sarah over this Saturday for a movie and pizza night instead."',
       ],

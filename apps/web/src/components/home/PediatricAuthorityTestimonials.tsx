@@ -19,7 +19,7 @@ export interface Testimonial {
   badge: string;
 }
 
-export const CLINICAL_TESTIMONIALS: Testimonial[] = [
+export const PEDIATRIC_TESTIMONIALS: Testimonial[] = [
   {
     quote:
       'AlongSide’s developmental sleep architecture, circadian rhythm guidance, and milestone benchmarks bring pediatric clarity directly to parents at 2:00 AM. It eliminates late-night panic with calm, evidence-based developmental understanding.',
@@ -52,7 +52,9 @@ export const CLINICAL_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-export function ClinicalAuthorityTestimonials() {
+export const CLINICAL_TESTIMONIALS = PEDIATRIC_TESTIMONIALS;
+
+export function PediatricAuthorityTestimonials() {
   return (
     <section id="testimonials" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
@@ -72,7 +74,7 @@ export function ClinicalAuthorityTestimonials() {
 
       {/* Testimonials Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
-        {CLINICAL_TESTIMONIALS.map((t, idx) => {
+        {PEDIATRIC_TESTIMONIALS.map((t, idx) => {
           const Icon = t.icon;
           return (
             <Card
@@ -141,3 +143,5 @@ export function ClinicalAuthorityTestimonials() {
     </section>
   );
 }
+
+export { PediatricAuthorityTestimonials as ClinicalAuthorityTestimonials };

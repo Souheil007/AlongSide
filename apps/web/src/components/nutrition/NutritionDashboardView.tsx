@@ -529,7 +529,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
         )}
       </div>
 
-      {/* Clinical Reference Safe Harbor Footer */}
+      {/* Pediatric Reference Safe Harbor Footer */}
       <footer className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5 text-xs text-slate-600 space-y-1.5">
         <div className="flex items-center gap-2 font-bold text-slate-800">
           <ShieldCheck className="h-4 w-4 text-emerald-700" />

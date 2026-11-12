@@ -215,8 +215,8 @@ describe('Plan 36 & 37: 8-Stage Lifespan Horizon & Category Advisory UI Specific
     it('verifies all 40 courses across 8 tiers have authoritative clinical notes and 3 structured micro-lessons', () => {
       for (const stage of CANONICAL_8_LIFESPAN_STAGES) {
         for (const course of stage.courses) {
-          expect(course.clinicalNote).toBeDefined();
-          expect(course.clinicalNote.length).toBeGreaterThan(15);
+          expect(course.guidanceNote || course.clinicalNote).toBeDefined();
+          expect((course.guidanceNote || course.clinicalNote)!.length).toBeGreaterThan(15);
           expect(course.lessons).toHaveLength(3);
 
           for (const lesson of course.lessons) {

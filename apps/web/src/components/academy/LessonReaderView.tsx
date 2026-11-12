@@ -92,14 +92,15 @@ export function renderInlineMarkdown(text: string): React.ReactNode {
 export interface ParsedLessonParts {
   scenarioText: string;
   neurobiologyText: string;
-  clinicalInsight: string;
+  keyInsight: string;
+  clinicalInsight?: string;
   groundingText: string;
   actionItems: ActionProtocolItem[];
   hasStructuredParts: boolean;
 }
 
 /**
- * Extracts distinct clinical parts from lesson markdown:
+ * Extracts distinct pedagogical parts from lesson markdown:
  * - Part 1: The Kitchen-Table Scenario
  * - Part 2: The Developmental Neurobiology Behind It
  * - Key Takeaway callout
@@ -111,6 +112,7 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
     return {
       scenarioText: '',
       neurobiologyText: '',
+      keyInsight: '',
       clinicalInsight: '',
       groundingText: '',
       actionItems: [],
@@ -146,6 +148,7 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
   return {
     scenarioText,
     neurobiologyText,
+    keyInsight: clinicalInsight,
     clinicalInsight,
     groundingText,
     actionItems,
@@ -263,7 +266,7 @@ export function LessonReaderView({
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [isNightstandMode, setIsNightstandMode] = React.useState<boolean>(false);
 
-  // 1. Resolve Archetype and Non-Clinical Headings
+  // 1. Resolve Archetype and Pedagogical Headings
   const archetype = React.useMemo(() => {
     return (
       lesson.archetype ||

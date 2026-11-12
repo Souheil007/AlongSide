@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 10: The Spatial Glass HUD & Copilot | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cabinet+Grotesk:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cabinet Grotesk"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            huddark: '#0A0E17',
+            crystal: 'rgba(255, 255, 255, 0.08)',
+            neonemerald: '#10B981',
+            neonteal: '#14B8A6',
+            amberpulse: '#F59E0B',
+            violacore: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #0A0E17; color: #F3F4F6; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .spatial-glass {
+      background: rgba(18, 24, 38, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .spatial-glass:hover {
+      border-color: rgba(20, 184, 166, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 25px 60px -12px rgba(20, 184, 166, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    }
+    .ambient-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    @keyframes wave-bar {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+    .audio-bar-1 { animation: wave-bar 1.2s ease-in-out infinite; }
+    .audio-bar-2 { animation: wave-bar 0.9s ease-in-out infinite 0.2s; }
+    .audio-bar-3 { animation: wave-bar 1.4s ease-in-out infinite 0.4s; }
+    .audio-bar-4 { animation: wave-bar 1.0s ease-in-out infinite 0.1s; }
+  </style>
+</head>
+<body class="min-h-screen relative antialiased selection:bg-teal-500 selection:text-black">
+
+  <!-- Ambient Glowing Orbs in Background -->
+  <div class="ambient-glow bg-teal-500 top-[-100px] left-[15%]"></div>
+  <div class="ambient-glow bg-indigo-600 top-[20%] right-[10%]"></div>
+  <div class="ambient-glow bg-amber-500 bottom-[10%] left-[25%]"></div>
+
+  <!-- Top Glass HUD Header -->
+  <header class="border-b border-white/10 bg-[#0A0E17]/80 backdrop-blur-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-1.5 font-mono text-xs text-stone-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>All Explorations</span>
+        </a>
+        <span class="text-white/20">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-neonteal animate-ping"></span>
+          <span class="font-display font-extrabold text-xl tracking-tight text-white">ALONGSIDE</span>
+          <span class="font-mono text-[10px] text-teal-300 border border-teal-500/30 px-2 py-0.5 rounded-full bg-teal-950/60">SPATIAL COPILOT</span>
+        </div>
+      </div>
+
+      <!-- Live Audio Waveform Soundscape & Child Indicator -->
+      <div class="flex items-center gap-3">
+        <!-- 432Hz Soundscape Widget -->
+        <div class="hidden sm:flex items-center gap-2.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full cursor-pointer hover:bg-white/10 transition" onclick="toggleAudio()">
+          <div class="flex items-end gap-0.5 h-5 w-4">
+            <span class="w-1 bg-neonteal rounded-full audio-bar-1"></span>
+            <span class="w-1 bg-neonteal rounded-full audio-bar-2"></span>
+            <span class="w-1 bg-neonteal rounded-full audio-bar-3"></span>
+            <span class="w-1 bg-neonteal rounded-full audio-bar-4"></span>
+          </div>
+          <span class="font-mono text-[11px] text-stone-300">432Hz Calm Frequency</span>
+        </div>
+
+        <div class="flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full font-mono text-xs">
+          <span class="w-2 h-2 rounded-full bg-neonteal"></span>
+          <span class="text-white font-semibold">Maya</span>
+          <span class="text-stone-400">· Age 10</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-10 space-y-10 relative z-10">
+
+    <!-- HERO SPATIAL BANNER -->
+    <section class="spatial-glass rounded-3xl p-8 sm:p-10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="space-y-4 max-w-xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 font-mono text-xs text-teal-300">
+          <span class="w-2 h-2 rounded-full bg-neonteal animate-pulse"></span>
+          <span>92/100 Sanctuary Vitality · Equilibrium</span>
+        </div>
+        <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white leading-tight">
+          Welcome back, Souheil. <br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-indigo-300 to-amber-200">
+            A calm repair teaches what perfection never could.
+          </span>
+        </h1>
+        <p class="text-xs sm:text-sm text-stone-300 font-sans leading-relaxed">
+          Your spatial copilot is monitoring Maya's digital readiness, 8:30 PM bedtime curfew lock, and modern slang signals in real time.
+        </p>
+      </div>
+
+      <!-- Quick Action Capsule -->
+      <div class="flex flex-col gap-2.5 w-full md:w-64">
+        <div class="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between font-mono text-xs">
+          <span class="text-stone-400">Current Phase:</span>
+          <span class="text-teal-300 font-bold">Pre-Device (Road 1)</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between font-mono text-xs">
+          <span class="text-stone-400">Curfew Countdown:</span>
+          <span class="text-amber-300 font-bold">Locks in 2h 45m</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between font-mono text-xs">
+          <span class="text-stone-400">Family Streak:</span>
+          <span class="text-emerald-400 font-bold">🔥 4 Days</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DUAL SPATIAL TELEMETRY PODS (Readiness Radar Pod + Curfew Pact Pod) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- POD 01: FIRST-PHONE READINESS RADAR -->
+      <div class="spatial-glass rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-neonteal"></span>
+            <span class="font-mono text-xs uppercase tracking-wider text-teal-300 font-bold">Telemetry 01 · Readiness Radar</span>
+          </div>
+          <span class="font-mono text-xs text-stone-400">Road 1: Pre-Device</span>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <!-- Big Glowing SVG Radial Meter -->
+          <div class="relative w-28 h-28 flex-shrink-0 flex items-center justify-center">
+            <svg class="w-28 h-28 -rotate-90" viewBox="0 0 36 36">
+              <path class="text-white/10" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="text-neonteal" stroke-dasharray="84, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <div class="absolute flex flex-col items-center">
+              <span class="font-display font-extrabold text-2xl text-white">84</span>
+              <span class="font-mono text-[8px] text-stone-400 uppercase">/ 100 pts</span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <h3 class="font-display font-bold text-lg text-white">High Cognitive Autonomy</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Maya regulates game sessions well. Only bedtime transition friction remains flagged before hardware release.
+            </p>
+          </div>
+        </div>
+
+        <button class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-black font-display font-bold text-sm tracking-wide transition shadow-lg flex items-center justify-center gap-2">
+          <span>Start Readiness Assessment</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- POD 02: BILATERAL PACT & 8:30 PM BEDTIME CURFEW -->
+      <div class="spatial-glass rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amberpulse"></span>
+            <span class="font-mono text-xs uppercase tracking-wider text-amber-300 font-bold">Telemetry 02 · Neutral Hardware Curfew</span>
+          </div>
+          <span class="font-mono text-xs text-emerald-400">Signed & Verified</span>
+        </div>
+
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5">
+          <div>
+            <span class="font-mono text-xs text-stone-400 block">MDM HARDWARE LOCK</span>
+            <span class="font-display font-extrabold text-3xl text-white">8:30 PM Lock</span>
+            <span class="font-mono text-[11px] text-amber-300 mt-0.5 block">Living Room Dock Required</span>
+          </div>
+          <div class="text-right">
+            <span class="font-mono text-sm font-bold text-amber-400">In 2h 45m</span>
+            <span class="font-mono text-[9px] text-stone-500 block">No Arguments</span>
+          </div>
+        </div>
+
+        <p class="text-xs text-stone-400 leading-relaxed">
+          The device automatically powers down via cryptographic profile. Zero parent nagging, 100% neutral enforcement.
+        </p>
+
+        <div class="flex items-center gap-3">
+          <button class="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs font-semibold transition text-center">
+            View Family Pact PDF
+          </button>
+          <button class="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs font-semibold transition text-center">
+            Adjust Curfew Time
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 24/7 AI pediatric COPILOT TERMINAL -->
+    <section class="spatial-glass rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-xl text-white">24/7 pediatric AI Child Advisor</h2>
+            <p class="text-xs text-stone-400">Instant evidence-based scripts when tween friction strikes.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-xs text-neonteal">
+          <span class="w-2 h-2 rounded-full bg-neonteal animate-pulse"></span>
+          <span>Pediatric Model Synced</span>
+        </div>
+      </div>
+
+      <!-- Quick Interactive Prompt Pills -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="bg-white/5 hover:bg-white/10 p-3.5 rounded-2xl border border-white/10 transition cursor-pointer space-y-1">
+          <span class="font-mono text-[10px] text-teal-300 font-bold uppercase">Screen Cutoff</span>
+          <h4 class="font-display font-bold text-sm text-white">“Resisting Minecraft shutdown”</h4>
+          <p class="text-[11px] text-stone-400 italic">“Your brain is having trouble stopping dopamine, not you.”</p>
+        </div>
+
+        <div class="bg-white/5 hover:bg-white/10 p-3.5 rounded-2xl border border-white/10 transition cursor-pointer space-y-1">
+          <span class="font-mono text-[10px] text-indigo-300 font-bold uppercase">Social Peer Pressure</span>
+          <h4 class="font-display font-bold text-sm text-white">“Asking for Discord at age 10”</h4>
+          <p class="text-[11px] text-stone-400 italic">“I hear how badly you want to belong with your class.”</p>
+        </div>
+
+        <div class="bg-white/5 hover:bg-white/10 p-3.5 rounded-2xl border border-white/10 transition cursor-pointer space-y-1">
+          <span class="font-mono text-[10px] text-amber-300 font-bold uppercase">Bedtime Rule</span>
+          <h4 class="font-display font-bold text-sm text-white">“Phone charging location”</h4>
+          <p class="text-[11px] text-stone-400 italic">“We agreed our bedroom is for rest, not notifications.”</p>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="flex items-center gap-3 bg-black/40 border border-white/10 rounded-2xl p-2">
+        <input type="text" placeholder="Describe the current conflict or question for the advisor..." class="flex-1 bg-transparent px-3 text-xs text-white focus:outline-none placeholder-stone-500" />
+        <button class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-mono text-xs font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition">
+          Ask Advisor
+        </button>
+      </div>
+    </section>
+
+    <!-- MODERN YOUTH VOCABULARY RADAR -->
+    <section class="spatial-glass rounded-3xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <span class="font-mono text-xs text-teal-400 uppercase tracking-wider font-bold">Spatial Intercept</span>
+          <h2 class="font-display font-bold text-xl text-white">Living Recess & Gaming Signals</h2>
+        </div>
+        <span class="font-mono text-xs text-stone-400">Elementary Tier</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-lg text-white">“Griefing”</span>
+            <span class="font-mono text-[10px] text-teal-300 bg-teal-950/80 px-2 py-0.5 rounded">Gaming Verb</span>
+          </div>
+          <p class="text-xs text-stone-400">Deliberately destroying another child's digital build in Minecraft.</p>
+          <div class="text-[11px] text-emerald-300 italic border-l-2 border-emerald-400 pl-2">
+            “That feels unfair when you worked hard on it.”
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-lg text-white">“No Backsies”</span>
+            <span class="font-mono text-[10px] text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded">Recess Law</span>
+          </div>
+          <p class="text-xs text-stone-400">Unwritten rule that once a trade is made, it cannot be undone.</p>
+          <div class="text-[11px] text-amber-300 italic border-l-2 border-amber-400 pl-2">
+            “Good friends check in to make it right.”
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-lg text-white">“Bruh / Oof”</span>
+            <span class="font-mono text-[10px] text-indigo-300 bg-indigo-950/80 px-2 py-0.5 rounded">Exclamation</span>
+          </div>
+          <p class="text-xs text-stone-400">Universal reflex to a physical stumble or minor mishap.</p>
+          <div class="text-[11px] text-indigo-300 italic border-l-2 border-indigo-400 pl-2">
+            “Oof indeed! Did everything survive?”
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="py-6 text-center font-mono text-xs text-stone-500">
+    AlongSide Spatial Glass HUD · Next-Gen Ambient Parenting
+  </footer>
+
+  <script>
+    let isPlaying = false;
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      alert(isPlaying ? "432Hz Ambient Calm frequency turned ON (soothing alpha waves for parent calm)." : "Ambient Calm soundscape paused.");
+    }
+  </script>
+</body>
+</html>

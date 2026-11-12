@@ -47,7 +47,7 @@ describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-S
   };
 
   describe('1. Takeaway & Empathetic Script Resolution', () => {
-    it('resolves curated bedtime dock clinical script and outcome', () => {
+    it('resolves curated bedtime dock script and outcome', () => {
       const takeaway = resolveLessonTakeaway({
         id: 'l-bedtime',
         moduleId: 'm-1',
@@ -92,7 +92,7 @@ describe('SOU-85 / SOU-102: Parent Academy Course Detail — Direction A2 Bite-S
       expect(takeaway.script).toBe('I am right here with you through every bump.');
     });
 
-    it('generates a graceful clinical fallback script for arbitrary custom lessons', () => {
+    it('generates a graceful fallback script for arbitrary custom lessons', () => {
       const takeaway = resolveLessonTakeaway({
         id: 'l-custom',
         moduleId: 'm-1',

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 7: The Architectural Monograph | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#FBFBF7',
+            ink: '#141412',
+            subtle: '#8C8980',
+            hairline: '#E3DFD5',
+            rust: '#C35334',
+            forest: '#1E3D2F',
+            stonecard: '#F3F0E8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #FBFBF7; color: #141412; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .arch-border { border-color: #E3DFD5; }
+    .grid-paper {
+      background-image: linear-gradient(to right, rgba(227, 223, 213, 0.4) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(227, 223, 213, 0.4) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .plate-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #8C8980;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-[#1E3D2F] selection:text-white">
+
+  <!-- Architectural Top Bar -->
+  <header class="border-b arch-border bg-canvas/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="flex items-center gap-1.5 font-mono text-xs text-subtle hover:text-ink transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>Index</span>
+        </a>
+        <div class="h-4 w-[1px] bg-hairline"></div>
+        <div class="flex items-baseline gap-2">
+          <span class="font-serif italic font-bold text-2xl tracking-tight text-ink">AlongSide</span>
+          <span class="font-mono text-[10px] text-subtle">ARCHITECTURAL MONOGRAPH / FOLIO VII</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6 font-mono text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-forest rounded-full"></span>
+          <span>SUBJECT: MAYA</span>
+          <span class="text-subtle">· ELEM (10 YRS)</span>
+        </div>
+        <div class="hidden sm:block text-subtle">
+          CALM PULSE: <span class="text-ink font-bold">92% EQ</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+    <!-- MASTHEAD: High-Fashion Monograph Headline -->
+    <section class="border-b arch-border pb-10 space-y-4">
+      <div class="flex items-baseline justify-between font-mono text-[11px] text-subtle">
+        <span>PLATE 01.00 — ESSAY ON REPAIR & SANCTUARY</span>
+        <span>EDITION NOVEMBER 2026</span>
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-6xl text-ink font-light leading-[1.08] max-w-4xl">
+        “A calm repair after friction teaches your child more about emotional security than a parent who never makes a mistake.”
+      </h1>
+
+      <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-subtle">
+        <div class="flex items-center gap-3">
+          <span class="text-forest font-bold">STATUS: PRE-DEVICE PREPARATION (ROAD 1)</span>
+          <span>•</span>
+          <span>STREAK: 4 CONSECUTIVE DAYS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>CO-FOUNDER pediatric DIGEST</span>
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: ASYMMETRIC DUAL SPREAD (Readiness Metric vs 24/7 pediatric Advisor) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+      <!-- Left Column (5 cols): Architectural Millimeter Readiness Gauge -->
+      <div class="lg:col-span-5 border arch-border p-8 bg-stonecard flex flex-col justify-between space-y-8">
+        <div>
+          <span class="plate-number">PLATE 02.01 · TELEMETRY GAUGE</span>
+          <div class="mt-4 flex items-baseline gap-4">
+            <span class="font-serif text-7xl sm:text-8xl font-light text-ink">84</span>
+            <div>
+              <span class="font-mono text-xs font-bold text-forest uppercase block">Readiness Index</span>
+              <span class="font-mono text-[10px] text-subtle">SCALE 000 — 100 PTS</span>
+            </div>
+          </div>
+          <p class="mt-4 text-xs text-ink/80 leading-relaxed font-sans">
+            Maya exhibits advanced cognitive autonomy in self-moderation. High impulse control flagged; bedtime boundary friction remains the sole gating metric for unmonitored hardware release.
+          </p>
+
+          <!-- Millimeter Architectural Ruler -->
+          <div class="mt-6 space-y-2">
+            <div class="w-full h-3 bg-hairline relative">
+              <div class="h-full bg-forest" style="width: 84%;"></div>
+              <div class="absolute -top-1 left-[84%] w-1.5 h-5 bg-rust -translate-x-1/2"></div>
+            </div>
+            <div class="flex justify-between font-mono text-[9px] text-subtle">
+              <span>00 · INITIATION</span>
+              <span>50 · MODERATE</span>
+              <span class="text-rust font-bold">84 · CURRENT</span>
+              <span>100 · AUTONOMOUS</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="w-full py-3.5 px-4 bg-ink hover:bg-forest text-white font-mono text-xs uppercase tracking-wider transition flex items-center justify-between">
+          <span>Start Readiness Assessment</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Right Column (7 cols): pediatric Dialogue Ledger (24/7 AI Child Advisor) -->
+      <div class="lg:col-span-7 border arch-border p-8 bg-white flex flex-col justify-between space-y-6">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="plate-number">PLATE 02.02 · pediatric DIALOGUE COMPASS</span>
+            <span class="font-mono text-[10px] text-forest font-bold">24/7 AI DISPATCH ACTIVE</span>
+          </div>
+
+          <h3 class="font-serif text-2xl sm:text-3xl font-light text-ink mt-3">
+            Parent-Child De-Escalation Protocols
+          </h3>
+          <p class="text-xs text-subtle mt-1">
+            Validated by pediatric neurobiology. Instant pediatric scripts tailored to Elementary developmental friction.
+          </p>
+
+          <!-- Script Prompts as Ledger Entries -->
+          <div class="mt-6 divide-y arch-border border-y">
+            <div class="py-3.5 flex items-start justify-between gap-4 hover:bg-canvas transition px-2 cursor-pointer group">
+              <div>
+                <span class="font-mono text-[10px] text-rust uppercase">Scenario A</span>
+                <p class="font-serif text-base text-ink group-hover:text-forest transition">
+                  “She’s asking for Discord because ‘literally everyone in 5th grade has it’...”
+                </p>
+              </div>
+              <span class="font-mono text-xs text-subtle group-hover:text-ink transition shrink-0">Open Script ↗</span>
+            </div>
+
+            <div class="py-3.5 flex items-start justify-between gap-4 hover:bg-canvas transition px-2 cursor-pointer group">
+              <div>
+                <span class="font-mono text-[10px] text-rust uppercase">Scenario B</span>
+                <p class="font-serif text-base text-ink group-hover:text-forest transition">
+                  “Explosive anger when Minecraft screen time ends at 6:00 PM.”
+                </p>
+              </div>
+              <span class="font-mono text-xs text-subtle group-hover:text-ink transition shrink-0">Open Script ↗</span>
+            </div>
+
+            <div class="py-3.5 flex items-start justify-between gap-4 hover:bg-canvas transition px-2 cursor-pointer group">
+              <div>
+                <span class="font-mono text-[10px] text-rust uppercase">Scenario C</span>
+                <p class="font-serif text-base text-ink group-hover:text-forest transition">
+                  “Negotiating phone placement outside the bedroom at night.”
+                </p>
+              </div>
+              <span class="font-mono text-xs text-subtle group-hover:text-ink transition shrink-0">Open Script ↗</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2 font-mono text-[11px] text-subtle">
+          <input type="text" placeholder="Type customized situational query to advisor..." class="flex-1 bg-stonecard border arch-border px-3.5 py-2.5 text-xs text-ink focus:outline-none focus:border-forest" />
+          <button class="bg-forest text-white px-4 py-2.5 uppercase tracking-wider text-[10px] font-bold">Ask</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 03: ARCHITECTURAL CURRICULUM STRIP (Academy Stream) -->
+    <section class="space-y-4">
+      <div class="flex items-baseline justify-between border-b arch-border pb-2">
+        <span class="plate-number">PLATE 03.00 · NEUROBIOLOGY CURRICULUM FOLIO</span>
+        <span class="font-mono text-[10px] text-subtle">3 OF 8 MODULES MASTERED</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Module 01 -->
+        <div class="border arch-border p-6 bg-white space-y-3">
+          <span class="font-mono text-[10px] text-forest font-bold">MODULE 01 · 4 MIN READ</span>
+          <h4 class="font-serif text-xl text-ink">The Prefrontal Cortex & Screen Latency</h4>
+          <p class="text-xs text-subtle leading-relaxed">
+            Why tween transitions trigger executive resistance: the neurochemistry of sudden algorithmic interruption.
+          </p>
+          <div class="pt-2 font-mono text-[10px] text-rust">READ CHAPTER →</div>
+        </div>
+
+        <!-- Module 02 -->
+        <div class="border arch-border p-6 bg-white space-y-3">
+          <span class="font-mono text-[10px] text-forest font-bold">MODULE 02 · 6 MIN AUDIO</span>
+          <h4 class="font-serif text-xl text-ink">Bilateral Negotiation over Surveillance</h4>
+          <p class="text-xs text-subtle leading-relaxed">
+            pediatric evidence proves secret spyware breaks developmental attachment. Replacing snooping with contracts.
+          </p>
+          <div class="pt-2 font-mono text-[10px] text-rust">LISTEN AUDIO →</div>
+        </div>
+
+        <!-- Module 03 -->
+        <div class="border arch-border p-6 bg-white space-y-3">
+          <span class="font-mono text-[10px] text-forest font-bold">MODULE 03 · 3 MIN EXERCISE</span>
+          <h4 class="font-serif text-xl text-ink">The Neutral Hardware Curfew</h4>
+          <p class="text-xs text-subtle leading-relaxed">
+            Removing human emotion from bedtime enforcement: why MDM device-level locks protect parent-child rapport.
+          </p>
+          <div class="pt-2 font-mono text-[10px] text-rust">STUDY CASE →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: THE MONOGRAPH LEXICON (Modern Youth Vocabulary Decoded) -->
+    <section class="border arch-border bg-stonecard p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b arch-border pb-4 gap-2">
+        <div>
+          <span class="plate-number">PLATE 04.00 · LEXICOGRAPHY OF ELEMENTARY RECESSCRAFT</span>
+          <h3 class="font-serif text-2xl text-ink mt-1">Living Dialect & Culture Decoder</h3>
+        </div>
+        <span class="font-mono text-xs text-subtle">3 TERMS ACTIVE IN MAYA'S PEER GROUP</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Entry 01 -->
+        <div class="space-y-2">
+          <div class="flex items-baseline justify-between">
+            <h4 class="font-serif text-2xl font-bold text-ink">Griefing</h4>
+            <span class="font-mono text-[10px] text-subtle">/ ˈɡriːfɪŋ / · VERB</span>
+          </div>
+          <p class="text-xs text-ink/80 leading-relaxed font-sans">
+            Deliberately sabotaging someone else’s digital build, creative world, or game progress in sandbox titles.
+          </p>
+          <div class="border-l-2 border-forest pl-3 pt-1 text-xs italic font-serif text-forest">
+            “That feels really unfair when you worked hard on it. Let's make sure the world has saving backups.”
+          </div>
+        </div>
+
+        <!-- Entry 02 -->
+        <div class="space-y-2">
+          <div class="flex items-baseline justify-between">
+            <h4 class="font-serif text-2xl font-bold text-ink">No Backsies</h4>
+            <span class="font-mono text-[10px] text-subtle">/ noʊ ˈbæksiz / · LAW</span>
+          </div>
+          <p class="text-xs text-ink/80 leading-relaxed font-sans">
+            Unwritten playground statute asserting that physical card or collectible trades cannot be reversed once agreed.
+          </p>
+          <div class="border-l-2 border-forest pl-3 pt-1 text-xs italic font-serif text-forest">
+            “Even with 'no backsies,' if someone felt pressured, good friends check in to make it right.”
+          </div>
+        </div>
+
+        <!-- Entry 03 -->
+        <div class="space-y-2">
+          <div class="flex items-baseline justify-between">
+            <h4 class="font-serif text-2xl font-bold text-ink">Bruh / Oof</h4>
+            <span class="font-mono text-[10px] text-subtle">/ brʌ / uːf / · INTERJ</span>
+          </div>
+          <p class="text-xs text-ink/80 leading-relaxed font-sans">
+            Universal acoustic reflex signaling an awkward stumble, physical clumsy mishap, or minor disappointment.
+          </p>
+          <div class="border-l-2 border-forest pl-3 pt-1 text-xs italic font-serif text-forest">
+            “Oof indeed! Did everything survive the fall?”
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t arch-border py-8 text-center font-mono text-[10px] text-subtle">
+    ALONGSIDE ARCHITECTURAL MONOGRAPH · NEUROBIOLOGICAL SANCTUARY SYSTEMS · COPPA SAFE HARBOR COMPLIANT
+  </footer>
+
+</body>
+</html>

@@ -152,7 +152,7 @@ describe('PLAN-31: Parent Intelligence Academy Curriculum Explorer & Chapter Rea
   });
 
   describe('3. Prioritized Chapter Roadmap & Priority Themes', () => {
-    it('returns accurate theme badges and clinical taglines for Priority 1, 2, and 3', () => {
+    it('returns accurate theme badges and guidance taglines for Priority 1, 2, and 3', () => {
       const p1 = getPriorityTheme(ChapterPriority.PRIORITY_1_CRITICAL);
       expect(p1.shortBadge).toContain('Priority 1 · Critical');
       expect(p1.tagline).toBe('Start here for acute friction and core neurobiology.');
@@ -238,7 +238,7 @@ describe('PLAN-31: Parent Intelligence Academy Curriculum Explorer & Chapter Rea
   });
 
   describe('5. Rich Micro-Lesson Reader View & Markdown Callout Parsing', () => {
-    it('renders LessonReaderView with lesson detail containing Clinical Insight and What to Say scripts', () => {
+    it('renders LessonReaderView with lesson detail containing Key Takeaway and What to Say scripts', () => {
       const onComplete = vi.fn();
       const element = React.createElement(LessonReaderView, {
         lesson: MOCK_LESSON_DETAIL_ADRENARCHE,

@@ -27,8 +27,8 @@ describe('useReadinessStore', () => {
         expect(question.options).toHaveLength(4);
         const scores = question.options.map((opt) => opt.score);
         expect(scores).toEqual([10, 7, 4, 1]);
-        expect(question.clinicalInsight).toBeDefined();
-        expect(question.clinicalInsight.length).toBeGreaterThan(20);
+        expect(question.expertInsight).toBeDefined();
+        expect(question.expertInsight.length).toBeGreaterThan(20);
       }
     });
   });

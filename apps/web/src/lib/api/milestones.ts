@@ -20,7 +20,7 @@ export const CANONICAL_MILESTONES: MilestoneDTO[] = [
     title: 'Independent Walking & Balance',
     description: 'Takes 5+ steps independently without holding onto furniture or adult hands with steady balance.',
     signsToWatch: 'If child is not walking independently by 18 months, or displays persistent asymmetrical limp, mention to pediatrician.',
-    clinicalAuthority: 'AAP Clinical Practice Guidelines (Gross Motor Surveillance)',
+    clinicalAuthority: 'AAP Practice Guidelines (Gross Motor Surveillance)',
     sortOrder: 1,
     status: MilestoneStatus.ACHIEVED,
   },

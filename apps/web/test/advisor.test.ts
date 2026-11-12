@@ -15,7 +15,7 @@ import {
 
 describe('24/7 AI Advisor & Living FAQ Explorer Specification (PLAN-11)', () => {
   describe('Curated FAQ Vault & Search Engine', () => {
-    it('contains comprehensive clinical scenarios covering all key digital milestones', () => {
+    it('contains comprehensive scenarios covering all key digital milestones', () => {
       expect(CURATED_FAQS.length).toBeGreaterThanOrEqual(7);
 
       const ids = CURATED_FAQS.map((f) => f.id);
