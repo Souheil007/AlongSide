@@ -10,6 +10,7 @@ import {
 import {
   AcademyCategory,
   ChapterPriority,
+  LessonArchetype,
   type DevelopmentalTier,
   type AcademyCategoryStatsDTO,
   type AcademyChapterDTO,
@@ -26,6 +27,7 @@ import {
   getEquivalentTiers,
   formatCourseTitle,
   resolveAdaptiveModuleType,
+  resolveLessonArchetype,
   resolveReliefTagline,
   parseDialogueCards,
   parseThirtySecondGlance,
@@ -192,6 +194,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
             chapterId: true,
             slug: true,
             title: true,
+            archetype: true,
             readingMinutes: true,
             sortOrder: true,
             audioUrl: true,
@@ -240,6 +243,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
           videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
+          archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, m.category as AcademyCategory),
         }));
 
       return {
@@ -317,6 +321,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
       deliveryTip: l.deliveryTip ?? undefined,
       videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
+      archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, moduleRecord.category as AcademyCategory),
     }));
 
     const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
@@ -335,6 +340,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
         videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
+        archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, moduleRecord.category as AcademyCategory),
       }));
 
       const chLessonCount = chLessons.length;
@@ -512,6 +518,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       thirtySecondGlance,
       adaptiveModuleType,
       dialogueCards,
+      archetype: (lesson.archetype as LessonArchetype) || resolveLessonArchetype(lesson.slug, lesson.title, category),
       actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??
@@ -662,6 +669,7 @@ interface InMemoryLesson {
   whatNotToSay?: string | null;
   deliveryTip?: string | null;
   videoLecture?: MasterVideoLectureDTO | null;
+  archetype?: LessonArchetype;
 }
 
 export class InMemoryAcademyRepository implements AcademyRepository {
@@ -723,12 +731,17 @@ export class InMemoryAcademyRepository implements AcademyRepository {
               lesson.title
             );
 
+          const archetype =
+            ((lesson as any).archetype as LessonArchetype) ??
+            resolveLessonArchetype(lesson.slug, lesson.title, category);
+
           const lessonRecord: InMemoryLesson = {
             id: lessonId,
             moduleId,
             chapterId,
             slug: lesson.slug,
             title: lesson.title,
+            archetype,
             contentMarkdown: lesson.contentMarkdown,
             readingMinutes: lesson.readingMinutes,
             sortOrder: lesson.sortOrder,
@@ -842,6 +855,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
           videoLecture: l.videoLecture ?? undefined,
+          archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, m.category),
         };
       });
 
@@ -913,6 +927,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           whatNotToSay: l.whatNotToSay ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
           videoLecture: l.videoLecture ?? undefined,
+          archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, mod.category),
         };
       });
 
@@ -957,6 +972,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         whatNotToSay: l.whatNotToSay ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
         videoLecture: l.videoLecture ?? undefined,
+        archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, mod.category),
       };
     });
 
@@ -1067,6 +1083,7 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       thirtySecondGlance,
       adaptiveModuleType,
       dialogueCards,
+      archetype: (lesson.archetype as LessonArchetype) || resolveLessonArchetype(lesson.slug, lesson.title, category),
       actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??

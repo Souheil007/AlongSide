@@ -175,6 +175,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       );
       expect(mod.lessons[0].readingMinutes).toBe(4);
       expect(mod.lessons[0].isCompleted).toBe(false);
+      expect(mod.lessons[0].archetype).toBe('EVERYDAY_BEHAVIOR');
     });
 
     it('returns 404 NOT_FOUND for non-existent module slug', async () => {
@@ -220,6 +221,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(typeof lesson.reliefTagline).toBe('string');
       expect(lesson.reliefTagline.length).toBeGreaterThan(0);
       expect(lesson.adaptiveModuleType).toBe('SOMATIC_RESET');
+      expect(lesson.archetype).toBe('EVERYDAY_BEHAVIOR');
       expect(lesson.thirtySecondGlance).toBeDefined();
       expect(typeof lesson.thirtySecondGlance.coreProblem).toBe('string');
       expect(typeof lesson.thirtySecondGlance.immediateShift).toBe('string');
@@ -511,6 +513,45 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const payload = lessonRes.json();
       expect(payload.success).toBe(true);
       expect(payload.data.lesson.videoLecture).toBeFalsy();
+    });
+  });
+
+  describe('Lesson Archetypes Serialization (PLAN-40 / SOU-114)', () => {
+    it('serializes distinct archetypes across lesson summaries and detailed views', async () => {
+      // 1. Module fetch - summaries have archetype
+      const modRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/modules/play-preschool-executive-function',
+      });
+      expect(modRes.statusCode).toBe(200);
+      const modPayload = modRes.json();
+      expect(modPayload.success).toBe(true);
+      expect(modPayload.data.module.lessons.length).toBeGreaterThan(0);
+      for (const lesson of modPayload.data.module.lessons) {
+        expect(['EVERYDAY_BEHAVIOR', 'CHILD_GROWTH_CONCEPT', 'PRACTICAL_FAMILY_GUIDE']).toContain(
+          lesson.archetype
+        );
+      }
+
+      // 2. CHILD_GROWTH_CONCEPT lesson
+      const growthRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/preschool-freeze-dance-inhibitory-control',
+      });
+      expect(growthRes.statusCode).toBe(200);
+      const growthPayload = growthRes.json();
+      expect(growthPayload.success).toBe(true);
+      expect(growthPayload.data.lesson.archetype).toBe('CHILD_GROWTH_CONCEPT');
+
+      // 3. PRACTICAL_FAMILY_GUIDE lesson
+      const guideRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/academy/lessons/by-slug/preschool-daycare-viral-comfort',
+      });
+      expect(guideRes.statusCode).toBe(200);
+      const guidePayload = guideRes.json();
+      expect(guidePayload.success).toBe(true);
+      expect(guidePayload.data.lesson.archetype).toBe('PRACTICAL_FAMILY_GUIDE');
     });
   });
 });

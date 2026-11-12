@@ -1,14 +1,45 @@
 import { describe, expect, it } from 'vitest';
-import { AcademyCategory } from '../src/constants/index.js';
+import { AcademyCategory, LessonArchetype } from '../src/constants/index.js';
 import {
+  getLessonArchetypeHeadings,
   parseActionProtocolItems,
   parseDialogueCards,
   parseThirtySecondGlance,
   resolveAdaptiveModuleType,
+  resolveLessonArchetype,
   resolveReliefTagline,
 } from '../src/algorithms/academy.js';
 
-describe('Academy Algorithms & Pure Resolvers (PLAN-38)', () => {
+describe('Academy Algorithms & Pure Resolvers (PLAN-38 & PLAN-40)', () => {
+  describe('resolveLessonArchetype & getLessonArchetypeHeadings', () => {
+    it('resolves CHILD_GROWTH_CONCEPT for developmental milestones, curiosity and play', () => {
+      expect(
+        resolveLessonArchetype('vocal-echo-game', 'The Vocal Echo Game', AcademyCategory.DEVELOPMENT_AND_PLAY)
+      ).toBe(LessonArchetype.CHILD_GROWTH_CONCEPT);
+      const headings = getLessonArchetypeHeadings(LessonArchetype.CHILD_GROWTH_CONCEPT);
+      expect(headings.bannerPrefix).toContain('How your child grows');
+      expect(headings.part2Title).toBe('How This Builds Confidence & Connection');
+    });
+
+    it('resolves PRACTICAL_FAMILY_GUIDE for health safety, nutrition grocery, or device covenants', () => {
+      expect(
+        resolveLessonArchetype('baby-fever-guide', 'Baby & Toddler Fever Guide', AcademyCategory.HEALTH_AND_WELLNESS)
+      ).toBe(LessonArchetype.PRACTICAL_FAMILY_GUIDE);
+      const headings = getLessonArchetypeHeadings(LessonArchetype.PRACTICAL_FAMILY_GUIDE);
+      expect(headings.bannerPrefix).toContain("Parent's guide");
+      expect(headings.part4Title).toBe('3 Simple Steps to Keep Handy');
+    });
+
+    it('resolves EVERYDAY_BEHAVIOR for meltdown, friction and behavior categories', () => {
+      expect(
+        resolveLessonArchetype('calming-toddler-meltdown', 'Calming a Meltdown', AcademyCategory.BEHAVIOR_AND_EMOTIONS)
+      ).toBe(LessonArchetype.EVERYDAY_BEHAVIOR);
+      const headings = getLessonArchetypeHeadings(LessonArchetype.EVERYDAY_BEHAVIOR);
+      expect(headings.bannerPrefix).toContain('Why this happens');
+      expect(headings.part1Title).toBe('What It Looks Like at Home');
+    });
+  });
+
   describe('resolveAdaptiveModuleType', () => {
     it('maps all 5 canonical Academy categories to their designated adaptive widgets', () => {
       expect(resolveAdaptiveModuleType(AcademyCategory.BEHAVIOR_AND_EMOTIONS)).toBe('SOMATIC_RESET');
@@ -27,19 +58,19 @@ describe('Academy Algorithms & Pure Resolvers (PLAN-38)', () => {
   describe('resolveReliefTagline', () => {
     it('derives authentic guilt-release tagline for behavior and emotions', () => {
       const tagline = resolveReliefTagline('Toddler Meltdowns in Grocery Aisles', AcademyCategory.BEHAVIOR_AND_EMOTIONS);
-      expect(tagline).toContain('100% normal autonomic surge');
-      expect(tagline).toContain('not a discipline failure');
+      expect(tagline).toContain('A normal wave of big feelings at this age');
+      expect(tagline).toContain('never a sign of bad parenting');
     });
 
     it('provides specialized messaging for infant sleep and health', () => {
       const sleepTagline = resolveReliefTagline('Infant Safe Sleep & Wake Windows', AcademyCategory.HEALTH_AND_WELLNESS);
-      expect(sleepTagline).toContain('Pediatric biological rhythm shift');
-      expect(sleepTagline).toContain('not stubborn bedtime defiance');
+      expect(sleepTagline).toContain("A natural shift in your child's sleep and body rhythms");
+      expect(sleepTagline).toContain('not stubborn defiance');
     });
 
     it('provides specialized messaging for nutrition and feeding', () => {
       const nutritionTagline = resolveReliefTagline('Toddler Food Jags', AcademyCategory.NUTRITION_AND_FEEDING);
-      expect(nutritionTagline).toContain('Natural neophobic palate protection');
+      expect(nutritionTagline).toContain('A normal stage of cautious tasting');
       expect(nutritionTagline).toContain('not intentional mealtime rejection');
     });
   });
@@ -77,7 +108,35 @@ describe('Academy Algorithms & Pure Resolvers (PLAN-38)', () => {
   });
 
   describe('parseThirtySecondGlance', () => {
-    it('synthesizes a 30-second crisis glance protocol', () => {
+    it('synthesizes a 30-second crisis glance protocol with Key Takeaway', () => {
+      const markdown = `
+> **Key Takeaway:** Inability to inhibit impulse before age 4 due to ongoing myelination.
+
+## Part 4: Tonight's Emergency Protocol
+1. Drop below child eye level, breathe slowly, and state the neutral boundary.
+      `;
+
+      const cards = [
+        {
+          instinctiveMistake: 'Stop biting!',
+          whyItBackfires: 'Activates shame spiral',
+          empatheticScript: 'Teeth are not for biting people.',
+          deliveryTip: 'Keep posture low and neutral',
+        },
+      ];
+
+      const glance = parseThirtySecondGlance(
+        markdown,
+        cards,
+        'Toddler Biting Protocol'
+      );
+
+      expect(glance.coreProblem).toBe('Inability to inhibit impulse before age 4 due to ongoing myelination.');
+      expect(glance.immediateShift).toBe('Drop below child eye level, breathe slowly, and state the neutral boundary.');
+      expect(glance.exactWords).toBe('Teeth are not for biting people.');
+    });
+
+    it('synthesizes a 30-second crisis glance protocol with legacy Clinical Insight', () => {
       const markdown = `
 > **Clinical Insight:** Inability to inhibit impulse before age 4 due to ongoing myelination.
 

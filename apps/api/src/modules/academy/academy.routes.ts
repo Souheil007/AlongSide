@@ -63,6 +63,12 @@ const tierEnum = [
   'TIER_4_AGES_14_PLUS',
 ];
 
+const archetypeEnum = [
+  'EVERYDAY_BEHAVIOR',
+  'CHILD_GROWTH_CONCEPT',
+  'PRACTICAL_FAMILY_GUIDE',
+];
+
 const academyCategoryStatsSchema = {
   type: 'object',
   properties: {
@@ -111,6 +117,7 @@ const academyLessonSummarySchema = {
     empatheticScript: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
+    archetype: { type: ['string', 'null'], enum: archetypeEnum },
   },
   required: [
     'id',
@@ -290,6 +297,7 @@ const academyLessonDtoSchema = {
     empatheticScript: { type: ['string', 'null'] },
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
+    archetype: { type: ['string', 'null'], enum: archetypeEnum },
     module: {
       type: 'object',
       properties: {

@@ -1,8 +1,9 @@
-import { AcademyCategory } from '../constants/index.js';
+import { AcademyCategory, LessonArchetype } from '../constants/index.js';
 import type {
   ActionProtocolItem,
   AdaptiveModuleType,
   DialogueCardDTO,
+  LessonArchetypeHeadings,
   ThirtySecondGlanceDTO,
 } from '../types/index.js';
 
@@ -25,23 +26,151 @@ export function resolveAdaptiveModuleType(
   }
 }
 
+export function resolveLessonArchetype(
+  slug: string,
+  title: string,
+  category?: AcademyCategory
+): LessonArchetype {
+  const s = slug.toLowerCase();
+  const t = title.toLowerCase();
+
+  // 1. Practical family guides: safety, fever, sleep setup, nutrition grocery/prep, digital pledges/rules
+  if (
+    category === AcademyCategory.HEALTH_AND_WELLNESS &&
+    (s.includes('fever') ||
+      s.includes('sleep-setup') ||
+      s.includes('safe-sleep') ||
+      s.includes('first-aid') ||
+      s.includes('guide') ||
+      t.includes('guide') ||
+      t.includes('fever') ||
+      t.includes('safety') ||
+      t.includes('routine'))
+  ) {
+    return LessonArchetype.PRACTICAL_FAMILY_GUIDE;
+  }
+  if (
+    category === AcademyCategory.NUTRITION_AND_FEEDING &&
+    (s.includes('grocery') ||
+      s.includes('batch-prep') ||
+      s.includes('meal-plan') ||
+      s.includes('budget') ||
+      t.includes('grocery') ||
+      t.includes('batch') ||
+      t.includes('plan'))
+  ) {
+    return LessonArchetype.PRACTICAL_FAMILY_GUIDE;
+  }
+  if (
+    category === AcademyCategory.DIGITAL_AND_DEVICES &&
+    (s.includes('driving-pledge') ||
+      s.includes('unplugged') ||
+      s.includes('covenant') ||
+      s.includes('contract') ||
+      s.includes('curfew') ||
+      t.includes('pledge') ||
+      t.includes('covenant') ||
+      t.includes('agreement') ||
+      t.includes('rules'))
+  ) {
+    return LessonArchetype.PRACTICAL_FAMILY_GUIDE;
+  }
+
+  // 2. Child growth concepts: development & play, milestones, brain growth, curiosity, vocal echo, puppet play, gut-brain, sleep maturation, partial attention
+  if (
+    category === AcademyCategory.DEVELOPMENT_AND_PLAY ||
+    s.includes('milestone') ||
+    s.includes('vocal-echo') ||
+    s.includes('puppet') ||
+    s.includes('gut-brain') ||
+    s.includes('maturation') ||
+    s.includes('continuous-partial-attention') ||
+    s.includes('shared-attention') ||
+    t.includes('milestone') ||
+    t.includes('vocal echo') ||
+    t.includes('puppet') ||
+    t.includes('how your') ||
+    t.includes('grows') ||
+    t.includes('brain') ||
+    t.includes('maturation')
+  ) {
+    return LessonArchetype.CHILD_GROWTH_CONCEPT;
+  }
+
+  // 3. Fallback for behavior & emotions or reactive situations
+  return LessonArchetype.EVERYDAY_BEHAVIOR;
+}
+
+export function getLessonArchetypeHeadings(
+  archetype?: LessonArchetype
+): LessonArchetypeHeadings {
+  switch (archetype) {
+    case LessonArchetype.CHILD_GROWTH_CONCEPT:
+      return {
+        bannerPrefix: '🌱 How your child grows:',
+        quickReadTitle: '⚡ Concept at a Glance (30-Second Read)',
+        part1Eyebrow: "Part 1 · What You'll Notice",
+        part1Title: 'A New Stage of Growth',
+        part2Eyebrow: 'Part 2 · Why This Milestone Matters',
+        part2Title: 'How This Builds Confidence & Connection',
+        part3Eyebrow: 'Part 3 · Encouraging Their Curiosity',
+        part3Title: 'How to Spark & Nurture It Together',
+        part4Eyebrow: 'Part 4 · Fun Ideas for This Week',
+        part4Title: '3 Simple Ways to Practice Together',
+        takeawayLabel: 'The Key Takeaway to Remember',
+        closingLabel: 'A Note for You as a Parent',
+      };
+    case LessonArchetype.PRACTICAL_FAMILY_GUIDE:
+      return {
+        bannerPrefix: "🧭 Parent's guide:",
+        quickReadTitle: '⚡ Quick Reference (30-Second Read)',
+        part1Eyebrow: 'Part 1 · Why Clear Guidance Matters',
+        part1Title: 'The Everyday Family Decision',
+        part2Eyebrow: 'Part 2 · What Every Parent Should Know',
+        part2Title: 'The "Why" Behind the Guidance',
+        part3Eyebrow: 'Part 3 · Common Myths vs. Helpful Habits',
+        part3Title: 'What to Avoid & What Helps Most',
+        part4Eyebrow: 'Part 4 · Your Home Checklist',
+        part4Title: '3 Simple Steps to Keep Handy',
+        takeawayLabel: 'The Key Takeaway to Remember',
+        closingLabel: 'A Note for You as a Parent',
+      };
+    case LessonArchetype.EVERYDAY_BEHAVIOR:
+    default:
+      return {
+        bannerPrefix: '💡 Why this happens:',
+        quickReadTitle: '⚡ The Short Version (30-Second Read)',
+        part1Eyebrow: 'Part 1 · A Moment Every Parent Knows',
+        part1Title: 'What It Looks Like at Home',
+        part2Eyebrow: 'Part 2 · Understanding Your Child',
+        part2Title: "What's Going On Inside Their Growing Mind",
+        part3Eyebrow: 'Part 3 · Words That Help',
+        part3Title: 'What to Say (and What If They Push Back?)',
+        part4Eyebrow: 'Part 4 · Putting It Into Practice',
+        part4Title: '3 Simple Steps to Try at Home',
+        takeawayLabel: 'The Key Takeaway to Remember',
+        closingLabel: 'A Note for You as a Parent',
+      };
+  }
+}
+
 export function resolveReliefTagline(
   title: string,
   category?: AcademyCategory
 ): string {
   switch (category) {
     case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
-      return '💡 100% normal autonomic surge at this developmental stage, not a discipline failure';
+      return '💡 A normal wave of big feelings at this age—never a sign of bad parenting or manipulation';
     case AcademyCategory.HEALTH_AND_WELLNESS:
-      return '💡 Pediatric biological rhythm shift, not stubborn bedtime defiance';
+      return "🧭 A natural shift in your child's sleep and body rhythms—not stubborn defiance";
     case AcademyCategory.NUTRITION_AND_FEEDING:
-      return '💡 Natural neophobic palate protection, not intentional mealtime rejection';
+      return '🌱 A normal stage of cautious tasting—not intentional mealtime rejection';
     case AcademyCategory.DEVELOPMENT_AND_PLAY:
-      return '💡 Rapid synaptic arborization at play, not attention deficiency';
+      return "🌱 How your child's curious mind builds new skills through everyday play";
     case AcademyCategory.DIGITAL_AND_DEVICES:
-      return '💡 Dopaminergic variable-reward hook, not moral weakness';
+      return '🧭 Modern apps are engineered to hold attention—clear family habits beat willpower';
     default:
-      return '💡 Normal neurodevelopmental milestone, not a parenting inadequacy';
+      return '💡 A normal part of growing up—not a parenting inadequacy';
   }
 }
 
@@ -117,14 +246,14 @@ export function parseThirtySecondGlance(
 
   let coreProblem = '';
   const clinicalMatch = contentMarkdown.match(
-    />\s*\*\*Clinical Insight:\*\*\s*([^\n]+)/i
+    />\s*\*\*(?:Key Takeaway|Clinical Insight|Developmental Insight):?\*\*:?\s*([^\n]+)/i
   );
   if (clinicalMatch && clinicalMatch[1]) {
     coreProblem = clinicalMatch[1].trim();
   } else if (cards[0]?.whyItBackfires) {
     coreProblem = cards[0].whyItBackfires;
   } else {
-    coreProblem = `Autonomic arousal during ${title.toLowerCase()} without prefrontal emotional braking.`;
+    coreProblem = `A normal wave of big feelings during ${title.toLowerCase()} as their brain builds regulation.`;
   }
 
   let immediateShift = '';
