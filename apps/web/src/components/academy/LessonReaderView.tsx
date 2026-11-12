@@ -7,18 +7,24 @@ import type {
   AcademyLessonSummaryDTO,
   ActionProtocolItem,
 } from '@alongside/shared';
-import { parseActionProtocolItems } from '@alongside/shared';
+import {
+  getLessonArchetypeHeadings,
+  parseActionProtocolItems,
+  parseDialogueCards,
+  parseThirtySecondGlance,
+  resolveLessonArchetype,
+  resolveReliefTagline,
+} from '@alongside/shared';
 import { getCategoryBadgeInfo } from './ModuleCard';
 import { markLessonComplete } from '@/lib/api/academy';
 import {
   ScrollProgressBar,
   LessonReliefMasthead,
   LessonVideoPlayer,
-  LessonDialogueDeck,
   LessonActionChecklist,
   LessonFooterNav,
-  LessonAdaptiveModuleRenderer,
   AudioMemoPlayer,
+  LessonThirtySecondGlance,
 } from './reader';
 import { cn } from '@/lib/utils';
 
@@ -97,8 +103,8 @@ export interface ParsedLessonParts {
  * Extracts distinct clinical parts from lesson markdown:
  * - Part 1: The Kitchen-Table Scenario
  * - Part 2: The Developmental Neurobiology Behind It
- * - Clinical / Developmental Insight callout
- * - Clinical Implementation & Parental Grounding anchor
+ * - Key Takeaway callout
+ * - A Note for You as a Parent (Parental Grounding anchor)
  * - Part 4: 3-Step Action Protocol items
  */
 export function parseLessonContentParts(markdown: string): ParsedLessonParts {
@@ -116,19 +122,19 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
   const part1Match = markdown.match(/## Part 1:[^\n]*\n([\s\S]*?)(?=## Part 2:|$)/i);
   const part2Match = markdown.match(/## Part 2:[^\n]*\n([\s\S]*?)(?=## Part 3:|## Part 4:|$)/i);
   const groundingMatch = markdown.match(
-    /### (?:Clinical Implementation & Parental Grounding|Parental Grounding)[^\n]*\n([\s\S]*?)(?=\*Need tailored|$)/i
+    /### (?:A Note for You as a Parent|Clinical Implementation & Parental Grounding|Parental Grounding)[^\n]*\n([\s\S]*?)(?=\*Need tailored|$)/i
   );
 
   let rawPart2 = part2Match ? part2Match[1]!.trim() : '';
   let clinicalInsight = '';
 
   const insightMatch = rawPart2.match(
-    />\s*\*\*(?:Clinical|Developmental) Insight:?\*\*:?\s*([\s\S]*?)(?=(?:\n\n|\n##|$))/i
+    />\s*\*\*(?:Key Takeaway|Clinical Insight|Developmental Insight):?\*\*:?\s*([\s\S]*?)(?=(?:\n\n|\n##|$))/i
   );
   if (insightMatch) {
     clinicalInsight = insightMatch[1]!.trim();
     rawPart2 = rawPart2
-      .replace(/>\s*\*\*(?:Clinical|Developmental) Insight:?\*\*:?\s*[\s\S]*?(?=(?:\n\n|\n##|$))/i, '')
+      .replace(/>\s*\*\*(?:Key Takeaway|Clinical Insight|Developmental Insight):?\*\*:?\s*[\s\S]*?(?=(?:\n\n|\n##|$))/i, '')
       .trim();
   }
 
@@ -152,10 +158,10 @@ export function parseLessonContentParts(markdown: string): ParsedLessonParts {
  * Assembles speech text strictly in the sequential order in which it is displayed on screen:
  * 1. Title
  * 2. Part 1 · Kitchen-Table Scenario
- * 3. Part 2 · Developmental Neurobiology
- * 4. Clinical & Neurobiological Insight
- * 5. Empathetic Dialogue Script
- * 6. Parental Grounding Anchor
+ * 3. Part 2 · Developmental Understanding
+ * 4. Key Takeaway
+ * 5. Part 3 · Empathetic Dialogue Script
+ * 6. Part 4 · Note for You as a Parent
  */
 export function buildSequentialLessonSpokenText(
   lesson: AcademyLessonDTO,
@@ -178,15 +184,15 @@ export function buildSequentialLessonSpokenText(
       .replace(/\n+/g, ' ')
       .trim();
     if (cleanScenario) {
-      chunks.push(`The Kitchen-Table Scenario: ${cleanScenario}`);
+      chunks.push(`What It Looks Like: ${cleanScenario}`);
     }
   }
 
-  // 3. Neurobiology
+  // 3. Neurobiology / Growth
   if (parsedParts.neurobiologyText) {
     const cleanNeuro = parsedParts.neurobiologyText
       .replace(/^#+\s*[^\n]*\n?/gm, '')
-      .replace(/>\s*\*\*(?:Clinical|Developmental) Insight:?\*\*:?[\s\S]*?(?=(?:\n\n|\n##|$))/gi, '')
+      .replace(/>\s*\*\*(?:Key Takeaway|Clinical|Developmental) Insight:?\*\*:?[\s\S]*?(?=(?:\n\n|\n##|$))/gi, '')
       .replace(/\*\*(.*?)\*\*/g, '$1')
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/_(.*?)_/g, '$1')
@@ -195,18 +201,18 @@ export function buildSequentialLessonSpokenText(
       .replace(/\n+/g, ' ')
       .trim();
     if (cleanNeuro) {
-      chunks.push(`Developmental Neurobiology: ${cleanNeuro}`);
+      chunks.push(`Understanding Your Child: ${cleanNeuro}`);
     }
   }
 
-  // 4. Clinical Insight
+  // 4. Key Takeaway
   if (parsedParts.clinicalInsight) {
     const cleanInsight = parsedParts.clinicalInsight
       .replace(/\*\*(.*?)\*\*/g, '$1')
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/_(.*?)_/g, '$1')
       .trim();
-    chunks.push(`Clinical Insight: ${cleanInsight}`);
+    chunks.push(`Key Takeaway: ${cleanInsight}`);
   }
 
   // 5. Empathetic Script
@@ -216,7 +222,7 @@ export function buildSequentialLessonSpokenText(
     chunks.push(`Words to say: ${lesson.thirtySecondGlance.exactWords}`);
   }
 
-  // 6. Parental Grounding Anchor
+  // 6. Note for You as a Parent
   if (parsedParts.groundingText) {
     const cleanGrounding = parsedParts.groundingText
       .replace(/\*\*(.*?)\*\*/g, '$1')
@@ -226,7 +232,7 @@ export function buildSequentialLessonSpokenText(
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\n+/g, ' ')
       .trim();
-    chunks.push(`Parental Grounding: ${cleanGrounding}`);
+    chunks.push(`A Note for You as a Parent: ${cleanGrounding}`);
   } else if (!parsedParts.hasStructuredParts && lesson.contentMarkdown) {
     // Fallback for non-structured markdown
     const cleanFallback = lesson.contentMarkdown
@@ -258,10 +264,51 @@ export function LessonReaderView({
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [isNightstandMode, setIsNightstandMode] = React.useState<boolean>(false);
 
+  // 1. Resolve Archetype and Non-Clinical Headings
+  const archetype = React.useMemo(() => {
+    return (
+      lesson.archetype ||
+      resolveLessonArchetype(lesson.slug, lesson.title, lesson.module?.category)
+    );
+  }, [lesson.archetype, lesson.slug, lesson.title, lesson.module?.category]);
+
+  const headings = React.useMemo(() => {
+    return getLessonArchetypeHeadings(archetype);
+  }, [archetype]);
+
+  const reliefTagline = React.useMemo(() => {
+    return (
+      lesson.reliefTagline ||
+      resolveReliefTagline(lesson.title, lesson.module?.category)
+    );
+  }, [lesson.reliefTagline, lesson.title, lesson.module?.category]);
+
   const parsedParts = React.useMemo(
     () => parseLessonContentParts(lesson.contentMarkdown),
     [lesson.contentMarkdown]
   );
+
+  // Dialogue Cards for Part 3
+  const dialogueCards = React.useMemo(() => {
+    if (lesson.dialogueCards && lesson.dialogueCards.length > 0) {
+      return lesson.dialogueCards;
+    }
+    return parseDialogueCards(lesson.contentMarkdown, lesson.deliveryTip);
+  }, [lesson.dialogueCards, lesson.contentMarkdown, lesson.deliveryTip]);
+
+  // 30-Second Glance Data for Header Drawer
+  const glanceData = React.useMemo(() => {
+    if (lesson.thirtySecondGlance) return lesson.thirtySecondGlance;
+    return parseThirtySecondGlance(lesson.contentMarkdown, dialogueCards, lesson.title);
+  }, [lesson.thirtySecondGlance, lesson.contentMarkdown, dialogueCards, lesson.title]);
+
+  // Action Protocol Items for Part 4
+  const actionItems = React.useMemo(() => {
+    if (lesson.actionProtocolItems && lesson.actionProtocolItems.length > 0) {
+      return lesson.actionProtocolItems;
+    }
+    return parsedParts.actionItems;
+  }, [lesson.actionProtocolItems, parsedParts.actionItems]);
 
   // Generates sequential audio text strictly matching the displayed blog article
   const audioNarrationText = React.useMemo(() => {
@@ -335,9 +382,9 @@ export function LessonReaderView({
       const trimmed = block.trim();
       if (!trimmed) return null;
 
-      // Omit raw comparative dialogue headers if already rendered in dialogue deck
+      // Omit raw comparative dialogue headers if handled by Part 3 comparative cards
       if (
-        trimmed.toLowerCase().startsWith('## part 3: comparative dialogue') ||
+        trimmed.toLowerCase().startsWith('## part 3') ||
         trimmed.toLowerCase().startsWith('### comparative dialogue') ||
         trimmed.includes('| What NOT to Say |')
       ) {
@@ -346,6 +393,7 @@ export function LessonReaderView({
 
       // Omit raw checklist markdown if handled by action checklist
       if (
+        trimmed.toLowerCase().startsWith('## part 4') ||
         trimmed.toLowerCase().startsWith('### practical action protocol') ||
         trimmed.toLowerCase().startsWith('### action protocol') ||
         (trimmed.startsWith('- [ ]') && trimmed.includes('\n- [ ]'))
@@ -353,10 +401,13 @@ export function LessonReaderView({
         return null;
       }
 
-      // 1. Clinical / Developmental Insight Pullquote Callout
+      // 1. Key Takeaway Pullquote Callout
       if (
         trimmed.toLowerCase().includes('developmental insight') ||
         trimmed.toLowerCase().includes('clinical insight') ||
+        trimmed.toLowerCase().includes('key takeaway') ||
+        trimmed.startsWith('> **Key Takeaway') ||
+        trimmed.startsWith('**Key Takeaway') ||
         trimmed.startsWith('> **Developmental Insight') ||
         trimmed.startsWith('**Developmental Insight') ||
         trimmed.startsWith('> **Clinical Insight') ||
@@ -365,15 +416,15 @@ export function LessonReaderView({
         const cleanText = trimmed
           .replace(/^#+\s*/, '')
           .replace(/^>\s*/, '')
-          .replace(/^\*\*(?:Developmental|Clinical) Insight:?\*\*:?\s*/i, '')
-          .replace(/^(?:Developmental|Clinical) Insight:?\s*/i, '')
+          .replace(/^\*\*(?:Key Takeaway|Developmental|Clinical) Insight:?\*\*:?\s*/i, '')
+          .replace(/^(?:Key Takeaway|Developmental|Clinical) Insight:?\s*/i, '')
           .trim();
 
         return (
           <aside
             key={`insight-${idx}`}
             data-testid="lesson-clinical-insight"
-            aria-label="Developmental Insight Callout"
+            aria-label={headings.takeawayLabel}
             className={cn(
               'my-8 rounded-2xl border-l-4 border-l-teal-600 dark:border-l-teal-400 border border-stone-200/80 dark:border-stone-800 p-6 sm:p-7 shadow-2xs transition-colors',
               isNightstandMode
@@ -382,7 +433,7 @@ export function LessonReaderView({
             )}
           >
             <div className="text-xs font-mono uppercase tracking-wider font-bold text-teal-800 dark:text-teal-300 mb-2">
-              Clinical Neurobiology Takeaway
+              {headings.takeawayLabel}
             </div>
             <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-800 dark:text-stone-200">
               {renderInlineMarkdown(cleanText)}
@@ -562,21 +613,13 @@ export function LessonReaderView({
         onToggleNightstandMode={toggleNightstandMode}
       />
 
-      {/* 1.5 Master Video Lecture Player (When present) */}
-      {lesson.videoLecture && (
-        <LessonVideoPlayer
-          video={lesson.videoLecture}
-          isNightstandMode={isNightstandMode}
-        />
-      )}
-
-      {/* 2. Dedicated Blog-Style Lesson Reading Article (Single Unified Box) */}
+      {/* 2. Unified Rich Editorial Blog Post Reader (Single Continuous Article Container) */}
       <section
         data-testid="lesson-editorial-section"
         aria-label="Lesson Reading Article and Narration"
         className="space-y-4"
       >
-        <div
+        <article
           data-testid="lesson-article-container"
           className={cn(
             'rounded-2xl sm:rounded-3xl border shadow-sm transition-colors overflow-hidden',
@@ -598,11 +641,28 @@ export function LessonReaderView({
                   Lesson {lesson.sortOrder}
                 </span>
               </div>
+
               <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400 font-mono text-xs">
                 <span>~{lesson.readingMinutes || 4} min read</span>
                 <span>•</span>
-                <span>Evidence-Based</span>
+                <span>Research-Backed</span>
               </div>
+            </div>
+
+            {/* Archetype-Driven Top Highlight Banner */}
+            <div
+              data-testid="lesson-archetype-banner"
+              className={cn(
+                'rounded-xl p-3 sm:p-3.5 border text-xs sm:text-sm font-medium leading-relaxed flex items-start gap-2.5 transition-colors',
+                isNightstandMode
+                  ? 'bg-stone-850/80 border-stone-800 text-amber-200'
+                  : 'bg-stone-50/90 border-stone-200/80 text-slate-800'
+              )}
+            >
+              <span className="font-bold text-teal-800 dark:text-teal-300 shrink-0">
+                {headings.bannerPrefix}
+              </span>
+              <span>{reliefTagline}</span>
             </div>
 
             {/* Editorial Blog Headline */}
@@ -615,7 +675,7 @@ export function LessonReaderView({
               {lesson.title}
             </h1>
 
-            {/* Minimalist Wave Audio Player Docked in Blog Header */}
+            {/* Minimalist Wave Audio Player Docked in Blog Header ("Listen to Article") */}
             <div data-testid="lesson-narration-player" className="pt-2">
               <AudioMemoPlayer
                 audioUrl={lesson.audioUrl}
@@ -628,25 +688,36 @@ export function LessonReaderView({
                 textToSpeak={audioNarrationText}
               />
             </div>
+
+            {/* Collapsible Quick 30-Sec Read Drawer Inside Blog Post Header */}
+            <div className="pt-1">
+              <LessonThirtySecondGlance
+                glance={glanceData}
+                defaultOpen={false}
+                isNightstandMode={isNightstandMode}
+                eyebrow={headings.quickReadTitle}
+                title="What's Happening &amp; What to Say"
+              />
+            </div>
           </header>
 
-          {/* Blog Article Body - Seamless, unbroken reading experience */}
-          <div className="px-6 py-8 sm:px-10 sm:py-10 space-y-8">
-            {/* 3.1 Part 1: The Kitchen-Table Scenario */}
+          {/* Blog Article Body - Seamless, unbroken reading experience across all 4 parts */}
+          <div className="px-6 py-8 sm:px-10 sm:py-10 space-y-10">
+            {/* Part 1: The Kitchen-Table Scenario */}
             {parsedParts.scenarioText && (
-              <section className="space-y-4">
+              <section data-testid="lesson-part-1" className="space-y-4">
                 <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                  <p className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-semibold mb-1">
+                    {headings.part1Eyebrow}
+                  </p>
                   <h2
                     className={cn(
                       'font-serif text-xl sm:text-2xl font-bold tracking-tight',
                       isNightstandMode ? 'text-amber-100' : 'text-slate-900'
                     )}
                   >
-                    The Kitchen-Table Scenario
+                    {headings.part1Title}
                   </h2>
-                  <p className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-semibold mt-1">
-                    Real Family Friction
-                  </p>
                 </div>
                 <div className="space-y-4 text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-700 dark:text-stone-300 font-normal">
                   {renderFormattedEditorialBody(parsedParts.scenarioText)}
@@ -654,48 +725,156 @@ export function LessonReaderView({
               </section>
             )}
 
-            {/* 3.2 Part 2: Developmental Neurobiology Behind It */}
+            {/* Part 2: Understanding Your Child & Growth Concept */}
             {parsedParts.neurobiologyText && (
-              <section className="space-y-4 pt-4 border-t border-stone-100 dark:border-stone-800/60">
+              <section
+                data-testid="lesson-part-2"
+                className="space-y-4 pt-4 border-t border-stone-100 dark:border-stone-800/60"
+              >
                 <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                  <p className="text-xs font-mono uppercase tracking-wider text-teal-800 dark:text-teal-300 font-semibold mb-1">
+                    {headings.part2Eyebrow}
+                  </p>
                   <h2
                     className={cn(
                       'font-serif text-xl sm:text-2xl font-bold tracking-tight',
                       isNightstandMode ? 'text-amber-100' : 'text-slate-900'
                     )}
                   >
-                    Developmental Neurobiology
+                    {headings.part2Title}
                   </h2>
-                  <p className="text-xs font-mono uppercase tracking-wider text-teal-800 dark:text-teal-300 font-semibold mt-1">
-                    Inside Your Child&apos;s Brain
-                  </p>
                 </div>
                 <div className="space-y-4 text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-700 dark:text-stone-300 font-normal">
                   {renderFormattedEditorialBody(parsedParts.neurobiologyText)}
                 </div>
+
+                {/* Key Takeaway Pullquote Callout */}
+                {parsedParts.clinicalInsight && (
+                  <aside
+                    data-testid="lesson-clinical-insight"
+                    aria-label={headings.takeawayLabel}
+                    className={cn(
+                      'my-6 rounded-2xl border-l-4 border-l-teal-600 dark:border-l-teal-400 border border-stone-200/80 dark:border-stone-800 p-6 sm:p-7 shadow-2xs transition-colors',
+                      isNightstandMode
+                        ? 'bg-stone-850/80 text-stone-200'
+                        : 'bg-stone-50/80 text-slate-800'
+                    )}
+                  >
+                    <div className="text-xs font-mono uppercase tracking-wider font-bold text-teal-800 dark:text-teal-300 mb-2">
+                      {headings.takeawayLabel}
+                    </div>
+                    <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-800 dark:text-stone-200">
+                      {renderInlineMarkdown(parsedParts.clinicalInsight)}
+                    </p>
+                  </aside>
+                )}
               </section>
             )}
 
-            {/* 3.3 Clinical / Developmental Insight Callout (Pullquote Style) */}
-            {parsedParts.clinicalInsight && (
-              <aside
-                data-testid="lesson-clinical-insight"
-                aria-label="Clinical and Developmental Insight"
-                className={cn(
-                  'my-6 rounded-2xl border-l-4 border-l-teal-600 dark:border-l-teal-400 border border-stone-200/80 dark:border-stone-800 p-6 sm:p-7 shadow-2xs transition-colors',
-                  isNightstandMode
-                    ? 'bg-stone-850/80 text-stone-200'
-                    : 'bg-stone-50/80 text-slate-800'
-                )}
-              >
-                <div className="text-xs font-mono uppercase tracking-wider font-bold text-teal-800 dark:text-teal-300 mb-2">
-                  Clinical Neurobiology Takeaway
-                </div>
-                <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-800 dark:text-stone-200">
-                  {renderInlineMarkdown(parsedParts.clinicalInsight)}
+            {/* Part 3: What to Say in the Moment (Comparative Dialogue Scripts & Pushback Recovery) */}
+            <section
+              data-testid="lesson-part-3"
+              className="space-y-6 pt-4 border-t border-stone-100 dark:border-stone-800/60"
+            >
+              <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                <p className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-semibold mb-1">
+                  {headings.part3Eyebrow}
                 </p>
-              </aside>
-            )}
+                <h2
+                  className={cn(
+                    'font-serif text-xl sm:text-2xl font-bold tracking-tight',
+                    isNightstandMode ? 'text-amber-100' : 'text-slate-900'
+                  )}
+                >
+                  {headings.part3Title}
+                </h2>
+              </div>
+
+              {/* Side-by-side Comparative Dialogue Cards (No Copy Script button) */}
+              {dialogueCards.length > 0 && (
+                <div data-testid="comparative-dialogue-section" className="space-y-4">
+                  {dialogueCards.map((card, idx) => (
+                    <div
+                      key={`card-${idx}`}
+                      className={cn(
+                        'grid grid-cols-1 md:grid-cols-2 gap-4 rounded-2xl border p-4 sm:p-5 shadow-2xs transition-colors',
+                        isNightstandMode
+                          ? 'bg-stone-850/50 border-stone-800'
+                          : 'bg-stone-50/50 border-stone-200/90'
+                      )}
+                    >
+                      {/* Common Reaction / Reactive Trap (Red) */}
+                      <div
+                        className={cn(
+                          'rounded-xl border p-4 space-y-2 transition-colors',
+                          isNightstandMode
+                            ? 'bg-rose-950/20 border-rose-900/40 text-rose-200'
+                            : 'bg-rose-50/70 border-rose-200/80 text-rose-950'
+                        )}
+                      >
+                        <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">
+                          <span>🛑 Common Reaction</span>
+                        </div>
+                        <blockquote className="text-sm sm:text-base font-serif italic text-rose-950 dark:text-rose-200">
+                          &ldquo;{card.instinctiveMistake}&rdquo;
+                        </blockquote>
+                        {card.whyItBackfires && (
+                          <p className="text-xs text-rose-900/80 dark:text-rose-300 leading-relaxed pt-1.5 border-t border-rose-200/60 dark:border-rose-900/40">
+                            <strong className="font-semibold">Why it backfires:</strong>{' '}
+                            {card.whyItBackfires}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Empathetic Script to Try (Green) */}
+                      <div
+                        className={cn(
+                          'rounded-xl border p-4 space-y-2 transition-colors',
+                          isNightstandMode
+                            ? 'bg-emerald-950/20 border-emerald-900/40 text-emerald-200'
+                            : 'bg-emerald-50/70 border-emerald-200/80 text-emerald-950'
+                        )}
+                      >
+                        <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
+                          <span>✅ Try Saying This Instead</span>
+                        </div>
+                        <blockquote className="text-sm sm:text-base font-serif italic font-medium text-emerald-950 dark:text-emerald-200">
+                          &ldquo;{card.empatheticScript}&rdquo;
+                        </blockquote>
+                        {card.deliveryTip && (
+                          <p className="text-xs text-emerald-900/80 dark:text-emerald-300 leading-relaxed pt-1.5 border-t border-emerald-200/60 dark:border-emerald-900/40">
+                            <strong className="font-semibold">🎙️ Tone &amp; Body Language Tip:</strong>{' '}
+                            {card.deliveryTip}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Pushback Recovery Guidance */}
+              {(lesson.whatNotToSay || (dialogueCards[0]?.deliveryTip && dialogueCards.length > 0)) && (
+                <div
+                  data-testid="pushback-recovery-box"
+                  className={cn(
+                    'rounded-xl border p-4 sm:p-5 text-xs sm:text-sm leading-relaxed transition-colors space-y-2',
+                    isNightstandMode
+                      ? 'bg-stone-850/60 border-stone-700 text-stone-200'
+                      : 'bg-amber-50/50 border-amber-200/80 text-slate-800'
+                  )}
+                >
+                  <div className="font-bold uppercase tracking-wider text-[11px] text-amber-800 dark:text-amber-400 flex items-center gap-1.5">
+                    <span>💭 What If They Push Back?</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 dark:text-stone-300 leading-relaxed">
+                    {lesson.whatNotToSay
+                      ? `If your child tests the limit or escalates: Remember that pushback is often a test of emotional safety, not defiance. Keep your tone neutral, repeat your boundary in fewer than six words, and avoid defending or lecturing: "${dialogueCards[0]?.empatheticScript || 'I hear you. It is okay to be upset, and we are sticking to our family plan.'}"`
+                      : 'If your child pushes back or demands an immediate argument: Stay physically grounded, keep your vocal pitch low, and pause before answering. Children can only co-regulate to an adult who refuses to join their chaotic rhythm.'}
+                  </p>
+                </div>
+              )}
+            </section>
 
             {/* Fallback if unstructured markdown */}
             {!parsedParts.hasStructuredParts && (
@@ -704,59 +883,88 @@ export function LessonReaderView({
               </div>
             )}
 
-            {/* 3.4 Clinical Implementation & Parental Grounding Anchor */}
-            {parsedParts.groundingText && (
-              <section
-                data-testid="lesson-grounding-anchor"
-                className={cn(
-                  'rounded-2xl border p-6 sm:p-7 transition-colors space-y-2',
-                  isNightstandMode
-                    ? 'border-stone-800 bg-stone-850/60 text-stone-200'
-                    : 'border-stone-200/90 bg-stone-50/60 text-slate-800'
-                )}
-              >
-                <div className="text-xs font-mono uppercase tracking-wider font-bold text-stone-700 dark:text-stone-300 mb-1">
-                  Parental Grounding · Tonight&apos;s Anchor
-                </div>
-                <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-700 dark:text-stone-300">
-                  {renderInlineMarkdown(parsedParts.groundingText)}
+            {/* Part 4: Putting It Into Practice (3-Step Action Checklist & Parental Grounding) */}
+            <section
+              data-testid="lesson-part-4"
+              className="space-y-6 pt-4 border-t border-stone-100 dark:border-stone-800/60"
+            >
+              <div className="border-b border-stone-100 dark:border-stone-800/60 pb-2">
+                <p className="text-xs font-mono uppercase tracking-wider text-teal-800 dark:text-teal-300 font-semibold mb-1">
+                  {headings.part4Eyebrow}
                 </p>
-              </section>
-            )}
+                <h2
+                  className={cn(
+                    'font-serif text-xl sm:text-2xl font-bold tracking-tight',
+                    isNightstandMode ? 'text-amber-100' : 'text-slate-900'
+                  )}
+                >
+                  {headings.part4Title}
+                </h2>
+              </div>
+
+              {/* Interactive 3-Step Action Checklist integrated directly inside article */}
+              <LessonActionChecklist
+                lessonId={lesson.id}
+                items={actionItems}
+                category={lesson.module?.category}
+                lessonTitle={lesson.title}
+                isNightstandMode={isNightstandMode}
+                className="my-4"
+              />
+
+              {/* A Note for You as a Parent (Unique closing reflection) */}
+              {parsedParts.groundingText && (
+                <section
+                  data-testid="lesson-grounding-anchor"
+                  className={cn(
+                    'rounded-2xl border p-6 sm:p-7 transition-colors space-y-2 mt-6',
+                    isNightstandMode
+                      ? 'border-stone-800 bg-stone-850/60 text-stone-200'
+                      : 'border-stone-200/90 bg-stone-50/60 text-slate-800'
+                  )}
+                >
+                  <div className="text-xs font-mono uppercase tracking-wider font-bold text-stone-700 dark:text-stone-300 mb-1">
+                    {headings.closingLabel}
+                  </div>
+                  <p className="font-serif italic text-base sm:text-lg leading-relaxed text-slate-700 dark:text-stone-300">
+                    {renderInlineMarkdown(parsedParts.groundingText)}
+                  </p>
+                </section>
+              )}
+            </section>
           </div>
-        </div>
+        </article>
       </section>
 
-      {/* 4. Category-Specific Adaptive Widget */}
-      <LessonAdaptiveModuleRenderer
-        adaptiveModuleType={lesson.adaptiveModuleType}
-        category={lesson.module?.category}
-        tier={lesson.module?.developmentalTier}
-        isNightstandMode={isNightstandMode}
-      />
+      {/* 3. Optional Master Video Lecture Section (Positioned BELOW the Unified Blog Post) */}
+      {lesson.videoLecture && (
+        <section
+          data-testid="lesson-video-section"
+          aria-label="Watch &amp; Go Deeper: Master Video Lecture"
+          className="space-y-3 pt-2"
+        >
+          <div className="border-b border-stone-200 dark:border-stone-800 pb-2">
+            <h2
+              className={cn(
+                'font-serif text-xl sm:text-2xl font-bold tracking-tight',
+                isNightstandMode ? 'text-amber-100' : 'text-slate-900'
+              )}
+            >
+              Watch &amp; Go Deeper
+            </h2>
+            <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">
+              Optional curated video talk and key concepts to deepen your perspective
+            </p>
+          </div>
 
-      {/* 5. Interactive Dialogue Deck (Say This / Not That) */}
-      <LessonDialogueDeck
-        cards={lesson.dialogueCards}
-        whatNotToSay={lesson.whatNotToSay}
-        deliveryTip={lesson.deliveryTip}
-        isNightstandMode={isNightstandMode}
-      />
+          <LessonVideoPlayer
+            video={lesson.videoLecture}
+            isNightstandMode={isNightstandMode}
+          />
+        </section>
+      )}
 
-      {/* 5. Tonight's 3-Step Action Checklist */}
-      <LessonActionChecklist
-        lessonId={lesson.id}
-        items={
-          lesson.actionProtocolItems && lesson.actionProtocolItems.length > 0
-            ? lesson.actionProtocolItems
-            : parsedParts.actionItems
-        }
-        category={lesson.module?.category}
-        lessonTitle={lesson.title}
-        isNightstandMode={isNightstandMode}
-      />
-
-      {/* 6. Footer Navigation & Completion */}
+      {/* 4. Footer Navigation & Completion */}
       <LessonFooterNav
         isCompleted={isCompleted}
         isSubmitting={isSubmitting}

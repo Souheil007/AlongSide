@@ -235,9 +235,10 @@ describe('Plan 36 & 37: 8-Stage Lifespan Horizon & Category Advisory UI Specific
       expect(html).toContain('WHOLE-CHILD COMPASS // Ages 0–1 • 5 PILLARS OF DEVELOPMENT');
       expect(html).toContain('PILLAR FOCUS • Behavior &amp; Emotions • Ages 0–1');
 
-      // Clinical Rationale Note Box
-      expect(html).toContain('Clinical Rationale:');
-      expect(html).toContain('Infant limbic system, crying curves &amp; vagal tone co-regulation.');
+      // Why This Matters Note Box (De-clinicalized)
+      expect(html).toContain('Why This Matters:');
+      expect(html).not.toContain('Clinical Rationale:');
+      expect(html).toContain('Focus: Infant limbic system, crying curves &amp; vagal tone co-regulation.');
 
       // 3-Lesson Micro-Syllabus Drawer
       expect(html).toContain('Inside This Pillar (3 Lessons)');

@@ -533,7 +533,7 @@ export function NutritionDashboardView({ initialChildId }: NutritionDashboardVie
       <footer className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5 text-xs text-slate-600 space-y-1.5">
         <div className="flex items-center gap-2 font-bold text-slate-800">
           <ShieldCheck className="h-4 w-4 text-emerald-700" />
-          <span>Pediatric Nutrition Authority & Clinical Safe Harbor</span>
+          <span>Evidence-Based Family Nutrition Guide</span>
         </div>
         <p className="leading-relaxed">
           Nutrition recommendations are developed in alignment with the American Academy of Pediatrics (AAP) Committee on Nutrition, the European Society for Paediatric Gastroenterology, Hepatology and Nutrition (ESPGHAN), the LEAP (Learning Early About Peanut Allergy) Trial, and the Ellyn Satter Institute Division of Responsibility. Always consult your child’s pediatrician before introducing new diets or managing suspected food allergies.

@@ -97,7 +97,7 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
       const html = renderToStaticMarkup(<LessonVideoPlayer video={sampleVideo} />);
 
       expect(html).toContain('data-testid="video-parent-hook"');
-      expect(html).toContain('Clinical Video Hook');
+      expect(html).toContain('Why This Talk Matters');
       expect(html).toContain('font-serif');
       expect(html).toContain('italic');
       expect(html).toContain(
@@ -119,7 +119,7 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
 
       expect(html).toContain('data-testid="video-takeaways-drawer"');
       expect(html).toContain('data-testid="takeaways-drawer-toggle"');
-      expect(html).toContain('Clinical Key Takeaways (3 Core Concepts)');
+      expect(html).toContain('Key Takeaways (3 Core Ideas)');
     });
 
     it('gracefully omits takeaways drawer when list is empty', () => {

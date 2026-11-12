@@ -22,9 +22,25 @@ import type {
   TemperatureMethod,
   NutritionStage,
   AntipyreticMedication,
+  LessonArchetype,
 } from '../constants/index.js';
 
-export type { EarlyChildhoodTranche };
+export type { EarlyChildhoodTranche, LessonArchetype };
+
+export interface LessonArchetypeHeadings {
+  bannerPrefix: string;
+  quickReadTitle: string;
+  part1Eyebrow: string;
+  part1Title: string;
+  part2Eyebrow: string;
+  part2Title: string;
+  part3Eyebrow: string;
+  part3Title: string;
+  part4Eyebrow: string;
+  part4Title: string;
+  takeawayLabel: string;
+  closingLabel: string;
+}
 
 export interface ApiResponse<T> {
   success: true;
@@ -319,6 +335,7 @@ export interface AcademyLessonSummaryDTO {
   empatheticScript?: string;
   deliveryTip?: string;
   videoLecture?: MasterVideoLectureDTO | null;
+  archetype?: LessonArchetype;
 }
 
 export interface AcademyLessonDTO {
@@ -342,6 +359,7 @@ export interface AcademyLessonDTO {
   whatNotToSay?: string;
   deliveryTip?: string;
   videoLecture?: MasterVideoLectureDTO | null;
+  archetype?: LessonArchetype;
   module?: {
     id: string;
     slug: string;

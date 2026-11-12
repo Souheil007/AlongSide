@@ -17,6 +17,8 @@ export interface LessonThirtySecondGlanceProps {
   defaultOpen?: boolean;
   isNightstandMode?: boolean;
   className?: string;
+  eyebrow?: string;
+  title?: string;
 }
 
 export function LessonThirtySecondGlance({
@@ -24,14 +26,16 @@ export function LessonThirtySecondGlance({
   defaultOpen = true,
   isNightstandMode = false,
   className,
+  eyebrow,
+  title,
 }: LessonThirtySecondGlanceProps) {
   const [isOpen, setIsOpen] = React.useState<boolean>(defaultOpen);
 
   const effectiveGlance: ThirtySecondGlance = glance || {
     coreProblem:
-      'Amygdala hyper-reactivity with zero cortical regulation. Logic or debating facts inflames the fight-or-flight surge.',
+      'A normal wave of big feelings as their brain builds self-regulation. Logic in the heat of the moment inflames friction.',
     immediateShift:
-      'Drop your physical eye level below the child. Pause speech. Speak under 8 soft words to borrow your calm nervous system.',
+      'Drop your eye level below your child. Take a calm breath. Speak under 8 soft words to offer a steady anchor.',
     exactWords:
       '"I can see this feels so big right now. You are safe. I am right here with you."',
   };
@@ -39,7 +43,7 @@ export function LessonThirtySecondGlance({
   return (
     <section
       data-testid="thirty-second-glance"
-      aria-label="30-Second Crisis Summary"
+      aria-label="Quick 30-Second Read"
       className={cn(
         'rounded-2xl border transition-colors overflow-hidden shadow-xs',
         isNightstandMode
@@ -74,10 +78,10 @@ export function LessonThirtySecondGlance({
           </span>
           <div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
-              In a Rush? 30-Second Crisis Glance
+              {eyebrow || '⚡ Quick 30-Second Read'}
             </span>
             <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-amber-100">
-              Tonight&apos;s 10-Second Emergency Protocol
+              {title || 'The Short Version at a Glance'}
             </h2>
           </div>
         </div>
@@ -95,14 +99,14 @@ export function LessonThirtySecondGlance({
       {/* Expandable Body */}
       {isOpen && (
         <div className="px-4 pb-5 sm:px-5 sm:pb-6 pt-1 space-y-3.5 border-t border-amber-200/50 dark:border-amber-900/40">
-          {/* 1. Core Problem */}
+          {/* 1. Core Problem -> What's Going On */}
           <div className="flex items-start gap-3">
             <span className="mt-0.5 shrink-0 flex h-5 w-5 items-center justify-center rounded bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300">
               <AlertTriangle className="h-3 w-3" />
             </span>
             <div>
               <strong className="text-xs font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 block">
-                The Biological Trap (Core Problem)
+                What&apos;s Going On
               </strong>
               <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-stone-300">
                 {effectiveGlance.coreProblem}
@@ -110,14 +114,14 @@ export function LessonThirtySecondGlance({
             </div>
           </div>
 
-          {/* 2. Immediate Shift */}
+          {/* 2. Immediate Shift -> Your Best First Move */}
           <div className="flex items-start gap-3">
             <span className="mt-0.5 shrink-0 flex h-5 w-5 items-center justify-center rounded bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-300">
               <Compass className="h-3 w-3" />
             </span>
             <div>
               <strong className="text-xs font-bold uppercase tracking-wider text-teal-900 dark:text-teal-300 block">
-                Immediate Mindset Pivot
+                Your Best First Move
               </strong>
               <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-stone-300">
                 {effectiveGlance.immediateShift}
@@ -125,14 +129,14 @@ export function LessonThirtySecondGlance({
             </div>
           </div>
 
-          {/* 3. Exact Words */}
+          {/* 3. Exact Words -> What to Say */}
           <div className="flex items-start gap-3 rounded-xl border border-emerald-300/80 bg-white dark:bg-stone-900 p-3 sm:p-3.5">
             <span className="mt-0.5 shrink-0 flex h-5 w-5 items-center justify-center rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
               <MessageSquare className="h-3 w-3" />
             </span>
             <div>
               <strong className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 block mb-0.5">
-                Exact Words to Say Right Now
+                What to Say
               </strong>
               <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-emerald-100 italic">
                 {effectiveGlance.exactWords}

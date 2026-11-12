@@ -74,7 +74,7 @@ export function AudioMemoPlayer({
   const fullText = React.useMemo(() => {
     return (
       textToSpeak ||
-      `${title}. Evidence-based clinical guidance from AlongSide Pediatric Academy.`
+      `${title}. Practical, research-backed parenting guidance from AlongSide Academy.`
     );
   }, [textToSpeak, title]);
 

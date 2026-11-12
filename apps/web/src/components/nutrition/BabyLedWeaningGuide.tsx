@@ -226,7 +226,7 @@ export function BabyLedWeaningGuide() {
         </div>
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-1.5 rounded-md bg-amber-200/80 px-2 py-0.5 text-xs font-black uppercase tracking-wider text-amber-950">
-            Absolute Clinical Prohibition
+            Important Safety Rule
           </div>
           <h4 className="text-base font-bold text-amber-950">
             Strictly NO HONEY Under 12 Months (Infant Botulism Risk)

@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { AcademyCategory, DevelopmentalTier } from '../constants/index.js';
+import { AcademyCategory, DevelopmentalTier, LessonArchetype } from '../constants/index.js';
+
+export const LessonArchetypeSchema = z.enum([
+  LessonArchetype.EVERYDAY_BEHAVIOR,
+  LessonArchetype.CHILD_GROWTH_CONCEPT,
+  LessonArchetype.PRACTICAL_FAMILY_GUIDE,
+]);
+
+export type LessonArchetypeType = z.infer<typeof LessonArchetypeSchema>;
 
 export const AcademyCategorySchema = z.enum([
   AcademyCategory.BEHAVIOR_AND_EMOTIONS,
@@ -111,6 +119,7 @@ export const AcademyLessonSummarySchema = z.object({
   whatNotToSay: z.string().optional(),
   deliveryTip: z.string().optional(),
   videoLecture: MasterVideoLectureSchema.nullable().optional(),
+  archetype: LessonArchetypeSchema.optional(),
 });
 
 export type AcademyLessonSummaryType = z.infer<typeof AcademyLessonSummarySchema>;
@@ -134,6 +143,7 @@ export const AcademyLessonSchema = z.object({
   whatNotToSay: z.string().optional(),
   deliveryTip: z.string().optional(),
   videoLecture: MasterVideoLectureSchema.nullable().optional(),
+  archetype: LessonArchetypeSchema.optional(),
   module: z
     .object({
       id: z.string(),
