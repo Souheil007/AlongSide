@@ -14,10 +14,8 @@ import {
   ScrollProgressBar,
   LessonReliefMasthead,
   LessonVideoPlayer,
-  LessonThirtySecondGlance,
   LessonDialogueDeck,
   LessonActionChecklist,
-  LessonToolBridges,
   LessonFooterNav,
   LessonAdaptiveModuleRenderer,
   AudioMemoPlayer,
@@ -572,13 +570,7 @@ export function LessonReaderView({
         />
       )}
 
-      {/* 2. 30-Second Crisis Summary Drawer */}
-      <LessonThirtySecondGlance
-        glance={lesson.thirtySecondGlance}
-        isNightstandMode={isNightstandMode}
-      />
-
-      {/* 3. Dedicated Blog-Style Lesson Reading Article (Single Unified Box) */}
+      {/* 2. Dedicated Blog-Style Lesson Reading Article (Single Unified Box) */}
       <section
         data-testid="lesson-editorial-section"
         aria-label="Lesson Reading Article and Narration"
@@ -751,7 +743,7 @@ export function LessonReaderView({
         isNightstandMode={isNightstandMode}
       />
 
-      {/* 6. Tonight's 3-Step Action Checklist */}
+      {/* 5. Tonight's 3-Step Action Checklist */}
       <LessonActionChecklist
         lessonId={lesson.id}
         items={
@@ -764,13 +756,7 @@ export function LessonReaderView({
         isNightstandMode={isNightstandMode}
       />
 
-      {/* 7. Active Tool Bridges (AI Advisor / Family Pact / Script Vault) */}
-      <LessonToolBridges
-        scenarioPrompt={lesson.title}
-        isNightstandMode={isNightstandMode}
-      />
-
-      {/* 8. Footer Navigation & Completion */}
+      {/* 6. Footer Navigation & Completion */}
       <LessonFooterNav
         isCompleted={isCompleted}
         isSubmitting={isSubmitting}
