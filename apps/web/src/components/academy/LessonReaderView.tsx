@@ -15,7 +15,7 @@ import {
   resolveLessonArchetype,
 } from '@alongside/shared';
 import { getCategoryBadgeInfo } from './ModuleCard';
-import { markLessonComplete } from '@/lib/api/academy';
+import { markLessonComplete, recordActiveReadingTime } from '@/lib/api/academy';
 import {
   ScrollProgressBar,
   LessonReliefMasthead,
@@ -340,13 +340,27 @@ export function LessonReaderView({
     });
   };
 
+  // Dynamically record active reading time (1 minute intervals when tab is visible)
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        recordActiveReadingTime(lesson.id, 1);
+      }
+    }, 60000);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [lesson.id]);
+
   const handleComplete = async () => {
     if (isCompleted || isSubmitting) return;
 
     try {
       setIsSubmitting(true);
       setErrorMessage(null);
-      await markLessonComplete(lesson.id);
+      await markLessonComplete(lesson.id, lesson.readingMinutes || 4);
       setIsCompleted(true);
       onLessonComplete?.();
     } catch (err) {
