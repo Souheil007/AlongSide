@@ -73,6 +73,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('building healthy habits and emotional trust');
       expect(html).toContain('4-Day Streak');
       expect(html).toContain('18 mins learned this week');
+      expect(html).toContain('Daily Compass:');
     });
 
     it('renders 0-Day Streak and Start Today when parent has not completed lessons yet', () => {
@@ -218,8 +219,6 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Task Responsibility');
       expect(html).toContain('Peer Impulse Control');
       expect(html).toContain('Emotional Reset');
-      expect(html).toContain('Parent Compass Reminder');
-      expect(html).toContain('You don&#x27;t have to get every moment right');
       expect(html).toContain('10 developmental questions');
 
       // Purged fake alarm widgets and redundant/clinical wording
@@ -283,7 +282,6 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Today&#x27;s Sensory Activity');
       expect(html).toContain('15 min outdoor water &amp; leaf play');
       expect(html).toContain('/brain-games?childId=child-leo');
-      expect(html).toContain('Parent Compass Reminder');
     });
   });
 

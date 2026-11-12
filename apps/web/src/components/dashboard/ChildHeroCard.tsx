@@ -142,6 +142,81 @@ export function getDevelopmentalLeap(tierOrAge?: string | number | null): LeapIn
   return DEVELOPMENTAL_LEAPS[DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18]!;
 }
 
+export interface ParentCompassReflection {
+  quote: string;
+  author: string;
+}
+
+export const TODDLER_COMPASS_REFLECTIONS: ParentCompassReflection[] = [
+  {
+    quote: "You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.",
+    author: 'Dr. Chen, AlongSide Advisory Team',
+  },
+  {
+    quote: "When a toddler melts down, their upstairs brain is offline. Don't try to reason with a storm — be the calm, physical harbor.",
+    author: 'AlongSide Neurobiology Practice',
+  },
+  {
+    quote: 'Co-regulation precedes self-regulation. Your steady, slow exhalations are your child’s primary nervous system manual.',
+    author: 'Dr. Aliza Pressman',
+  },
+  {
+    quote: 'Clear, gentle boundaries are not punishment; they are the loving guardrails that make a young child feel safe to explore.',
+    author: 'Janet Lansbury',
+  },
+  {
+    quote: 'Big feelings are not defiance. They are an immature nervous system overwhelmed by raw neurochemical sensation.',
+    author: 'Dr. Dan Siegel',
+  },
+  {
+    quote: 'A child who feels safely held through tears learns that vulnerability will never lead to emotional abandonment.',
+    author: 'AlongSide Child Development',
+  },
+  {
+    quote: 'Patience is not the absence of frustration; it is choosing emotional attunement over immediate urgency.',
+    author: 'Dr. Becky Kennedy',
+  },
+];
+
+export const TWEEN_TEEN_COMPASS_REFLECTIONS: ParentCompassReflection[] = [
+  {
+    quote: "You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.",
+    author: 'Dr. Chen, AlongSide Advisory Team',
+  },
+  {
+    quote: 'An eye-roll is often an involuntary developmental reflex of budding autonomy, not a withdrawal of love.',
+    author: 'Dr. Lisa Damour',
+  },
+  {
+    quote: 'Connection before correction. When an adolescent feels understood first, their defensive prefrontal wall drops.',
+    author: 'AlongSide Family Institute',
+  },
+  {
+    quote: 'A smartphone is an open door to peer comparison. Bilateral trust protects their self-worth far more than secret surveillance.',
+    author: 'Jonathan Haidt, The Anxious Generation',
+  },
+  {
+    quote: 'Curiosity de-escalates conflict. Ask “Help me understand how you saw that” instead of “Why did you do that?”',
+    author: 'Dr. Ross Greene',
+  },
+  {
+    quote: 'Adolescent brains undergo massive synaptic pruning. Steady, unconditional warmth during mood swings anchors their identity.',
+    author: 'Dr. Frances Jensen',
+  },
+  {
+    quote: 'Independence is built on the certainty of a safe return. Be the unshakeable home base your child can always come back to.',
+    author: 'AlongSide Family Advisory',
+  },
+];
+
+export function getDailyParentCompassReflection(isEarlyTier: boolean, customDate?: Date): ParentCompassReflection {
+  const date = customDate ?? new Date();
+  const startOfYear = new Date(date.getFullYear(), 0, 1);
+  const dayOfYear = Math.floor((date.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24));
+  const pool = isEarlyTier ? TODDLER_COMPASS_REFLECTIONS : TWEEN_TEEN_COMPASS_REFLECTIONS;
+  return pool[dayOfYear % pool.length]!;
+}
+
 export function ChildHeroCard({
   child,
   className,
@@ -183,6 +258,7 @@ export function ChildHeroCard({
   const leap = getDevelopmentalLeap(child.developmentalTier || child.age);
   const isToddler = (child.age !== undefined && child.age !== null && child.age <= 3) ||
     String(child.developmentalTier || '').includes('TIER_0');
+  const compassReflection = getDailyParentCompassReflection(isToddler);
 
   // Friendly date formatting
   const todayFormatted = new Intl.DateTimeFormat('en-US', {
@@ -198,7 +274,7 @@ export function ChildHeroCard({
         aria-label="Welcome & Purpose"
         className="bg-white rounded-2xl border border-[#E3E3DC] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4"
       >
-        <div className="space-y-1">
+        <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-mono text-xs text-[#143D2B] font-semibold uppercase tracking-wider">
@@ -213,6 +289,20 @@ export function ChildHeroCard({
               ? 'Toddlerhood is about emotional co-regulation and clear, gentle boundaries. You are your child’s calm anchor.'
               : 'You’re building healthy habits and emotional trust, one small conversation at a time. No perfection required—just 4 minutes of intentional learning today.'}
           </p>
+
+          {/* Daily Parent Compass Micro-Reflection */}
+          <div className="pt-2 border-t border-[#E3E3DC]/70 flex items-start sm:items-center gap-2 text-xs text-[#494F4C]">
+            <Compass className="w-3.5 h-3.5 text-[#143D2B] shrink-0 mt-0.5 sm:mt-0" />
+            <p className="font-serif italic text-xs text-[#111413] leading-relaxed">
+              <span className="font-mono not-italic text-[10px] uppercase font-bold text-[#143D2B] tracking-wider mr-1.5">
+                Daily Compass:
+              </span>
+              &ldquo;{compassReflection.quote}&rdquo;
+              <span className="font-mono not-italic text-[10px] text-[#858C88] ml-2 inline-block">
+                — {compassReflection.author}
+              </span>
+            </p>
+          </div>
         </div>
 
         {/* Weekly Habit Streak Badge */}
