@@ -147,29 +147,33 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
     });
   });
 
-  describe('2. #1 Hero Centerpiece: Streamlined Continue Lesson Strip (ActiveChapterContinueCard)', () => {
-    it('renders streamlined continue lesson strip for tween Maya', () => {
+  describe('2. #1 Hero Centerpiece: Dynamic Course Journey Roadmap (ActiveChapterContinueCard)', () => {
+    it('renders dynamic curriculum roadmap with real chapter nodes for tween Maya', () => {
       const html = wrapWithQueryClient(
         <ActiveChapterContinueCard child={mockTweenMaya} />
       );
 
-      expect(html).toContain('Continue Lesson');
+      expect(html).toContain('Parent Intelligence Academy • Active Course');
+      expect(html).toContain('Curriculum Roadmap');
       expect(html).toContain('Tween Adrenarche &amp; Neurobiology Shift');
+      expect(html).toContain('The Shift');
+      expect(html).toContain('Active Now');
       expect(html).toContain('Read Lesson');
-      expect(html).not.toContain('Curriculum Roadmap');
       expect(html).not.toContain('Tonight&#x27;s Script');
       expect(html).not.toContain('Listen to Audio');
     });
 
-    it('renders streamlined continue lesson strip tailored for toddler Leo', () => {
+    it('renders dynamic course journey roadmap tailored for toddler Leo', () => {
       const html = wrapWithQueryClient(
         <ActiveChapterContinueCard child={mockToddlerLeo} />
       );
 
-      expect(html).toContain('Continue Lesson');
+      expect(html).toContain('Parent Intelligence Academy • Active Course');
+      expect(html).toContain('Curriculum Roadmap');
       expect(html).toContain('Sensory Overload &amp; Infant Co-Regulation: Taming Big Feelings');
+      expect(html).toContain('Amygdala Basics');
       expect(html).toContain('Read Lesson');
-      expect(html).not.toContain('Curriculum Roadmap');
+      expect(html).not.toContain('Tonight&#x27;s Script');
     });
   });
 
