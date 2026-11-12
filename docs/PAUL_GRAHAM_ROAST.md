@@ -214,14 +214,13 @@ Stop running away from devices. Don't build spyware (no reading texts, no keylog
   - **Pediatrician Networks & Health Insurance:** Screen addiction is now classified as an adolescent mental health crisis. Pediatricians hand Alongside prescription cards to parents during the 10-year checkup.
   - **School Districts (PTAs):** Sell district-wide site licenses so every incoming 6th-grade family gets Alongside to standardize middle-school phone rules across the entire class. This eliminates the *"all my friends have it"* excuse entirely.
 
-#### 3. Replace Static Text Scripts with an AI Voice Sparring Partner
+#### 3. Replace Static Text Scripts with an AI Advisor & Guided Dialogue Partner
 - Reading a static text script on a screen does not help a parent when their 13-year-old daughter is screaming in their face.
-- Use low-latency streaming voice AI to build an **interactive sparring simulator**:
-  - The parent presses *"Practice this conversation."*
-  - The AI plays the voice of an agitated 13-year-old demanding Snapchat (*"Everyone in 7th grade has it! You’re ruining my social life!"*).
-  - The parent speaks their boundary out loud.
-  - The AI coaches the parent in real-time on tone, de-escalation, and firmness before they face their real child at the dinner table.
-- That is a defensible software product. A static PDF is not.
+- Use high-speed streaming AI to deliver **immediate situational dialogue & clinical guidance**:
+  - The parent consults the 24/7 AI Advisor: *"Leo slammed the door and called me a dictator when I asked for his phone."*
+  - The AI immediately delivers the exact clinical script and breakdown (*"Say This / Not That"*).
+  - The parent receives real-time coaching on tone, de-escalation, and firmness before facing their child.
+- *(Note: Rehearsal model pivoted under SOU-108 from experimental voice streaming to rapid streaming clinical text and 250+ scenario FAQ vault for deterministic reliability and speed).*
 
 ---
 
@@ -261,7 +260,7 @@ Here is why each component of the proposed pivot radically shifts the startup's 
 
 | Proposed Component | Strategic Diagnosis | Business Impact |
 | :--- | :--- | :--- |
-| **"Directly an App (Native/Mobile-First)"** | Mandatory. Web-only cannot configure MDM profiles, cannot trigger low-latency voice sparring on a parent's morning walk, and cannot push native OS notifications. | Increases daily active engagement (DAU/MAU) by 4x–6x over a mobile web bookmark. |
+| **"Directly an App (Native/Mobile-First)"** | Mandatory. Web-only cannot configure MDM profiles, cannot trigger background push notifications, and cannot deliver lock-screen micro-guidance. | Increases daily active engagement (DAU/MAU) by 4x–6x over a mobile web bookmark. |
 | **"No Free Subscription, Just Paid"** | Eliminates the freemium illusion. Freemium in parenting attracts price-sensitive parents who download the free PDF and cost hundreds in LLM/voice token burn. Requiring a paid trial filters for high-conviction households. | Elevates Day 1 Gross Margins; eliminates CAC bleed; funds real-time voice inference and Apple MDM server infrastructure. |
 | **"The Transparent Contract-Driven Device Profile"** | **This is the multi-billion-dollar insight.** Parents hate being authoritarian spies; kids hate spyware. By compiling the bilateral contract directly into a signed `.mobileconfig` / Android Policy, the OS becomes the impartial neutral referee. | Creates an unassailable technical moat. Bark and Qustodio cannot easily copy this because their brand DNA is rooted in clandestine surveillance. |
 | **"A Whole Roadmap for Understanding Child at Every Stage"** | Solves the aging-out problem. A child who is 10 today will be 11 next year and in middle school at 12. A static contract breaks in 6 months; an adaptive roadmap upgrades privileges dynamically. | Expands customer lifetime from 3 months to 4+ years (Ages 9 through 14), multiplying LTV by 8x. |
@@ -304,7 +303,7 @@ Here is why each component of the proposed pivot radically shifts the startup's 
 #### Risk #3: Voice AI Inference Costs vs. Margins
 *(Severity: Medium)*
 - **The Threat:** Streaming low-latency voice models (WebSockets with sub-300ms audio) can erode margins if parents use it like a general-purpose voice companion.
-- **The Solution:** Segment voice sparring into discrete 3-minute structured "rehearsal sessions" (e.g., 3 rounds of back-and-forth sparring per conflict scenario). Daily advice and weekly summaries remain fast text LLM queries. This preserves an 80%+ gross margin on an annual $79 subscription.
+- **The Solution:** Deliver ultra-fast streaming text de-escalation scripts and a curated 250+ scenario FAQ vault. Daily advice and weekly summaries remain fast text LLM queries. This preserves an 85%+ gross margin on an annual $79 subscription.
 
 ---
 

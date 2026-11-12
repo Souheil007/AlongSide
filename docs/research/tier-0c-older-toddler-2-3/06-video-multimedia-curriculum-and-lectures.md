@@ -40,7 +40,7 @@
 
 ### AlongSide Academy Course Integration:
 - **Module:** *Academy Tier 0C — Lesson 1: Surviving the Supermarket Storm*
-- **Voice Sparring Simulator:** Parents practice responding with calm empathy when a simulated 2-year-old screams *"I HATE YOU!"*
+- **24/7 AI Advisor Integration:** Parents access word-for-word empathy scripts when an overwhelmed 2-year-old screams *"I HATE YOU!"*
 
 ---
 

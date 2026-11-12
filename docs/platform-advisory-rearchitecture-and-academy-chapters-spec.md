@@ -194,7 +194,7 @@ The public-facing homepage (`apps/web/src/app/page.tsx`) serves as the welcoming
   - Pillar 1: **Parent Intelligence Academy** (5 Categories with prioritized chapters) -> `/academy`.
   - Pillar 2: **Sunday Youth Culture Digest** (Slang Radar, Cringe Meter, Dinner Starters) -> `/digest`.
   - Pillar 3: **Bilateral Family Pacts & Devices** (Pact-as-Code, 8:30 PM dock, 0-100 readiness) -> `/devices`.
-  - Global Companion: **24/7 AI Child Advisor** (Voice sparring, instant empathy scripts) -> `/advisor`.
+  - Global Companion: **24/7 AI Child Advisor** (Clinical guidance, instant empathy scripts & FAQ vault) -> `/advisor`.
 - **Interactive Culture Playground Demo (`CulturePlaygroundDemo.tsx`):**
   - Live interactive playground allowing visitors to search modern slang terms (*Crashout*, *Rizz*, *Skibidi*) with live Cringe Meter ratings and draw dinner conversation starters.
 - **Bilateral Tech Sovereignty Spotlight (`DeviceActionHubSpotlight.tsx`):**

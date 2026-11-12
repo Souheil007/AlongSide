@@ -39,8 +39,8 @@ THE ADULT LAUNCHPAD COMPETENCY TRIAD:
 ### 2.2 Independent Solo Travel & Wilderness Navigation
 - Planning a weekend camping trip or day hike with friends: planning route maps, packing emergency first-aid, water filtration, and food rations. Physical self-reliance builds unshakeable prefrontal self-efficacy.
 
-### 2.3 Professional Pragmatics & Interview Sparring
-- Roleplaying professional scenarios using AlongSide’s Voice Sparring Simulator:
+### 2.3 Professional Pragmatics & Roleplay Practice
+- Roleplaying professional scenarios using AlongSide’s Guided Dialogue Scripts:
   - *Negotiating with a college professor for an assignment extension.*
   - *Interviewing for a summer job or research internship.*
   - *Addressing a billing error with a landlord or internet provider.*

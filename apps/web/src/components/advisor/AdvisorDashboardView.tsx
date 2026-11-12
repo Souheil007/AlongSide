@@ -48,7 +48,6 @@ export function AdvisorDashboardView() {
   } = useAiAdvisorChat({ defaultChildId: activeChild?.id });
 
   const [inputMessage, setInputMessage] = React.useState('');
-  const [isSparringOpen, setIsSparringOpen] = React.useState(false);
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const autoSentRef = React.useRef(false);
 
