@@ -101,7 +101,7 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
   };
 
   describe('1. The 10-Second Relief Masthead & 90s Spoken Audio Memo Bar', () => {
-    it('renders breadcrumb navigation, chapter title, and reading timer', () => {
+    it('renders breadcrumb navigation, badges, and decluttered masthead without redundant title', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReliefMasthead, {
           lesson: multiModalLesson,
@@ -111,12 +111,12 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       );
 
       expect(html).toContain('Back to Toddler Emotional Storms');
-      expect(html).toContain('Chapter 1: The Immature Brain');
-      expect(html).toContain('Lesson 1');
-      expect(html).toContain('3 min read');
-      expect(html).toContain(
+      expect(html).toContain('data-testid="lesson-relief-masthead"');
+      // Redundant chapter header card and duplicate lesson title removed per SOU-112
+      expect(html).not.toContain(
         'The Immature Amygdala: Why Toddlers Melt Down &amp; How to Anchor Calm'
       );
+      expect(html).not.toContain('3 min read');
     });
 
     it('does not display redundant guilt-release banner in the masthead', () => {
@@ -132,7 +132,20 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).not.toContain('Guilt-Release Pediatric Anchor');
     });
 
-    it('renders native HTML5 audio memo player with hands-free controls', () => {
+    it('renders completed status badge in masthead when isCompleted is true', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(LessonReliefMasthead, {
+          lesson: multiModalLesson,
+          moduleSlug: 'behavior-toddler-tantrums',
+          isCompleted: true,
+        })
+      );
+
+      expect(html).toContain('data-testid="lesson-completed-badge"');
+      expect(html).toContain('Completed');
+    });
+
+    it('renders minimalist audio memo player without separate stop button and with skip controls', () => {
       const html = renderToStaticMarkup(
         React.createElement(AudioMemoPlayer, {
           audioUrl: multiModalLesson.audioUrl,
@@ -147,8 +160,26 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain('data-testid="audio-skip-forward"');
       expect(html).toContain('data-testid="audio-speed-toggle"');
       expect(html).not.toContain('Hands-Free');
+      // Stop square removed per SOU-112: play, pause, resume unified inside main button
+      expect(html).not.toContain('Stop narration');
       expect(html).toContain('Listen');
       expect(html).toContain('1:32');
+    });
+
+    it('calculates duration dynamically from text word-count when audioDurationSeconds is absent', () => {
+      const html = renderToStaticMarkup(
+        React.createElement(AudioMemoPlayer, {
+          audioUrl: null,
+          audioDurationSeconds: null,
+          title: 'Sample Briefing',
+          textToSpeak: 'One two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty.',
+        })
+      );
+
+      expect(html).toContain('data-testid="audio-memo-player"');
+      expect(html).toContain('Listen');
+      // Minimum duration floor is 30s
+      expect(html).toContain('0:30');
     });
   });
 
@@ -300,6 +331,12 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       // Decluttered per SOU-110: ThirtySecondGlance and ToolBridges removed from lesson reader
       expect(html).not.toContain('data-testid="thirty-second-glance"');
       expect(html).not.toContain('data-testid="tool-bridges"');
+
+      // Decluttered per SOU-112: verify lesson title appears once in article header, not duplicated in masthead
+      const titleOccurrences = (
+        html.match(/The Immature Amygdala: Why Toddlers Melt Down &amp; How to Anchor Calm/g) || []
+      ).length;
+      expect(titleOccurrences).toBe(1);
     });
   });
 

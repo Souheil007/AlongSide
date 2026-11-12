@@ -4,8 +4,6 @@ import * as React from 'react';
 import Link from 'next/link';
 import {
   ArrowLeft,
-  BookOpen,
-  Clock,
   CheckCircle2,
 } from 'lucide-react';
 import {
@@ -43,7 +41,6 @@ export function LessonReliefMasthead({
   const priorityTheme = lesson.chapter?.priority
     ? getPriorityTheme(lesson.chapter.priority)
     : null;
-
 
   return (
     <div
@@ -101,6 +98,16 @@ export function LessonReliefMasthead({
             </span>
           )}
 
+          {isCompleted && (
+            <span
+              data-testid="lesson-completed-badge"
+              className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800 text-xs"
+            >
+              <CheckCircle2 className="h-3 w-3" />
+              Completed
+            </span>
+          )}
+
           {onToggleNightstandMode && (
             <NightstandModeToggle
               isNightstandMode={isNightstandMode}
@@ -109,59 +116,7 @@ export function LessonReliefMasthead({
           )}
         </div>
       </nav>
-
-      {/* Main Masthead Card */}
-      <header
-        className={cn(
-          'rounded-2xl border p-6 sm:p-8 shadow-xs transition-colors space-y-5',
-          isNightstandMode
-            ? 'bg-stone-900 border-stone-800 text-stone-100'
-            : 'bg-white border-slate-200/90 text-slate-900'
-        )}
-      >
-        {/* Meta Row: Chapter, Lesson Order, Timer, Completion */}
-        <div className="flex flex-wrap items-center gap-2.5 text-xs font-medium text-slate-500">
-          {lesson.chapter && (
-            <span
-              className={cn(
-                'font-semibold',
-                isNightstandMode ? 'text-stone-300' : 'text-slate-700'
-              )}
-            >
-              {lesson.chapter.title}
-            </span>
-          )}
-          <span className="text-slate-300">•</span>
-          <span className="flex items-center gap-1.5">
-            <BookOpen className="h-3.5 w-3.5 text-teal-600" />
-            Lesson {lesson.sortOrder}
-          </span>
-          <span className="text-slate-300">•</span>
-          <span className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-slate-400" />
-            {lesson.readingMinutes} min read
-          </span>
-          {isCompleted && (
-            <>
-              <span className="text-slate-300">•</span>
-              <span className="inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                <CheckCircle2 className="h-3 w-3" />
-                Completed
-              </span>
-            </>
-          )}
-        </div>
-
-        {/* Lesson Title (Serene Editorial Serif) */}
-        <h1
-          className={cn(
-            'text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug font-serif',
-            isNightstandMode ? 'text-amber-100' : 'text-slate-900'
-          )}
-        >
-          {lesson.title}
-        </h1>
-      </header>
     </div>
   );
 }
+
