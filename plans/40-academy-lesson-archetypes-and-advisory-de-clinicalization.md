@@ -3,7 +3,10 @@
 **Assignee:** Joint (Backend Agent & Frontend Agent)  
 **Dependencies:** PLAN-38, PLAN-39  
 **Estimated Scope:** Large (Lesson Archetype Engine, Unified Editorial Blog Post & Platform-Wide De-Clinicalization)  
-**Status:** Approved Architectural Plan (Ready for Delegation)  
+**Status:** In Progress (Delegated via SOU-114 & SOU-115)  
+**Engineering Delegation Tasks:**
+- **Backend Foundation (SOU-114):** [`Implement Plan 40 Backend Foundation: Lesson Archetypes, De-Clinicalized Parsers & Academy Seed Pipeline`](http://localhost:3100/issues/1688ff4d-f564-4d0e-ba69-2e678d5c170a) — Feature Branch: `feat/SOU-114-backend-plan-40-lesson-archetypes-and-seeds`
+- **Frontend UI (SOU-115):** [`Implement Plan 40 Frontend UI: Unified Editorial Blog Post Reader & Platform-Wide De-Clinicalization`](http://localhost:3100/issues/30dce807-5218-4e5a-830a-f37725cbd8d9) — Feature Branch: `feat/SOU-115-frontend-plan-40-unified-blog-reader-de-clinicalization`  
 
 ---
 
