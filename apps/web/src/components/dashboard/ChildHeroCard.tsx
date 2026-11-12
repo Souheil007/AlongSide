@@ -1,13 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import {
   Sparkles,
   Calendar,
   Compass,
   FileCheck2,
-  ChevronRight,
   Shield,
   Brain,
   Flame,
@@ -247,28 +245,18 @@ export function ChildHeroCard({
       {/* 3. Quiet Ambient Horizon & Active Leap (Cardless Fluid Strip) */}
       <section
         aria-label="Advisory Horizon"
-        className="px-2 py-1 flex flex-wrap items-center justify-between gap-3 text-xs text-[#494F4C]"
+        className="px-2 py-1 flex flex-wrap items-center gap-2 text-xs text-[#494F4C]"
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider">
-            {child.name}&apos;s Advisory Horizon:
-          </span>
-          <span className="font-serif text-xs font-semibold text-[#111413]">
-            {isToddler ? 'Co-Regulation Routines' : horizon.horizon}
-          </span>
-          <span className="text-[#858C88]">•</span>
-          <span className="text-[#494F4C] text-[11px]">
-            Active Leap: {leap.leapTitle}
-          </span>
-        </div>
-
-        <Link
-          href="/academy"
-          className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-[#143D2B] hover:underline"
-        >
-          <span>Why this leap matters</span>
-          <ChevronRight className="h-3 w-3" />
-        </Link>
+        <span className="font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider">
+          {child.name}&apos;s Advisory Horizon:
+        </span>
+        <span className="font-serif text-xs font-semibold text-[#111413]">
+          {isToddler ? 'Co-Regulation Routines' : horizon.horizon}
+        </span>
+        <span className="text-[#858C88]">•</span>
+        <span className="text-[#494F4C] text-[11px]">
+          Active Leap: {leap.leapTitle}
+        </span>
       </section>
     </div>
   );

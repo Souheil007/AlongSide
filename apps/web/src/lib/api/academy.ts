@@ -117,6 +117,18 @@ export function getLearningActivityRecords(): LearningActivityRecord[] {
   }
 }
 
+/**
+ * Calculates start of current calendar week (Monday 00:00:00 local time).
+ */
+export function getStartOfWeekDate(reference: Date = new Date()): string {
+  const d = new Date(reference);
+  const day = d.getDay();
+  // distance back to Monday: Sunday (0) is 6 days back, Monday (1) is 0 days back, etc.
+  const distanceToMonday = (day + 6) % 7;
+  d.setDate(d.getDate() - distanceToMonday);
+  return d.toISOString().split('T')[0] ?? '';
+}
+
 export function recordLearningActivity(lessonId: string, minutes: number = 4): void {
   if (typeof window === 'undefined' || !window.localStorage) {
     return;
@@ -124,17 +136,55 @@ export function recordLearningActivity(lessonId: string, minutes: number = 4): v
   try {
     const records = getLearningActivityRecords();
     const todayStr = new Date().toISOString().split('T')[0] ?? '';
-    const exists = records.some((r) => r.lessonId === lessonId && r.date === todayStr);
-    if (!exists) {
+    const existing = records.find((r) => r.lessonId === lessonId && r.date === todayStr);
+    if (existing) {
+      existing.minutes = Math.max(existing.minutes, minutes);
+    } else {
       records.push({ lessonId, date: todayStr, minutes });
-      window.localStorage.setItem(LOCAL_STORAGE_ACTIVITY_KEY, JSON.stringify(records));
+    }
+    window.localStorage.setItem(LOCAL_STORAGE_ACTIVITY_KEY, JSON.stringify(records));
+    if (typeof window.dispatchEvent === 'function') {
+      try {
+        window.dispatchEvent(new CustomEvent('alongside-learning-activity-updated'));
+      } catch {
+        // silent fallback
+      }
     }
   } catch {
     // silent fallback
   }
 }
 
-export function saveLocalCompletedLessonId(lessonId: string): void {
+/**
+ * Record active time spent reading a lesson (increments minutes for today).
+ */
+export function recordActiveReadingTime(lessonId: string, minutesToAdd: number = 1): void {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+  try {
+    const records = getLearningActivityRecords();
+    const todayStr = new Date().toISOString().split('T')[0] ?? '';
+    const existing = records.find((r) => r.lessonId === lessonId && r.date === todayStr);
+    if (existing) {
+      existing.minutes += minutesToAdd;
+    } else {
+      records.push({ lessonId, date: todayStr, minutes: minutesToAdd });
+    }
+    window.localStorage.setItem(LOCAL_STORAGE_ACTIVITY_KEY, JSON.stringify(records));
+    if (typeof window.dispatchEvent === 'function') {
+      try {
+        window.dispatchEvent(new CustomEvent('alongside-learning-activity-updated'));
+      } catch {
+        // silent fallback
+      }
+    }
+  } catch {
+    // silent fallback
+  }
+}
+
+export function saveLocalCompletedLessonId(lessonId: string, readingMinutes: number = 4): void {
   if (typeof window === 'undefined' || !window.localStorage) {
     return;
   }
@@ -142,7 +192,14 @@ export function saveLocalCompletedLessonId(lessonId: string): void {
     const set = getLocalCompletedLessonIds();
     set.add(lessonId);
     window.localStorage.setItem(LOCAL_STORAGE_COMPLETED_KEY, JSON.stringify(Array.from(set)));
-    recordLearningActivity(lessonId, 4);
+    recordLearningActivity(lessonId, readingMinutes);
+    if (typeof window.dispatchEvent === 'function') {
+      try {
+        window.dispatchEvent(new CustomEvent('alongside-learning-activity-updated'));
+      } catch {
+        // silent fallback
+      }
+    }
   } catch {
     // silent fallback
   }
@@ -152,8 +209,26 @@ export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]):
   streakDays: number;
   minsLearnedThisWeek: number;
 } {
-  // 1. Calculate genuine minutes learned from completed lessons
-  let dynamicMins = 0;
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0] ?? '';
+  const mondayStr = getStartOfWeekDate(now);
+
+  // 1. Calculate explicit minutes recorded in activity records for this calendar week
+  const activityRecords = getLearningActivityRecords();
+  const dateSet = new Set<string>();
+  let recordedWeekMinutes = 0;
+
+  for (const r of activityRecords) {
+    if (r.date) {
+      dateSet.add(r.date);
+      if (r.date >= mondayStr) {
+        recordedWeekMinutes += Number(r.minutes) || 0;
+      }
+    }
+  }
+
+  // 2. Calculate fallback minutes from completed module lessons
+  let moduleMins = 0;
   let totalCompletedLessons = 0;
 
   if (allModules && allModules.length > 0) {
@@ -161,12 +236,12 @@ export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]):
       if (mod.lessons && mod.lessons.length > 0) {
         for (const les of mod.lessons) {
           if (les.isCompleted) {
-            dynamicMins += les.readingMinutes || 4;
+            moduleMins += les.readingMinutes || 4;
             totalCompletedLessons++;
           }
         }
       } else if (mod.completedLessonCount) {
-        dynamicMins += mod.completedLessonCount * 4;
+        moduleMins += mod.completedLessonCount * 4;
         totalCompletedLessons += mod.completedLessonCount;
       }
     }
@@ -176,26 +251,22 @@ export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]):
   const localCompleted = getLocalCompletedLessonIds();
   if (totalCompletedLessons === 0 && localCompleted.size > 0) {
     totalCompletedLessons = localCompleted.size;
-    dynamicMins = totalCompletedLessons * 4;
+    moduleMins = totalCompletedLessons * 4;
   }
 
-  // 2. Calculate consecutive active habit streak
-  const activityRecords = getLearningActivityRecords();
-  const dateSet = new Set<string>();
-
-  for (const r of activityRecords) {
-    if (r.date) dateSet.add(r.date);
-  }
-
-  const now = new Date();
-  const todayStr = now.toISOString().split('T')[0] ?? '';
-
-  // If user completed a lesson in the current session but hasn't reloaded
+  // If user completed a lesson in the current session but dateSet is empty
   if (totalCompletedLessons > 0 && dateSet.size === 0) {
     dateSet.add(todayStr);
   }
 
-  if (dateSet.size === 0 || totalCompletedLessons === 0) {
+  // Determine final minutes learned this week:
+  // Take the highest of explicit recorded weekly minutes or completed module lesson minutes
+  const minsLearnedThisWeek = Math.max(
+    recordedWeekMinutes,
+    totalCompletedLessons > 0 ? moduleMins : 0
+  );
+
+  if (dateSet.size === 0 && totalCompletedLessons === 0) {
     return {
       streakDays: 0,
       minsLearnedThisWeek: 0,
@@ -210,7 +281,7 @@ export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]):
   if (!dateSet.has(todayStr) && !dateSet.has(yesterdayStr)) {
     return {
       streakDays: 0,
-      minsLearnedThisWeek: dynamicMins,
+      minsLearnedThisWeek,
     };
   }
 
@@ -230,7 +301,7 @@ export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]):
 
   return {
     streakDays: Math.max(1, streak),
-    minsLearnedThisWeek: dynamicMins,
+    minsLearnedThisWeek,
   };
 }
 
@@ -455,10 +526,11 @@ export async function getLesson(
  * Mark a lesson complete for the authenticated parent (with local storage fallback).
  */
 export async function markLessonComplete(
-  id: string
+  id: string,
+  readingMinutes?: number
 ): Promise<AcademyLessonCompletionResponseDTO> {
   // Always mark completed in local storage for instant optimistic persistence
-  saveLocalCompletedLessonId(id);
+  saveLocalCompletedLessonId(id, readingMinutes || 4);
 
   try {
     return await apiClient<AcademyLessonCompletionResponseDTO>(

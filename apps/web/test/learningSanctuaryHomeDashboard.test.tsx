@@ -85,7 +85,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('0 mins learned this week');
     });
 
-    it('omits redundant child context anchor bar and artificial active goal from homepage', () => {
+    it('omits redundant child context anchor bar, artificial active goal, and Why this leap matters link from homepage', () => {
       const html = renderToStaticMarkup(
         <ChildHeroCard child={mockTweenMaya} parentName="Sarah" />
       );
@@ -94,6 +94,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).not.toContain('Active Goal:');
       expect(html).not.toContain('Road 1: Pre-Device');
       expect(html).not.toContain('14-Day Independent Morning Alarm');
+      expect(html).not.toContain('Why this leap matters');
     });
 
     it('renders dynamic greeting for connected user Souheil and child Lina (SOU-89)', () => {

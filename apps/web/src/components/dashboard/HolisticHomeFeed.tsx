@@ -40,9 +40,27 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
     staleTime: 5 * 60 * 1000,
   });
 
+  const [activityVersion, setActivityVersion] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleActivityChange = () => {
+      setActivityVersion((v) => v + 1);
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('alongside-learning-activity-updated', handleActivityChange);
+      window.addEventListener('storage', handleActivityChange);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('alongside-learning-activity-updated', handleActivityChange);
+        window.removeEventListener('storage', handleActivityChange);
+      }
+    };
+  }, []);
+
   const { streakDays, minsLearnedThisWeek } = React.useMemo(() => {
     return calculateHabitStreakAndMinutes(allModules);
-  }, [allModules]);
+  }, [allModules, activityVersion]);
 
   const resolvedParentName =
     parentName || (user?.fullName ? user.fullName.trim().split(/\s+/)[0] : 'Parent');

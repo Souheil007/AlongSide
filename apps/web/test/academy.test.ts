@@ -8,13 +8,41 @@ import {
   markLessonComplete,
   calculateHabitStreakAndMinutes,
   recordLearningActivity,
+  recordActiveReadingTime,
+  getStartOfWeekDate,
 } from '../src/lib/api/academy';
 
 describe('Parent Intelligence Academy Component & API Specification', () => {
   const originalFetch = global.fetch;
+  const storageMap = new Map<string, string>();
+  const mockLocalStorage = {
+    getItem: vi.fn((key: string) => storageMap.get(key) ?? null),
+    setItem: vi.fn((key: string, val: string) => {
+      storageMap.set(key, val);
+    }),
+    removeItem: vi.fn((key: string) => {
+      storageMap.delete(key);
+    }),
+    clear: vi.fn(() => storageMap.clear()),
+  };
+
+  const originalWindow = (globalThis as any).window;
+
+  beforeEach(() => {
+    storageMap.clear();
+    (globalThis as any).window = {
+      localStorage: mockLocalStorage,
+      dispatchEvent: vi.fn(),
+    };
+  });
 
   afterEach(() => {
     global.fetch = originalFetch;
+    if (originalWindow !== undefined) {
+      (globalThis as any).window = originalWindow;
+    } else {
+      delete (globalThis as any).window;
+    }
     vi.restoreAllMocks();
   });
   describe('Developmental Tier Badge Mapping', () => {
@@ -334,6 +362,18 @@ describe('Parent Intelligence Academy Component & API Specification', () => {
 
       expect(stats.minsLearnedThisWeek).toBe(5);
       expect(stats.streakDays).toBeGreaterThanOrEqual(1);
+    });
+
+    it('correctly calculates start of week (Monday) and accumulates active reading minutes', () => {
+      const now = new Date('2026-11-12T12:00:00Z'); // Thursday
+      const mondayStr = getStartOfWeekDate(now);
+      expect(mondayStr).toBe('2026-11-09');
+
+      recordActiveReadingTime('les-timer-1', 1);
+      recordActiveReadingTime('les-timer-1', 2);
+
+      const stats = calculateHabitStreakAndMinutes([]);
+      expect(stats.minsLearnedThisWeek).toBeGreaterThanOrEqual(3);
     });
   });
 });
