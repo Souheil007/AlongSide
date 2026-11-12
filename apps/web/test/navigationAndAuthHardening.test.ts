@@ -179,9 +179,9 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
 
       const expectedLinks = [
         { href: '/dashboard', label: 'Home' },
-        { href: '/academy', label: 'Parent Academy' },
-        { href: '/digest', label: 'Culture Digest' },
-        { href: '/devices', label: 'Family Pacts & Devices' },
+        { href: '/academy', label: 'Academy' },
+        { href: '/digest', label: 'Digest' },
+        { href: '/devices', label: 'Devices' },
       ];
 
       const coreLinks = AUTHENTICATED_CORE_LINKS.map((l) => ({

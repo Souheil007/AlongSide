@@ -33,9 +33,9 @@ export interface NavLinkItem {
 
 export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
   { href: '/dashboard', label: 'Home' },
-  { href: '/academy', label: 'Parent Academy', icon: BookOpen },
-  { href: '/digest', label: 'Culture Digest', icon: Sparkles },
-  { href: '/devices', label: 'Family Pacts & Devices', icon: Shield },
+  { href: '/academy', label: 'Academy', icon: BookOpen },
+  { href: '/digest', label: 'Digest', icon: Sparkles },
+  { href: '/devices', label: 'Devices', icon: Shield },
 ];
 
 /**
@@ -137,15 +137,12 @@ export function Header() {
               <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413] leading-tight">
                 AlongSide
               </span>
-              <span className="font-mono text-[9px] font-semibold tracking-wider uppercase text-[#143D2B] -mt-0.5 hidden sm:inline-block">
-                Pediatric Sanctuary • Lifespan 0–18
-              </span>
             </div>
           </Link>
 
           {/* Child Selector embedded next to brand logo for authenticated parents */}
           {isAuthenticated && (
-            <div className="hidden sm:flex items-center pl-1 sm:pl-2 border-l border-[#E3E3DC]">
+            <div className="hidden sm:flex items-center pl-2 sm:pl-3 border-l border-[#E3E3DC]">
               <ChildSelector variant="header" />
             </div>
           )}
@@ -155,31 +152,22 @@ export function Header() {
         {isAuthenticated ? (
           <nav
             aria-label="Domain Hub Navigation"
-            className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold"
+            className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-xs font-semibold"
           >
             {AUTHENTICATED_CORE_LINKS.map((link) => {
               const isActive = isLinkActive(link.href);
-              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'flex items-center gap-1.5 px-3 py-1.5 rounded-[5px] text-xs font-semibold transition-all duration-150 border-b-2 whitespace-nowrap',
+                    'px-3 py-1.5 rounded-full text-xs transition-all duration-150 whitespace-nowrap',
                     isActive
-                      ? 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B] font-bold shadow-2xs'
-                      : 'text-[#494F4C] hover:text-[#111413] hover:bg-[#F4F4F0] border-transparent font-medium'
+                      ? 'bg-[#EAF3EE] text-[#143D2B] font-bold shadow-2xs'
+                      : 'text-[#494F4C] hover:text-[#111413] hover:bg-[#F4F4F0] font-medium'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  {Icon && (
-                    <Icon
-                      className={cn(
-                        'h-3.5 w-3.5 shrink-0',
-                        isActive ? 'text-[#143D2B]' : 'text-[#858C88]'
-                      )}
-                    />
-                  )}
                   <span>{link.label}</span>
                 </Link>
               );
@@ -221,22 +209,19 @@ export function Header() {
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className={cn(
-                  'flex min-h-[40px] items-center gap-2 rounded-[5px] border border-[#E3E3DC] bg-white px-2.5 py-1.5 text-xs font-medium text-[#111413] shadow-2xs transition-all hover:border-[#111413] hover:bg-[#F4F4F0] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/30',
+                  'flex min-h-[38px] items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-2.5 py-1 text-xs font-medium text-[#111413] shadow-2xs transition-all hover:border-[#111413] hover:bg-[#F4F4F0] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/30',
                   userMenuOpen && 'border-[#143D2B] ring-2 ring-[#143D2B]/20'
                 )}
                 aria-expanded={userMenuOpen}
                 aria-haspopup="menu"
                 aria-label="User account menu"
               >
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-[11px] font-bold text-white shadow-2xs">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#143D2B] text-[10px] font-bold text-white shadow-2xs">
                   {getInitials(user.fullName)}
                 </div>
-                <div className="hidden xl:flex flex-col text-left max-w-[120px]">
+                <div className="hidden xl:flex text-left max-w-[100px]">
                   <span className="truncate font-semibold text-[#111413] text-xs">
-                    {user.fullName}
-                  </span>
-                  <span className="truncate text-[10px] text-[#858C88] font-normal font-mono">
-                    {user.email}
+                    {user.fullName.split(' ')[0] || user.fullName}
                   </span>
                 </div>
                 <ChevronDown
