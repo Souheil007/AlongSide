@@ -1,17 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import {
   Play,
   GraduationCap,
   ChevronDown,
-  MessageSquare,
-  Sparkles,
   Video,
 } from 'lucide-react';
 import type { MasterVideoLectureDTO } from '@alongside/shared';
-import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export interface LessonVideoPlayerProps {
@@ -210,44 +206,6 @@ export function LessonVideoPlayer({
               ))}
             </div>
           )}
-        </div>
-      )}
-
-      {/* 4. Interactive 1-click Action Prompt button launching /advisor */}
-      {video.actionPrompt && (
-        <div
-          data-testid="video-action-prompt"
-          className={cn(
-            'rounded-xl border p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs transition-colors',
-            isNightstandMode
-              ? 'bg-stone-800/80 border-stone-700'
-              : 'bg-gradient-to-r from-teal-50/70 via-emerald-50/50 to-teal-50/40 border-teal-200/80'
-          )}
-        >
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Parent Practice Exercise</span>
-            </div>
-            <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-stone-200 leading-snug">
-              {video.actionPrompt}
-            </p>
-          </div>
-          <Link
-            href={`/advisor?prompt=${encodeURIComponent(
-              `I just watched the lecture "${video.title}" by ${video.presenter}. How do I put this into action: "${video.actionPrompt}"?`
-            )}`}
-            className="shrink-0"
-          >
-            <Button
-              size="sm"
-              className="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs gap-1.5 shadow-xs w-full sm:w-auto"
-              data-testid="launch-advisor-button"
-            >
-              <MessageSquare className="h-3.5 w-3.5" />
-              <span>Practice with AI Advisor</span>
-            </Button>
-          </Link>
         </div>
       )}
     </section>
