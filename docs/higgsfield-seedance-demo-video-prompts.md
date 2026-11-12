@@ -225,7 +225,7 @@ node scripts/generate-higgsfield-demo-videos.mjs
 ```
 
 ### 6.2 Low-Level JSON-RPC 2.0 MCP Protocol Schema
-When triggering directly via an MCP agent or HTTP POST with `Authorization: Bearer <higgsfield-token>` and `Accept: application/json, text/event-stream`:
+When triggering directly via an MCP agent or HTTP POST with `Authorization: Bearer <higgsfield-token>` and `Accept: application/json, text/event-stream`. For accounts with an active unlimited free trial pass, pass `"use_unlim": true` in params:
 
 #### MCP Call for Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour"
 ```json
@@ -242,7 +242,8 @@ When triggering directly via an MCP agent or HTTP POST with `Authorization: Bear
         "duration": 30,
         "resolution": "480p",
         "aspect_ratio": "16:9",
-        "generate_audio": true
+        "generate_audio": true,
+        "use_unlim": true
       }
     }
   }
@@ -264,7 +265,8 @@ When triggering directly via an MCP agent or HTTP POST with `Authorization: Bear
         "duration": 30,
         "resolution": "480p",
         "aspect_ratio": "16:9",
-        "generate_audio": true
+        "generate_audio": true,
+        "use_unlim": true
       }
     }
   }
@@ -274,7 +276,10 @@ When triggering directly via an MCP agent or HTTP POST with `Authorization: Bear
 ### 6.3 Credit & Account Quota Diagnostic
 - **Seedance 2.5 Cost Profile:** Each 30-second `480p` video requires **90 credits** (or 180 credits for both videos).
 - **Workspace Selection Requirement:** The MCP requires selecting the active user workspace (via `select_workspace`) before submitting jobs.
-- **Trial & Credit Gating:** If the account has an expired or cancelled trial, the backend returns HTTP 403 `only_mcp_usage_on_trial_is_available`. Accounts must have sufficient credits (top-up available at `https://higgsfield.ai/mcp-pricing`) or an active unmetered MCP trial pass.
+- **Unlimited Mode (`use_unlim: true`):** Supported by `seedance_2_5` when an unmetered trial is active. Live MCP diagnostic returns:
+  * When `use_unlim: true` is passed on an account with a cancelled trial: `{"error": "Unlimited generations aren't available on this account. Retry without use_unlim to generate with credits."}`
+  * Account trial inspection (`show_plans_and_credits`): `trial_status: {"status": "cancelled_by_user", "trial_credits": 0, "eligible": false}`, `unlim_trial_in_mcp_active: false`.
+  * Standard credit mode: Account holds `9.5 credits` (insufficient for 90-credit generation). Reactivation / top-up available at `https://higgsfield.ai/mcp-pricing`.
 
 ### 6.4 Direct Higgsfield CLI Execution Engine
 In addition to the MCP protocol runner, a dedicated direct CLI execution script is provided in the repository:
@@ -290,8 +295,8 @@ node scripts/execute-higgsfield-cli-demo-videos.mjs
 
 🔍 Checking Higgsfield CLI Installation & Account Status...
    • CLI Version: higgsfield 1.2.3 (4cdfcbdbc9972c1092f9d8fcb93a00c3a97de84f)
-   • Account: mouradmaker@gmail.com — ultra plan, 10 credits
-   • Active Workspace: Private — ultra plan, 10 credits
+   • Account: mouradmaker@gmail.com — ultra plan, 9.5 credits
+   • Active Workspace: Private — ultra plan, 9.5 credits
 
 🚀 Executing CLI Generation for [Video 1: The 3 Pillars of Alongside — Guided Lifespan Tour]...
    Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
@@ -305,9 +310,10 @@ node scripts/execute-higgsfield-cli-demo-videos.mjs
 ```
 
 ### 6.5 Live Completed Seedance 2.5 Video Assets on Account
-The account previously generated two 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
+The account previously generated three 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
 1. [**Launch Trailer Part 1 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_125709_9de81a3e-c2f3-4d32-8e46-036b21613fec.mp4) (`9de81a3e-c2f3-4d32-8e46-036b21613fec`): Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
 2. [**Launch Trailer Part 2 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_173740_ffae18d9-dba0-48dc-87fa-898bc433fdb6.mp4) (`ffae18d9-dba0-48dc-87fa-898bc433fdb6`): Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
+3. [**Lifespan Exploration Trailer (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_114758_2187e72a-224d-4b9a-b234-30f09eb2b956.mp4) (`2187e72a-224d-4b9a-b234-30f09eb2b956`): Whole-child lifespan navigation, developmental tier benchmarking, and calm parental advisory interface.
 
 ---
 

@@ -7,7 +7,7 @@
  * and the Seedance 2.5 model (480p, 16:9, Native Audio).
  * 
  * Usage:
- *   node scripts/generate-higgsfield-demo-videos.mjs [--preflight] [--video 1|2|all]
+ *   node scripts/generate-higgsfield-demo-videos.mjs [--preflight] [--unlim] [--video 1|2|all]
  */
 
 import https from "node:https";
@@ -111,7 +111,17 @@ async function main() {
   const credits = balanceRes.result?.structuredContent?.credits ?? "Unknown";
   const plan = balanceRes.result?.structuredContent?.subscription_plan_type ?? "Unknown";
   console.log(`   • Plan: ${plan}`);
-  console.log(`   • Current Balance: ${credits} credits\n`);
+  console.log(`   • Current Balance: ${credits} credits`);
+
+  // Check Unlimited Generations Allowance on Account
+  const exploreRes = await callMcpTool(token, "models_explore", { action: "list", unlim: true });
+  const unlimStatus = exploreRes.result?.structuredContent?.unlim;
+  const isUnlimAvailable = Boolean(unlimStatus?.available);
+  console.log(`   • Unlimited Generations Active: ${isUnlimAvailable ? "YES (Unlimited Free Trial)" : "NO (Not active / Trial cancelled)"}`);
+  if (unlimStatus?.expires_at) {
+    console.log(`   • Allowance Expires: ${unlimStatus.expires_at}`);
+  }
+  console.log("");
 
   const wsRes = await callMcpTool(token, "list_workspaces", {});
   const workspaces = wsRes.result?.structuredContent?.workspaces || [];
@@ -121,6 +131,10 @@ async function main() {
     await callMcpTool(token, "select_workspace", { workspace_id: targetWs.id });
     console.log("   ✓ Workspace active.\n");
   }
+
+  const isPreflightOnly = process.argv.includes("--preflight");
+  const forceUnlim = process.argv.includes("--unlim");
+  const useUnlim = forceUnlim || isUnlimAvailable;
 
   // Step B: Preflight Cost Verification
   console.log("📊 Preflight Cost Calculation for Seedance 2.5 (30s, 480p, Native Audio):");
@@ -138,9 +152,8 @@ async function main() {
     const quotedCost = costRes.result?.structuredContent?.cost?.credits ?? 90;
     console.log(`   • [${video.title}]: ${quotedCost} credits required.`);
   }
-  console.log("");
+  console.log(`   • Generation Mode: ${useUnlim ? "Unlimited Trial (use_unlim: true)" : "Standard Credits"}\n`);
 
-  const isPreflightOnly = process.argv.includes("--preflight");
   if (isPreflightOnly) {
     console.log("ℹ️  --preflight flag detected. Halting prior to generation submission.");
     return;
@@ -148,26 +161,34 @@ async function main() {
 
   // Step C: Execute Video Generations
   for (const video of DEMO_VIDEOS) {
-    console.log(`🚀 Submitting ${video.title}...`);
-    const submitRes = await callMcpTool(token, "generate_video", {
-      params: {
-        model: "seedance_2_5",
-        prompt: video.prompt,
-        duration: video.duration,
-        resolution: video.resolution,
-        aspect_ratio: video.aspect_ratio,
-        generate_audio: video.generate_audio
-      }
-    });
+    console.log(`🚀 Submitting ${video.title} via Higgsfield MCP...`);
+    const params = {
+      model: "seedance_2_5",
+      prompt: video.prompt,
+      duration: video.duration,
+      resolution: video.resolution,
+      aspect_ratio: video.aspect_ratio,
+      generate_audio: video.generate_audio
+    };
+    if (useUnlim) {
+      params.use_unlim = true;
+    }
+
+    const submitRes = await callMcpTool(token, "generate_video", { params });
 
     if (submitRes.isError) {
       const errMsg = submitRes.result?.content?.[0]?.text || JSON.stringify(submitRes.result);
       console.warn(`   ⚠️ Generation rejected by backend:`);
       console.warn(`      ${errMsg}\n`);
 
-      if (errMsg.includes("only_mcp_usage_on_trial_is_available") || errMsg.includes("credits")) {
+      if (errMsg.includes("Unlimited generations aren't available")) {
+        console.log("   📌 Unlimited Status Note:");
+        console.log("      The MCP backend rejected `use_unlim: true` because unlimited trial is not currently active on this account.");
+        console.log("      Trial Status: `cancelled_by_user` (0 trial credits).");
+        console.log("      Reactivate trial or top up at: https://higgsfield.ai/mcp-pricing\n");
+      } else if (errMsg.includes("only_mcp_usage_on_trial_is_available") || errMsg.includes("credits")) {
         console.log("   📌 Resolution Note:");
-        console.log("      Your account currently has 10 credits, while Seedance 2.5 (30s) requires 90 credits.");
+        console.log(`      Your account currently has ${credits} credits, while Seedance 2.5 (30s) requires 90 credits.`);
         console.log("      The trial period was previously marked 'cancelled_by_user'.");
         console.log("      To generate these high-fidelity 30s clips, visit:");
         console.log("      https://higgsfield.ai/mcp-pricing to top up credits or reactivate your trial.\n");

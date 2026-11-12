@@ -23,7 +23,10 @@ node scripts/execute-higgsfield-cli-demo-videos.mjs
 # Preflight cost and workspace verification:
 node scripts/generate-higgsfield-demo-videos.mjs --preflight
 
-# Execute both video generations directly via Higgsfield MCP:
+# Execute generation attempting unlimited free trial mode (use_unlim: true):
+node scripts/generate-higgsfield-demo-videos.mjs --unlim
+
+# Execute standard generation:
 node scripts/generate-higgsfield-demo-videos.mjs
 ```
 
@@ -129,11 +132,17 @@ Direct terminal execution of the CLI commands via `node scripts/execute-higgsfie
 
 ## 🎥 Completed Seedance 2.5 Demo Video References (Generated on Account)
 
-The account previously generated two 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
+The account previously generated three 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
 
 1. [**Launch Trailer Part 1 (Shot 1–3, 30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_125709_9de81a3e-c2f3-4d32-8e46-036b21613fec.mp4):
-   - ID: `9de81a3e-c2f3-4d32-8e46-036b21613fec`
-   - Features: Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
+   - **ID:** `9de81a3e-c2f3-4d32-8e46-036b21613fec`
+   - **Created:** 2026-11-11 12:57 UTC
+   - **Features:** Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
 2. [**Launch Trailer Part 2 (Shot 4–6, 30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_173740_ffae18d9-dba0-48dc-87fa-898bc433fdb6.mp4):
-   - ID: `ffae18d9-dba0-48dc-87fa-898bc433fdb6`
-   - Features: Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
+   - **ID:** `ffae18d9-dba0-48dc-87fa-898bc433fdb6`
+   - **Created:** 2026-11-11 17:37 UTC
+   - **Features:** Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
+3. [**Lifespan Exploration Trailer (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_114758_2187e72a-224d-4b9a-b234-30f09eb2b956.mp4):
+   - **ID:** `2187e72a-224d-4b9a-b234-30f09eb2b956`
+   - **Created:** 2026-11-11 11:47 UTC
+   - **Features:** Whole-child lifespan navigation, developmental tier benchmarking, and calm parental advisory interface.
