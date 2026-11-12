@@ -18,13 +18,13 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
     it('asserts AUTHENTICATED_CORE_LINKS contains the canonical advisory destinations', () => {
       expect(AUTHENTICATED_CORE_LINKS).toHaveLength(4);
       const labels = AUTHENTICATED_CORE_LINKS.map((link) => link.label);
-      expect(labels).toEqual(['Home', 'Parent Academy', 'Culture Digest', 'Family Pacts & Devices']);
+      expect(labels).toEqual(['Home', 'Academy', 'Digest', 'Devices']);
     });
 
     it('asserts devices link is present in primary navigation', () => {
       const devicesLink = AUTHENTICATED_CORE_LINKS.find((link) => link.href === '/devices');
       expect(devicesLink).toBeDefined();
-      expect(devicesLink?.label).toBe('Family Pacts & Devices');
+      expect(devicesLink?.label).toBe('Devices');
     });
 
     it('verifies "More" dropdown was eliminated from desktop Header navigation', () => {

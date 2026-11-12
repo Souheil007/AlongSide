@@ -16,7 +16,7 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
       expect(AUTHENTICATED_CORE_LINKS).toHaveLength(4);
     });
 
-    it('asserts AUTHENTICATED_CORE_LINKS has Home, Parent Academy, Culture Digest, and Family Pacts & Devices in order', () => {
+    it('asserts AUTHENTICATED_CORE_LINKS has Home, Academy, Digest, and Devices in order', () => {
       const links = AUTHENTICATED_CORE_LINKS.map((link) => ({
         href: link.href,
         label: link.label,
@@ -24,9 +24,9 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
 
       expect(links).toEqual([
         { href: '/dashboard', label: 'Home' },
-        { href: '/academy', label: 'Parent Academy' },
-        { href: '/digest', label: 'Culture Digest' },
-        { href: '/devices', label: 'Family Pacts & Devices' },
+        { href: '/academy', label: 'Academy' },
+        { href: '/digest', label: 'Digest' },
+        { href: '/devices', label: 'Devices' },
       ]);
     });
 

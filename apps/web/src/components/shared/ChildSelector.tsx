@@ -175,11 +175,12 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
         className={cn(
           'group inline-flex min-h-[44px] items-center gap-2 rounded-[5px] border border-[#E3E3DC] bg-white px-3 py-1.5 text-left text-xs font-medium text-[#111413] shadow-2xs transition-all hover:border-[#111413] hover:bg-[#F4F4F0] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/30',
           variant === 'compact' && 'min-h-[38px] px-2 py-1 text-xs',
+          variant === 'header' && 'min-h-[38px] py-1 px-2.5 rounded-full',
           isOpen && 'border-[#143D2B] ring-2 ring-[#143D2B]/20'
         )}
       >
         {/* Child Avatar with Initial */}
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] bg-[#143D2B] text-[11px] font-bold text-white shadow-2xs group-hover:scale-105 transition-transform">
+        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#143D2B] text-[10px] font-bold text-white shadow-2xs group-hover:scale-105 transition-transform">
           {activeChild?.name ? (
             activeChild.name.charAt(0).toUpperCase()
           ) : (
@@ -199,7 +200,7 @@ export function ChildSelector({ className, variant = 'header' }: ChildSelectorPr
               </span>
             )}
           </div>
-          {variant !== 'compact' && horizon && (
+          {variant !== 'compact' && variant !== 'header' && horizon && (
             <span className="truncate text-[10px] text-[#858C88] hidden sm:inline-block max-w-[140px]">
               {horizon.tierLabel.split(':')[1]?.trim() || horizon.stage}
             </span>
