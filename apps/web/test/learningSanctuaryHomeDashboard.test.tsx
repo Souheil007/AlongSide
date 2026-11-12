@@ -353,23 +353,26 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
     });
   });
 
-  describe('6. 24/7 AI Child Advisor — Empathetic Co-Pilot (AskAdvisorPromptBar)', () => {
-    it('renders Empathetic Co-Pilot format matching user approval with Frequent Situations and AI Advisor', () => {
+  describe('6. 24/7 AI Child Advisor — Ultra-Compact Launcher (AskAdvisorPromptBar)', () => {
+    it('renders ultra-compact AI Advisor omnibar with 1-tap frequent situations (Direction 3)', () => {
       const html = renderToStaticMarkup(
         <AskAdvisorPromptBar child={mockTweenMaya} />
       );
 
-      expect(html).toContain('Empathetic Co-Pilot');
       expect(html).toContain('24/7 AI Child Advisor');
-      expect(html).toContain('Trained on Developmental Neurobiology • Non-Judgmental');
-      expect(html).toContain('Ask Dr. Alongside');
+      expect(html).toContain('Dr. Alongside');
+      expect(html).toContain('Ask anything about Maya');
       expect(html).toContain('Frequent Situations:');
       expect(html).toContain('Console Meltdown');
       expect(html).toContain('Peer Phone Pressure');
       expect(html).toContain('Slammed Bedroom Door');
-      expect(html).toContain('De-escalating Screen Shutdown Meltdowns');
-      expect(html).toContain('Actionable Guide');
-      expect(html).toContain('Ask Advisor About This');
+
+      // Purged clutter: static reading guides and redundant sub-headers
+      expect(html).not.toContain('Empathetic Co-Pilot');
+      expect(html).not.toContain('Trained on Developmental Neurobiology • Non-Judgmental');
+      expect(html).not.toContain('Actionable Guide');
+      expect(html).not.toContain('De-escalating Screen Shutdown Meltdowns');
+      expect(html).not.toContain('Ask Advisor About This');
     });
   });
 });
