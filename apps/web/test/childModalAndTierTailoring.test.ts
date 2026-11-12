@@ -73,7 +73,7 @@ describe('SOU-63: Child Profile Modal, Tier Tailoring & Modern FAQ Explorer Spec
       expect(categoryIds).toContain('modern-world-and-devices');
     });
 
-    it('provides clinical FAQs covering every canonical tier in CURATED_FAQS', () => {
+    it('provides expert FAQs covering every canonical tier in CURATED_FAQS', () => {
       const tiersInVault = new Set(CURATED_FAQS.map((f) => f.targetTier).filter(Boolean));
 
       expect(tiersInVault.has(DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3)).toBe(true);

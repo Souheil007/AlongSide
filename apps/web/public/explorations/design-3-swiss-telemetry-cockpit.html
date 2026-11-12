@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 3: The Swiss Telemetry Cockpit | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #F8F8F6; color: #111413; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .swiss-border { border-color: #E2E2DE; }
+    .swiss-grid-bg {
+      background-size: 24px 24px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased swiss-grid-bg">
+
+  <!-- Swiss Precision Top Coordinate Bar -->
+  <header class="border-b swiss-border bg-white sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between text-xs font-mono">
+      <div class="flex items-center gap-6">
+        <span class="font-bold tracking-wider uppercase text-[#143D2B] flex items-center gap-2">
+          <span class="w-2 h-2 bg-emerald-600 rounded-none"></span>
+          ALONGSIDE.OS
+        </span>
+        <span class="text-stone-400 hidden sm:inline">SYS.VER: 2.4.0</span>
+        <span class="text-stone-400 hidden md:inline">LOC: 48.8566° N, 2.3522° E</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 bg-stone-100 px-2.5 py-1 text-stone-800">
+          <span class="text-emerald-600 font-bold">●</span>
+          <span>SUBJECT: MAYA (11.2 YRS)</span>
+          <span class="text-stone-400">|</span>
+          <span class="text-stone-600">ROAD 1: PRE-DEVICE</span>
+        </div>
+        <div class="bg-stone-900 text-stone-100 px-2.5 py-1 font-bold">
+          4-DAY STREAK (18M)
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto border-x swiss-border bg-white min-h-[calc(100vh-45px)]">
+
+    <!-- 1. SWISS PRECISION HERO STRIP -->
+    <section class="border-b swiss-border p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-baseline">
+      <div class="lg:col-span-8 space-y-3">
+        <div class="font-mono text-[10px] uppercase font-bold tracking-widest text-[#143D2B]">
+          [ 01 // CALIBRATION &amp; DAILY COMPASS ]
+        </div>
+        <h1 class="font-serif text-4xl sm:text-6xl font-normal tracking-tight text-black leading-none">
+          Welcome home, Souheil.
+        </h1>
+        <p class="font-serif italic text-lg sm:text-xl text-stone-600 pt-2 leading-snug max-w-2xl">
+          “You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.”
+        </p>
+      </div>
+
+      <div class="lg:col-span-4 border-l swiss-border pl-6 space-y-2 font-mono text-xs text-stone-500 self-end">
+        <div class="flex justify-between py-1 border-b swiss-border">
+          <span>SOURCE:</span>
+          <span class="text-black font-semibold">Dr. Chen, Advisory</span>
+        </div>
+        <div class="flex justify-between py-1 border-b swiss-border">
+          <span>DEVELOPMENTAL TIER:</span>
+          <span class="text-black font-semibold">TIER 3 (10–12 YRS)</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span>HORIZON TARGET:</span>
+          <span class="text-emerald-700 font-bold">SMARTPHONE READINESS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HIGH-DENSITY CURRICULUM CONSOLE (No boxes, connected grid matrix) -->
+    <section class="border-b swiss-border grid grid-cols-1 lg:grid-cols-12">
+      
+      <!-- Left Meta Rail -->
+      <div class="lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r swiss-border space-y-6">
+        <div class="space-y-1">
+          <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-[#143D2B]">
+            [ 02 // ACTIVE NEUROBIOLOGY CURRICULUM ]
+          </span>
+          <h2 class="font-serif text-2xl font-bold text-black mt-1">
+            Tween Adrenarche &amp; Neurobiology Shift
+          </h2>
+          <p class="text-xs text-stone-600 leading-relaxed pt-1">
+            Biological calibration for peer validation, social pain circuits, and dopamine surges during pubertal transitions.
+          </p>
+        </div>
+
+        <!-- Segmented Chapter Ribbon -->
+        <div class="space-y-2 font-mono text-xs">
+          <div class="flex items-center justify-between text-stone-400 text-[10px] pb-1 border-b swiss-border">
+            <span>MILESTONE PROGRESSION</span>
+            <span>40% COMPLETE</span>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex items-center justify-between p-2 bg-stone-100 text-stone-500 line-through">
+              <span>01. The Biological Shift</span>
+              <span>[DONE]</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-stone-100 text-stone-500 line-through">
+              <span>02. Peer Validation Dominance</span>
+              <span>[DONE]</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 bg-[#143D2B] text-white font-bold">
+              <span>03. Exclusion Anxiety (Tonight)</span>
+              <span class="text-emerald-300">ACTIVE • 3:45</span>
+            </div>
+            <div class="flex items-center justify-between p-2 text-stone-400">
+              <span>04. Screen Pacts Without Friction</span>
+              <span>PENDING</span>
+            </div>
+            <div class="flex items-center justify-between p-2 text-stone-400">
+              <span>05. Bedtime Sleep Architecture</span>
+              <span>PENDING</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Active Script Display -->
+      <div class="lg:col-span-8 p-8 sm:p-10 flex flex-col justify-between space-y-6 bg-stone-50/50">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-[#143D2B] font-bold">
+              VERBATIM RE-REGULATION SCRIPT • CH 03
+            </span>
+            <span class="text-stone-500">4-MIN ESTIMATED PRACTICE</span>
+          </div>
+
+          <div class="border-l-4 border-[#143D2B] pl-6 py-2">
+            <p class="font-serif italic text-xl sm:text-2xl text-black leading-relaxed">
+              “I notice you felt left out of that Minecraft realm today. It really hurts when friends don't include you, and it makes complete sense that you feel angry. I am right here with you.”
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs pt-4 border-t swiss-border">
+            <div class="space-y-1">
+              <span class="text-stone-400 text-[10px] uppercase font-bold block">SCIENTIFIC MECHANISM:</span>
+              <p class="text-stone-700 leading-snug">
+                Adrenarche activates dACC social exclusion circuitry with the same neural markers as physical burn trauma.
+              </p>
+            </div>
+            <div class="space-y-1">
+              <span class="text-stone-400 text-[10px] uppercase font-bold block">PARENT OBJECTIVE:</span>
+              <p class="text-stone-700 leading-snug">
+                Co-regulate the amygdala before offering logical problem solving.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t swiss-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
+          <div class="flex items-center gap-3">
+            <button class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold hover:bg-stone-800 transition">
+              ▶
+            </button>
+            <div class="text-xs">
+              <span class="font-bold text-black block">AUDIO DISPATCH (3:45)</span>
+              <span class="text-stone-500">DR. CHEN NARRATION</span>
+            </div>
+          </div>
+
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] text-white text-xs font-bold px-6 py-3 hover:bg-[#0E2B1E] transition">
+            <span>OPEN CHAPTER READER (4M)</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SPLIT TELEMETRY: Cultural Intelligence & Readiness Diagnostic -->
+    <section class="border-b swiss-border grid grid-cols-1 lg:grid-cols-12">
+      
+      <!-- Youth Culture Telemetry (Left 6 cols) -->
+      <div class="lg:col-span-6 p-8 border-b lg:border-b-0 lg:border-r swiss-border space-y-6">
+        <div class="flex items-center justify-between font-mono text-[10px] font-bold text-stone-500">
+          <span>[ 03 // SCHOOLYARD CULTURAL TELEMETRY ]</span>
+          <span>ISSUE #42</span>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-baseline justify-between border-b swiss-border pb-2">
+            <span class="font-serif text-2xl font-bold text-black">TERM: RIZZ</span>
+            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5">
+              CRINGE SCORE: 3 / 5 (MODERATE)
+            </span>
+          </div>
+          <p class="text-xs text-stone-600 leading-relaxed font-sans">
+            Short for charisma. The ability to charm someone through effortless composure. Safe for parents to recognize without prompting eye-rolls.
+          </p>
+        </div>
+
+        <div class="space-y-2 font-mono text-xs">
+          <span class="text-stone-400 text-[10px] font-bold block">RADAR INDEX:</span>
+          <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+            <div class="p-2 border swiss-border bg-stone-50">
+              <span class="font-bold block text-black">CRASHOUT</span>
+              <span class="text-stone-500 text-[10px]">4/5 Cringe</span>
+            </div>
+            <div class="p-2 border swiss-border bg-stone-50">
+              <span class="font-bold block text-black">COOKED</span>
+              <span class="text-stone-500 text-[10px]">2/5 Cringe</span>
+            </div>
+            <div class="p-2 border swiss-border bg-stone-50">
+              <span class="font-bold block text-black">GYATT</span>
+              <span class="text-stone-500 text-[10px]">5/5 Cringe</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-stone-100 space-y-1 font-mono text-xs">
+          <span class="text-[#143D2B] font-bold block">[ DINNER PROTOCOL ]</span>
+          <p class="text-stone-800 font-sans italic text-sm">
+            “If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”
+          </p>
+        </div>
+      </div>
+
+      <!-- Readiness Diagnostic (Right 6 cols) -->
+      <div class="lg:col-span-6 p-8 space-y-6">
+        <div class="flex items-center justify-between font-mono text-[10px] font-bold text-stone-500">
+          <span>[ 04 // FIRST-PHONE READINESS RADAR ]</span>
+          <span class="text-emerald-700">STATUS: AWAITING CALIBRATION</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <!-- Circular Swiss Diagnostic Reticle -->
+          <div class="sm:col-span-5 flex flex-col items-center justify-center p-4 border swiss-border bg-stone-50 text-center space-y-2">
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="#E2E2DE" stroke-width="4" fill="transparent" />
+                <circle cx="50" cy="50" r="40" stroke="#10B981" stroke-width="4" stroke-dasharray="8 8" fill="transparent" class="animate-spin" style="animation-duration: 24s;" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center font-mono">
+                <span class="text-xl font-bold text-black">--%</span>
+                <span class="text-[9px] text-stone-400">PENDING</span>
+              </div>
+            </div>
+            <span class="font-mono text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5">
+              ● RADAR READY
+            </span>
+          </div>
+
+          <!-- Quadrant Targets -->
+          <div class="sm:col-span-7 space-y-3 font-mono text-xs">
+            <h4 class="font-serif font-bold text-base text-black font-sans">
+              Evaluate Maya's Readiness
+            </h4>
+            <p class="text-xs text-stone-600 font-sans leading-snug">
+              10 real-world scenarios across bedtime sleep, impulse control, and group chat boundaries.
+            </p>
+            <div class="grid grid-cols-2 gap-1.5 text-[10px]">
+              <span class="p-1 border swiss-border bg-stone-50">🌙 SLEEP INDEP.</span>
+              <span class="p-1 border swiss-border bg-stone-50">📚 TASK HABITS</span>
+              <span class="p-1 border swiss-border bg-stone-50">👥 PEER DEFENSE</span>
+              <span class="p-1 border swiss-border bg-stone-50">🧘 RESET MECH.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t swiss-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono">
+          <span class="text-[11px] text-stone-500">~3 MINS • 10 QUESTIONS</span>
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] text-white text-xs font-bold px-5 py-2.5 hover:bg-[#0E2B1E] transition">
+            <span>START READINESS ASSESSMENT</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 4. 24/7 AI ADVISOR SWISS INTERFACE -->
+    <section class="p-8 sm:p-12 space-y-4">
+      <div class="flex items-center justify-between font-mono text-xs">
+        <span class="text-[#143D2B] font-bold">[ 05 // 24/7 NEUROBIOLOGICAL SPARRING ADVISOR ]</span>
+        <span class="text-stone-400 hidden sm:inline">ZERO-RETENTION TELEMETRY</span>
+      </div>
+
+      <form class="flex flex-col sm:flex-row gap-2">
+        <input 
+          type="text" 
+          placeholder="Ask Dr. Alongside: 'Console shutdown friction' or 'How to discuss sleepovers without defensiveness'..."
+          class="flex-1 border swiss-border p-3 text-xs sm:text-sm font-sans focus:outline-none focus:border-black bg-stone-50"
+        />
+        <button class="bg-black hover:bg-stone-800 text-white font-mono text-xs font-bold px-6 py-3 transition shrink-0">
+          SUBMIT QUERY →
+        </button>
+      </form>
+
+      <div class="flex items-center gap-2 font-mono text-xs text-stone-500 pt-1 flex-wrap">
+        <span>PRE-CONFIGURED PROTOCOLS:</span>
+        <button class="px-2 py-0.5 border swiss-border hover:bg-stone-100 text-black text-[11px]">
+          [1] CONSOLE MELTDOWN
+        </button>
+        <button class="px-2 py-0.5 border swiss-border hover:bg-stone-100 text-black text-[11px]">
+          [2] PEER PHONE PRESSURE
+        </button>
+        <button class="px-2 py-0.5 border swiss-border hover:bg-stone-100 text-black text-[11px]">
+          [3] SLAMMED BEDROOM DOOR
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t swiss-border bg-stone-100 text-stone-500 font-mono text-[11px] py-4 text-center">
+    ALONGSIDE pediatric ARCHITECTURE • ZERO SURVEILLANCE • BILATERAL PACT INTEGRITY
+  </footer>
+
+</body>
+</html>

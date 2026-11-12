@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 6: The Celestial Gravitational Orbit | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            space: '#070A12',
+            starvoid: '#0C1120',
+            cosmic: '#141D34',
+            aurora: '#2DD4BF',
+            starlight: '#F5DEB3',
+            flare: '#F59E0B',
+            plasma: '#818CF8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #070A12; color: #E2E8F0; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .orbit-ring {
+      border: 1px dashed rgba(129, 140, 248, 0.2);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .orbit-ring-solid {
+      border: 1px solid rgba(45, 212, 191, 0.15);
+    }
+    @keyframes spin-slow {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 35px rgba(45, 212, 191, 0.6)); }
+    }
+    .pulse-core { animation: pulse-glow 5s infinite ease-in-out; }
+    .spin-ring { animation: spin-slow 120s linear infinite; }
+    .star-bg {
+      background-image: radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                        radial-gradient(1.5px 1.5px at 80px 120px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 150px 70px, rgba(129,140,248,0.8), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 230px 240px, rgba(45,212,191,0.6), rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 300px 180px, #ffffff, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 400px 400px;
+    }
+    .glass-station {
+      background: rgba(12, 17, 32, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-station:hover {
+      border-color: rgba(45, 212, 191, 0.4);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 35px -5px rgba(45, 212, 191, 0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body class="star-bg min-h-screen relative antialiased selection:bg-teal-500 selection:text-black">
+
+  <!-- Top Navigation & Return -->
+  <header class="border-b border-white/10 bg-space/80 backdrop-blur-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-1.5 font-mono text-xs text-stone-400 hover:text-white transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>All Explorations</span>
+        </a>
+        <span class="text-white/20">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+          <span class="font-display font-bold text-lg tracking-wider text-white">ALONGSIDE</span>
+          <span class="font-mono text-[10px] text-teal-400 border border-teal-500/30 px-2 py-0.5 rounded-full bg-teal-950/40">ORBIT HUD</span>
+        </div>
+      </div>
+
+      <!-- Child Orbit Core Selector -->
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl font-mono text-xs">
+          <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+          <span class="text-white font-medium">Child: Maya</span>
+          <span class="text-white/40">·</span>
+          <span class="text-teal-300">Age 10 (Elementary)</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl font-mono text-xs text-starlight">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <span>4-Day Orbit Streak</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-12 relative">
+
+    <!-- Atmospheric Intro -->
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 font-mono text-xs text-teal-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+        <span>Equilibrium Telemetry · 92% Calm Index</span>
+      </div>
+      <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
+        Family Gravitational Field
+      </h1>
+      <p class="text-xs sm:text-sm text-stone-400 leading-relaxed">
+        Everything revolves around mutual connection. No disconnected silos—every satellite syncs your pediatric guidance, digital agreement, and child’s developmental universe in one live spatial orbit.
+      </p>
+    </div>
+
+    <!-- THE CENTRAL ORBIT SYSTEM (Spatial Map) -->
+    <div class="relative w-full min-h-[580px] sm:min-h-[640px] flex items-center justify-center py-8">
+
+      <!-- Orbit Rings Background -->
+      <div class="orbit-ring w-[320px] h-[320px] sm:w-[440px] sm:h-[440px]"></div>
+      <div class="orbit-ring orbit-ring-solid w-[480px] h-[480px] sm:w-[680px] sm:h-[680px] spin-ring"></div>
+      <div class="orbit-ring w-[640px] h-[640px] sm:w-[900px] sm:h-[900px]"></div>
+
+      <!-- CENTER SUN: MAYA'S SANCTUARY CORE -->
+      <div class="relative z-20 flex flex-col items-center text-center">
+        <div class="relative flex items-center justify-center">
+          <div class="absolute w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-teal-500/20 via-indigo-500/20 to-amber-500/20 blur-xl"></div>
+          <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gradient-to-tr from-[#0F291E] via-[#143D2B] to-[#1E5D42] border-2 border-teal-400/50 flex flex-col items-center justify-center shadow-[0_0_50px_rgba(45,212,191,0.3)] pulse-core cursor-pointer hover:border-teal-300 transition p-2">
+            <span class="font-mono text-[9px] uppercase tracking-widest text-teal-300">Gravitational Core</span>
+            <span class="font-display font-bold text-lg sm:text-xl text-white">Maya</span>
+            <span class="font-mono text-[10px] text-starlight">92/100 Calm</span>
+            <div class="mt-1 flex items-center gap-1 font-mono text-[8px] bg-black/40 px-2 py-0.5 rounded-full text-teal-200">
+              <span class="w-1 h-1 rounded-full bg-teal-400 animate-pulse"></span>
+              <span>Harmonious</span>
+            </div>
+          </div>
+        </div>
+        <p class="mt-3 font-mono text-[11px] text-stone-400">Road 1: Pre-Device Preparation</p>
+      </div>
+
+      <!-- SATELLITE 1 (Top Left): 84/100 Readiness Radar Orbit -->
+      <div class="absolute top-4 left-2 sm:top-12 sm:left-12 z-20 w-64 sm:w-72 glass-station rounded-2xl p-4 space-y-3 cursor-pointer group" onclick="expandDrawer('readiness')">
+        <div class="flex items-center justify-between font-mono text-[11px]">
+          <span class="text-teal-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+            ORBIT I · TELEMETRY
+          </span>
+          <span class="text-stone-400 group-hover:text-teal-300 transition">Inspect ↗</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <!-- Animated mini ring -->
+          <div class="relative w-12 h-12 flex-shrink-0 flex items-center justify-center">
+            <svg class="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+              <path class="text-white/10" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="text-teal-400" stroke-dasharray="84, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <span class="absolute font-mono text-xs font-bold text-white">84</span>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-sm text-white group-hover:text-teal-300 transition">First-Phone Readiness</h3>
+            <p class="text-[11px] text-stone-400">High impulse control, bedtime friction flagged</p>
+          </div>
+        </div>
+        <button class="w-full py-2 px-3 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 border border-teal-500/40 font-mono text-xs text-teal-200 font-semibold transition flex items-center justify-center gap-1.5">
+          <span>Start Readiness Assessment</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- SATELLITE 2 (Top Right): 24/7 AI Child Advisor Pulsing Comet -->
+      <div class="absolute top-4 right-2 sm:top-8 sm:right-12 z-20 w-64 sm:w-80 glass-station rounded-2xl p-4 space-y-3 cursor-pointer group" onclick="expandDrawer('advisor')">
+        <div class="flex items-center justify-between font-mono text-[11px]">
+          <span class="text-indigo-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping"></span>
+            ORBIT II · 24/7 AI COMET
+          </span>
+          <span class="text-teal-300 text-[10px]">Ready</span>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-indigo-300 transition">pediatric Advisor Uplink</h3>
+        <p class="text-[11px] text-stone-400">Evidence-based scripts for tween digital boundaries.</p>
+        
+        <div class="space-y-1.5">
+          <div class="bg-white/5 hover:bg-white/10 p-2 rounded-lg text-[11px] text-stone-300 border border-white/5 transition flex items-center justify-between">
+            <span>“She asked for Discord at 10...”</span>
+            <span class="text-indigo-400 font-mono text-[10px]">Script ↗</span>
+          </div>
+          <div class="bg-white/5 hover:bg-white/10 p-2 rounded-lg text-[11px] text-stone-300 border border-white/5 transition flex items-center justify-between">
+            <span>“Bedtime phone arguing...”</span>
+            <span class="text-indigo-400 font-mono text-[10px]">Script ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SATELLITE 3 (Bottom Left): Micro-Academy Galaxy -->
+      <div class="absolute bottom-4 left-2 sm:bottom-10 sm:left-14 z-20 w-64 sm:w-76 glass-station rounded-2xl p-4 space-y-3 cursor-pointer group" onclick="expandDrawer('academy')">
+        <div class="flex items-center justify-between font-mono text-[11px]">
+          <span class="text-amber-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            ORBIT III · ACADEMY
+          </span>
+          <span class="text-stone-400 font-mono text-[10px]">3 min audio</span>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-amber-300 transition">Neurobiology of the Tween Brain</h3>
+        <p class="text-[11px] text-stone-400">Why dopamine loops make Roblox disengagement painful, not defiant.</p>
+        <div class="flex items-center gap-2 pt-1">
+          <div class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300">
+            <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+          </div>
+          <div class="flex-1">
+            <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div class="w-3/5 h-full bg-gradient-to-r from-amber-400 to-amber-200 rounded-full"></div>
+            </div>
+            <span class="font-mono text-[9px] text-stone-400 mt-1 block">Module 3 of 5 · 60% complete</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SATELLITE 4 (Bottom Right): Bilateral Curfew Eclipse & Pact -->
+      <div class="absolute bottom-4 right-2 sm:bottom-8 sm:right-12 z-20 w-64 sm:w-80 glass-station rounded-2xl p-4 space-y-3 cursor-pointer group" onclick="expandDrawer('curfew')">
+        <div class="flex items-center justify-between font-mono text-[11px]">
+          <span class="text-emerald-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            ORBIT IV · PACT LOCK
+          </span>
+          <span class="text-starlight font-mono text-[10px]">Active</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-display font-bold text-sm text-white group-hover:text-emerald-300 transition">Curfew: 8:30 PM Lock</h3>
+            <p class="text-[11px] text-stone-400">Neutral OS-level enforcement</p>
+          </div>
+          <div class="text-right">
+            <span class="font-mono text-xs font-bold text-amber-300">In 2h 45m</span>
+            <span class="block font-mono text-[9px] text-stone-500">Living Room Dock</span>
+          </div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between text-xs">
+          <span class="text-stone-300">Mutual Pact Signed</span>
+          <span class="font-mono text-emerald-400 font-bold">✓ Verified</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HORIZONTAL DEEP INTERCEPT STRIP: Modern Youth Vernacular Radar -->
+    <section class="glass-station rounded-3xl p-6 sm:p-8 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+        <div>
+          <span class="font-mono text-xs uppercase text-teal-400 tracking-wider font-semibold">Sub-Orbital Radar</span>
+          <h2 class="font-display text-xl font-bold text-white">Modern Recess & Gaming Signals</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs text-stone-400">Elementary Tier Decoded</span>
+          <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <!-- Signal 1 -->
+        <div class="bg-space/80 border border-white/10 rounded-2xl p-4 space-y-2 hover:border-teal-400/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-white text-base">“Griefing”</span>
+            <span class="font-mono text-[10px] text-teal-300 bg-teal-950/60 border border-teal-500/20 px-2 py-0.5 rounded">Gaming Verb</span>
+          </div>
+          <p class="text-xs text-stone-400">Sabotaging someone’s digital build or creative progress in Minecraft/Roblox.</p>
+          <div class="bg-white/5 p-2 rounded-lg border-l-2 border-teal-400 text-[11px] text-teal-100 italic">
+            “That feels unfair when you worked hard on it. Let's make sure the world has saving backups.”
+          </div>
+        </div>
+
+        <!-- Signal 2 -->
+        <div class="bg-space/80 border border-white/10 rounded-2xl p-4 space-y-2 hover:border-teal-400/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-white text-base">“No Backsies”</span>
+            <span class="font-mono text-[10px] text-amber-300 bg-amber-950/60 border border-amber-500/20 px-2 py-0.5 rounded">Recess Law</span>
+          </div>
+          <p class="text-xs text-stone-400">Unwritten recess rule that once a physical card or toy trade is shaken, it’s permanent.</p>
+          <div class="bg-white/5 p-2 rounded-lg border-l-2 border-amber-400 text-[11px] text-amber-100 italic">
+            “Even with 'no backsies,' if someone felt pressured, good friends check in to make it right.”
+          </div>
+        </div>
+
+        <!-- Signal 3 -->
+        <div class="bg-space/80 border border-white/10 rounded-2xl p-4 space-y-2 hover:border-teal-400/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-white text-base">“Bruh / Oof”</span>
+            <span class="font-mono text-[10px] text-indigo-300 bg-indigo-950/60 border border-indigo-500/20 px-2 py-0.5 rounded">Exclamation</span>
+          </div>
+          <p class="text-xs text-stone-400">Universal reflex to an awkward mishap or mild classroom disappointment.</p>
+          <div class="bg-white/5 p-2 rounded-lg border-l-2 border-indigo-400 text-[11px] text-indigo-100 italic">
+            “Oof indeed! Did everything survive the fall?”
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function expandDrawer(type) {
+      alert("Satellite Telemetry Opened: " + type.toUpperCase() + "\nIn the full app, clicking any orbital satellite smoothly summons a spatial cockpit overlay with full interactivity!");
+    }
+  </script>
+</body>
+</html>

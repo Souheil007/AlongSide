@@ -30,7 +30,8 @@ export interface PillarData {
   badge: string;
   badgeClass: string;
   highlights: string[];
-  clinicalAnchor: string;
+  expertAnchor: string;
+  clinicalAnchor?: string;
   href: string;
   colSpan?: string;
 }
@@ -118,6 +119,7 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'Bedtime calm rituals & sensory co-regulation strategies',
       'Circadian rhythm calibration & natural melatonin optimization',
     ],
+    expertAnchor: 'American Academy of Pediatrics (AAP) & Pediatric Sleep Foundations',
     clinicalAnchor: 'American Academy of Pediatrics (AAP) & Pediatric Sleep Foundations',
     href: '/academy?category=HEALTH_AND_WELLNESS',
   },
@@ -136,6 +138,7 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'Strict choking hazard spears vs dangerous round cuts',
       'The Division of Responsibility: Parents decide WHAT/WHEN, child decides IF/HOW MUCH',
     ],
+    expertAnchor: 'Based on LEAP Allergy Study & Division of Responsibility in Feeding',
     clinicalAnchor: 'Based on LEAP Allergy Study & Division of Responsibility in Feeding',
     href: '/nutrition',
   },
@@ -154,6 +157,7 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'Face-to-face animal puppet vocal mirroring & high-contrast sensory toys',
       'The Boredom Buster: Why rescuing kids from boredom stunts creative focus',
     ],
+    expertAnchor: 'Based on CDC 2026 Milestone Guidelines & Montessori/Piaget Play Science',
     clinicalAnchor: 'Based on CDC 2026 Milestone Guidelines & Montessori/Piaget Play Science',
     href: '/brain-games',
   },
@@ -172,6 +176,7 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'Toddler hitting & biting decoded: Pre-verbal motor impulse before language inhibition',
       'Word-for-word co-regulation scripts that hold firm limits while validating big feelings',
     ],
+    expertAnchor: 'Based on Dan Siegel’s Whole-Brain Child & Ross Greene Collaborative Proactive Solutions',
     clinicalAnchor: 'Based on Dan Siegel’s Whole-Brain Child & Ross Greene Collaborative Proactive Solutions',
     href: '/behavior',
   },
@@ -190,6 +195,7 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
       'The Bilateral Family Media Agreement: Dual-signed contract holding parents and children mutually accountable',
       'The Neutral 8:30 PM Bed Dock: MDM device profiles enforcing bedroom curfews without manual policing',
     ],
+    expertAnchor: 'Compliant with COPPA Safe Harbor, Apple DDM, and Jonathan Haidt Anxious Generation Principles',
     clinicalAnchor: 'Compliant with COPPA Safe Harbor, Apple DDM, and Jonathan Haidt Anxious Generation Principles',
     href: '/devices',
     colSpan: 'md:col-span-2 lg:col-span-2',

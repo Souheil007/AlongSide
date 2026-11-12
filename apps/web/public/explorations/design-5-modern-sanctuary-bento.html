@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design 5: The Modern Sanctuary Bento | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #F6F6F3; color: #111413; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .bento-surface {
+      background: #FFFFFF;
+      border: 1px solid #E5E5DE;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 10px 20px -5px rgba(20, 61, 43, 0.03);
+    }
+    .bento-surface-accent {
+      background: linear-gradient(135deg, #F9FAF8 0%, #EFF4F1 100%);
+      border: 1px solid #DDE5E0;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased py-8 px-4 sm:px-6 lg:px-8">
+
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <!-- TOP NAV -->
+    <header class="flex items-center justify-between px-2">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-2xl bg-[#143D2B] text-white flex items-center justify-center font-serif italic font-bold shadow-sm">
+          A
+        </div>
+        <span class="font-serif text-xl font-bold tracking-tight text-[#143D2B]">AlongSide</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-full border border-[#E5E5DE] text-xs font-semibold shadow-2xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Maya</span>
+          <span class="text-[#858C88] font-mono text-[11px]">(Age 11)</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-[#FEF3C7] text-[#B45309] font-mono text-xs font-bold px-3 py-1.5 rounded-full border border-amber-200">
+          <span>🔥 4-Day Streak</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ASYMMETRIC BENTO GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- BENTO 1: PANORAMIC SANCTUARY HERO (12 cols) -->
+      <section class="lg:col-span-12 bento-surface rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="space-y-2 max-w-3xl relative z-10">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-[#111413] tracking-tight">
+              Welcome home, Souheil.
+            </h1>
+          </div>
+          <p class="font-serif italic text-sm sm:text-base text-[#494F4C] leading-relaxed">
+            “You don't have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.”
+            <span class="font-mono not-italic text-[11px] text-[#858C88] ml-2 inline-block">— Dr. Chen, Advisory Team</span>
+          </p>
+        </div>
+
+        <div class="shrink-0 flex items-center gap-3 bg-[#FBFBF9] px-4 py-3 rounded-2xl border border-[#E5E5DE] self-start md:self-auto">
+          <div class="w-10 h-10 rounded-xl bg-[#FEF3C7] text-[#B45309] flex items-center justify-center font-bold text-lg">
+            🔥
+          </div>
+          <div class="font-mono text-xs">
+            <span class="font-bold text-[#111413] block">4-Day Active Habit</span>
+            <span class="text-[#858C88]">18 mins learned this week</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- BENTO 2: ACADEMY JOURNEY & SCRIPT (Wide 7 cols) -->
+      <section class="lg:col-span-7 bento-surface rounded-3xl p-6 sm:p-7 space-y-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-[#E5E5DE] pb-3">
+            <div>
+              <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-[#143D2B] block">
+                Active Curriculum • Chapter 3 of 5
+              </span>
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
+                Tween Adrenarche &amp; Neurobiology Shift
+              </h2>
+            </div>
+            <span class="font-mono text-[10px] bg-[#EAF3EE] text-[#143D2B] font-bold px-2.5 py-1 rounded-full border border-emerald-900/10">
+              Active Leaps
+            </span>
+          </div>
+
+          <!-- Micro Roadmap Stepper -->
+          <div class="grid grid-cols-3 gap-2 font-mono text-[11px]">
+            <div class="bg-[#FBFBF9] p-2 rounded-xl border border-[#E5E5DE] text-center text-[#858C88] line-through">
+              Ch 1. Shift ✓
+            </div>
+            <div class="bg-[#FBFBF9] p-2 rounded-xl border border-[#E5E5DE] text-center text-[#858C88] line-through">
+              Ch 2. Peers ✓
+            </div>
+            <div class="bg-[#143D2B] text-white p-2 rounded-xl text-center font-bold shadow-sm">
+              Ch 3. Exclusion
+            </div>
+          </div>
+
+          <!-- The Script -->
+          <div class="bg-gradient-to-br from-[#FBFBF9] to-[#F1F6F3] p-5 rounded-2xl border border-[#E5E5DE] space-y-2">
+            <span class="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
+              Tonight's Verbatim Co-Regulation Script:
+            </span>
+            <blockquote class="font-serif italic text-base text-[#111413] leading-relaxed">
+              “I notice you felt left out of that Minecraft realm today. It really hurts when friends don't include you, and it makes complete sense that you feel angry. I am right here with you.”
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-[#E5E5DE] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 font-mono text-xs text-[#858C88]">
+            <button class="w-8 h-8 rounded-full bg-[#143D2B] text-white flex items-center justify-center text-xs shadow-sm hover:scale-105 transition">
+              ▶
+            </button>
+            <span>Audio Guide (3:45) • Dr. Chen</span>
+          </div>
+
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition shadow-2xs">
+            <span>Start Tonight's Lesson (4m)</span>
+            <span>→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- BENTO 3: SUNDAY YOUTH CULTURE DIGEST (Tall 5 cols) -->
+      <section class="lg:col-span-5 bento-surface rounded-3xl p-6 sm:p-7 space-y-5 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-[#E5E5DE] pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🎒</span>
+              <h3 class="font-serif text-lg font-bold text-[#111413]">Youth Culture Digest</h3>
+            </div>
+            <span class="font-mono text-xs text-[#858C88]">Issue #42</span>
+          </div>
+
+          <!-- Slang Highlight -->
+          <div class="bg-[#FBFBF9] p-4 rounded-2xl border border-[#E5E5DE] space-y-2">
+            <div class="flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-serif font-bold text-lg text-[#143D2B]">Rizz</span>
+                <span class="font-mono text-xs text-[#858C88]">/rɪz/</span>
+              </div>
+              <span class="font-mono text-[10px] font-bold bg-[#FEF3C7] text-[#B45309] px-2 py-0.5 rounded-full">
+                3/5 Cringe
+              </span>
+            </div>
+            <p class="text-xs text-[#494F4C] leading-snug">
+              Charisma and effortless charm. Safe to acknowledge casually.
+            </p>
+          </div>
+
+          <!-- Dinner Challenge -->
+          <div class="bg-[#EAF3EE]/60 p-4 rounded-2xl border border-[#143D2B]/10 space-y-1">
+            <span class="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
+              🍽️ Dinner Starter
+            </span>
+            <p class="font-serif italic text-xs text-[#111413] leading-relaxed">
+              “If our family had to survive inside Minecraft for 24 hours, who builds the shelter and who guards the door?”
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between text-xs text-[#858C88] font-mono border-t border-[#E5E5DE]">
+          <span>Slang: Crashout • Cooked</span>
+          <span class="text-[#143D2B] font-bold">View Digest →</span>
+        </div>
+      </section>
+
+      <!-- BENTO 4: BIOMETRIC READINESS RADAR (Compact 5 cols) -->
+      <section class="lg:col-span-5 bento-surface rounded-3xl p-6 sm:p-7 space-y-4 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-[#E5E5DE] pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🧭</span>
+              <h3 class="font-serif text-lg font-bold text-[#111413]">Readiness Radar</h3>
+            </div>
+            <span class="font-mono text-[10px] font-bold bg-[#EAF3EE] text-[#143D2B] px-2 py-0.5 rounded-full">
+              Road 1: Pre-Device
+            </span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- Animated Radial Radar Ring -->
+            <div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="38" stroke="#E5E5DE" stroke-width="6" fill="transparent" />
+                <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="6" stroke-dasharray="12 8" fill="transparent" class="animate-spin" style="animation-duration: 16s;" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span class="font-mono text-[9px] font-bold text-[#143D2B]">Radar</span>
+                <span class="font-mono text-[8px] text-[#858C88]">Ready</span>
+              </div>
+            </div>
+
+            <div class="space-y-1 flex-1">
+              <h4 class="font-serif font-bold text-sm text-[#111413]">
+                Evaluate Maya's Readiness
+              </h4>
+              <p class="text-xs text-[#494F4C] leading-snug">
+                10 scenarios across sleep, impulse defense, and group chat boundaries.
+              </p>
+            </div>
+          </div>
+
+          <!-- Quadrant Chips -->
+          <div class="flex flex-wrap gap-1 font-mono text-[10px]">
+            <span class="bg-[#FBFBF9] border border-[#E5E5DE] px-2 py-0.5 rounded text-[#494F4C]">🌙 Sleep</span>
+            <span class="bg-[#FBFBF9] border border-[#E5E5DE] px-2 py-0.5 rounded text-[#494F4C]">📚 Habits</span>
+            <span class="bg-[#FBFBF9] border border-[#E5E5DE] px-2 py-0.5 rounded text-[#494F4C]">👥 Peers</span>
+            <span class="bg-[#FBFBF9] border border-[#E5E5DE] px-2 py-0.5 rounded text-[#494F4C]">🧘 Reset</span>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-[#E5E5DE] flex items-center justify-between gap-2">
+          <span class="font-mono text-[10px] text-[#858C88]">~3 mins • Bilateral</span>
+          <a href="#" class="inline-flex items-center gap-1.5 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-4 py-2 rounded-xl transition shadow-2xs">
+            <span>Start Readiness Assessment</span>
+            <span>→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- BENTO 5: 24/7 AI ADVISOR DIALOGUE CONSOLE (Wide 7 cols) -->
+      <section class="lg:col-span-7 bento-surface rounded-3xl p-6 sm:p-7 space-y-4 flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-[#E5E5DE] pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h3 class="font-serif text-lg font-bold text-[#111413]">24/7 AI Child Advisor</h3>
+            </div>
+            <span class="font-mono text-xs text-[#858C88]">Trained on Neurobiology</span>
+          </div>
+
+          <!-- Omnibar Form -->
+          <form class="flex gap-2">
+            <input 
+              type="text" 
+              placeholder="Ask anything about Maya (bedtime resistance, Roblox limits, slammed doors)..."
+              class="flex-1 bg-[#FBFBF9] border border-[#E5E5DE] rounded-xl px-4 py-3 text-xs text-[#111413] focus:outline-none focus:ring-1 focus:ring-[#143D2B]"
+            />
+            <button class="bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-5 py-3 rounded-xl transition shadow-2xs shrink-0 flex items-center gap-1.5">
+              <span>Ask Dr. Alongside</span>
+            </button>
+          </form>
+
+          <!-- 1-Tap Situation Chips -->
+          <div class="flex items-center gap-2 flex-wrap text-xs pt-1">
+            <span class="font-mono text-[10px] uppercase font-bold text-[#858C88]">Quick Situations:</span>
+            <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E5E5DE] text-xs text-[#111413] hover:border-[#143D2B] transition">
+              🎮 Console Meltdown
+            </button>
+            <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E5E5DE] text-xs text-[#111413] hover:border-[#143D2B] transition">
+              📱 Peer Phone Pressure
+            </button>
+            <button class="px-2.5 py-1 rounded-lg bg-[#FBFBF9] border border-[#E5E5DE] text-xs text-[#111413] hover:border-[#143D2B] transition">
+              🚪 Slammed Door
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-2 text-xs font-mono text-[#858C88] border-t border-[#E5E5DE] flex justify-between">
+          <span>Non-Judgmental pediatric Sparring</span>
+          <span class="text-[#143D2B] font-bold">Open Advisor Vault →</span>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -98,7 +98,7 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
       expect(healthViewContent).not.toContain("setActiveTab('dosing')");
     });
 
-    it('asserts HealthDashboardView purges clinical symptom triage and retains Sleep Regression Companion', () => {
+    it('asserts HealthDashboardView purges emergency symptom triage and retains Sleep Regression Companion', () => {
       const healthViewPath = path.resolve(
         __dirname,
         '../src/components/health/HealthDashboardView.tsx'

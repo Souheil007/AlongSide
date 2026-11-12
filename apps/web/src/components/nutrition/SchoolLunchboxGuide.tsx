@@ -19,7 +19,7 @@ interface BentoBoxBlueprint {
   title: string;
   category: string;
   items: string[];
-  clinicalBenefit: string;
+  developmentalBenefit: string;
 }
 
 const BENTO_COMPARTMENTS: BentoBoxBlueprint[] = [
@@ -32,7 +32,7 @@ const BENTO_COMPARTMENTS: BentoBoxBlueprint[] = [
       'Hard-boiled pasture-raised eggs (cut in halves)',
       'Cubed organic cheddar or baked tofu bites',
     ],
-    clinicalBenefit: 'Amino acids stabilize neurotransmitters and prevent mid-morning glucose spikes and crashes.',
+    developmentalBenefit: 'Amino acids stabilize neurotransmitters and prevent mid-morning glucose spikes and crashes.',
   },
   {
     category: '2. Low-Glycemic Complex Carbs',
@@ -43,7 +43,7 @@ const BENTO_COMPARTMENTS: BentoBoxBlueprint[] = [
       'Rolled oat energy bites with chia and sunflower butter',
       'Roasted sweet potato coins with cinnamon',
     ],
-    clinicalBenefit: 'Slow-release glycogen fuels continuous executive attention without hyperactive insulin swings.',
+    developmentalBenefit: 'Slow-release glycogen fuels continuous executive attention without hyperactive insulin swings.',
   },
   {
     category: '3. Antioxidant Brain Produce',
@@ -54,7 +54,7 @@ const BENTO_COMPARTMENTS: BentoBoxBlueprint[] = [
       'Sweet baby bell pepper rings with tzatziki dip',
       'Crispy honeycrisp apple slices with lemon rinse',
     ],
-    clinicalBenefit: 'Polyphenols protect cortical neurons while high water content sustains classroom hydration.',
+    developmentalBenefit: 'Polyphenols protect cortical neurons while high water content sustains classroom hydration.',
   },
   {
     category: '4. Healthy Fats & Micronutrient Crunch',
@@ -65,7 +65,7 @@ const BENTO_COMPARTMENTS: BentoBoxBlueprint[] = [
       'Crispy roasted spiced chickpeas',
       'Hemp-heart sprinkled melon balls',
     ],
-    clinicalBenefit: 'Healthy unsaturated fats support continuing axonal myelination throughout middle childhood.',
+    developmentalBenefit: 'Healthy unsaturated fats support continuing axonal myelination throughout middle childhood.',
   },
 ];
 
@@ -144,7 +144,7 @@ export function SchoolLunchboxGuide() {
                 <span>Recommended Items for {BENTO_COMPARTMENTS[selectedCompartment].category}</span>
               </div>
               <p className="text-xs text-emerald-800 font-medium">
-                {BENTO_COMPARTMENTS[selectedCompartment].clinicalBenefit}
+                {BENTO_COMPARTMENTS[selectedCompartment].developmentalBenefit}
               </p>
             </div>
 

@@ -7,8 +7,13 @@ export { CulturePlaygroundDemo, DEMO_SLANG_TERMS, DEMO_DINNER_STARTERS } from '.
 export type { SlangDemoItem } from './CulturePlaygroundDemo';
 export { DeviceActionHubSpotlight, DEVICE_HUB_STEPS } from './DeviceActionHubSpotlight';
 export type { HubStep } from './DeviceActionHubSpotlight';
-export { ClinicalAuthorityTestimonials, CLINICAL_TESTIMONIALS } from './ClinicalAuthorityTestimonials';
-export type { Testimonial } from './ClinicalAuthorityTestimonials';
+export {
+  PediatricAuthorityTestimonials,
+  PediatricAuthorityTestimonials as ClinicalAuthorityTestimonials,
+  PEDIATRIC_TESTIMONIALS,
+  PEDIATRIC_TESTIMONIALS as CLINICAL_TESTIMONIALS,
+} from './PediatricAuthorityTestimonials';
+export type { Testimonial } from './PediatricAuthorityTestimonials';
 export { PricingSection, PRICING_PLANS } from './PricingSection';
 export type { PricingPlan } from './PricingSection';
 export { FaqSection, FAQS } from './FaqSection';

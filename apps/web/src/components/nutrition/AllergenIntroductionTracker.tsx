@@ -99,7 +99,7 @@ export function AllergenIntroductionTracker() {
           <Progress value={completionPercentage} className="h-2.5 bg-teal-200/70" indicatorClassName="bg-teal-600" />
         </div>
 
-        {/* Clinical Safe Intro Rules */}
+        {/* Pediatric Safe Intro Rules */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs text-teal-950">
           <div className="rounded-xl border border-teal-200 bg-white/80 p-2.5 space-y-1">
             <div className="font-bold flex items-center gap-1.5 text-teal-800">

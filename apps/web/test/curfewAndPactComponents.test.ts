@@ -41,7 +41,7 @@ describe('Curfew & Bilateral Pact Components Specification', () => {
     });
   });
 
-  describe('Category Definitions & Clinical Rationales', () => {
+  describe('Category Definitions & Expert Rationales', () => {
     it('contains all 6 canonical categories with empathetic rationales', () => {
       expect(CATEGORY_DEFINITIONS).toHaveLength(6);
 

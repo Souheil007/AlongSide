@@ -97,7 +97,7 @@ export function HealthDashboardView({ initialChildId }: HealthDashboardViewProps
           <span>Developmental Guidance &amp; Restorative Routines</span>
         </div>
         <p className="leading-relaxed">
-          AlongSide’s sleep architecture guidance is educational and grounded in developmental sleep science and pediatric circadian research. AlongSide does not provide medical diagnosis or clinical treatment. For medical concerns, always consult your licensed pediatrician.
+          AlongSide’s sleep architecture guidance is educational and grounded in developmental sleep science and pediatric circadian research. AlongSide does not provide medical diagnosis or treatment. For medical concerns, always consult your licensed pediatrician.
         </p>
       </footer>
     </div>

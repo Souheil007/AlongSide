@@ -18,7 +18,7 @@ export interface ReadinessQuestion {
   dimensionName: string;
   questionText: string;
   scenario: string;
-  clinicalInsight: string;
+  expertInsight: string;
   options: ReadinessQuestionOption[];
 }
 
@@ -37,7 +37,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Executive Function & Impulse Control',
     questionText: 'When it is time to shut off a screen or transition to dinner or homework:',
     scenario: 'Stopping high-stimulation digital play and shifting focus to non-digital routines.',
-    clinicalInsight:
+    expertInsight:
       'The self-control centers of a child&apos;s brain are still actively developing. Stopping fun digital play causes a sudden shift that calls for calm, steady guidance.',
     options: [
       {
@@ -72,7 +72,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Online Safety & Hazard Detection',
     questionText: 'If an unknown gamer or direct message offers free game currency or requests personal chat:',
     scenario: 'Encountering unsolicited strangers, phishing links, or social manipulation online.',
-    clinicalInsight:
+    expertInsight:
       'Growing tweens naturally crave connection and often mistake online friendliness for genuine friendship before learning to spot red flags.',
     options: [
       {
@@ -107,7 +107,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Bedtime Habits & Circadian Sleep Rhythm',
     questionText: 'Regarding device presence in the bedroom during sleeping hours:',
     scenario: 'Protecting uncompromised neurobiological sleep from nighttime screen stimulation.',
-    clinicalInsight:
+    expertInsight:
       'A teen&apos;s natural sleep rhythm shifts later by about two hours. Screen light and notifications right before bed interfere with restorative deep sleep.',
     options: [
       {
@@ -142,7 +142,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Peer Pressure & Group Chat Resilience',
     questionText: 'When a group chat erupts with mean roasting, spamming, or dare challenges:',
     scenario: 'Holding personal boundaries against digital herd mentality and group exclusion fear.',
-    clinicalInsight:
+    expertInsight:
       'Tweens naturally feel peer approval deeply. Being left out of group chats triggers real emotional hurt, which makes digital boundaries crucial.',
     options: [
       {
@@ -177,7 +177,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Emotional Regulation & Gaming Frustration',
     questionText: 'When experiencing a high-stakes loss in a video game or sudden device lockout:',
     scenario: 'Navigating frustration, digital loss, and sudden stimulation removal.',
-    clinicalInsight:
+    expertInsight:
       'Emotional reactivity develops faster than calm self-regulation. Fast-paced games create excitement surges that take time to cool down.',
     options: [
       {
@@ -212,7 +212,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Family Communication & Restorative Trust',
     questionText: 'If your child accidentally sees disturbing adult content or makes a digital mistake:',
     scenario: 'Approaching parents for help without fear of immediate punishment or device confiscation.',
-    clinicalInsight:
+    expertInsight:
       'Taking devices away in anger drives mistakes underground. Calm, curious listening keeps your child coming to you whenever something goes wrong.',
     options: [
       {
@@ -247,7 +247,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Screen Time Balance & Offline Passions',
     questionText: 'How naturally does your child engage in non-digital activities and physical hobbies?',
     scenario: 'Balancing screens with reading, sports, outdoor play, arts, and real-world connection.',
-    clinicalInsight:
+    expertInsight:
       'Fast-paced apps make everyday offline activities feel slower by comparison. Protecting regular offline time keeps their real-world passions alive.',
     options: [
       {
@@ -282,7 +282,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Critical Thinking & Algorithmic Skepticism',
     questionText: 'When viewing viral influencer videos, sponsored giveaways, or clickbait challenges:',
     scenario: 'Evaluating digital authenticity, commercial motives, and AI-generated content.',
-    clinicalInsight:
+    expertInsight:
       'Young minds tend to take what they see online at face value. Spotting sponsored tricks and filters is a skill parents can teach through friendly curiosity.',
     options: [
       {
@@ -317,7 +317,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Privacy Awareness & Digital Footprint',
     questionText: 'Regarding safeguarding sensitive credentials, real locations, and family details:',
     scenario: 'Understanding data permanence, passwords, location sharing, and digital boundaries.',
-    clinicalInsight:
+    expertInsight:
       'Understanding that online posts last forever is an abstract idea for tweens. Simple, clear family guidelines protect their privacy while they learn.',
     options: [
       {
@@ -352,7 +352,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     dimensionName: 'Co-Regulation & Bilateral Collaboration',
     questionText: 'How does your child participate in creating household boundaries and family agreements?',
     scenario: 'Co-creating rules, respecting mutual commitments, and honoring digital boundaries.',
-    clinicalInsight:
+    expertInsight:
       'Wanting independence is a healthy part of growing up. Making agreements together gives them a real voice while keeping loving guardrails in place.',
     options: [
       {

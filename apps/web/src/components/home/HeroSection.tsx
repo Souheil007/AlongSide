@@ -99,7 +99,7 @@ export function HeroSection() {
           </a>
         </div>
 
-        {/* Clinical Authority & Trust Signals */}
+        {/* Pediatric Authority & Trust Signals */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 w-full max-w-3xl text-left">
           {HERO_TRUST_SIGNALS.map((badge, idx) => {
             const Icon = badge.icon;

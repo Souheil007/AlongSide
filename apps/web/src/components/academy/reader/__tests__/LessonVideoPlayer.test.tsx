@@ -114,7 +114,7 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
   });
 
   describe('5. Expandable Key Takeaways Drawer', () => {
-    it('renders takeaways drawer toggle button with clinical concepts count', () => {
+    it('renders takeaways drawer toggle button with key concepts count', () => {
       const html = renderToStaticMarkup(<LessonVideoPlayer video={sampleVideo} />);
 
       expect(html).toContain('data-testid="video-takeaways-drawer"');

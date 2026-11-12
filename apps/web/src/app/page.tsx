@@ -4,7 +4,7 @@ import {
   LifespanStageSelector,
   CulturePlaygroundDemo,
   DeviceActionHubSpotlight,
-  ClinicalAuthorityTestimonials,
+  PediatricAuthorityTestimonials,
   PricingSection,
   FaqSection,
 } from '@/components/home';
@@ -28,7 +28,7 @@ export default function HomePage() {
       <DeviceActionHubSpotlight />
 
       {/* 6. Developmental Authority Testimonials & Trust Badges */}
-      <ClinicalAuthorityTestimonials />
+      <PediatricAuthorityTestimonials />
 
       {/* 7. Pricing & 7-Day Risk-Free Trial Onboarding */}
       <PricingSection />

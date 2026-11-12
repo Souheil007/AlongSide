@@ -280,7 +280,10 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
         expect(content).toContain('<LifespanStageSelector />');
         expect(content).toContain('<CulturePlaygroundDemo />');
         expect(content).toContain('<DeviceActionHubSpotlight />');
-        expect(content).toContain('<ClinicalAuthorityTestimonials />');
+        expect(
+          content.includes('<PediatricAuthorityTestimonials />') ||
+            content.includes('<ClinicalAuthorityTestimonials />')
+        ).toBe(true);
         expect(content).toContain('<PricingSection />');
         expect(content).toContain('<FaqSection />');
       });
