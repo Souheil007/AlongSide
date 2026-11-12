@@ -203,28 +203,28 @@ export function resolveTierAnchor(tierOrAge?: string | number | null): TierPrior
 }
 
 /**
- * Format chapter / node titles into clean, concise human labels.
- * Strips repetitive prefixes like "Chapter 1: Priority 1 -" and extracts the meaningful topic.
+ * Format lesson titles into clean, concise human labels for roadmap nodes.
+ * Extracts the punchy topic without clunky prefixes or generic chapter numbers.
  */
-function formatRoadmapNodeTitle(rawTitle: string, index: number): string {
-  if (!rawTitle) return `Chapter ${index + 1}`;
+function formatLessonNodeTitle(rawTitle: string, index: number): string {
+  if (!rawTitle) return `Lesson ${index + 1}`;
 
-  // Extract from "Priority 1 - Critical Win" or "Priority 1: Immediate Reset"
-  const priorityMatch = rawTitle.match(/Priority\s*\d+\s*[-–:]\s*(.+)/i);
-  if (priorityMatch && priorityMatch[1]) {
-    const clean = priorityMatch[1].trim();
-    return clean.length > 22 ? clean.slice(0, 20) + '…' : clean;
+  // If title has a colon (e.g. "The 4-Step Somatic Soothing Sequence: Calming the Crying Storm")
+  const parts = rawTitle.split(':');
+  let main = parts[0]?.trim() ?? rawTitle;
+
+  // Clean leading words
+  main = main.replace(/^The\s+/i, '');
+  main = main.replace(/^\d+-Step\s+/i, '');
+
+  if (main.length > 22) {
+    const sub = parts[1]?.trim();
+    if (sub && sub.length <= 22) {
+      return sub;
+    }
+    return main.slice(0, 20) + '…';
   }
-
-  // Extract from "Chapter 1: Amygdala Basics"
-  const chapterMatch = rawTitle.match(/Chapter\s*\d+\s*:\s*(.+)/i);
-  if (chapterMatch && chapterMatch[1]) {
-    const clean = chapterMatch[1].trim();
-    return clean.length > 22 ? clean.slice(0, 20) + '…' : clean;
-  }
-
-  // Direct short title
-  return rawTitle.length > 22 ? rawTitle.slice(0, 20) + '…' : rawTitle;
+  return main;
 }
 
 export function ActiveChapterContinueCard({
@@ -267,28 +267,27 @@ export function ActiveChapterContinueCard({
   const lessonTitle = currentIncompleteLesson?.title ?? fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '');
   const readingMinutes = currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
 
-  const totalChapters = moduleDetail?.chapters?.length || activeModule?.lessonCount || fallbackAnchor.totalChapters;
-  const completedChapters =
-    moduleDetail?.chapters && moduleDetail.chapters.length > 0
-      ? moduleDetail.chapters.filter((c) => c.lessons && c.lessons.length > 0 && c.lessons.every((l) => l.isCompleted)).length
-      : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
-  const progressPercent = totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
+  const totalLessons = allLessons.length > 0 ? allLessons.length : fallbackAnchor.totalChapters;
+  const completedLessons = allLessons.length > 0
+    ? allLessons.filter((l) => l.isCompleted).length
+    : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
+  const progressPercent = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
-  // Derive dynamic roadmap nodes
+  // Derive dynamic roadmap nodes directly from lessons
   const roadmapNodes = React.useMemo(() => {
-    if (moduleDetail?.chapters && moduleDetail.chapters.length > 0) {
+    if (allLessons.length > 0) {
       let foundActive = false;
-      return moduleDetail.chapters.map((ch, idx) => {
-        const isCompleted = ch.lessons && ch.lessons.length > 0 ? ch.lessons.every((l) => l.isCompleted) : false;
+      return allLessons.map((les, idx) => {
         let isCurrent = false;
-        if (!isCompleted && !foundActive) {
+        if (!les.isCompleted && !foundActive) {
           isCurrent = true;
           foundActive = true;
         }
         return {
           id: idx + 1,
-          title: formatRoadmapNodeTitle(ch.title, idx),
-          completed: isCompleted,
+          title: formatLessonNodeTitle(les.title, idx),
+          slug: les.slug,
+          completed: les.isCompleted,
           isCurrent,
         };
       });
@@ -296,11 +295,12 @@ export function ActiveChapterContinueCard({
 
     return fallbackAnchor.chapters.map((ch) => ({
       id: ch.id,
-      title: formatRoadmapNodeTitle(ch.shortTitle, ch.id - 1),
+      title: ch.shortTitle.replace(/^Ch \d+:\s*/, ''),
+      slug: fallbackAnchor.lessonSlug,
       completed: ch.completed,
       isCurrent: ch.isCurrent,
     }));
-  }, [moduleDetail?.chapters, fallbackAnchor.chapters]);
+  }, [allLessons, fallbackAnchor]);
 
   return (
     <div
@@ -330,7 +330,7 @@ export function ActiveChapterContinueCard({
 
         <div className="shrink-0 self-start sm:self-auto font-mono">
           <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/15 px-3 py-1 rounded-full">
-            {progressPercent}% Completed ({completedChapters} of {totalChapters} Chapters)
+            {progressPercent}% Completed ({completedLessons} of {totalLessons} Lessons)
           </span>
         </div>
       </div>
@@ -342,7 +342,7 @@ export function ActiveChapterContinueCard({
             Curriculum Roadmap
           </span>
           <span className="text-[#858C88] font-mono text-[11px]">
-            Next Chapter: {readingMinutes} min read
+            Next Lesson: {readingMinutes} min read
           </span>
         </div>
 
@@ -354,40 +354,52 @@ export function ActiveChapterContinueCard({
             {/* Real Progress Fill Line */}
             <div
               className="absolute left-6 top-4 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
-              style={{ width: `${Math.min(94, Math.max(0, (completedChapters / Math.max(1, totalChapters)) * 94))}%` }}
+              style={{ width: `${Math.min(94, Math.max(0, (completedLessons / Math.max(1, totalLessons)) * 94))}%` }}
             />
 
             {roadmapNodes.map((node) => {
               if (node.completed) {
                 return (
-                  <div key={node.id} className="flex flex-col items-center gap-1.5 z-10">
-                    <span className="w-8 h-8 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-xs">
+                  <Link
+                    key={node.id}
+                    href={`/academy/${moduleSlug}/${node.slug}`}
+                    className="flex flex-col items-center gap-1.5 z-10 group/node cursor-pointer"
+                  >
+                    <span className="w-8 h-8 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-xs transition-transform group-hover/node:scale-110">
                       <Check className="w-4 h-4" />
                     </span>
-                    <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate">
+                    <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate group-hover/node:underline">
                       {node.title}
                     </span>
                     <span className="font-mono text-[9px] text-[#143D2B]/70 font-medium">Completed</span>
-                  </div>
+                  </Link>
                 );
               }
 
               if (node.isCurrent) {
                 return (
-                  <div key={node.id} className="flex flex-col items-center gap-1.5 z-10">
-                    <span className="w-9 h-9 rounded-full bg-[#143D2B] text-white font-mono text-xs font-black flex items-center justify-center ring-4 ring-[#EAF3EE] shadow-md animate-pulse">
+                  <Link
+                    key={node.id}
+                    href={`/academy/${moduleSlug}/${node.slug}`}
+                    className="flex flex-col items-center gap-1.5 z-10 group/node cursor-pointer"
+                  >
+                    <span className="w-9 h-9 rounded-full bg-[#143D2B] text-white font-mono text-xs font-black flex items-center justify-center ring-4 ring-[#EAF3EE] shadow-md animate-pulse transition-transform group-hover/node:scale-105">
                       {node.id}
                     </span>
-                    <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate">
+                    <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate group-hover/node:underline">
                       {node.title}
                     </span>
                     <span className="font-mono text-[9px] text-[#B45309] font-bold bg-[#FEF3C7] px-1.5 py-0.2 rounded">Active Now</span>
-                  </div>
+                  </Link>
                 );
               }
 
               return (
-                <div key={node.id} className="flex flex-col items-center gap-1.5 z-10 opacity-60">
+                <Link
+                  key={node.id}
+                  href={`/academy/${moduleSlug}/${node.slug}`}
+                  className="flex flex-col items-center gap-1.5 z-10 opacity-60 hover:opacity-90 transition-opacity cursor-pointer"
+                >
                   <span className="w-8 h-8 rounded-full bg-white border-2 border-[#E3E3DC] text-[#858C88] font-mono text-xs font-bold flex items-center justify-center">
                     {node.id}
                   </span>
@@ -395,7 +407,7 @@ export function ActiveChapterContinueCard({
                     {node.title}
                   </span>
                   <span className="font-mono text-[9px] text-[#858C88]">Upcoming</span>
-                </div>
+                </Link>
               );
             })}
           </div>
