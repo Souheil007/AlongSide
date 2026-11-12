@@ -8,9 +8,22 @@
 
 ---
 
-## ⚡ Quick-Start CLI Commands
+## ⚡ Quick-Start Execution
 
-### Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour" (Platform Experience)
+### Option A: Automated Higgsfield MCP Script Runner (Recommended)
+```bash
+# Preflight cost and workspace verification:
+node scripts/generate-higgsfield-demo-videos.mjs --preflight
+
+# Execute both video generations directly via Higgsfield MCP:
+node scripts/generate-higgsfield-demo-videos.mjs
+```
+
+---
+
+### Option B: Higgsfield CLI 1-Click Commands
+
+#### Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour" (Platform Experience)
 ```bash
 higgsfield generate create seedance_2_5 \
   --prompt "A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: \"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide.\" Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects." \
