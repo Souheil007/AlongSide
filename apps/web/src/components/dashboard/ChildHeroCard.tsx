@@ -14,9 +14,6 @@ import {
   type ChildDTO,
   DevelopmentalTier,
 } from '@alongside/shared';
-import {
-  getChildDevelopmentalHorizon,
-} from '@/stores/useChildContextStore';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -254,8 +251,6 @@ export function ChildHeroCard({
     );
   }
 
-  const horizon = getChildDevelopmentalHorizon(child.developmentalTier || child.age);
-  const leap = getDevelopmentalLeap(child.developmentalTier || child.age);
   const isToddler = (child.age !== undefined && child.age !== null && child.age <= 3) ||
     String(child.developmentalTier || '').includes('TIER_0');
   const compassReflection = getDailyParentCompassReflection(isToddler);
@@ -330,23 +325,6 @@ export function ChildHeroCard({
             <p className="font-mono text-[11px] text-[#858C88]">{minsLearnedThisWeek} mins learned this week</p>
           </div>
         </div>
-      </section>
-
-      {/* 3. Quiet Ambient Horizon & Active Leap (Cardless Fluid Strip) */}
-      <section
-        aria-label="Advisory Horizon"
-        className="px-2 py-1 flex flex-wrap items-center gap-2 text-xs text-[#494F4C]"
-      >
-        <span className="font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider">
-          {child.name}&apos;s Advisory Horizon:
-        </span>
-        <span className="font-serif text-xs font-semibold text-[#111413]">
-          {isToddler ? 'Co-Regulation Routines' : horizon.horizon}
-        </span>
-        <span className="text-[#858C88]">•</span>
-        <span className="text-[#494F4C] text-[11px]">
-          Active Leap: {leap.leapTitle}
-        </span>
       </section>
     </div>
   );
