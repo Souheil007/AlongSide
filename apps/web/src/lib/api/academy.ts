@@ -80,7 +80,14 @@ export async function getAcademyCategories(params?: {
   }
 }
 
-const LOCAL_STORAGE_COMPLETED_KEY = 'alongside-completed-lessons';
+export const LOCAL_STORAGE_COMPLETED_KEY = 'alongside-completed-lessons';
+export const LOCAL_STORAGE_ACTIVITY_KEY = 'alongside-learning-activity-v1';
+
+export interface LearningActivityRecord {
+  lessonId: string;
+  date: string; // 'YYYY-MM-DD'
+  minutes: number;
+}
 
 export function getLocalCompletedLessonIds(): Set<string> {
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -96,6 +103,37 @@ export function getLocalCompletedLessonIds(): Set<string> {
   }
 }
 
+export function getLearningActivityRecords(): LearningActivityRecord[] {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return [];
+  }
+  try {
+    const raw = window.localStorage.getItem(LOCAL_STORAGE_ACTIVITY_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function recordLearningActivity(lessonId: string, minutes: number = 4): void {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+  try {
+    const records = getLearningActivityRecords();
+    const todayStr = new Date().toISOString().split('T')[0] ?? '';
+    const exists = records.some((r) => r.lessonId === lessonId && r.date === todayStr);
+    if (!exists) {
+      records.push({ lessonId, date: todayStr, minutes });
+      window.localStorage.setItem(LOCAL_STORAGE_ACTIVITY_KEY, JSON.stringify(records));
+    }
+  } catch {
+    // silent fallback
+  }
+}
+
 export function saveLocalCompletedLessonId(lessonId: string): void {
   if (typeof window === 'undefined' || !window.localStorage) {
     return;
@@ -104,9 +142,96 @@ export function saveLocalCompletedLessonId(lessonId: string): void {
     const set = getLocalCompletedLessonIds();
     set.add(lessonId);
     window.localStorage.setItem(LOCAL_STORAGE_COMPLETED_KEY, JSON.stringify(Array.from(set)));
+    recordLearningActivity(lessonId, 4);
   } catch {
     // silent fallback
   }
+}
+
+export function calculateHabitStreakAndMinutes(allModules?: AcademyModuleDTO[]): {
+  streakDays: number;
+  minsLearnedThisWeek: number;
+} {
+  // 1. Calculate genuine minutes learned from completed lessons
+  let dynamicMins = 0;
+  let totalCompletedLessons = 0;
+
+  if (allModules && allModules.length > 0) {
+    for (const mod of allModules) {
+      if (mod.lessons && mod.lessons.length > 0) {
+        for (const les of mod.lessons) {
+          if (les.isCompleted) {
+            dynamicMins += les.readingMinutes || 4;
+            totalCompletedLessons++;
+          }
+        }
+      } else if (mod.completedLessonCount) {
+        dynamicMins += mod.completedLessonCount * 4;
+        totalCompletedLessons += mod.completedLessonCount;
+      }
+    }
+  }
+
+  // Also factor local storage completed lesson count if modules wasn't populated
+  const localCompleted = getLocalCompletedLessonIds();
+  if (totalCompletedLessons === 0 && localCompleted.size > 0) {
+    totalCompletedLessons = localCompleted.size;
+    dynamicMins = totalCompletedLessons * 4;
+  }
+
+  // 2. Calculate consecutive active habit streak
+  const activityRecords = getLearningActivityRecords();
+  const dateSet = new Set<string>();
+
+  for (const r of activityRecords) {
+    if (r.date) dateSet.add(r.date);
+  }
+
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0] ?? '';
+
+  // If user completed a lesson in the current session but hasn't reloaded
+  if (totalCompletedLessons > 0 && dateSet.size === 0) {
+    dateSet.add(todayStr);
+  }
+
+  if (dateSet.size === 0 || totalCompletedLessons === 0) {
+    return {
+      streakDays: 0,
+      minsLearnedThisWeek: 0,
+    };
+  }
+
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0] ?? '';
+
+  // A streak is only active if the parent completed a lesson today or yesterday
+  if (!dateSet.has(todayStr) && !dateSet.has(yesterdayStr)) {
+    return {
+      streakDays: 0,
+      minsLearnedThisWeek: dynamicMins,
+    };
+  }
+
+  // Count consecutive days backwards
+  let streak = 0;
+  const checkDate = dateSet.has(todayStr) ? new Date(now) : new Date(yesterday);
+
+  while (true) {
+    const dStr = checkDate.toISOString().split('T')[0] ?? '';
+    if (dateSet.has(dStr)) {
+      streak++;
+      checkDate.setDate(checkDate.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return {
+    streakDays: Math.max(1, streak),
+    minsLearnedThisWeek: dynamicMins,
+  };
 }
 
 /**

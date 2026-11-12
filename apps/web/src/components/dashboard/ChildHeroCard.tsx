@@ -14,11 +14,9 @@ import {
 } from 'lucide-react';
 import {
   type ChildDTO,
-  RoadType,
   DevelopmentalTier,
 } from '@alongside/shared';
 import {
-  formatChildAge,
   getChildDevelopmentalHorizon,
 } from '@/stores/useChildContextStore';
 import { Card, CardContent } from '@/components/ui/Card';
@@ -151,8 +149,8 @@ export function ChildHeroCard({
   className,
   onOpenOnboarding,
   parentName = 'Parent',
-  streakDays = 4,
-  minsLearnedThisWeek = 18,
+  streakDays = 0,
+  minsLearnedThisWeek = 0,
 }: ChildHeroCardProps) {
   if (!child) {
     return (
@@ -183,9 +181,7 @@ export function ChildHeroCard({
     );
   }
 
-  const isPreDevice = child.roadType === RoadType.PRE_DEVICE;
   const horizon = getChildDevelopmentalHorizon(child.developmentalTier || child.age);
-  const formattedAge = formatChildAge(child);
   const leap = getDevelopmentalLeap(child.developmentalTier || child.age);
   const isToddler = (child.age !== undefined && child.age !== null && child.age <= 3) ||
     String(child.developmentalTier || '').includes('TIER_0');
@@ -199,36 +195,7 @@ export function ChildHeroCard({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {/* 1. Single-Line Ambient Status Anchor (Fluid Stream Context) */}
-      <section
-        aria-label="Child Context Anchor"
-        className="bg-[#EAF3EE] border border-[#143D2B]/15 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-2.5 text-xs transition-colors"
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-serif text-sm font-bold text-[#111413]">
-            {child.name} • {formattedAge}
-          </span>
-          <span className="text-[#143D2B]/40">•</span>
-          <span className="font-mono text-[11px] text-[#143D2B] font-semibold uppercase tracking-wider">
-            {isPreDevice ? 'Road 1: Pre-Device' : 'Road 2: Active-Device'}
-          </span>
-          <span className="text-[#143D2B]/40">•</span>
-          <span className="text-[#494F4C] text-[11px]">
-            {horizon.stage || horizon.tierLabel}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2 text-[11px] text-[#494F4C]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-medium">
-            {isToddler
-              ? 'Active Goal: Screen-Free Bedtime Story Routine (3/3 Nights)'
-              : 'Active Goal: 14-Day Independent Morning Alarm (Day 9 of 14)'}
-          </span>
-        </div>
-      </section>
-
-      {/* 2. Welcoming Value Banner & 4-Day Habit Streak */}
+      {/* Welcoming Value Banner & Habit Streak */}
       <section
         aria-label="Welcome & Purpose"
         className="bg-white rounded-2xl border border-[#E3E3DC] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4"
@@ -252,13 +219,25 @@ export function ChildHeroCard({
 
         {/* Weekly Habit Streak Badge */}
         <div className="shrink-0 flex items-center gap-3 bg-[#FBFBF9] px-4 py-3 rounded-xl border border-[#E3E3DC] self-start md:self-auto">
-          <div className="w-10 h-10 rounded-full bg-[#FEF3C7] text-[#B45309] flex items-center justify-center text-lg font-bold">
-            <Flame className="w-5 h-5 text-[#B45309]" />
+          <div
+            className={cn(
+              'w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-colors',
+              streakDays > 0 ? 'bg-[#FEF3C7] text-[#B45309]' : 'bg-stone-100 text-stone-400'
+            )}
+          >
+            <Flame className={cn('w-5 h-5', streakDays > 0 ? 'text-[#B45309]' : 'text-stone-400')} />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-serif text-base font-bold text-[#111413]">{streakDays}-Day Streak</span>
-              <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-[#EAF3EE] px-1.5 py-0.5 rounded">Active</span>
+              <span
+                className={cn(
+                  'font-mono text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors',
+                  streakDays > 0 ? 'bg-[#EAF3EE] text-[#143D2B]' : 'bg-stone-100 text-stone-500'
+                )}
+              >
+                {streakDays > 0 ? 'Active' : 'Start Today'}
+              </span>
             </div>
             <p className="font-mono text-[11px] text-[#858C88]">{minsLearnedThisWeek} mins learned this week</p>
           </div>

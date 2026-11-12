@@ -6,6 +6,8 @@ import {
   getModuleBySlug,
   getLesson,
   markLessonComplete,
+  calculateHabitStreakAndMinutes,
+  recordLearningActivity,
 } from '../src/lib/api/academy';
 
 describe('Parent Intelligence Academy Component & API Specification', () => {
@@ -291,6 +293,47 @@ describe('Parent Intelligence Academy Component & API Specification', () => {
       );
       expect(res.progress.isCompleted).toBe(true);
       expect(res.module.percentComplete).toBe(67);
+    });
+
+    it('calculates 0-day streak and 0 minutes when no lessons are completed', () => {
+      const stats = calculateHabitStreakAndMinutes([]);
+      expect(stats.streakDays).toBe(0);
+      expect(stats.minsLearnedThisWeek).toBe(0);
+    });
+
+    it('calculates dynamic streak and minutes when lessons are completed', () => {
+      const todayStr = new Date().toISOString().split('T')[0];
+      recordLearningActivity('les-abc', 4);
+
+      const stats = calculateHabitStreakAndMinutes([
+        {
+          id: 'mod-test',
+          title: 'Test Mod',
+          slug: 'test-mod',
+          category: 'BEHAVIOR_AND_EMOTIONS' as any,
+          developmentalTier: 'TIER_1_EARLY_CHILDHOOD_4_6' as any,
+          summary: 'Summary',
+          coverImageUrl: '',
+          lessonCount: 2,
+          completedLessonCount: 1,
+          isCompleted: false,
+          sortOrder: 1,
+          lessons: [
+            {
+              id: 'les-abc',
+              moduleId: 'mod-test',
+              slug: 'les-abc',
+              title: 'Lesson ABC',
+              readingMinutes: 5,
+              sortOrder: 1,
+              isCompleted: true,
+            },
+          ],
+        },
+      ]);
+
+      expect(stats.minsLearnedThisWeek).toBe(5);
+      expect(stats.streakDays).toBeGreaterThanOrEqual(1);
     });
   });
 });
