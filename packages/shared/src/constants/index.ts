@@ -64,6 +64,13 @@ export const AcademyCategory = {
 } as const;
 export type AcademyCategory = (typeof AcademyCategory)[keyof typeof AcademyCategory];
 
+export const LessonArchetype = {
+  EVERYDAY_BEHAVIOR: 'EVERYDAY_BEHAVIOR',
+  CHILD_GROWTH_CONCEPT: 'CHILD_GROWTH_CONCEPT',
+  PRACTICAL_FAMILY_GUIDE: 'PRACTICAL_FAMILY_GUIDE',
+} as const;
+export type LessonArchetype = (typeof LessonArchetype)[keyof typeof LessonArchetype];
+
 export const ChapterPriority = {
   PRIORITY_1_CRITICAL: 1,
   PRIORITY_2_ROUTINES: 2,

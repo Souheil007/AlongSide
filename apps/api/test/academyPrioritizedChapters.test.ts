@@ -262,7 +262,7 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
 
       const lesson = payload.data.lesson;
       expect(lesson.title).toContain('The Critical 4-11 Month Window');
-      expect(lesson.contentMarkdown).toContain('> **Clinical Insight:**');
+      expect(lesson.contentMarkdown).toContain('> **Key Takeaway:**');
       expect(lesson.contentMarkdown).toContain('What to Say');
       expect(lesson.module).toBeDefined();
       expect(lesson.module.category).toBe(AcademyCategory.NUTRITION_AND_FEEDING);

@@ -423,6 +423,7 @@ model AcademyLesson {
   chapter            AcademyChapter?    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   slug               String
   title              String
+  archetype          String             @default("EVERYDAY_BEHAVIOR")
   contentMarkdown    String
   readingMinutes     Int                @default(4)
   sortOrder          Int                @default(0)
