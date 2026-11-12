@@ -731,7 +731,7 @@ export function StageTailoredVocabularyView({
               className="gap-1 min-h-[38px] px-3.5 rounded-xl border-[#E3E3DC] disabled:opacity-40 cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>Previous 4</span>
+              <span>Previous</span>
             </Button>
 
             <span className="px-3 py-1.5 rounded-xl bg-[#F4F4F0] border border-[#E3E3DC] text-[#111413] font-bold">
@@ -745,7 +745,7 @@ export function StageTailoredVocabularyView({
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               className="gap-1 min-h-[38px] px-3.5 rounded-xl border-[#E3E3DC] disabled:opacity-40 cursor-pointer"
             >
-              <span>Next 4</span>
+              <span>Next</span>
               <ChevronRight className="w-4 h-4" />
             </Button>
           </div>

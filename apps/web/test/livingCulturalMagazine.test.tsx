@@ -223,8 +223,8 @@ describe('Culture Digest: Direction L Living Cultural Magazine Specification', (
 
       // Verify page 1 shows terms 1 to 4 of 12
       expect(html).toContain('Showing 1–4 of 12 terms');
-      expect(html).toContain('Previous 4');
-      expect(html).toContain('Next 4');
+      expect(html).toContain('Previous');
+      expect(html).toContain('Next');
       expect(html).toContain('Page 1 of 3');
 
       // Verify Page 1 terms are rendered
