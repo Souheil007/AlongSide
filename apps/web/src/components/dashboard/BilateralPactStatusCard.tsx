@@ -12,7 +12,6 @@ import {
   Lock,
   Baby,
   Palette,
-  Coffee,
   Sparkles,
   ClipboardCheck,
 } from 'lucide-react';
@@ -507,20 +506,6 @@ export function BilateralPactStatusCard({
             </CardContent>
           </>
         )}
-      </Card>
-
-      {/* REASSURING PARENT COMPASS REMINDER (FEEL AT HOME) */}
-      <Card className="border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-2xl p-5 sm:p-6 space-y-2">
-        <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider flex items-center gap-1.5">
-          <Coffee className="w-3.5 h-3.5 text-[#143D2B]" />
-          <span>Parent Compass Reminder</span>
-        </span>
-        <blockquote className="font-serif text-sm text-[#111413] leading-relaxed italic">
-          &ldquo;You don&apos;t have to get every moment right. A calm repair after friction teaches your child more about emotional safety than a parent who never makes a mistake.&rdquo;
-        </blockquote>
-        <span className="font-mono text-[10px] text-[#858C88] block text-right">
-          — Dr. Chen, Alongside Advisory Team
-        </span>
       </Card>
     </div>
   );
