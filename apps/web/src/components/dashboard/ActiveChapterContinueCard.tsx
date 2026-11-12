@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   BookOpen,
   ArrowRight,
+  Check,
 } from 'lucide-react';
 import {
   DevelopmentalTier,
@@ -201,6 +202,31 @@ export function resolveTierAnchor(tierOrAge?: string | number | null): TierPrior
   return TIER_PRIORITY_ANCHORS[DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18]!;
 }
 
+/**
+ * Format chapter / node titles into clean, concise human labels.
+ * Strips repetitive prefixes like "Chapter 1: Priority 1 -" and extracts the meaningful topic.
+ */
+function formatRoadmapNodeTitle(rawTitle: string, index: number): string {
+  if (!rawTitle) return `Chapter ${index + 1}`;
+
+  // Extract from "Priority 1 - Critical Win" or "Priority 1: Immediate Reset"
+  const priorityMatch = rawTitle.match(/Priority\s*\d+\s*[-–:]\s*(.+)/i);
+  if (priorityMatch && priorityMatch[1]) {
+    const clean = priorityMatch[1].trim();
+    return clean.length > 22 ? clean.slice(0, 20) + '…' : clean;
+  }
+
+  // Extract from "Chapter 1: Amygdala Basics"
+  const chapterMatch = rawTitle.match(/Chapter\s*\d+\s*:\s*(.+)/i);
+  if (chapterMatch && chapterMatch[1]) {
+    const clean = chapterMatch[1].trim();
+    return clean.length > 22 ? clean.slice(0, 20) + '…' : clean;
+  }
+
+  // Direct short title
+  return rawTitle.length > 22 ? rawTitle.slice(0, 20) + '…' : rawTitle;
+}
+
 export function ActiveChapterContinueCard({
   child,
   className,
@@ -232,6 +258,7 @@ export function ActiveChapterContinueCard({
 
   const courseTitle = moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
   const moduleSlug = moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
+  const summary = moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
 
   const allLessons = moduleDetail?.lessons && moduleDetail.lessons.length > 0 ? moduleDetail.lessons : [];
   const currentIncompleteLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
@@ -247,62 +274,160 @@ export function ActiveChapterContinueCard({
       : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
   const progressPercent = totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
 
+  // Derive dynamic roadmap nodes
+  const roadmapNodes = React.useMemo(() => {
+    if (moduleDetail?.chapters && moduleDetail.chapters.length > 0) {
+      let foundActive = false;
+      return moduleDetail.chapters.map((ch, idx) => {
+        const isCompleted = ch.lessons && ch.lessons.length > 0 ? ch.lessons.every((l) => l.isCompleted) : false;
+        let isCurrent = false;
+        if (!isCompleted && !foundActive) {
+          isCurrent = true;
+          foundActive = true;
+        }
+        return {
+          id: idx + 1,
+          title: formatRoadmapNodeTitle(ch.title, idx),
+          completed: isCompleted,
+          isCurrent,
+        };
+      });
+    }
+
+    return fallbackAnchor.chapters.map((ch) => ({
+      id: ch.id,
+      title: formatRoadmapNodeTitle(ch.shortTitle, ch.id - 1),
+      completed: ch.completed,
+      isCurrent: ch.isCurrent,
+    }));
+  }, [moduleDetail?.chapters, fallbackAnchor.chapters]);
+
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl border border-[#E3E3DC] bg-[#FBFBF9] p-4 sm:p-5 transition-all duration-200 hover:border-[#143D2B]/40 hover:shadow-sm hover:bg-[#FDFDFB]',
+        'rounded-2xl border border-[#E3E3DC] bg-[#FBFBF9] p-5 sm:p-6 shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-5 transition-all hover:border-[#143D2B]/30',
         className
       )}
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* Left: Icon Pill + Lesson Context */}
-        <div className="flex items-start sm:items-center gap-3.5 min-w-0">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF3EE] text-[#143D2B] border border-[#143D2B]/15 transition-transform duration-200 group-hover:scale-105">
-            <BookOpen className="h-5 w-5" />
-          </div>
-
-          <div className="min-w-0 space-y-1">
-            {/* Overline & Progress */}
-            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
-              <span className="font-bold text-[#143D2B] uppercase tracking-wider">
-                Continue Lesson
-              </span>
-              <span className="text-[#858C88]">•</span>
-              <span className="text-[#494F4C] truncate font-medium max-w-[200px] sm:max-w-none">
-                {courseTitle}
-              </span>
-              <span className="text-[#858C88] hidden sm:inline">•</span>
-              <span className="text-[#858C88] hidden sm:inline">
-                {progressPercent}% Complete
-              </span>
-            </div>
-
-            {/* Main Lesson Title */}
+      {/* 1. Top Header: Course Identification & Real-Time Progress Badge */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E3E3DC] pb-4">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#143D2B] text-white font-bold shadow-xs">
+            <BookOpen className="h-4 w-4" />
+          </span>
+          <div className="min-w-0">
+            <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
+              Parent Intelligence Academy • Active Course
+            </span>
             <Link
-              href={`/academy/${moduleSlug}/${lessonSlug}`}
-              className="block font-serif text-base sm:text-lg font-bold text-[#111413] tracking-tight group-hover:text-[#143D2B] transition-colors leading-snug truncate"
+              href={`/academy/${moduleSlug}`}
+              className="font-serif text-lg sm:text-xl font-bold text-[#111413] leading-snug hover:text-[#143D2B] hover:underline transition-colors block truncate"
             >
-              {lessonTitle}
+              {courseTitle}
             </Link>
-
-            {/* Reading Minutes & Format */}
-            <p className="font-mono text-[11px] text-[#858C88] flex items-center gap-2">
-              <span>{readingMinutes} min read</span>
-              <span>•</span>
-              <span>Audio &amp; Text</span>
-            </p>
           </div>
         </div>
 
-        {/* Right: Tactile Action Button */}
+        <div className="shrink-0 self-start sm:self-auto font-mono">
+          <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/15 px-3 py-1 rounded-full">
+            {progressPercent}% Completed ({completedChapters} of {totalChapters} Chapters)
+          </span>
+        </div>
+      </div>
+
+      {/* 2. Fully Dynamic Visual Curriculum Roadmap */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-mono font-bold text-[#111413] uppercase tracking-wider text-[11px]">
+            Curriculum Roadmap
+          </span>
+          <span className="text-[#858C88] font-mono text-[11px]">
+            Next Chapter: {readingMinutes} min read
+          </span>
+        </div>
+
+        {/* Dynamic Connected Node Track */}
+        <div className="relative pt-1 pb-2 overflow-x-auto">
+          <div className="min-w-[480px] flex items-center justify-between relative px-4 sm:px-6">
+            {/* Background Grey Track Line */}
+            <div className="absolute left-6 right-6 top-4 h-1 bg-[#E3E3DC] -z-0" />
+            {/* Real Progress Fill Line */}
+            <div
+              className="absolute left-6 top-4 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
+              style={{ width: `${Math.min(94, Math.max(0, (completedChapters / Math.max(1, totalChapters)) * 94))}%` }}
+            />
+
+            {roadmapNodes.map((node) => {
+              if (node.completed) {
+                return (
+                  <div key={node.id} className="flex flex-col items-center gap-1.5 z-10">
+                    <span className="w-8 h-8 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-xs">
+                      <Check className="w-4 h-4" />
+                    </span>
+                    <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate">
+                      {node.title}
+                    </span>
+                    <span className="font-mono text-[9px] text-[#143D2B]/70 font-medium">Completed</span>
+                  </div>
+                );
+              }
+
+              if (node.isCurrent) {
+                return (
+                  <div key={node.id} className="flex flex-col items-center gap-1.5 z-10">
+                    <span className="w-9 h-9 rounded-full bg-[#143D2B] text-white font-mono text-xs font-black flex items-center justify-center ring-4 ring-[#EAF3EE] shadow-md animate-pulse">
+                      {node.id}
+                    </span>
+                    <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate">
+                      {node.title}
+                    </span>
+                    <span className="font-mono text-[9px] text-[#B45309] font-bold bg-[#FEF3C7] px-1.5 py-0.2 rounded">Active Now</span>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={node.id} className="flex flex-col items-center gap-1.5 z-10 opacity-60">
+                  <span className="w-8 h-8 rounded-full bg-white border-2 border-[#E3E3DC] text-[#858C88] font-mono text-xs font-bold flex items-center justify-center">
+                    {node.id}
+                  </span>
+                  <span className="font-mono text-[10px] text-[#858C88] text-center whitespace-nowrap max-w-[120px] truncate">
+                    {node.title}
+                  </span>
+                  <span className="font-mono text-[9px] text-[#858C88]">Upcoming</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Today's Active Incomplete Lesson & Read Action */}
+      <div className="p-4 sm:p-5 rounded-xl bg-[#EAF3EE]/80 border border-[#143D2B]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1.5 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-white px-2 py-0.5 rounded border border-[#143D2B]/20 uppercase tracking-wider">
+              Today&apos;s Active Lesson
+            </span>
+            <span className="font-mono text-xs text-[#858C88] font-medium">
+              {readingMinutes} min read • Audio &amp; Text
+            </span>
+          </div>
+          <h3 className="font-serif text-base sm:text-lg font-bold text-[#111413] leading-snug">
+            {lessonTitle}
+          </h3>
+          <p className="text-xs text-[#494F4C] leading-relaxed max-w-2xl line-clamp-2">
+            {summary}
+          </p>
+        </div>
+
         <div className="shrink-0 self-end sm:self-auto pt-1 sm:pt-0">
           <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
             <Button
-              size="sm"
-              className="min-h-[42px] px-5 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer group-hover:shadow"
+              className="min-h-[42px] px-5 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer hover:shadow"
             >
               <span>Read Lesson</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+              <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>
