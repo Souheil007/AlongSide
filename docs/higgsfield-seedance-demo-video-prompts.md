@@ -208,41 +208,131 @@ higgsfield generate create seedance_2_5 \
 
 ---
 
-## 6. Higgsfield MCP Tool Invocation JSON Schema
+## 6. Official Higgsfield MCP Tool Invocation Architecture
 
-When triggering via an agent with MCP tool capabilities or Claude/Antigravity MCP, format the payload as follows:
+Higgsfield provides an official Streamable HTTP (SSE) MCP endpoint located at:
+`https://mcp.higgsfield.ai/mcp`
 
-### MCP Call for Video 1:
+### 6.1 Automated 1-Click MCP Execution Runner
+An automated Node.js execution script is provided in the repository to preflight, authenticate, and submit both demo videos:
+
+```bash
+# Run preflight cost inspection
+node scripts/generate-higgsfield-demo-videos.mjs --preflight
+
+# Execute generation across both demo videos
+node scripts/generate-higgsfield-demo-videos.mjs
+```
+
+### 6.2 Low-Level JSON-RPC 2.0 MCP Protocol Schema
+When triggering directly via an MCP agent or HTTP POST with `Authorization: Bearer <higgsfield-token>` and `Accept: application/json, text/event-stream`. For accounts with an active unlimited free trial pass, pass `"use_unlim": true` in params:
+
+#### MCP Call for Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour"
 ```json
 {
-  "server": "higgsfield",
-  "tool": "generate_create",
-  "arguments": {
-    "model": "seedance_2_5",
-    "prompt": "A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: \"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide.\" Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects.",
-    "duration": 30,
-    "resolution": "480p",
-    "aspect_ratio": "16:9",
-    "generate_audio": true
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "generate_video",
+    "arguments": {
+      "params": {
+        "model": "seedance_2_5",
+        "prompt": "A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: \"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide.\" Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects.",
+        "duration": 30,
+        "resolution": "480p",
+        "aspect_ratio": "16:9",
+        "generate_audio": true,
+        "use_unlim": true
+      }
+    }
   }
 }
 ```
 
-### MCP Call for Video 2:
+#### MCP Call for Video 2: "From Profile to Pact — An Interactive Parent Journey"
 ```json
 {
-  "server": "higgsfield",
-  "tool": "generate_create",
-  "arguments": {
-    "model": "seedance_2_5",
-    "prompt": "An interactive 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during a family evening. Soft ambient home office lighting. Handheld smartphone close-up as a parent selects their 10-year-old child's profile, revealing personalized developmental tier advisory guidance. The camera tracks as the parent taps into the premier pillar—the Platform Academy—browsing multiple course categories and opening a bite-sized course on tween digital boundaries, where a vibrant green soundwave player animates with audio guidance. A smooth horizontal swipe reveals the second pillar—the weekly Culture Digest—highlighting weekly news for 10-year-old children, decoded slang tags, and a dinner table conversation starter that bridges the generational gap. The camera smoothly zooms into a dual-device view on the kitchen table where parent and child experience the third pillar—Family Devices: the child completes the interactive Device Readiness Assessment with an enthusiastic green score badge, and together they co-sign the Bilateral Family Pact establishing parent-configured device usage restrictions that activate an automated 8:30 PM bedtime curfew lock. Crisp modern UI animations, spring easing, shallow depth of field. Synchronized native audio features an empathetic, reassuring spoken voiceover: \"Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families.\" Background music is an intimate modern acoustic piano rhythm with realistic glass typing, card flip swooshes, score tally chimes, and a comforting curfew lock tone.",
-    "duration": 30,
-    "resolution": "480p",
-    "aspect_ratio": "16:9",
-    "generate_audio": true
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "generate_video",
+    "arguments": {
+      "params": {
+        "model": "seedance_2_5",
+        "prompt": "An interactive 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during a family evening. Soft ambient home office lighting. Handheld smartphone close-up as a parent selects their 10-year-old child's profile, revealing personalized developmental tier advisory guidance. The camera tracks as the parent taps into the premier pillar—the Platform Academy—browsing multiple course categories and opening a bite-sized course on tween digital boundaries, where a vibrant green soundwave player animates with audio guidance. A smooth horizontal swipe reveals the second pillar—the weekly Culture Digest—highlighting weekly news for 10-year-old children, decoded slang tags, and a dinner table conversation starter that bridges the generational gap. The camera smoothly zooms into a dual-device view on the kitchen table where parent and child experience the third pillar—Family Devices: the child completes the interactive Device Readiness Assessment with an enthusiastic green score badge, and together they co-sign the Bilateral Family Pact establishing parent-configured device usage restrictions that activate an automated 8:30 PM bedtime curfew lock. Crisp modern UI animations, spring easing, shallow depth of field. Synchronized native audio features an empathetic, reassuring spoken voiceover: \"Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families.\" Background music is an intimate modern acoustic piano rhythm with realistic glass typing, card flip swooshes, score tally chimes, and a comforting curfew lock tone.",
+        "duration": 30,
+        "resolution": "480p",
+        "aspect_ratio": "16:9",
+        "generate_audio": true,
+        "use_unlim": true
+      }
+    }
   }
 }
 ```
+
+### 6.3 Credit & Account Quota Diagnostic (`trial_ends_at` vs. `cancelled_by_user`)
+- **Seedance 2.5 Cost Profile:** Each 30-second `480p` video requires **90 credits** (or 180 credits for both videos).
+- **Workspace Selection Requirement:** The MCP requires selecting the active user workspace (via `select_workspace`) before submitting jobs.
+- **Why `trial_ends_at: "2026-11-14T11:03:13Z"` is in the future but generations were rejected:**
+  * When enrolled in the trial (`kind: "mcp_ultra_unlim"`), the backend set the trial period to conclude on **November 14, 2026 at 11:03:13 UTC** (`trial_ends_at`).
+  * However, when a trial subscription is cancelled early (e.g. to avoid post-trial auto-billing), Higgsfield's backend applies an **immediate cutoff** rather than allowing unmetered generation until period end:
+    ```json
+    "unlim_trial_in_mcp_active": false,
+    "trial_status": {
+      "eligible": false,
+      "status": "cancelled_by_user",
+      "kind": "mcp_ultra_unlim",
+      "trial_ends_at": "2026-11-14T11:03:13Z",
+      "trial_credits": 0
+    }
+    ```
+  * As a consequence:
+    1. **Unlimited Generation Mode (`use_unlim: true`):** The server checks `unlim_trial_in_mcp_active` (`false`) and `unlim.available` (`false`), rejecting with: `{"error": "Unlimited generations aren't available on this account. Retry without use_unlim to generate with credits."}`
+    2. **Standard Credit Mode (without `use_unlim`):** The account holds `9.0 credits` remaining (insufficient for 90-credit generation), returning HTTP 403 `only_mcp_usage_on_trial_is_available`.
+- **Empirical Transaction Verification (`higgsfield account transactions`):**
+  * **2026-11-11 (Active Trial):** Seedance 2.5 and Seed Audio 1.0 jobs were billed at **`0 credits`** (e.g. the 3 completed launch videos).
+  * **2026-11-12 (Post-Cancellation):** Generations switched to standard credit deduction (e.g. `GPT Image 2.0` spent `0.5 credits`, decreasing balance from `10.0` to `9.0 credits`).
+- **Immediate Unblock Options:**
+  1. **Resume / Un-cancel Trial:** Since `trial_ends_at` is November 14, log into [Higgsfield Web / Stripe Billing](https://higgsfield.ai) under Account / Subscription and click **"Resume Subscription" / "Reactivate Trial"** to restore unmetered generation for the remaining days at 0 cost.
+  2. **Top-Up Credits:** Add credits or upgrade at [Higgsfield MCP Pricing](https://higgsfield.ai/mcp-pricing?new_price_id=price_1TDRhfCmk0pn4HuHdZEyd8mB&seats=1&dry_run=True&source=mcp).
+  3. **Run 1-Click Execution:** Once resumed or topped up, run `node scripts/generate-higgsfield-demo-videos.mjs --unlim`.
+
+### 6.4 Direct Higgsfield CLI Execution Engine
+In addition to the MCP protocol runner, a dedicated direct CLI execution script is provided in the repository:
+```bash
+node scripts/execute-higgsfield-cli-demo-videos.mjs
+```
+
+#### Host CLI Execution Verification Transcript:
+```text
+================================================================================
+  AlongSide — Higgsfield CLI Demo Video Direct Execution Engine
+================================================================================
+
+🔍 Checking Higgsfield CLI Installation & Account Status...
+   • CLI Version: higgsfield 1.2.3 (4cdfcbdbc9972c1092f9d8fcb93a00c3a97de84f)
+   • Account: mouradmaker@gmail.com — ultra plan, 9.5 credits
+   • Active Workspace: Private — ultra plan, 9.5 credits
+
+🚀 Executing CLI Generation for [Video 1: The 3 Pillars of Alongside — Guided Lifespan Tour]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3 (0.73s)
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+
+🚀 Executing CLI Generation for [Video 2: From Profile to Pact — An Interactive Parent Journey]...
+   Command: higgsfield generate create seedance_2_5 --duration 30 --resolution 480p --aspect_ratio 16:9 --generate_audio true
+   ⏱️ Exit Code: 3 (0.53s)
+   ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
+```
+
+### 6.5 Live Completed Seedance 2.5 Video Assets on Account
+The account previously generated three 30-second Seedance 2.5 launch video renders that are fully completed, hosted on CloudFront, and viewable immediately:
+1. [**Launch Trailer Part 1 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_125709_9de81a3e-c2f3-4d32-8e46-036b21613fec.mp4) (`9de81a3e-c2f3-4d32-8e46-036b21613fec`): Dim nursery tension to Scandinavian kitchen reveal, iPad Pro app interface, developmental horizon arc, and hands-free nutrition food ladder.
+2. [**Launch Trailer Part 2 (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_173740_ffae18d9-dba0-48dc-87fa-898bc433fdb6.mp4) (`ffae18d9-dba0-48dc-87fa-898bc433fdb6`): Parent-child dialogue deck, Bilateral Family Pact stylus signing, 8:30 PM bedtime curfew seal stamp, and AlongSide lifespan branding.
+3. [**Lifespan Exploration Trailer (30s, Seedance 2.5)**](https://d8j0ntlcm91z4.cloudfront.net/user_3LxPLfkmENXyKn29oERn9nhTYJr/hf_20261111_114758_2187e72a-224d-4b9a-b234-30f09eb2b956.mp4) (`2187e72a-224d-4b9a-b234-30f09eb2b956`): Whole-child lifespan navigation, developmental tier benchmarking, and calm parental advisory interface.
 
 ---
 
