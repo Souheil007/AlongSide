@@ -220,10 +220,13 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Emotional Reset');
       expect(html).toContain('Parent Compass Reminder');
       expect(html).toContain('You don&#x27;t have to get every moment right');
+      expect(html).toContain('10 developmental questions');
 
-      // Purged fake alarm widgets
+      // Purged fake alarm widgets and redundant/clinical wording
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
       expect(html).not.toContain('Day 9 of 14 Completed');
+      expect(html).not.toContain('Begin 3-min evaluation');
+      expect(html).not.toContain('clinical');
     });
 
     it('renders genuine score gauge and 4 quadrants when tween Maya is assessed', () => {
@@ -250,9 +253,11 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('View Full Readiness Diagnostic');
       expect(html).toContain('/children/child-maya/readiness');
 
-      // Purged fake alarm widgets
+      // Purged fake alarm widgets and redundant/clinical wording
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
       expect(html).not.toContain('Day 9 of 14 Completed');
+      expect(html).not.toContain('Begin 3-min evaluation');
+      expect(html).not.toContain('clinical');
     });
 
     it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders Early Screen Boundaries', () => {
@@ -265,16 +270,19 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).not.toContain('Readiness Radar');
       expect(html).not.toContain('Sleep Independence');
 
-      // Verify Early Screen Boundaries & Meltdown Reset are shown
+      // Verify Early Screen Boundaries & Meltdown Reset are shown (Option A: pediatric guideline, no fake telemetry)
       expect(html).toContain('Early Screen Boundaries');
       expect(html).toContain('Leo&#x27;s Daily Media Boundary');
       expect(html).toContain('Max 30 min/day');
-      expect(html).toContain('20 / 30m (10 min remaining)');
+      expect(html).toContain('Pediatric Guideline: Max 30 min/day');
+      expect(html).toContain('Co-Viewing Standard');
+      expect(html).not.toContain('20 / 30m');
       expect(html).toContain('Toddler Meltdown Reset Steps:');
       expect(html).toContain('Get low to eye level (sit on floor)');
       expect(html).toContain('Offer physical bridge');
       expect(html).toContain('Today&#x27;s Sensory Activity');
       expect(html).toContain('15 min outdoor water &amp; leaf play');
+      expect(html).toContain('/brain-games?childId=child-leo');
       expect(html).toContain('Parent Compass Reminder');
     });
   });
