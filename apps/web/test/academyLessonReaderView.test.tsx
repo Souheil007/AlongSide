@@ -245,8 +245,8 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
       expect(html).toContain('data-testid="lesson-article-container"');
 
       // 2. Blog header elements
-      expect(html).toContain('data-testid="lesson-archetype-banner"');
-      expect(html).toContain('💡 Why this happens:');
+      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
+      expect(html).not.toContain('💡 Why this happens:');
       expect(html).toContain('data-testid="lesson-narration-player"');
       expect(html).toContain('data-testid="thirty-second-glance"');
 
@@ -292,7 +292,7 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
       expect(titleOccurrences).toBe(1);
     });
 
-    it('renders CHILD_GROWTH_CONCEPT archetype headings and banners cleanly', () => {
+    it('renders CHILD_GROWTH_CONCEPT archetype headings cleanly without top banner', () => {
       const growthLesson: AcademyLessonDTO = {
         ...multiModalLesson,
         id: 'les-growth',
@@ -308,7 +308,8 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
         })
       );
 
-      expect(html).toContain('🌱 How your child grows:');
+      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
+      expect(html).not.toContain('🌱 How your child grows:');
       expect(html).toContain('Part 1 · What You&#x27;ll Notice');
       expect(html).toContain('A New Stage of Growth');
       expect(html).toContain('Part 2 · Why This Milestone Matters');
@@ -317,7 +318,7 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
       expect(html).toContain('Part 4 · Fun Ideas for This Week');
     });
 
-    it('renders PRACTICAL_FAMILY_GUIDE archetype headings and banners cleanly', () => {
+    it('renders PRACTICAL_FAMILY_GUIDE archetype headings cleanly without top banner', () => {
       const guideLesson: AcademyLessonDTO = {
         ...multiModalLesson,
         id: 'les-guide',
@@ -333,7 +334,8 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
         })
       );
 
-      expect(html).toContain('🧭 Parent&#x27;s guide:');
+      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
+      expect(html).not.toContain('🧭 Parent&#x27;s guide:');
       expect(html).toContain('Part 1 · Why Clear Guidance Matters');
       expect(html).toContain('The Everyday Family Decision');
       expect(html).toContain('Part 2 · What Every Parent Should Know');
