@@ -5,12 +5,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import {
   BookOpen,
-  Play,
-  Pause,
   ArrowRight,
-  Check,
-  Copy,
-  Headphones,
 } from 'lucide-react';
 import {
   DevelopmentalTier,
@@ -18,11 +13,8 @@ import {
   AcademyCategory,
   type ChildDTO,
 } from '@alongside/shared';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { getAcademyModules, getAcademyModuleBySlug } from '@/lib/api/academy';
-import { getPriorityTheme } from '@/components/academy/ChapterRoadmapView';
 import { useChildAge } from '@/hooks/useChildAge';
 import { cn } from '@/lib/utils';
 
@@ -102,23 +94,23 @@ export const TIER_PRIORITY_ANCHORS: Record<string, TierPriorityAnchor> = {
     priority: ChapterPriority.PRIORITY_1_CRITICAL,
     readingMinutes: 4,
     totalChapters: 5,
-    completedChapters: 2,
+    completedChapters: 1,
     summary:
-      'Move from referee to coach when sibling rivalry and gaming screen transitions flare up.',
+      'Neutral co-regulation for elementary sibling conflict and executive function scaffolding for homework initiation.',
     chapters: [
-      { id: 1, shortTitle: 'Ch 1: Concrete Logic', fullTitle: 'Operational Reasoning', completed: true, isCurrent: false },
-      { id: 2, shortTitle: 'Ch 2: Dopamine Crashes', fullTitle: 'Mediation & Screen Reset', completed: false, isCurrent: true },
-      { id: 3, shortTitle: 'Ch 3: Sibling Friction', fullTitle: 'Zero-Blame Fair Resolution', completed: false, isCurrent: false },
-      { id: 4, shortTitle: 'Ch 4: Device Envy', fullTitle: 'Handling Peer Comparisons', completed: false, isCurrent: false },
-      { id: 5, shortTitle: 'Ch 5: Sleep Hygiene', fullTitle: 'Pre-Bedtime Reading Sanctuary', completed: false, isCurrent: false },
+      { id: 1, shortTitle: 'Ch 1: Sibling Mediation', fullTitle: 'Fairness and De-escalation', completed: true, isCurrent: false },
+      { id: 2, shortTitle: 'Ch 2: Dopamine Drops', fullTitle: 'Ending Video Game Sessions Calmly', completed: false, isCurrent: true },
+      { id: 3, shortTitle: 'Ch 3: Homework Friction', fullTitle: 'Initiation and Focus Scaffolding', completed: false, isCurrent: false },
+      { id: 4, shortTitle: 'Ch 4: Friendship Drama', fullTitle: 'Peer Conflict and Perspective Taking', completed: false, isCurrent: false },
+      { id: 5, shortTitle: 'Ch 5: Bedtime Autonomy', fullTitle: 'Independent Sleep Rhythms', completed: false, isCurrent: false },
     ],
-    audioDuration: '3:40',
+    audioDuration: '3:45',
   },
   [DevelopmentalTier.TIER_3_PRE_TEEN_10_12]: {
-    moduleSlug: 'behavior-tween-adrenarche',
-    lessonSlug: 'adrenarche-neurobiology',
-    courseTitle: 'Tween Adrenarche: Navigating Friendships & Digital Independence',
-    chapterTitle: 'Chapter 1: The Biological Awakening to Peer Status',
+    moduleSlug: 'behavior-tween-neurobiology',
+    lessonSlug: 'tween-neurobiology-and-adrenarche',
+    courseTitle: 'Tween Adrenarche & Neurobiology Shift',
+    chapterTitle: 'Chapter 1: The Adrenarche Shift & Peer Validation',
     category: AcademyCategory.BEHAVIOR_AND_EMOTIONS,
     categoryLabel: 'Behavior & Emotions',
     priority: ChapterPriority.PRIORITY_1_CRITICAL,
@@ -126,13 +118,13 @@ export const TIER_PRIORITY_ANCHORS: Record<string, TierPriorityAnchor> = {
     totalChapters: 5,
     completedChapters: 2,
     summary:
-      'Why peer rejection feels like physical pain to a middle-schooler, and how to validate their hurt without giving in to reckless screen demands.',
+      'Why middle school emotional storms are biological, not bad behavior, and how to maintain empathetic connection during pubertal changes.',
     chapters: [
-      { id: 1, shortTitle: 'Ch 1: The Shift', fullTitle: 'The Biological Awakening to Peer Status', completed: true, isCurrent: false },
-      { id: 2, shortTitle: 'Ch 2: Peer Validation', fullTitle: 'Dopamine & Belonging Ache', completed: true, isCurrent: false },
-      { id: 3, shortTitle: 'Ch 3: Exclusion (Today)', fullTitle: 'When Left Out of the Group Chat', completed: false, isCurrent: true },
-      { id: 4, shortTitle: 'Ch 4: Screen Pacts', fullTitle: 'Collaborative Pre-Device Treaty', completed: false, isCurrent: false },
-      { id: 5, shortTitle: 'Ch 5: Bedtime Trust', fullTitle: 'The 8:30 PM Living Room Dock', completed: false, isCurrent: false },
+      { id: 1, shortTitle: 'Ch 1: The Shift', fullTitle: 'Adrenarche & the Changing Amygdala', completed: true, isCurrent: false },
+      { id: 2, shortTitle: 'Ch 2: Peer Validation', fullTitle: 'Why Your Opinion Suddenly Vanished', completed: true, isCurrent: false },
+      { id: 3, shortTitle: 'Ch 3: Exclusion (Today)', fullTitle: 'Peer Group Validation & Exclusion Anxiety', completed: false, isCurrent: true },
+      { id: 4, shortTitle: 'Ch 4: Screen Pacts', fullTitle: 'Collaborative Tech Agreements', completed: false, isCurrent: false },
+      { id: 5, shortTitle: 'Ch 5: Bedtime Trust', fullTitle: 'Protecting Sleep without Hostility', completed: false, isCurrent: false },
     ],
     audioDuration: '3:45',
   },
@@ -217,35 +209,6 @@ export function ActiveChapterContinueCard({
   const effectiveTier = (child?.developmentalTier ?? childAge.developmentalTier) as DevelopmentalTier;
   const fallbackAnchor = resolveTierAnchor(child?.developmentalTier ?? child?.age);
 
-  const [isPlayingAudio, setIsPlayingAudio] = React.useState(false);
-  const [scriptCopied, setScriptCopied] = React.useState(false);
-
-  const tonightScript = React.useMemo(() => {
-    const age = child?.age ?? 10;
-    if (age <= 3) {
-      return '“Your feelings are so big right now. I’m sitting right here on the carpet with you until your breathing slows down.”';
-    }
-    if (age <= 6) {
-      return '“I see you’re really frustrated. Let’s take two deep breaths together, and then we’ll decide what happens next.”';
-    }
-    if (age <= 12) {
-      return '“I see how hard you’re working on that game. It’s hard to stop. I’m starting our 3-minute timer now so we can head down to dinner together.”';
-    }
-    return '“I hear you, and I understand why you feel that way. Let’s take 10 minutes to reset, and then talk through this calmly without raising our voices.”';
-  }, [child?.age]);
-
-  const handleCopyScript = async () => {
-    try {
-      if (typeof navigator !== 'undefined' && navigator.clipboard) {
-        await navigator.clipboard.writeText(tonightScript);
-        setScriptCopied(true);
-        setTimeout(() => setScriptCopied(false), 2000);
-      }
-    } catch {
-      // ignore
-    }
-  };
-
   // Fetch modules for this tier
   const { data: modules } = useQuery({
     queryKey: ['active-chapter-modules', effectiveTier],
@@ -269,15 +232,12 @@ export function ActiveChapterContinueCard({
 
   const courseTitle = moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
   const moduleSlug = moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
-  const summary = moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
 
   const allLessons = moduleDetail?.lessons && moduleDetail.lessons.length > 0 ? moduleDetail.lessons : [];
   const currentIncompleteLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
 
   const lessonSlug = currentIncompleteLesson?.slug ?? fallbackAnchor.lessonSlug;
-  const chapterTitle = currentIncompleteLesson?.title
-    ? `Chapter: ${currentIncompleteLesson.title}`
-    : fallbackAnchor.chapterTitle;
+  const lessonTitle = currentIncompleteLesson?.title ?? fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '');
   const readingMinutes = currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
 
   const totalChapters = moduleDetail?.chapters?.length || activeModule?.lessonCount || fallbackAnchor.totalChapters;
@@ -287,245 +247,66 @@ export function ActiveChapterContinueCard({
       : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
   const progressPercent = totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
 
-  const chapters = React.useMemo(() => {
-    if (moduleDetail?.chapters && moduleDetail.chapters.length > 0) {
-      let foundActive = false;
-      return moduleDetail.chapters.map((ch, idx) => {
-        const isCompleted = ch.lessons && ch.lessons.length > 0 ? ch.lessons.every((l) => l.isCompleted) : false;
-        let isCurrent = false;
-        if (!isCompleted && !foundActive) {
-          isCurrent = true;
-          foundActive = true;
-        }
-        return {
-          id: idx + 1,
-          shortTitle: ch.title.length > 20 ? ch.title.slice(0, 18) + '...' : ch.title,
-          fullTitle: ch.title,
-          completed: isCompleted,
-          isCurrent,
-        };
-      });
-    }
-    return fallbackAnchor.chapters;
-  }, [moduleDetail?.chapters, fallbackAnchor.chapters]);
-
-  const audioDuration = fallbackAnchor.audioDuration;
-
-  const toggleAudio = () => {
-    setIsPlayingAudio((prev) => !prev);
-  };
-
   return (
-    <Card
+    <div
       className={cn(
-        'border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] overflow-hidden transition-all hover:border-[#143D2B]/30',
+        'group relative overflow-hidden rounded-2xl border border-[#E3E3DC] bg-[#FBFBF9] p-4 sm:p-5 transition-all duration-200 hover:border-[#143D2B]/40 hover:shadow-sm hover:bg-[#FDFDFB]',
         className
       )}
     >
-      <CardHeader className="p-5 pb-4 space-y-3 border-b border-[#E3E3DC]">
-        {/* Top Header Row with Category & Progress Badge */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-[6px] bg-[#143D2B] text-white font-bold shadow-2xs">
-              <BookOpen className="h-4 w-4" />
-            </span>
-            <div>
-              <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
-                Parent Intelligence Academy • Active Course
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Left: Icon Pill + Lesson Context */}
+        <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF3EE] text-[#143D2B] border border-[#143D2B]/15 transition-transform duration-200 group-hover:scale-105">
+            <BookOpen className="h-5 w-5" />
+          </div>
+
+          <div className="min-w-0 space-y-1">
+            {/* Overline & Progress */}
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+              <span className="font-bold text-[#143D2B] uppercase tracking-wider">
+                Continue Lesson
               </span>
-              <Link href={`/academy/${moduleSlug}`} className="hover:underline">
-                <CardTitle className="font-serif text-lg sm:text-xl font-bold text-[#111413] leading-snug mt-0.5">
-                  {courseTitle}
-                </CardTitle>
-              </Link>
+              <span className="text-[#858C88]">•</span>
+              <span className="text-[#494F4C] truncate font-medium max-w-[200px] sm:max-w-none">
+                {courseTitle}
+              </span>
+              <span className="text-[#858C88] hidden sm:inline">•</span>
+              <span className="text-[#858C88] hidden sm:inline">
+                {progressPercent}% Complete
+              </span>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2 font-mono">
-            <Badge
-              variant="outline"
-              className="text-xs font-mono font-bold text-[#143D2B] bg-[#EAF3EE] border-[#143D2B]/20 px-2.5 py-1 rounded-full"
+            {/* Main Lesson Title */}
+            <Link
+              href={`/academy/${moduleSlug}/${lessonSlug}`}
+              className="block font-serif text-base sm:text-lg font-bold text-[#111413] tracking-tight group-hover:text-[#143D2B] transition-colors leading-snug truncate"
             >
-              {progressPercent}% Completed ({completedChapters} of {totalChapters} Chapters)
-            </Badge>
-          </div>
-        </div>
-      </CardHeader>
+              {lessonTitle}
+            </Link>
 
-      <CardContent className="p-5 space-y-5">
-        {/* 1. VISUAL CURRICULUM ROADMAP CHAPTER NODES */}
-        <div className="space-y-2.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="font-mono font-bold text-[#111413] uppercase tracking-wider text-[11px]">
-              Curriculum Roadmap
-            </span>
-            <span className="text-[#858C88] font-mono text-[11px]">
-              Next Chapter: {readingMinutes} min audio/read
-            </span>
-          </div>
-
-          {/* Connected Roadmap Track */}
-          <div className="relative pt-2 pb-2 overflow-x-auto">
-            <div className="min-w-[560px] flex items-center justify-between relative px-6">
-              {/* Background Grey Track Line */}
-              <div className="absolute left-8 right-8 top-5 h-1 bg-[#E3E3DC] -z-0" />
-              {/* Completed Progress Line */}
-              <div
-                className="absolute left-8 top-5 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
-                style={{ width: `${Math.min(92, progressPercent + 10)}%` }}
-              />
-
-              {chapters.map((ch) => {
-                if (ch.completed) {
-                  return (
-                    <div key={ch.id} className="flex flex-col items-center gap-1.5 z-10">
-                      <span className="w-8 h-8 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-xs">
-                        <Check className="w-4 h-4" />
-                      </span>
-                      <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap">
-                        {ch.shortTitle}
-                      </span>
-                    </div>
-                  );
-                }
-
-                if (ch.isCurrent) {
-                  return (
-                    <div key={ch.id} className="flex flex-col items-center gap-1.5 z-10">
-                      <span className="w-9 h-9 rounded-full bg-[#143D2B] text-white font-mono text-xs font-black flex items-center justify-center ring-4 ring-[#EAF3EE] shadow-md animate-pulse">
-                        {ch.id}
-                      </span>
-                      <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap">
-                        {ch.shortTitle}
-                      </span>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div key={ch.id} className="flex flex-col items-center gap-1.5 z-10 opacity-60">
-                    <span className="w-8 h-8 rounded-full bg-[#FBFBF9] border-2 border-[#E3E3DC] text-[#858C88] font-mono text-xs font-bold flex items-center justify-center">
-                      {ch.id}
-                    </span>
-                    <span className="font-mono text-[10px] text-[#858C88] text-center whitespace-nowrap">
-                      {ch.shortTitle}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+            {/* Reading Minutes & Format */}
+            <p className="font-mono text-[11px] text-[#858C88] flex items-center gap-2">
+              <span>{readingMinutes} min read</span>
+              <span>•</span>
+              <span>Audio &amp; Text</span>
+            </p>
           </div>
         </div>
 
-        {/* 2. TODAY'S ACTIVE LESSON & TONIGHT'S SCRIPT (2-COLUMN GRID) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
-          {/* Left: Active Lesson & Audio Player (7 cols) */}
-          <div className="md:col-span-7 p-4 sm:p-5 rounded-xl bg-[#EAF3EE]/80 border border-[#143D2B]/20 flex flex-col justify-between space-y-3">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-white px-2 py-0.5 rounded border border-[#143D2B]/20 uppercase tracking-wider">
-                  Today&apos;s Active Lesson
-                </span>
-                <span className="font-mono text-xs text-[#858C88] font-medium">
-                  {readingMinutes} minutes • Audio or Text
-                </span>
-              </div>
-              <h3 className="font-serif text-base sm:text-lg font-bold text-[#111413] leading-snug">
-                {chapterTitle}
-              </h3>
-              <p className="text-xs text-[#494F4C] leading-relaxed">
-                {summary}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2.5 pt-1">
-              <Button
-                type="button"
-                onClick={toggleAudio}
-                className="min-h-[44px] gap-2 rounded-lg bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-bold shadow-xs transition cursor-pointer"
-              >
-                {isPlayingAudio ? (
-                  <>
-                    <Pause className="w-4 h-4 fill-current" />
-                    <span>Pause Audio</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-4 h-4 fill-current" />
-                    <span>Listen to Audio ({audioDuration})</span>
-                  </>
-                )}
-              </Button>
-
-              <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
-                <Button
-                  variant="outline"
-                  className="min-h-[44px] gap-1.5 rounded-lg bg-white border-[#E3E3DC] text-xs font-semibold text-[#111413] hover:bg-[#F4F4F0] transition"
-                >
-                  <span>Read Lesson</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Right: What to Say Out Loud Tonight (5 cols) */}
-          <div className="md:col-span-5 p-4 sm:p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] flex flex-col justify-between space-y-3">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider">
-                  Tonight&apos;s Script
-                </span>
-                <button
-                  type="button"
-                  onClick={handleCopyScript}
-                  className="inline-flex items-center gap-1 font-mono text-[10px] text-[#143D2B] hover:text-[#0E2B1E] bg-white px-2 py-0.5 rounded border border-[#E3E3DC] shadow-2xs transition cursor-pointer"
-                >
-                  {scriptCopied ? (
-                    <>
-                      <Check className="w-3 h-3 text-emerald-600" />
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3 text-[#143D2B]" />
-                      <span>Copy 📋</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              <blockquote className="font-serif text-sm text-[#111413] italic leading-relaxed">
-                {tonightScript}
-              </blockquote>
-            </div>
-
-            <span className="font-mono text-[10px] text-[#858C88] block border-t border-[#E3E3DC] pt-2">
-              Co-Regulation Tip: Keep vocal pitch calm and low. Connect before correcting.
-            </span>
-          </div>
+        {/* Right: Tactile Action Button */}
+        <div className="shrink-0 self-end sm:self-auto pt-1 sm:pt-0">
+          <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
+            <Button
+              size="sm"
+              className="min-h-[42px] px-5 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer group-hover:shadow"
+            >
+              <span>Read Lesson</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Button>
+          </Link>
         </div>
-
-        {/* 3. AUDIO WAVEFORM VISUALIZER (EXPANDABLE DRAWER) */}
-        {isPlayingAudio && (
-          <div className="p-3 bg-white rounded-[8px] border border-[#E3E3DC] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in duration-300">
-            <div className="flex items-center gap-1.5 h-6 px-2 overflow-hidden flex-1">
-              <span className="w-1 bg-[#143D2B]/40 rounded-full h-2 animate-pulse" />
-              <span className="w-1 bg-[#143D2B]/60 rounded-full h-4 animate-bounce" />
-              <span className="w-1 bg-[#143D2B] rounded-full h-6 animate-pulse" />
-              <span className="w-1 bg-[#143D2B] rounded-full h-3 animate-bounce" />
-              <span className="w-1 bg-[#143D2B]/80 rounded-full h-5 animate-pulse" />
-              <span className="w-1 bg-[#143D2B] rounded-full h-6 animate-bounce" />
-              <span className="w-1 bg-[#143D2B]/70 rounded-full h-4 animate-pulse" />
-              <span className="w-1 bg-[#143D2B]/50 rounded-full h-3 animate-bounce" />
-            </div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#858C88]">
-              <Headphones className="w-3.5 h-3.5 text-[#143D2B]" />
-              <span>Playing narration by Dr. Chen (Pediatric Advisor)</span>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

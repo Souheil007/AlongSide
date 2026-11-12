@@ -146,32 +146,29 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
     });
   });
 
-  describe('2. #1 Hero Centerpiece: Course Journey Roadmap (ActiveChapterContinueCard)', () => {
-    it('renders visual curriculum roadmap with 5 connected chapter nodes for tween Maya', () => {
+  describe('2. #1 Hero Centerpiece: Streamlined Continue Lesson Strip (ActiveChapterContinueCard)', () => {
+    it('renders streamlined continue lesson strip for tween Maya', () => {
       const html = wrapWithQueryClient(
         <ActiveChapterContinueCard child={mockTweenMaya} />
       );
 
-      expect(html).toContain('Parent Intelligence Academy • Active Course');
-      expect(html).toContain('Curriculum Roadmap');
-      expect(html).toContain('Ch 1: The Shift');
-      expect(html).toContain('Ch 2: Peer Validation');
-      expect(html).toContain('Ch 3: Exclusion (Today)');
-      expect(html).toContain('Ch 4: Screen Pacts');
-      expect(html).toContain('Ch 5: Bedtime Trust');
-      expect(html).toContain('Listen to Audio (3:45)');
+      expect(html).toContain('Continue Lesson');
+      expect(html).toContain('Tween Adrenarche &amp; Neurobiology Shift');
       expect(html).toContain('Read Lesson');
+      expect(html).not.toContain('Curriculum Roadmap');
+      expect(html).not.toContain('Tonight&#x27;s Script');
+      expect(html).not.toContain('Listen to Audio');
     });
 
-    it('renders toddler-tailored course journey for toddler Leo', () => {
+    it('renders streamlined continue lesson strip tailored for toddler Leo', () => {
       const html = wrapWithQueryClient(
         <ActiveChapterContinueCard child={mockToddlerLeo} />
       );
 
-      expect(html).toContain('Parent Intelligence Academy • Active Course');
-      expect(html).toContain('Ch 1: Amygdala Basics');
-      expect(html).toContain('Ch 2: Tantrum Reset');
-      expect(html).toContain('Listen to Audio (3:15)');
+      expect(html).toContain('Continue Lesson');
+      expect(html).toContain('Sensory Overload &amp; Infant Co-Regulation: Taming Big Feelings');
+      expect(html).toContain('Read Lesson');
+      expect(html).not.toContain('Curriculum Roadmap');
     });
   });
 
