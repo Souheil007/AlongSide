@@ -213,7 +213,7 @@ export function ReadinessWizard({
             <CardDescription className="flex items-start gap-2 p-3 rounded-lg bg-teal-50/60 border border-teal-100 text-teal-900 text-xs sm:text-sm leading-relaxed">
               <Sparkles className="h-4 w-4 text-teal-700 shrink-0 mt-0.5" />
               <span>
-                <strong>Developmental Neurobiology:</strong> {question.clinicalInsight}
+                <strong>Why This Matters:</strong> {question.clinicalInsight}
               </span>
             </CardDescription>
           )}

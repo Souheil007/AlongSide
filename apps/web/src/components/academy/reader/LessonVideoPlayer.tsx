@@ -129,7 +129,7 @@ export function LessonVideoPlayer({
                 {video.title}
               </h3>
               <p className="text-xs text-stone-300 font-medium hidden sm:block">
-                Click to load master lecture and clinical analysis
+                Click to watch this talk
               </p>
             </div>
           </div>
@@ -152,7 +152,7 @@ export function LessonVideoPlayer({
           </span>
           <div className="space-y-0.5">
             <span className="font-bold uppercase tracking-wider text-[10px] text-amber-700 dark:text-amber-400 block">
-              Clinical Video Hook
+              Why This Talk Matters
             </span>
             <p className="font-serif italic text-sm sm:text-base leading-relaxed">
               &ldquo;{video.parentHook}&rdquo;
@@ -182,7 +182,7 @@ export function LessonVideoPlayer({
             <span className="flex items-center gap-2">
               <GraduationCap className="h-4 w-4 text-teal-600 dark:text-teal-400" />
               <span>
-                Clinical Key Takeaways ({video.keyTakeaways.length} Core Concepts)
+                Key Takeaways ({video.keyTakeaways.length} Core Ideas)
               </span>
             </span>
             <ChevronDown

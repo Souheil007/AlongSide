@@ -38,7 +38,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'When it is time to shut off a screen or transition to dinner or homework:',
     scenario: 'Stopping high-stimulation digital play and shifting focus to non-digital routines.',
     clinicalInsight:
-      'The prefrontal cortex inhibitory stop-system is still actively myelinating. Abrupt dopamine drops create physiological resistance that requires neurological patience.',
+      'The self-control centers of a child&apos;s brain are still actively developing. Stopping fun digital play causes a sudden shift that calls for calm, steady guidance.',
     options: [
       {
         id: 'ef-10',
@@ -73,7 +73,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'If an unknown gamer or direct message offers free game currency or requests personal chat:',
     scenario: 'Encountering unsolicited strangers, phishing links, or social manipulation online.',
     clinicalInsight:
-      'Tween social reward circuitry interprets online friendliness as genuine camaraderie without mature threat-evaluation heuristics.',
+      'Growing tweens naturally crave connection and often mistake online friendliness for genuine friendship before learning to spot red flags.',
     options: [
       {
         id: 'os-10',
@@ -108,7 +108,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'Regarding device presence in the bedroom during sleeping hours:',
     scenario: 'Protecting uncompromised neurobiological sleep from nighttime screen stimulation.',
     clinicalInsight:
-      'Adolescent melatonin secretion is naturally delayed by 2 hours. Blue light and late-night social anticipation severely degrade deep sleep architecture.',
+      'A teen&apos;s natural sleep rhythm shifts later by about two hours. Screen light and notifications right before bed interfere with restorative deep sleep.',
     options: [
       {
         id: 'bh-10',
@@ -143,7 +143,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'When a group chat erupts with mean roasting, spamming, or dare challenges:',
     scenario: 'Holding personal boundaries against digital herd mentality and group exclusion fear.',
     clinicalInsight:
-      'Tween adrenarche amplifies ventral striatum sensitivity to peer approval. Digital exclusion activates neural pain pathways identical to physical injury.',
+      'Tweens naturally feel peer approval deeply. Being left out of group chats triggers real emotional hurt, which makes digital boundaries crucial.',
     options: [
       {
         id: 'pr-10',
@@ -178,7 +178,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'When experiencing a high-stakes loss in a video game or sudden device lockout:',
     scenario: 'Navigating frustration, digital loss, and sudden stimulation removal.',
     clinicalInsight:
-      'Amygdala reactivity surges ahead of prefrontal connectivity. High-stimulus games flood the brain with adrenaline and cortisol.',
+      'Emotional reactivity develops faster than calm self-regulation. Fast-paced games create excitement surges that take time to cool down.',
     options: [
       {
         id: 'er-10',
@@ -213,7 +213,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'If your child accidentally sees disturbing adult content or makes a digital mistake:',
     scenario: 'Approaching parents for help without fear of immediate punishment or device confiscation.',
     clinicalInsight:
-      'Punitive device seizure creates a "shame spiral" that drives mistakes underground. Restorative curiosity keeps the communication lifeline intact.',
+      'Taking devices away in anger drives mistakes underground. Calm, curious listening keeps your child coming to you whenever something goes wrong.',
     options: [
       {
         id: 'fc-10',
@@ -248,7 +248,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'How naturally does your child engage in non-digital activities and physical hobbies?',
     scenario: 'Balancing screens with reading, sports, outdoor play, arts, and real-world connection.',
     clinicalInsight:
-      'Algorithmic hyper-stimulation elevates dopamine thresholds, temporarily making real-world analog activities feel dull by comparison.',
+      'Fast-paced apps make everyday offline activities feel slower by comparison. Protecting regular offline time keeps their real-world passions alive.',
     options: [
       {
         id: 'st-10',
@@ -283,7 +283,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'When viewing viral influencer videos, sponsored giveaways, or clickbait challenges:',
     scenario: 'Evaluating digital authenticity, commercial motives, and AI-generated content.',
     clinicalInsight:
-      'Developing neural architecture tends toward literalism. Recognizing algorithmic manipulation requires explicit coaching in digital literacy.',
+      'Young minds tend to take what they see online at face value. Spotting sponsored tricks and filters is a skill parents can teach through friendly curiosity.',
     options: [
       {
         id: 'ct-10',
@@ -318,7 +318,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'Regarding safeguarding sensitive credentials, real locations, and family details:',
     scenario: 'Understanding data permanence, passwords, location sharing, and digital boundaries.',
     clinicalInsight:
-      'Abstract consequences (e.g. lifetime digital footprints) are challenging for tween concrete-stage operational cognition.',
+      'Understanding that online posts last forever is an abstract idea for tweens. Simple, clear family guidelines protect their privacy while they learn.',
     options: [
       {
         id: 'pa-10',
@@ -353,7 +353,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     questionText: 'How does your child participate in creating household boundaries and family agreements?',
     scenario: 'Co-creating rules, respecting mutual commitments, and honoring digital boundaries.',
     clinicalInsight:
-      'Autonomy is a primary adolescent developmental drive. Bilateral collaboration honors their agency while maintaining supportive parental guardrails.',
+      'Wanting independence is a healthy part of growing up. Making agreements together gives them a real voice while keeping loving guardrails in place.',
     options: [
       {
         id: 'cr-10',

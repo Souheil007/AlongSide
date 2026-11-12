@@ -579,7 +579,7 @@ export function AccountSettingsView() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-teal-600 shrink-0" />
-                    <span>24/7 AI Child Advisor &amp; Clinical FAQ Vault</span>
+                    <span>24/7 AI Child Advisor &amp; Parenting Q&amp;A Library</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-teal-600 shrink-0" />

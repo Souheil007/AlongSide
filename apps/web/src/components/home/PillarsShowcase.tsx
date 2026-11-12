@@ -211,7 +211,7 @@ export function PillarsShowcase() {
           The 3 Pillars of <em className="italic font-normal text-[#143D2B]">Parent Calm</em> &amp; Child Understanding
         </h2>
         <p className="text-base text-[#494F4C] leading-relaxed">
-          AlongSide converges prioritized clinical education, weekly youth culture intelligence, and bilateral screen contracts into one unified sanctuary.
+          AlongSide brings together stage-by-stage parent courses, weekly youth culture guides, and family screen agreements in one calm place.
         </p>
       </div>
 
@@ -298,14 +298,14 @@ export function PillarsShowcase() {
                 Omnipresent Companion
               </span>
               <span className="text-[10px] bg-teal-500/20 text-teal-300 font-semibold px-2 py-0.5 rounded-full border border-teal-400/30">
-                Clinical FAQ Vault
+                Parenting Q&A Library
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-white">
               24/7 AI Child Advisor: Safe Harbor Guidance
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Trained on 260+ clinical parenting FAQs and developmental neurobiology. Generate word-for-word scripts, resolve acute bedtime and screen friction, and get instant answers anytime.
+              Grounded in 260+ real-life parenting questions and child development research. Generate word-for-word scripts, resolve acute bedtime and screen friction, and get instant answers anytime.
             </p>
           </div>
         </div>

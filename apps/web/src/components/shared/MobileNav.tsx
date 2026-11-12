@@ -212,7 +212,7 @@ export function MobileNav({ className }: MobileNavProps) {
                       24/7 AI Child Advisor
                     </span>
                     <span className="text-[10px] text-teal-700 font-medium">
-                      AI Child Advisor &amp; Clinical Vault
+                      AI Child Advisor &amp; Q&amp;A Library
                     </span>
                   </div>
                 </div>

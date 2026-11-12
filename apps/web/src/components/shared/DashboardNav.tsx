@@ -74,7 +74,7 @@ export const DOMAIN_HUBS: DomainHubItem[] = [
     shortLabel: 'AI Advisor',
     icon: Bot,
     badge: 'AI Advisor',
-    description: 'Multi-child AI advisor & 250+ FAQ clinical vault',
+    description: '24/7 AI parenting advisor & 250+ Q&A library',
   },
   {
     href: '/devices',

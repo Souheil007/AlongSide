@@ -44,20 +44,12 @@ describe('Decluttering, Realistic Pediatric Weight & Sunday Culture Digest Speci
       expect(weightKg).toBe(27.2);
     });
 
-    it('ensures SymptomTriageRunner uses calculateEstimatedWeightLbs and provides editable input', () => {
+    it('confirms retired SymptomTriageRunner is deleted from health components', () => {
       const filePath = path.join(
         webRoot,
         'src/components/health/SymptomTriageRunner.tsx'
       );
-      const content = fs.readFileSync(filePath, 'utf8');
-
-      // Uses proper Barton Schmitt / CDC derivation
-      expect(content).toContain('calculateEstimatedWeightLbs(computedMonths, Math.floor(computedMonths / 12))');
-      // Does not use the broken computedMonths * 2.2 formula
-      expect(content).not.toContain('computedMonths * 2.2');
-      // Provides editable weight input
-      expect(content).toContain('id="triage-weight-input"');
-      expect(content).toContain('onChange={(e) => setWeightLbs(');
+      expect(fs.existsSync(filePath)).toBe(false);
     });
   });
 

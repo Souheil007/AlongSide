@@ -34,7 +34,7 @@ export const CLINICAL_TESTIMONIALS: Testimonial[] = [
     quote:
       'The HALT behavioral framework and bilateral agreements transform parental panic into calm authority. It respects prefrontal brain development instead of treating children like adversaries. Every parent needs this.',
     author: 'Dr. Marcus Vance, PhD',
-    credentials: 'Child Clinical Psychologist',
+    credentials: 'Child Psychologist & Educator',
     role: 'Author & Developmental Neurobiologist',
     institution: 'Family Neurodevelopment Institute',
     icon: Brain,
