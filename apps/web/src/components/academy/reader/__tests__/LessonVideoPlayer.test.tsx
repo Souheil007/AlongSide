@@ -130,25 +130,14 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
     });
   });
 
-  describe('6. Interactive 1-Click Action Prompt Button', () => {
-    it('renders action prompt card with link to /advisor', () => {
+  describe('6. Action Prompt Clean Removal', () => {
+    it('does not render redundant practice exercise card or AI advisor launch button', () => {
       const html = renderToStaticMarkup(<LessonVideoPlayer video={sampleVideo} />);
 
-      expect(html).toContain('data-testid="video-action-prompt"');
-      expect(html).toContain('Parent Practice Exercise');
-      expect(html).toContain(
-        'Practice wrapping your infant in a snug swaddle and making a loud white-noise &quot;shhh&quot; sound'
-      );
-      expect(html).toContain('data-testid="launch-advisor-button"');
-      expect(html).toContain('Practice with AI Advisor');
-      expect(html).toContain('/advisor?prompt=');
-    });
-
-    it('gracefully omits action prompt card when not provided', () => {
-      const videoWithoutPrompt = { ...sampleVideo, actionPrompt: undefined };
-      const html = renderToStaticMarkup(<LessonVideoPlayer video={videoWithoutPrompt} />);
-
       expect(html).not.toContain('data-testid="video-action-prompt"');
+      expect(html).not.toContain('Parent Practice Exercise');
+      expect(html).not.toContain('Practice with AI Advisor');
+      expect(html).not.toContain('data-testid="launch-advisor-button"');
     });
   });
 
