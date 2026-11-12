@@ -12,11 +12,8 @@ import {
   formatTierBadge,
   formatCategoryBadge,
 } from '../src/components/advisor/FaqCard';
-import {
-  SPARRING_SCENARIOS,
-} from '../src/components/advisor/VoiceSparringModal';
 
-describe('24/7 AI Advisor, Living FAQ Explorer & Voice Sparring Specification (PLAN-11)', () => {
+describe('24/7 AI Advisor & Living FAQ Explorer Specification (PLAN-11)', () => {
   describe('Curated FAQ Vault & Search Engine', () => {
     it('contains comprehensive clinical scenarios covering all key digital milestones', () => {
       expect(CURATED_FAQS.length).toBeGreaterThanOrEqual(7);
@@ -199,55 +196,6 @@ describe('24/7 AI Advisor, Living FAQ Explorer & Voice Sparring Specification (P
       const secretApps = formatCategoryBadge('SECRET_APPS');
       expect(secretApps.label).toContain('Secret Vaults');
       expect(secretApps.badgeClass).toContain('violet');
-    });
-  });
-
-  describe('Interactive Voice Sparring Simulator Scenarios & Coaching', () => {
-    it('defines the 5 canonical high-heat conflict scenarios across the lifespan', () => {
-      expect(SPARRING_SCENARIOS).toHaveLength(5);
-
-      const keys = SPARRING_SCENARIOS.map((s) => s.key);
-      expect(keys).toContain('1');
-      expect(keys).toContain('2');
-      expect(keys).toContain('3');
-      expect(keys).toContain('4');
-      expect(keys).toContain('5');
-
-      const titles = SPARRING_SCENARIOS.map((s) => s.title);
-      expect(titles).toContain('2:00 AM Teething & Fever Panic');
-      expect(titles).toContain('Dinner Plate Resistance ("This dinner is gross!")');
-      expect(titles).toContain('Biting / Hitting Sibling Confrontation');
-      expect(titles).toContain('Middle School Peer Exclusion');
-      expect(titles).toContain('Bedtime Device Cutoff Resistance');
-    });
-
-    it('provides realistic child objection dialogues and duration timings for audio simulation', () => {
-      for (const scenario of SPARRING_SCENARIOS) {
-        expect(scenario.childDialogue.length).toBeGreaterThan(20);
-        expect(scenario.audioDurationSeconds).toBeGreaterThanOrEqual(3);
-        expect(scenario.developmentalContext).toBeDefined();
-      }
-    });
-
-    it('supplies 3 distinct response patterns (Recommended, Punitive, Concession) for each scenario', () => {
-      for (const scenario of SPARRING_SCENARIOS) {
-        expect(scenario.options).toHaveLength(3);
-
-        const recommended = scenario.options.find((o) => o.clinicalVerdict === 'RECOMMENDED');
-        expect(recommended).toBeDefined();
-        expect(recommended?.toneType).toBe('EMPATHETIC_FIRM');
-        expect(recommended?.toneScore).toContain('(');
-        expect(recommended?.firmnessScore).toContain('(');
-        expect(recommended?.neurobiologyFeedback.length).toBeGreaterThan(25);
-
-        const escalating = scenario.options.find((o) => o.clinicalVerdict === 'ESCALATING');
-        expect(escalating).toBeDefined();
-        expect(escalating?.toneType).toBe('DEFENSIVE_PUNITIVE');
-
-        const permissive = scenario.options.find((o) => o.clinicalVerdict === 'PERMISSIVE');
-        expect(permissive).toBeDefined();
-        expect(permissive?.toneType).toBe('PASSIVE_CONCESSION');
-      }
     });
   });
 });

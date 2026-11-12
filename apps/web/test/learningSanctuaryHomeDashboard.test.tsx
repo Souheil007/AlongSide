@@ -149,7 +149,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
     });
   });
 
-  describe('3. Word-for-Word Empathy Script & Practice Sparring (DailyAdvisoryScriptCard)', () => {
+  describe('3. Word-for-Word Empathy Script & Consultation (DailyAdvisoryScriptCard)', () => {
     it('renders word-for-word empathy dialogue and tonight connection challenge for tween', () => {
       const html = renderToStaticMarkup(
         <DailyAdvisoryScriptCard child={mockTweenMaya} />
@@ -160,8 +160,8 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('When This Happens Today:');
       expect(html).toContain('Say This (Calm &amp; Connected):');
       expect(html).toContain("Tonight&#x27;s 5-Minute Practice:");
-      expect(html).toContain('Practice with AI Child Simulator');
-      expect(html).toContain('Start Practice Sparring');
+      expect(html).toContain('Consult with 24/7 AI Advisor');
+      expect(html).toContain('Consult AI Advisor');
     });
 
     it('renders toddler-calibrated script and floor calming steps for toddler', () => {
@@ -236,7 +236,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   });
 
   describe('6. 24/7 AI Child Advisor — Empathetic Co-Pilot (AskAdvisorPromptBar)', () => {
-    it('renders Empathetic Co-Pilot format matching user approval with Frequent Situations and Voice Sparring', () => {
+    it('renders Empathetic Co-Pilot format matching user approval with Frequent Situations and AI Advisor', () => {
       const html = renderToStaticMarkup(
         <AskAdvisorPromptBar child={mockTweenMaya} />
       );
@@ -251,7 +251,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Slammed Bedroom Door');
       expect(html).toContain('De-escalating Screen Shutdown Meltdowns');
       expect(html).toContain('Actionable Guide');
-      expect(html).toContain('Practice Voice Sparring (2 Min)');
+      expect(html).toContain('Ask Advisor About This');
     });
   });
 });

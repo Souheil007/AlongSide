@@ -59,7 +59,7 @@ graph TD
     - **Contextual Road Fork UI:** Pre-Device (Road 1) vs. Active-Device (Road 2) dashboard personalization.
     - **Parent Intelligence Academy:** Course viewer, lesson reader, progress tracker.
     - **Interactive Quiz Runner:** "Do You Speak Tween?", Parenting Style Profiler, First-Phone Readiness (Score 0-100).
-    - **24/7 AI Child Advisor Interface:** Streaming conversational chat, quick-prompts, and voice sparring simulator UI.
+    - **24/7 AI Child Advisor Interface:** Streaming conversational chat, quick-prompts, and clinical FAQ vault.
     - **Bilateral Family Pact Wizard:** Zustand-powered co-negotiation wizard and digital canvas signatures.
     - **Pact-as-Code Device Enrollment:** Single-scan QR code screen, bedtime curfew status (8:30 PM lock), and neutral enforcement card.
     - **Sunday Youth Culture Digest:** Slang tags, exploit alerts, and Sunday dinner conversation starters.

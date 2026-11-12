@@ -217,7 +217,7 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
   });
 
   describe('5. Active Tool Action Bridges', () => {
-    it('renders launcher buttons for AI Sparring, Family Pact, and Pocket Vault', () => {
+    it('renders launcher buttons for AI Advisor, Family Pact, and Pocket Vault', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonToolBridges, {
           scenarioPrompt: multiModalLesson.title,

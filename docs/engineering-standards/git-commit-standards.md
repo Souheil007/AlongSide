@@ -87,7 +87,7 @@ The scope provides immediate architectural context within AlongSide's monorepo. 
 - `(quiz)`: Interactive parent micro-quizzes, self-assessments, scoring rules.
 - `(device-mdm)`: Signed Apple Screen Time / Android Enterprise configuration profiles.
 - `(culture-digest)`: Weekly youth culture trends, slang decoders, exploit alerts.
-- `(voice-coach)`: AI voice sparring simulator, de-escalation scenarios.
+- `(ai-advisor)`: AI child advisor, clinical FAQ vault, de-escalation scenarios.
 - `(billing)`: Stripe billing, subscription tiers, customer portal, webhooks.
 
 ### 4.3 Governance & Repository Scopes

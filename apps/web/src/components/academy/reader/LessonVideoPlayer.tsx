@@ -213,7 +213,7 @@ export function LessonVideoPlayer({
         </div>
       )}
 
-      {/* 4. Interactive 1-click Action Prompt button launching /advisor AI sparring */}
+      {/* 4. Interactive 1-click Action Prompt button launching /advisor */}
       {video.actionPrompt && (
         <div
           data-testid="video-action-prompt"
@@ -242,7 +242,7 @@ export function LessonVideoPlayer({
             <Button
               size="sm"
               className="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs gap-1.5 shadow-xs w-full sm:w-auto"
-              data-testid="launch-sparring-button"
+              data-testid="launch-advisor-button"
             >
               <MessageSquare className="h-3.5 w-3.5" />
               <span>Practice with AI Advisor</span>

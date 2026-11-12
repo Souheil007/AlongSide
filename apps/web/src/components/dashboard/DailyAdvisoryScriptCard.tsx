@@ -4,12 +4,12 @@ import * as React from 'react';
 import Link from 'next/link';
 import {
   MessageSquare,
-  Mic,
   Copy,
   Check,
   Brain,
   ArrowRight,
   Sprout,
+  Sparkles,
 } from 'lucide-react';
 import {
   DevelopmentalTier,
@@ -244,19 +244,19 @@ export function DailyAdvisoryScriptCard({
         </CardContent>
       </Card>
 
-      {/* Practice in AI Child Simulator Action Bar */}
+      {/* Consult 24/7 AI Advisor Action Bar */}
       <Card className="border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] rounded-[10px] p-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-[#143D2B] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
-              <Mic className="w-4.5 h-4.5" />
+              <Sparkles className="w-4.5 h-4.5" />
             </div>
             <div>
               <span className="font-serif text-sm font-bold text-[#111413] block">
-                Practice with AI Child Simulator
+                Consult with 24/7 AI Advisor
               </span>
               <span className="text-[11px] text-[#858C88]">
-                Test your calm voice against pushback before talking to {childName}
+                Consult the AI Advisor on this scenario before talking to {childName}
               </span>
             </div>
           </div>
@@ -266,7 +266,7 @@ export function DailyAdvisoryScriptCard({
               size="sm"
               className="w-full sm:w-auto min-h-[44px] gap-1.5 rounded-[5px] bg-[#FBFBF9] border border-[#E3E3DC] text-xs font-bold text-[#143D2B] hover:bg-[#143D2B] hover:text-white transition"
             >
-              <span>Start Practice Sparring</span>
+              <span>Consult AI Advisor</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>

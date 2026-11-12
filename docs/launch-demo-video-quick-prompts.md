@@ -33,7 +33,7 @@ SCENES TO GENERATE:
 1. Scene 1 (0-8s): Exhausted mother in dim nursery at 2:14 AM illuminated only by cold blue phone screen. Camera: Slow creeping dolly push-in.
 2. Scene 2 (8-18s): Bright morning kitchen, warm sunlit oak table with iPad displaying AlongSide's Developmental Horizon arc (6 lifespan stages). Camera: Smooth crane down from window to screen.
 3. Scene 3 (18-30s): Lifestyle montage: Father tucking in peaceful toddler; hands preparing colorful toddler food ladder; 7yo boy playing with wooden geometric blocks. Camera: Smooth lateral tracking with match-cuts.
-4. Scene 4 (30-42s): Father in study speaking into phone using 24/7 Voice Sparring AI. Organic green soundwave animating on screen, dialogue card showing 'Say This, Not That'. Camera: Slow orbital arc.
+4. Scene 4 (30-42s): Father in study consulting 24/7 AI Child Advisor on phone. Clean text stream animating on screen, dialogue card showing 'Say This, Not That'. Camera: Slow orbital arc.
 5. Scene 5 (42-52s): Mother and 12yo son sitting side-by-side at kitchen table smiling, son signing digital Bilateral Family Pact with stylus. Status card: 'Bedtime Curfew Active: 8:30 PM Lock • Zero Spyware'. Camera: Push-in to top-down screen macro.
 6. Scene 6 (52-60s): Backlit golden-hour shot of happy family laughing in an autumn meadow, dissolving to AlongSide brand lockup: 'Start Your Free 7-Day Family Pass'. Camera: Cinematic slow dolly-out.
 
@@ -65,11 +65,11 @@ A cinematic three-part lifestyle sequence of mindful modern parenting: first, a 
 [Negative Prompt: crying baby, junk food, iPad babysitting, clutter, low quality, oversaturated]
 ```
 
-### Scene 4: 24/7 AI Voice Sparring (0:30 – 0:42)
+### Scene 4: 24/7 AI Child Advisor & Dialogue Scripts (0:30 – 0:42)
 ```text
-Over-the-shoulder cinematic medium close-up of a thoughtful 38-year-old father speaking calmly into his smartphone in a warm home office with bookshelves. The phone screen displays an elegant voice interaction UI with an organic spruce-green soundwave animating in real time, accompanied by crisp dialogue cards labeled 'Say This / Not That'. Warm ambient desk lamp light, shallow depth of field, focused expression, authentic fatherly care. 85mm portrait lens, f/2.0, 4K cinematic film still --ar 16:9
-[Motion Direction: Slow orbital arc around father, rack focus to phone interface as soundwave undulates, 24fps]
-[Negative Prompt: robot face, sci-fi glowing circuits, unnatural speech, angry screaming, aggressive confrontation]
+Over-the-shoulder cinematic medium close-up of a thoughtful 38-year-old father consulting his smartphone in a warm home office with bookshelves. The phone screen displays an elegant AI Advisor chat UI with crisp dialogue cards labeled 'Say This / Not That'. Warm ambient desk lamp light, shallow depth of field, focused expression, authentic fatherly care. 85mm portrait lens, f/2.0, 4K cinematic film still --ar 16:9
+[Motion Direction: Slow orbital arc around father, rack focus to phone interface as text stream reveals, 24fps]
+[Negative Prompt: robot face, sci-fi glowing circuits, angry screaming, aggressive confrontation]
 ```
 
 ### Scene 5: Bilateral Family Pact (0:42 – 0:52)
@@ -102,10 +102,10 @@ Vertical 9:16 macro shot of a sleek smartphone held in a clean hand, displaying 
 [Motion: Top-down macro drift, thumb toggling child from toddler to pre-teen. On-Screen Text: 'ONE APP. AGES 0 TO 18.']
 ```
 
-### Shot 3: Voice Sparring Feature (0:12 – 0:22)
+### Shot 3: AI Advisor In Action (0:12 – 0:22)
 ```text
-Vertical 9:16 medium shot of a father sitting in the driver's seat of a parked car at dusk, holding his phone and practicing a conversation aloud, warm dashboard light, natural candid expression, cinematic lighting --ar 9:16
-[Motion: Passenger-seat camera drift, phone waveform glowing green. On-Screen Text: 'PRACTICE BEFORE YOU REACT']
+Vertical 9:16 medium shot of a father sitting in the driver's seat of a parked car at dusk, holding his phone and reading a conversation script, warm dashboard light, natural candid expression, cinematic lighting --ar 9:16
+[Motion: Passenger-seat camera drift, phone displaying clean empathy script. On-Screen Text: 'GET THE SCRIPT BEFORE YOU REACT']
 ```
 
 ### Shot 4: The Bilateral Pact & CTA (0:22 – 0:30)
@@ -133,8 +133,8 @@ A tender, candid documentary portrait of a 32-year-old mother cradling her 6-mon
 // KF-04: Tactile Block Play
 Close-up dynamic angle of a 5-year-old boy's hands carefully placing the final wooden block onto a tall, intricate architectural tower on a beige textured wool rug. Natural daylight from the side, shallow depth of field, focused expression of concentration, authentic childhood play without screens, Leica M11 look, 4k --ar 16:9 --style raw --v 6.1
 
-// KF-05: Father Voice Sparring
-Cinematic medium shot of an empathetic 39-year-old father standing near a window at twilight, holding a modern smartphone near his mouth as if in a voice call. Screen visible with a vibrant forest green soundwave visualization. Warm interior tungsten lighting contrasted with cool blue twilight outside. Contemplative, loving facial expression. 35mm anamorphic, f/2.0 --ar 16:9 --style raw --v 6.1
+// KF-05: Father AI Advisor Guidance
+Cinematic medium shot of an empathetic 39-year-old father standing near a window at twilight, consulting his smartphone screen displaying crisp dialogue cards labeled 'Say This / Not That'. Warm interior tungsten lighting contrasted with cool blue twilight outside. Contemplative, loving facial expression. 35mm anamorphic, f/2.0 --ar 16:9 --style raw --v 6.1
 
 // KF-06: Shared Tablet Agreement
 Candid, natural-light shot of a 12-year-old boy sitting beside his mother at a dining table, holding a digital pencil and signing his signature onto a tablet screen. Both are smiling with genuine warmth and mutual trust. High key natural lighting, modern Scandinavian interior, crisp details, Kodak Portra 400 aesthetic --ar 16:9 --style raw --v 6.1
@@ -161,7 +161,7 @@ Minimalist graphic composition on an Archival Linen (#FBFBF9) backdrop with subt
 > "Not another baby tracker you delete at toddlerhood. AlongSide gives you pediatrician-backed guidance on sleep architecture, nutrition ladders, and screen-free cognitive play—calibrated to your child’s exact age and nervous system."  
 >  
 > *[0:30 - 0:42 | Tone: Reassuring, empathetic]*  
-> "And when high-stakes moments happen, don't guess. Practice tough conversations out loud with our 24/7 Voice Sparring AI—grounded in real child psychology, so you always know what to say before you walk into the room."  
+> "And when high-stakes moments happen, don't guess. Consult our 24/7 AI Child Advisor—grounded in pediatric psychology and developmental neurobiology, so you always know what to say before you walk into the room."  
 >  
 > *[0:42 - 0:52 | Tone: Collaborative, inspiring]*  
 > "When it's time for their first phone, replace secret surveillance with mutual respect. A bilateral family pact signed together—enforced with calm, neutral automation and zero spyware."  
@@ -174,5 +174,5 @@ Minimalist graphic composition on an Archival Linen (#FBFBF9) backdrop with subt
 ### 30-Second Social Script:
 > *[0:00 - 0:04]* "If you're still panic-Googling parenting advice at 2:00 in the morning, stop."  
 > *[0:04 - 0:12]* "AlongSide isn't another baby tracker you delete at age two. It reconfigures across your child's entire life—from infant sleep to teenage slang."  
-> *[0:12 - 0:22]* "Practice tough conversations out loud with our AI Voice Sparring before you react."  
+> *[0:12 - 0:22]* "Access clinical scripts tailored to your child with our 24/7 AI Advisor before you react."  
 > *[0:22 - 0:30]* "Replace spyware with bilateral agreements. Try AlongSide free today at Alongside.care."

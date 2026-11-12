@@ -64,8 +64,8 @@ const PUPPET_MODES: PuppetMode[] = [
       'The 5-Second Rule: Infant neurological processing is 3x slower than adults. If you talk too quickly, you interrupt their serve-and-return response loop.',
   },
   {
-    id: 'emotional-sparring',
-    title: 'Emotional Sparring & Tantrum Projection',
+    id: 'emotional-roleplay',
+    title: 'Emotional Roleplay & Tantrum Projection',
     ageBracket: 'Early Childhood (3–7 yrs)',
     focus: 'Third-Person Frustration De-escalation',
     icon: <Heart className="h-4 w-4 text-rose-600" />,

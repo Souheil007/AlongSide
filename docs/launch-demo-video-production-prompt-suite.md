@@ -12,14 +12,14 @@
 ### 1.1 Purpose & Scope
 This specification defines the production-grade prompt system, cinematographic storyboard, voiceover scripts, audio engineering blueprints, and Claude MCP execution protocol for creating the official launch demo video for **AlongSide (ParentPath)**.
 
-AlongSide is **The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow (Ages 0–18)**. It unites whole-child upbringing, developmental neurobiology, pediatric wellness habits, nutrition, cognitive play, behavioral emotional decoding, 24/7 AI child advisory with voice sparring, and modern cultural mentorship (including the Bilateral Family Pact and automated 8:30 PM bedtime curfews) into a single, cohesive family operating system.
+AlongSide is **The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow (Ages 0–18)**. It unites whole-child upbringing, developmental neurobiology, pediatric wellness habits, nutrition, cognitive play, behavioral emotional decoding, 24/7 AI child advisory with guided dialogue scripts, and modern cultural mentorship (including the Bilateral Family Pact and automated 8:30 PM bedtime curfews) into a single, cohesive family operating system.
 
 ### 1.2 The Core Creative Premise: "From Fragmented Panic to Grounded Sanctuary"
 Most parenting apps amplify anxiety: late-night symptom paranoia, disjointed toddler blogs, toxic milestone comparisons on social media, or adversarial surveillance spyware (Bark, Qustodio) that destroys parent-child trust. 
 
 The AlongSide launch demo video creates a sharp, emotional contrast between:
 1. **The Agony (First 8 Seconds):** The 2:14 AM blue-light exhaustion, contradictory forum threads, baby app churn, and the looming fear of losing connection with your growing child.
-2. **The Sanctuary (The Solution):** The quiet, warm, dignified clarity of AlongSide. Editorial elegance (Archival Linen `#FBFBF9`, Deep Spruce `#143D2B`, Newsreader typography), 6 lifespan developmental stages, word-for-word scripts, voice sparring out loud, and bilateral pacts signed together with mutual respect.
+2. **The Sanctuary (The Solution):** The quiet, warm, dignified clarity of AlongSide. Editorial elegance (Archival Linen `#FBFBF9`, Deep Spruce `#143D2B`, Newsreader typography), 6 lifespan developmental stages, word-for-word scripts, instant clinical advice, and bilateral pacts signed together with mutual respect.
 
 ### 1.3 Four Non-Negotiable Brand Guardrails (Per AGENTS.md & PROJECT_SCOPE.md)
 1. 🛡️ **Strictly Non-Clinical (SOU-86):** AlongSide is an educational developmental sanctuary, NOT a medical triage service or Barton Schmitt telephone clinic. Never depict medical diagnoses, prescriptions, or clinical triage emergencies.
@@ -45,14 +45,14 @@ You have access to MCP tools that allow you to generate photorealistic images an
 - Tagline: "Keep Up With Your Child As They Grow (Ages 0–18)"
 - Visual Style: "Taste 2: Editorial Pediatric Almanac" — Natural golden hour and morning window light, warm archival linen surfaces (#FBFBF9), deep forest spruce accents (#143D2B), crisp dark ink typography (#111413), warm cedar wood tones, and hyper-realistic human emotion.
 - Tone: Empathetic, grounded, authoritative, calm, and hopeful. Avoid generic stock footage, neon cyberpunk glows, cartoon 3D, and dystopian surveillance tropes.
-- Non-Clinical: Emphasize child upbringing, developmental neurobiology, sleep routines, nutrition, brain play, AI voice sparring, and bilateral family pacts. No medical emergency triage.
+- Non-Clinical: Emphasize child upbringing, developmental neurobiology, sleep routines, nutrition, brain play, AI child advisory, and bilateral family pacts. No medical emergency triage.
 
 ### YOUR PRODUCTION MISSION:
 Generate the assets for a high-impact, 60-second flagship launch trailer (16:9 Landscape, 4K resolution, 24fps) composed of 6 tightly choreographed scenes:
 1. Scene 1 (0:00-0:08): The 2:14 AM Parenting Crisis & Blue-Light Overwhelm
 2. Scene 2 (0:08-0:18): The Sanctuary Reveal — AlongSide Lifespan Horizon (Ages 0–18)
 3. Scene 3 (0:18-0:30): Whole-Child Upbringing — Physical Habits, Sleep Architecture & Brain Play
-4. Scene 4 (0:30-0:42): 24/7 AI Child Advisor & Voice Sparring Simulator ("Say This, Not That")
+4. Scene 4 (0:30-0:42): 24/7 AI Child Advisor & Guided Dialogue Scripts ("Say This, Not That")
 5. Scene 5 (0:42-0:52): The Technology Transition — Bilateral Family Pact & Automated 8:30 PM Lock
 6. Scene 6 (0:52-1:00): Climax & Resolution — The Grounded Family & Launch CTA
 
@@ -86,7 +86,7 @@ timeline
     0:00 - 0:08 : Scene 1 - The 2:14 AM Crisis : Blue-light insomnia, fragmented panic, baby app churn
     0:08 - 0:18 : Scene 2 - Sanctuary Reveal : Warm morning light, AlongSide UI, 6 Lifespan stages (0-18)
     0:18 - 0:30 : Scene 3 - Whole-Child Upbringing : Sleep architecture, motor milestones, brain play
-    0:30 - 0:42 : Scene 4 - 24/7 AI Voice Sparring : Live rehearsal out loud, "Say This / Not That"
+    0:30 - 0:42 : Scene 4 - 24/7 AI Child Advisor : Instant guidance & empathy scripts, "Say This / Not That"
     0:42 - 0:52 : Scene 5 - Bilateral Family Pact : Shared digital signature, 8:30 PM curfew, zero spyware
     0:52 - 1:00 : Scene 6 - Resolution & CTA : Connected family, calm sanctuary seal, Start Free Pass
 ```
@@ -183,33 +183,33 @@ A cinematic three-part lifestyle sequence of mindful modern parenting: first, a 
 
 ---
 
-### Scene 4: 24/7 AI Child Advisor & Voice Sparring Simulator (0:30 – 0:42)
+### Scene 4: 24/7 AI Child Advisor & Guided Dialogue Scripts (0:30 – 0:42)
 
 #### Narrative & Visual Action:
-The father is sitting in his study before dinner. His 11-year-old daughter is in the other room, upset after a tough day at middle school. The father opens Alongside's **Voice Sparring Simulator**. He taps the microphone icon. A beautiful, pulsating Deep Spruce audio waveform ripples on the screen. He speaks into his phone: *"How do I talk to my daughter when she slams her door and says she hates everyone?"* 
-Instantly, the AI Advisor replies with a calm, empathetic voice and generates an interactive **Dialogue Deck** on screen:
+The father is sitting in his study before dinner. His 11-year-old daughter is in the other room, upset after a tough day at middle school. The father opens Alongside's **24/7 AI Child Advisor**. He types in his dilemma: *"How do I talk to my daughter when she slams her door and says she hates everyone?"* 
+Instantly, the AI Advisor replies with calm, empathetic clinical guidance and generates an interactive **Dialogue Deck** on screen:
 - ❌ **Instinctive Mistake:** *"Don't you dare talk to me like that!"*
 - ✅ **Empathetic Script:** *"I can hear how overwhelmed you are right now. I'm leaving the door cracked. I'm right here whenever you're ready."*
-The father practices saying the script out loud, exhales, and smiles with renewed confidence.
+The father reads the script, exhales, and smiles with renewed confidence.
 
 #### Diffusion Prompt (Text-to-Image / Image-to-Video):
 ```text
-Over-the-shoulder cinematic medium close-up of a thoughtful 38-year-old father speaking calmly into his smartphone in a warm home office with bookshelves. The phone screen displays an elegant voice interaction UI with an organic spruce-green soundwave animating in real time, accompanied by crisp dialogue cards labeled 'Say This / Not That'. Warm ambient desk lamp light, shallow depth of field, focused expression, authentic fatherly care. 85mm portrait lens, f/2.0, 4K cinematic film still --ar 16:9
+Over-the-shoulder cinematic medium close-up of a thoughtful 38-year-old father consulting his smartphone in a warm home office with bookshelves. The phone screen displays an elegant AI Advisor chat UI with crisp dialogue cards labeled 'Say This / Not That'. Warm ambient desk lamp light, shallow depth of field, focused expression, authentic fatherly care. 85mm portrait lens, f/2.0, 4K cinematic film still --ar 16:9
 ```
 
 #### Camera Motion & Video Generation Parameters:
-- **Camera Movement:** Slow orbital arc around the father, focusing tightly on the phone interface as the waveform pulses and the text reveals.
-- **Motion Dynamics:** Real-time audio waveform undulating with voice input, card smoothly expanding with a tactile spring effect.
+- **Camera Movement:** Slow orbital arc around the father, focusing tightly on the phone interface as the text stream reveals.
+- **Motion Dynamics:** Fluid streaming text generation, card smoothly expanding with a tactile spring effect.
 - **MCP Tool Parameters:** `duration: 12s`, `camera_motion: "slow orbital arc around subject, rack focus to UI"`, `fps: 24`, `aspect_ratio: "16:9"`.
 
 #### UI Screen Graphic Direction:
-- AlongSide Voice Sparring interface:
-  * Audio Waveform: Deep Spruce (`#143D2B`) fluid frequency waves.
-  * Tagline: *"Practice out loud before you speak."*
+- AlongSide AI Advisor interface:
+  * Consultation Feed: Deep Spruce (`#143D2B`) accents and Archival Linen styling.
+  * Tagline: *"Clinical wisdom and exact words when you need them most."*
   * Dialogue Card: One-click *"Copy Script"* button with checkmark animation.
 
 #### Voiceover (VO) Script:
-> *"And when high-stakes moments happen, don't guess. Practice tough conversations out loud with our 24/7 Voice Sparring AI—grounded in real child psychology, so you always know what to say before you walk into the room."*
+> *"And when high-stakes moments happen, don't guess. Consult our 24/7 AI Child Advisor—grounded in pediatric psychology and developmental neurobiology, so you always know what to say before you walk into the room."*
 
 #### Sound Design (SFX) & Music:
 - **SFX:** Soft microphone tap, organic voice resonance waveform hum, crisp "copy to clipboard" tactile chime.
@@ -297,7 +297,7 @@ timeline
     title 30-Second Vertical Social Reel Structure
     0:00 - 0:04 : Beat 1 - Pattern Interrupt : "Stop Googling symptoms at 2 AM"
     0:04 - 0:12 : Beat 2 - The Lifespan Shift : Toddler to Teen in 1 tap (Ages 0-18)
-    0:12 - 0:22 : Beat 3 - AI Voice Sparring : "Practice saying it before you yell"
+    0:12 - 0:22 : Beat 3 - AI Child Advisor : "Exact empathy scripts before you react"
     0:22 - 0:30 : Beat 4 - Bilateral Pact & CTA : Mutual respect, 8:30 PM lock, Try Free
 ```
 
@@ -323,14 +323,14 @@ timeline
 - **VO:** *"AlongSide isn't another baby tracker you delete at age two. It reconfigures across your child's entire life."*
 - **Camera:** High-angle top-down macro drift.
 
-#### Shot 3: Voice Sparring In Action (0:12 – 0:22)
-- **Visual:** Father sitting in his car before walking inside. Taps AlongSide: *"She slammed the door on me."* Screen shows animated green waveform + exact script: *"Say: 'I hear how mad you are. I'm right here.'"* Dad speaks the line, takes a deep breath.
+#### Shot 3: AI Advisor In Action (0:12 – 0:22)
+- **Visual:** Father sitting in his car before walking inside. Taps AlongSide: *"She slammed the door on me."* Screen shows instant guidance + exact script: *"Say: 'I hear how mad you are. I'm right here.'"* Dad reads the line, takes a deep breath.
 - **Diffusion Prompt (9:16):**
   ```text
-  Vertical 9:16 medium shot of a father sitting in the driver's seat of a parked car at dusk, holding his phone and practicing a conversation aloud, warm dashboard light, natural candid expression, cinematic lighting --ar 9:16
+  Vertical 9:16 medium shot of a father sitting in the driver's seat of a parked car at dusk, holding his phone and reading a conversation script, warm dashboard light, natural candid expression, cinematic lighting --ar 9:16
   ```
-- **Text on Screen:** *"PRACTICE BEFORE YOU REACT."*
-- **VO:** *"Practice tough conversations out loud with our AI Voice Sparring before you react."*
+- **Text on Screen:** *"GET THE SCRIPT BEFORE YOU REACT."*
+- **VO:** *"Access clinical scripts tailored to your child with our 24/7 AI Advisor before you react."*
 - **Camera:** Front windshield passenger angle, slow drift.
 
 #### Shot 4: The Family Pact & Viral CTA (0:22 – 0:30)
@@ -387,9 +387,9 @@ A tender, candid documentary portrait of a 32-year-old mother cradling her 6-mon
 Close-up dynamic angle of a 5-year-old boy's hands carefully placing the final wooden block onto a tall, intricate architectural tower on a beige textured wool rug. Natural daylight from the side, shallow depth of field, focused expression of concentration, authentic childhood play without screens, Leica M11 look, 4k --ar 16:9 --style raw --v 6.1
 ```
 
-#### Keyframe KF-05: "The Empathetic Voice Sparring Session"
+#### Keyframe KF-05: "The Empathetic AI Advisor Guidance"
 ```text
-Cinematic medium shot of an empathetic 39-year-old father standing near a window at twilight, holding a modern smartphone near his mouth as if in a voice call. Screen visible with a vibrant forest green soundwave visualization. Warm interior tungsten lighting contrasted with cool blue twilight outside. Contemplative, loving facial expression. 35mm anamorphic, f/2.0 --ar 16:9 --style raw --v 6.1
+Cinematic medium shot of an empathetic 39-year-old father standing near a window at twilight, consulting his smartphone screen displaying crisp dialogue cards labeled 'Say This / Not That'. Warm interior tungsten lighting contrasted with cool blue twilight outside. Contemplative, loving facial expression. 35mm anamorphic, f/2.0 --ar 16:9 --style raw --v 6.1
 ```
 
 #### Keyframe KF-06: "The Bilateral Pact Signing"
@@ -465,7 +465,7 @@ flowchart TD
 Before rendering or publishing the final video, audit against this Quality Checklist:
 - [ ] **No Medical/Clinical Claims:** No mention of ER triage, clinical diagnoses, Barton Schmitt protocols, or medication dosages (compliant with SOU-86).
 - [ ] **Zero Surveillance Tropes:** No spy cameras, red lockouts, secret tracking, or adversarial framing (compliant with Project Scope).
-- [ ] **Lifespan Range Highlighted:** Video clearly showcases both young children (toddler sleep/play) and older kids/pre-teens (voice sparring, bilateral pacts).
+- [ ] **Lifespan Range Highlighted:** Video clearly showcases both young children (toddler sleep/play) and older kids/pre-teens (AI advisor scripts, bilateral pacts).
 - [ ] **Taste 2 Palette Compliance:** Archival Linen (`#FBFBF9`), Deep Spruce (`#143D2B`), and warm sunlight verified in all rendered frames.
 - [ ] **Pacing & Timing:** Total runtime aligns strictly with the target format (60s, 30s, or 45s).
 - [ ] **Audio Mix Balance:** Voiceover peaks at -6dB; background music bed dips to -18dB during dialogue.

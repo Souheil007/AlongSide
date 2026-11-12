@@ -25,7 +25,7 @@
 2. **What is different?**
    * **Architecture:** Legacy parental controls install coercive spyware (secret text scraping, keyloggers, battery-draining VPN proxies). Alongside replaces spyware with **Bilateral "Pact-as-Code"**: transparent family agreements compiled into signed Apple / Android configuration profiles that neutrally enforce an 8:30 PM bedtime curfew with zero surveillance.
    * **Scope & Continuity:** Legacy baby apps suffer a 90% churn cliff at age 2 when diapers end. Alongside spans **the complete 0–18 developmental continuum**, expanding customer lifespan from 18 months to 18 years.
-   * **Methodology:** Influencer apps sell passive video courses ("content in a trenchcoat"). Alongside delivers **active neuromuscular rehearsal** via the real-time **AI Voice Sparring Simulator**, allowing parents to practice de-escalating conflicts out loud before facing an agitated child.
+   * **Methodology:** Influencer apps sell passive video courses ("content in a trenchcoat"). Alongside delivers **actionable, clinical guidance & empathetic dialogue** via the real-time **24/7 AI Child Advisor & Clinical FAQ Vault**, allowing parents to access instant, personalized crisis response scripts and pediatric insights before facing an agitated child.
    * **Triage vs. Panic:** Telehealth charges $240/yr and WebMD terrifies parents at 2:00 AM. Alongside provides instant, evidence-based **Barton Schmitt pediatric symptom triage** (Green/Yellow/Red protocols) integrated with the child’s longitudinal profile.
 
 3. **How much of a difference?**
@@ -35,7 +35,7 @@
    * Incumbents win on **brand heritage, venture war chests ($100M+ funding), fear-based retention loops, free built-in OS dominance (Google Family Link / Apple Screen Time), legal prescription authority (telehealth), and celebrity founder followings (Dr. Becky).**
 
 5. **Where do we win?**
-   * Alongside wins on **family trust (zero spyware), PTA/Pediatrician viral zero-CAC distribution, 18-year customer retention (slaying the 24-month baby churn curse), neuromuscular AI voice sparring, unified 360° child data context, and the "Brain + Muscle" integration of developmental neurobiology with native device curfew enforcement.**
+   * Alongside wins on **family trust (zero spyware), PTA/Pediatrician viral zero-CAC distribution, 18-year customer retention (slaying the 24-month baby churn curse), 24/7 AI child advisory with guided dialogue scripts, unified 360° child data context, and the "Brain + Muscle" integration of developmental neurobiology with native device curfew enforcement.**
 
 ---
 
@@ -136,12 +136,12 @@ Track infant feeding, bottle ounces, wet diapers, pumping logs, and nap interval
 Deliver video workshops, digital parenting courses, Instagram reels, downloadable PDF workbooks, community forums, and basic text AI chatbots (e.g., Dr. Becky’s "GiGi") based on respectful, gentle, and authoritative parenting frameworks.
 
 #### 2. What Is Different in Alongside:
-- **Neuromuscular Rehearsal vs. Passive Video Watching:** Watching a video about emotional regulation does not stop a parent from screaming when provoked in real life. Alongside provides the **AI Voice Sparring Simulator**: parents press a button, hear a realistic AI child yelling or refusing a boundary, and practice speaking their de-escalation script out loud under simulated stress.
+- **Clinical Guidance & Scripts vs. Passive Video Watching:** Watching a video about emotional regulation does not stop a parent from freezing or screaming when provoked in real life. Alongside provides the **24/7 AI Child Advisor & Guided Dialogue Script Vault**: parents access instant, word-for-word de-escalation scripts and clinical advice tailored to their child's developmental age and exact high-heat situation.
 - **Mechanical Peace vs. Pure Homework:** Good Inside teaches parents how to manage screen battles through verbal boundaries alone, placing 100% of the cognitive burden on an exhausted parent. Alongside combines psychological education with the **Automated 8:30 PM Bedtime Profile**: the operating system neutrally turns off apps, removing the parent from the role of bedtime police officer.
-- **Accessible Pricing:** Good Inside charges an exorbitant $279/year for what is essentially a digital video community. Alongside provides a complete Family OS—including pediatric health, nutrition, brain play, AI voice sparring, and device enforcement—for just $79/year.
+- **Accessible Pricing:** Good Inside charges an exorbitant $279/year for what is essentially a digital video community. Alongside provides a complete Family OS—including pediatric health, nutrition, brain play, 24/7 AI child advisory, and device enforcement—for just $79/year.
 
 #### 3. How Much of a Difference?
-- **Experiential:** Passive consumption vs. active behavioural simulator. Good Inside is like reading a book on swimming; AlongSide’s Voice Sparring is getting into the pool with a coach.
+- **Actionable Utility:** Passive consumption vs. active situational guidance. Good Inside is like reading a book on swimming; AlongSide’s AI Advisor provides an on-demand coach with exact scripts when you're in deep water.
 
 #### 4. Where They Win:
 - **Celebrity Founder Charisma & Trust:** Dr. Becky Kennedy has over 3 million Instagram followers, a #1 New York Times bestselling book, and massive mainstream media credibility (Time Magazine cover, podcasts). Parents feel a profound parasocial attachment to her voice and authority.
@@ -230,7 +230,7 @@ The following table provides an exhaustive side-by-side evaluation across 12 cri
 | **Infant & Child Nutrition / Feeding** | **YES (BLW + Picky Eating)** | ❌ No | ❌ No | ❌ No | Basic logs only | ❌ No | General guidance | ❌ No |
 | **Motor & Speech Milestones Tracking** | **YES (0–18 Benchmarks)** | ❌ No | ❌ No | ❌ No | Basic 0–12mo | ❌ No | ❌ No | ❌ No |
 | **Brain Games, Puppets & Cognitive Play** | **YES (Age-Tailored)** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
-| **Interactive AI Voice Sparring Simulator** | **YES (Live Rehearsal)** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ (Text bot only) | ❌ No | ❌ No |
+| **24/7 AI Child Advisor & Clinical FAQ Vault** | **YES (250+ Scenarios & Scripts)** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ (Text bot only) | ❌ No | ❌ No |
 | **Weekly Youth Culture & Slang Decoder** | **YES (Sunday Digest)** | Partial (Alert tags) | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **Annual Pricing** | **$79 / year** | $99 / year | $55–$100 / yr | **$0 (Free)** | $120 / year | $279 / year | $240 / year | $510 Year 1 |
 | **Expected Customer Lifespan** | **15–18 Years** | 2–3 Years | 2–3 Years | 3–5 Years | **12–18 Months** | 1–2 Years | 2–4 Years | 1–2 Years |
@@ -257,7 +257,7 @@ The following table provides an exhaustive side-by-side evaluation across 12 cri
 │                                                                                                  │
 │   3. THE ACTION DIVIDE: Passive Content vs. Neuromuscular Rehearsal & Machine Peace              │
 │      • Competitors: Read advice, get yelled at by tween, scream back in exhaustion                │
-│      • Alongside: Voice Sparring AI prepares the parent; Signed profile locks phone automatically│
+│      • Alongside: 24/7 AI Advisor prepares the parent; Signed profile locks phone automatically  │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -270,9 +270,9 @@ The following table provides an exhaustive side-by-side evaluation across 12 cri
    - Single-point apps suffer from catastrophic customer churn. Huckleberry loses parents when diapers end. Bark loses parents when teens rebel or leave for college.
    - Alongside is an **18-year customer retention flywheel**. A family that adopts Alongside for infant fever triage and baby-led weaning at 6 months continues using it for toddler speech milestones, elementary school brain games, middle school smartwatch transitions, and adolescent safe driving pacts.
 
-3. **The Action Divide (Static Words vs. Neuromuscular Rehearsal):**
+3. **The Action Divide (Static Words vs. Actionable Guidance & Scripts):**
    - Every existing parenting content app gives parents *more reading*. When a child throws a violent tantrum or screams *"I hate you!"*, intellectual memory evaporates under adrenaline.
-   - Alongside's **AI Voice Sparring Simulator** trains neuromuscular calm. By speaking boundaries aloud against a simulated, emotional AI voice, parents build automatic neural pathways of calmness before entering real-life family conflicts.
+   - Alongside's **24/7 AI Child Advisor & Guided Dialogue Scripts** deliver immediate, situation-specific words to say. By providing exact, empathetic phrasing tailored to the child's developmental tier and the heat of the moment, parents stay grounded and confident without guessing or freezing.
 
 ---
 
@@ -317,7 +317,7 @@ flowchart TD
         W1["The Anti-Spyware Trust Alliance<br/>(PTAs, Schools & Pediatricians endorse us; they ban Bark)"]
         W2["Slaying the 24-Month Churn Cliff<br/>(18-year continuous lifespan multiplies LTV by 10x)"]
         W3["The Brain + Muscle Integration<br/>(Connecting child psychology directly to device-level curfews)"]
-        W4["Neuromuscular AI Voice Sparring<br/>(Experiential vocal training replaces passive video watching)"]
+        W4["24/7 AI Child Advisor & Script Vault<br/>(Immediate situation-tailored empathy scripts replace passive reading)"]
         W5["Unified 360° Child Data Context<br/>(Health, diet, milestones, play, and tech in one single database)"]
     end
 ```
@@ -334,9 +334,9 @@ flowchart TD
 - **The Mechanism:** Parenting apps have historically been either "all brain" (abstract psychology books and podcasts with zero device control) or "all muscle" (crude dumbphone hardware or dumb toggles with zero understanding of child development).
 - **The Win:** Alongside is the first platform that unites the brain and the muscle. We teach parents the neurobiology of why their 11-year-old struggles to disconnect, provide the script to talk about it, and then neutrally compile the agreed boundary into an operating system lock that enforces it without tears.
 
-### 4. Interactive Neuromuscular Voice Sparring
-- **The Mechanism:** Real-time conversational AI models streaming low-latency voice enable experiential simulation.
-- **The Win:** No competitor offers real-time voice sparring. Giving parents a safe sandbox to hear a simulated defiant child and practice staying calm transforms parenting from theoretical knowledge into conditioned emotional reflex.
+### 4. 24/7 Clinical AI Advisor & Guided Dialogue Scripts
+- **The Mechanism:** High-speed streaming AI coupled with pediatric evidence and clinical FAQ knowledge base.
+- **The Win:** While competitors offer generic video libraries or shallow chatbots, Alongside's AI Advisor delivers immediate, situation-specific guidance and word-for-word response scripts rooted in developmental neurobiology and pediatric best practices.
 
 ### 5. Unified 360° Child Intelligence
 - **The Mechanism:** When a parent asks the 24/7 AI Advisor a question, the LLM’s context window has access to:

@@ -131,7 +131,7 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
   });
 
   describe('6. Interactive 1-Click Action Prompt Button', () => {
-    it('renders action prompt card with link to /advisor sparring', () => {
+    it('renders action prompt card with link to /advisor', () => {
       const html = renderToStaticMarkup(<LessonVideoPlayer video={sampleVideo} />);
 
       expect(html).toContain('data-testid="video-action-prompt"');
@@ -139,7 +139,7 @@ describe('Plan 39: LessonVideoPlayer Master Lecture Multi-Modal Architecture', (
       expect(html).toContain(
         'Practice wrapping your infant in a snug swaddle and making a loud white-noise &quot;shhh&quot; sound'
       );
-      expect(html).toContain('data-testid="launch-sparring-button"');
+      expect(html).toContain('data-testid="launch-advisor-button"');
       expect(html).toContain('Practice with AI Advisor');
       expect(html).toContain('/advisor?prompt=');
     });

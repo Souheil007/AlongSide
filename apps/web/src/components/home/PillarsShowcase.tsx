@@ -298,14 +298,14 @@ export function PillarsShowcase() {
                 Omnipresent Companion
               </span>
               <span className="text-[10px] bg-teal-500/20 text-teal-300 font-semibold px-2 py-0.5 rounded-full border border-teal-400/30">
-                Voice Sparring Simulator
+                Clinical FAQ Vault
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-white">
               24/7 AI Child Advisor: Safe Harbor Guidance
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Trained on 260+ clinical parenting FAQs and developmental neurobiology. Spar against simulated child pushback, generate word-for-word scripts, and get instant answers anytime.
+              Trained on 260+ clinical parenting FAQs and developmental neurobiology. Generate word-for-word scripts, resolve acute bedtime and screen friction, and get instant answers anytime.
             </p>
           </div>
         </div>
@@ -315,7 +315,7 @@ export function PillarsShowcase() {
             size="lg"
             className="w-full md:w-auto gap-2 bg-teal-400 hover:bg-teal-300 text-slate-950 font-bold min-h-[44px] shadow-sm"
           >
-            <span>Try AI Voice Sparring</span>
+            <span>Consult AI Advisor</span>
             <ArrowRight className="h-4 w-4" />
           </Button>
         </Link>
