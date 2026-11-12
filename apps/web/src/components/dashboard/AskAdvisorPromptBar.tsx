@@ -63,11 +63,13 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
   return (
     <Card
       className={cn(
-        'border-[#E3E3DC] bg-white/90 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] rounded-[2rem] overflow-hidden transition-all hover:border-[#143D2B]/40 p-6 sm:p-8 space-y-4',
+        'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] overflow-hidden transition-all hover:border-[#143D2B]/30 p-6 sm:p-10 space-y-5 relative',
         className
       )}
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/5 pb-3">
+      {/* Ambient Glow Behind AI Input */}
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-96 h-48 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/5 pb-4">
         <div className="space-y-0.5">
           <span className="font-mono text-[10px] uppercase tracking-widest text-[#143D2B] font-bold block">
             24/7 Developmental Sparring
@@ -84,11 +86,12 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
         </span>
       </div>
 
-      <p className="font-serif text-sm sm:text-base text-stone-700">
+      <p className="relative z-10 font-serif text-base sm:text-lg text-stone-700">
         Ask Dr. Alongside anything about {child ? child.name : 'your child'}.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5 pt-1">
+      {/* The Dialogue Omnibar */}
+      <form onSubmit={handleSubmit} className="relative z-10 flex items-center gap-2 bg-white/95 rounded-full p-2 pl-6 border border-emerald-900/15 shadow-md focus-within:border-[#143D2B] focus-within:ring-2 focus-within:ring-[#143D2B]/10 transition">
         <input
           type="text"
           value={question}
@@ -98,11 +101,11 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
               ? `Ask anything about ${child.name}: e.g. 'She won't get off Roblox' or 'How to discuss sleepovers without friction'...'`
               : "Ask anything: e.g. 'She won't get off Roblox' or 'How to discuss sleepovers without friction'..."
           }
-          className="flex-1 bg-white/95 border border-[#E3E3DC] rounded-2xl px-5 py-3 text-xs sm:text-sm text-[#111413] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/20 shadow-2xs placeholder:text-[#858C88]"
+          className="w-full bg-transparent text-xs sm:text-sm text-[#111815] placeholder:text-stone-400 focus:outline-none"
         />
         <Button
           type="submit"
-          className="min-h-[46px] px-6 py-3 rounded-2xl bg-[#143D2B] text-white text-xs font-semibold hover:bg-[#0E2B1E] transition shadow-md shrink-0 cursor-pointer flex items-center justify-center gap-2"
+          className="shrink-0 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-medium text-xs px-6 py-3.5 rounded-full transition shadow-sm cursor-pointer flex items-center gap-2"
         >
           <Sparkles className="w-4 h-4" />
           <span>Ask Advisor</span>
@@ -110,7 +113,7 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
       </form>
 
       {/* Acute Moments / Frequent Situations 1-Tap Quick Prompts */}
-      <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+      <div className="relative z-10 pt-1 flex flex-wrap items-center gap-2 text-xs">
         <span className="font-mono text-[11px] text-[#858C88] uppercase tracking-wider font-bold">
           Frequent Situations: Acute Moments:
         </span>
@@ -119,7 +122,7 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
             key={prompt.label}
             type="button"
             onClick={() => navigateToAdvisor(prompt.query)}
-            className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FBFBF9] hover:bg-[#EAF3EE] text-[#111413] hover:text-[#143D2B] border border-[#E3E3DC] hover:border-[#143D2B]/30 transition-all cursor-pointer shadow-2xs"
+            className="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/90 hover:bg-[#EAF3EE] text-[#111413] hover:text-[#143D2B] border border-stone-200/80 hover:border-[#143D2B]/30 transition-all cursor-pointer shadow-2xs"
           >
             {prompt.label}
           </button>
