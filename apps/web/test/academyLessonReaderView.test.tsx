@@ -175,8 +175,8 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
     });
   });
 
-  describe('3. Tactile Dialogue Deck & 1-Click Script Copier', () => {
-    it('renders comparative script cards with What NOT to Say and Empathetic Script', () => {
+  describe('3. Tactile Dialogue Deck (Decluttered Say This, Not That)', () => {
+    it('renders comparative script cards with What NOT to Say and Empathetic Script without button clutter', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonDialogueDeck, {
           cards: multiModalLesson.dialogueCards,
@@ -190,9 +190,10 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain(
         'Your body feels so big and stormy right now. It is hard when we wanted the yellow cup.'
       );
-      expect(html).toContain('data-testid="copy-script-btn"');
-      expect(html).toContain('Copy Script');
-      expect(html).toContain('Save to Vault');
+      // Decluttered: Copy Script and Save to Vault removed per user request
+      expect(html).not.toContain('data-testid="copy-script-btn"');
+      expect(html).not.toContain('Copy Script');
+      expect(html).not.toContain('Save to Vault');
       expect(html).toContain('Vocal &amp; Physical Delivery Tip:');
     });
   });
@@ -263,7 +264,7 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
   });
 
   describe('7. Master LessonReaderView Assembly', () => {
-    it('assembles all 8 multi-modal elements into a cohesive reader experience', () => {
+    it('assembles multi-modal elements into a cohesive, decluttered reader experience', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: multiModalLesson,
@@ -281,21 +282,24 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
         })
       );
 
-      // Verify all canonical components exist
+      // Verify canonical components exist
       expect(html).toContain('data-testid="lesson-reader-view"');
       expect(html).toContain('data-testid="reading-progress-bar"');
       expect(html).toContain('data-testid="lesson-relief-masthead"');
-      expect(html).toContain('data-testid="thirty-second-glance"');
       expect(html).toContain('data-testid="lesson-editorial-section"');
       expect(html).toContain('data-testid="lesson-narration-player"');
       expect(html).toContain('data-testid="adaptive-module-container"');
       expect(html).toContain('data-testid="dialogue-deck"');
       expect(html).toContain('data-testid="action-checklist"');
-      expect(html).toContain('data-testid="tool-bridges"');
       expect(html).toContain('data-testid="lesson-footer-nav"');
+      expect(html).toContain('data-testid="lesson-progress-completion-wrapper"');
       expect(html).toContain('data-testid="complete-lesson-btn"');
       expect(html).toContain('Up Next');
       expect(html).toContain('Borrowing Your Nervous System');
+
+      // Decluttered per SOU-110: ThirtySecondGlance and ToolBridges removed from lesson reader
+      expect(html).not.toContain('data-testid="thirty-second-glance"');
+      expect(html).not.toContain('data-testid="tool-bridges"');
     });
   });
 
@@ -344,7 +348,7 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).not.toContain('data-testid="master-lecture-badge"');
     });
 
-    it('embeds LessonVideoPlayer seamlessly between masthead and thirty-second glance in LessonReaderView', () => {
+    it('embeds LessonVideoPlayer seamlessly between masthead and editorial section in LessonReaderView', () => {
       const html = renderToStaticMarkup(
         React.createElement(LessonReaderView, {
           lesson: videoLectureLesson,
@@ -360,14 +364,14 @@ Take a breath. You are not a bad parent, and your child is not broken.`,
       expect(html).toContain('Clinical Key Takeaways (3 Core Concepts)');
       expect(html).toContain('Practice with AI Advisor');
 
-      // Verify sequence order: ReliefMasthead -> LessonVideoPlayer -> ThirtySecondGlance
+      // Verify sequence order: ReliefMasthead -> LessonVideoPlayer -> EditorialSection
       const mastheadIdx = html.indexOf('data-testid="lesson-relief-masthead"');
       const videoIdx = html.indexOf('data-testid="lesson-video-player"');
-      const glanceIdx = html.indexOf('data-testid="thirty-second-glance"');
+      const editorialIdx = html.indexOf('data-testid="lesson-editorial-section"');
 
       expect(mastheadIdx).toBeGreaterThan(-1);
       expect(videoIdx).toBeGreaterThan(mastheadIdx);
-      expect(glanceIdx).toBeGreaterThan(videoIdx);
+      expect(editorialIdx).toBeGreaterThan(videoIdx);
     });
 
     it('omits LessonVideoPlayer in LessonReaderView when lesson has no videoLecture', () => {

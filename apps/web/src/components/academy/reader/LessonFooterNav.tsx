@@ -52,42 +52,40 @@ export function LessonFooterNav({
       aria-label="Lesson completion and navigation"
       className={cn('space-y-6 pt-4', className)}
     >
-      {/* Chapter Progress Bar */}
+      {/* Unified Chapter Progress & Completion Wrapper */}
       <div
+        data-testid="lesson-progress-completion-wrapper"
         className={cn(
-          'rounded-2xl border p-5 shadow-xs transition-colors space-y-3',
+          'rounded-2xl border p-5 sm:p-6 shadow-xs transition-colors space-y-5',
           isNightstandMode
             ? 'bg-stone-900 border-stone-800 text-stone-200'
             : 'bg-white border-slate-200/90 text-slate-800'
         )}
       >
-        <div className="flex items-center justify-between text-xs font-semibold">
-          <span className="flex items-center gap-1.5 text-slate-600 dark:text-stone-400">
-            <BookOpen className="h-3.5 w-3.5 text-teal-600" />
-            Chapter Journey Progress
-          </span>
-          <span className="text-teal-700 dark:text-teal-400 font-mono">
-            Lesson {currentLessonOrder} of {totalLessons}
-          </span>
+        {/* Chapter Journey Progress Header & Bar */}
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between text-xs font-semibold">
+            <span className="flex items-center gap-1.5 text-slate-600 dark:text-stone-400">
+              <BookOpen className="h-3.5 w-3.5 text-teal-600" />
+              Chapter Journey Progress
+            </span>
+            <span className="text-teal-700 dark:text-teal-400 font-mono">
+              Lesson {currentLessonOrder} of {totalLessons}
+            </span>
+          </div>
+
+          <div className="w-full bg-slate-100 dark:bg-stone-800 h-2 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-300"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
         </div>
 
-        <div className="w-full bg-slate-100 dark:bg-stone-800 h-2 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-300"
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
-      </div>
+        {/* Divider */}
+        <div className="border-t border-slate-100 dark:border-stone-800/80" />
 
-      {/* Completion Action Card */}
-      <div
-        className={cn(
-          'rounded-2xl border p-6 shadow-xs transition-colors space-y-4',
-          isNightstandMode
-            ? 'bg-stone-900 border-stone-800 text-stone-200'
-            : 'bg-white border-slate-200/90 text-slate-800'
-        )}
-      >
+        {/* Completion Action Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2

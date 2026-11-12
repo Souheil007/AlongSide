@@ -5,13 +5,9 @@ import {
   MessageSquare,
   XCircle,
   CheckCircle,
-  Copy,
-  Check,
-  Bookmark,
   Mic,
 } from 'lucide-react';
 import type { DialogueCardItem } from '@alongside/shared';
-import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export interface LessonDialogueDeckProps {
@@ -27,7 +23,7 @@ export interface LessonDialogueDeckProps {
  * Features:
  * - All dialogue comparisons wrapped together inside a single authoritative card
  * - Clean side-by-side contrast between instinctive reactions and empathetic scripts
- * - 1-Click Copy and Save to Pocket Vault buttons
+ * - Minimal, quiet aesthetic without redundant copy/vault buttons
  * - Single consolidated Vocal & Physical Delivery Tip at the bottom of all dialogues (only if a relevant tip exists)
  */
 export function LessonDialogueDeck({
@@ -37,9 +33,6 @@ export function LessonDialogueDeck({
   isNightstandMode = false,
   className,
 }: LessonDialogueDeckProps) {
-  const [copiedIndex, setCopiedIndex] = React.useState<number | null>(null);
-  const [savedIndex, setSavedIndex] = React.useState<number | null>(null);
-
   const effectiveCards: DialogueCardItem[] = React.useMemo(() => {
     if (cards && cards.length > 0) return cards;
     return [
@@ -68,36 +61,6 @@ export function LessonDialogueDeck({
     );
     return cardWithTip?.deliveryTip?.trim() || null;
   }, [deliveryTip, effectiveCards]);
-
-  const handleCopy = (text: string, index: number) => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(text);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2500);
-    }
-  };
-
-  const handleSaveToVault = (index: number) => {
-    setSavedIndex(index);
-    if (typeof window !== 'undefined' && window.localStorage) {
-      try {
-        const existing = JSON.parse(
-          window.localStorage.getItem('alongside-script-vault') || '[]'
-        );
-        existing.push({
-          script: effectiveCards[index]?.empatheticScript,
-          savedAt: new Date().toISOString(),
-        });
-        window.localStorage.setItem(
-          'alongside-script-vault',
-          JSON.stringify(existing)
-        );
-      } catch {
-        // silent fallback
-      }
-    }
-    setTimeout(() => setSavedIndex(null), 2500);
-  };
 
   return (
     <section
@@ -150,7 +113,7 @@ export function LessonDialogueDeck({
             </div>
 
             {/* ✅ Right Column: Alongside Empathetic Script */}
-            <div className="rounded-xl border border-emerald-300 bg-emerald-50/70 dark:bg-emerald-950/20 dark:border-emerald-800 p-4 space-y-3 flex flex-col justify-between">
+            <div className="rounded-xl border border-emerald-300 bg-emerald-50/70 dark:bg-emerald-950/20 dark:border-emerald-800 p-4 space-y-2 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 mb-1.5">
                   <CheckCircle className="h-4 w-4 text-emerald-600" />
@@ -159,50 +122,6 @@ export function LessonDialogueDeck({
                 <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-emerald-100 leading-relaxed font-serif text-[15px]">
                   &ldquo;{card.empatheticScript}&rdquo;
                 </p>
-              </div>
-
-              {/* 1-Click Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-emerald-200/60 dark:border-emerald-900/40">
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handleCopy(card.empatheticScript, idx)}
-                  data-testid="copy-script-btn"
-                  className="h-8 gap-1.5 text-xs font-semibold bg-white dark:bg-stone-800 border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100"
-                >
-                  {copiedIndex === idx ? (
-                    <>
-                      <Check className="h-3.5 w-3.5 text-emerald-600" />
-                      <span>Copied to Clipboard!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-3.5 w-3.5" />
-                      <span>Copy Script</span>
-                    </>
-                  )}
-                </Button>
-
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => handleSaveToVault(idx)}
-                  className="h-8 gap-1 text-xs text-slate-600 dark:text-stone-300 hover:text-emerald-700"
-                >
-                  {savedIndex === idx ? (
-                    <>
-                      <Check className="h-3.5 w-3.5 text-emerald-600" />
-                      <span>Saved to Vault!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Bookmark className="h-3.5 w-3.5" />
-                      <span>Save to Vault</span>
-                    </>
-                  )}
-                </Button>
               </div>
             </div>
           </div>
