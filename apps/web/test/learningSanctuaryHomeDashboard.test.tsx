@@ -96,6 +96,8 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).not.toContain('Road 1: Pre-Device');
       expect(html).not.toContain('14-Day Independent Morning Alarm');
       expect(html).not.toContain('Why this leap matters');
+      expect(html).not.toContain('Advisory Horizon:');
+      expect(html).not.toContain('Active Leap:');
     });
 
     it('renders dynamic greeting for connected user Souheil and child Lina (SOU-89)', () => {
@@ -134,8 +136,8 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
 
       expect(html).toContain('Welcome home, Sarah. Here is today&#x27;s guidance for Leo.');
       expect(html).toContain('Toddlerhood is about emotional co-regulation');
-      expect(html).toContain('Leo&#x27;s Advisory Horizon');
-      expect(html).toContain('Co-Regulation Routines');
+      expect(html).not.toContain('Leo&#x27;s Advisory Horizon');
+      expect(html).not.toContain('Active Leap:');
     });
 
     it('renders empty welcoming state when no child profile exists', () => {
