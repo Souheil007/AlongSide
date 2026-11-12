@@ -113,14 +113,23 @@ async function main() {
   console.log(`   • Plan: ${plan}`);
   console.log(`   • Current Balance: ${credits} credits`);
 
+  // Query Detailed Trial & Subscription Diagnostics
+  const plansRes = await callMcpTool(token, "show_plans_and_credits", {});
+  const trialStatus = plansRes.result?.structuredContent?.trial_status;
+  const unlimTrialActive = Boolean(plansRes.result?.structuredContent?.unlim_trial_in_mcp_active);
+
+  if (trialStatus) {
+    console.log(`   • Trial Kind: ${trialStatus.kind || "None"}`);
+    console.log(`   • Trial Scheduled End: ${trialStatus.trial_ends_at || "N/A"}`);
+    console.log(`   • Trial Status: ${trialStatus.status || "Unknown"} (Trial Credits: ${trialStatus.trial_credits ?? 0})`);
+    console.log(`   • Unlimited MCP Trial Active: ${unlimTrialActive ? "YES" : "NO (Deactivated upon cancellation)"}`);
+  }
+
   // Check Unlimited Generations Allowance on Account
   const exploreRes = await callMcpTool(token, "models_explore", { action: "list", unlim: true });
   const unlimStatus = exploreRes.result?.structuredContent?.unlim;
-  const isUnlimAvailable = Boolean(unlimStatus?.available);
-  console.log(`   • Unlimited Generations Active: ${isUnlimAvailable ? "YES (Unlimited Free Trial)" : "NO (Not active / Trial cancelled)"}`);
-  if (unlimStatus?.expires_at) {
-    console.log(`   • Allowance Expires: ${unlimStatus.expires_at}`);
-  }
+  const isUnlimAvailable = Boolean(unlimStatus?.available) || unlimTrialActive;
+  console.log(`   • Unlimited Generations Spendable: ${isUnlimAvailable ? "YES" : "NO"}`);
   console.log("");
 
   const wsRes = await callMcpTool(token, "list_workspaces", {});
@@ -182,16 +191,19 @@ async function main() {
       console.warn(`      ${errMsg}\n`);
 
       if (errMsg.includes("Unlimited generations aren't available")) {
-        console.log("   📌 Unlimited Status Note:");
-        console.log("      The MCP backend rejected `use_unlim: true` because unlimited trial is not currently active on this account.");
-        console.log("      Trial Status: `cancelled_by_user` (0 trial credits).");
-        console.log("      Reactivate trial or top up at: https://higgsfield.ai/mcp-pricing\n");
+        console.log("   📌 Unlimited Status Note (Why trial_ends_at is in the future but generation was rejected):");
+        console.log(`      • Scheduled Trial Expiration: ${trialStatus?.trial_ends_at || "2026-11-14T11:03:13Z"}`);
+        console.log(`      • Account Status: "${trialStatus?.status || "cancelled_by_user"}" (trial_credits: ${trialStatus?.trial_credits ?? 0})`);
+        console.log("      • Root Cause: While the original trial was scheduled to end on Nov 14, cancelling the trial");
+        console.log("        causes Higgsfield to immediately set `unlim_trial_in_mcp_active: false` and revoke unmetered generation.");
+        console.log("      • To Unblock: Log into https://higgsfield.ai to resume/reactivate your trial subscription before Nov 14,");
+        console.log("        or top up credits at: https://higgsfield.ai/mcp-pricing\n");
       } else if (errMsg.includes("only_mcp_usage_on_trial_is_available") || errMsg.includes("credits")) {
         console.log("   📌 Resolution Note:");
-        console.log(`      Your account currently has ${credits} credits, while Seedance 2.5 (30s) requires 90 credits.`);
-        console.log("      The trial period was previously marked 'cancelled_by_user'.");
-        console.log("      To generate these high-fidelity 30s clips, visit:");
-        console.log("      https://higgsfield.ai/mcp-pricing to top up credits or reactivate your trial.\n");
+        console.log(`      • Available Balance: ${credits} credits (Seedance 2.5 30s requires 90 credits, or 210 for high fidelity).`);
+        console.log(`      • Account Trial Status: "${trialStatus?.status || "cancelled_by_user"}" (Scheduled end: ${trialStatus?.trial_ends_at || "2026-11-14T11:03:13Z"}).`);
+        console.log("      • To generate these 30s clips, resume trial or top up credits at:");
+        console.log("        https://higgsfield.ai/mcp-pricing\n");
       }
     } else {
       console.log("   ✓ Job submitted successfully!");

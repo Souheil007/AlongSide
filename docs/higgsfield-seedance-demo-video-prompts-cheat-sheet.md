@@ -122,11 +122,15 @@ Direct terminal execution of the CLI commands via `node scripts/execute-higgsfie
    ⚠️ STDERR: Error: {"error_type":"only_mcp_usage_on_trial_is_available"}
 ```
 
-### Root Cause & Unlock Step:
-- **Root Cause:** Both the CLI and MCP endpoints enforce credit checks. The account has **10 credits** (each 30s `seedance_2_5` generation costs 90 credits = 180 credits total), and the earlier MCP trial was marked `cancelled_by_user` with `0` trial credits.
+### Root Cause & Unlock Step (`trial_ends_at` vs. `cancelled_by_user`):
+- **Why `trial_ends_at: "2026-11-14T11:03:13Z"` is in the future but generations were rejected:**
+  - The trial was scheduled to end on **November 14, 2026** (`trial_ends_at`).
+  - However, because the trial subscription was cancelled early, Higgsfield's backend immediately flipped `unlim_trial_in_mcp_active: false` and set `trial_credits: 0`, revoking unmetered generations before the expiration date.
+  - The account currently holds **9.0 credits** (each 30s `seedance_2_5` generation costs 90 credits = 180 credits total), causing standard credit calls to return HTTP 403 `only_mcp_usage_on_trial_is_available`.
 - **Immediate Resolution:**
-  1. Visit [Higgsfield MCP Pricing](https://higgsfield.ai/mcp-pricing?new_price_id=price_1TDRhfCmk0pn4HuHdZEyd8mB&seats=1&dry_run=True&source=mcp) to reactivate the trial or top up credits.
-  2. Run `node scripts/execute-higgsfield-cli-demo-videos.mjs`.
+  1. **Resume / Reactivate Trial:** Since `trial_ends_at` is Nov 14, visit [Higgsfield Web Dashboard](https://higgsfield.ai) under Account / Billing and click **"Resume Subscription" / "Reactivate Trial"** to restore unmetered generation at zero cost for the remaining period.
+  2. **Or Top-Up Credits:** Visit [Higgsfield MCP Pricing](https://higgsfield.ai/mcp-pricing?new_price_id=price_1TDRhfCmk0pn4HuHdZEyd8mB&seats=1&dry_run=True&source=mcp).
+  3. **Run Runner:** `node scripts/generate-higgsfield-demo-videos.mjs --unlim` or `node scripts/execute-higgsfield-cli-demo-videos.mjs`.
 
 ---
 

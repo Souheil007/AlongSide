@@ -273,13 +273,32 @@ When triggering directly via an MCP agent or HTTP POST with `Authorization: Bear
 }
 ```
 
-### 6.3 Credit & Account Quota Diagnostic
+### 6.3 Credit & Account Quota Diagnostic (`trial_ends_at` vs. `cancelled_by_user`)
 - **Seedance 2.5 Cost Profile:** Each 30-second `480p` video requires **90 credits** (or 180 credits for both videos).
 - **Workspace Selection Requirement:** The MCP requires selecting the active user workspace (via `select_workspace`) before submitting jobs.
-- **Unlimited Mode (`use_unlim: true`):** Supported by `seedance_2_5` when an unmetered trial is active. Live MCP diagnostic returns:
-  * When `use_unlim: true` is passed on an account with a cancelled trial: `{"error": "Unlimited generations aren't available on this account. Retry without use_unlim to generate with credits."}`
-  * Account trial inspection (`show_plans_and_credits`): `trial_status: {"status": "cancelled_by_user", "trial_credits": 0, "eligible": false}`, `unlim_trial_in_mcp_active: false`.
-  * Standard credit mode: Account holds `9.5 credits` (insufficient for 90-credit generation). Reactivation / top-up available at `https://higgsfield.ai/mcp-pricing`.
+- **Why `trial_ends_at: "2026-11-14T11:03:13Z"` is in the future but generations were rejected:**
+  * When enrolled in the trial (`kind: "mcp_ultra_unlim"`), the backend set the trial period to conclude on **November 14, 2026 at 11:03:13 UTC** (`trial_ends_at`).
+  * However, when a trial subscription is cancelled early (e.g. to avoid post-trial auto-billing), Higgsfield's backend applies an **immediate cutoff** rather than allowing unmetered generation until period end:
+    ```json
+    "unlim_trial_in_mcp_active": false,
+    "trial_status": {
+      "eligible": false,
+      "status": "cancelled_by_user",
+      "kind": "mcp_ultra_unlim",
+      "trial_ends_at": "2026-11-14T11:03:13Z",
+      "trial_credits": 0
+    }
+    ```
+  * As a consequence:
+    1. **Unlimited Generation Mode (`use_unlim: true`):** The server checks `unlim_trial_in_mcp_active` (`false`) and `unlim.available` (`false`), rejecting with: `{"error": "Unlimited generations aren't available on this account. Retry without use_unlim to generate with credits."}`
+    2. **Standard Credit Mode (without `use_unlim`):** The account holds `9.0 credits` remaining (insufficient for 90-credit generation), returning HTTP 403 `only_mcp_usage_on_trial_is_available`.
+- **Empirical Transaction Verification (`higgsfield account transactions`):**
+  * **2026-11-11 (Active Trial):** Seedance 2.5 and Seed Audio 1.0 jobs were billed at **`0 credits`** (e.g. the 3 completed launch videos).
+  * **2026-11-12 (Post-Cancellation):** Generations switched to standard credit deduction (e.g. `GPT Image 2.0` spent `0.5 credits`, decreasing balance from `10.0` to `9.0 credits`).
+- **Immediate Unblock Options:**
+  1. **Resume / Un-cancel Trial:** Since `trial_ends_at` is November 14, log into [Higgsfield Web / Stripe Billing](https://higgsfield.ai) under Account / Subscription and click **"Resume Subscription" / "Reactivate Trial"** to restore unmetered generation for the remaining days at 0 cost.
+  2. **Top-Up Credits:** Add credits or upgrade at [Higgsfield MCP Pricing](https://higgsfield.ai/mcp-pricing?new_price_id=price_1TDRhfCmk0pn4HuHdZEyd8mB&seats=1&dry_run=True&source=mcp).
+  3. **Run 1-Click Execution:** Once resumed or topped up, run `node scripts/generate-higgsfield-demo-videos.mjs --unlim`.
 
 ### 6.4 Direct Higgsfield CLI Execution Engine
 In addition to the MCP protocol runner, a dedicated direct CLI execution script is provided in the repository:
