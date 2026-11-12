@@ -103,13 +103,13 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
       {/* 2. SECTION 1: Active Academy Track (Hero Centerpiece with Visual Roadmap & Tonight's Script) */}
       <ActiveChapterContinueCard child={activeChild} />
 
-      {/* 3. DUAL SPATIAL TILES: Sunday Culture Digest & First-Phone Readiness Radar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
-        <SundayCultureDigestCard child={activeChild} />
-        <BilateralPactStatusCard child={activeChild} />
-      </div>
+      {/* 3. SECTION 2: Sunday Youth Culture Digest (Full-Width 3-Column Living Feed) */}
+      <SundayCultureDigestCard child={activeChild} />
 
-      {/* 4. SECTION 3: 24/7 AI Child Advisor (Empathetic Co-Pilot & Guided Dialogue) */}
+      {/* 4. SECTION 3: First-Phone Assessment & Readiness Radar (Full-Width 3-Column Diagnostic) */}
+      <BilateralPactStatusCard child={activeChild} />
+
+      {/* 5. SECTION 4: 24/7 AI Child Advisor (Empathetic Co-Pilot & Guided Dialogue) */}
       <AskAdvisorPromptBar child={activeChild} />
 
       {/* Child Onboarding Modal */}

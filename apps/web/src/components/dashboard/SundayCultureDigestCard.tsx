@@ -173,9 +173,9 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
         </div>
       </CardHeader>
 
-      <CardContent className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
-        {/* 3-Column / Responsive Interactive Grid */}
-        <div className="grid grid-cols-1 gap-4">
+      <CardContent className="p-6 sm:p-7 space-y-6 flex-1 flex flex-col justify-between">
+        {/* 3-Column Balanced Horizontal Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Column 1: Interactive Slang Decoder with Cringe Meter */}
           <div className="p-5 rounded-2xl bg-white/80 border border-white shadow-2xs flex flex-col justify-between space-y-3">
             <div className="space-y-2">
@@ -319,14 +319,9 @@ export function SundayCultureDigestCard({ child, className }: SundayCultureDiges
                 <span
                   key={idx}
                   title={item.definition}
-                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#F4F4F0] text-[#111413] border border-[#E3E3DC]"
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-white/90 text-[#111413] border border-stone-200/80 shadow-2xs hover:border-[#143D2B]/30 transition"
                 >
                   <span className="font-semibold">&ldquo;{item.term}&rdquo;</span>
-                  {item.definition && (
-                    <span className="text-[10px] text-[#858C88] hidden sm:inline">
-                      • {item.definition}
-                    </span>
-                  )}
                 </span>
               ))}
             </div>
