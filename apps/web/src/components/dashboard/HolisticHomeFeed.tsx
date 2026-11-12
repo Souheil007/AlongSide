@@ -8,7 +8,7 @@ import {
 } from '@/stores/useChildContextStore';
 import { useChildren } from '@/hooks/useChildren';
 import { useAuth } from '@/hooks/useAuth';
-import { getAcademyModules } from '@/lib/api/academy';
+import { getAcademyModules, calculateHabitStreakAndMinutes } from '@/lib/api/academy';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import { ChildHeroCard } from './ChildHeroCard';
 import { ActiveChapterContinueCard } from './ActiveChapterContinueCard';
@@ -40,13 +40,9 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
     staleTime: 5 * 60 * 1000,
   });
 
-  const totalCompletedLessons = React.useMemo(() => {
-    if (!allModules || allModules.length === 0) return 0;
-    return allModules.reduce((acc, m) => acc + (m.completedLessonCount || 0), 0);
+  const { streakDays, minsLearnedThisWeek } = React.useMemo(() => {
+    return calculateHabitStreakAndMinutes(allModules);
   }, [allModules]);
-
-  const dynamicStreakDays = totalCompletedLessons > 0 ? Math.min(7, Math.max(1, totalCompletedLessons)) : 4;
-  const dynamicMinsLearned = totalCompletedLessons > 0 ? totalCompletedLessons * 4 : 18;
 
   const resolvedParentName =
     parentName || (user?.fullName ? user.fullName.trim().split(/\s+/)[0] : 'Parent');
@@ -81,8 +77,8 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
       <ChildHeroCard
         child={activeChild}
         parentName={resolvedParentName}
-        streakDays={dynamicStreakDays}
-        minsLearnedThisWeek={dynamicMinsLearned}
+        streakDays={streakDays}
+        minsLearnedThisWeek={minsLearnedThisWeek}
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 

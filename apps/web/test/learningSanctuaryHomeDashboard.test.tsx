@@ -60,7 +60,12 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   describe('1. Welcoming Value Banner & Family Headquarters (ChildHeroCard)', () => {
     it('renders welcoming greeting making user feel at home and clear on purpose', () => {
       const html = renderToStaticMarkup(
-        <ChildHeroCard child={mockTweenMaya} parentName="Sarah" />
+        <ChildHeroCard
+          child={mockTweenMaya}
+          parentName="Sarah"
+          streakDays={4}
+          minsLearnedThisWeek={18}
+        />
       );
 
       expect(html).toContain("Your Family&#x27;s Calm Daily Headquarters");
@@ -68,6 +73,27 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('building healthy habits and emotional trust');
       expect(html).toContain('4-Day Streak');
       expect(html).toContain('18 mins learned this week');
+    });
+
+    it('renders 0-Day Streak and Start Today when parent has not completed lessons yet', () => {
+      const html = renderToStaticMarkup(
+        <ChildHeroCard child={mockTweenMaya} parentName="Sarah" />
+      );
+
+      expect(html).toContain('0-Day Streak');
+      expect(html).toContain('Start Today');
+      expect(html).toContain('0 mins learned this week');
+    });
+
+    it('omits redundant child context anchor bar and artificial active goal from homepage', () => {
+      const html = renderToStaticMarkup(
+        <ChildHeroCard child={mockTweenMaya} parentName="Sarah" />
+      );
+
+      expect(html).not.toContain('Child Context Anchor');
+      expect(html).not.toContain('Active Goal:');
+      expect(html).not.toContain('Road 1: Pre-Device');
+      expect(html).not.toContain('14-Day Independent Morning Alarm');
     });
 
     it('renders dynamic greeting for connected user Souheil and child Lina (SOU-89)', () => {
