@@ -13,7 +13,6 @@ import {
   parseDialogueCards,
   parseThirtySecondGlance,
   resolveLessonArchetype,
-  resolveReliefTagline,
 } from '@alongside/shared';
 import { getCategoryBadgeInfo } from './ModuleCard';
 import { markLessonComplete } from '@/lib/api/academy';
@@ -275,13 +274,6 @@ export function LessonReaderView({
   const headings = React.useMemo(() => {
     return getLessonArchetypeHeadings(archetype);
   }, [archetype]);
-
-  const reliefTagline = React.useMemo(() => {
-    return (
-      lesson.reliefTagline ||
-      resolveReliefTagline(lesson.title, lesson.module?.category)
-    );
-  }, [lesson.reliefTagline, lesson.title, lesson.module?.category]);
 
   const parsedParts = React.useMemo(
     () => parseLessonContentParts(lesson.contentMarkdown),
@@ -647,22 +639,6 @@ export function LessonReaderView({
                 <span>•</span>
                 <span>Research-Backed</span>
               </div>
-            </div>
-
-            {/* Archetype-Driven Top Highlight Banner */}
-            <div
-              data-testid="lesson-archetype-banner"
-              className={cn(
-                'rounded-xl p-3 sm:p-3.5 border text-xs sm:text-sm font-medium leading-relaxed flex items-start gap-2.5 transition-colors',
-                isNightstandMode
-                  ? 'bg-stone-850/80 border-stone-800 text-amber-200'
-                  : 'bg-stone-50/90 border-stone-200/80 text-slate-800'
-              )}
-            >
-              <span className="font-bold text-teal-800 dark:text-teal-300 shrink-0">
-                {headings.bannerPrefix}
-              </span>
-              <span>{reliefTagline}</span>
             </div>
 
             {/* Editorial Blog Headline */}
