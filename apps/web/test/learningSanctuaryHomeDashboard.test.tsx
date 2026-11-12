@@ -209,7 +209,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   });
 
   describe('4. Stage-Adaptive Telemetry Widget (BilateralPactStatusCard)', () => {
-    it('renders clean Readiness Assessment CTA when tween Maya is unassessed', () => {
+    it('renders 3-Tier Smartphone Milestone Passport when tween Maya is unassessed (Concept 3)', () => {
       const html = renderToStaticMarkup(
         <BilateralPactStatusCard child={mockTweenMaya} />
       );
@@ -217,8 +217,11 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('First-Phone Readiness Radar');
       expect(html).toContain('Not Yet Assessed');
       expect(html).toContain('Evaluate Maya&#x27;s First-Phone Readiness');
-      expect(html).toContain('Start Readiness Assessment');
+      expect(html).toContain('Reveal Starting Tier');
       expect(html).toContain('/children/child-maya/readiness');
+      expect(html).toContain('Audio Watch / Talk');
+      expect(html).toContain('Curfew First Phone');
+      expect(html).toContain('Sovereign Smartphone');
       expect(html).toContain('Sleep Independence');
       expect(html).toContain('Task Responsibility');
       expect(html).toContain('Peer Impulse Control');
