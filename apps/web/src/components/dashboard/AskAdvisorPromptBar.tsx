@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Sparkles,
-  Mic,
 } from 'lucide-react';
 import { type ChildDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
@@ -58,7 +57,6 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
 
   const [question, setQuestion] = React.useState('');
   const [activeScenario, setActiveScenario] = React.useState<'console' | 'phone' | 'silence'>('console');
-  const [connectingVoice, setConnectingVoice] = React.useState(false);
 
   const scenario = ADVISOR_SCENARIOS[activeScenario]!;
 
@@ -74,19 +72,6 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
     } else if (typeof window !== 'undefined') {
       window.location.href = targetUrl;
     }
-  };
-
-  const handleLaunchVoice = () => {
-    setConnectingVoice(true);
-    const childParam = child ? `&childId=${child.id}` : '';
-    const targetUrl = `/advisor?mode=voice&topic=${activeScenario}${childParam}`;
-    setTimeout(() => {
-      if (router && typeof router.push === 'function') {
-        router.push(targetUrl);
-      } else if (typeof window !== 'undefined') {
-        window.location.href = targetUrl;
-      }
-    }, 400);
   };
 
   return (
@@ -174,24 +159,30 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
             {scenario.body}
           </p>
 
-          {/* Voice Roleplay Sparring Simulator Button */}
+          {/* Ask Advisor Deep-Dive Action */}
           <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-xs text-[#111413] font-medium">
-                Ready to test what to say? Practice out loud with AI voice simulator.
+                Need tailored advice? Discuss this acute scenario with Dr. Alongside.
               </span>
             </div>
 
             <Button
               type="button"
-              onClick={handleLaunchVoice}
+              onClick={() => {
+                const childParam = child ? `&childId=${child.id}` : '';
+                const targetUrl = `/advisor?prompt=${encodeURIComponent(`How should I de-escalate this: ${scenario.title}?`)}${childParam}`;
+                if (router && typeof router.push === 'function') {
+                  router.push(targetUrl);
+                } else if (typeof window !== 'undefined') {
+                  window.location.href = targetUrl;
+                }
+              }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-semibold transition shadow-2xs shrink-0 cursor-pointer min-h-[38px]"
             >
-              <Mic className="w-3.5 h-3.5" />
-              <span>
-                {connectingVoice ? 'Connecting Voice Simulator...' : '🎙️ Practice Voice Sparring (2 Min)'}
-              </span>
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Ask Advisor About This</span>
             </Button>
           </div>
         </div>

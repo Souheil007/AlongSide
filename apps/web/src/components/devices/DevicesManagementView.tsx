@@ -125,7 +125,7 @@ export function DevicesManagementView({
       return [
         `Dock family tablet at the central living station by ${curfewDisplay}; zero bedroom screens.`,
         'Stop screen co-viewing calmly when family transition timer rings after 30-45 minutes.',
-        'Share screen play with parents, practicing turn-taking and emotional sparring.',
+        'Share screen play with parents, practicing turn-taking and emotional regulation.',
       ];
     }
     if (activeAge <= 12) {

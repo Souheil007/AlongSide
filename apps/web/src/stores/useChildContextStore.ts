@@ -164,7 +164,7 @@ export function getChildDevelopmentalHorizon(
   if (age <= 6) {
     return {
       horizon: 'Curiosity & Purposeful Play Window',
-      subtitle: 'Puppet emotional sparring, social turn-taking, gross motor agility & boundless imagination.',
+      subtitle: 'Puppet emotional play, social turn-taking, gross motor agility & boundless imagination.',
       stage: 'Early Childhood (4–6 yrs)',
       tierLabel: 'Tier 1: Early Childhood',
       badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',

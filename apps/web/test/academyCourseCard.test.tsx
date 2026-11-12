@@ -94,7 +94,7 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
   });
 
   describe('2. Elimination of Overwhelming Format Pills & Age in Course Titles', () => {
-    it('does not render overwhelming format pills (Audio Memo, Script Vault, AI Sparring)', () => {
+    it('does not render overwhelming format pills (Audio Memo, Script Vault, AI Advisor)', () => {
       const html = renderToStaticMarkup(
         React.createElement(ModuleCard, { module: editorialModule })
       );
@@ -102,7 +102,7 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
       // Verify pills are eliminated to prevent user overwhelm
       expect(html).not.toContain('🎧 Audio Memo');
       expect(html).not.toContain('💬 Script Vault');
-      expect(html).not.toContain('🤖 AI Sparring');
+      expect(html).not.toContain('🤖 AI Advisor');
     });
 
     it('renders concise course title with relative age stripped', () => {
@@ -269,7 +269,7 @@ describe('Plan 37: Parent Intelligence Academy CourseCard Editorial UI Specifica
       expect(html).toContain('💬');
       expect(html).toContain('Script Vault');
       expect(html).toContain('🤖');
-      expect(html).toContain('AI Sparring');
+      expect(html).toContain('AI Advisor');
     });
 
     it('marks lessons with master videos inside the expandable syllabus preview drawer', () => {

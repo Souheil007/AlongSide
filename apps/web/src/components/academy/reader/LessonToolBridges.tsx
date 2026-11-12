@@ -69,7 +69,7 @@ export function LessonToolBridges({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1">
-        {/* 1. AI Sparring Sandbox */}
+        {/* 1. AI Advisor Sandbox */}
         <Link href={advisorHref} className="block">
           <Button
             type="button"
@@ -90,7 +90,7 @@ export function LessonToolBridges({
               <ArrowRight className="h-3 w-3 text-teal-600" />
             </div>
             <p className="text-[11px] text-slate-500 dark:text-stone-400 font-normal leading-tight">
-              Spar in the 24/7 simulator before using live
+              Consult with the 24/7 AI Advisor before using live
             </p>
           </Button>
         </Link>

@@ -8,7 +8,7 @@ import { Loader2 } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Brain Games, Sensory Play & Early Toys — AlongSide Family OS',
   description:
-    'Age-indexed purposeful play grounded in Harvard Center on the Developing Child research, puppet emotional sparring, and cognitive leaps. Elevated into the Parent Intelligence Academy.',
+    'Age-indexed purposeful play grounded in Harvard Center on the Developing Child research, puppet emotional play, and cognitive leaps. Elevated into the Parent Intelligence Academy.',
 };
 
 interface BrainGamesPageProps {

@@ -255,7 +255,7 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
               </span>
               <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 border border-slate-200/60 font-medium">
                 <span aria-hidden="true">🤖</span>
-                <span>AI Sparring</span>
+                <span>AI Advisor</span>
               </span>
             </div>
           )}

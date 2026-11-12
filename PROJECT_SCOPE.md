@@ -80,8 +80,8 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
 │                                            │                                                     │
 │                                            ▼                                                     │
 │   ┌──────────────────────────────────────────────────────────────────────────────────────────┐   │
-│   │              6. 24/7 CLINICAL AI ADVISOR, VOICE SPARRING & 250+ SCENARIO FAQ VAULT       │   │
-│   │   • "Ask Alongside Anything" (24/7) • Pediatric & Clinical RAG  • Voice Sparring Sim     │   │
+│   │              6. 24/7 CLINICAL AI ADVISOR & 250+ SCENARIO FAQ VAULT                       │   │
+│   │   • "Ask Alongside Anything" (24/7) • Pediatric & Clinical RAG  • Living FAQ Vault       │   │
 │   │   • Word-for-Word Dialogue Scripts  • Acute Crisis Guidance    • Multi-Child Memory      │   │
 │   └────────────────────────────────────────┬─────────────────────────────────────────────────┘   │
 │                                            │                                                     │
@@ -114,9 +114,9 @@ Alongside replaces fragmented parenting panic with a calm, authoritative, scient
 5. **Behavioral Psychology & The Modern Cultural Advisor:**
    - Translates confusing or challenging behaviors (tantrums, hitting, defiance, lying, withdrawal) into underlying neurological and emotional needs.
    - Serves as a cultural advisor teaching parents how to raise resilient, empathetic, confident children in today's fast-moving world.
-6. **24/7 AI Child Advisor & Voice Sparring Simulator:**
-   - Real-time text and voice guidance personalized by the child's exact age, developmental history, health notes, and temperament.
-   - Live Voice Sparring Simulator allowing parents to practice tough, emotionally charged conversations aloud before facing them in real life.
+6. **24/7 AI Child Advisor & Clinical FAQ Vault:**
+   - Real-time text guidance personalized by the child's exact age, developmental history, health notes, and temperament.
+   - Living FAQ Vault (250+ scenarios) and guided dialogue scripts allowing parents to practice tough, emotionally charged conversations before facing them in real life.
 7. **Modern Culture & The "Thinking About Buying a Device?" Solution Hub:**
    - Integrates technology into modern family life with healthy boundaries: Sunday slang decoders, multi-device management (TVs, tablets, consoles, smartwatches, phones), and an actionable milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown**.
 
@@ -413,13 +413,13 @@ Children do not misbehave because they are malicious; they act out when their in
 
 ---
 
-### Pillar 6: 24/7 AI Child Advisor, Voice Sparring Simulator & FAQ Vault
+### Pillar 6: 24/7 AI Child Advisor & Clinical FAQ Vault
 
 When a parenting crisis strikes—whether a 102°F fever at 2:00 AM, a biting phase at daycare, or a middle-school social meltdown—Alongside provides immediate, personalized clinical guidance.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                       24/7 CLINICAL AI ADVISOR & VOICE SPARRING VAULT                            │
+│                       24/7 CLINICAL AI ADVISOR & FAQ VAULT                                       │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
 │ 1. "ASK ALONGSIDE ANYTHING" (24/7 CLINICAL AI CONCIERGE)                                         │
@@ -432,15 +432,14 @@ When a parenting crisis strikes—whether a 102°F fever at 2:00 AM, a biting ph
 │      - *"What are 3 brain games I can play with my 4-year-old today to stimulate speech clarity?"*│
 │      - *"My 11-year-old came home crying that she has no friends at lunch. What do I say?"*      │
 │                                                                                                  │
-│ 2. INTERACTIVE AI VOICE SPARRING SIMULATOR                                                       │
-│    • Parents practice emotionally intense parenting moments out loud against an AI simulation     │
-│      of an agitated, emotional child:                                                            │
+│ 2. GUIDED DIALOGUE & EMPATHETIC SCRIPT VAULT                                                     │
+│    • Word-for-word response blueprints across high-heat parenting moments:                       │
 │      - Scenario 1: Toddler Public Tantrum (de-escalating kicking and screaming in a grocery store)│
 │      - Scenario 2: Dinner Plate Resistance (*"This dinner is gross, make me chicken nuggets!"*) │
 │      - Scenario 3: Biting / Hitting Sibling Confrontation                                        │
 │      - Scenario 4: Middle School Group Chat Exclusion                                            │
 │      - Scenario 5: Bedtime Device Cutoff Resistance                                              │
-│    • Live Feedback: AI evaluates parental tone, calmness, empathy validation, and firmness.     │
+│    • Clinical Coaching: Evaluates parental tone, calmness, empathy validation, and firmness.     │
 │                                                                                                  │
 │ 3. LIVING CLINICAL FAQ VAULT (250+ CURATED SCENARIOS)                                            │
 │    • Categorized across 5 clinical domains:                                                      │
@@ -518,9 +517,9 @@ The Alongside application organizes the child's life into a clean, child-centere
 │      • Play & Brain Toy Catalog: Best puppets, sensory toys, and brain puzzles for this age      │
 │      • Modern Cultural Advice: Raising grounded, resilient kids with loving firm boundaries      │
 │                                                                                                  │
-│   4. 24/7 AI CLINICAL ADVISOR & VOICE SPARRING                                                   │
+│   4. 24/7 AI CLINICAL ADVISOR & FAQ VAULT                                                        │
 │      • "Ask Alongside Anything" (Instant multi-child contextual chat)                             │
-│      • Voice Sparring Simulator (Practice difficult conversations aloud)                         │
+│      • Guided Dialogue Rehearsal (Navigate difficult conversations calmly)                        │
 │      • 250+ Clinical Parenting FAQ Vault                                                         │
 │                                                                                                  │
 │   5. MODERN WORLD & DEVICE HUB                                                                   │
@@ -559,7 +558,7 @@ The Alongside application organizes the child's life into a clean, child-centere
   3. *Nutrition Protocol (Division of Responsibility):* The app delivers Ellyn Satter's framework:
      - Jessica's job: Serve balanced meals with at least one guaranteed "safe food" (toast).
      - Chloe's job: Choose whether to eat and how much. No bribes, no forced bites, no short-order cooking.
-  4. *AI Voice Sparring Rehearsal:* Jessica spends 3 minutes in the Voice Sparring Simulator, practicing staying calm and neutral while an AI toddler shouts: *"I'm not eating that!"* Jessica rehearses her script: *"You don't have to eat the broccoli, love. It's on your plate if you want to touch or smell it. We eat together."*
+  4. *AI Script Consultation:* Jessica consults the AI Advisor on de-escalation, reviewing and practicing her script: *"You don't have to eat the broccoli, love. It's on your plate if you want to touch or smell it. We eat together."*
   5. *Outcome:* Next evening, dinner is peaceful. Chloe ignores the broccoli, eats her toast, and watches her parents eat calmly. Within 2 weeks of zero-pressure exposure, Chloe voluntarily licks a piece of broccoli.
 
 ---
@@ -667,7 +666,7 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 │    • Complete Developmental Milestone Checkup & Pediatric Symptom Guide                          │
 │    • Full access to Nutrition & Feeding Vault (Infant Solids, Picky Eating)                      │
 │    • Full access to Brain Games & Play Enrichment Catalog                                        │
-│    • 24/7 AI Child Advisor & Voice Sparring Simulator access                                     │
+│    • 24/7 AI Child Advisor & Clinical FAQ Vault access                                           │
 │    • 1 Signed Native Device Profile deployment                                                   │
 │                                                                                                  │
 │ 2. ANNUAL HERO PASS (RECOMMENDED): $79 / year (~$6.58 / mo)                                      │
@@ -676,7 +675,7 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 │    • Milestone Tracking across Gross Motor, Fine Motor, Speech & Cognition                       │
 │    • Nutrition Vault, Meal Blueprints & Allergen Introduction Guides                             │
 │    • Complete Brain Games & Sensory Play Catalog (Puppets to Logic Riddles)                      │
-│    • Unlimited 24/7 AI Clinical Advisor & AI Voice Sparring Simulator                            │
+│    • Unlimited 24/7 AI Clinical Advisor & Clinical FAQ Vault                                     │
 │    • Weekly Sunday Youth Culture Digest & Slang Decoders                                         │
 │    • Up to 5 Child Profiles with "Thinking About a Device?" Pacts & 8:30 PM Curfew Profiles      │
 │    • 30-Day Money-Back "Household Peace" Guarantee                                               │
@@ -730,8 +729,7 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
                                       │
                                       ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ PHASE 2: AI Voice Sparring & Interactive Developmental Diagnostics                                │
-│ • Streaming AI Voice Sparring Simulator (Tantrums, Picky Eating, Biting, Group Chat Drama)        │
+│ PHASE 2: Interactive Developmental Diagnostics                                                    │
 │ • Interactive Multi-Dimensional Quizzes (Parenting Style, Co-Parent Harmony, Milestone Audits)    │
 │ • Pediatric Medication Weight-Based Dose Calculator & Immunization Milestone Tracker              │
 │ • Semi-Annual Milestone Upgrade Ceremonies for enrolled devices                                   │
@@ -792,7 +790,7 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                  ALONGSIDE (PARENTPATH) DIFFERENCE                               │
 │  Unifies Pediatric Health Triage, Nutrition, Milestones (0-18), Brain Play, Psychology,         │
-│  AI Voice Sparring Rehearsal, and Bilateral Device Pacts ("Pact-as-Code") at $79/year.          │
+│  Living Clinical FAQ Vault, and Bilateral Device Pacts ("Pact-as-Code") at $79/year.            │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -802,7 +800,7 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 2. **Vs. Baby Trackers (Huckleberry, BabyCenter):**
    - *Difference:* Infant apps focus on diaper ounces and wake windows, suffering a **90% churn cliff at age 2**. Alongside covers the complete 0-to-18 lifespan, expanding customer retention from 18 months to 18 years.
 3. **Vs. Parenting Influencers (Good Inside / Dr. Becky):**
-   - *Difference:* Good Inside charges $279/yr for passive video content and text tips ("content in a trenchcoat"). Alongside delivers **experiential neuromuscular training** via the **AI Voice Sparring Simulator** (practicing vocal boundaries aloud under simulated stress) combined with hardware-level curfew automation for $79/yr.
+   - *Difference:* Good Inside charges $279/yr for passive video content and text tips ("content in a trenchcoat"). Alongside delivers **actionable neurobiological scripts** and a **250+ scenario Living FAQ Vault** combined with hardware-level curfew automation for $79/yr.
 4. **Vs. Pediatric Telehealth & WebMD (Blueberry Pediatrics, Summer Health):**
    - *Difference:* WebMD sparks 2:00 AM panic; telehealth charges $240–$540/yr. Alongside delivers instantaneous, pediatrician-backed **Barton Schmitt symptom triage** (Green/Yellow/Red action paths) embedded into the child’s continuous developmental history.
 5. **Vs. Kid Dumbphones (Gabb Wireless, Pinwheel):**
@@ -823,7 +821,7 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 - **The Anti-Spyware Trust Alliance:** Pediatricians and PTAs actively ban Bark, but eagerly endorse Alongside's collaborative "First-Phone Readiness" roadmap (Road 1), providing a viral, zero-CAC distribution channel.
 - **Slaying the 24-Month Churn Cliff:** 18-year customer retention unlocks an LTV of $600–$1,000+ per family, crushing the unit economics of legacy baby apps.
 - **The Brain + Muscle Integration:** We are the only platform that connects child neurobiology and parenting scripts directly to signed operating system device curfews.
-- **Neuromuscular Voice Sparring:** Real-time conversational AI allows parents to rehearse difficult conversations out loud under adrenaline before facing their real child.
+- **Empathetic Guided Dialogue:** Real-time conversational AI and 250+ curated FAQs give parents word-for-word calming dialogue before entering real-life family conflicts.
 - **Unified 360° Child Context:** A single context-aware intelligence engine that understands the child’s age, developmental milestones, health flags, dietary stages, and screen agreements simultaneously.
 
 ---

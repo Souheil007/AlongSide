@@ -7,7 +7,6 @@ import {
   Send,
   Square,
   Sparkles,
-  Radio,
   BookOpen,
   RotateCcw,
   AlertCircle,
@@ -22,7 +21,6 @@ import {
 } from '@/stores/useChildContextStore';
 import { ChatFeed } from '@/components/advisor/ChatFeed';
 import { QuickPrompts } from '@/components/advisor/QuickPrompts';
-import { VoiceSparringModal } from '@/components/advisor/VoiceSparringModal';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
@@ -121,14 +119,6 @@ export function AdvisorDashboardView() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2.5">
-          <Button
-            variant="outline"
-            onClick={() => setIsSparringOpen(true)}
-            className="gap-2 border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] min-h-[44px] rounded-[5px]"
-          >
-            <Radio className="h-4 w-4 text-[#143D2B] animate-pulse" />
-            <span>Voice Sparring Simulator</span>
-          </Button>
           <Link href="/advisor/faqs">
             <Button
               variant="outline"
@@ -139,32 +129,6 @@ export function AdvisorDashboardView() {
             </Button>
           </Link>
         </div>
-      </div>
-
-      {/* Voice Sparring Callout Card */}
-      <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FFFFFF] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
-        <div className="flex items-start gap-3.5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#EAF3EE] text-[#143D2B] shadow-2xs">
-            <Radio className="h-5 w-5" />
-          </div>
-          <div>
-            <h2 className="font-serif text-base font-semibold text-[#111413]">
-              Need to Practice High-Heat Arguments?
-            </h2>
-            <p className="text-xs text-[#494F4C] mt-0.5 leading-relaxed">
-              Step into the Voice Sparring Simulator to rehearse responses to bedtime meltdowns,
-              Snapchat begging, and spying accusations with immediate coaching.
-            </p>
-          </div>
-        </div>
-        <Button
-          variant="default"
-          onClick={() => setIsSparringOpen(true)}
-          className="shrink-0 gap-1.5 text-xs min-h-[44px] bg-[#111413] hover:bg-[#143D2B] text-white rounded-[5px] transition-colors"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-[#EAF3EE]" />
-          Launch Sparring Lab
-        </Button>
       </div>
 
       {/* Chat Area Card */}
@@ -299,12 +263,6 @@ export function AdvisorDashboardView() {
           </div>
         </div>
       </div>
-
-      {/* Voice Sparring Modal */}
-      <VoiceSparringModal
-        open={isSparringOpen}
-        onOpenChange={setIsSparringOpen}
-      />
     </div>
   );
 }

@@ -95,7 +95,7 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
       {/* 4. SECTION 3: First-Phone Assessment & Readiness Radar (Stage-Adaptive 3-Column Grid) */}
       <BilateralPactStatusCard child={activeChild} />
 
-      {/* 5. SECTION 4: 24/7 AI Child Advisor (Empathetic Co-Pilot & Voice Sparring Simulator) */}
+      {/* 5. SECTION 4: 24/7 AI Child Advisor (Empathetic Co-Pilot & Guided Dialogue) */}
       <AskAdvisorPromptBar child={activeChild} />
 
       {/* Child Onboarding Modal */}

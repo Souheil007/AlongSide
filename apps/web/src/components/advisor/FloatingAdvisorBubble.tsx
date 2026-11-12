@@ -13,7 +13,6 @@ import {
   RotateCcw,
   AlertCircle,
   AlertTriangle,
-  Radio,
   Minimize2,
 } from 'lucide-react';
 import { useAiAdvisorChat } from '@/hooks/useAiAdvisorChat';
@@ -187,9 +186,9 @@ export function FloatingAdvisorBubble() {
                   href="/advisor"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-1 text-[11px] font-semibold text-[#143D2B] hover:text-[#0E2B1E] bg-[#EAF3EE] hover:bg-[#D1E7DD] border border-[#143D2B]/20 rounded-[5px] px-2.5 py-1.5 transition-colors font-mono"
-                  title="Open Full Voice Sparring Rehearsal Studio"
+                  title="Open Full AI Advisor Studio"
                 >
-                  <Radio className="h-3 w-3 text-[#143D2B] animate-pulse" />
+                  <Sparkles className="h-3 w-3 text-[#143D2B]" />
                   <span className="hidden xs:inline">Full Studio</span>
                   <ExternalLink className="h-3 w-3 text-[#143D2B]" />
                 </Link>

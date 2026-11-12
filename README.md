@@ -26,7 +26,7 @@ Historically, parenting technology suffers from two fatal blinders:
 - **Pediatric Nutrition, Feeding & Dietary Safety:** Step-by-step guidance on infant solids, safe allergen introduction, choking hazard prevention, conquering toddler picky eating, and fueling teenage athletic growth.
 - **Brain Games, Sensory Play & Cognitive Enrichment:** Purposeful, offline developmental play—from early animal puppets and high-contrast sensory cards to symbolic block play, LEGO building, and strategic logic chess.
 - **Behavioral Psychology & The Modern Cultural Advisor:** Translating confusing behaviors (tantrums, biting, defiance, lying) into unmet nervous system needs, fostering authoritative warmth with firm boundaries, and mentoring kids in a complex modern world.
-- **24/7 AI Child Advisor & Voice Sparring Simulator:** Multi-child contextual AI guidance for acute dilemmas and an interactive voice sparring simulator to practice high-stakes parenting conversations out loud.
+- **24/7 AI Child Advisor & Clinical FAQ Vault:** Multi-child contextual AI guidance for acute dilemmas and a living clinical FAQ vault to navigate high-stakes parenting conversations.
 - **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
 
 For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md), the exhaustive [**Competitive Analysis & Strategic Differentiation Specification**](docs/COMPETITIVE_ANALYSIS.md), and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
@@ -117,7 +117,7 @@ graph TD
         Browser["Parent Web / Mobile PWA"]
         AcademyUI["Academy Course Player"]
         QuizUI["Interactive Quiz Runner"]
-        AdvisorUI["24/7 AI Advisor & Sparring"]
+        AdvisorUI["24/7 AI Advisor & Clinical FAQs"]
         PactUI["Bilateral Pact Wizard (Zustand)"]
         DeviceUI["One-Tap QR Code Enrollment"]
     end
@@ -301,7 +301,7 @@ AlongSide is executed across discrete, sequential engineering plans:
 | **08** | [**Parent Intelligence Academy Modules & Youth Culture Digest API**](plans/08-parent-academy-and-culture-digest-api.md) | Backend Agent | ✅ **Complete** |
 | **09** | [**Academy Course Player, Sunday Culture Digest & Offline PWA**](plans/09-parent-academy-and-culture-digest-ui.md) | Frontend Agent | ✅ **Complete** |
 | **10** | [**24/7 AI Child Advisor & Modern Parenting FAQ Vault API**](plans/10-ai-child-advisor-and-faq-vault-api.md) | Backend Agent | ✅ **Complete* |
-| **11** | [**24/7 AI Advisor Chat, Living FAQ Explorer & Sparring UI**](plans/11-ai-advisor-and-voice-sparring-ui.md) | Frontend Agent | ✅ **Complete* |
+| **11** | [**24/7 AI Advisor Chat & Living FAQ Explorer UI**](plans/11-ai-advisor-and-voice-sparring-ui.md) | Frontend Agent | ✅ **Complete* |
 | **12** | [**Interactive Assessment Suite & Cultural Fluency Quizzes**](plans/12-interactive-quiz-suite-and-fluency-checks.md) | Joint FE & BE | ⏳ Queued |
 | **13** | [**Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync**](plans/13-stripe-billing-and-trial-lifecycle.md) | Backend Agent | ⏳ Queued |
 | **14** | [**End-to-End Integration, Playwright Verification & Launch Hardening**](plans/14-e2e-integration-hardening-and-launch.md) | Joint FE & BE | ⏳ Queued |
@@ -310,7 +310,7 @@ AlongSide is executed across discrete, sequential engineering plans:
 | **17** | [**Holistic Family Dashboard & Unified Navigation UI**](plans/17-holistic-family-dashboard-and-navigation-ui.md) | Frontend Agent | ✅ **Complete** (PR #29) |
 | **18** | [**Pediatric Health Triage & Nutrition Hub UI**](plans/18-pediatric-health-triage-and-nutrition-ui.md) | Frontend Agent | ✅ **Complete** (PR #27) |
 | **19** | [**Brain Games, Puppets & Behavioral Psychology UI**](plans/19-brain-games-puppets-and-behavior-ui.md) | Frontend Agent | ✅ **Complete** (PR #30) |
-| **20** | [**Clinical AI Advisor Lifespan RAG & Sparring Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ✅ **Complete** (PR #31) |
+| **20** | [**Clinical AI Advisor Lifespan RAG Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ✅ **Complete** (PR #31) |
 
 For complete plan details, see [**`plans/README.md`**](plans/README.md).
 
