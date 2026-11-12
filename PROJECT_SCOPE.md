@@ -823,11 +823,31 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 - **The Anti-Spyware Trust Alliance:** Pediatricians and PTAs actively ban Bark, but eagerly endorse Alongside's collaborative "First-Phone Readiness" roadmap (Road 1), providing a viral, zero-CAC distribution channel.
 - **Slaying the 24-Month Churn Cliff:** 18-year customer retention unlocks an LTV of $600–$1,000+ per family, crushing the unit economics of legacy baby apps.
 - **The Brain + Muscle Integration:** We are the only platform that connects child neurobiology and parenting scripts directly to signed operating system device curfews.
-- **Neuromuscular Voice Sparring:** Real-time conversational AI allows parents to rehearse difficult conversations out loud under adrenaline before facing their real child.
+- **Grounded 24/7 AI Child Advisor:** Real-time conversational AI providing parents with pediatric neurobiology scripts, interactive dialogue decks, and connection-first boundaries.
 - **Unified 360° Child Context:** A single context-aware intelligence engine that understands the child’s age, developmental milestones, health flags, dietary stages, and screen agreements simultaneously.
+
+---
+
+## 10. Official Product Demo Videos & Higgsfield Seedance 2.5 Launch Campaign (SOU-111)
+
+To visually communicate Alongside's unique position at launch, the company deploys two focused 30-second product demo videos generated via **Higgsfield Seedance 2.5 (`seedance_2_5`)** utilizing native audio and fluid UI motion design:
+
+### 10.1 Demo Video 1: "The Complete Parenting Sanctuary" (Platform Experience & Lifespan Tour)
+- **Target Channels:** Website Hero, Product Hunt Launch, Investor Decks.
+- **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
+- **Core Narrative:** Macro fly-through across an elegant iPad Pro in warm morning light, showcasing the 8-tier Developmental Horizon (Ages 0–18), the bite-sized Parent Intelligence Academy with real-time pulsing audio waveform, the living Sunday Youth Culture Digest with decoded slang cards, and the Bilateral Family Pact with neutral 8:30 PM bedtime lock.
+- **Emotional Resonance:** "Parenting moves fast. AlongSide gives you the calm ground to keep up."
+- **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
+
+### 10.2 Demo Video 2: "In The Moment — Crisis to Clarity" (Interactive Walkthrough)
+- **Target Channels:** Paid Social (Instagram, TikTok, YouTube Shorts), High-Intent Landing Pages.
+- **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
+- **Core Narrative:** Micro problem-solving in an acute parenting friction moment (door slam / meltdown). Close-up typing into 24/7 AI Child Advisor, dynamic spring expansion into the Interactive Dialogue Deck ("Say This / Not That"), and dual-device synchronization of the Bilateral Screen Curfew.
+- **Emotional Resonance:** "When high-stakes moments happen, don't guess. Clarity in thirty seconds."
+- **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
 
 ---
 *Canonical Specification Approved by:*  
 **Chief Executive Officer (CEO)**  
 **AlongSide Technologies Inc.**  
-*(Version 2.4.1 Canonical Specification)*
+*(Version 2.4.2 Canonical Specification)*
