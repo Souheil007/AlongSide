@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlongSide — Academy Lesson Before vs. After (Unified Rich Blog Post vs. Current v2.7)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#FBFBF9',
+            'canvas-subtle': '#F4F4F0',
+            card: '#FFFFFF',
+            ink: '#111413',
+            body: '#494F4C',
+            mute: '#858C88',
+            hairline: '#E3E3DC',
+            spruce: '#143D2B',
+            'spruce-hover': '#0F2E20',
+            'spruce-soft': '#EAF3EE',
+            amber: '#B45309',
+            'amber-soft': '#FEF3C7',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #EDEDEA;
+      color: #111413;
+      font-family: 'Inter', sans-serif;
+    }
+    .mode-btn-active {
+      background-color: #143D2B !important;
+      color: #FFFFFF !important;
+      border-color: #143D2B !important;
+    }
+    .nightstand-surface {
+      background-color: #181614 !important;
+      color: #E7E2DA !important;
+    }
+    .nightstand-surface .surface-card,
+    .nightstand-surface .bg-white {
+      background-color: #221F1C !important;
+      border-color: #35302B !important;
+      color: #E7E2DA !important;
+    }
+    .nightstand-surface h1,
+    .nightstand-surface h2,
+    .nightstand-surface h3,
+    .nightstand-surface .text-ink,
+    .nightstand-surface .text-slate-900 {
+      color: #F5EFE6 !important;
+    }
+    .nightstand-surface p,
+    .nightstand-surface .text-body,
+    .nightstand-surface .text-slate-700 {
+      color: #C8C1B8 !important;
+    }
+    @keyframes wavePulse {
+      0%, 100% { transform: scaleY(0.45); }
+      50% { transform: scaleY(1.15); }
+    }
+    .wave-bar-playing {
+      animation: wavePulse 0.85s ease-in-out infinite;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F4F4F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD0CD;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #858C88;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ===================================================================== -->
+  <!-- TOP STICKY STUDIO CONTROL BAR                                         -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-hairline px-4 sm:px-6 py-3 shadow-xs">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Left: Brand & Chosen Lesson Context -->
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="flex items-center gap-2">
+          <span class="h-7 w-7 rounded-lg bg-spruce text-white font-serif font-bold flex items-center justify-center text-sm">A</span>
+          <span class="font-serif font-bold text-lg tracking-tight text-ink">AlongSide</span>
+          <span class="text-hairline">|</span>
+          <span class="font-mono text-xs uppercase tracking-wider font-semibold text-spruce">Lesson UX Before &amp; After Studio</span>
+        </div>
+        <span class="hidden xl:inline-flex items-center gap-1.5 font-mono text-[11px] bg-canvas-subtle border border-hairline px-2.5 py-1 rounded-full text-body">
+          <span>Lesson:</span>
+          <strong class="text-ink">toddler-floor-level-vagal-grounding</strong>
+          <span class="text-mute">(Tier 0B · Ages 1–2 · Behavior)</span>
+        </span>
+      </div>
+
+      <!-- Center: View Mode Switcher -->
+      <div class="flex items-center gap-1 bg-canvas-subtle p-1 rounded-xl border border-hairline text-xs font-medium">
+        <button id="btn-view-split" onclick="setViewMode('split')" class="mode-btn-active px-3 py-1.5 rounded-lg transition cursor-pointer">
+          ⚖️ Side-by-Side Compare
+        </button>
+        <button id="btn-view-before" onclick="setViewMode('before')" class="px-3 py-1.5 rounded-lg text-body hover:bg-white transition cursor-pointer">
+          🔴 Before Only (Current v2.7)
+        </button>
+        <button id="btn-view-after" onclick="setViewMode('after')" class="px-3 py-1.5 rounded-lg text-body hover:bg-white transition cursor-pointer">
+          🟢 After Only (Unified Rich Blog v2.8)
+        </button>
+      </div>
+
+      <!-- Right: Audit Callouts Toggle & Nightstand Mode -->
+      <div class="flex items-center gap-2 text-xs">
+        <button id="btn-annotations" onclick="toggleAnnotations()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber/40 bg-amber-soft/60 text-amber font-mono font-semibold hover:bg-amber-soft transition cursor-pointer">
+          <span>🔍 Audit Notes:</span>
+          <span id="annotations-state">ON</span>
+        </button>
+        <button id="btn-nightstand" onclick="toggleNightstand()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-hairline bg-canvas-subtle text-ink font-mono font-medium hover:bg-white transition cursor-pointer">
+          <span id="nightstand-icon">🌙</span>
+          <span id="nightstand-label">Nightstand Dim: OFF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Strip of the Streamlined, Blog-First Changes -->
+    <div class="max-w-[1600px] mx-auto mt-2.5 pt-2.5 border-t border-hairline flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-body">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="font-bold uppercase text-ink">Refined Blog-First Architecture:</span>
+        <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">1. Kept 1 Unified Editorial Blog Post (Zero fragmented boxes)</span>
+        <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">2. Removed useless Interactive Lab Widget, Copy, Vault &amp; AI Roleplay bloat</span>
+        <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">3. Added "Adult vs. Child Brain" Lens + Multi-Turn Dialogue inside the Blog</span>
+        <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">4. Moved Master Video to Bottom ("Watch &amp; Go Deeper")</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN COMPARISON WORKSPACE                                             -->
+  <!-- ===================================================================== -->
+  <main id="workspace-grid" class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+    <!-- =================================================================== -->
+    <!-- COLUMN 1: BEFORE (CURRENT CODE IN LessonReaderView.tsx v2.7)        -->
+    <!-- =================================================================== -->
+    <section id="panel-before" class="rounded-2xl border-2 border-rose-300/80 bg-[#FBFBF9] shadow-md overflow-hidden transition-colors">
+      
+      <!-- Panel Status Header -->
+      <div class="bg-rose-950 text-white px-5 py-3 flex items-center justify-between gap-2 border-b border-rose-800">
+        <div class="flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full bg-rose-400 animate-pulse"></span>
+          <span class="font-mono text-xs uppercase tracking-wider font-bold text-rose-200">BEFORE · Current Production Code (`LessonReaderView.tsx` v2.7)</span>
+        </div>
+        <span class="font-mono text-[11px] bg-rose-900/90 text-rose-100 px-2.5 py-0.5 rounded-full border border-rose-700">
+          Video Blocks Top + Widget Clutter
+        </span>
+      </div>
+
+      <!-- Simulated Lesson Reader Canvas (BEFORE) -->
+      <div class="lesson-surface p-5 sm:p-8 space-y-7 max-w-3xl mx-auto">
+
+        <!-- 1. LessonReliefMasthead.tsx (BEFORE) -->
+        <div class="space-y-2">
+          <nav class="flex flex-wrap items-center justify-between gap-2 text-xs font-medium">
+            <a href="#before" class="flex items-center gap-1.5 text-slate-600 font-semibold">
+              <span>← Back to Toddler Meltdowns &amp; Limbic Flooding</span>
+            </a>
+            <div class="flex items-center gap-2">
+              <span class="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-800">Priority 1: Critical</span>
+              <span class="rounded-full border border-teal-200 bg-teal-50 px-2.5 py-0.5 text-xs font-semibold text-teal-800">Behavior &amp; Emotions</span>
+              <span class="rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-900">🎬 Master Lecture</span>
+            </div>
+          </nav>
+        </div>
+
+        <!-- 1.5 LessonVideoPlayer.tsx (BEFORE - Rendered ABOVE the Blog Post!) -->
+        <div class="space-y-3">
+          <div class="audit-callout rounded-xl border border-rose-300 bg-rose-50/90 p-3 text-xs text-rose-900 flex items-start gap-2.5">
+            <span class="font-mono font-bold bg-rose-600 text-white px-1.5 py-0.5 rounded text-[10px] shrink-0 mt-0.5">PROBLEM #1</span>
+            <div>
+              <strong>Video Player Sits ABOVE the Blog Post &amp; Lesson Title:</strong>
+              Before the parent even sees the lesson title or reads a single word of the blog post, they hit a YouTube embed + Video Hook + Takeaways Drawer + "Practice with AI Advisor" button.
+            </div>
+          </div>
+
+          <div class="aspect-video w-full rounded-2xl overflow-hidden border border-[#EBE7DF] bg-stone-900 shadow-sm relative flex flex-col justify-between p-5 text-white">
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-900/60 to-stone-950/40"></div>
+            <div class="relative z-10 flex flex-wrap items-center justify-between gap-2">
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/90 px-2.5 py-1 text-xs font-bold text-stone-950">
+                🎬 Master Lecture
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-stone-900/85 border border-white/10 px-3 py-1 text-xs font-medium text-stone-200">
+                Dr. Daniel J. Siegel, MD • PsychAlive • 7 min
+              </span>
+            </div>
+            <div class="relative z-10 flex items-center justify-center my-auto">
+              <div class="h-14 w-14 rounded-full bg-white/95 text-teal-800 flex items-center justify-center shadow-lg font-bold text-xl">▶</div>
+            </div>
+            <div class="relative z-10">
+              <h3 class="text-white font-bold text-base">The Hand Model of the Brain</h3>
+              <p class="text-xs text-stone-300">Click to load master lecture and clinical analysis</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-amber-200/80 bg-amber-50/70 p-3.5 text-xs text-amber-950">
+            <span class="font-bold uppercase tracking-wider text-[10px] text-amber-700 block">💡 Clinical Video Hook</span>
+            <p class="font-serif italic text-sm mt-0.5">“Ever wonder why your 18-month-old looks you in the eye, screams, and throws their plate on the floor? Put your hand up: you are about to see their brain 'flip its lid' in real time.”</p>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 bg-white p-3.5 text-xs font-semibold flex items-center justify-between">
+            <span>🎓 Clinical Key Takeaways (3 Core Concepts)</span>
+            <span class="text-slate-400">▼</span>
+          </div>
+
+          <div class="rounded-xl border border-teal-200/80 bg-teal-50/60 p-3.5 flex items-center justify-between gap-3">
+            <div class="text-xs">
+              <span class="font-bold uppercase tracking-wider text-[10px] text-teal-800 block">✨ Parent Practice Exercise</span>
+              <p class="font-medium text-slate-800">Use the hand model of the brain to remind yourself: connect somatically first before attempting any redirection.</p>
+            </div>
+            <span class="shrink-0 bg-teal-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">Practice with AI Advisor</span>
+          </div>
+        </div>
+
+        <!-- 2. Blog Article Container (BEFORE) -->
+        <div class="rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-xs">
+          <!-- Blog Header -->
+          <div class="p-6 sm:p-8 border-b border-stone-100 space-y-4">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-mono uppercase font-bold text-teal-800">Behavior &amp; Emotions • Lesson 1</span>
+              <span class="font-mono text-stone-500">~4 min read • Evidence-Based</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 leading-tight">
+              The Floor-Level Vagal Grounding Protocol: Calming Flooded Toddlers
+            </h1>
+            <!-- Audio Bar -->
+            <div class="rounded-full border border-stone-200 bg-stone-50 px-4 py-2.5 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2.5">
+                <span class="bg-teal-700 text-white px-3 py-1 rounded-full font-semibold">▶ Listen</span>
+                <span class="text-stone-600 font-medium">Lesson Narration</span>
+              </div>
+              <span class="font-mono text-stone-500">0:00 / 1:50 • 1x</span>
+            </div>
+          </div>
+
+          <!-- Blog Body (BEFORE) -->
+          <div class="p-6 sm:p-8 space-y-7">
+            <!-- Part 1 -->
+            <div class="space-y-3">
+              <div class="border-b border-stone-100 pb-2">
+                <h2 class="font-serif text-xl font-bold text-slate-900">The Kitchen-Table Scenario</h2>
+                <p class="text-[11px] font-mono uppercase tracking-wider text-amber-700 font-semibold">Real Family Friction</p>
+              </div>
+              <p class="text-sm sm:text-base leading-relaxed text-slate-700">
+                You are in the living room and you tell your 16-month-old that it is time to put away their wooden puzzle for dinner. In a split second, your sweet toddler arches their back, throws the wooden puzzle board across the floor, collapses onto the rug face-down, and screams at the top of their lungs until their face turns purple. Your instinct might be to sternly demand 'Stop screaming right now!' or send them to a timeout corner. But standing over a screaming toddler and demanding that they use logic is like shouting at a housefire to turn down its heat. In this moment, their cognitive brain has gone completely offline.
+              </p>
+            </div>
+
+            <!-- Part 2 -->
+            <div class="space-y-3 pt-3 border-t border-stone-100">
+              <div class="border-b border-stone-100 pb-2">
+                <h2 class="font-serif text-xl font-bold text-slate-900">Developmental Neurobiology</h2>
+                <p class="text-[11px] font-mono uppercase tracking-wider text-teal-800 font-semibold">Inside Your Child's Brain</p>
+              </div>
+              <p class="text-sm sm:text-base leading-relaxed text-slate-700">
+                In early toddlerhood (ages 12 to 24 months), the emotional command center—the amygdala and limbic circuits—is mature and highly reactive, while the ventromedial prefrontal cortex (responsible for emotional inhibition, delay of gratification, and impulse control) is still practically unmyelinated. When a toddler experiences frustration, their autonomic nervous system experiences total limbic flooding. Noradrenaline and cortisol spike instantly, shutting down the auditory processing pathways in Wernicke's area. They literally cannot process verbal lectures. They need the caregiver to act as their external nervous system, signaling safety through somatic posture and physical proximity.
+              </p>
+            </div>
+
+            <!-- Clinical Insight -->
+            <aside class="rounded-2xl border-l-4 border-l-teal-600 border border-stone-200 bg-stone-50/80 p-5">
+              <div class="text-[11px] font-mono uppercase tracking-wider font-bold text-teal-800 mb-1">Clinical Neurobiology Takeaway</div>
+              <p class="font-serif italic text-sm sm:text-base text-slate-800">
+                Toddler tantrums are involuntary neurochemical storms, not deliberate acts of malice. Time-outs during acute emotional flooding increase cortisol and activate panic circuits in the periaqueductal gray.
+              </p>
+            </aside>
+
+            <!-- Part 3.4: Parental Grounding (BEFORE: Copy-Pasted Boilerplate!) -->
+            <div class="space-y-2">
+              <div class="audit-callout rounded-xl border border-rose-300 bg-rose-50/90 p-3 text-xs text-rose-900 flex items-start gap-2.5">
+                <span class="font-mono font-bold bg-rose-600 text-white px-1.5 py-0.5 rounded text-[10px] shrink-0 mt-0.5">PROBLEM #2</span>
+                <div>
+                  <strong>Copy-Pasted Grounding Boilerplate &amp; Premature End of Blog Post:</strong>
+                  The blog post ends here with a generic 4-sentence paragraph that is copy-pasted identically across all 160 lessons, while the actual Dialogue Scripts and Action Steps are kicked outside the blog post!
+                </div>
+              </div>
+              <section class="rounded-2xl border border-stone-200 bg-stone-50/60 p-5 space-y-1.5">
+                <div class="text-[11px] font-mono uppercase tracking-wider font-bold text-stone-700">Parental Grounding · Tonight's Anchor</div>
+                <p class="font-serif italic text-sm leading-relaxed text-slate-700">
+                  When caregivers execute predictable, somatic co-regulation paired with unwavering loving containment, children's autonomic arousal downregulates rapidly. Consistently implementing these three micro-steps anchors the household nervous system, protects the developing brain from chronic sympathetic overload, strengthens the vagal brake, and deepens long-term secure attachment. Take a steady, deep breath before responding: your calm, regulated adult presence is the single most powerful neurobiological medicine your child will ever receive in moments of distress. Practice holding this compassionate, unwavering stance with quiet confidence tonight.
+                </p>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. LessonAdaptiveModuleRenderer.tsx (BEFORE: Unnecessary Friction Widget) -->
+        <div class="space-y-2">
+          <div class="audit-callout rounded-xl border border-rose-300 bg-rose-50/90 p-3 text-xs text-rose-900 flex items-start gap-2.5">
+            <span class="font-mono font-bold bg-rose-600 text-white px-1.5 py-0.5 rounded text-[10px] shrink-0 mt-0.5">PROBLEM #3</span>
+            <div>
+              <strong>Unnecessary Interactive Widget (`SomaticBreathWidget`) Interrupts Reading Flow:</strong>
+              Adds visual clutter and friction between the blog article and the dialogue scripts, repeating the exact same box in every lesson of the course.
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-teal-200 bg-gradient-to-br from-teal-50/70 to-white p-5 space-y-4">
+            <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-teal-800">
+              <span>🌬️ Infant Autonomic Co-Regulation · Somatosensory Mirroring (4s In / 6s Out)</span>
+              <span class="text-slate-500 font-normal">0 breaths done</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+              <div class="flex flex-col items-center justify-center p-3">
+                <div class="w-24 h-24 rounded-full bg-slate-200 text-slate-700 flex flex-col items-center justify-center font-mono">
+                  <span class="text-lg font-bold">4s</span>
+                  <span class="text-[10px] uppercase">READY</span>
+                </div>
+                <span class="mt-3 bg-teal-700 text-white text-xs font-semibold px-4 py-1.5 rounded-full">▶ Start 4s/6s Breathing</span>
+              </div>
+              <div class="text-xs text-slate-700 space-y-2">
+                <strong class="block text-teal-900">❤️ Why Caregiver Vagal Tone Regulates the Child</strong>
+                <p>When a child enters a rage or meltdown, mirror neurons instantly spike the caregiver’s heart rate. Extending your exhale to 6 seconds stimulates the vagus nerve.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. LessonDialogueDeck.tsx (BEFORE: Detached Outside the Blog Post) -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 text-xs font-bold uppercase tracking-wider text-teal-800">
+            <span>💬 Interactive Dialogue Deck · Say This, Not That</span>
+            <span class="font-mono text-[11px] text-stone-500">2 Practice Dialogues</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="rounded-xl border border-rose-200 bg-rose-50/50 p-3.5 space-y-1.5 text-xs">
+              <span class="font-bold uppercase text-rose-800 block">✖ What We Instinctively Say</span>
+              <p class="font-semibold text-rose-900 line-through">“Stop crying right now or you are going straight to timeout!”</p>
+              <p class="text-rose-700 pt-1 border-t border-rose-200/60"><strong>Why it escalates:</strong> Threatens isolation when the child's nervous system is already in full autonomic panic.</p>
+            </div>
+            <div class="rounded-xl border border-emerald-300 bg-emerald-50/70 p-3.5 space-y-1.5 text-xs">
+              <span class="font-bold uppercase text-emerald-800 block">✔ Alongside Empathetic Script</span>
+              <p class="font-serif font-bold text-slate-900 text-sm">“You are having big feelings right now. I am sitting right here on the rug. You are safe, and I will keep your body safe.”</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-teal-200 bg-teal-50/70 p-3 text-xs text-slate-700">
+            <strong class="text-slate-900 block">🎙️ Vocal &amp; Physical Delivery Tip:</strong>
+            Drop your body down to the carpet so you are lower than their eye line. Keep your palms open and resting on your knees.
+          </div>
+        </div>
+
+        <!-- 6. LessonActionChecklist.tsx (BEFORE: Detached Outside the Blog Post) -->
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-teal-800">
+            <span>🛡️ Tonight's 3-Step Action Checklist</span>
+            <span class="text-slate-500 font-normal">0 of 3 completed</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="p-3 rounded-xl border border-slate-200 bg-white">
+              <strong>1. The Floor-Level Drop</strong>
+              <p class="text-slate-600 mt-0.5">Lower your physical body to the floor immediately; towering over a toddler triggers evolutionary predator alarms.</p>
+            </div>
+            <div class="p-3 rounded-xl border border-slate-200 bg-white">
+              <strong>2. The Vagal Exhale</strong>
+              <p class="text-slate-600 mt-0.5">Take three exaggerated deep breaths with audible sighs (inhale through nose for 4s, exhale through mouth for 6s).</p>
+            </div>
+            <div class="p-3 rounded-xl border border-slate-200 bg-white">
+              <strong>3. Open-Hand Invitation</strong>
+              <p class="text-slate-600 mt-0.5">Keep your hands open and relaxed on your lap, inviting physical touch without forcing a smothering hug.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- COLUMN 2: AFTER (UNIFIED, RICH EDITORIAL BLOG POST — ZERO BLOAT)    -->
+    <!-- =================================================================== -->
+    <section id="panel-after" class="rounded-2xl border-2 border-spruce bg-[#FBFBF9] shadow-xl overflow-hidden transition-colors">
+      
+      <!-- Panel Status Header -->
+      <div class="bg-spruce text-white px-5 py-3 flex items-center justify-between gap-2 border-b border-spruce-hover">
+        <div class="flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full bg-emerald-300"></span>
+          <span class="font-mono text-xs uppercase tracking-wider font-bold text-emerald-100">AFTER · Unified Rich Editorial Blog Post (Zero Widget Bloat)</span>
+        </div>
+        <span class="font-mono text-[11px] bg-white/15 text-white px-2.5 py-0.5 rounded-full border border-white/20">
+          One Seamless Article + Video at Bottom
+        </span>
+      </div>
+
+      <!-- Simulated Lesson Reader Canvas (AFTER) -->
+      <div class="lesson-surface p-5 sm:p-8 space-y-7 max-w-3xl mx-auto">
+
+        <!-- Top Breadcrumb Bar -->
+        <nav class="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <a href="#after" class="inline-flex items-center gap-1.5 text-body hover:text-spruce font-semibold transition">
+            <span>← Back to Toddler Meltdowns &amp; Limbic Flooding</span>
+          </a>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="inline-flex items-center gap-1 rounded-full bg-spruce-soft border border-spruce/20 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-spruce">
+              Ages 1–2 · Young Toddler
+            </span>
+            <span class="rounded-full border border-hairline bg-white px-2.5 py-0.5 font-mono text-[11px] text-body">
+              Lesson 1 of 4
+            </span>
+          </div>
+        </nav>
+
+        <div class="audit-callout rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 text-xs text-emerald-950 flex items-start gap-2.5">
+          <span class="font-mono font-bold bg-spruce text-white px-2 py-0.5 rounded text-[10px] shrink-0 mt-0.5">UPGRADE #1</span>
+          <div class="space-y-2 w-full">
+            <div>
+              <strong>3 Lesson Archetypes + Warm Advisory Voice (Zero Textbook Jargon):</strong>
+              Instead of forcing every lesson into a cold clinical crisis template (with terms like <em>"ventromedial prefrontal cortex"</em>, <em>"periaqueductal gray"</em>, and <em>"Clinical Neurobiology Takeaway"</em>), each lesson belongs to one of <strong>3 Archetypes</strong> and speaks like a warm, trusted parenting advisor. Click below to preview all 3 archetypes:
+            </div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <button id="arch-btn-behavior" onclick="setArchetype('behavior')" class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-spruce text-white cursor-pointer transition">
+                1. Everyday Behavior ("💡 Why This Happens")
+              </button>
+              <button id="arch-btn-concept" onclick="setArchetype('concept')" class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-white border border-emerald-300 text-spruce hover:bg-emerald-100/50 cursor-pointer transition">
+                2. Child Growth &amp; Concept ("🌱 How Your Child Grows")
+              </button>
+              <button id="arch-btn-system" onclick="setArchetype('system')" class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-white border border-emerald-300 text-spruce hover:bg-emerald-100/50 cursor-pointer transition">
+                3. Practical Family Guide ("🧭 Parent's Guide")
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- THE UNIFIED EDITORIAL BLOG ARTICLE CONTAINER                    -->
+        <!-- =============================================================== -->
+        <article class="surface-card rounded-2xl sm:rounded-3xl border border-hairline bg-white shadow-sm overflow-hidden">
+
+          <!-- 1. BLOG ARTICLE HEADER -->
+          <header class="px-6 pt-8 pb-6 sm:px-10 sm:pt-10 sm:pb-8 border-b border-hairline space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2">
+                <span id="arch-category" class="uppercase font-bold text-spruce tracking-wider">Behavior &amp; Emotions</span>
+                <span class="text-hairline">•</span>
+                <span class="text-body font-medium">Lesson 1</span>
+              </div>
+              <span class="text-mute">~4 min read • Parent Guide</span>
+            </div>
+
+            <h1 id="arch-title" class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-ink tracking-tight leading-tight">
+              Getting Down on Their Level: How to Calm a Toddler Meltdown
+            </h1>
+
+            <!-- Adaptive Top Banner: Warm, human, non-clinical -->
+            <p id="arch-banner" class="text-sm sm:text-base text-spruce bg-spruce-soft/60 border border-spruce/20 rounded-xl px-4 py-3 font-medium leading-relaxed">
+              💡 <strong>Why this happens:</strong> At 1 to 2 years old, a toddler's big feelings are fully switched on, but the part of their brain that helps them calm down is still years away from being built. Meltdowns aren't manipulation or bad parenting—they just mean your child is overwhelmed and needs your calm presence.
+            </p>
+
+            <!-- Article Audio Narration Bar + Quick Summary Toggle -->
+            <div class="pt-1 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-hairline bg-canvas px-4 py-2.5">
+                <div class="flex items-center gap-3 min-w-0">
+                  <button id="after-audio-btn" onclick="toggleAfterAudio()" class="bg-spruce hover:bg-spruce-hover text-white text-xs font-semibold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+                    <span id="after-audio-icon">▶</span>
+                    <span id="after-audio-label">Listen to Article</span>
+                  </button>
+                  <div class="flex items-center gap-0.5 h-4 shrink-0" id="after-wave">
+                    <span class="w-1 h-2 bg-spruce/60 rounded-full"></span>
+                    <span class="w-1 h-3.5 bg-spruce/80 rounded-full"></span>
+                    <span class="w-1 h-4 bg-spruce rounded-full"></span>
+                    <span class="w-1 h-2.5 bg-spruce/70 rounded-full"></span>
+                    <span class="w-1 h-3 bg-spruce/90 rounded-full"></span>
+                  </div>
+                  <span class="text-xs text-body truncate">Reads this full article aloud top-to-bottom (1:50)</span>
+                </div>
+
+                <button onclick="toggleCrisisDrawer()" class="text-xs font-mono font-semibold text-amber hover:underline cursor-pointer shrink-0">
+                  <span id="crisis-chevron">⚡ Quick 30-Sec Read ▼</span>
+                </button>
+              </div>
+
+              <!-- Collapsible 30-Second Quick Summary -->
+              <div id="crisis-drawer" class="hidden rounded-xl border border-amber/30 bg-amber-50/60 p-4 space-y-2 text-xs">
+                <div class="font-mono font-bold uppercase tracking-wider text-amber text-[11px]">⚡ The Short Version (30-Second Read)</div>
+                <ul class="space-y-1.5 text-ink leading-relaxed">
+                  <li>• <strong>What's Going On:</strong> When a toddler is crying this hard, they literally can't process spoken lessons—standing over them and lecturing only makes them feel more panicked.</li>
+                  <li>• <strong>Your Best First Move:</strong> Sit right down on the floor so you are at their eye level, rest your hands gently on your knees, and take a slow, audible breath out.</li>
+                  <li>• <strong>What to Say:</strong> <em>“You're having such big feelings right now. I'm sitting right here with you. You're safe.”</em></li>
+                </ul>
+              </div>
+            </div>
+          </header>
+
+          <!-- 2. SEAMLESS BLOG ARTICLE BODY -->
+          <div class="px-6 py-8 sm:px-10 sm:py-10 space-y-10">
+
+            <!-- SECTION 1: THE REAL-LIFE MOMENT (Full Rich Prose) -->
+            <section class="space-y-4">
+              <div class="border-b border-hairline pb-2">
+                <p id="arch-part1-eyebrow" class="text-[11px] font-mono uppercase tracking-wider text-amber font-semibold">Part 1 · A Moment Every Parent Knows</p>
+                <h2 id="arch-part1-title" class="font-serif text-xl sm:text-2xl font-bold text-ink tracking-tight mt-0.5">
+                  What It Looks Like at Home
+                </h2>
+              </div>
+
+              <div class="space-y-4 text-base sm:text-[17px] leading-relaxed sm:leading-loose text-body">
+                <p>
+                  You are in the living room and you tell your 16-month-old that it is time to put away their wooden puzzle for dinner. In a split second, your sweet toddler arches their back, throws the puzzle board across the floor, drops onto the rug face-down, and screams at the top of their lungs.
+                </p>
+                <p>
+                  Your first instinct might be to say firmly, <em>“Stop screaming right now!”</em> or put them in a timeout. That reaction makes total sense—we want to teach our kids how to behave. But trying to reason with a toddler in the middle of a meltdown is like trying to teach someone to swim while they feel like they're sinking. Right now, the thinking part of their mind is completely offline.
+                </p>
+              </div>
+            </section>
+
+            <!-- SECTION 2: HOW YOUR CHILD EXPERIENCES IT + PERSPECTIVE SHIFT -->
+            <section class="space-y-5 pt-6 border-t border-hairline">
+              <div class="border-b border-hairline pb-2">
+                <p id="arch-part2-eyebrow" class="text-[11px] font-mono uppercase tracking-wider text-spruce font-semibold">Part 2 · Understanding Your Child</p>
+                <h2 id="arch-part2-title" class="font-serif text-xl sm:text-2xl font-bold text-ink tracking-tight mt-0.5">
+                  What's Going On Inside Their Growing Mind
+                </h2>
+              </div>
+
+              <div class="audit-callout rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 text-xs text-emerald-950 flex items-start gap-2.5">
+                <span class="font-mono font-bold bg-spruce text-white px-2 py-0.5 rounded text-[10px] shrink-0 mt-0.5">UPGRADE #2</span>
+                <div>
+                  <strong>Plain-English Perspective Shift (No Medical Jargon):</strong>
+                  Instead of textbook terms like <em>"ventromedial prefrontal cortex"</em> or <em>"Wernicke's area,"</em> we explain what the child is experiencing in clear, relatable human language.
+                </div>
+              </div>
+
+              <!-- Embedded Perspective Shift (Zero clicking required, pure editorial richness) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 my-2">
+                <div class="rounded-xl border border-stone-200 bg-stone-50/80 p-4 space-y-1.5">
+                  <span id="arch-lens-left-label" class="font-mono text-[10px] uppercase tracking-wider font-bold text-stone-500 block">👁️ How It Feels to Us as Adults</span>
+                  <p id="arch-lens-left-body" class="text-xs sm:text-sm text-slate-800 italic leading-relaxed">
+                    “I only asked them to put away 5 wooden puzzle pieces so we can eat dinner. They're throwing a fit just to test my limits and get their way.”
+                  </p>
+                </div>
+                <div class="rounded-xl border border-spruce/25 bg-spruce-soft/50 p-4 space-y-1.5">
+                  <span id="arch-lens-right-label" class="font-mono text-[10px] uppercase tracking-wider font-bold text-spruce block">💛 How It Feels to Your 16-Month-Old</span>
+                  <p id="arch-lens-right-body" class="text-xs sm:text-sm text-ink font-medium leading-relaxed">
+                    “I was so focused on my puzzle and suddenly it stopped! A wave of frustration just took over my whole body. I can't understand big sentences right now, and when you stand tall above me with a stern voice, I feel scared and even more overwhelmed.”
+                  </p>
+                </div>
+              </div>
+
+              <div class="space-y-4 text-base sm:text-[17px] leading-relaxed sm:leading-loose text-body">
+                <p>
+                  Think of a toddler's mind like a brand-new car that came with a <strong>supercharged gas pedal</strong> (big emotions, curiosity, frustration) but <strong>bicycle brakes</strong> (patience, impulse control, and calming down). Those internal "brakes" take years of childhood to slowly grow and strengthen.
+                </p>
+                <p>
+                  When a toddler hits sudden disappointment—like stopping a game they love—their body gets flooded with stress energy. In that moment, they literally cannot process long explanations or lectures. Instead of words, they read your <strong>body language and tone of voice</strong> to figure out: <em>“Am I safe, and are you still on my team?”</em> When you sit down on the floor beside them, your calm body lends them the brakes they don't have yet.
+                </p>
+              </div>
+
+              <!-- Key Takeaway Callout (Warm Advisory Style, Not "Clinical Takeaway") -->
+              <aside class="rounded-2xl border-l-4 border-l-spruce border border-hairline bg-canvas p-5 sm:p-6">
+                <div class="text-xs font-mono uppercase tracking-wider font-bold text-spruce mb-1.5">
+                  The Key Takeaway to Remember
+                </div>
+                <p class="font-serif italic text-base sm:text-lg leading-relaxed text-ink">
+                  A toddler meltdown isn't achild giving you a hard time—it's a child having a hard time. Sitting quietly on the floor with them teaches them how to calm down far faster than sending them away alone.
+                </p>
+              </aside>
+            </section>
+
+            <!-- SECTION 3: COMPARATIVE DIALOGUE SCRIPTS (Integrated Inside the Blog Flow!) -->
+            <section class="space-y-5 pt-6 border-t border-hairline">
+              <div class="border-b border-hairline pb-2">
+                <p id="arch-part3-eyebrow" class="text-[11px] font-mono uppercase tracking-wider text-spruce font-semibold">Part 3 · Words That Help</p>
+                <h2 id="arch-part3-title" class="font-serif text-xl sm:text-2xl font-bold text-ink tracking-tight mt-0.5">
+                  What to Say (and What If They Push Back?)
+                </h2>
+              </div>
+
+              <div class="audit-callout rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 text-xs text-emerald-950 flex items-start gap-2.5">
+                <span class="font-mono font-bold bg-spruce text-white px-2 py-0.5 rounded text-[10px] shrink-0 mt-0.5">UPGRADE #3</span>
+                <div>
+                  <strong>Integrated Directly Into the Article + "When They Push Back" Follow-Up (Zero Copy/Vault Clutter):</strong>
+                  No useless "Copy Script" or "Pin to Vault" buttons. Instead, the parent reads the side-by-side comparison plus what to do 15 seconds later if the toddler kicks or screams louder.
+                </div>
+              </div>
+
+              <!-- Dialogue Comparison 1 -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="rounded-xl border border-rose-200/90 bg-rose-50/50 p-4 space-y-2">
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-800 block">🛑 Common Reaction</span>
+                  <p class="text-sm font-semibold text-rose-900 line-through decoration-rose-400">
+                    “Stop crying right now or you are going straight to timeout!”
+                  </p>
+                  <p class="text-xs text-rose-800 pt-2 border-t border-rose-200/60 leading-relaxed">
+                    <strong>Why it makes things harder:</strong> Being sent away alone when they already feel overwhelmed makes a toddler feel panicked, which turns up the crying even louder.
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-emerald-300 bg-emerald-50/60 p-4 space-y-2">
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-900 block">✅ Try Saying This Instead</span>
+                  <p class="font-serif font-bold text-ink text-[15px] sm:text-base leading-relaxed">
+                    “You are having such big feelings right now. I am sitting right here on the rug. You are safe, and I'm right here with you.”
+                  </p>
+                </div>
+              </div>
+
+              <!-- Dialogue Comparison 2 -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="rounded-xl border border-rose-200/90 bg-rose-50/50 p-4 space-y-2">
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-800 block">🛑 Common Reaction</span>
+                  <p class="text-sm font-semibold text-rose-900 line-through decoration-rose-400">
+                    “Look at me and tell me with words why you are screaming! Use your words!”
+                  </p>
+                  <p class="text-xs text-rose-800 pt-2 border-t border-rose-200/60 leading-relaxed">
+                    <strong>Why it makes things harder:</strong> When a young child is crying hard, they literally can't find words yet. Asking them to explain themselves while upset only frustrates them more.
+                  </p>
+                </div>
+
+                <div class="rounded-xl border border-emerald-300 bg-emerald-50/60 p-4 space-y-2">
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-900 block">✅ Try Saying This Instead</span>
+                  <p class="font-serif font-bold text-ink text-[15px] sm:text-base leading-relaxed">
+                    “(Sit down on the rug at their eye level, take a slow breath, open your hands gently): I'm right here. My arms are open whenever you're ready for a hug.”
+                  </p>
+                </div>
+              </div>
+
+              <!-- NEW: What If They Push Back? (2nd-Turn Real-World Follow-Up) -->
+              <div class="rounded-xl border border-amber-300/80 bg-amber-50/50 p-4 space-y-1.5">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-900 block">🔄 What If They Push You Away or Kick? (15 Seconds Later)</span>
+                <p class="text-xs sm:text-sm text-ink leading-relaxed">
+                  <strong>If your toddler kicks harder or swats at you when you sit down:</strong> Trying to hug them too early can feel like being held down when they're still upset. Simply scoot back two feet so they have safe room and say softly: <em>“I see your body needs a little space right now. I'm staying right here until you're ready.”</em>
+                </p>
+              </div>
+
+              <!-- Body Language & Tone Tip -->
+              <div class="rounded-xl border border-teal-200/80 bg-teal-50/60 p-4 text-xs sm:text-sm text-body leading-relaxed">
+                <strong class="text-ink font-semibold block mb-0.5">🎙️ Tone &amp; Body Language Tip:</strong>
+                Sit down on the floor so you aren't towering above them. Keep your hands relaxed on your knees and speak in a warm, slow, quiet voice—almost like a lullaby.
+              </div>
+            </section>
+
+            <!-- SECTION 4: 3 SIMPLE STEPS TO TRY AT HOME & PARENT NOTE (Inside the Blog!) -->
+            <section class="space-y-5 pt-6 border-t border-hairline">
+              <div class="flex items-center justify-between border-b border-hairline pb-2">
+                <div>
+                  <p id="arch-part4-eyebrow" class="text-[11px] font-mono uppercase tracking-wider text-spruce font-semibold">Part 4 · Putting It Into Practice</p>
+                  <h2 id="arch-part4-title" class="font-serif text-xl sm:text-2xl font-bold text-ink tracking-tight mt-0.5">
+                    3 Simple Steps to Try at Home
+                  </h2>
+                </div>
+                <span id="checklist-progress" class="font-mono text-xs font-semibold text-spruce bg-spruce-soft px-2.5 py-1 rounded-full">0 of 3 Completed</span>
+              </div>
+
+              <div class="space-y-2.5">
+                <button onclick="toggleCheck(this)" class="check-item w-full text-left p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white flex items-start gap-3 transition cursor-pointer">
+                  <span class="check-box mt-0.5 h-5 w-5 rounded border border-stone-400 bg-white flex items-center justify-center text-xs font-bold shrink-0"></span>
+                  <div class="text-xs sm:text-sm">
+                    <strong class="text-ink block">1. Get Down on the Floor</strong>
+                    <p class="text-xs text-body mt-0.5 leading-relaxed">Sit down on the rug so you are at or below your child's eye level instead of standing over them.</p>
+                  </div>
+                </button>
+
+                <button onclick="toggleCheck(this)" class="check-item w-full text-left p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white flex items-start gap-3 transition cursor-pointer">
+                  <span class="check-box mt-0.5 h-5 w-5 rounded border border-stone-400 bg-white flex items-center justify-center text-xs font-bold shrink-0"></span>
+                  <div class="text-xs sm:text-sm">
+                    <strong class="text-ink block">2. Take a Slow, Audible Breath Out</strong>
+                    <p class="text-xs text-body mt-0.5 leading-relaxed">Let your child hear you take three slow, gentle sighs. Young children naturally mirror the calm or tension they see in us.</p>
+                  </div>
+                </button>
+
+                <button onclick="toggleCheck(this)" class="check-item w-full text-left p-3.5 rounded-xl border border-hairline bg-canvas hover:bg-white flex items-start gap-3 transition cursor-pointer">
+                  <span class="check-box mt-0.5 h-5 w-5 rounded border border-stone-400 bg-white flex items-center justify-center text-xs font-bold shrink-0"></span>
+                  <div class="text-xs sm:text-sm">
+                    <strong class="text-ink block">3. Offer Open Arms Without Forcing a Hug</strong>
+                    <p class="text-xs text-body mt-0.5 leading-relaxed">Rest your hands open on your lap and wait. Within a minute or two, as the wave passes, they will usually crawl right into your lap.</p>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Unique Lesson-Specific Note for the Parent -->
+              <div class="rounded-2xl border border-spruce/25 bg-spruce-soft/40 p-5 sm:p-6 space-y-1.5">
+                <div class="text-xs font-mono uppercase tracking-wider font-bold text-spruce">
+                  A Note for You as a Parent
+                </div>
+                <p class="font-serif italic text-base sm:text-lg leading-relaxed text-ink">
+                  Your job during a 16-month-old's meltdown isn't to stop the rain—it's just to be the warm, steady shelter on the living room rug until the storm passes. Every time you sit calmly beside them while they cry, you are helping them feel safe enough to learn how to calm down on their own as they grow.
+                </p>
+              </div>
+            </section>
+
+          </div>
+        </article>
+
+        <!-- =============================================================== -->
+        <!-- OPTIONAL DEEP-DIVE MASTERCLASS VIDEO (MOVED BELOW BLOG POST!)   -->
+        <!-- =============================================================== -->
+        <div class="space-y-3">
+          <div class="audit-callout rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 text-xs text-emerald-950 flex items-start gap-2.5">
+            <span class="font-mono font-bold bg-spruce text-white px-2 py-0.5 rounded text-[10px] shrink-0 mt-0.5">UPGRADE #4</span>
+            <div>
+              <strong>Master Video Lecture Moved Below the Blog Post ("Watch &amp; Go Deeper"):</strong>
+              Parents who want to watch Dr. Daniel Siegel's 7-minute lecture can watch it right here after reading the blog post—without it hijacking the top of the page.
+            </div>
+          </div>
+
+          <section class="surface-card rounded-2xl border border-hairline bg-white p-6 sm:p-7 shadow-xs space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="font-mono text-[11px] uppercase tracking-wider font-bold text-amber block">Watch &amp; Go Deeper · Master Lecture</span>
+                <h2 class="font-serif text-lg sm:text-xl font-bold text-ink">The Hand Model of the Brain — Dr. Daniel J. Siegel, MD</h2>
+              </div>
+              <span class="rounded-full bg-canvas-subtle border border-hairline px-3 py-1 font-mono text-xs text-body">
+                PsychAlive • 7 min
+              </span>
+            </div>
+
+            <div class="aspect-video w-full rounded-xl overflow-hidden border border-hairline bg-stone-900 relative flex flex-col justify-between p-5 text-white">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/50 to-stone-950/30"></div>
+              <div class="relative z-10 flex items-center justify-between text-xs font-mono">
+                <span class="bg-amber-500 text-stone-950 font-bold px-2.5 py-0.5 rounded-full">🎬 Clinical Lecture</span>
+                <span class="bg-stone-900/80 px-2.5 py-0.5 rounded-full text-stone-200">Key demonstration: 01:45 – 03:50</span>
+              </div>
+              <div class="relative z-10 flex items-center justify-center my-auto">
+                <div class="h-14 w-14 rounded-full bg-white text-spruce flex items-center justify-center font-bold text-xl shadow-lg">▶</div>
+              </div>
+              <div class="relative z-10">
+                <p class="font-serif italic text-xs sm:text-sm text-stone-200">
+                  “Ever wonder why your 18-month-old looks you in the eye, screams, and throws their plate on the floor? Put your hand up: you are about to see their brain 'flip its lid' in real time.”
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Complete Lesson & Up Next Footer -->
+        <div class="surface-card rounded-2xl border border-hairline bg-white p-5 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="font-mono text-[11px] text-spruce font-semibold block">Chapter Journey Progress · Lesson 1 of 4</span>
+            <h3 class="text-sm font-bold text-ink">Mark This Lesson Complete</h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="this.textContent='✓ Lesson Completed'; this.className='bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-xs';" class="bg-spruce hover:bg-spruce-hover text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-xs transition cursor-pointer">
+              ✓ Complete Lesson
+            </button>
+            <span class="text-xs font-mono text-mute hidden sm:inline">Up Next: The Toddler Amygdala →</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- INTERACTIVE CONTROLLER SCRIPTS                                        -->
+  <!-- ===================================================================== -->
+  <script>
+    function setViewMode(mode) {
+      const grid = document.getElementById('workspace-grid');
+      const before = document.getElementById('panel-before');
+      const after = document.getElementById('panel-after');
+      const btnSplit = document.getElementById('btn-view-split');
+      const btnBefore = document.getElementById('btn-view-before');
+      const btnAfter = document.getElementById('btn-view-after');
+
+      [btnSplit, btnBefore, btnAfter].forEach(b => b.classList.remove('mode-btn-active'));
+
+      if (mode === 'split') {
+        btnSplit.classList.add('mode-btn-active');
+        grid.className = 'flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start';
+        before.classList.remove('hidden');
+        after.classList.remove('hidden');
+      } else if (mode === 'before') {
+        btnBefore.classList.add('mode-btn-active');
+        grid.className = 'flex-1 max-w-4xl w-full mx-auto p-3 sm:p-6 grid grid-cols-1 gap-6 items-start';
+        before.classList.remove('hidden');
+        after.classList.add('hidden');
+      } else {
+        btnAfter.classList.add('mode-btn-active');
+        grid.className = 'flex-1 max-w-4xl w-full mx-auto p-3 sm:p-6 grid grid-cols-1 gap-6 items-start';
+        before.classList.add('hidden');
+        after.classList.remove('hidden');
+      }
+    }
+
+    let showAnnotations = true;
+    function toggleAnnotations() {
+      showAnnotations = !showAnnotations;
+      document.getElementById('annotations-state').textContent = showAnnotations ? 'ON' : 'OFF';
+      document.querySelectorAll('.audit-callout').forEach(el => {
+        el.style.display = showAnnotations ? 'flex' : 'none';
+      });
+    }
+
+    let isNightstand = false;
+    function toggleNightstand() {
+      isNightstand = !isNightstand;
+      document.getElementById('nightstand-label').textContent = isNightstand ? 'Nightstand Dim: ON' : 'Nightstand Dim: OFF';
+      document.getElementById('nightstand-icon').textContent = isNightstand ? '☀️' : '🌙';
+      document.querySelectorAll('.lesson-surface').forEach(el => {
+        if (isNightstand) {
+          el.classList.add('nightstand-surface');
+        } else {
+          el.classList.remove('nightstand-surface');
+        }
+      });
+    }
+
+    function toggleCrisisDrawer() {
+      const drawer = document.getElementById('crisis-drawer');
+      const chevron = document.getElementById('crisis-chevron');
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        chevron.textContent = '⚡ Hide 30-Sec Summary ▲';
+      } else {
+        drawer.classList.add('hidden');
+        chevron.textContent = '⚡ In a Rush? 30-Sec Summary ▼';
+      }
+    }
+
+    let audioPlaying = false;
+    function toggleAfterAudio() {
+      audioPlaying = !audioPlaying;
+      const icon = document.getElementById('after-audio-icon');
+      const label = document.getElementById('after-audio-label');
+      const bars = document.querySelectorAll('#after-wave span');
+
+      if (audioPlaying) {
+        icon.textContent = '⏸';
+        label.textContent = 'Pause Article Audio';
+        bars.forEach(b => b.classList.add('wave-bar-playing'));
+      } else {
+        icon.textContent = '▶';
+        label.textContent = 'Listen to Article';
+        bars.forEach(b => b.classList.remove('wave-bar-playing'));
+      }
+    }
+
+    function toggleCheck(btn) {
+      const isChecked = btn.classList.contains('checked');
+      const box = btn.querySelector('.check-box');
+      if (isChecked) {
+        btn.classList.remove('checked', 'border-emerald-300', 'bg-emerald-50/60');
+        btn.classList.add('border-hairline', 'bg-canvas');
+        box.className = 'check-box mt-0.5 h-5 w-5 rounded border border-stone-400 bg-white flex items-center justify-center text-xs font-bold shrink-0';
+        box.textContent = '';
+      } else {
+        btn.classList.add('checked', 'border-emerald-300', 'bg-emerald-50/60');
+        btn.classList.remove('border-hairline', 'bg-canvas');
+        box.className = 'check-box mt-0.5 h-5 w-5 rounded bg-spruce text-white flex items-center justify-center text-xs font-bold shrink-0';
+        box.textContent = '✓';
+      }
+      const totalChecked = document.querySelectorAll('.check-item.checked').length;
+      document.getElementById('checklist-progress').textContent = `${totalChecked} of 3 Completed`;
+    }
+
+    function setArchetype(mode) {
+      const btnBehavior = document.getElementById('arch-btn-behavior');
+      const btnConcept = document.getElementById('arch-btn-concept');
+      const btnSystem = document.getElementById('arch-btn-system');
+      const activeClass = 'px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-spruce text-white cursor-pointer transition';
+      const inactiveClass = 'px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-white border border-emerald-300 text-spruce hover:bg-emerald-100/50 cursor-pointer transition';
+
+      btnBehavior.className = mode === 'behavior' ? activeClass : inactiveClass;
+      btnConcept.className = mode === 'concept' ? activeClass : inactiveClass;
+      btnSystem.className = mode === 'system' ? activeClass : inactiveClass;
+
+      if (mode === 'behavior') {
+        document.getElementById('arch-category').textContent = 'Behavior & Emotions';
+        document.getElementById('arch-title').textContent = 'Getting Down on Their Level: How to Calm a Toddler Meltdown';
+        document.getElementById('arch-banner').innerHTML = '💡 <strong>Why this happens:</strong> At 1 to 2 years old, a toddler\'s big feelings are fully switched on, but the part of their brain that helps them calm down is still years away from being built. Meltdowns aren\'t manipulation or bad parenting—they just mean your child is overwhelmed and needs your calm presence.';
+        document.getElementById('arch-part1-eyebrow').textContent = 'Part 1 · A Moment Every Parent Knows';
+        document.getElementById('arch-part1-title').textContent = 'What It Looks Like at Home';
+        document.getElementById('arch-part2-eyebrow').textContent = 'Part 2 · Understanding Your Child';
+        document.getElementById('arch-part2-title').textContent = 'What\'s Going On Inside Their Growing Mind';
+        document.getElementById('arch-lens-left-label').textContent = '👁️ How It Feels to Us as Adults';
+        document.getElementById('arch-lens-left-body').textContent = '“I only asked them to put away 5 wooden puzzle pieces so we can eat dinner. They\'re throwing a fit just to test my limits and get their way.”';
+        document.getElementById('arch-lens-right-label').textContent = '💛 How It Feels to Your 16-Month-Old';
+        document.getElementById('arch-lens-right-body').textContent = '“I was so focused on my puzzle and suddenly it stopped! A wave of frustration just took over my whole body. I can\'t understand big sentences right now, and when you stand tall above me with a stern voice, I feel scared and even more overwhelmed.”';
+        document.getElementById('arch-part3-eyebrow').textContent = 'Part 3 · Words That Help';
+        document.getElementById('arch-part3-title').textContent = 'What to Say (and What If They Push Back?)';
+        document.getElementById('arch-part4-eyebrow').textContent = 'Part 4 · Putting It Into Practice';
+        document.getElementById('arch-part4-title').textContent = '3 Simple Steps to Try at Home';
+      } else if (mode === 'concept') {
+        document.getElementById('arch-category').textContent = 'Development & Play';
+        document.getElementById('arch-title').textContent = 'Playing With Puppets & Sharing Focus: How Babies Learn to Connect';
+        document.getElementById('arch-banner').innerHTML = '🌱 <strong>How Your Child Grows:</strong> Between 9 and 12 months, babies unlock a wonderful milestone called <em>shared attention</em>—looking at a toy and then looking up at your eyes to share the excitement. This simple moment is the #1 foundation for talking and empathy.';
+        document.getElementById('arch-part1-eyebrow').textContent = 'Part 1 · What You\'ll Notice';
+        document.getElementById('arch-part1-title').textContent = 'A Magical New Stage of Play';
+        document.getElementById('arch-part2-eyebrow').textContent = 'Part 2 · Why This Milestone Matters';
+        document.getElementById('arch-part2-title').textContent = 'How Shared Moments Build Language & Empathy';
+        document.getElementById('arch-lens-left-label').textContent = '💭 Common Parenting Myth';
+        document.getElementById('arch-lens-left-body').textContent = '“Babies only learn to talk from flashcards, educational apps, or hearing adults use serious, grown-up words.”';
+        document.getElementById('arch-lens-right-label').textContent = '✨ What Really Helps Them Thrive';
+        document.getElementById('arch-lens-right-body').textContent = '“When your baby looks from a silly puppet back to your smiling face, they are learning that other people have thoughts and feelings they can share—the very root of conversation.”';
+        document.getElementById('arch-part3-eyebrow').textContent = 'Part 3 · Encouraging Their Curiosity';
+        document.getElementById('arch-part3-title').textContent = 'How to Spark Shared Attention During Play';
+        document.getElementById('arch-part4-eyebrow').textContent = 'Part 4 · Fun Ideas for This Week';
+        document.getElementById('arch-part4-title').textContent = '3 Simple Games to Play Together';
+      } else {
+        document.getElementById('arch-category').textContent = 'Health & Everyday Care';
+        document.getElementById('arch-title').textContent = 'Baby & Toddler Fevers: When to Call the Doctor vs. Comfort at Home';
+        document.getElementById('arch-banner').innerHTML = '🧭 <strong>Parent\'s Guide:</strong> A fever is actually a healthy sign that your child\'s immune system is fighting off a bug—not an illness by itself. The one big rule every parent should know comes down to your baby\'s age.';
+        document.getElementById('arch-part1-eyebrow').textContent = 'Part 1 · Why Clear Guidance Matters';
+        document.getElementById('arch-part1-title').textContent = 'The 1:30 AM Thermometer Moment';
+        document.getElementById('arch-part2-eyebrow').textContent = 'Part 2 · What Every Parent Should Know';
+        document.getElementById('arch-part2-title').textContent = 'Why Your Baby\'s Age Changes the Plan';
+        document.getElementById('arch-lens-left-label').textContent = '🚨 When to Go Straight to the Doctor';
+        document.getElementById('arch-lens-left-body').textContent = 'Any baby under 3 months old with a temperature of 100.4°F (38.0°C) or higher. Don\'t give fever medicine first—have a doctor check them right away.';
+        document.getElementById('arch-lens-right-label').textContent = '🟢 When Home Comfort Is Enough (6+ Months)';
+        document.getElementById('arch-lens-right-body').textContent = 'A baby over 6 months who is alert, drinking fluids, and making eye contact. Focus on keeping them comfortable and hydrated rather than chasing the number on the thermometer.';
+        document.getElementById('arch-part3-eyebrow').textContent = 'Part 3 · Common Myths vs. Helpful Care';
+        document.getElementById('arch-part3-title').textContent = 'What to Avoid &amp; What Helps Most';
+        document.getElementById('arch-part4-eyebrow').textContent = 'Part 4 · Your Home Care Checklist';
+        document.getElementById('arch-part4-title').textContent = '3 Simple Steps to Keep Handy';
+      }
+    }
+  </script>
+</body>
+</html>

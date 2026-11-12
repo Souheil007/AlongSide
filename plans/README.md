@@ -58,6 +58,7 @@ graph TD
         P37["37: Academy Editorial Course Content & Rich Preview Architecture (Joint)"]
         P38["38: Academy Lesson Experience & Multi-Modal Reader Architecture (Joint)"]
         P39["39: Academy 8-Tier Curriculum Synthesis & Video Integration (Joint)"]
+        P40["40: Academy Lesson Archetypes, Unified Blog Reader & De-Clinicalization (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -126,7 +127,9 @@ graph TD
     P36 --> P37
     P37 --> P38
     P38 --> P39
+    P39 --> P40
     P39 --> P14
+    P40 --> P14
     P36 --> P14
     P35 --> P14
     P33 --> P14
@@ -179,6 +182,7 @@ graph TD
 | [**`37-parent-intelligence-academy-course-editorial-and-preview-architecture.md`**](37-parent-intelligence-academy-course-editorial-and-preview-architecture.md) | Academy Editorial Course Content & Rich Preview Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-35 | Approved (Ready for Delegation) |
 | [**`38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md`**](38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md) | Academy Lesson Experience & Multi-Modal Reader Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-37 | Approved (Ready for Delegation) |
 | [**`39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md`**](39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md) | Academy 8-Tier Curriculum Synthesis & Master Video Lecture Integration | **Joint (FE & BE)** | PLAN-36, PLAN-37, PLAN-38 | Approved (Ready for Delegation) |
+| [**`40-academy-lesson-archetypes-and-advisory-de-clinicalization.md`**](40-academy-lesson-archetypes-and-advisory-de-clinicalization.md) | Academy Lesson Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization | **Joint (FE & BE)** | PLAN-38, PLAN-39 | Approved (Ready for Delegation) |
 
 ---
 
