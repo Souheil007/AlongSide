@@ -414,7 +414,9 @@ export function BilateralPactStatusCard({
                     </span>
                     <CardTitle className="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
                       {isPreDevice
-                        ? `${childName}'s First-Phone Assessment`
+                        ? (score !== null
+                            ? `${childName}'s First-Phone Assessment`
+                            : `Evaluate ${childName}'s First-Phone Readiness`)
                         : `${childName}'s Bedtime Curfew & Pact-as-Code`}
                     </CardTitle>
                   </div>
@@ -606,62 +608,95 @@ export function BilateralPactStatusCard({
                     </div>
                   </div>
                 ) : (
-                  /* Pre-Device UNASSESSED: Inviting Clean Assessment CTA */
+                  /* Pre-Device UNASSESSED: Dynamic Live Radar Awaiting Calibration */
                   <div className="space-y-4">
-                    <div className="p-5 sm:p-6 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] space-y-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC]">
+                      {/* Left: Animated Radial Radar Gauge (Awaiting Baseline) */}
+                      <div className="md:col-span-4 flex flex-col items-center justify-center p-4 rounded-xl bg-white border border-[#E3E3DC] text-center space-y-3 shadow-2xs">
+                        <div className="relative w-28 h-28 flex items-center justify-center">
+                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="6" fill="transparent" />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              stroke="#10B981"
+                              strokeWidth="6"
+                              strokeDasharray="14 10"
+                              fill="transparent"
+                              className="animate-[spin_16s_linear_infinite]"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <Compass className="w-6 h-6 text-[#143D2B] animate-pulse" />
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#858C88] font-bold mt-1">
+                              Radar Ready
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EE] text-[#143D2B] text-[10px] font-mono font-bold border border-[#143D2B]/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Awaiting Baseline
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Right: Low-Text, High-Action Diagnostic Panel */}
+                      <div className="md:col-span-8 flex flex-col justify-between space-y-3.5">
                         <div className="space-y-1">
                           <span className="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
                             Developmental Baseline
                           </span>
-                          <h4 className="font-serif text-lg font-bold text-[#111413]">
+                          <h4 className="font-serif text-base sm:text-lg font-bold text-[#111413]">
                             Evaluate {childName}&apos;s First-Phone Readiness
                           </h4>
-                          <p className="text-xs text-[#494F4C] max-w-xl leading-relaxed">
-                            Before purchasing or handing over a personal smartphone, complete our 10-dimension developmental evaluation to assess bedtime habits, impulse control, and emotional regulation.
+                          <p className="text-xs text-[#494F4C] leading-relaxed">
+                            10 real-world scenarios evaluating bedtime sleep, impulse control, and digital boundaries before getting a personal phone.
                           </p>
                         </div>
 
-                        <Link href={`/children/${childId}/readiness`} className="shrink-0">
-                          <Button
-                            size="sm"
-                            className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#143D2B]/90 text-white rounded-lg min-h-[42px] px-5 shadow-2xs"
-                          >
-                            <span>Start Readiness Assessment</span>
-                            <ArrowRight className="h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </div>
+                        {/* 4 Quadrants as Clean Visual Chips */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>🌙</span>
+                            <span>Sleep Independence</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>📚</span>
+                            <span>Task Responsibility</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>👥</span>
+                            <span>Peer Impulse Control</span>
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
+                            <span>🧘</span>
+                            <span>Emotional Reset</span>
+                          </span>
+                        </div>
 
-                      {/* 4 Quadrants Measured Overview */}
-                      <div className="pt-3 border-t border-[#E3E3DC] space-y-2">
-                        <span className="font-mono text-[10px] uppercase font-bold text-[#858C88] tracking-wider block">
-                          4 Core Developmental Quadrants Evaluated
-                        </span>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
-                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
-                            <span className="font-semibold text-[#111413] block">Sleep Independence</span>
-                            <span className="text-[11px] text-[#858C88] leading-tight block">Bedtime docking &amp; melatonin recovery</span>
-                          </div>
-                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
-                            <span className="font-semibold text-[#111413] block">Task Responsibility</span>
-                            <span className="text-[11px] text-[#858C88] leading-tight block">Voluntary screen transitions &amp; homework</span>
-                          </div>
-                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
-                            <span className="font-semibold text-[#111413] block">Peer Impulse Control</span>
-                            <span className="text-[11px] text-[#858C88] leading-tight block">Group chat resilience &amp; boundary defense</span>
-                          </div>
-                          <div className="p-3 rounded-lg bg-white border border-[#E3E3DC] text-xs space-y-1">
-                            <span className="font-semibold text-[#111413] block">Emotional Reset</span>
-                            <span className="text-[11px] text-[#858C88] leading-tight block">Regulation after digital stimulation</span>
-                          </div>
+                        {/* Primary Action Button */}
+                        <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <Link href={`/children/${childId}/readiness`} className="shrink-0">
+                            <Button
+                              className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#0E2B1E] text-white rounded-xl min-h-[44px] px-6 shadow-2xs cursor-pointer"
+                            >
+                              <span>Start Readiness Assessment</span>
+                              <ArrowRight className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <span className="font-mono text-[11px] text-[#858C88]">
+                            Takes ~3 mins • 10 questions
+                          </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-[#E3E3DC] flex items-center justify-between text-xs text-[#858C88]">
+                    {/* Footer Guarantee */}
+                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#858C88] font-mono">
                       <span>Takes ~3 minutes • 10 developmental questions • Generates customized Bilateral Pact</span>
-                      <span className="hidden sm:inline font-mono text-[11px] text-[#494F4C]">Zero surveillance • Bilateral collaboration</span>
+                      <span className="text-[#143D2B] font-medium">Zero surveillance • Bilateral collaboration</span>
                     </div>
                   </div>
                 )
