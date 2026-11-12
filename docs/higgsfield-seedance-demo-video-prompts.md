@@ -3,117 +3,115 @@
 **Status:** Canonical Production Specification  
 **Issue Reference:** Paperclip Task SOU-111  
 **Target Engine:** Higgsfield AI — Seedance 2.5 (`seedance_2_5`)  
-**Generation Constraints:** Free Tier `480p`, `30 seconds` duration, Native Audio Enabled  
+**Generation Constraints:** Free Tier `480p`, `30 seconds` duration, `16:9` widescreen, Native Audio Enabled  
 
 ---
 
 ## 1. Executive Strategy & Creative Vision
 
-### 1.1 Purpose & Objective
-This specification establishes the canonical generation prompts, motion choreography, audio directives, and Higgsfield CLI/MCP execution commands for creating two official 30-second product demo videos for **AlongSide (ParentPath)**:
-> **"The Parent Advisory Sanctuary: Keep Up With Your Child As They Grow (Ages 0–18)"**
+### 1.1 Purpose & Core Platform Positioning
+This specification establishes the canonical generation prompts, motion choreography, audio blueprints, and Higgsfield CLI/MCP execution commands for creating two official 30-second product demo videos for **AlongSide (ParentPath)**:
+> **"The Lifespan Guidance & Advisory Platform for Parents (Ages 0–18)"**
 
-Unlike generic brand commercials or conceptual mood films, these two demo videos are engineered to **showcase the digital platform itself in active motion**. They display the elegance of the "Parent Calm" design system (Archival Linen `#FBFBF9`, Deep Forest Spruce `#143D2B`, Newsreader serif typography), dynamic UI transitions, real-time micro-interactions, and synchronized native audio (spoken voiceover, acoustic background instrumentation, and tactile UI sound effects).
+AlongSide is designed as a whole-child guidance and advisory platform that empowers parents across all developmental stages from birth to eighteen (0–18). Parents create individual profiles for each of their children, immediately unlocking continuous developmental education tailored to the specific developmental tier their child is navigating.
 
-### 1.2 Two Targeted Demo Perspectives
+The demo videos visually spotlight Alongside's **Three Core Pillars**, highlighting their hierarchy and seamless integration:
+1. 🏛️ **Pillar 1 (The Primary Pillar): The Platform Academy (Parent Intelligence Academy)** — A comprehensive catalog of courses tailored for each child age tier across diverse categories (Behavioral Psychology, Developmental Milestones, Pediatric Sleep & Wellness, Emotional Co-Regulation, Healthy Nutrition, and Digital Maturity).
+2. 📰 **Pillar 2: The Weekly Youth Culture Digest** — Weekly news, cultural trends, and decoded slang tailored to the child's exact age tier, deliberately engineered to close the generational gap between parents and their children, keeping parents up-to-date.
+3. 📱 **Pillar 3: Family Devices & Bilateral Pacts** — An interactive Child Device Readiness Assessment evaluating whether a child is ready for a device, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions (such as an automated 8:30 PM bedtime curfew lock) with zero spyware.
 
 ```mermaid
-graph LR
-    AlongSideDemo["AlongSide Demo Video Suite<br/>Seedance 2.5 (30s, 480p, Native Audio)"]
-    AlongSideDemo --> Video1["Video 1: Macro Platform Experience<br/>The Lifespan Sanctuary Tour (Ages 0–18)"]
-    AlongSideDemo --> Video2["Video 2: Micro Interactive Walkthrough<br/>In The Moment: Crisis to Clarity"]
+graph TD
+    Platform["AlongSide Guidance & Advisory Platform (Ages 0–18)<br/>Child Profile Creation • Developmental Tier Education"]
+    Platform --> Pillar1["Pillar 1 (Primary Hero): Platform Academy<br/>Extensive courses for each child age tier across diverse categories"]
+    Platform --> Pillar2["Pillar 2: Weekly Culture Digest<br/>Age-tailored weekly news & decoded slang closing the generational gap"]
+    Platform --> Pillar3["Pillar 3: Family Devices & Bilateral Pacts<br/>Child Readiness Assessment • Co-signed pact • Device usage restrictions"]
     
-    Video1 --> V1_Feat["Developmental Horizon • Academy • Living Culture Digest • Bilateral Curfew"]
-    Video2 --> V2_Feat["24/7 AI Advisor • Interactive Dialogue Deck • Bilateral Pact Sync • Bedtime Lock"]
+    Pillar1 --> VideoSuite["Higgsfield Seedance 2.5 Demo Suite<br/>(30s, 480p, 16:9, Native Audio)"]
+    Pillar2 --> VideoSuite
+    Pillar3 --> VideoSuite
 ```
-
-1. **Video 1: "The Complete Parenting Sanctuary (Platform Experience & Lifespan Tour)"**  
-   - **Scope:** Macro product showcase. Demonstrates the breadth of AlongSide as a living family operating system that evolves from birth to 18.
-   - **Key Highlights:** 3D device perspective fly-through, rotating Developmental Horizon radial arc, Parent Intelligence Academy lesson with pulsing wave audio player, Sunday Youth Culture Digest living feed cards, and the Bilateral Family Pact activation.
-
-2. **Video 2: "In The Moment — Crisis to Clarity Interactive Product Walkthrough"**  
-   - **Scope:** Micro interactive deep-dive. Shows an acute real-world parenting crisis (tantrum, door slam, digital friction) resolved in real time through AlongSide's active tools.
-   - **Key Highlights:** Fast text query into 24/7 AI Advisor, fluid soundwave animation, 1-click Dialogue Deck ("Say This / Not That") card comparison, dual-device bilateral pact synchronization, and neutral automated 8:30 PM bedtime lock.
 
 ---
 
 ## 2. Technical Execution Profile: Higgsfield Seedance 2.5
 
-Both videos are tailored for Higgsfield's flagship **Seedance 2.5** model under the free tier specifications:
+Both videos are engineered for Higgsfield's flagship **Seedance 2.5** model under the free tier specifications:
 
 | Parameter | Value | Rationale |
 | :--- | :--- | :--- |
-| **Model ID** | `seedance_2_5` | State-of-the-art all-purpose video model; superior multi-shot motion, screen fidelity, and fluid UI animation. |
-| **Duration** | `30` | Maximum single-take runtime supported by Seedance 2.5, capturing a complete narrative arc. |
-| **Resolution** | `480p` | Standard free tier resolution, ensuring fast generation turnaround and zero paywall blocking. |
-| **Aspect Ratio** | `16:9` (`--aspect_ratio 16:9`) | Landscape orientation optimized for website hero banners, YouTube, demo presentations, and investor updates. |
-| **Audio Mode** | `Native Audio` (`--generate_audio true`) | Native Seedance 2.5 sound generation synthesizing spoken voiceover, ambient score, and UI foley directly from prompt conditioning. |
-| **Generation Mode** | `t2v` (or `omni_reference`) | Can run pure text-to-video or reference-guided from an initial UI screenshot plate. |
+| **Model ID** | `seedance_2_5` | Premier video model; exceptional screen rendering, multi-element motion fidelity, and fluid UI micro-interactions. |
+| **Duration** | `30` | Maximum single-take runtime supported by Seedance 2.5, enabling a complete narrative progression. |
+| **Resolution** | `480p` | Standard free tier resolution, ensuring rapid generation turnaround and zero paywall blockage. |
+| **Aspect Ratio** | `16:9` (`--aspect_ratio 16:9`) | Landscape orientation optimized for website hero banners, YouTube product demos, and stakeholder showcases. |
+| **Audio Mode** | `Native Audio` (`--generate_audio true`) | Native Seedance 2.5 sound generation synthesizing spoken voiceover narration, acoustic musical scoring, and tactile UI foley directly from prompt conditioning. |
+| **Generation Mode** | `t2v` (or `omni_reference`) | Pure text-to-video prompt or guided by an initial platform screenshot plate. |
 
 ---
 
-## 3. Video 1: "The Complete Parenting Sanctuary" (Platform Experience Tour)
+## 3. Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour"
 
 ### 3.1 Overview & Storyboard Timeline (30 Seconds)
 
 ```mermaid
 timeline
-    title Video 1: Platform Experience & Lifespan Tour (30 Seconds)
-    00:00 - 00:07 : Scene 1 - Hero Device & Lifespan Arc : Tablet in sunlit space, Developmental Horizon (0-18) rotates smoothly
-    00:07 - 00:15 : Scene 2 - Parent Intelligence Academy : Lesson card slides up, minimalist audio wave pulses with real-time green glow
-    00:15 - 00:23 : Scene 3 - Sunday Youth Culture Digest : Living feed cards glide in with slang decode chips ('No Cap', 'Rizz')
-    00:23 - 00:30 : Scene 4 - Bilateral Pact & Neutral Curfew : Digital signature draws, 8:30 PM lock badge illuminates, brand seal resolves
+    title Video 1: The 3 Pillars Guided Tour (30 Seconds)
+    00:00 - 00:07 : Child Profile & Tier Education : Tablet in morning sun, parent selects child profile (Ages 0-18), tier education unlocks
+    00:07 - 00:16 : Pillar 1 (Primary Hero) - Platform Academy : Course catalog expands across categories, animated green wave audio player pulses
+    00:16 - 00:23 : Pillar 2 - Weekly Youth Culture Digest : Weekly age-tailored news glides in with slang decoders ('No Cap', 'Rizz') to bridge the gap
+    00:23 - 00:30 : Pillar 3 - Family Devices & Bilateral Pact : Child Readiness Assessment score gauge, co-signed pact, 8:30 PM bedtime curfew lock
 ```
 
 ### 3.2 Shot-by-Shot Visual & Motion Choreography
 
-#### Shot 1: The Sanctuary Reveal & Developmental Horizon Arc (0:00 – 0:07)
-- **Visual Subject:** Ultra-crisp modern tablet resting on a warm Scandinavian oak table in soft morning sunlight. The tablet displays AlongSide's Archival Linen canvas (`#FBFBF9`) and the **Developmental Horizon** radial arc.
-- **Motion & Camera:** The camera starts in a low-angle diagonal push-in, gently tilting upward. The Developmental Horizon arc smoothly glides across the 8 developmental tiers (Infant 0-1, Toddler 1-3, Early Childhood 3-5, Tween 9-11, Adolescent 12-18). The active child pill (*"Liam • 4y 2m • Early Childhood"*) illuminates with a soft emerald glow.
-- **Micro-Interactions:** Light morning dust motes in the sunbeam; crisp digital spring easing as the child profile switches smoothly.
+#### Shot 1: Child Profile Creation & Developmental Tier Education (0:00 – 0:07)
+- **Visual Subject:** Ultra-crisp iPad Pro resting on a warm Scandinavian oak desk in soft morning sunlight. The tablet displays AlongSide's Archival Linen canvas (`#FBFBF9`) and the **Child Profile Selector**.
+- **Motion & Camera:** The camera starts in a low-angle diagonal push-in. The parent selects or adds a child profile: *"Liam • 10 Years Old • Tween Tier"*. As the profile activates, the interface illuminates with developmental tier education: a developmental arc displays key milestones, neurological shifts, and social-emotional guidance tailored specifically to Liam's age group (0–18 lifespan breadth).
+- **Micro-Interactions:** Delicate morning light reflections on the glass; fluid spring animation as the child's developmental tier badge illuminates in Deep Forest Spruce (`#143D2B`).
 
-#### Shot 2: Parent Intelligence Academy & Pulsing Wave Audio Player (0:07 – 0:15)
-- **Visual Subject:** Seamless camera glide into the **Parent Intelligence Academy** view.
-- **Motion & Camera:** Camera glides laterally to the right. A structured lesson card elevates with a soft drop shadow: *"The 10-Second Meltdown Reset"*. Below the headline, the integrated audio narration player opens. A minimalist Deep Spruce (`#143D2B`) audio wave ripples smoothly with dynamic fluid physics.
-- **Micro-Interactions:** The 30-Second Crisis Glance drawer peeks into view; the play head moves across the waveform with high precision.
+#### Shot 2: Pillar 1 (Hero Pillar): The Platform Academy — Multi-Tier Course Catalog (0:07 – 0:16)
+- **Visual Subject:** Seamless camera glide into the **Platform Academy** (the centerpiece of the platform).
+- **Motion & Camera:** Camera glides laterally to the right. The screen reveals a rich, multi-category course catalog tailored specifically for Liam's Tween tier. Filter tabs highlight categories: *Behavioral Psychology*, *Developmental Milestones*, *Sleep & Rest*, *Nutrition*, and *Emotional Co-Regulation*.
+- **Micro-Interactions:** A featured course card elevates smoothly: *"Navigating Tween Independence & Emotional Surges"*. Tapping the card opens a structured lesson view with a minimalist Deep Spruce audio wave player undulating with organic green pulses as hands-free audio narration plays.
 
-#### Shot 3: Sunday Youth Culture Digest & Slang Decoders (0:15 – 0:23)
-- **Visual Subject:** Fluid transition to the **Sunday Youth Culture Digest** living magazine feed.
-- **Motion & Camera:** Smooth upward scroll with parallax card motion. Three vibrant slang tag pills glide into focus: `[NO CAP - Truthful / Green]`, `[RIZZ - Charisma / Green]`, and `[CRASH OUT - Loss of Emotional Control / Yellow]`. An elegant Sunday dinner conversation starter card floats to the center: *"Ask This Tonight: If school was a video game, which level is the hardest?"*
-- **Micro-Interactions:** Tactile card hover states with delicate border sheen; crisp typography rendering with zero artifacting.
+#### Shot 3: Pillar 2: Weekly Youth Culture Digest — Closing the Generational Gap (0:16 – 0:23)
+- **Visual Subject:** Smooth upward transition to the **Sunday Youth Culture Digest**.
+- **Motion & Camera:** Parallax scroll reveals this week's news and cultural trends tailored to Liam's 10-year-old age group. Vibrant decoded slang cards float into view: `[NO CAP - Truthful]`, `[RIZZ - Charisma]`, and `[CRASH OUT - Emotional Reaction]`. A prominent Sunday dinner table conversation card surfaces: *"Dinner Bridge Question: What's a trend in your grade that teachers completely misunderstand?"*
+- **Visual Context:** Subtle subtitle callout: *"Closing the generational gap • Keeping parents up-to-date with their child's world."*
 
-#### Shot 4: Bilateral Family Pact & Bedtime Curfew Lock (0:23 – 0:30)
-- **Visual Subject:** The **Bilateral Family Pact** co-negotiation screen.
-- **Motion & Camera:** Close-up macro tracking shot as a digital stylus sweeps across the screen, signing the agreement with fluid black ink. A calm green verification card springs into view: `✓ Pact Active • Bedtime Curfew: 8:30 PM Lock • Zero Spyware`. The camera smoothly pulls back as the interface transitions into the clean AlongSide seal: *"Keep Up With Your Child As They Grow (Ages 0–18)"*.
-- **Micro-Interactions:** Satisfying ink fluid stroke; soft ambient light reflection on the tablet bezel.
+#### Shot 4: Pillar 3: Family Devices — Readiness Assessment & Bilateral Pact (0:23 – 0:30)
+- **Visual Subject:** The **Family Devices** management and pact hub.
+- **Motion & Camera:** The camera moves into a macro tracking shot. First, the screen displays the **Child Device Readiness Assessment** with a circular animated score gauge: `Readiness Score: 88/100 • Ready for Guided First Phone`. Next, the screen slides into the **Bilateral Family Pact**, where parent and child digital signatures sweep across the screen, establishing parent-configured device usage restrictions. An automated status badge illuminates in calm emerald green: `✓ Pact Active • Bedtime Curfew: 8:30 PM Lock • Zero Spyware`.
+- **Resolution:** Camera pulls back smoothly as the AlongSide brand seal resolves: *"Guidance & Advisory for Parents (Ages 0–18)"*.
 
 ---
 
 ### 3.3 Native Audio Design Blueprint (Prompt Conditioned)
 
-- **Spoken Voiceover Script (Calm, Grounded, Pediatrician/Parent Tone):**
-  > *"Parenting moves fast. AlongSide gives you the calm ground to keep up. Whole-child guidance, bite-sized neurobiology, and neutral family agreements—from birth to eighteen. Welcome to your parenting sanctuary."*
-- **Acoustic Music Bed:** Warm acoustic piano chords (C Major – F Major7) layered with gentle fingerpicked acoustic guitar and a rich, grounded cello swell that builds warmth without tension.
+- **Spoken Voiceover Script (Warm, Authoritative, Reassuring Tone):**
+  > *"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their exact developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide."*
+- **Acoustic Music Bed:** Warm acoustic piano progression (C Major – F Major7) layered with gentle fingerpicked acoustic guitar and a rich, grounded cello swell that evokes calm clarity and parental confidence.
 - **Tactile Sound Effects (Foley):**
-  - `0:02` — Soft morning birds outside, faint ceramic mug clink.
-  - `0:06` — Crisp tactile digital UI swoosh as child profile clicks.
-  - `0:11` — Gentle liquid wave flutter and warm audio play tone.
-  - `0:18` — Subtle paper card sliding sound and soft haptic pop on slang tags.
-  - `0:25` — Smooth glass stylus friction sound followed by a reassuring digital lock chime.
-  - `0:28` — Resonant acoustic resolve chord.
+  - `0:02` — Soft morning ambient room tone, gentle mug tap.
+  - `0:05` — Crisp tactile digital UI click as child profile activates.
+  - `0:10` — Smooth card expansion swoosh and gentle resonant audio wave hum.
+  - `0:18` — Subtle paper card sliding sound and soft haptic pop on culture slang tags.
+  - `0:24` — Upbeat positive chime on the readiness score (88/100).
+  - `0:26` — Smooth glass stylus friction followed by a reassuring digital lock chime.
+  - `0:29` — Resonant acoustic resolve chord.
 
 ---
 
-### 3.4 Canonical Higgsfield Seedance 2.5 Generation Prompt
+### 3.4 Canonical Higgsfield Seedance 2.5 Generation Prompt (Video 1)
 
 ```text
-A sleek 30-second product demo video showing the AlongSide parenting platform on an elegant tablet. Modern Scandinavian oak desk in warm morning sunlight. The camera glides smoothly across the UI in continuous motion: first showing the Developmental Horizon arc rotating smoothly across ages 0 to 18 with archival linen textures and deep spruce badges; next gliding into the Parent Intelligence Academy where a lesson card expands and a minimalist green soundwave player animates in real time; then transitioning to the Sunday Culture Digest with floating youth slang cards 'No Cap' and 'Rizz'; ending on the Bilateral Family Pact as a digital stylus signs the screen and an automated 8:30 PM Bedtime Curfew Lock badge illuminates with calm green light. Smooth 3D camera pan, shallow depth of field, premium Apple-style motion design. Synchronized native audio features a warm, reassuring conversational voiceover: "Parenting moves fast. AlongSide gives you the calm ground to keep up. Whole-child guidance, bite-sized neurobiology, and neutral family agreements—from birth to eighteen. Welcome to your parenting sanctuary." Background music is a gentle, uplifting acoustic piano and cello melody with crisp tactile UI click and chime sound effects.
+A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: "Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide." Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects.
 ```
 
-#### Higgsfield CLI Command:
+#### Higgsfield CLI Command (Video 1):
 ```bash
 higgsfield generate create seedance_2_5 \
-  --prompt "A sleek 30-second product demo video showing the AlongSide parenting platform on an elegant tablet. Modern Scandinavian oak desk in warm morning sunlight. The camera glides smoothly across the UI in continuous motion: first showing the Developmental Horizon arc rotating smoothly across ages 0 to 18 with archival linen textures and deep spruce badges; next gliding into the Parent Intelligence Academy where a lesson card expands and a minimalist green soundwave player animates in real time; then transitioning to the Sunday Culture Digest with floating youth slang cards 'No Cap' and 'Rizz'; ending on the Bilateral Family Pact as a digital stylus signs the screen and an automated 8:30 PM Bedtime Curfew Lock badge illuminates with calm green light. Smooth 3D camera pan, shallow depth of field, premium Apple-style motion design. Synchronized native audio features a warm, reassuring conversational voiceover: \"Parenting moves fast. AlongSide gives you the calm ground to keep up. Whole-child guidance, bite-sized neurobiology, and neutral family agreements—from birth to eighteen. Welcome to your parenting sanctuary.\" Background music is a gentle, uplifting acoustic piano and cello melody with crisp tactile UI click and chime sound effects." \
+  --prompt "A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: \"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide.\" Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects." \
   --resolution 480p \
   --duration 30 \
   --aspect_ratio 16:9 \
@@ -123,72 +121,69 @@ higgsfield generate create seedance_2_5 \
 
 ---
 
-## 4. Video 2: "In The Moment — Crisis to Clarity" (Interactive Walkthrough)
+## 4. Video 2: "From Profile to Pact — An Interactive Parent Journey"
 
 ### 4.1 Overview & Storyboard Timeline (30 Seconds)
 
 ```mermaid
 timeline
-    title Video 2: Crisis to Clarity Interactive Walkthrough (30 Seconds)
-    00:00 - 00:07 : Scene 1 - 24/7 AI Child Advisor : Smartphone query 'Daughter slammed door', pulsing spruce soundwave streams advice
-    00:07 - 00:15 : Scene 2 - Interactive Dialogue Deck : 'Say This, Not That' card flips, thumb taps 1-Click Copy with haptic ripple
-    00:15 - 00:23 : Scene 3 - Bilateral Pact Synchronization : Dual screen view (Parent + Tween), curfew toggle slides smoothly
-    00:23 - 00:30 : Scene 4 - Neutral Automated Lock & Resolution : Device displays 'Curfew Active: 8:30 PM Lock', parent exhales calmly
+    title Video 2: Interactive Parent Journey (30 Seconds)
+    00:00 - 00:06 : Child Profile Activation : Parent holds smartphone, selects child's age profile, instant tier neurobiology insights load
+    00:06 - 00:15 : Deep Dive into Platform Academy : Parent filters course categories, opens 'Tween Digital Boundaries', wave audio player pulses
+    00:15 - 00:22 : Weekly Culture Digest & Connection : Horizontal swipe to weekly news & slang decoders, tapping Sunday dinner bridge card
+    00:22 - 00:30 : Child Assessment & Co-Created Pact : Dual-device view, child completes readiness test, co-signing 8:30 PM bedtime curfew restriction
 ```
 
 ### 4.2 Shot-by-Shot Visual & Motion Choreography
 
-#### Shot 1: The Urgent Query & 24/7 AI Child Advisor (0:00 – 0:07)
-- **Visual Subject:** Close-up of a parent's hands holding an iPhone in a cozy evening living room with warm ambient bookshelf lighting. The AlongSide AI Advisor interface is open.
-- **Motion & Camera:** Rapid, dynamic punch-in toward the screen. The parent quickly types: *"Daughter slammed her door, says she hates everyone."* A circular Deep Spruce (`#143D2B`) audio soundwave instantly ripples with organic fluid oscillations as thoughtful, empathetic streaming text appears on the screen in real time.
-- **Micro-Interactions:** Subtle haptic feedback animations around the text input box; dynamic cursor glow.
+#### Shot 1: Profile Selection & Developmental Tier Education (0:00 – 0:06)
+- **Visual Subject:** Close-up of a parent holding an iPhone in a cozy evening living room with warm ambient lamp lighting. AlongSide is open on the home screen.
+- **Motion & Camera:** Gentle push-in toward the smartphone screen. The parent taps their daughter's profile: *"Maya • 10 Years Old • Tween Tier"*. The interface immediately updates with developmental tier education: *"Tween Tier Focus: Maturing prefrontal cortex, peer belonging, digital boundary transitions."*
+- **Micro-Interactions:** Subtle haptic ripple on profile selection; clean typography with Newsreader serif headings and Archival Linen background.
 
-#### Shot 2: The Interactive Dialogue Deck ("Say This / Not That") (0:07 – 0:15)
-- **Visual Subject:** The **Interactive Dialogue Deck** component expands with spring physics.
-- **Motion & Camera:** Macro rack focus directly onto the side-by-side comparison cards:
-  - Left Column (Strikethrough / Red Accent): *"Don't you dare talk to me like that!"*
-  - Right Column (Highlighted Emerald Card): *"I hear how overwhelmed you are right now. I'm leaving the door cracked. I'm right here whenever you're ready."*
-  - The parent's thumb taps the *"Copy Script"* button. It transforms with a cheerful checkmark and soft green ripple: `✓ Copied to Clipboard`.
-- **Micro-Interactions:** Tactile card elevation; soft spring bounce on tap.
+#### Shot 2: Deep Dive into Pillar 1: Platform Academy Courses (0:06 – 0:15)
+- **Visual Subject:** The parent navigates into the **Platform Academy** course stream.
+- **Motion & Camera:** Smooth finger swipe across category pills (*"Behavior & Psychology"*, *"Digital Maturity"*, *"Emotional Regulation"*). The parent selects the course *"First Phone & Digital Boundaries for Tweens"*.
+- **Micro-Interactions:** The course syllabus expands in place. The parent taps *"Listen to 2-Min Audio Briefing"*; an 8-bar dynamic emerald soundwave equalizer undulates smoothly with natural speech rhythm, providing real-time parental coaching.
 
-#### Shot 3: Real-Time Bilateral Pact Synchronization (0:15 – 0:23)
-- **Visual Subject:** Split-screen or dual-device layout: parent's smartphone on the left, 12-year-old child's iPad on the right, resting on the kitchen counter.
-- **Motion & Camera:** The camera glides from left to right across both screens. The parent slides the toggle switch: *"Bedtime Curfew: 8:30 PM Lock"*. Instantly, without lag, the child's screen reflects the agreement update with a synchronized green checkmark badge: `✓ Bedtime Curfew Agreed`.
-- **Micro-Interactions:** Seamless cross-device state update animation; smooth toggle transition.
+#### Shot 3: Engaging with Pillar 2: Weekly Culture Digest (0:15 – 0:22)
+- **Visual Subject:** Fluid swipe into Maya's **Weekly Culture Digest** magazine view.
+- **Motion & Camera:** The camera tracks downward through the living feed. The digest highlights this week's trending youth culture specifically for 10-year-olds: decoded slang chips (`[SKIBIDI]`, `[BET]`, `[AURA POINTS]`) with clear parent explanations. The parent taps the *"Sunday Dinner Bridge Question"*: *"If you could redesign one family rule this week, what would it be?"*
+- **Emotional Resonance:** The parent looks up and smiles with instant connection confidence, knowing they are fully in tune with their child's world.
 
-#### Shot 4: Neutral 8:30 PM Curfew Lock & Emotional Relief (0:23 – 0:30)
-- **Visual Subject:** The child's device displays the neutral Apple-enforced bedtime lock screen at 8:30 PM: *"Curfew Active • Restorative Sleep • Goodnight Lucas"*.
-- **Motion & Camera:** Camera tilts up from the tablet to reveal the parent in the warm hallway, taking a deep, relaxed breath and smiling gently with renewed confidence. The screen dissolves into the AlongSide seal: *"Clarity in 30 Seconds • Non-Clinical, Neutral, Bilateral"*.
-- **Micro-Interactions:** Soft glowing lock icon fade-in; natural warm room lighting.
+#### Shot 4: Interactive Pillar 3: Child Readiness Assessment & Co-Signed Pact (0:22 – 0:30)
+- **Visual Subject:** Split view or over-the-shoulder shot at the kitchen table: parent with smartphone, 10-year-old child with iPad.
+- **Motion & Camera:** The child completes the interactive **Device Readiness Assessment**, answering questions on digital safety and responsibility. A cheerful green certificate badge appears: `✓ Readiness Score: 92/100 • Device Ready`. Together, parent and child review the **Bilateral Family Pact**. The parent sets device usage restrictions: automated bedtime curfew at 8:30 PM. Both slide their digital toggles to co-sign.
+- **Climax:** The child's device transitions to the peaceful, neutral bedtime lock screen: *"Curfew Active • Screen Time Locked • Goodnight Maya"*. Concludes on the AlongSide lockup: *"AlongSide: Empowering Parents, Honoring Kids (Ages 0–18)"*.
 
 ---
 
 ### 4.3 Native Audio Design Blueprint (Prompt Conditioned)
 
-- **Spoken Voiceover Script (Empathetic, Authoritative, Reassuring Tone):**
-  > *"When high-stakes moments happen, don't guess. AlongSide gives you real-time neurobiology scripts, interactive dialogue decks, and neutral curfews that protect your relationship. Clarity in thirty seconds."*
-- **Acoustic Music Bed:** Focused, contemporary acoustic pulse—warm muted electric piano chords, subtle marimba rhythm, and ascending acoustic cello that resolves into a peaceful, sustained chord.
+- **Spoken Voiceover Script (Empathetic, Reassuring, Practical Tone):**
+  > *"Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families."*
+- **Acoustic Music Bed:** Contemporary, intimate acoustic pulse—warm muted electric piano chords, subtle acoustic fingerpicking, and an ascending acoustic cello that settles into a peaceful, reassuring sustain.
 - **Tactile Sound Effects (Foley):**
-  - `0:02` — Rapid soft keyboard typing haptics on glass.
-  - `0:05` — Organic low resonant soundwave hum.
-  - `0:09` — Crisp card flip swoosh as Dialogue Deck appears.
-  - `0:13` — Satisfying tactile "copy" chime (gentle high-frequency bell).
-  - `0:19` — Smooth toggle slide click and synchronized dual-device confirmation ping.
-  - `0:26` — Peaceful evening ambient room tone and soft deep exhalation.
-  - `0:29` — Gentle acoustic logo chime.
+  - `0:02` — Subtle glass touchscreen tap and gentle haptic vibration.
+  - `0:05` — Low organic resonant sound as developmental tier cards populate.
+  - `0:09` — Fluid card expand sound and soft undulating wave audio hum.
+  - `0:16` — Light paper magazine flip sound and soft bubble pop on slang tags.
+  - `0:23` — Cheerful assessment completion tally chime (ascending major triad).
+  - `0:27` — Dual digital signature slide sound followed by a soft, soothing curfew lock chime.
+  - `0:29` — Peaceful acoustic outro chord.
 
 ---
 
-### 4.4 Canonical Higgsfield Seedance 2.5 Generation Prompt
+### 4.4 Canonical Higgsfield Seedance 2.5 Generation Prompt (Video 2)
 
 ```text
-A dynamic 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during an everyday family moment. Soft evening home office lighting. Handheld smartphone close-up as a parent types into the 24/7 AI Child Advisor: 'Daughter slammed door after school'. A deep spruce circular audio wave pulses fluidly as empathetic advice streams in. The screen smoothly expands into an interactive Dialogue Deck showing a side-by-side 'Say This / Not That' card comparison; a thumb taps the 'Copy Script' button with a tactile green checkmark animation. Camera smoothly transitions to a dual-device view of phone and tablet synchronizing the Bilateral Family Pact; a toggle slides to activate the neutral 8:30 PM Bedtime Curfew Lock with matching green checkmarks. Crisp modern UI animations, spring easing, shallow depth of field, Apple commercial aesthetic. Synchronized native audio includes an empathetic, authoritative voiceover: "When high-stakes moments happen, don't guess. AlongSide gives you real-time neurobiology scripts, interactive dialogue decks, and neutral curfews that protect your relationship. Clarity in thirty seconds." Background audio features an intimate modern acoustic piano rhythm with realistic keyboard typing, card flip swooshes, and a satisfying lock chime.
+An interactive 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during a family evening. Soft ambient home office lighting. Handheld smartphone close-up as a parent selects their 10-year-old child's profile, revealing personalized developmental tier advisory guidance. The camera tracks as the parent taps into the premier pillar—the Platform Academy—browsing multiple course categories and opening a bite-sized course on tween digital boundaries, where a vibrant green soundwave player animates with audio guidance. A smooth horizontal swipe reveals the second pillar—the weekly Culture Digest—highlighting weekly news for 10-year-olds, decoded slang tags, and a dinner table conversation starter that bridges the generational gap. The camera smoothly zooms into a dual-device view on the kitchen table where parent and child experience the third pillar—Family Devices: the child completes the interactive Device Readiness Assessment with an enthusiastic green score badge, and together they co-sign the Bilateral Family Pact establishing parent-configured device usage restrictions that activate an automated 8:30 PM bedtime curfew lock. Crisp modern UI animations, spring easing, shallow depth of field. Synchronized native audio features an empathetic, reassuring spoken voiceover: "Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families." Background music is an intimate modern acoustic piano rhythm with realistic glass typing, card flip swooshes, score tally chimes, and a comforting curfew lock tone.
 ```
 
-#### Higgsfield CLI Command:
+#### Higgsfield CLI Command (Video 2):
 ```bash
 higgsfield generate create seedance_2_5 \
-  --prompt "A dynamic 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during an everyday family moment. Soft evening home office lighting. Handheld smartphone close-up as a parent types into the 24/7 AI Child Advisor: 'Daughter slammed door after school'. A deep spruce circular audio wave pulses fluidly as empathetic advice streams in. The screen smoothly expands into an interactive Dialogue Deck showing a side-by-side 'Say This / Not That' card comparison; a thumb taps the 'Copy Script' button with a tactile green checkmark animation. Camera smoothly transitions to a dual-device view of phone and tablet synchronizing the Bilateral Family Pact; a toggle slides to activate the neutral 8:30 PM Bedtime Curfew Lock with matching green checkmarks. Crisp modern UI animations, spring easing, shallow depth of field, Apple commercial aesthetic. Synchronized native audio includes an empathetic, authoritative voiceover: \"When high-stakes moments happen, don't guess. AlongSide gives you real-time neurobiology scripts, interactive dialogue decks, and neutral curfews that protect your relationship. Clarity in thirty seconds.\" Background audio features an intimate modern acoustic piano rhythm with realistic keyboard typing, card flip swooshes, and a realistic lock chime." \
+  --prompt "An interactive 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during a family evening. Soft ambient home office lighting. Handheld smartphone close-up as a parent selects their 10-year-old child's profile, revealing personalized developmental tier advisory guidance. The camera tracks as the parent taps into the premier pillar—the Platform Academy—browsing multiple course categories and opening a bite-sized course on tween digital boundaries, where a vibrant green soundwave player animates with audio guidance. A smooth horizontal swipe reveals the second pillar—the weekly Culture Digest—highlighting weekly news for 10-year-olds, decoded slang tags, and a dinner table conversation starter that bridges the generational gap. The camera smoothly zooms into a dual-device view on the kitchen table where parent and child experience the third pillar—Family Devices: the child completes the interactive Device Readiness Assessment with an enthusiastic green score badge, and together they co-sign the Bilateral Family Pact establishing parent-configured device usage restrictions that activate an automated 8:30 PM bedtime curfew lock. Crisp modern UI animations, spring easing, shallow depth of field. Synchronized native audio features an empathetic, reassuring spoken voiceover: \"Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families.\" Background music is an intimate modern acoustic piano rhythm with realistic glass typing, card flip swooshes, score tally chimes, and a comforting curfew lock tone." \
   --resolution 480p \
   --duration 30 \
   --aspect_ratio 16:9 \
@@ -198,24 +193,24 @@ higgsfield generate create seedance_2_5 \
 
 ---
 
-## 5. Comparative Execution Matrix
+## 5. Comparative Execution Matrix: The 3 Pillars Across Both Demos
 
-| Dimension | Video 1: Platform Experience Tour | Video 2: Crisis to Clarity Walkthrough |
+| Dimension | Video 1: 3 Pillars Guided Tour (Macro) | Video 2: From Profile to Pact (Micro Journey) |
 | :--- | :--- | :--- |
-| **Primary Theme** | Macro Sanctuary, Lifespan Breadth (0–18) | Micro Friction, Real-Time Emotional Relief |
-| **Hero Hardware** | iPad Pro on Scandinavian Oak Desk | iPhone Handheld & Dual Device (Phone + iPad) |
-| **Featured Modules** | Developmental Horizon, Academy, Culture Digest, Bilateral Pact | 24/7 AI Advisor, Dialogue Deck ("Say This/Not That"), Curfew Sync |
-| **Camera Style** | Smooth diagonal crane, 3D perspective fly-through | Dynamic macro rack focus, tight over-the-shoulder tracking |
-| **Lighting Atmosphere** | Warm morning sunlight streaming through sheer linen | Cozy warm evening ambient desk & lamp light |
-| **Pacing** | Serene, expansive, dignified (24 fps) | Fast-paced urgent hook resolving into calm certainty |
-| **VO Focus** | Whole-child operating system, longevity (birth to 18) | Real-time script guidance, relationship protection, 30s clarity |
-| **Audience Hook** | "Parenting moves fast. Keep up with your growing child." | "Don't guess in high-stakes moments. Practice before you speak." |
+| **Perspective** | High-level architectural overview & lifespan breadth (0–18) | Intimate parent-child walkthrough during an evening routine |
+| **Hardware Staging** | iPad Pro resting on Scandinavian Oak Desk | Handheld smartphone transitioning to dual-device table setup |
+| **Profile & Tier Setup** | Profile creation unlocking developmental horizon across 8 tiers | Instant child profile toggle unlocking specific tween neurobiology |
+| **Pillar 1: Academy** | Broad course catalog view across categories with active lesson audio wave | Category filtering (*Behavior*, *Digital Maturity*) with 2-min audio brief |
+| **Pillar 2: Culture Digest** | Living weekly feed, slang cards (*No Cap*, *Rizz*), dinner starter | Weekly age-10 news, slang decoders (*Skibidi*, *Bet*), bridging the gap |
+| **Pillar 3: Family Devices** | Readiness score gauge (88/100) & bilateral bedtime lock badge | Interactive child test (92/100), co-signing pact, neutral curfew lock |
+| **Voiceover Focus** | Whole-child operating system, 0–18 lifespan, three pillars | Empathy, developmental individuality, cooperative device guidance |
+| **Audience Hook** | "Parenting moves fast. AlongSide is your guidance and advisory." | "Every child grows at their own pace. Guidance for real families." |
 
 ---
 
 ## 6. Higgsfield MCP Tool Invocation JSON Schema
 
-When triggering via an agent with MCP tool capabilities or Claude MCP, format the payload as follows:
+When triggering via an agent with MCP tool capabilities or Claude/Antigravity MCP, format the payload as follows:
 
 ### MCP Call for Video 1:
 ```json
@@ -224,7 +219,7 @@ When triggering via an agent with MCP tool capabilities or Claude MCP, format th
   "tool": "generate_create",
   "arguments": {
     "model": "seedance_2_5",
-    "prompt": "A sleek 30-second product demo video showing the AlongSide parenting platform on an elegant tablet. Modern Scandinavian oak desk in warm morning sunlight. The camera glides smoothly across the UI in continuous motion: first showing the Developmental Horizon arc rotating smoothly across ages 0 to 18 with archival linen textures and deep spruce badges; next gliding into the Parent Intelligence Academy where a lesson card expands and a minimalist green soundwave player animates in real time; then transitioning to the Sunday Culture Digest with floating youth slang cards 'No Cap' and 'Rizz'; ending on the Bilateral Family Pact as a digital stylus signs the screen and an automated 8:30 PM Bedtime Curfew Lock badge illuminates with calm green light. Smooth 3D camera pan, shallow depth of field, premium Apple-style motion design. Synchronized native audio features a warm, reassuring conversational voiceover: \"Parenting moves fast. AlongSide gives you the calm ground to keep up. Whole-child guidance, bite-sized neurobiology, and neutral family agreements—from birth to eighteen. Welcome to your parenting sanctuary.\" Background music is a gentle, uplifting acoustic piano and cello melody with crisp tactile UI click and chime sound effects.",
+    "prompt": "A cinematic 30-second product demo video showcasing the AlongSide parenting platform on an elegant iPad Pro resting on a Scandinavian oak desk in warm morning light. The camera glides in a smooth, continuous Apple-style tracking shot across the three core pillars: first showing the parent creating a child profile across ages 0 to 18, instantly unlocking tailored developmental tier education for a 10-year-old Tween. Next, the camera glides into the most important pillar—the Platform Academy—revealing a rich catalog of courses across categories like Behavioral Psychology and Sleep, where a course card smoothly expands and a minimalist green soundwave audio player ripples during a lesson. Then, the screen transitions upward into the second pillar—the weekly Culture Digest—showing age-tailored news and decoded youth slang cards 'No Cap' and 'Rizz' designed to close the parent-child gap. Finally, the camera glides into the third pillar—Family Devices—displaying an interactive Child Device Readiness Assessment score, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions with an automated 8:30 PM bedtime lock badge glowing calm emerald green. Synchronized native audio features a warm, authoritative spoken voiceover: \"Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen. Create your child's profile to unlock tailored education for their developmental tier. Explore our Platform Academy with rich courses across categories, stay up-to-date with your weekly Culture Digest to close the generational gap, and guide family devices with child readiness assessments and bilateral pacts with agreed bedtime restrictions. Welcome to AlongSide.\" Gentle, uplifting acoustic piano and cello melody with crisp tactile UI click, audio wave hum, assessment chime, and lock sound effects.",
     "duration": 30,
     "resolution": "480p",
     "aspect_ratio": "16:9",
@@ -240,7 +235,7 @@ When triggering via an agent with MCP tool capabilities or Claude MCP, format th
   "tool": "generate_create",
   "arguments": {
     "model": "seedance_2_5",
-    "prompt": "A dynamic 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during an everyday family moment. Soft evening home office lighting. Handheld smartphone close-up as a parent types into the 24/7 AI Child Advisor: 'Daughter slammed door after school'. A deep spruce circular audio wave pulses fluidly as empathetic advice streams in. The screen smoothly expands into an interactive Dialogue Deck showing a side-by-side 'Say This / Not That' card comparison; a thumb taps the 'Copy Script' button with a tactile green checkmark animation. Camera smoothly transitions to a dual-device view of phone and tablet synchronizing the Bilateral Family Pact; a toggle slides to activate the neutral 8:30 PM Bedtime Curfew Lock with matching green checkmarks. Crisp modern UI animations, spring easing, shallow depth of field, Apple commercial aesthetic. Synchronized native audio includes an empathetic, authoritative voiceover: \"When high-stakes moments happen, don't guess. AlongSide gives you real-time neurobiology scripts, interactive dialogue decks, and neutral curfews that protect your relationship. Clarity in thirty seconds.\" Background audio features an intimate modern acoustic piano rhythm with realistic keyboard typing, card flip swooshes, and a realistic lock chime.",
+    "prompt": "An interactive 30-second mobile UI product demo video showcasing the AlongSide parenting app in action during a family evening. Soft ambient home office lighting. Handheld smartphone close-up as a parent selects their 10-year-old child's profile, revealing personalized developmental tier advisory guidance. The camera tracks as the parent taps into the premier pillar—the Platform Academy—browsing multiple course categories and opening a bite-sized course on tween digital boundaries, where a vibrant green soundwave player animates with audio guidance. A smooth horizontal swipe reveals the second pillar—the weekly Culture Digest—highlighting weekly news for 10-year-old children, decoded slang tags, and a dinner table conversation starter that bridges the generational gap. The camera smoothly zooms into a dual-device view on the kitchen table where parent and child experience the third pillar—Family Devices: the child completes the interactive Device Readiness Assessment with an enthusiastic green score badge, and together they co-sign the Bilateral Family Pact establishing parent-configured device usage restrictions that activate an automated 8:30 PM bedtime curfew lock. Crisp modern UI animations, spring easing, shallow depth of field. Synchronized native audio features an empathetic, reassuring spoken voiceover: \"Every child grows at their own pace. With AlongSide, create your child's profile to master their exact developmental tier. Dive into the Platform Academy for deep, category-rich courses, bridge the generational gap with weekly age-tailored culture digests, and navigate technology together through child readiness assessments and co-created device pacts with automated bedtime curfews. Real guidance for real families.\" Background music is an intimate modern acoustic piano rhythm with realistic glass typing, card flip swooshes, score tally chimes, and a comforting curfew lock tone.",
     "duration": 30,
     "resolution": "480p",
     "aspect_ratio": "16:9",
@@ -254,7 +249,7 @@ When triggering via an agent with MCP tool capabilities or Claude MCP, format th
 ## 7. Non-Negotiable Brand & Regulatory Guardrails
 
 All generated demo videos must strictly adhere to the company's core governance rules:
-1. 🛡️ **Strictly Non-Clinical (SOU-86):** Under no circumstances should the demo display medical diagnosis, fever triage curves, clinical prescriptions, or emergency room prompts. AlongSide is an educational developmental sanctuary.
-2. 🤝 **Bilateral Respect, Zero Spyware:** The screen must never depict secret GPS tracking, keystroke logging, or reading a child's private texts. The enforcement is transparent, mutual ("Pact-as-Code"), and centered on circadian rest (8:30 PM bedtime curfew).
-3. 👶➡️🧑 **Lifespan Horizon (Ages 0–18):** Visual elements must communicate that AlongSide is not an infant diaper log that parents discard at age 2, but a lifelong operating system.
+1. 🛡️ **Strictly Non-Clinical (SOU-86):** Under no circumstances should the demo display medical symptom triage, diagnostic claims, or clinical medication calculators. AlongSide is an educational developmental sanctuary.
+2. 🤝 **Bilateral Respect, Zero Spyware:** The screen must never depict secret GPS tracking, keystroke logging, or reading a child's private texts. The enforcement is transparent, mutual ("Pact-as-Code"), and centered on circadian rest (8:30 PM bedtime curfew lock).
+3. 👶➡️🧑 **Whole-Child Lifespan Horizon (Ages 0–18):** Visual elements must highlight that AlongSide is a continuous lifespan guidance companion for children from infancy through adolescence, not an infant diaper tracker discarded at age 2.
 4. 🌿 **Parent Calm Aesthetic:** No harsh neon cyberpunk lighting, no chaotic spinning icons, no cartoon emojis in pastel circles. Maintain Archival Linen (`#FBFBF9`), Deep Forest Spruce (`#143D2B`), and warm natural textures.

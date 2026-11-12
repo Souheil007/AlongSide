@@ -830,24 +830,28 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 
 ## 10. Official Product Demo Videos & Higgsfield Seedance 2.5 Launch Campaign (SOU-111)
 
-To visually communicate Alongside's unique position at launch, the company deploys two focused 30-second product demo videos generated via **Higgsfield Seedance 2.5 (`seedance_2_5`)** utilizing native audio and fluid UI motion design:
+To visually communicate Alongside's unique position as a whole-child guidance and advisory platform (Ages 0–18), the company deploys two focused 30-second product demo videos generated via **Higgsfield Seedance 2.5 (`seedance_2_5`)** utilizing native audio and fluid UI motion design. Both videos spotlight how parents create child profiles to receive tailored education for their child's specific developmental tier, organized across the **Three Core Pillars**:
 
-### 10.1 Demo Video 1: "The Complete Parenting Sanctuary" (Platform Experience & Lifespan Tour)
+1. **Pillar 1 (Primary Hero): The Platform Academy** — An extensive course catalog tailored to each child age tier across diverse categories (Behavioral Psychology, Developmental Milestones, Pediatric Sleep & Wellness, Emotional Co-Regulation, Healthy Nutrition, and Digital Maturity).
+2. **Pillar 2: The Weekly Youth Culture Digest** — Weekly news, cultural trends, and decoded slang tailored to the child's exact age tier, engineered to close the generational gap between parents and their children, keeping parents up-to-date.
+3. **Pillar 3: Family Devices & Bilateral Pacts** — An interactive Child Device Readiness Assessment evaluating whether a child is ready for a device, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions (such as an automated 8:30 PM bedtime curfew lock) with zero spyware.
+
+### 10.1 Demo Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour" (Platform Experience)
 - **Target Channels:** Website Hero, Product Hunt Launch, Investor Decks.
 - **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
-- **Core Narrative:** Macro fly-through across an elegant iPad Pro in warm morning light, showcasing the 8-tier Developmental Horizon (Ages 0–18), the bite-sized Parent Intelligence Academy with real-time pulsing audio waveform, the living Sunday Youth Culture Digest with decoded slang cards, and the Bilateral Family Pact with neutral 8:30 PM bedtime lock.
-- **Emotional Resonance:** "Parenting moves fast. AlongSide gives you the calm ground to keep up."
+- **Core Narrative:** Macro tracking shot across an elegant iPad Pro on a sunlit oak desk. Parent creates a child profile across ages 0 to 18, immediately unlocking developmental tier education. Glides into Pillar 1 (Platform Academy) showing course catalog across categories and pulsing green audio wave player; transitions into Pillar 2 (Weekly Culture Digest) with age-tailored news and decoded slang ('No Cap', 'Rizz') to close the generational gap; concludes with Pillar 3 (Family Devices) featuring the child readiness assessment score gauge, co-signed bilateral pact, and automated 8:30 PM bedtime curfew lock.
+- **Emotional Resonance:** "Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen."
 - **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
 
-### 10.2 Demo Video 2: "In The Moment — Crisis to Clarity" (Interactive Walkthrough)
+### 10.2 Demo Video 2: "From Profile to Pact — An Interactive Parent Journey" (Interactive Walkthrough)
 - **Target Channels:** Paid Social (Instagram, TikTok, YouTube Shorts), High-Intent Landing Pages.
 - **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
-- **Core Narrative:** Micro problem-solving in an acute parenting friction moment (door slam / meltdown). Close-up typing into 24/7 AI Child Advisor, dynamic spring expansion into the Interactive Dialogue Deck ("Say This / Not That"), and dual-device synchronization of the Bilateral Screen Curfew.
-- **Emotional Resonance:** "When high-stakes moments happen, don't guess. Clarity in thirty seconds."
+- **Core Narrative:** Micro interactive walkthrough during an evening family routine. Parent selects 10-year-old daughter's profile, revealing personalized developmental tier insights. Dives into Pillar 1 (Platform Academy), filtering course categories and opening a tween boundary course with wave audio player. Swipes into Pillar 2 (Weekly Culture Digest) to view age-tailored weekly news, slang tags ('Skibidi', 'Bet'), and dinner table bridge question. Concludes with Pillar 3 (Family Devices) as child completes the interactive Readiness Assessment and both co-sign the Bilateral Pact with parent-configured 8:30 PM bedtime curfew restrictions.
+- **Emotional Resonance:** "Every child grows at their own pace. Guidance for real families."
 - **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
 
 ---
 *Canonical Specification Approved by:*  
 **Chief Executive Officer (CEO)**  
 **AlongSide Technologies Inc.**  
-*(Version 2.4.2 Canonical Specification)*
+*(Version 2.4.3 Canonical Specification)*
