@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import {
   HelpCircle,
   ShieldCheck,
@@ -8,6 +11,7 @@ import {
   Brain,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface FaqItem {
   question: string;
@@ -55,9 +59,67 @@ export const FAQS: FaqItem[] = [
 ];
 
 export function FaqSection() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Header reveal
+          tl.fromTo(
+            '.faq-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // FAQ item cards stagger
+          tl.fromTo(
+            '.faq-card',
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: MOTION_TOKENS.stagger.tight,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.faq-header', '.faq-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section id="faq" className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full scroll-mt-20">
-      <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+    <section
+      id="faq"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full scroll-mt-20"
+    >
+      <div className="faq-header text-center max-w-3xl mx-auto mb-12 space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
             VOL. XXIV // PARENTING FAQ
@@ -77,7 +139,7 @@ export function FaqSection() {
           return (
             <div
               key={idx}
-              className="p-6 rounded-[10px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-3 hover:border-[#111413] transition-colors"
+              className="faq-card p-6 rounded-[10px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-3 hover:border-[#111413] transition-colors"
             >
               <div className="flex items-start gap-3">
                 <div className="p-1.5 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 text-[#143D2B] shrink-0 mt-0.5">

@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
 import {
   Smartphone,
@@ -12,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface HubStep {
   step: number;
@@ -53,21 +57,115 @@ export const DEVICE_HUB_STEPS: HubStep[] = [
 ];
 
 export function DeviceActionHubSpotlight() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Header reveal
+          tl.fromTo(
+            '.device-hub-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // 3 Step cards stagger
+          tl.fromTo(
+            '.device-hub-step',
+            { opacity: 0, y: MOTION_TOKENS.offset.section },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              stagger: MOTION_TOKENS.stagger.cards,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+
+          // Contrast comparison cards
+          tl.fromTo(
+            '.device-hub-contrast',
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              stagger: 0.1,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+
+          // Bottom CTA action bar
+          tl.fromTo(
+            '.device-hub-cta',
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            [
+              '.device-hub-header',
+              '.device-hub-step',
+              '.device-hub-contrast',
+              '.device-hub-cta',
+            ],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section id="devices-hub" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative">
+    <section
+      id="devices-hub"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative"
+    >
       <span id="devices" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <span id="roads" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <span id="quiz" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
+
       <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-6 sm:p-10 lg:p-12 shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-12">
         {/* Header & Framing */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="device-hub-header text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9] px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
             <span className="font-mono text-[11px] uppercase tracking-wider">
               VOL. XXIV // DEVICE RITE OF PASSAGE
             </span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
-            Turn Device Introduction into an <em className="italic font-normal text-[#143D2B]">Empowering Rite of Passage</em>
+            Turn Device Introduction into an{' '}
+            <em className="italic font-normal text-[#143D2B]">Empowering Rite of Passage</em>
           </h2>
           <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
             Technology is an integrated reality of modern childhood. Rather than resorting to secret spyware or nightly bedtime shouting matches, AlongSide establishes mutual agreements, objective readiness, and neutral hardware enforcement.
@@ -77,7 +175,10 @@ export function DeviceActionHubSpotlight() {
         {/* The 3-Step Transition Pipeline */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {DEVICE_HUB_STEPS.map((s) => (
-            <div key={s.step} className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-6 shadow-xs space-y-4 relative">
+            <div
+              key={s.step}
+              className="device-hub-step rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-6 shadow-xs space-y-4 relative"
+            >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#143D2B]">
                   {s.label}
@@ -109,7 +210,7 @@ export function DeviceActionHubSpotlight() {
         {/* Contrast Comparison Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#E3E3DC]">
           {/* The Legacy Trap */}
-          <div className="p-6 rounded-[10px] bg-white border border-rose-200/80 space-y-3">
+          <div className="device-hub-contrast p-6 rounded-[10px] bg-white border border-rose-200/80 space-y-3">
             <div className="flex items-center gap-2 text-rose-900 font-bold text-base font-serif">
               <XCircle className="h-5 w-5 text-rose-600 shrink-0" />
               <span>The Legacy Surveillance Trap</span>
@@ -131,7 +232,7 @@ export function DeviceActionHubSpotlight() {
           </div>
 
           {/* The AlongSide Way */}
-          <div className="p-6 rounded-[10px] bg-[#EAF3EE] border border-[#143D2B]/20 space-y-3">
+          <div className="device-hub-contrast p-6 rounded-[10px] bg-[#EAF3EE] border border-[#143D2B]/20 space-y-3">
             <div className="flex items-center gap-2 text-[#143D2B] font-bold text-base font-serif">
               <CheckCircle2 className="h-5 w-5 text-[#143D2B] shrink-0" />
               <span>The AlongSide Parent Calm Way</span>
@@ -154,7 +255,7 @@ export function DeviceActionHubSpotlight() {
         </div>
 
         {/* Bottom CTA Action Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 sm:p-8 rounded-[10px] bg-[#143D2B] text-white">
+        <div className="device-hub-cta flex flex-col sm:flex-row items-center justify-between gap-4 p-6 sm:p-8 rounded-[10px] bg-[#143D2B] text-white">
           <div className="space-y-1 text-center sm:text-left">
             <h3 className="font-serif text-xl font-bold">
               Ready to assess your child&apos;s phone readiness?

@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
 import {
   BookOpen,
@@ -19,6 +22,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface PillarData {
   number: string;
@@ -203,11 +207,84 @@ export const FIVE_BALANCED_PILLARS: PillarData[] = [
 ];
 
 export function PillarsShowcase() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Section header entrance
+          tl.fromTo(
+            '.pillars-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // Stagger the 3 core pillar cards
+          tl.fromTo(
+            '.pillar-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.section },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              stagger: MOTION_TOKENS.stagger.cards,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+
+          // Omnipresent companion spotlight card reveal
+          tl.fromTo(
+            '.pillars-advisor-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.pillars-header', '.pillar-card', '.pillars-advisor-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section id="pillars" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative">
+    <section
+      id="pillars"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20 relative"
+    >
       <span id="features" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
       <span id="academy" className="scroll-mt-20 absolute -top-20" aria-hidden="true" />
-      <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+      
+      <div className="pillars-header text-center max-w-3xl mx-auto space-y-3 mb-12">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
             VOL. XXIV // THREE PILLARS
@@ -228,7 +305,7 @@ export function PillarsShowcase() {
           return (
             <Card
               key={pillar.number}
-              className="border-[#E3E3DC] bg-white hover:border-[#111413] transition-all shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-[0_4px_12px_rgba(17,20,19,0.06)] flex flex-col justify-between rounded-[10px]"
+              className="pillar-card border-[#E3E3DC] bg-white hover:border-[#111413] transition-all shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-[0_4px_12px_rgba(17,20,19,0.06)] flex flex-col justify-between rounded-[10px]"
             >
               <CardHeader className="p-6 space-y-3">
                 <div className="flex items-center justify-between gap-2">
@@ -293,7 +370,7 @@ export function PillarsShowcase() {
       </div>
 
       {/* Global Companion: 24/7 AI Child Advisor Spotlight Card */}
-      <div className="rounded-2xl border border-teal-200 bg-gradient-to-r from-teal-900 via-slate-900 to-teal-950 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+      <div className="pillars-advisor-card rounded-2xl border border-teal-200 bg-gradient-to-r from-teal-900 via-slate-900 to-teal-950 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-500 text-slate-950 font-bold shadow-sm">
             <Brain className="h-6 w-6" />

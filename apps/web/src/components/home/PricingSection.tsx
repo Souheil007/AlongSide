@@ -1,7 +1,11 @@
+'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
 import { CheckCircle2, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface PricingPlan {
   id: string;
@@ -53,10 +57,82 @@ export const PRICING_PLANS: PricingPlan[] = [
 ];
 
 export function PricingSection() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Header reveal
+          tl.fromTo(
+            '.pricing-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // 2 Pricing cards stagger
+          tl.fromTo(
+            '.pricing-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.section },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              stagger: MOTION_TOKENS.stagger.cards,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+
+          // Guarantee footer
+          tl.fromTo(
+            '.pricing-footer',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.pricing-header', '.pricing-card', '.pricing-footer'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full scroll-mt-20">
+    <section
+      id="pricing"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full scroll-mt-20"
+    >
       <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-8 sm:p-12 text-center shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-8">
-        <div className="space-y-3 max-w-2xl mx-auto">
+        <div className="pricing-header space-y-3 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9] px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
             <span className="font-mono text-[11px] uppercase tracking-wider">
               VOL. XXIV // FAMILY PASS
@@ -76,7 +152,7 @@ export function PricingSection() {
           {PRICING_PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`rounded-[10px] p-6 relative overflow-hidden flex flex-col justify-between ${
+              className={`pricing-card rounded-[10px] p-6 relative overflow-hidden flex flex-col justify-between ${
                 plan.isPopular
                   ? 'border-2 border-[#111413] bg-white shadow-md'
                   : 'border border-[#E3E3DC] bg-white shadow-xs'
@@ -140,7 +216,7 @@ export function PricingSection() {
         </div>
 
         {/* Guarantee Footer */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-[#858C88] pt-2 font-mono">
+        <div className="pricing-footer flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-[#858C88] pt-2 font-mono">
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="h-4 w-4 text-[#143D2B]" /> No charge during your 7-day trial
           </span>

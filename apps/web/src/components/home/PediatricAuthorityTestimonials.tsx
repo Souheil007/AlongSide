@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import {
   Stethoscope,
   Brain,
@@ -8,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent } from '@/components/ui/Card';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface Testimonial {
   quote: string;
@@ -55,16 +59,91 @@ export const PEDIATRIC_TESTIMONIALS: Testimonial[] = [
 export const CLINICAL_TESTIMONIALS = PEDIATRIC_TESTIMONIALS;
 
 export function PediatricAuthorityTestimonials() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Header reveal
+          tl.fromTo(
+            '.testimonials-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // 3 Testimonial cards stagger
+          tl.fromTo(
+            '.testimonial-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.section },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              stagger: MOTION_TOKENS.stagger.cards,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+
+          // Bottom institutional trust signals / citations
+          tl.fromTo(
+            '.testimonials-citations',
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.testimonials-header', '.testimonial-card', '.testimonials-citations'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section id="testimonials" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
-      <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+    <section
+      id="testimonials"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20"
+    >
+      <div className="testimonials-header text-center max-w-3xl mx-auto mb-12 space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
             VOL. XXIV // DEVELOPMENTAL SCIENCE
           </span>
         </div>
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#111413] tracking-tight">
-          Backed by <em className="italic font-normal text-[#143D2B]">Pediatricians, Psychologists &amp; Neurobiologists</em>
+          Backed by{' '}
+          <em className="italic font-normal text-[#143D2B]">
+            Pediatricians, Psychologists &amp; Neurobiologists
+          </em>
         </h2>
         <p className="text-base sm:text-lg text-[#494F4C] leading-relaxed">
           Parenting advice should come from peer-reviewed developmental science, not social media influencers.
@@ -79,7 +158,7 @@ export function PediatricAuthorityTestimonials() {
           return (
             <Card
               key={idx}
-              className="border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-md hover:border-[#111413] transition-all flex flex-col justify-between rounded-[10px]"
+              className="testimonial-card border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-md hover:border-[#111413] transition-all flex flex-col justify-between rounded-[10px]"
             >
               <CardContent className="p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
@@ -111,7 +190,7 @@ export function PediatricAuthorityTestimonials() {
       </div>
 
       {/* Institutional Trust Badges Banner */}
-      <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-around gap-6 text-center">
+      <div className="testimonials-citations p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-around gap-6 text-center">
         <div className="space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
             <Award className="h-4 w-4 text-teal-700" /> Developmental Neurobiology

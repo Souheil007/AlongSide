@@ -1,13 +1,8 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP);
-}
 import Link from 'next/link';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 import {
   Baby,
   Smile,
@@ -841,6 +836,57 @@ export function LifespanStageSelector() {
   const containerRef = useRef<HTMLElement>(null);
   const prevStageRef = useRef<string>(activeStageId);
 
+  // Initial ScrollTrigger entrance for header and stage pills
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          tl.fromTo(
+            '.stages-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          tl.fromTo(
+            '.stage-tab-pill',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.05,
+              ease: MOTION_TOKENS.ease.gentle,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.stages-header', '.stage-tab-pill'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   // GSAP Smooth Milestone Stage & Pillar Transitions
   useGSAP(
     () => {
@@ -926,7 +972,7 @@ export function LifespanStageSelector() {
   return (
     <section id="stages" ref={containerRef} className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       {/* Editorial Section Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
+      <div className="stages-header text-center max-w-3xl mx-auto space-y-3 mb-10">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3 py-1 text-xs font-semibold text-[#143D2B]">
           <span className="font-mono text-[11px] uppercase tracking-wider">
             VOL. XXIV // CONTINUOUS LIFESPAN (0–18)
@@ -958,7 +1004,7 @@ export function LifespanStageSelector() {
                 aria-selected={isActive}
                 onClick={() => setActiveStageId(stage.id)}
                 onKeyDown={(e) => handleStageKeyDown(e, idx)}
-                className={`relative flex flex-col items-center justify-center py-2 px-1 sm:px-2 rounded-lg transition-all duration-200 cursor-pointer min-h-[46px] select-none text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-1 ${
+                className={`stage-tab-pill relative flex flex-col items-center justify-center py-2 px-1 sm:px-2 rounded-lg transition-all duration-200 cursor-pointer min-h-[46px] select-none text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-1 ${
                   isActive
                     ? 'bg-[#143D2B] text-white shadow-[0_2px_8px_rgba(20,61,43,0.22)] border border-[#143D2B]'
                     : 'bg-transparent text-[#494F4C] hover:text-[#111413] hover:bg-white/80 border border-transparent'

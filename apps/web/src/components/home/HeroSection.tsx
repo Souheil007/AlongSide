@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -13,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export const HERO_TRUST_SIGNALS = [
   {
@@ -38,31 +42,152 @@ export const HERO_TRUST_SIGNALS = [
 ];
 
 export function HeroSection() {
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          // Sanctuary Hero entrance orchestrated timeline
+          const tl = gsap.timeline({ defaults: { ease: MOTION_TOKENS.ease.calm } });
+
+          // Phase 1 (0.0s): Ambient arch aura blooms softly, staying permanently luminous & gently breathing
+          tl.fromTo(
+            '.hero-ambient-aura',
+            { opacity: 0, scale: 0.88 },
+            {
+              opacity: 0.9,
+              scale: 1,
+              duration: MOTION_TOKENS.duration.aura,
+              ease: MOTION_TOKENS.ease.reassure,
+            },
+            0
+          );
+
+          // Continuous soothing breathing loop so the sanctuary aura remains permanently alive and never vanishes
+          gsap.to('.hero-ambient-aura', {
+            scale: 1.06,
+            opacity: 1,
+            duration: 5.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: MOTION_TOKENS.duration.aura,
+          });
+
+          // Phase 2 (0.2s): Sanctuary headline unfolds
+          tl.fromTo(
+            '.hero-headline',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.hero,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            0.2
+          );
+
+          // Phase 3 (0.4s): Editorial subheadline glides up
+          tl.fromTo(
+            '.hero-subheadline',
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            0.4
+          );
+
+          // Phase 4 (0.55s): Dual CTA buttons appear
+          tl.fromTo(
+            '.hero-ctas',
+            { opacity: 0, y: 14 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: MOTION_TOKENS.ease.gentle,
+              clearProps: 'all',
+            },
+            0.55
+          );
+
+          // Phase 5 (0.7s): 4 Trust signal badges stagger into view
+          tl.fromTo(
+            '.hero-trust-badge',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: MOTION_TOKENS.stagger.tight,
+              ease: MOTION_TOKENS.ease.gentle,
+              clearProps: 'all',
+            },
+            0.7
+          );
+
+          // Phase 6 (0.9s): Reassurance micro-copy fades in
+          tl.fromTo(
+            '.hero-reassurance',
+            { opacity: 0, y: 8 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: MOTION_TOKENS.ease.reassure,
+              clearProps: 'all',
+            },
+            0.9
+          );
+        },
+        () => {
+          // Reduced motion: instant opacity without clearing props or wiping background
+          gsap.set('.hero-ambient-aura', { opacity: 0.9, scale: 1 });
+          gsap.fromTo(
+            [
+              '.hero-headline',
+              '.hero-subheadline',
+              '.hero-ctas',
+              '.hero-trust-badge',
+              '.hero-reassurance',
+            ],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-      {/* Editorial Archival Mesh Hero Aura */}
+    <section
+      ref={containerRef}
+      className="isolate relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+    >
+      {/* Editorial Archival Mesh Hero Aura (Isolated z-0 stacking context; never drops behind body) */}
       <div
-        className="absolute top-8 left-1/2 -translate-x-1/2 w-[720px] h-[400px] pointer-events-none -z-10 blur-3xl opacity-80"
-        style={{
-          background:
-            'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.16), transparent 60%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.12), transparent 55%), radial-gradient(circle at 50% 80%, rgba(17, 20, 19, 0.08), transparent 60%)',
-        }}
+        className="pointer-events-none absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-[760px] sm:w-[920px] lg:w-[1060px] h-[440px] sm:h-[500px] z-0 blur-3xl overflow-visible"
         aria-hidden="true"
-      />
+      >
+        <div
+          className="hero-ambient-aura w-full h-full"
+          style={{
+            background:
+              'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.32), transparent 65%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.24), transparent 60%), radial-gradient(circle at 50% 75%, rgba(20, 61, 43, 0.18), transparent 65%)',
+          }}
+        />
+      </div>
 
-      <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
-        {/* Editorial Publication Eyebrow Pill */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1.5 text-xs font-medium text-[#494F4C] shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
-          <span className="rounded-[4px] bg-[#EAF3EE] px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
-            WHOLE-CHILD ADVISORY
-          </span>
-          <span className="font-medium text-[#494F4C]">
-            Neurodevelopmental Science • Lifespan Family OS
-          </span>
-        </div>
-
+      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
         {/* Editorial Sanctuary Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#111413] leading-[1.12]">
+        <h1 className="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#111413] leading-[1.12]">
           The Parent Advisory Sanctuary: <br className="hidden sm:inline" />
           <span className="font-serif italic font-normal text-[#143D2B] tracking-normal">
             Keep Up With Your Child
@@ -71,13 +196,13 @@ export function HeroSection() {
         </h1>
 
         {/* Empathetic Editorial Subheadline */}
-        <p className="text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
+        <p className="hero-subheadline text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
           Replace parenting anxiety, guilt, and exhaustion with evidence-based developmental science,
           prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
         </p>
 
         {/* Dual Primary CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 pt-3 w-full sm:w-auto">
+        <div className="hero-ctas flex flex-col sm:flex-row items-center gap-4 pt-3 w-full sm:w-auto">
           <Link href="/register" className="w-full sm:w-auto">
             <Button
               variant="pill"
@@ -106,7 +231,7 @@ export function HeroSection() {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2.5 p-3 rounded-[5px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] transition-colors hover:border-[#111413]"
+                className="hero-trust-badge flex items-center gap-2.5 p-3 rounded-[5px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] transition-colors hover:border-[#111413]"
               >
                 <Icon className="h-4 w-4 text-[#143D2B] shrink-0" />
                 <div className="text-xs">
@@ -119,7 +244,7 @@ export function HeroSection() {
         </div>
 
         {/* Reassurance Micro-Copy */}
-        <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 pt-2 text-xs text-[#858C88]">
+        <div className="hero-reassurance flex flex-wrap items-center justify-center gap-y-2 gap-x-6 pt-2 text-xs text-[#858C88]">
           <span className="flex items-center gap-1.5 font-medium">
             <Brain className="h-3.5 w-3.5 text-[#143D2B]" /> Prioritized Parent Academy (Neurobiology)
           </span>
