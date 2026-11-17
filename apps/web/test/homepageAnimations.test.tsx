@@ -96,7 +96,6 @@ describe('Plan 41: Homepage GSAP "Parent Calm" Animation & Scroll Experience', (
 
       // Contains animation anchor classes
       expect(html).toContain('hero-ambient-aura');
-      expect(html).toContain('hero-eyebrow');
       expect(html).toContain('hero-headline');
       expect(html).toContain('hero-subheadline');
       expect(html).toContain('hero-ctas');

@@ -75,21 +75,7 @@ export function HeroSection() {
             delay: MOTION_TOKENS.duration.aura,
           });
 
-          // Phase 2 (0.2s): Eyebrow badge descends
-          tl.fromTo(
-            '.hero-eyebrow',
-            { opacity: 0, y: -MOTION_TOKENS.offset.subtle },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: MOTION_TOKENS.ease.calm,
-              clearProps: 'all',
-            },
-            0.2
-          );
-
-          // Phase 3 (0.35s): Sanctuary headline unfolds
+          // Phase 2 (0.2s): Sanctuary headline unfolds
           tl.fromTo(
             '.hero-headline',
             { opacity: 0, y: MOTION_TOKENS.offset.standard },
@@ -100,10 +86,10 @@ export function HeroSection() {
               ease: MOTION_TOKENS.ease.calm,
               clearProps: 'all',
             },
-            0.35
+            0.2
           );
 
-          // Phase 4 (0.5s): Editorial subheadline glides up
+          // Phase 3 (0.4s): Editorial subheadline glides up
           tl.fromTo(
             '.hero-subheadline',
             { opacity: 0, y: 16 },
@@ -114,10 +100,10 @@ export function HeroSection() {
               ease: MOTION_TOKENS.ease.calm,
               clearProps: 'all',
             },
-            0.5
+            0.4
           );
 
-          // Phase 5 (0.65s): Dual CTA buttons appear
+          // Phase 4 (0.55s): Dual CTA buttons appear
           tl.fromTo(
             '.hero-ctas',
             { opacity: 0, y: 14 },
@@ -128,10 +114,10 @@ export function HeroSection() {
               ease: MOTION_TOKENS.ease.gentle,
               clearProps: 'all',
             },
-            0.65
+            0.55
           );
 
-          // Phase 6 (0.8s): 4 Trust signal badges stagger into view
+          // Phase 5 (0.7s): 4 Trust signal badges stagger into view
           tl.fromTo(
             '.hero-trust-badge',
             { opacity: 0, y: MOTION_TOKENS.offset.subtle },
@@ -143,10 +129,10 @@ export function HeroSection() {
               ease: MOTION_TOKENS.ease.gentle,
               clearProps: 'all',
             },
-            0.8
+            0.7
           );
 
-          // Phase 7 (1.0s): Reassurance micro-copy fades in
+          // Phase 6 (0.9s): Reassurance micro-copy fades in
           tl.fromTo(
             '.hero-reassurance',
             { opacity: 0, y: 8 },
@@ -157,7 +143,7 @@ export function HeroSection() {
               ease: MOTION_TOKENS.ease.reassure,
               clearProps: 'all',
             },
-            1.0
+            0.9
           );
         },
         () => {
@@ -165,7 +151,6 @@ export function HeroSection() {
           gsap.set('.hero-ambient-aura', { opacity: 0.9, scale: 1 });
           gsap.fromTo(
             [
-              '.hero-eyebrow',
               '.hero-headline',
               '.hero-subheadline',
               '.hero-ctas',
@@ -201,16 +186,6 @@ export function HeroSection() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
-        {/* Editorial Publication Eyebrow Pill */}
-        <div className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1.5 text-xs font-medium text-[#494F4C] shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
-          <span className="rounded-[4px] bg-[#EAF3EE] px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
-            WHOLE-CHILD ADVISORY
-          </span>
-          <span className="font-medium text-[#494F4C]">
-            Neurodevelopmental Science • Lifespan Family OS
-          </span>
-        </div>
-
         {/* Editorial Sanctuary Headline */}
         <h1 className="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#111413] leading-[1.12]">
           The Parent Advisory Sanctuary: <br className="hidden sm:inline" />
