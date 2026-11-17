@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 08: Zen Botanical Sanctuary | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            zenBg: '#F7F6F2',
+            zenCard: '#FFFFFF',
+            zenSage: '#3D5A45',
+            zenOat: '#EFECE6',
+            zenClay: '#C2847A',
+            zenBark: '#262A27'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #262A27;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .zen-shadow {
+      box-shadow: 0 4px 20px -2px rgba(61, 90, 69, 0.05), 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .breathe-circle {
+      transition: transform 4s ease-in-out;
+    }
+    .inhale {
+      transform: scale(1.4);
+    }
+    .exhale {
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-zenSage selection:text-white">
+
+  <!-- Top Header -->
+  <header class="border-b border-[#E8E5DD] bg-[#F7F6F2]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-zenSage text-white flex items-center justify-center font-serif text-sm font-bold">🌿</span>
+          <span class="font-serif text-lg font-bold text-zenBark">AlongSide Sanctuary</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Design 08 Restorative Salon</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-stone-500 hover:text-stone-900 px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-stone-500 hover:text-stone-900 px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-stone-500 hover:text-stone-900 px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="academy-design-6-celestial-milestone-orbit.html" class="text-stone-500 hover:text-stone-900 px-1">06</a>
+          <a href="academy-design-7-architectural-monograph.html" class="text-stone-500 hover:text-stone-900 px-1">07</a>
+          <span class="bg-zenSage font-bold text-white px-2 py-0.5 rounded-full shadow-xs">08 Zen</span>
+          <a href="academy-design-9-interactive-folio-deck.html" class="text-stone-500 hover:text-stone-900 px-1">09</a>
+          <a href="index.html" class="text-zenSage hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-zenSage text-white px-3.5 py-1.5 rounded-full hover:bg-zenSage/90 transition shadow-xs">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO WITH INTERACTIVE 4-7-8 BREATHING RESET -->
+    <section class="bg-white rounded-[2.5rem] p-8 sm:p-12 zen-shadow border border-[#E8E5DD] relative overflow-hidden space-y-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+        <div class="space-y-4 max-w-2xl">
+          <div class="inline-flex items-center gap-2 bg-[#EAF0EB] text-zenSage px-3.5 py-1 rounded-full text-xs font-mono font-semibold">
+            <span>A Regulated Parent Regulates A Child</span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-5xl font-light text-zenBark leading-tight">
+            Restorative Guidance for the <em class="italic font-normal">Tired Nervous System</em>.
+          </h1>
+          <p class="text-stone-600 text-sm sm:text-base leading-relaxed">
+            Parenting an 8-year-old through emotional storms requires your own baseline calm first. Ground yourself here before entering difficult evening transitions.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-mono text-stone-500 pt-2">
+            <span>Calibrated to Maya (Age 8 · Tier 2: Explorer)</span>
+          </div>
+        </div>
+
+        <!-- Interactive 4-Second Vagal Breathing Reset Widget -->
+        <div class="bg-[#F7F6F2] rounded-3xl p-6 border border-[#E8E5DD] shrink-0 w-full lg:w-80 flex flex-col items-center text-center space-y-4">
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-zenSage">Parent Somatic Anchor</span>
+          
+          <div class="w-24 h-24 rounded-full bg-[#E5ECE7] border-2 border-zenSage/30 flex items-center justify-center relative">
+            <div id="breathe-node" class="breathe-circle w-16 h-16 rounded-full bg-zenSage text-white flex items-center justify-center text-xs font-bold shadow-md">
+              <span id="breathe-text">Inhale</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-stone-600 leading-relaxed font-serif italic">
+            “Feel your feet flat on the floor. Soften your jaw before opening your child's door.”
+          </p>
+
+          <button onclick="triggerBreath()" class="text-xs font-mono bg-zenSage text-white px-4 py-1.5 rounded-full hover:bg-zenSage/90 transition shadow-xs">
+            Start Breath Cycle (4s)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALMING RESTORATIVE CURRICULUM CARDS -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[#E8E5DD] pb-4">
+        <div>
+          <h3 class="font-serif text-2xl font-light text-zenBark">Restorative Study Modules</h3>
+          <p class="text-xs text-stone-500 font-mono">Calibrated to 8-year-old middle childhood milestones</p>
+        </div>
+        <span class="font-mono text-xs text-zenSage">Quiet Mode Active</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Behavior &amp; Emotions</span>
+              <span class="text-amber-800 text-[11px] font-bold">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              When 8-year-old territorial jealousy flares over bedroom boundaries, learn restorative turn-taking rituals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Digital World</span>
+              <span class="text-amber-800 text-[11px] font-bold">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              Post-Screen Dopamine Crashes: 10m Decompression
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Health &amp; Sleep</span>
+              <span class="text-stone-500 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              Bedtime Somatosensory Calming &amp; Melatonin
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Digital World</span>
+              <span class="text-stone-500 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              Roblox &amp; Minecraft Voice Chat Peer Pressure
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Nutrition</span>
+              <span class="text-stone-500 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              School Lunchbox Co-Regulation &amp; Palate
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">3 Chapters · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E8E5DD] zen-shadow flex flex-col justify-between space-y-4 hover:border-zenSage/50 transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-zenSage font-bold bg-[#EAF0EB] px-2.5 py-0.5 rounded-full">Behavior &amp; Emotions</span>
+              <span class="text-stone-500 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-2xl text-zenBark leading-snug">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift to complex friendship hierarchies. Scripts to help de-escalate cliques.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-[#F0ECE4] flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 19 min</span>
+            <a href="http://localhost:3000/academy" class="text-zenSage font-bold hover:underline">Read Ritual →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-[#E8E5DD] pt-6 text-xs font-mono text-stone-500">
+      <a href="academy-design-7-architectural-monograph.html" class="hover:text-stone-900">← Prev: 07 Swiss Monograph</a>
+      <a href="academy-design-9-interactive-folio-deck.html" class="font-bold text-zenSage hover:underline">Next: 09 Interactive Folio Deck →</a>
+    </div>
+
+  </main>
+
+  <script>
+    let isBreathing = false;
+    function triggerBreath() {
+      if (isBreathing) return;
+      isBreathing = true;
+      const node = document.getElementById('breathe-node');
+      const text = document.getElementById('breathe-text');
+
+      text.textContent = 'Inhale...';
+      node.classList.add('inhale');
+
+      setTimeout(() => {
+        text.textContent = 'Hold (7s)...';
+        setTimeout(() => {
+          text.textContent = 'Exhale (8s)...';
+          node.classList.remove('inhale');
+          node.classList.add('exhale');
+          setTimeout(() => {
+            text.textContent = 'Rest';
+            isBreathing = false;
+          }, 4000);
+        }, 3500);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

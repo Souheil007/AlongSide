@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 10: Next-Gen Spatial Glass HUD | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            hudDark: '#0B0F19',
+            hudGlass: 'rgba(255, 255, 255, 0.05)',
+            hudBorder: 'rgba(255, 255, 255, 0.12)',
+            hudEmerald: '#10B981',
+            hudCyan: '#38BDF8'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 20% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                  #0B0F19;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #F8FAFC;
+    }
+    .hud-panel {
+      background: rgba(20, 26, 42, 0.65);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .hud-panel:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-hudEmerald selection:text-black">
+
+  <!-- Spatial Island Top Bar -->
+  <header class="max-w-6xl mx-auto pt-6 px-4 sticky top-4 z-50">
+    <div class="hud-panel rounded-full px-6 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-cyan-400 text-black flex items-center justify-center font-bold text-xs shadow-lg">
+            S
+          </div>
+          <span class="font-serif text-lg font-bold tracking-tight text-white">AlongSide HUD</span>
+        </a>
+        <span class="text-xs font-mono text-slate-400 hidden sm:inline">• Spatial Glass Telemetry</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-2 py-1 text-xs font-mono border border-white/10">
+          <a href="academy-design-1-editorial-atelier.html" class="text-slate-400 hover:text-white px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-slate-400 hover:text-white px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-slate-400 hover:text-white px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-slate-400 hover:text-white px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-slate-400 hover:text-white px-1">05</a>
+          <a href="academy-design-6-celestial-milestone-orbit.html" class="text-slate-400 hover:text-white px-1">06</a>
+          <a href="academy-design-7-architectural-monograph.html" class="text-slate-400 hover:text-white px-1">07</a>
+          <a href="academy-design-8-zen-sanctuary-salon.html" class="text-slate-400 hover:text-white px-1">08</a>
+          <a href="academy-design-9-interactive-folio-deck.html" class="text-slate-400 hover:text-white px-1">09</a>
+          <span class="bg-gradient-to-r from-emerald-500 to-cyan-400 font-bold text-black px-2 py-0.5 rounded-full shadow-xs">10 HUD</span>
+          <a href="index.html" class="text-emerald-400 hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-white text-black font-bold px-3.5 py-1.5 rounded-full hover:bg-slate-200 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pt-10 space-y-10">
+
+    <!-- HERO SPATIAL HUD MASTHEAD -->
+    <section class="hud-panel rounded-[2.5rem] p-8 sm:p-12 relative overflow-hidden space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>SPATIAL COMPUTING CURRICULUM HUD · VISION V1.0</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+          <span>Active Child Node:</span>
+          <span class="text-emerald-400 font-bold">Maya (Age 8 · Tier 2: Explorer)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <h1 class="font-serif text-3xl sm:text-5xl font-light text-white leading-tight">
+            Spatial Intelligence for <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 font-normal">Modern Parenting</span>.
+          </h1>
+          <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl">
+            A real-time telemetry dashboard for your child's neurodevelopmental needs. Track daily behavioral friction, sleep shifts, and digital habits in high fidelity.
+          </p>
+        </div>
+
+        <!-- Radial Telemetry Gauges -->
+        <div class="lg:col-span-4 bg-white/5 rounded-2xl p-5 border border-white/10 flex items-center justify-around">
+          <div class="text-center space-y-1">
+            <div class="text-2xl font-bold font-mono text-emerald-400">40%</div>
+            <div class="text-[10px] font-mono text-slate-400 uppercase">Syllabus</div>
+          </div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div class="text-center space-y-1">
+            <div class="text-2xl font-bold font-mono text-cyan-400">22m</div>
+            <div class="text-[10px] font-mono text-slate-400 uppercase">Invested</div>
+          </div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div class="text-center space-y-1">
+            <div class="text-2xl font-bold font-mono text-amber-400">3/3</div>
+            <div class="text-[10px] font-mono text-slate-400 uppercase">Streak</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOATING SPATIAL MODULE CARDS -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="font-serif text-2xl font-normal text-white">Spatial Curriculum Capsules</h3>
+          <p class="text-xs text-slate-400 font-mono">Calibrated to 8-year-old middle childhood milestones</p>
+        </div>
+        <span class="font-mono text-xs text-emerald-400">6 Capsules Online</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">CAPSULE 01 // BEHAVIOR</span>
+              <span class="text-amber-300 font-bold text-[11px]">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              When 8-year-old territorial jealousy flares over bedroom boundaries, learn restorative turn-taking rituals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="text-emerald-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">CAPSULE 02 // DIGITAL</span>
+              <span class="text-amber-300 font-bold text-[11px]">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Post-Screen Dopamine Crashes: 10m Decompression
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-cyan-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-purple-400 font-bold bg-purple-500/10 px-2.5 py-0.5 rounded-full border border-purple-500/20">CAPSULE 03 // SLEEP</span>
+              <span class="text-slate-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Bedtime Somatosensory Calming &amp; Melatonin
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-purple-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">CAPSULE 04 // DIGITAL</span>
+              <span class="text-slate-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Roblox &amp; Minecraft Voice Chat Peer Pressure
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-cyan-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-amber-400 font-bold bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">CAPSULE 05 // NUTRITION</span>
+              <span class="text-slate-400 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              School Lunchbox Co-Regulation &amp; Palate
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">3 Chapters · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-amber-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="hud-panel rounded-3xl p-6 flex flex-col justify-between space-y-4 hover:scale-[1.01] transition duration-300">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">CAPSULE 06 // BEHAVIOR</span>
+              <span class="text-slate-400 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift to complex friendship hierarchies. Scripts to help de-escalate cliques.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 19 min</span>
+            <a href="http://localhost:3000/academy" class="text-emerald-400 font-bold hover:underline">Activate Capsule →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-white/10 pt-6 text-xs font-mono text-slate-400">
+      <a href="academy-design-9-interactive-folio-deck.html" class="hover:text-white">← Prev: 09 Folio Deck</a>
+      <a href="index.html" class="font-bold text-white hover:underline">Return to All 10 Explorations Index →</a>
+    </div>
+
+  </main>
+
+</body>
+</html>

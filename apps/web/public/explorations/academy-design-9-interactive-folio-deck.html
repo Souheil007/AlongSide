@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 09: Interactive Folio Deck | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            folioBg: '#F3F2EE',
+            folioCard: '#FFFFFF',
+            folioTab: '#E4E2DC',
+            forest: '#143D2B',
+            leatherBrown: '#8B4513'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F3F2EE;
+      color: #1A1A18;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .folio-tab {
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+    }
+    .folio-shadow {
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 20px 30px -10px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-forest selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-stone-300 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-stone-900 text-white flex items-center justify-center font-serif text-sm font-bold">📁</span>
+          <span class="font-serif text-lg font-bold text-stone-900">AlongSide Folio</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Master Binder &amp; Drawers</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-stone-500 hover:text-stone-900 px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-stone-500 hover:text-stone-900 px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-stone-500 hover:text-stone-900 px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="academy-design-6-celestial-milestone-orbit.html" class="text-stone-500 hover:text-stone-900 px-1">06</a>
+          <a href="academy-design-7-architectural-monograph.html" class="text-stone-500 hover:text-stone-900 px-1">07</a>
+          <a href="academy-design-8-zen-sanctuary-salon.html" class="text-stone-500 hover:text-stone-900 px-1">08</a>
+          <span class="bg-forest font-bold text-white px-2 py-0.5 rounded-full shadow-xs">09 Folio</span>
+          <a href="academy-design-10-spatial-glass-hud.html" class="text-stone-500 hover:text-stone-900 px-1">10</a>
+          <a href="index.html" class="text-forest hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-forest text-white px-3.5 py-1.5 rounded-full hover:bg-forest/90 transition shadow-xs">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-10">
+
+    <!-- MASTHEAD INTRO -->
+    <section class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-stone-200 text-stone-800 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span>THE MASTER FOLIO DECK · PHYSICAL BINDER METAPHOR</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-stone-600 bg-white px-3.5 py-1.5 rounded-full border border-stone-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Calibrated: Maya (Age 8 · Tier 2: Explorer)</span>
+        </div>
+      </div>
+      <h1 class="font-serif text-3xl sm:text-5xl font-normal text-stone-950 leading-tight">
+        Tangible Developmental Dossiers.
+      </h1>
+      <p class="text-stone-600 text-base max-w-2xl leading-relaxed">
+        Click any folder tab to pull out its complete syllabus, audio recordings, and instant co-regulation scripts. Zero page jumping required.
+      </p>
+    </section>
+
+    <!-- TACTILE TABBED FOLDER INTERACTION -->
+    <section class="bg-white rounded-3xl p-6 sm:p-10 folio-shadow border border-stone-300 space-y-8">
+
+      <!-- Folder Top Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-stone-200">
+        <button onclick="selectTab('dopamine')" id="tab-btn-dopamine" class="folder-tab bg-forest text-white px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2 shadow-xs">
+          <span>📁 Vol 01: Dopamine Crashes</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        </button>
+        <button onclick="selectTab('impulse')" id="tab-btn-impulse" class="folder-tab bg-stone-100 text-stone-700 hover:bg-stone-200 px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2">
+          <span>📁 Vol 02: Sibling Rivalry</span>
+        </button>
+        <button onclick="selectTab('bedtime')" id="tab-btn-bedtime" class="folder-tab bg-stone-100 text-stone-700 hover:bg-stone-200 px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2">
+          <span>📁 Vol 03: Bedtime Melatonin</span>
+        </button>
+        <button onclick="selectTab('roblox')" id="tab-btn-roblox" class="folder-tab bg-stone-100 text-stone-700 hover:bg-stone-200 px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2">
+          <span>📁 Vol 04: Roblox Safety</span>
+        </button>
+      </div>
+
+      <!-- ACTIVE FOLIO DRAWER CONTENT (Dynamic JavaScript switch) -->
+      <div id="folio-content" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Column 1: Chapter Checklist & Audio -->
+        <div class="lg:col-span-5 space-y-6 bg-stone-50 p-6 rounded-2xl border border-stone-200">
+          <div class="space-y-1">
+            <span class="text-[10px] font-mono uppercase font-bold text-stone-400 tracking-wider">Volume Syllabus</span>
+            <h4 class="font-serif text-xl font-bold text-stone-900" id="folio-title">
+              Post-Screen Dopamine Crashes: The 10-Minute Decompression
+            </h4>
+          </div>
+
+          <!-- Audio Player Pill -->
+          <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between shadow-2xs">
+            <div class="flex items-center gap-3">
+              <button class="w-10 h-10 rounded-full bg-forest text-white flex items-center justify-center font-bold text-xs">▶</button>
+              <div>
+                <div class="text-xs font-bold text-stone-900">Dr. Chen Audio Briefing</div>
+                <div class="text-[10px] text-stone-400 font-mono">3:40 min duration</div>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-emerald-700 font-bold">1/5 Complete</span>
+          </div>
+
+          <!-- Chapters -->
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-3 bg-white rounded-lg border border-emerald-500/30 flex items-center justify-between font-bold text-stone-900 shadow-2xs">
+              <span>01. Anatomy of an iPad Dopamine Drop</span>
+              <span class="text-emerald-700">✓ Done</span>
+            </div>
+            <div class="p-3 bg-forest/5 rounded-lg border border-forest/30 flex items-center justify-between font-bold text-forest shadow-2xs">
+              <span>02. The Kinetic Snack Bridge</span>
+              <span class="text-forest">▶ Up Next</span>
+            </div>
+            <div class="p-3 bg-white/70 rounded-lg border border-stone-200 flex items-center justify-between text-stone-500">
+              <span>03. Why Timers Cause Sudden Defiance</span>
+              <span>3 min</span>
+            </div>
+            <div class="p-3 bg-white/70 rounded-lg border border-stone-200 flex items-center justify-between text-stone-500">
+              <span>04. The Co-Regulation Exit Script</span>
+              <span>4 min</span>
+            </div>
+            <div class="p-3 bg-white/70 rounded-lg border border-stone-200 flex items-center justify-between text-stone-500">
+              <span>05. Restoring Afternoon Focus</span>
+              <span>3 min</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Interactive Dialogue Flashcard & Action Scripts -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="flex items-center justify-between">
+            <h4 class="font-serif text-2xl text-stone-900 font-bold">
+              Parent Field Flashcard (Chapter 02)
+            </h4>
+            <span class="text-xs font-mono text-stone-400">Tactile Dialogue Card</span>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Bad script -->
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 space-y-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-rose-800">
+                ❌ What instinctively slips when stressed:
+              </span>
+              <p class="text-sm font-medium text-rose-950 font-serif italic" id="folio-bad-script">
+                “I told you three times your 30 minutes are up! Turn it off right now or no iPad this weekend!”
+              </p>
+              <p class="text-xs text-rose-800 font-mono pt-1">
+                Trigger: Activates fight/flight response; child literally perceives screen loss as sensory threat.
+              </p>
+            </div>
+
+            <!-- Good script -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800">
+                ✓ What to say instead (Co-Regulation Script):
+              </span>
+              <p class="text-sm font-medium text-emerald-950 font-serif italic" id="folio-good-script">
+                “I see you're finishing this world. I've got your apple slices and ice water here. Show me what you built while you take your first bite.”
+              </p>
+              <p class="text-xs text-emerald-800 font-mono pt-1">
+                Neurobiology: Tactile chewing and curiosity bridge the dopaminergic cliff without conflict.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-4 border-t border-stone-200 font-mono text-xs">
+            <span class="text-stone-500">Delivery tip: Soft eye contact, side-by-side stance</span>
+            <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-5 py-2.5 rounded-full font-bold hover:bg-stone-800 transition shadow-xs">
+              Read Entire Chapter →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-stone-300 pt-6 text-xs font-mono text-stone-500">
+      <a href="academy-design-8-zen-sanctuary-salon.html" class="hover:text-stone-900">← Prev: 08 Zen Sanctuary</a>
+      <a href="academy-design-10-spatial-glass-hud.html" class="font-bold text-forest hover:underline">Next: 10 Spatial Glass HUD →</a>
+    </div>
+
+  </main>
+
+  <script>
+    const volumes = {
+      dopamine: {
+        title: "Post-Screen Dopamine Crashes: The 10-Minute Decompression",
+        bad: "“I told you three times your 30 minutes are up! Turn it off right now or no iPad this weekend!”",
+        good: "“I see you're finishing this world. I've got your apple slices and ice water here. Show me what you built while you take your first bite.”"
+      },
+      impulse: {
+        title: "Elementary Impulse Control & Sibling Rivalry",
+        bad: "“Stop acting like a baby and just share your toys with your younger brother!”",
+        good: "“Your body is so mad because you weren't finished playing. I hear you. Let's find your brother another toy while you keep your space.”"
+      },
+      bedtime: {
+        title: "Bedtime Somatosensory Calming & Melatonin Shifting",
+        bad: "“You've asked for water three times. Go to sleep right now, it's 9:00 PM!”",
+        good: "“Your imagination gets really loud once the lamps go dark. Let me sit on the floor beside you for 3 quiet breaths.”"
+      },
+      roblox: {
+        title: "Roblox & Minecraft Voice Chat Peer Boundaries",
+        bad: "“If anyone talks to you online you are never playing this game again!”",
+        good: "“If anyone in the game asks you for a trade that feels weird, you can leave the room instantly. You will never be in trouble with me.”"
+      }
+    };
+
+    function selectTab(vol) {
+      document.querySelectorAll('.folder-tab').forEach(t => {
+        t.className = "folder-tab bg-stone-100 text-stone-700 hover:bg-stone-200 px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2";
+      });
+      const activeBtn = document.getElementById('tab-btn-' + vol);
+      activeBtn.className = "folder-tab bg-forest text-white px-5 py-2.5 rounded-t-xl text-xs font-mono font-bold transition flex items-center gap-2 shadow-xs";
+
+      document.getElementById('folio-title').textContent = volumes[vol].title;
+      document.getElementById('folio-bad-script').textContent = volumes[vol].bad;
+      document.getElementById('folio-good-script').textContent = volumes[vol].good;
+    }
+  </script>
+</body>
+</html>

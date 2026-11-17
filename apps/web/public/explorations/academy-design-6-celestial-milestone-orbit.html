@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 06: Celestial Developmental Orbit | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            spaceDark: '#0A0E17',
+            spaceSurface: '#121826',
+            starlight: '#F8FAFC',
+            orbitGlow: '#10B981',
+            starCyan: '#06B6D4'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0A0E17;
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+        radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .celestial-card {
+      background: rgba(18, 24, 38, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    }
+    .celestial-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.15);
+    }
+    .orbit-ring {
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-emerald-500 selection:text-black">
+
+  <!-- Top Bar -->
+  <header class="border-b border-white/10 bg-[#0A0E17]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-xs shadow-lg">
+            ✧
+          </div>
+          <span class="font-serif text-lg font-bold text-white tracking-tight">AlongSide Orbit</span>
+        </a>
+        <span class="text-xs font-mono text-slate-400 hidden sm:inline">• Celestial Milestone Map</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-2 py-1 text-xs font-mono border border-white/10">
+          <a href="academy-design-1-editorial-atelier.html" class="text-slate-400 hover:text-white px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-slate-400 hover:text-white px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-slate-400 hover:text-white px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-slate-400 hover:text-white px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-slate-400 hover:text-white px-1">05</a>
+          <span class="bg-emerald-500 font-bold text-black px-2 py-0.5 rounded-full shadow-xs">06 Orbit</span>
+          <a href="academy-design-7-architectural-monograph.html" class="text-slate-400 hover:text-white px-1">07</a>
+          <a href="index.html" class="text-emerald-400 hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-emerald-500 text-black font-bold px-3.5 py-1.5 rounded-full hover:bg-emerald-400 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO: CELESTIAL MASTHEAD -->
+    <section class="celestial-card rounded-3xl p-8 sm:p-12 relative overflow-hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>CELESTIAL DEVELOPMENTAL ORBIT · TIER 2</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+          <span>Center Coordinate:</span>
+          <span class="text-white font-bold">Maya (Age 8 · Explorer)</span>
+        </div>
+      </div>
+
+      <div class="max-w-2xl space-y-3">
+        <h1 class="font-serif text-3xl sm:text-5xl font-light text-white leading-tight">
+          A Child's Mind Is An <span class="italic text-emerald-400 font-normal">Expanding Universe</span>, Not A Problem To Fix.
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          Navigate concentric rings of developmental mastery: from inner autonomic regulation to outward digital citizenship and peer constellations.
+        </p>
+      </div>
+
+      <!-- VISUAL CONCENTRIC ORBITS SCHEMATIC -->
+      <div class="relative w-full h-80 sm:h-96 rounded-2xl bg-[#0F1420] border border-white/5 flex items-center justify-center overflow-hidden">
+        <!-- Orbit Rings -->
+        <div class="orbit-ring w-48 h-48 sm:w-56 sm:h-56"></div>
+        <div class="orbit-ring w-64 h-64 sm:w-80 sm:h-80"></div>
+        <div class="orbit-ring w-80 h-80 sm:w-[420px] sm:h-[420px]"></div>
+
+        <!-- Center Star Node (Maya) -->
+        <div class="relative z-10 w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-300 text-black flex flex-col items-center justify-center shadow-2xl ring-8 ring-emerald-500/20">
+          <span class="text-xs font-bold font-serif leading-none">MAYA</span>
+          <span class="text-[9px] font-mono opacity-80 mt-0.5">AGE 8</span>
+        </div>
+
+        <!-- Node 1: Inner Somatics -->
+        <div class="absolute top-14 left-1/4 z-10 bg-white/10 hover:bg-emerald-500 hover:text-black border border-white/20 px-3 py-1.5 rounded-full text-xs font-mono transition cursor-pointer backdrop-blur-md">
+          ✧ Orbit 1: Vagal Reset
+        </div>
+
+        <!-- Node 2: Sibling Dynamics -->
+        <div class="absolute bottom-16 left-1/3 z-10 bg-white/10 hover:bg-emerald-500 hover:text-black border border-white/20 px-3 py-1.5 rounded-full text-xs font-mono transition cursor-pointer backdrop-blur-md">
+          ✧ Orbit 2: Sibling Rivalry
+        </div>
+
+        <!-- Node 3: Digital World -->
+        <div class="absolute top-20 right-1/4 z-10 bg-white/10 hover:bg-emerald-500 hover:text-black border border-white/20 px-3 py-1.5 rounded-full text-xs font-mono transition cursor-pointer backdrop-blur-md">
+          ✧ Orbit 3: Dopamine Crash
+        </div>
+
+        <!-- Node 4: Sleep Melatonin -->
+        <div class="absolute bottom-14 right-1/4 z-10 bg-white/10 hover:bg-emerald-500 hover:text-black border border-white/20 px-3 py-1.5 rounded-full text-xs font-mono transition cursor-pointer backdrop-blur-md">
+          ✧ Orbit 4: Somatosensory Bedtime
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSTELLATION COURSE CARDS (Celestial Slate Style) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="font-serif text-2xl font-normal text-white">Active Milestone Constellations</h3>
+          <p class="text-xs text-slate-400 font-mono">Calibrated to 8-year-old brain maturation</p>
+        </div>
+        <span class="font-mono text-xs text-emerald-400">4 Orbits Active</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded">ORBIT 01 · BEHAVIOR</span>
+              <span class="text-amber-300 text-[11px]">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              When resource jealousy flares between age 8 and younger siblings, learn restorative turn-taking rituals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="text-emerald-400 hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-starCyan font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded">ORBIT 02 · DIGITAL</span>
+              <span class="text-amber-300 text-[11px]">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Post-Screen Dopamine Crashes: 10m Decompression
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-starCyan hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-indigo-400 font-bold bg-indigo-500/10 px-2.5 py-0.5 rounded">ORBIT 03 · SLEEP</span>
+              <span class="text-slate-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Bedtime Somatosensory Calming &amp; Melatonin
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-indigo-400 hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-starCyan font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded">ORBIT 02 · DIGITAL</span>
+              <span class="text-slate-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Roblox &amp; Minecraft Voice Chat Peer Pressure
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-starCyan hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded">ORBIT 04 · NUTRITION</span>
+              <span class="text-slate-400 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              School Lunchbox Co-Regulation &amp; Palate
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">3 Chapters · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-emerald-400 hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="celestial-card rounded-3xl p-6 flex flex-col justify-between transition space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded">ORBIT 01 · BEHAVIOR</span>
+              <span class="text-slate-400 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift to complex friendship hierarchies. Scripts to help de-escalate cliques.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">5 Chapters · 19 min</span>
+            <a href="http://localhost:3000/academy" class="text-emerald-400 hover:underline">Explore Constellation →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-white/10 pt-6 text-xs font-mono text-slate-400">
+      <a href="academy-design-5-modern-bento-studio.html" class="hover:text-white">← Prev: 05 Bento Studio</a>
+      <a href="academy-design-7-architectural-monograph.html" class="font-bold text-white hover:underline">Next: 07 Swiss Monograph →</a>
+    </div>
+
+  </main>
+
+</body>
+</html>

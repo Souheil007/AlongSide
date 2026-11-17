@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 14: Tactical Parental Playbook | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            tacticalBg: '#0D0E12',
+            tacticalCard: '#15171E',
+            tacticalOrange: '#FF4800',
+            tacticalYellow: '#FFCC00',
+            tacticalGray: '#9E9E9E'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0D0E12;
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .tactical-border {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
+    }
+    .hazard-stripe {
+      background: repeating-linear-gradient(
+        45deg,
+        #FF4800,
+        #FF4800 10px,
+        #0D0E12 10px,
+        #0D0E12 20px
+      );
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-tacticalOrange selection:text-black">
+
+  <!-- Top Navigation Header -->
+  <header class="border-b border-white/10 bg-[#0D0E12]/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between font-mono text-xs">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-tacticalOrange text-black flex items-center justify-center font-black text-sm rounded">
+            P
+          </div>
+          <span class="font-extrabold text-white text-base tracking-tighter">ALONGSIDE PLAYBOOK // TACTICAL</span>
+        </a>
+        <span class="text-stone-600">/</span>
+        <span class="text-stone-400 hidden sm:inline">REF: RAPID_RESPONSE_MANUAL</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-white/5 rounded px-2 py-1 text-xs">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-400 hover:text-white px-1">01</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-400 hover:text-white px-1">05</a>
+          <a href="academy-design-10-spatial-glass-hud.html" class="text-stone-400 hover:text-white px-1">10</a>
+          <a href="academy-design-11-roleplay-theatre.html" class="text-stone-400 hover:text-white px-1">11</a>
+          <a href="academy-design-12-botanical-herbarium.html" class="text-stone-400 hover:text-white px-1">12</a>
+          <a href="academy-design-13-podcast-broadcast-studio.html" class="text-stone-400 hover:text-white px-1">13</a>
+          <span class="bg-tacticalOrange font-black text-black px-2 py-0.5 rounded">14 Playbook</span>
+          <a href="academy-design-15-interactive-timeline-cartography.html" class="text-stone-400 hover:text-white px-1">15</a>
+          <a href="index.html" class="text-tacticalOrange font-bold pl-1 hover:underline">All 15 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="bg-tacticalOrange text-black font-black px-4 py-1.5 rounded hover:bg-orange-500 transition">
+          LIVE APP
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO MASTHEAD: ACUTE SITUATIONAL BRIEF -->
+    <section class="tactical-border bg-[#15171E] rounded-2xl p-8 sm:p-12 space-y-6 relative overflow-hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-tacticalOrange/20 border border-tacticalOrange text-tacticalOrange px-3 py-1 rounded text-xs font-mono font-black">
+          <span class="w-2 h-2 rounded-full bg-tacticalOrange animate-ping"></span>
+          <span>HIGH-STRESS ACUTE INCIDENT PLAYBOOK</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono bg-black/60 px-3 py-1.5 rounded border border-white/10">
+          <span class="text-stone-400">Tactical Target:</span>
+          <span class="text-white font-bold">Maya (Age 8 · Tier 2 Explorer)</span>
+        </div>
+      </div>
+
+      <div class="max-w-3xl space-y-4">
+        <h1 class="text-3xl sm:text-6xl font-black uppercase tracking-tight leading-none text-white">
+          When the Storm Hits: Zero Fluff, <span class="text-tacticalOrange">Immediate Execution</span>.
+        </h1>
+        <p class="text-stone-300 text-sm sm:text-base leading-relaxed font-mono">
+          Parents do not read 20-page theory guides in the middle of a screaming match. These are field-tested, numbered execution plays built for acute domestic moments.
+        </p>
+      </div>
+
+      <!-- Emergency Quick-Filter Play Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/10">
+        <button onclick="filterPlay('SCREEN')" class="p-3 bg-white/5 hover:bg-white/10 rounded-lg text-left border border-white/10 transition space-y-1">
+          <span class="text-[10px] font-mono text-tacticalOrange font-bold">PLAY CALL #01</span>
+          <div class="text-sm font-bold text-white uppercase">The Sudden Screen Handover</div>
+        </button>
+        <button onclick="filterPlay('SIBLING')" class="p-3 bg-white/5 hover:bg-white/10 rounded-lg text-left border border-white/10 transition space-y-1">
+          <span class="text-[10px] font-mono text-tacticalOrange font-bold">PLAY CALL #02</span>
+          <div class="text-sm font-bold text-white uppercase">The Sibling Partition Drill</div>
+        </button>
+        <button onclick="filterPlay('BEDTIME')" class="p-3 bg-white/5 hover:bg-white/10 rounded-lg text-left border border-white/10 transition space-y-1">
+          <span class="text-[10px] font-mono text-tacticalOrange font-bold">PLAY CALL #03</span>
+          <div class="text-sm font-bold text-white uppercase">The Bedtime Meltdown Lockout</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- THE TACTICAL PLAY CARDS (Bold Referee Style) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs">
+        <span class="text-tacticalOrange font-bold tracking-wider uppercase">FIELD PLAYBOOK // 6 VERIFIED DRILLS</span>
+        <span class="text-stone-400">TIER 2 (AGES 7–9)</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- PLAY 01 -->
+        <article class="tactical-border bg-[#15171E] rounded-2xl p-7 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="bg-tacticalOrange text-black font-black px-2.5 py-1 rounded text-[11px]">DRILL 01 // DIGITAL CRASH</span>
+              <span class="text-red-400 font-bold">ACUTE: LEVEL 1</span>
+            </div>
+            <h3 class="text-2xl font-black uppercase tracking-tight text-white">
+              The 60-Second Dopamine Decompression
+            </h3>
+            <p class="text-stone-400 text-xs sm:text-sm font-mono leading-relaxed">
+              Target situation: 8-year-old child screaming, crying, or throwing controller after being asked to turn off Minecraft.
+            </p>
+
+            <!-- Numbered Steps -->
+            <div class="space-y-2 pt-2 font-mono text-xs">
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">01</span>
+                <div>
+                  <strong class="text-white uppercase">Silence for 90 Seconds:</strong>
+                  <span class="text-stone-300"> Do not ask questions or demand immediate apologies. Striatal dopamine is bottoming out.</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">02</span>
+                <div>
+                  <strong class="text-white uppercase">Kinetic Sensory Bridge:</strong>
+                  <span class="text-stone-300"> Hand child cold ice water or crunchy apple slices. Physical chewing engages parasympathetic nerve.</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">03</span>
+                <div>
+                  <strong class="text-white uppercase">Curiosity Over Disciplinary Enforcement:</strong>
+                  <span class="text-stone-300"> “Show me what you were building before you close the lid.”</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="bg-tacticalOrange text-black px-4 py-2 rounded font-black hover:bg-orange-500 transition">
+              OPEN DRILL →
+            </a>
+          </div>
+        </article>
+
+        <!-- PLAY 02 -->
+        <article class="tactical-border bg-[#15171E] rounded-2xl p-7 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="bg-tacticalOrange text-black font-black px-2.5 py-1 rounded text-[11px]">DRILL 02 // SIBLING BATTLE</span>
+              <span class="text-red-400 font-bold">ACUTE: LEVEL 1</span>
+            </div>
+            <h3 class="text-2xl font-black uppercase tracking-tight text-white">
+              The Sibling Territory Partition Call
+            </h3>
+            <p class="text-stone-400 text-xs sm:text-sm font-mono leading-relaxed">
+              Target situation: 8-year-old shoving 5-year-old who entered their room or touched their Lego build without consent.
+            </p>
+
+            <!-- Numbered Steps -->
+            <div class="space-y-2 pt-2 font-mono text-xs">
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">01</span>
+                <div>
+                  <strong class="text-white uppercase">Physical Partition First:</strong>
+                  <span class="text-stone-300"> Place your body calmly between the children. No hands grabbing either child.</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">02</span>
+                <div>
+                  <strong class="text-white uppercase">Acknowledge Age-8 Dignity:</strong>
+                  <span class="text-stone-300"> “You worked for an hour on this tower. It makes sense you felt panicky when it was touched.”</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">03</span>
+                <div>
+                  <strong class="text-white uppercase">Neutral Limit Without Shaming:</strong>
+                  <span class="text-stone-300"> “I will protect your build, and I will protect your brother. Hitting is not an option here.”</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="bg-tacticalOrange text-black px-4 py-2 rounded font-black hover:bg-orange-500 transition">
+              OPEN DRILL →
+            </a>
+          </div>
+        </article>
+
+        <!-- PLAY 03 -->
+        <article class="tactical-border bg-[#15171E] rounded-2xl p-7 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="bg-white/10 text-white font-bold px-2.5 py-1 rounded text-[11px]">DRILL 03 // SLEEP RESISTANCE</span>
+              <span class="text-stone-400">ROUTINE: LEVEL 2</span>
+            </div>
+            <h3 class="text-2xl font-black uppercase tracking-tight text-white">
+              The Somatosensory Bedtime Reset
+            </h3>
+            <p class="text-stone-400 text-xs sm:text-sm font-mono leading-relaxed">
+              Target situation: 8-year-old repeatedly leaving bed, crying about being alone, or demanding endless stall rituals.
+            </p>
+
+            <div class="space-y-2 pt-2 font-mono text-xs">
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">01</span>
+                <div>
+                  <strong class="text-white uppercase">Joint Compression Protocol:</strong>
+                  <span class="text-stone-300"> 3 minutes of firm palm pressure down arms and feet to release somatic tension.</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">02</span>
+                <div>
+                  <strong class="text-white uppercase">Floor Presence Anchor:</strong>
+                  <span class="text-stone-300"> Sit on the floor facing away from the child for 4 minutes in quiet stillness.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="bg-white text-black px-4 py-2 rounded font-black hover:bg-stone-200 transition">
+              OPEN DRILL →
+            </a>
+          </div>
+        </article>
+
+        <!-- PLAY 04 -->
+        <article class="tactical-border bg-[#15171E] rounded-2xl p-7 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="bg-white/10 text-white font-bold px-2.5 py-1 rounded text-[11px]">DRILL 04 // GAMING SAFETY</span>
+              <span class="text-stone-400">ROUTINE: LEVEL 2</span>
+            </div>
+            <h3 class="text-2xl font-black uppercase tracking-tight text-white">
+              The Roblox Voice Chat Boundary Drill
+            </h3>
+            <p class="text-stone-400 text-xs sm:text-sm font-mono leading-relaxed">
+              Target situation: Older children joining voice servers requesting items or social info. Building self-efficacy.
+            </p>
+
+            <div class="space-y-2 pt-2 font-mono text-xs">
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">01</span>
+                <div>
+                  <strong class="text-white uppercase">The Immediate Eject Rule:</strong>
+                  <span class="text-stone-300"> Child can quit any server anytime with zero penalty from parents.</span>
+                </div>
+              </div>
+              <div class="p-3 bg-black/60 border border-white/10 rounded-lg flex items-start gap-3">
+                <span class="text-tacticalOrange font-black text-sm">02</span>
+                <div>
+                  <strong class="text-white uppercase">No-Guilt Confession Seal:</strong>
+                  <span class="text-stone-300"> If an exploit occurs, reporting it to parents never results in game bans.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="bg-white text-black px-4 py-2 rounded font-black hover:bg-stone-200 transition">
+              OPEN DRILL →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-white/10 pt-6 font-mono text-xs text-stone-400">
+      <a href="academy-design-13-podcast-broadcast-studio.html" class="hover:text-white">← Prev: 13 Vintage Studio</a>
+      <a href="academy-design-15-interactive-timeline-cartography.html" class="font-bold text-tacticalOrange hover:underline">Next: 15 Cartography Map →</a>
+    </div>
+
+  </main>
+
+  <script>
+    function filterPlay(type) {
+      alert("Filtering playbook drills for: " + type + ". Reviewing tactical steps.");
+    }
+  </script>
+</body>
+</html>

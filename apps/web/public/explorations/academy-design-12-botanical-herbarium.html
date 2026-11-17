@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 12: Botanical Herbarium &amp; Living Greenhouse | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            parchmentBg: '#F8F6F0',
+            herbariumCard: '#FFFFFF',
+            botanicalGreen: '#234433',
+            terracotta: '#C06C52',
+            driedSage: '#889C86',
+            amberPressed: '#D99B4B'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8F6F0;
+      background-image: 
+        radial-gradient(#D6D1C4 0.75px, transparent 0.75px),
+        linear-gradient(to right, rgba(35, 68, 51, 0.02) 1px, transparent 1px);
+      background-size: 20px 20px, 80px 80px;
+      color: #1F2421;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .herbarium-shadow {
+      box-shadow: 0 4px 6px -1px rgba(35, 68, 51, 0.04), 0 20px 30px -10px rgba(35, 68, 51, 0.07);
+    }
+    .botanical-frame {
+      border: 1px solid #D9D4C7;
+      border-radius: 1.5rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-botanicalGreen selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-[#E0DBCF] bg-[#F8F6F0]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-botanicalGreen text-white flex items-center justify-center font-cinzel text-sm font-bold">H</span>
+          <span class="font-cinzel text-base tracking-wider text-botanicalGreen font-bold">AlongSide Herbarium</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Living Developmental Specimen Garden</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="academy-design-10-spatial-glass-hud.html" class="text-stone-500 hover:text-stone-900 px-1">10</a>
+          <a href="academy-design-11-roleplay-theatre.html" class="text-stone-500 hover:text-stone-900 px-1">11</a>
+          <span class="bg-botanicalGreen font-bold text-white px-2 py-0.5 rounded-full shadow-xs">12 Herbarium</span>
+          <a href="academy-design-13-podcast-broadcast-studio.html" class="text-stone-500 hover:text-stone-900 px-1">13</a>
+          <a href="index.html" class="text-botanicalGreen hover:underline pl-1 font-semibold">All 15 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-botanicalGreen text-white px-3.5 py-1.5 rounded-full hover:bg-botanicalGreen/90 transition shadow-xs">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO: BOTANICAL GREENHOUSE MASTHEAD -->
+    <section class="bg-white rounded-[2.5rem] p-8 sm:p-12 botanical-frame herbarium-shadow relative overflow-hidden space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-[#E9EFEA] border border-[#CCDCD0] text-botanicalGreen px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span>🌿 FOLIO SPECIMEN NO. 08 // FLORA COGNITIVA</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-stone-600 bg-[#F8F6F0] px-3.5 py-1.5 rounded-full border border-[#E0DBCF]">
+          <span>Specimen Record:</span>
+          <span class="text-botanicalGreen font-bold font-cinzel">Maya (Ages 7–9 · Explorer)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <h1 class="font-serif text-3xl sm:text-5xl font-light text-stone-950 leading-tight">
+            Nurturing Root Systems, <em class="italic text-botanicalGreen font-normal">Not Pruning Branches</em> in Anger.
+          </h1>
+          <p class="text-stone-600 text-sm sm:text-base leading-relaxed max-w-xl">
+            A child’s brain grows like living timber: emotional regulation stems from deep underground autonomic root systems. Explore living botanical specimens to scaffold Maya's growth.
+          </p>
+        </div>
+
+        <!-- Botanical Plant Anatomy Inspector -->
+        <div class="lg:col-span-4 bg-[#F8F6F0] p-6 rounded-2xl border border-[#D9D4C7] space-y-3 font-mono text-xs">
+          <div class="flex justify-between border-b border-stone-300 pb-2">
+            <span class="font-cinzel text-stone-600 font-bold">PLANT ANATOMY</span>
+            <span class="text-botanicalGreen">STAGE 8Y</span>
+          </div>
+          <div class="space-y-2 text-stone-700">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span>🌱</span> <strong>The Taproot:</strong></span>
+              <span class="text-botanicalGreen font-bold">Sleep &amp; Melatonin</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span>🌿</span> <strong>The Stem:</strong></span>
+              <span class="text-botanicalGreen font-bold">Impulse Co-Regulation</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span>🍃</span> <strong>The Canopy:</strong></span>
+              <span class="text-botanicalGreen font-bold">Sibling Sharing</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span>🌸</span> <strong>The Fruit:</strong></span>
+              <span class="text-botanicalGreen font-bold">Digital Autonomy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVING SPECIMEN CARDS (Botanical Herbarium Mounts) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[#E0DBCF] pb-4">
+        <div>
+          <h3 class="font-cinzel text-xl font-bold text-stone-950">Pressed Field Specimens</h3>
+          <p class="text-xs text-stone-500 font-mono">Curated developmental biology studies for 8-year-old middle childhood</p>
+        </div>
+        <span class="font-mono text-xs text-botanicalGreen">6 Cultivars Cataloged</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Specimen 1 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 01 // ROOTS</span>
+              <span class="text-terracotta text-[11px] font-bold">Priority 1</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Impulsus Fratrum Var. Explorer</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              When 8-year-old territorial roots are disturbed by younger seedlings, learn restorative turn-taking rituals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+        <!-- Specimen 2 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 02 // STEM</span>
+              <span class="text-terracotta text-[11px] font-bold">Priority 1</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Dopaminum Technologicus</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Post-Screen Dopamine Crashes: 10m Reset
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+        <!-- Specimen 3 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 03 // SAP</span>
+              <span class="text-stone-500 text-[11px]">Priority 2</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Melatoninus Nocturnus</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Bedtime Somatosensory Calming &amp; Melatonin
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+        <!-- Specimen 4 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 04 // FRUIT</span>
+              <span class="text-stone-500 text-[11px]">Priority 2</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Societas Digitalis Roblox</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Roblox &amp; Minecraft Voice Chat Peer Pressure
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+        <!-- Specimen 5 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 05 // SOIL</span>
+              <span class="text-stone-500 text-[11px]">Priority 3</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Nutritio Cafeteria</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              School Lunchbox Co-Regulation &amp; Palate
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">3 Chapters · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+        <!-- Specimen 6 -->
+        <div class="bg-white rounded-3xl p-7 botanical-frame herbarium-shadow flex flex-col justify-between space-y-4 hover:border-botanicalGreen transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-botanicalGreen font-bold bg-[#E9EFEA] px-2.5 py-0.5 rounded-full">SPECIMEN 06 // CANOPY</span>
+              <span class="text-stone-500 text-[11px]">Priority 3</span>
+            </div>
+            <span class="text-[10px] font-serif italic text-stone-400">Empathia Socialis</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift to complex friendship hierarchies. Scripts to help de-escalate cliques.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 19 min</span>
+            <a href="http://localhost:3000/academy" class="text-botanicalGreen font-bold hover:underline">Inspect Specimen →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-[#E0DBCF] pt-6 text-xs font-mono text-stone-500">
+      <a href="academy-design-11-roleplay-theatre.html" class="hover:text-stone-900">← Prev: 11 Roleplay Theatre</a>
+      <a href="academy-design-13-podcast-broadcast-studio.html" class="font-bold text-botanicalGreen hover:underline">Next: 13 Vintage Studio →</a>
+    </div>
+
+  </main>
+
+</body>
+</html>

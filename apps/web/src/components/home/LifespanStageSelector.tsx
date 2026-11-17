@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 import Link from 'next/link';
 import {
   Baby,
@@ -832,6 +838,67 @@ export function LifespanStageSelector() {
     AcademyCategory.BEHAVIOR_AND_EMOTIONS
   );
 
+  const containerRef = useRef<HTMLElement>(null);
+  const prevStageRef = useRef<string>(activeStageId);
+
+  // GSAP Smooth Milestone Stage & Pillar Transitions
+  useGSAP(
+    () => {
+      const isStageChange = prevStageRef.current !== activeStageId;
+      prevStageRef.current = activeStageId;
+
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+        if (isStageChange) {
+          // 1. Staggered cascade on the 5 pillar buttons
+          tl.fromTo(
+            '.gsap-pillar-tab',
+            { opacity: 0, y: 6, scale: 0.98 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.32, stagger: 0.035, clearProps: 'transform' }
+          );
+
+          // 2. Smooth entrance for the connected spotlight panel
+          tl.fromTo(
+            '.gsap-spotlight-card',
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.38, clearProps: 'all' },
+            '<0.08'
+          );
+        } else {
+          // Crossfade the spotlight content smoothly within the same stage
+          tl.fromTo(
+            '.gsap-spotlight-details',
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, duration: 0.28, clearProps: 'all' }
+          );
+        }
+
+        // 3. Staggered reveal for the 3 syllabus lesson rows
+        tl.fromTo(
+          '.gsap-syllabus-row',
+          { opacity: 0, x: 8 },
+          { opacity: 1, x: 0, duration: 0.25, stagger: 0.04, clearProps: 'all' },
+          '<0.05'
+        );
+
+        // 4. Subtle punch on the selected pillar tab
+        tl.fromTo(
+          '.gsap-selected-pillar-tab',
+          { scale: 0.97 },
+          { scale: 1, duration: 0.2, ease: 'back.out(2)', clearProps: 'transform' },
+          '<0.02'
+        );
+      });
+    },
+    {
+      scope: containerRef,
+      dependencies: [activeStageId, selectedCategory],
+    }
+  );
+
+
   const activeStage =
     CANONICAL_8_LIFESPAN_STAGES.find((s) => s.id === activeStageId) ??
     CANONICAL_8_LIFESPAN_STAGES[0]!;
@@ -857,7 +924,7 @@ export function LifespanStageSelector() {
   };
 
   return (
-    <section id="stages" className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
+    <section id="stages" ref={containerRef} className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       {/* Editorial Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3 py-1 text-xs font-semibold text-[#143D2B]">
@@ -963,7 +1030,7 @@ export function LifespanStageSelector() {
                     role="tab"
                     aria-selected={isSelected}
                     onClick={() => setSelectedCategory(course.category)}
-                    className={`w-full text-left sm:text-center p-3.5 sm:p-4 rounded-[8px] border transition-all cursor-pointer flex flex-col items-start sm:items-center gap-1.5 min-h-[44px] ${
+                    className={`gsap-pillar-tab ${isSelected ? "gsap-selected-pillar-tab " : ""}w-full text-left sm:text-center p-3.5 sm:p-4 rounded-[8px] border transition-all cursor-pointer flex flex-col items-start sm:items-center gap-1.5 min-h-[44px] ${
                       isSelected
                         ? 'bg-[#143D2B] text-white border-[#143D2B] shadow-[0_4px_14px_rgba(20,61,43,0.22)] -translate-y-0.5'
                         : 'bg-[#F4F4F0] text-[#111413] border-[#E3E3DC] hover:border-[#143D2B]/40 hover:bg-white hover:-translate-y-0.5'
@@ -1023,10 +1090,10 @@ export function LifespanStageSelector() {
         </div>
 
         {/* Lower Stage: Connected Spotlight Panel */}
-        <div className="rounded-[10px] border border-[#E3E3DC] bg-[#F4F4F0] p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+        <div className="gsap-spotlight-card rounded-[10px] border border-[#E3E3DC] bg-[#F4F4F0] p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           {/* Left Column: Spotlight Course Details */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="gsap-spotlight-details lg:col-span-7 space-y-4">
             <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold text-[#143D2B] uppercase tracking-wider bg-[#EAF3EE] px-2.5 py-1 rounded-full border border-[#143D2B]/20">
               <ActiveCategoryIcon className="h-3.5 w-3.5" />
               <span>
@@ -1087,7 +1154,7 @@ export function LifespanStageSelector() {
                 {activeCourse.lessons?.map((lesson) => (
                   <div
                     key={lesson.num}
-                    className="flex items-baseline justify-between gap-3 py-2 border-b border-[#EDEDEA] last:border-b-0"
+                    className="gsap-syllabus-row flex items-baseline justify-between gap-3 py-2 border-b border-[#EDEDEA] last:border-b-0"
                   >
                     <div className="flex items-baseline gap-2.5 min-w-0">
                       <span className="font-mono text-xs font-bold text-[#143D2B] shrink-0">

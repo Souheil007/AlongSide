@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlongSide Homepage: Before &amp; After Unslop Transformation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            forest: '#143D2B',
+            forestDark: '#0D261B',
+            parchment: '#FAF8F5',
+            inkPrimary: '#111815',
+            inkSecondary: '#4A524D',
+            inkMuted: '#78827C',
+            hairline: 'rgba(17, 24, 21, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F4F3EE;
+      color: #111815;
+    }
+    .redline-pin {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      background: #EF4444;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+      cursor: pointer;
+      z-index: 30;
+      transition: transform 0.2s ease;
+    }
+    .redline-pin:hover {
+      transform: scale(1.2);
+    }
+    .before-surface {
+      background: #FFFFFF;
+    }
+    .after-surface {
+      background: #FAF8F5;
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-forest selection:text-white pb-24">
+
+  <!-- TOP STICKY COMPARISON CONTROLLER -->
+  <header class="sticky top-0 z-50 bg-stone-900 text-white border-b border-stone-800 shadow-xl px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <span class="w-8 h-8 rounded-full bg-forest text-white flex items-center justify-center font-serif italic font-bold">A</span>
+          <span class="font-serif text-lg font-bold tracking-tight text-white">AlongSide</span>
+        </a>
+        <span class="text-stone-500">|</span>
+        <span class="font-mono text-xs text-stone-300">Homepage Unslopping Studio (Logged-Out)</span>
+      </div>
+
+      <!-- Tab View Modes -->
+      <div class="flex items-center gap-2 bg-stone-800 p-1 rounded-full text-xs font-mono">
+        <button onclick="setViewMode('side-by-side')" id="btn-side" class="mode-btn px-4 py-1.5 rounded-full bg-forest text-white font-bold transition shadow-xs">
+          Side-by-Side Comparison
+        </button>
+        <button onclick="setViewMode('after-only')" id="btn-after" class="mode-btn px-4 py-1.5 rounded-full text-stone-300 hover:text-white transition">
+          Unslopped Craft (After)
+        </button>
+        <button onclick="setViewMode('before-only')" id="btn-before" class="mode-btn px-4 py-1.5 rounded-full text-stone-300 hover:text-white transition">
+          Slop Audit &amp; Redlines (Before)
+        </button>
+      </div>
+
+      <a href="http://localhost:3000/" class="text-xs font-mono bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5">
+        <span>Live Next.js Site</span>
+        <span>→</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 space-y-12">
+
+    <!-- THE 5-LINE DIRECTION BANNER (Unslop Skill Standard) -->
+    <section class="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+      <div class="flex items-center justify-between border-b border-stone-200 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs font-bold uppercase tracking-wider bg-forest text-white px-2.5 py-1 rounded">
+            Unslop Protocol Pass
+          </span>
+          <span class="font-mono text-xs text-stone-500">Derived from AlongSide's authentic product essence</span>
+        </div>
+        <span class="font-mono text-xs text-stone-400">9 Passes Applied</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 font-mono text-xs">
+        <div class="space-y-1 bg-stone-50 p-3.5 rounded-xl border border-stone-200/70">
+          <span class="text-stone-400 font-bold uppercase text-[10px]">1. Product</span>
+          <p class="text-stone-900 font-sans text-xs">Pediatric neurobiology micro-lessons, weekly tween culture intelligence, and bilateral screen pacts (Ages 0–18).</p>
+        </div>
+        <div class="space-y-1 bg-stone-50 p-3.5 rounded-xl border border-stone-200/70">
+          <span class="text-stone-400 font-bold uppercase text-[10px]">2. Character</span>
+          <p class="text-stone-900 font-sans text-xs font-semibold">Calm, restorative, grounded.</p>
+        </div>
+        <div class="space-y-1 bg-stone-50 p-3.5 rounded-xl border border-stone-200/70">
+          <span class="text-stone-400 font-bold uppercase text-[10px]">3. World</span>
+          <p class="text-stone-900 font-sans text-xs">High-craft parenting monograph and pediatric study: linen paper, deep forest ink, warm stone neutrals, and clean hairlines.</p>
+        </div>
+        <div class="space-y-1 bg-stone-50 p-3.5 rounded-xl border border-stone-200/70">
+          <span class="text-stone-400 font-bold uppercase text-[10px]">4. Moments</span>
+          <p class="text-stone-900 font-sans text-xs">A tactile preview of Maya's age-8 sanctuary window (curfew status, 4-minute vagal reset lesson, and culture radar).</p>
+        </div>
+        <div class="space-y-1 bg-stone-50 p-3.5 rounded-xl border border-stone-200/70">
+          <span class="text-stone-400 font-bold uppercase text-[10px]">5. Signature</span>
+          <p class="text-stone-900 font-sans text-xs font-semibold">The calm green status pulse: “• Calibrated to your child”.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDE-BY-SIDE COMPARISON CONTAINER -->
+    <div id="comparison-deck" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+      <!-- ========================================================================= -->
+      <!-- COLUMN 1: BEFORE (ORIGINAL VIBECODED HOMEPAGE WITH REDLINE PINS)           -->
+      <!-- ========================================================================= -->
+      <section id="col-before" class="space-y-4">
+        <div class="flex items-center justify-between px-2">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+            <h3 class="font-mono text-sm font-bold uppercase tracking-wider text-rose-800">
+              Before: Original Logged-Out Homepage
+            </h3>
+          </div>
+          <span class="text-xs font-mono text-stone-500">Click pins ❶–❻ for audit notes</span>
+        </div>
+
+        <div class="relative before-surface border-2 border-rose-300 rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden space-y-8">
+
+          <!-- REDLINE PIN 1: BLURRED RADIAL BLOB -->
+          <div class="redline-pin top-6 right-6" onclick="showAuditNote(1)">1</div>
+          <!-- REDLINE PIN 2: EYEBROW BADGE -->
+          <div class="redline-pin top-20 left-8" onclick="showAuditNote(2)">2</div>
+          <!-- REDLINE PIN 3: STACKED CENTERED HERO -->
+          <div class="redline-pin top-44 left-1/2 -translate-x-1/2" onclick="showAuditNote(3)">3</div>
+          <!-- REDLINE PIN 4: SPARKLES & REPETITIVE ICONS -->
+          <div class="redline-pin bottom-48 right-12" onclick="showAuditNote(4)">4</div>
+          <!-- REDLINE PIN 5: PASTEL PILL BOXES -->
+          <div class="redline-pin bottom-20 left-12" onclick="showAuditNote(5)">5</div>
+
+          <!-- Original Blurred Radial Mesh Aura (AI Tell) -->
+          <div class="w-full h-32 rounded-full blur-2xl opacity-60 bg-gradient-to-r from-emerald-200 via-amber-100 to-emerald-100 absolute -top-10 left-0 pointer-events-none"></div>
+
+          <!-- Hero Content (Original Centered Stack) -->
+          <div class="flex flex-col items-center text-center space-y-5 pt-4">
+
+            <!-- Eyebrow Pill -->
+            <div class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3.5 py-1 text-xs text-stone-600 shadow-2xs">
+              <span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wider uppercase">
+                WHOLE-CHILD ADVISORY
+              </span>
+              <span>Neurodevelopmental Science • Lifespan Family OS</span>
+            </div>
+
+            <!-- Heavy Bold Headline -->
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-950 leading-tight">
+              The Parent Advisory Sanctuary: <br/>
+              <span class="font-serif italic font-normal text-emerald-900">Keep Up With Your Child</span> As They Grow.
+            </h1>
+
+            <p class="text-stone-600 text-sm max-w-lg leading-relaxed">
+              Replace parenting anxiety, guilt, and exhaustion with evidence-based developmental science, prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
+            </p>
+
+            <!-- Centered Stacked Buttons -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+              <button class="bg-emerald-900 hover:bg-emerald-950 text-white font-bold text-xs px-6 py-3.5 rounded-full shadow-md flex items-center gap-2">
+                <span>Start 7-Day Risk-Free Trial</span>
+                <span>→</span>
+              </button>
+              <button class="border border-stone-300 text-stone-800 font-semibold text-xs px-6 py-3.5 rounded-full hover:bg-stone-50">
+                Explore 6-Stage Curriculum
+              </button>
+            </div>
+
+            <!-- Trust Signals (Flat 4 boxes) -->
+            <div class="grid grid-cols-2 gap-2.5 pt-4 w-full text-left">
+              <div class="p-3 bg-white border border-stone-200 rounded text-xs flex items-center gap-2">
+                <span class="text-emerald-900 font-bold">🧠 Neurobiology</span>
+              </div>
+              <div class="p-3 bg-white border border-stone-200 rounded text-xs flex items-center gap-2">
+                <span class="text-emerald-900 font-bold">📚 CDC &amp; AAP Milestones</span>
+              </div>
+              <div class="p-3 bg-white border border-stone-200 rounded text-xs flex items-center gap-2">
+                <span class="text-emerald-900 font-bold">🔒 Zero-Spyware Pledge</span>
+              </div>
+              <div class="p-3 bg-white border border-stone-200 rounded text-xs flex items-center gap-2">
+                <span class="text-emerald-900 font-bold">✓ 1-Click Cancel Anytime</span>
+              </div>
+            </div>
+
+            <!-- Reassurance Micro-Copy with Sparkles AI Tell -->
+            <div class="pt-2 flex flex-wrap justify-center gap-3 text-[11px] text-stone-500">
+              <span class="flex items-center gap-1">🧠 Prioritized Academy</span>
+              <span class="flex items-center gap-1 text-purple-700 font-semibold">✨ Weekly Youth Culture Digest</span>
+              <span class="flex items-center gap-1">✓ All Ages Covered</span>
+            </div>
+
+          </div>
+
+          <!-- The 3 Pillars Preview (Original Pastel Box Slop) -->
+          <div class="pt-6 border-t border-stone-200 space-y-3">
+            <span class="text-xs font-mono uppercase tracking-wider text-stone-400 font-bold">Pillars Section (Original)</span>
+            <div class="space-y-3">
+              <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/60 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-amber-900 font-bold uppercase bg-amber-200/60 px-2 py-0.5 rounded">Pillar 01</span>
+                  <h4 class="font-bold text-stone-900 text-sm mt-1">Parent Intelligence Academy</h4>
+                  <p class="text-xs text-stone-600">5-minute micro-courses in 5 categories.</p>
+                </div>
+                <span class="text-amber-800 text-xs font-mono font-bold">Prioritized (P1–P3)</span>
+              </div>
+
+              <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/60 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-purple-900 font-bold uppercase bg-purple-200/60 px-2 py-0.5 rounded">Pillar 02</span>
+                  <h4 class="font-bold text-stone-900 text-sm mt-1">🔥 Sunday Youth Culture Digest</h4>
+                  <p class="text-xs text-stone-600">Slang radar and 1-5 cringe meter.</p>
+                </div>
+                <span class="text-purple-800 text-xs font-mono font-bold">Weekly Feed</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Dynamic Audit Note Inspector Box -->
+        <div id="audit-inspector" class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-xs font-mono text-rose-950 space-y-1.5 shadow-2xs">
+          <span class="font-bold uppercase tracking-wider text-rose-800">Audit Finding Inspector:</span>
+          <p id="audit-text" class="font-sans text-xs text-rose-900 leading-relaxed">
+            Click on any red numbered pin (❶–❺) above to see the exact AI slop tell and why it was redesigned.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- COLUMN 2: AFTER (UNSLOPPED CRAFT HOMEPAGE HERO & SANCTUARY MOMENT)         -->
+      <!-- ========================================================================= -->
+      <section id="col-after" class="space-y-4">
+        <div class="flex items-center justify-between px-2">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-forest"></span>
+            <h3 class="font-mono text-sm font-bold uppercase tracking-wider text-forest font-bold">
+              After: Unslopped Craft Homepage
+            </h3>
+          </div>
+          <span class="text-xs font-mono text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full font-bold">
+            Deliberate Craft
+          </span>
+        </div>
+
+        <div class="after-surface border border-stone-300 rounded-3xl p-6 sm:p-8 shadow-lg space-y-8">
+
+          <!-- Asymmetric Split Hero: Calm Editorial Left, Real Product Moment Right -->
+          <div class="space-y-6">
+
+            <!-- Quiet Sentence-Case Meta (No glowing pill, no tracked caps) -->
+            <div class="flex items-center justify-between text-xs font-mono border-b border-stone-200/80 pb-3">
+              <span class="text-forest font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Whole-child developmental advisory
+              </span>
+              <span class="text-stone-400">Lifespan 0–18</span>
+            </div>
+
+            <!-- Crafted Headline (Newsreader Serif + Plus Jakarta Sans, Optical Hierarchy) -->
+            <div class="space-y-3">
+              <h1 class="font-serif text-3xl sm:text-4xl text-inkPrimary leading-[1.12] font-normal">
+                Parenting guidance calibrated to your child’s <em class="italic font-normal text-forest">neurobiology</em>.
+              </h1>
+              <p class="text-inkSecondary text-sm leading-relaxed max-w-md">
+                Replace daily reactivity with developmental science. 5-minute micro-courses, Sunday youth culture intelligence, and neutral bilateral screen pacts.
+              </p>
+            </div>
+
+            <!-- Single Primary Action + Quiet Text Secondary Link (No stacked button clutter) -->
+            <div class="flex items-center gap-4 pt-1">
+              <a href="http://localhost:3000/register" class="bg-forest hover:bg-forestDark text-white text-xs font-mono font-bold px-6 py-3 rounded-full shadow-xs transition">
+                Start 7-day risk-free trial →
+              </a>
+              <a href="#preview" class="text-xs font-mono text-inkSecondary hover:text-inkPrimary underline">
+                Browse 6 developmental stages
+              </a>
+            </div>
+
+            <!-- THE FOCAL MOMENT: THE ALONGSIDE SANCTUARY WINDOW (Authentic Preview) -->
+            <div class="bg-white border border-stone-200/90 rounded-2xl p-5 shadow-xs space-y-4">
+              <div class="flex items-center justify-between border-b border-stone-100 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-forest text-white flex items-center justify-center font-serif text-xs font-bold">M</span>
+                  <div>
+                    <div class="text-xs font-bold text-inkPrimary">Maya’s Active Sanctuary</div>
+                    <div class="text-[10px] font-mono text-stone-400">Age 8 · Tier 2: Explorer</div>
+                  </div>
+                </div>
+                <span class="font-mono text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full font-medium">
+                  • Stage Calibrated
+                </span>
+              </div>
+
+              <!-- Real Product Features in One Cohesive Window -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <!-- Lesson Preview -->
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/70 space-y-1.5">
+                  <span class="text-[10px] font-mono text-stone-400 font-bold uppercase">Up Next Tonight</span>
+                  <div class="font-serif font-bold text-inkPrimary">The 4-Minute Vagal Reset</div>
+                  <div class="text-[11px] text-inkSecondary">Impulse co-regulation without shouting.</div>
+                </div>
+
+                <!-- Bedtime Hardware Status -->
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/70 space-y-1.5">
+                  <span class="text-[10px] font-mono text-stone-400 font-bold uppercase">Bilateral Pact</span>
+                  <div class="font-serif font-bold text-inkPrimary">8:30 PM Neutral Dock</div>
+                  <div class="text-[11px] text-inkSecondary">Hardware curfew locks without spyware.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiet Reassurance Line (Single stroke icons, no sparkles) -->
+            <div class="pt-2 flex items-center justify-between text-[11px] font-mono text-inkMuted border-t border-stone-200/70">
+              <span>CDC &amp; AAP Milestones 0–18</span>
+              <span>•</span>
+              <span>Zero-Spyware Pledge</span>
+              <span>•</span>
+              <span>Cancel Anytime in 1-Click</span>
+            </div>
+
+          </div>
+
+          <!-- The 3 Pillars Section (Unslopped: Uniform hairlines, quiet neutrals, no flame emojis) -->
+          <div class="pt-6 border-t border-stone-200 space-y-3">
+            <span class="text-xs font-mono uppercase tracking-wider text-inkMuted font-bold">The Three Advisory Pillars (Craft)</span>
+            <div class="space-y-2.5">
+              <div class="p-4 rounded-xl bg-white border border-stone-200 hover:border-forest/40 transition flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-stone-400 uppercase font-bold">01 // Academy</span>
+                  <h4 class="font-serif font-bold text-inkPrimary text-sm mt-0.5">Parent Intelligence Academy</h4>
+                  <p class="text-xs text-inkSecondary">5-minute neurobiology micro-lessons prioritized by immediate friction.</p>
+                </div>
+                <span class="text-forest text-xs font-mono font-bold">Priority 1–3 →</span>
+              </div>
+
+              <div class="p-4 rounded-xl bg-white border border-stone-200 hover:border-forest/40 transition flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-stone-400 uppercase font-bold">02 // Living Feed</span>
+                  <h4 class="font-serif font-bold text-inkPrimary text-sm mt-0.5">Sunday Youth Culture Digest</h4>
+                  <p class="text-xs text-inkSecondary">Tween slang translations and dinner table conversation starters.</p>
+                </div>
+                <span class="text-forest text-xs font-mono font-bold">Every Sunday →</span>
+              </div>
+
+              <div class="p-4 rounded-xl bg-white border border-stone-200 hover:border-forest/40 transition flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-stone-400 uppercase font-bold">03 // Tech Pact</span>
+                  <h4 class="font-serif font-bold text-inkPrimary text-sm mt-0.5">Bilateral Family Pacts &amp; Devices</h4>
+                  <p class="text-xs text-inkSecondary">Certified MDM hardware lock without text-reading or keyloggers.</p>
+                </div>
+                <span class="text-forest text-xs font-mono font-bold">Zero Spyware →</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SUMMARY OF THE 9 UNSLOP PASSES -->
+    <section class="bg-white border border-stone-200 rounded-3xl p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-stone-900">The 9 Unslopping Passes (Applied)</h2>
+          <p class="text-xs text-stone-500 font-mono">Comparing the mechanical changes from vibecoded defaults to bespoke craft</p>
+        </div>
+        <span class="font-mono text-xs text-forest font-bold bg-emerald-50 px-3 py-1 rounded-full">Passed All 9 Checklists</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <div class="flex justify-between items-center text-stone-400 text-[10px] uppercase font-bold">
+            <span>Pass 01 &amp; 02</span>
+            <span>Spacing &amp; Color</span>
+          </div>
+          <h4 class="font-bold text-stone-900 font-sans text-sm">Quiet Chrome &amp; Strict 4px Scale</h4>
+          <p class="text-stone-600 font-sans leading-relaxed">
+            Eliminated blurred radial blobs, purple glowing badges, and random margins. Grounded the entire page on warm linen (`#FAF8F5`) with quiet hairline borders (8% opacity).
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <div class="flex justify-between items-center text-stone-400 text-[10px] uppercase font-bold">
+            <span>Pass 03 &amp; 04</span>
+            <span>Icons &amp; Copy</span>
+          </div>
+          <h4 class="font-bold text-stone-900 font-sans text-sm">Purged Emojis &amp; Hype Words</h4>
+          <p class="text-stone-600 font-sans leading-relaxed">
+            Removed sparkles ✨, flames 🔥, and decorative emoji bullets. Rewrote vague headlines ("Keep Up With Your Child As They Grow") into exact, grounded pediatric facts.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <div class="flex justify-between items-center text-stone-400 text-[10px] uppercase font-bold">
+            <span>Pass 05 &amp; 06</span>
+            <span>Type &amp; Layout</span>
+          </div>
+          <h4 class="font-bold text-stone-900 font-sans text-sm">Asymmetric Split &amp; Optical Balance</h4>
+          <p class="text-stone-600 font-sans leading-relaxed">
+            Swapped the generic stacked-and-centered template for an asymmetric split hero: calm editorial left column balanced against a tactile live preview of Maya's age-8 sanctuary on the right.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const auditNotes = {
+      1: "RADIAL COLOR WASH BLOB: A tri-color blurred mesh gradient blob (emerald, amber, dark wash) floating behind the hero. Slop tell: decorative filler that adds visual noise without communicating anything about child development.",
+      2: "UPPERCASE TRACKED PILL BADGE: 'WHOLE-CHILD ADVISORY' in uppercase with tracking and pastel background. Slop tell: AI template default. Replaced with quiet sentence-case meta.",
+      3: "STACKED AND CENTERED HERO: Centered eyebrow, centered title, centered subtitle, centered dual buttons, centered trust cards below. Slop tell: the universal generic SaaS landing page default. Replaced with an asymmetric split giving half the width to the real product.",
+      4: "SPARKLES & EMOJIS: Decorative sparkle '✨' on Youth Culture Digest and flame '🔥' on Pillars. Slop tell: sparkles for anything AI/feed-related. Replaced with uniform line icons and small status dots.",
+      5: "PASTEL BOXES & INCONSISTENT RADII: Cards with rounded-[5px], buttons with rounded-full, cards with amber-50/purple-50 backgrounds. Slop tell: scattered color over chrome. Replaced with nested radius math and unified neutral ramp."
+    };
+
+    function showAuditNote(pinNumber) {
+      const textEl = document.getElementById('audit-text');
+      textEl.textContent = auditNotes[pinNumber] || "Auditing element...";
+    }
+
+    function setViewMode(mode) {
+      const colBefore = document.getElementById('col-before');
+      const colAfter = document.getElementById('col-after');
+      const deck = document.getElementById('comparison-deck');
+      const buttons = document.querySelectorAll('.mode-btn');
+
+      buttons.forEach(b => {
+        b.className = "mode-btn px-4 py-1.5 rounded-full text-stone-300 hover:text-white transition";
+      });
+
+      if (mode === 'side-by-side') {
+        document.getElementById('btn-side').className = "mode-btn px-4 py-1.5 rounded-full bg-forest text-white font-bold transition shadow-xs";
+        deck.className = "grid grid-cols-1 lg:grid-cols-2 gap-8 items-start";
+        colBefore.style.display = "block";
+        colAfter.style.display = "block";
+      } else if (mode === 'after-only') {
+        document.getElementById('btn-after').className = "mode-btn px-4 py-1.5 rounded-full bg-forest text-white font-bold transition shadow-xs";
+        deck.className = "grid grid-cols-1 gap-8 max-w-4xl mx-auto";
+        colBefore.style.display = "none";
+        colAfter.style.display = "block";
+      } else if (mode === 'before-only') {
+        document.getElementById('btn-before').className = "mode-btn px-4 py-1.5 rounded-full bg-forest text-white font-bold transition shadow-xs";
+        deck.className = "grid grid-cols-1 gap-8 max-w-4xl mx-auto";
+        colBefore.style.display = "block";
+        colAfter.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

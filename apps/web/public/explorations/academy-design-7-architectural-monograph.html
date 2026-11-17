@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 07: Swiss Architectural Monograph | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            monoBg: '#FFFFFF',
+            monoBlack: '#000000',
+            monoGray: '#666666',
+            monoBorder: '#E5E5E5',
+            swissRed: '#143D2B'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #000000;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .swiss-rule {
+      border-top: 1px solid #000000;
+    }
+    .swiss-hairline {
+      border-top: 1px solid #E5E5E5;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-black selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-black sticky top-0 bg-white z-50">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between font-mono text-xs">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="font-bold tracking-tighter text-sm flex items-center gap-1.5">
+          <span class="w-4 h-4 bg-black text-white flex items-center justify-center font-bold text-[10px]">A</span>
+          <span>ALONGSIDE / MONOGRAPH 07</span>
+        </a>
+        <span class="text-neutral-300">/</span>
+        <span class="text-neutral-500 hidden sm:inline">SWISS SYSTEM CURRICULUM</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-neutral-100 rounded px-2 py-0.5 text-[11px]">
+          <a href="academy-design-1-editorial-atelier.html" class="text-neutral-500 hover:text-black px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-neutral-500 hover:text-black px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-neutral-500 hover:text-black px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-neutral-500 hover:text-black px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-neutral-500 hover:text-black px-1">05</a>
+          <a href="academy-design-6-celestial-milestone-orbit.html" class="text-neutral-500 hover:text-black px-1">06</a>
+          <span class="bg-black font-bold text-white px-1.5 py-0.2 rounded">07 Swiss</span>
+          <a href="academy-design-8-zen-sanctuary-salon.html" class="text-neutral-500 hover:text-black px-1">08</a>
+          <a href="index.html" class="text-neutral-900 font-bold pl-1 hover:underline">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="bg-black text-white px-3 py-1 font-bold hover:bg-neutral-800 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-12 space-y-16">
+
+    <!-- ARCHITECTURAL HERO MASTHEAD -->
+    <section class="space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-8 space-y-6">
+          <div class="font-mono text-xs uppercase tracking-widest text-neutral-500 flex items-center gap-3">
+            <span class="w-2 h-2 bg-black"></span>
+            <span>SECTION 01 // ARCHITECTURAL PEDAGOGY</span>
+          </div>
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] uppercase">
+            Parenting Curriculum as Structured Systems.
+          </h1>
+          <p class="text-neutral-600 text-base sm:text-lg max-w-2xl leading-relaxed">
+            Eliminating decorative ambiguity. Every interaction is indexed against child neurobiology, developmental timing, and precise conversational boundaries.
+          </p>
+        </div>
+
+        <!-- Meta Specification Column -->
+        <div class="lg:col-span-4 border-l border-black pl-6 space-y-4 font-mono text-xs">
+          <div class="uppercase tracking-wider text-neutral-400 font-bold">Subject Specification</div>
+          <div class="text-lg font-bold text-black">Maya (Age 8)</div>
+          <div class="space-y-1.5 text-neutral-600">
+            <div class="flex justify-between border-b border-neutral-200 pb-1">
+              <span>DEVELOPMENT TIER:</span>
+              <span class="font-bold text-black">TIER 2 (EXPLORER)</span>
+            </div>
+            <div class="flex justify-between border-b border-neutral-200 pb-1">
+              <span>TARGET AGE:</span>
+              <span class="font-bold text-black">7 TO 9 YEARS</span>
+            </div>
+            <div class="flex justify-between border-b border-neutral-200 pb-1">
+              <span>ACTIVE MODULES:</span>
+              <span class="font-bold text-black">06 TOTAL</span>
+            </div>
+            <div class="flex justify-between pb-1">
+              <span>STATUS:</span>
+              <span class="font-bold text-emerald-700">CALIBRATED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiss-rule pt-2"></div>
+    </section>
+
+    <!-- PRECISION EDITORIAL CATALOG (Index 01 to 06) -->
+    <section class="space-y-8">
+      <div class="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-neutral-500">
+        <span>CURRICULUM INDEX // VOL 2026</span>
+        <span>6 VOLUMES RECORDED</span>
+      </div>
+
+      <div class="divide-y divide-black border-y border-black">
+
+        <!-- Entry 01 -->
+        <article class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-neutral-50 transition">
+          <div class="md:col-span-2 font-mono text-2xl font-extrabold tracking-tighter">
+            01.
+          </div>
+          <div class="md:col-span-6 space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="font-bold uppercase tracking-wider bg-black text-white px-2 py-0.5">BEHAVIOR &amp; EMOTIONS</span>
+              <span class="text-red-700 font-bold">• PRIORITY 1</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight uppercase">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h3>
+            <p class="text-sm text-neutral-600 leading-relaxed max-w-xl">
+              Autonomic nervous system escalation in middle childhood. Moving from punitive time-outs to physical proprioceptive resets.
+            </p>
+          </div>
+          <div class="md:col-span-4 flex flex-col justify-between items-start md:items-end space-y-3 font-mono text-xs">
+            <span class="text-neutral-500">5 CHAPTERS · 18 MIN · 🎧 AUDIO</span>
+            <a href="http://localhost:3000/academy" class="bg-black hover:bg-neutral-800 text-white px-5 py-2 font-bold uppercase tracking-wider transition">
+              Open Specification →
+            </a>
+          </div>
+        </article>
+
+        <!-- Entry 02 -->
+        <article class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-neutral-50 transition">
+          <div class="md:col-span-2 font-mono text-2xl font-extrabold tracking-tighter">
+            02.
+          </div>
+          <div class="md:col-span-6 space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="font-bold uppercase tracking-wider bg-black text-white px-2 py-0.5">DIGITAL WORLD</span>
+              <span class="text-red-700 font-bold">• PRIORITY 1</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight uppercase">
+              Post-Screen Dopamine Crashes: 10m Decompression
+            </h3>
+            <p class="text-sm text-neutral-600 leading-relaxed max-w-xl">
+              Rapid striatal dopamine drop creates a transient sensory deprivation state. Script to neutralize the crash.
+            </p>
+          </div>
+          <div class="md:col-span-4 flex flex-col justify-between items-start md:items-end space-y-3 font-mono text-xs">
+            <span class="text-neutral-500">5 CHAPTERS · 20 MIN · 🎧 AUDIO</span>
+            <a href="http://localhost:3000/academy" class="bg-black hover:bg-neutral-800 text-white px-5 py-2 font-bold uppercase tracking-wider transition">
+              Open Specification →
+            </a>
+          </div>
+        </article>
+
+        <!-- Entry 03 -->
+        <article class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-neutral-50 transition">
+          <div class="md:col-span-2 font-mono text-2xl font-extrabold tracking-tighter">
+            03.
+          </div>
+          <div class="md:col-span-6 space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="font-bold uppercase tracking-wider bg-neutral-200 text-black px-2 py-0.5">HEALTH &amp; SLEEP</span>
+              <span class="text-neutral-500">• PRIORITY 2</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight uppercase">
+              Bedtime Somatosensory Calming &amp; Melatonin Shifting
+            </h3>
+            <p class="text-sm text-neutral-600 leading-relaxed max-w-xl">
+              Circadian biology shifts in 8-year-olds: why melatonin release occurs 35–45 minutes later than in early childhood.
+            </p>
+          </div>
+          <div class="md:col-span-4 flex flex-col justify-between items-start md:items-end space-y-3 font-mono text-xs">
+            <span class="text-neutral-500">4 CHAPTERS · 15 MIN · 🎧 AUDIO</span>
+            <a href="http://localhost:3000/academy" class="bg-black hover:bg-neutral-800 text-white px-5 py-2 font-bold uppercase tracking-wider transition">
+              Open Specification →
+            </a>
+          </div>
+        </article>
+
+        <!-- Entry 04 -->
+        <article class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-neutral-50 transition">
+          <div class="md:col-span-2 font-mono text-2xl font-extrabold tracking-tighter">
+            04.
+          </div>
+          <div class="md:col-span-6 space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="font-bold uppercase tracking-wider bg-neutral-200 text-black px-2 py-0.5">DIGITAL WORLD</span>
+              <span class="text-neutral-500">• PRIORITY 2</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight uppercase">
+              Roblox &amp; Minecraft Voice Chat Peer Boundaries
+            </h3>
+            <p class="text-sm text-neutral-600 leading-relaxed max-w-xl">
+              Social developmental vulnerability in elementary gaming lobbies. How to build situational discernment.
+            </p>
+          </div>
+          <div class="md:col-span-4 flex flex-col justify-between items-start md:items-end space-y-3 font-mono text-xs">
+            <span class="text-neutral-500">4 CHAPTERS · 16 MIN · 🎧 AUDIO</span>
+            <a href="http://localhost:3000/academy" class="bg-black hover:bg-neutral-800 text-white px-5 py-2 font-bold uppercase tracking-wider transition">
+              Open Specification →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-black pt-6 font-mono text-xs">
+      <a href="academy-design-6-celestial-milestone-orbit.html" class="hover:underline">← PREV: 06 CELESTIAL ORBIT</a>
+      <a href="academy-design-8-zen-sanctuary-salon.html" class="font-bold hover:underline">NEXT: 08 ZEN SANCTUARY →</a>
+    </div>
+
+  </main>
+
+</body>
+</html>

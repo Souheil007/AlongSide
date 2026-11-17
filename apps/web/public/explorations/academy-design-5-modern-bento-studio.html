@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 05: Modern Bento Studio | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            bentoBg: '#F7F8FA',
+            bentoCard: '#FFFFFF',
+            forest: '#143D2B',
+            accentMint: '#10B981'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F7F8FA;
+      color: #0F172A;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .bento-shadow {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 8px 24px -4px rgba(15,23,42,0.04);
+    }
+    .bento-hover {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 16px 32px -4px rgba(15,23,42,0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-32 selection:bg-slate-900 selection:text-white">
+
+  <!-- Top Bar -->
+  <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+            B
+          </div>
+          <span class="font-serif text-lg font-bold text-slate-900">AlongSide Bento Studio</span>
+        </a>
+        <span class="text-xs font-mono text-slate-400 hidden sm:inline">• Design 05</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-slate-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-slate-500 hover:text-slate-900 px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-slate-500 hover:text-slate-900 px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-slate-500 hover:text-slate-900 px-1">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-slate-500 hover:text-slate-900 px-1">04</a>
+          <span class="bg-slate-900 font-bold text-white px-2 py-0.5 rounded-full shadow-xs">05 Bento</span>
+          <a href="academy-design-6-celestial-milestone-orbit.html" class="text-slate-500 hover:text-slate-900 px-1">06</a>
+          <a href="index.html" class="text-emerald-700 hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-slate-900 text-white px-3.5 py-1.5 rounded-full hover:bg-slate-800 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-8">
+
+    <!-- Header Intro -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-8">
+      <div class="space-y-3 max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-mono font-semibold border border-emerald-200/60">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Apple &amp; Linear-Grade Bento Curriculum</span>
+        </div>
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+          Parenting Intelligence Studio
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          High-density, modular bento architecture. Zero clutter, instant audio playback, and neurobiological scripts mapped directly to Maya's developmental needs.
+        </p>
+      </div>
+
+      <!-- Live Calibration Telemetry Widget -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 bento-shadow flex items-center gap-4 shrink-0 w-full md:w-80">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">
+          M
+        </div>
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-slate-900 text-sm">Maya B.</span>
+            <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold">Age 8</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono">Tier 2: Explorer (7–9 yrs)</p>
+          <div class="flex items-center gap-2 text-[11px] text-emerald-700 font-mono font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>40% Syllabus Complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE MASTER BENTO GRID (Linear / Apple Layout) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <!-- BENTO 1: HERO SPOTLIGHT (Span 2 cols, 2 rows) -->
+      <div class="md:col-span-2 lg:col-span-2 bg-gradient-to-br from-slate-900 via-slate-900 to-[#102A1E] text-white rounded-3xl p-8 bento-shadow bento-hover flex flex-col justify-between relative overflow-hidden group">
+        <!-- Ambient decorative glow -->
+        <div class="absolute -top-12 -right-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-4 relative z-10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">
+              ★ Active Cover Story
+            </span>
+            <span class="text-xs font-mono text-slate-400">Chapter 2 of 5</span>
+          </div>
+
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold leading-tight text-white">
+            Elementary Impulse Control &amp; Sibling Rivalry
+          </h2>
+
+          <p class="text-slate-300 text-sm leading-relaxed max-w-xl">
+            When 8-year-old territorial jealousy flares over iPads or bedroom space, traditional time-outs escalate cortisol. Learn the 4-minute vagal reset.
+          </p>
+        </div>
+
+        <!-- Inline Audio Controller -->
+        <div class="mt-8 pt-6 border-t border-white/10 space-y-4 relative z-10">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <button onclick="bentoPlay()" id="bento-play-btn" class="w-11 h-11 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shadow-lg hover:scale-105 transition shrink-0 font-bold">
+                ▶
+              </button>
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Listen Now · 3:45 min</span>
+                <p class="text-xs font-semibold text-white">Narrated by Dr. Aris Chen</p>
+              </div>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1">
+              Full Lesson →
+            </a>
+          </div>
+
+          <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-emerald-400 h-full w-2/5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BENTO 2: 30-SECOND GLANCE INTERACTIVE DRAWER (Span 1 or 2 cols) -->
+      <div class="md:col-span-1 lg:col-span-2 bg-white rounded-3xl p-7 border border-slate-200 bento-shadow bento-hover flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+              30-Second Glance
+            </span>
+            <span class="text-xs font-mono text-slate-400">Instant Field Script</span>
+          </div>
+
+          <h3 class="font-serif text-xl font-bold text-slate-900">
+            What instinctively slips vs. What to say instead
+          </h3>
+
+          <!-- Interactive Script Comparison -->
+          <div class="space-y-3 pt-2">
+            <div class="bg-rose-50/80 border border-rose-200/60 rounded-2xl p-3.5 space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold text-rose-800">❌ Instinctive Mistake:</span>
+              <p class="text-xs text-rose-950 font-medium">“Stop being so selfish and just share with your little brother!”</p>
+            </div>
+
+            <div class="bg-emerald-50/80 border border-emerald-200/60 rounded-2xl p-3.5 space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800">✓ The Co-Regulation Shift:</span>
+              <p class="text-xs text-emerald-950 font-medium">“You were deep in your project and it felt jarring to be interrupted. Let's find your brother a different toy while you finish.”</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-400">
+          <span>Delivery tip: Low vocal pitch</span>
+          <span class="text-emerald-700 font-bold">Saves 15 min conflict</span>
+        </div>
+      </div>
+
+      <!-- BENTO 3: POST-SCREEN DOPAMINE CRASH (Span 1 or 2 cols) -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 bento-shadow bento-hover flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded">
+              Priority 1 · Urgent
+            </span>
+            <span class="text-[11px] font-mono text-slate-400">Digital World</span>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-slate-900 leading-snug">
+            Post-Screen Dopamine Crashes
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of reactive discipline.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-400">5 Chapters · 20m</span>
+          <a href="http://localhost:3000/academy" class="text-slate-900 font-bold hover:underline">Resume →</a>
+        </div>
+      </div>
+
+      <!-- BENTO 4: BEDTIME SOMATOSENSORY CALMING -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 bento-shadow bento-hover flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
+              Priority 2 · Routine
+            </span>
+            <span class="text-[11px] font-mono text-slate-400">Health &amp; Sleep</span>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-slate-900 leading-snug">
+            Bedtime Somatosensory Calming
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Why 8-year-olds suddenly experience bedtime bedtime resistance and separation anxiety as cognitive imagination deepens after dusk.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-400">4 Chapters · 15m</span>
+          <a href="http://localhost:3000/academy" class="text-slate-900 font-bold hover:underline">Begin →</a>
+        </div>
+      </div>
+
+      <!-- BENTO 5: ROBLOX VOICE CHAT -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 bento-shadow bento-hover flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+              Priority 2 · Routine
+            </span>
+            <span class="text-[11px] font-mono text-slate-400">Digital World</span>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-slate-900 leading-snug">
+            Roblox &amp; Minecraft Voice Chat
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Equip your 8-year-old with situational awareness when older children enter multiplayer game servers, without installing spyware apps.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-400">4 Chapters · 16m</span>
+          <a href="http://localhost:3000/academy" class="text-slate-900 font-bold hover:underline">Begin →</a>
+        </div>
+      </div>
+
+      <!-- BENTO 6: SCHOOL LUNCHBOX CO-REGULATION -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 bento-shadow bento-hover flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+              Priority 3 · Routine
+            </span>
+            <span class="text-[11px] font-mono text-slate-400">Nutrition</span>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-slate-900 leading-snug">
+            Cafeteria Social Palates &amp; Lunchbox
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            How elementary cafeteria peer dynamics trigger sudden food refusal, and how to build agency in daily nutrition without power battles.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-400">3 Chapters · 12m</span>
+          <a href="http://localhost:3000/academy" class="text-slate-900 font-bold hover:underline">Begin →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STICKY FLOATING AUDIO DOCK (Bottom Interactive Bar) -->
+    <div class="fixed bottom-6 inset-x-0 max-w-3xl mx-auto px-4 z-50">
+      <div class="bg-slate-900/95 backdrop-blur-xl border border-white/20 text-white rounded-full p-3 px-6 shadow-2xl flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <button onclick="bentoPlay()" class="w-9 h-9 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-xs hover:scale-105 transition">
+            ▶
+          </button>
+          <div class="hidden sm:block">
+            <div class="text-xs font-bold leading-tight">Amygdala Tantrums &amp; Vagal Reset</div>
+            <div class="text-[10px] text-slate-400 font-mono">Playing Chapter 2 · 3:45 min</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono text-slate-400">1:28 / 3:45</span>
+          <a href="http://localhost:3000/academy" class="bg-white/10 hover:bg-white/20 text-white text-xs font-mono px-3 py-1.5 rounded-full transition">
+            Open Drawer
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-slate-200 pt-6 text-xs font-mono text-slate-500">
+      <a href="academy-design-4-rhythms-learning-stream.html" class="hover:text-slate-900">← Prev: 04 Rhythms Stream</a>
+      <a href="academy-design-6-celestial-milestone-orbit.html" class="font-bold text-slate-900 hover:underline">Next: 06 Celestial Orbit →</a>
+    </div>
+
+  </main>
+
+  <script>
+    function bentoPlay() {
+      alert("Audio Narrator: 'Chapter 2: The 4-minute vagal reset for 8-year-olds...' is now playing.");
+    }
+  </script>
+</body>
+</html>

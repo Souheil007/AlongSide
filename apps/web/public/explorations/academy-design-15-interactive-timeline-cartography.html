@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 15: Developmental Cartography &amp; Expedition Map | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            topoBg: '#FAF7F0',
+            topoCard: '#FFFFFF',
+            topoInk: '#1C261F',
+            topoGreen: '#244A32',
+            topoGold: '#B88636',
+            topoTerracotta: '#BD6446',
+            contourLine: '#E3DDD0'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAF7F0;
+      background-image: 
+        radial-gradient(#D8D2C2 0.75px, transparent 0.75px),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(184, 134, 54, 0.04) 40px, rgba(184, 134, 54, 0.04) 41px);
+      background-size: 24px 24px, 100% 41px;
+      color: #1C261F;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .topo-shadow {
+      box-shadow: 0 4px 6px -1px rgba(36, 74, 50, 0.04), 0 20px 30px -10px rgba(36, 74, 50, 0.08);
+    }
+    .waypoint-flag {
+      transition: all 0.25s ease;
+    }
+    .waypoint-flag:hover {
+      transform: scale(1.08) translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-topoGreen selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-[#E3DDD0] bg-[#FAF7F0]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-topoGreen text-white flex items-center justify-center font-cinzel text-sm font-bold shadow-xs">🧭</span>
+          <span class="font-cinzel text-base tracking-wider text-topoGreen font-bold">AlongSide Cartography</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Developmental Expedition Map</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="academy-design-10-spatial-glass-hud.html" class="text-stone-500 hover:text-stone-900 px-1">10</a>
+          <a href="academy-design-11-roleplay-theatre.html" class="text-stone-500 hover:text-stone-900 px-1">11</a>
+          <a href="academy-design-12-botanical-herbarium.html" class="text-stone-500 hover:text-stone-900 px-1">12</a>
+          <a href="academy-design-13-podcast-broadcast-studio.html" class="text-stone-500 hover:text-stone-900 px-1">13</a>
+          <a href="academy-design-14-tactical-playbook.html" class="text-stone-500 hover:text-stone-900 px-1">14</a>
+          <span class="bg-topoGreen font-bold text-white px-2 py-0.5 rounded-full shadow-xs">15 Map</span>
+          <a href="index.html" class="text-topoGreen hover:underline pl-1 font-semibold">All 15 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-topoGreen text-white px-3.5 py-1.5 rounded-full hover:bg-topoGreen/90 transition shadow-xs">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO: CARTOGRAPHY EXPEDITION MASTHEAD -->
+    <section class="bg-white rounded-[2.5rem] p-8 sm:p-12 border border-[#E3DDD0] topo-shadow relative overflow-hidden space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-[#E9EFEA] border border-[#CCDCD0] text-topoGreen px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span>TERRAIN SURVEY // SECTION IV: MIDDLE CHILDHOOD</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-stone-600 bg-[#FAF7F0] px-3.5 py-1.5 rounded-full border border-[#E3DDD0]">
+          <span>Expedition Lead:</span>
+          <span class="text-topoGreen font-bold font-cinzel">Maya (Age 8 · Basecamp Explorer)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <h1 class="font-serif text-3xl sm:text-5xl font-light text-stone-950 leading-tight">
+            Charting the <em class="italic text-topoGreen font-normal">Living Geography</em> of Childhood.
+          </h1>
+          <p class="text-stone-600 text-sm sm:text-base leading-relaxed max-w-xl">
+            Childhood is an expedition through distinct psychological terrains. Navigate the Amygdala Ridge, the Screen Plateau, and the Twilight Pass with pediatric coordinates.
+          </p>
+        </div>
+
+        <!-- Compass Elevation Gauge -->
+        <div class="lg:col-span-4 bg-[#FAF7F0] p-6 rounded-2xl border border-[#E3DDD0] space-y-3 font-mono text-xs">
+          <div class="flex justify-between border-b border-stone-300 pb-2">
+            <span class="font-cinzel text-stone-600 font-bold">EXPEDITION TELEMETRY</span>
+            <span class="text-topoGreen font-bold">TIER 2 ELEVATION</span>
+          </div>
+          <div class="space-y-1.5 text-stone-700">
+            <div class="flex justify-between"><span>Current Longitude:</span> <span class="font-bold">Age 8 Years 2 Mo</span></div>
+            <div class="flex justify-between"><span>Terrain Complexity:</span> <span class="text-amber-800 font-bold">Moderate (Pre-Adolescent Shift)</span></div>
+            <div class="flex justify-between"><span>Waypoints Cleared:</span> <span class="text-emerald-700 font-bold">2 of 6 Visited</span></div>
+            <div class="flex justify-between"><span>Elevation Hazard:</span> <span class="text-rose-700 font-bold">Screen Transition Cliffs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE HORIZONTAL EXPEDITION TRAIL -->
+      <div class="pt-4 border-t border-[#E3DDD0] space-y-3">
+        <div class="flex justify-between items-center text-xs font-mono text-stone-500">
+          <span class="uppercase tracking-wider font-bold">The Developmental Continental Divide (Ages 4 to 12)</span>
+          <span class="text-topoGreen font-bold">Interactive Waypoints</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <!-- Zone 1 -->
+          <div class="p-4 rounded-xl bg-stone-50 border border-stone-200 text-xs font-mono space-y-1 opacity-70">
+            <span class="text-[10px] text-stone-400 font-bold">TERRAIN 01 (AGES 4–6)</span>
+            <div class="font-bold text-stone-800">The Early Forest</div>
+            <div class="text-[11px] text-stone-500">Separation &amp; Potty Routines (Cleared)</div>
+          </div>
+
+          <!-- Zone 2 (Active Maya) -->
+          <div class="p-4 rounded-xl bg-[#EBF3ED] border-2 border-topoGreen text-xs font-mono space-y-1 shadow-sm">
+            <div class="flex justify-between">
+              <span class="text-[10px] text-topoGreen font-bold">TERRAIN 02 (AGES 7–9)</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div class="font-bold text-topoGreen text-sm">The Explorer Highlands</div>
+            <div class="text-[11px] text-stone-600">Active Basecamp (Maya · Age 8)</div>
+          </div>
+
+          <!-- Zone 3 -->
+          <div class="p-4 rounded-xl bg-stone-50 border border-stone-200 text-xs font-mono space-y-1 opacity-70">
+            <span class="text-[10px] text-stone-400 font-bold">TERRAIN 03 (AGES 10–12)</span>
+            <div class="font-bold text-stone-800">The Pre-Teen Ridge</div>
+            <div class="text-[11px] text-stone-500">Social Status &amp; Phone Compacts (Ahead)</div>
+          </div>
+
+          <!-- Zone 4 -->
+          <div class="p-4 rounded-xl bg-stone-50 border border-stone-200 text-xs font-mono space-y-1 opacity-70">
+            <span class="text-[10px] text-stone-400 font-bold">TERRAIN 04 (AGES 13+)</span>
+            <div class="font-bold text-stone-800">The High Divide</div>
+            <div class="text-[11px] text-stone-500">Full Autonomy &amp; Identity (Distant)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAYPOINT DISCOVERY CARDS (Expedition Journals) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[#E3DDD0] pb-4">
+        <div>
+          <h3 class="font-cinzel text-xl font-bold text-stone-950">Explorer Expedition Waypoints</h3>
+          <p class="text-xs text-stone-500 font-mono">Calibrated coordinates for Maya's active developmental trek</p>
+        </div>
+        <span class="font-mono text-xs text-topoGreen">6 Waypoints Charted</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Waypoint 1 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 01 // PASS</span>
+              <span class="text-topoTerracotta text-[11px] font-bold">Hazard: Critical</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 420m · Limbic Ridge</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              When 8-year-old territorial boundaries are crossed by younger siblings, learn restorative turn-taking rituals.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+        <!-- Waypoint 2 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 02 // VALLEY</span>
+              <span class="text-topoTerracotta text-[11px] font-bold">Hazard: Critical</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 180m · Striatum Ravine</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Post-Screen Dopamine Crashes: 10m Decompression
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+        <!-- Waypoint 3 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 03 // RIDGE</span>
+              <span class="text-stone-500 text-[11px]">Routine</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 610m · Twilight Summit</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Bedtime Somatosensory Calming &amp; Melatonin
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+        <!-- Waypoint 4 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 04 // OCEAN</span>
+              <span class="text-stone-500 text-[11px]">Routine</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 0m · Digital Archipelago</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Roblox &amp; Minecraft Voice Chat Peer Pressure
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+        <!-- Waypoint 5 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 05 // VALLEY</span>
+              <span class="text-stone-500 text-[11px]">Scaffold</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 250m · Cafeteria Commons</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              School Lunchbox Co-Regulation &amp; Palate
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">3 Chapters · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+        <!-- Waypoint 6 -->
+        <div class="bg-white rounded-3xl p-7 border border-[#E3DDD0] topo-shadow waypoint-flag flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-topoGreen font-bold bg-[#EBF3ED] px-2.5 py-0.5 rounded-full">WAYPOINT 06 // SUMMIT</span>
+              <span class="text-stone-500 text-[11px]">Scaffold</span>
+            </div>
+            <span class="text-[10px] font-mono text-stone-400">Elevation: 580m · Empathy Plateau</span>
+            <h4 class="font-serif text-2xl font-bold text-stone-900 leading-snug">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift to complex friendship hierarchies. Scripts to help de-escalate cliques.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Chapters · 19 min</span>
+            <a href="http://localhost:3000/academy" class="text-topoGreen font-bold hover:underline">Plot Trek →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-[#E3DDD0] pt-6 text-xs font-mono text-stone-500">
+      <a href="academy-design-14-tactical-playbook.html" class="hover:text-stone-900">← Prev: 14 Tactical Playbook</a>
+      <a href="index.html" class="font-bold text-topoGreen hover:underline">Return to All 15 Explorations Index →</a>
+    </div>
+
+  </main>
+
+</body>
+</html>
