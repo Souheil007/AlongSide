@@ -11,6 +11,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { DevelopmentalTier, type ChildDTO } from '@alongside/shared';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -539,6 +540,53 @@ export function StageTailoredVocabularyView({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const [copiedWord, setCopiedWord] = React.useState<string | null>(null);
+  const containerRef = React.useRef<HTMLElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger Entrance
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          tl.fromTo(
+            '.vocab-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            { opacity: 1, y: 0, duration: 0.5, clearProps: 'all' }
+          );
+
+          tl.fromTo(
+            '.vocab-term-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+              stagger: 0.08,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.vocab-header', '.vocab-term-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
   // Reset to page 1 whenever search query or child stage changes
   React.useEffect(() => {
@@ -562,6 +610,27 @@ export function StageTailoredVocabularyView({
   const startIndex = (validPage - 1) * VOCABULARY_PAGE_SIZE;
   const paginatedTerms = filteredTerms.slice(startIndex, startIndex + VOCABULARY_PAGE_SIZE);
 
+  // Smooth card transition on pagination or search change
+  React.useEffect(() => {
+    if (gridRef.current) {
+      const cards = gridRef.current.querySelectorAll('.vocab-term-card');
+      if (cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            stagger: 0.04,
+            ease: MOTION_TOKENS.ease.gentle,
+            clearProps: 'all',
+          }
+        );
+      }
+    }
+  }, [validPage, searchQuery]);
+
   const handleCopy = (word: string, textToCopy: string) => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(textToCopy);
@@ -571,9 +640,9 @@ export function StageTailoredVocabularyView({
   };
 
   return (
-    <section className={cn('space-y-5 max-w-7xl mx-auto', className)}>
+    <section ref={containerRef} className={cn('space-y-5 max-w-7xl mx-auto', className)}>
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+      <div className="vocab-header flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
         <div className="space-y-0.5">
           <span className="font-mono text-[11px] uppercase tracking-wider text-[#143D2B] font-bold flex items-center gap-1.5">
             <MessageSquare className="w-4 h-4 text-[#143D2B]" />
@@ -639,11 +708,11 @@ export function StageTailoredVocabularyView({
         </div>
       ) : (
         /* Terms Grid (2 Columns, Exactly 4 Terms per Page) */
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {paginatedTerms.map((term) => (
             <div
               key={term.word}
-              className="rounded-3xl border border-[#E3E3DC] bg-white p-6 space-y-4 shadow-xs hover:border-[#143D2B]/30 transition"
+              className="vocab-term-card rounded-3xl border border-[#E3E3DC] bg-white p-6 space-y-4 shadow-xs hover:border-[#143D2B]/30 transition"
             >
               {/* Card Header: Word, Phonetic, Type & Copy Script Button */}
               <div className="flex items-start justify-between gap-3 border-b border-[#E3E3DC]/60 pb-3">
