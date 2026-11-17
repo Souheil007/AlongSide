@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 04: Circadian Rhythms Learning Stream | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            streamDawn: '#FFF8F0',
+            streamNoon: '#F4F9F6',
+            streamDusk: '#F2F4F8',
+            streamNight: '#1A212D',
+            forest: '#143D2B'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #FDFBF7;
+      color: #1A1816;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 28px;
+      width: 2px;
+      background: #E5E7EB;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-amber-100 selection:text-amber-950">
+
+  <!-- Header -->
+  <header class="border-b border-stone-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center font-serif font-bold">R</span>
+          <span class="font-serif text-lg font-bold text-stone-900">AlongSide Rhythms</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Circadian Learning Stream</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-stone-500 hover:text-stone-900 px-1">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-stone-500 hover:text-stone-900 px-1">03</a>
+          <span class="bg-amber-600 font-bold text-white px-2 py-0.5 rounded-full shadow-xs">04 Rhythms</span>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="index.html" class="text-amber-800 hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-stone-900 text-white px-3.5 py-1.5 rounded-full hover:bg-stone-800 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pt-10 space-y-10">
+
+    <!-- HERO: CIRCADIAN INTENT -->
+    <section class="bg-gradient-to-br from-amber-50/70 via-orange-50/40 to-stone-50 rounded-3xl p-8 sm:p-12 border border-amber-200/60 relative overflow-hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span>☀️ TIME-OF-DAY ACADEMY STREAM</span>
+        </div>
+        <div class="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-full border border-amber-200/80 text-xs font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Calibrated to Maya (Age 8 · Explorer)</span>
+        </div>
+      </div>
+
+      <div class="max-w-2xl space-y-3">
+        <h1 class="font-serif text-3xl sm:text-5xl font-normal text-stone-900 leading-tight">
+          Learning That Meets You <span class="italic text-amber-800">In the Exact Moment</span> You Need It.
+        </h1>
+        <p class="text-stone-600 text-sm sm:text-base leading-relaxed">
+          Parents do not have 45 minutes to browse an unstructured course list. Here, pediatric neurobiology is sequenced into the four daily biological transitions of your child's day.
+        </p>
+      </div>
+
+      <!-- Time-of-Day Filter Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+        <button onclick="filterTime('ALL')" id="filter-all" class="time-btn bg-stone-900 text-white p-3 rounded-2xl text-left transition shadow-xs">
+          <div class="text-[10px] font-mono opacity-70">ENTIRE DAY</div>
+          <div class="text-xs font-bold mt-0.5">All 4 Rhythms</div>
+        </button>
+        <button onclick="filterTime('MORNING')" id="filter-morning" class="time-btn bg-white border border-stone-200 hover:border-amber-400 p-3 rounded-2xl text-left transition">
+          <div class="text-[10px] font-mono text-amber-700">07:00 – 08:30</div>
+          <div class="text-xs font-bold text-stone-900 mt-0.5">Morning Launch</div>
+        </button>
+        <button onclick="filterTime('AFTERNOON')" id="filter-afternoon" class="time-btn bg-white border border-stone-200 hover:border-amber-400 p-3 rounded-2xl text-left transition">
+          <div class="text-[10px] font-mono text-emerald-700">15:30 – 18:00</div>
+          <div class="text-xs font-bold text-stone-900 mt-0.5">After School &amp; Screens</div>
+        </button>
+        <button onclick="filterTime('EVENING')" id="filter-evening" class="time-btn bg-white border border-stone-200 hover:border-amber-400 p-3 rounded-2xl text-left transition">
+          <div class="text-[10px] font-mono text-indigo-700">19:30 – 21:00</div>
+          <div class="text-xs font-bold text-stone-900 mt-0.5">Bedtime Winddown</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- CHRONOLOGICAL STREAM CONTAINER -->
+    <div class="relative pl-0 sm:pl-16 space-y-10" id="stream-container">
+      <div class="timeline-line hidden sm:block"></div>
+
+      <!-- STREAM BLOCK 1: MORNING LAUNCH -->
+      <div class="stream-item relative space-y-4" data-time="MORNING">
+        <div class="hidden sm:flex absolute -left-16 top-0 w-10 h-10 rounded-full bg-amber-500 text-white items-center justify-center font-bold text-sm shadow-md z-10">
+          🌅
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs font-bold text-amber-900 uppercase tracking-wider bg-amber-100 px-3 py-1 rounded-full">
+            07:00 – 08:30 · Morning Launch
+          </span>
+          <span class="text-xs font-mono text-stone-400">Cortisol awakening response &amp; executive inertia</span>
+        </div>
+
+        <div class="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:border-amber-400/80 transition space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-2 max-w-xl">
+              <span class="font-mono text-[11px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded">
+                Behavior &amp; Executive Function
+              </span>
+              <h3 class="font-serif text-2xl font-bold text-stone-900">
+                The Elementary Morning Drag: Eliminating the 3-Shoe Standoff
+              </h3>
+              <p class="text-stone-600 text-sm leading-relaxed">
+                Why repeating "Put your shoes on" 8 times causes parental rage and activates child defiance. Switch to the 2-choice kinetic cue.
+              </p>
+            </div>
+            <div class="shrink-0 text-right font-mono text-xs text-stone-400">
+              <div>Lesson 01 of 03</div>
+              <div class="text-emerald-700 font-bold mt-1">🎧 3:15 min audio</div>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/60 border border-amber-200/60 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-amber-800 font-bold">Script of the Morning:</span>
+              <p class="text-xs sm:text-sm font-serif italic text-stone-900">
+                “Do you want to lace your left shoe or your right shoe first while I pack the apples?”
+              </p>
+            </div>
+            <a href="http://localhost:3000/academy" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-mono px-4 py-2 rounded-full transition shadow-xs whitespace-nowrap self-start sm:self-auto">
+              Read Lesson →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- STREAM BLOCK 2: AFTERNOON TRANSITION & SCREENS -->
+      <div class="stream-item relative space-y-4" data-time="AFTERNOON">
+        <div class="hidden sm:flex absolute -left-16 top-0 w-10 h-10 rounded-full bg-emerald-600 text-white items-center justify-center font-bold text-sm shadow-md z-10">
+          🎮
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs font-bold text-emerald-900 uppercase tracking-wider bg-emerald-100 px-3 py-1 rounded-full">
+            15:30 – 18:00 · School Gate &amp; Digital Transitions
+          </span>
+          <span class="text-xs font-mono text-stone-400">Sensory depletion &amp; dopamine crashes</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Card 1 -->
+          <div class="bg-white border border-stone-200 rounded-3xl p-6 shadow-xs hover:border-emerald-400/80 transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="font-mono text-[11px] text-red-700 font-bold bg-red-50 px-2 py-0.5 rounded">
+                Priority 1 · Urgent
+              </span>
+              <h3 class="font-serif text-xl font-bold text-stone-900">
+                Post-Screen Dopamine Crashes: The 10-Minute Decompression
+              </h3>
+              <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                Why 8-year-olds scream when asked to turn off the iPad: biological striatal drop, not bad manners.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-stone-400">5 Chapters · 20 min</span>
+              <a href="http://localhost:3000/academy" class="text-emerald-700 font-bold hover:underline">Open Guide →</a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white border border-stone-200 rounded-3xl p-6 shadow-xs hover:border-emerald-400/80 transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="font-mono text-[11px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">
+                Multiplayer Safety
+              </span>
+              <h3 class="font-serif text-xl font-bold text-stone-900">
+                Roblox &amp; Minecraft Voice Chat Peer Pressure
+              </h3>
+              <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                Equipping Maya to spot older kids and manipulative trade requests on public gaming servers.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-stone-400">4 Chapters · 16 min</span>
+              <a href="http://localhost:3000/academy" class="text-emerald-700 font-bold hover:underline">Open Guide →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- STREAM BLOCK 3: BEDTIME & SOMATOSENSORY WINDDOWN -->
+      <div class="stream-item relative space-y-4" data-time="EVENING">
+        <div class="hidden sm:flex absolute -left-16 top-0 w-10 h-10 rounded-full bg-indigo-600 text-white items-center justify-center font-bold text-sm shadow-md z-10">
+          🌙
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs font-bold text-indigo-900 uppercase tracking-wider bg-indigo-100 px-3 py-1 rounded-full">
+            19:30 – 21:00 · Evening Winddown
+          </span>
+          <span class="text-xs font-mono text-stone-400">Melatonin lag &amp; somatic de-arousal</span>
+        </div>
+
+        <div class="bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-xs hover:border-indigo-400/80 transition space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-2 max-w-xl">
+              <span class="font-mono text-[11px] text-indigo-700 font-bold bg-indigo-50 px-2 py-0.5 rounded">
+                Health &amp; Pediatric Sleep Architecture
+              </span>
+              <h3 class="font-serif text-2xl font-bold text-stone-900">
+                Bedtime Somatosensory Calming: Dissolving The "One More Glass of Water" Stall
+              </h3>
+              <p class="text-stone-600 text-sm leading-relaxed">
+                Elementary stall tactics are rarely about thirst; they are an involuntary protest against dark separation when imagination peaks. The somatic heavy-blanket protocol.
+              </p>
+            </div>
+            <div class="shrink-0 text-right font-mono text-xs text-stone-400">
+              <div>4 Chapters · 15 min</div>
+              <div class="text-indigo-700 font-bold mt-1">🎧 Narrated Walkthrough</div>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/60 border border-indigo-200/60 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-indigo-800 font-bold">Tonight's Winddown Routine:</span>
+              <p class="text-xs sm:text-sm font-serif italic text-stone-900">
+                Dim lamps to 20% at 20:00. 3 minutes of joint compression (hand-over-feet gentle press) to shift autonomic tone.
+              </p>
+            </div>
+            <a href="http://localhost:3000/academy" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-mono px-4 py-2 rounded-full transition shadow-xs whitespace-nowrap self-start sm:self-auto">
+              Start Winddown Guide →
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-stone-200 pt-6 text-xs font-mono text-stone-500">
+      <a href="academy-design-3-neuroscience-fieldguide.html" class="hover:text-stone-900">← Prev: 03 Neuroscience Notebook</a>
+      <a href="academy-design-5-modern-bento-studio.html" class="font-bold text-stone-900 hover:underline">Next: 05 Bento Studio →</a>
+    </div>
+
+  </main>
+
+  <script>
+    function filterTime(time) {
+      const items = document.querySelectorAll('.stream-item');
+      const buttons = document.querySelectorAll('.time-btn');
+
+      buttons.forEach(b => {
+        b.classList.remove('bg-stone-900', 'text-white');
+        b.classList.add('bg-white', 'border', 'border-stone-200');
+        const text = b.querySelector('.text-stone-900');
+        if (text) text.classList.remove('text-white');
+      });
+
+      const activeBtn = document.getElementById('filter-' + time.toLowerCase());
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'border', 'border-stone-200');
+        activeBtn.classList.add('bg-stone-900', 'text-white');
+      }
+
+      items.forEach(item => {
+        if (time === 'ALL' || item.getAttribute('data-time') === time) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 03: Neuroscience Field Notebook | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['Newsreader', 'serif'],
+          },
+          colors: {
+            fieldBg: '#F5F5EE',
+            fieldCard: '#FCFCF8',
+            fieldInk: '#1C2321',
+            blueprintBlue: '#1D4ED8',
+            nerveGreen: '#15803D',
+            cortexOrange: '#C2410C'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F5F5EE;
+      background-image: 
+        radial-gradient(#D3D6CE 0.75px, transparent 0.75px),
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 24px 24px, 120px 120px, 120px 120px;
+      color: #1C2321;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .technical-border {
+      border: 1px solid #D6D8D0;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.04);
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-stone-800 selection:text-white pb-20">
+
+  <!-- Technical Top Header Bar -->
+  <header class="border-b border-[#D6D8D0] bg-[#FCFCF8]/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between font-mono text-xs">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="w-6 h-6 bg-stone-900 text-white flex items-center justify-center font-bold text-[11px] rounded">NB</span>
+          <span class="font-bold tracking-tight text-stone-900">AlongSide FIELD_GUIDE // ACADEMY</span>
+        </a>
+        <span class="text-stone-300">|</span>
+        <span class="text-stone-500 hidden sm:inline">REF: PEDIATRIC_NEURO_2026.04</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-2">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded px-2 py-0.5 text-[11px]">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-500 hover:text-stone-900 px-1">01</a>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-stone-500 hover:text-stone-900 px-1">02</a>
+          <span class="bg-stone-900 font-bold text-white px-1.5 py-0.2 rounded">03 Notebook</span>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-stone-500 hover:text-stone-900 px-1">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1">05</a>
+          <a href="index.html" class="text-blue-700 hover:underline pl-1 font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-3 py-1 rounded hover:bg-stone-800 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-8 space-y-10">
+
+    <!-- MASTHEAD: LABORATORY & FIELD DISPATCH -->
+    <section class="technical-border bg-[#FCFCF8] rounded-xl p-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-[#E2E4DC] pb-6">
+        <div class="space-y-2 max-w-3xl">
+          <div class="flex items-center gap-2 font-mono text-[11px] text-stone-500 uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+            <span>Biological Calibration Active</span>
+            <span>//</span>
+            <span>Subject ID: MAYA_BIC_08</span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-5xl font-normal text-stone-950 leading-tight">
+            Pediatric Neurobiology Field Notebook
+          </h1>
+          <p class="text-sm sm:text-base text-stone-600 font-normal leading-relaxed">
+            Translating prefrontal cortical maturation, limbic arousal thresholds, and autonomic co-regulation into actionable parental field protocols.
+          </p>
+        </div>
+
+        <!-- Telemetry Status Block -->
+        <div class="font-mono text-xs bg-stone-50 border border-stone-200 rounded-lg p-4 shrink-0 w-full md:w-72 space-y-2">
+          <div class="flex justify-between text-stone-400 text-[10px] uppercase font-bold">
+            <span>Developmental Matrix</span>
+            <span>Tier 02</span>
+          </div>
+          <div class="text-stone-900 font-bold text-sm">Maya · 8 yrs 2 mo</div>
+          <div class="space-y-1 pt-1 text-[11px] text-stone-600">
+            <div class="flex justify-between"><span>PFC Pruning:</span> <span class="font-bold text-emerald-700">Active (42%)</span></div>
+            <div class="flex justify-between"><span>Dopamine Sensitivity:</span> <span class="font-bold text-amber-700">High (Peak)</span></div>
+            <div class="flex justify-between"><span>Melatonin Lag:</span> <span class="font-bold text-blue-700">+45 min (8–10y)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE BRAIN ARCHITECTURE SCHEMATIC -->
+      <div class="bg-[#F8F8F2] border border-[#DCDED5] rounded-lg p-6 space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="font-mono text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+            <span class="w-3 h-3 bg-stone-800 text-white rounded-xs text-[9px] flex items-center justify-center">Ω</span>
+            <span>Interactive Neural Circuit Inspector (Select Focus Area)</span>
+          </span>
+          <span class="font-mono text-[11px] text-stone-500">Click a node to inspect parent action trigger</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Node 1: Prefrontal Cortex -->
+          <button onclick="inspectCircuit('pfc')" id="btn-pfc" class="circuit-btn text-left p-4 rounded-lg border-2 border-emerald-600 bg-white shadow-xs transition">
+            <div class="flex items-center justify-between font-mono text-[11px] mb-1">
+              <span class="font-bold text-emerald-800">NODE 01: PFC</span>
+              <span class="text-stone-400">Scaffolding</span>
+            </div>
+            <h4 class="font-bold text-stone-900 text-sm">Prefrontal Cortex</h4>
+            <p class="text-xs text-stone-600 mt-1">Impulse inhibition &amp; cognitive flexibility. Offline under acute fatigue.</p>
+          </button>
+
+          <!-- Node 2: Amygdala -->
+          <button onclick="inspectCircuit('amygdala')" id="btn-amygdala" class="circuit-btn text-left p-4 rounded-lg border border-stone-300 bg-white hover:border-stone-400 transition">
+            <div class="flex items-center justify-between font-mono text-[11px] mb-1">
+              <span class="font-bold text-amber-800">NODE 02: LIMBIC</span>
+              <span class="text-stone-400">Arousal</span>
+            </div>
+            <h4 class="font-bold text-stone-900 text-sm">Amygdala Core</h4>
+            <p class="text-xs text-stone-600 mt-1">Fight/flight trigger. Interprets boundary enforcement as physical threat.</p>
+          </button>
+
+          <!-- Node 3: Striatum / Dopamine -->
+          <button onclick="inspectCircuit('striatum')" id="btn-striatum" class="circuit-btn text-left p-4 rounded-lg border border-stone-300 bg-white hover:border-stone-400 transition">
+            <div class="flex items-center justify-between font-mono text-[11px] mb-1">
+              <span class="font-bold text-blue-800">NODE 03: REWARD</span>
+              <span class="text-stone-400">Dopamine</span>
+            </div>
+            <h4 class="font-bold text-stone-900 text-sm">Ventral Striatum</h4>
+            <p class="text-xs text-stone-600 mt-1">Video game reward anticipation. Generates severe transition resistance.</p>
+          </button>
+        </div>
+
+        <!-- Dynamic Circuit Action Display -->
+        <div id="circuit-details" class="p-4 rounded-lg bg-emerald-50 border border-emerald-200 font-mono text-xs text-emerald-950 space-y-2">
+          <div class="font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>Protocol Recommendation for Prefrontal Cortex (Age 8):</span>
+          </div>
+          <p class="leading-relaxed font-sans text-sm text-emerald-900">
+            Never attempt verbal logic, reasoning, or consequences while the child's prefrontal cortex is depleted. Offer physical proprioceptive grounding (firm shoulder hug, deep exhale, drinking ice water) before introducing behavioral conversation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD PROTOCOL MODULES (Scientific Index Layout) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[#D6D8D0] pb-3">
+        <h3 class="font-mono text-sm font-bold uppercase tracking-wider text-stone-900">
+          Calibrated Field Modules (Index 01–06)
+        </h3>
+        <span class="font-mono text-xs text-stone-500">Tier 02 · Middle Childhood</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Module 1 -->
+        <div class="technical-border bg-[#FCFCF8] rounded-xl p-6 space-y-4">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-700 font-bold">MOD_01 // BEHAVIOR</span>
+            <span class="text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded font-bold">Priority: CRITICAL</span>
+          </div>
+          <h4 class="font-serif text-2xl font-bold text-stone-900">
+            Elementary Impulse Control &amp; Sibling Rivalry
+          </h4>
+          <p class="text-sm text-stone-600 leading-relaxed font-sans">
+            Autonomic nervous system triggers when younger siblings disrupt play. Includes the 3-step physical decompression protocol to prevent explosive reactivity.
+          </p>
+          <div class="font-mono text-xs bg-stone-50 p-3 rounded border border-stone-200 space-y-1">
+            <div class="text-stone-400 text-[10px] uppercase font-bold">Scientific Core</div>
+            <div class="text-stone-700">Amygdala hijack suppression via vagal sensory brake</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between font-mono text-xs">
+            <span class="text-emerald-700 font-bold">5 Chapters · 18 min</span>
+            <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-4 py-2 rounded hover:bg-stone-800 transition font-sans font-semibold">
+              Open Protocol →
+            </a>
+          </div>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="technical-border bg-[#FCFCF8] rounded-xl p-6 space-y-4">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-700 font-bold">MOD_02 // DIGITAL</span>
+            <span class="text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded font-bold">Priority: CRITICAL</span>
+          </div>
+          <h4 class="font-serif text-2xl font-bold text-stone-900">
+            Post-Screen Dopamine Crashes
+          </h4>
+          <p class="text-sm text-stone-600 leading-relaxed font-sans">
+            Why ending Roblox triggers violent tantrums: rapid striatal dopamine drop creates a transient sensory deprivation state. Script to neutralize the crash.
+          </p>
+          <div class="font-mono text-xs bg-stone-50 p-3 rounded border border-stone-200 space-y-1">
+            <div class="text-stone-400 text-[10px] uppercase font-bold">Scientific Core</div>
+            <div class="text-stone-700">Gradual dopamine tapering via kinetic tactile bridge</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between font-mono text-xs">
+            <span class="text-emerald-700 font-bold">5 Chapters · 20 min</span>
+            <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-4 py-2 rounded hover:bg-stone-800 transition font-sans font-semibold">
+              Open Protocol →
+            </a>
+          </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="technical-border bg-[#FCFCF8] rounded-xl p-6 space-y-4">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-700 font-bold">MOD_03 // HEALTH</span>
+            <span class="text-stone-600 bg-stone-100 px-2 py-0.5 rounded font-bold">Priority: ROUTINE</span>
+          </div>
+          <h4 class="font-serif text-2xl font-bold text-stone-900">
+            Bedtime Somatosensory Calming &amp; Melatonin Shifting
+          </h4>
+          <p class="text-sm text-stone-600 leading-relaxed font-sans">
+            Circadian biology shifts in 8-year-olds: why melatonin release occurs 35–45 minutes later than in early childhood, and how to scaffold somatosensory winddown.
+          </p>
+          <div class="font-mono text-xs bg-stone-50 p-3 rounded border border-stone-200 space-y-1">
+            <div class="text-stone-400 text-[10px] uppercase font-bold">Scientific Core</div>
+            <div class="text-stone-700">Suprachiasmatic nucleus light hygiene + parasympathetic winddown</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-500">4 Chapters · 15 min</span>
+            <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-4 py-2 rounded hover:bg-stone-800 transition font-sans font-semibold">
+              Open Protocol →
+            </a>
+          </div>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="technical-border bg-[#FCFCF8] rounded-xl p-6 space-y-4">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="px-2 py-0.5 bg-stone-100 rounded text-stone-700 font-bold">MOD_04 // DIGITAL</span>
+            <span class="text-stone-600 bg-stone-100 px-2 py-0.5 rounded font-bold">Priority: ROUTINE</span>
+          </div>
+          <h4 class="font-serif text-2xl font-bold text-stone-900">
+            Roblox &amp; Minecraft Voice Chat Peer Boundaries
+          </h4>
+          <p class="text-sm text-stone-600 leading-relaxed font-sans">
+            Social developmental vulnerability in elementary gaming lobbies. How to build situational discernment without punitive confiscation.
+          </p>
+          <div class="font-mono text-xs bg-stone-50 p-3 rounded border border-stone-200 space-y-1">
+            <div class="text-stone-400 text-[10px] uppercase font-bold">Scientific Core</div>
+            <div class="text-stone-700">Digital self-efficacy vs external surveillance anxiety</div>
+          </div>
+          <div class="pt-2 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-500">4 Chapters · 16 min</span>
+            <a href="http://localhost:3000/academy" class="bg-stone-900 text-white px-4 py-2 rounded hover:bg-stone-800 transition font-sans font-semibold">
+              Open Protocol →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-[#D6D8D0] pt-6 font-mono text-xs text-stone-500">
+      <a href="academy-design-2-atmospheric-glass-spatial.html" class="hover:text-stone-900">← Prev: 02 Atmospheric Glass</a>
+      <a href="academy-design-4-rhythms-learning-stream.html" class="font-bold text-stone-900 hover:underline">Next: 04 Rhythms Learning Stream →</a>
+    </div>
+
+  </main>
+
+  <script>
+    function inspectCircuit(type) {
+      const details = document.getElementById('circuit-details');
+      const buttons = document.querySelectorAll('.circuit-btn');
+      
+      buttons.forEach(b => {
+        b.classList.remove('border-2', 'border-emerald-600', 'border-amber-600', 'border-blue-600');
+        b.classList.add('border', 'border-stone-300');
+      });
+
+      if (type === 'pfc') {
+        document.getElementById('btn-pfc').classList.add('border-2', 'border-emerald-600');
+        details.className = "p-4 rounded-lg bg-emerald-50 border border-emerald-200 font-mono text-xs text-emerald-950 space-y-2";
+        details.innerHTML = `
+          <div class="font-bold uppercase tracking-wider">Protocol Recommendation for Prefrontal Cortex (Age 8):</div>
+          <p class="leading-relaxed font-sans text-sm text-emerald-900">
+            Never attempt verbal logic, reasoning, or consequences while the child's prefrontal cortex is depleted. Offer physical proprioceptive grounding (firm shoulder hug, deep exhale, drinking ice water) before introducing behavioral conversation.
+          </p>
+        `;
+      } else if (type === 'amygdala') {
+        document.getElementById('btn-amygdala').classList.add('border-2', 'border-amber-600');
+        details.className = "p-4 rounded-lg bg-amber-50 border border-amber-200 font-mono text-xs text-amber-950 space-y-2";
+        details.innerHTML = `
+          <div class="font-bold uppercase tracking-wider">Protocol Recommendation for Amygdala Core (Limbic Hijack):</div>
+          <p class="leading-relaxed font-sans text-sm text-amber-900">
+            The amygdala interprets adult volume and posture as existential threat. Lower your eye level by 12 inches below child line of sight, soften facial muscles, and hum or use a calm, low-frequency tone to signal physiological safety.
+          </p>
+        `;
+      } else if (type === 'striatum') {
+        document.getElementById('btn-striatum').classList.add('border-2', 'border-blue-600');
+        details.className = "p-4 rounded-lg bg-blue-50 border border-blue-200 font-mono text-xs text-blue-950 space-y-2";
+        details.innerHTML = `
+          <div class="font-bold uppercase tracking-wider">Protocol Recommendation for Ventral Striatum (Dopamine Bridge):</div>
+          <p class="leading-relaxed font-sans text-sm text-blue-900">
+            Do not end digital play abruptly with a timer alarm (which spikes cortisol). Use a 3-minute tactile bridge: hand the child a physical snack, ask them to show you their favorite creation on screen, and physically walk together away from the device.
+          </p>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 11: Interactive Roleplay Theatre | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            stageDark: '#121118',
+            stageVelvet: '#1E1926',
+            stageGold: '#E5B869',
+            stageRose: '#D9777F',
+            forest: '#143D2B'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 10%, #2A2238 0%, #121118 60%);
+      color: #F5F3EF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .theatre-card {
+      background: rgba(30, 25, 38, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(229, 184, 105, 0.2);
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.7);
+    }
+    .spotlight-glow {
+      box-shadow: 0 0 50px -10px rgba(229, 184, 105, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 selection:bg-stageGold selection:text-black">
+
+  <!-- Top Navigation Ribbon -->
+  <header class="border-b border-white/10 bg-[#121118]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-stageGold text-black flex items-center justify-center font-serif font-bold text-sm shadow-md">
+            🎭
+          </div>
+          <span class="font-serif text-lg font-bold text-white tracking-wide">AlongSide Theatre</span>
+        </a>
+        <span class="text-xs font-mono text-stone-400 hidden sm:inline">• Design 11 Roleplay Lab</span>
+      </div>
+
+      <!-- Quick Switcher -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-2 py-1 text-xs font-mono border border-white/10">
+          <a href="academy-design-1-editorial-atelier.html" class="text-stone-400 hover:text-white px-1">01</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-400 hover:text-white px-1">05</a>
+          <a href="academy-design-10-spatial-glass-hud.html" class="text-stone-400 hover:text-white px-1">10</a>
+          <span class="bg-stageGold font-bold text-black px-2 py-0.5 rounded-full shadow-xs">11 Roleplay</span>
+          <a href="academy-design-12-botanical-herbarium.html" class="text-stone-400 hover:text-white px-1">12</a>
+          <a href="index.html" class="text-stageGold hover:underline pl-1 font-semibold">All 15 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-stageGold text-black font-bold px-3.5 py-1.5 rounded-full hover:bg-yellow-400 transition">
+          Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- HERO: THEATRE SPOTLIGHT STAGE -->
+    <section class="theatre-card rounded-3xl p-8 sm:p-12 relative overflow-hidden space-y-8 spotlight-glow">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="inline-flex items-center gap-2 bg-stageGold/15 border border-stageGold/30 text-stageGold px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+          <span class="w-2 h-2 rounded-full bg-stageGold animate-pulse"></span>
+          <span>INTERACTIVE DIALOGUE STAGE // ACT II: EXPLORER STAGE</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-stone-400 bg-white/5 px-3.5 py-1.5 rounded-full border border-white/10">
+          <span>Cast Member:</span>
+          <span class="text-stageGold font-bold">Maya (Age 8 · Tier 2: Explorer)</span>
+        </div>
+      </div>
+
+      <div class="max-w-3xl space-y-3">
+        <h1 class="font-serif text-3xl sm:text-5xl font-normal text-white leading-tight">
+          Rehearse the Hardest 4 Minutes <span class="italic text-stageGold">Before</span> It Happens in Real Life.
+        </h1>
+        <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+          Reading advice is passive; rehearsing dialogue rewires your instinctive emotional response. Step onto the stage, test conversational forks, and inspect pediatric neurobiology tension meters in real time.
+        </p>
+      </div>
+
+      <!-- INTERACTIVE STAGE REHEARSAL RIG -->
+      <div class="bg-[#171320] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-mono uppercase tracking-wider text-stageGold font-bold">Scene 01: The Post-Roblox Device Standoff</span>
+            <span class="text-xs text-stone-400 hidden sm:inline">| Room: Living Room Couch</span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs">
+            <span class="text-stone-400">Child Amygdala Tension:</span>
+            <span id="tension-meter" class="text-rose-400 font-bold">High (Level 8/10)</span>
+          </div>
+        </div>
+
+        <!-- The Dialogue Prompt Box -->
+        <div class="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+          <div class="w-10 h-10 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center font-bold text-sm shrink-0 border border-rose-500/40">
+            M
+          </div>
+          <div class="space-y-1">
+            <div class="text-xs font-mono text-stone-400 font-bold">Maya (Throws controller onto cushion):</div>
+            <p class="text-sm sm:text-base font-serif italic text-white">
+              “NO! You always ruin my games! I was in the middle of a trade with my friends and now I lost everything! You're the worst!”
+            </p>
+          </div>
+        </div>
+
+        <!-- Fork Selection Buttons -->
+        <div class="space-y-3">
+          <span class="text-xs font-mono text-stone-400 uppercase tracking-wider font-bold">Choose Your Parental Reaction:</span>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Fork A (The Instinctive Trap) -->
+            <button onclick="pickFork('trap')" id="fork-trap" class="fork-btn text-left p-4 rounded-xl border border-white/20 hover:border-rose-400 bg-white/5 transition space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-rose-400 font-bold">OPTION A // DEFENSIVE LIMIT</span>
+                <span class="text-stone-500">Traditional</span>
+              </div>
+              <p class="text-xs text-stone-300 italic">
+                “Do not talk to me with that disrespectful tone! Hand me the iPad right now or you are grounded for the whole weekend!”
+              </p>
+            </button>
+
+            <!-- Fork B (The Co-Regulation Shift) -->
+            <button onclick="pickFork('co-reg')" id="fork-coreg" class="fork-btn text-left p-4 rounded-xl border border-white/20 hover:border-stageGold bg-white/5 transition space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-stageGold font-bold">OPTION B // VAGAL CO-REGULATION</span>
+                <span class="text-stone-500">Neurobiologically Sound</span>
+              </div>
+              <p class="text-xs text-stone-300 italic">
+                (Lower physical eye level, soften voice) “Your game cut off right when you were winning. That feels intensely unfair. I'm right here with your snack.”
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Feedback Display -->
+        <div id="rehearsal-feedback" class="p-4 rounded-xl bg-stageGold/10 border border-stageGold/30 text-xs font-mono text-stageGold space-y-1">
+          <span class="font-bold uppercase tracking-wider">Pediatric Feedback:</span>
+          <p class="font-sans text-sm text-stone-300">
+            Click one of the options above to simulate Maya's neurochemical reaction and view Dr. Chen's stage breakdown.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALL REHEARSAL VOLUMES (Roleplay Catalog) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="font-serif text-2xl text-white font-normal">Rehearsal Stage Scripts</h3>
+          <p class="text-xs text-stone-400 font-mono">Calibrated to Maya (Age 8) emotional developmental milestones</p>
+        </div>
+        <span class="font-mono text-xs text-stageGold">5 Scenes In Repertoire</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Scene 1 -->
+        <div class="theatre-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-stageGold font-bold bg-stageGold/10 px-2.5 py-0.5 rounded">SCENE 01 · BEHAVIOR</span>
+              <span class="text-rose-400 text-[11px] font-bold">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              The Bedroom Boundary Meltdown
+            </h4>
+            <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">
+              When 8-year-old territorial privacy is breached by a 5-year-old sibling. How to establish firm limits without invalidating age-8 dignity.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Forks · 15 min</span>
+            <a href="http://localhost:3000/academy" class="text-stageGold font-bold hover:underline">Rehearse Scene →</a>
+          </div>
+        </div>
+
+        <!-- Scene 2 -->
+        <div class="theatre-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded">SCENE 02 · DIGITAL</span>
+              <span class="text-rose-400 text-[11px] font-bold">Priority 1</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              The Post-Screen Dopamine Cliff
+            </h4>
+            <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with neuro-sensory resets instead of discipline.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">5 Forks · 20 min</span>
+            <a href="http://localhost:3000/academy" class="text-cyan-400 font-bold hover:underline">Rehearse Scene →</a>
+          </div>
+        </div>
+
+        <!-- Scene 3 -->
+        <div class="theatre-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-purple-400 font-bold bg-purple-500/10 px-2.5 py-0.5 rounded">SCENE 03 · SLEEP</span>
+              <span class="text-stone-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              The 3-Glass Bedtime Water Stall
+            </h4>
+            <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime resistance as cognitive imagination deepens after dusk.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">3 Forks · 12 min</span>
+            <a href="http://localhost:3000/academy" class="text-purple-400 font-bold hover:underline">Rehearse Scene →</a>
+          </div>
+        </div>
+
+        <!-- Scene 4 -->
+        <div class="theatre-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded">SCENE 04 · DIGITAL</span>
+              <span class="text-stone-400 text-[11px]">Priority 2</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Roblox Voice Chat Manipulation
+            </h4>
+            <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">
+              Equip Maya with situational awareness when older children enter multiplayer game servers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">4 Forks · 16 min</span>
+            <a href="http://localhost:3000/academy" class="text-cyan-400 font-bold hover:underline">Rehearse Scene →</a>
+          </div>
+        </div>
+
+        <!-- Scene 5 -->
+        <div class="theatre-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="text-stageGold font-bold bg-stageGold/10 px-2.5 py-0.5 rounded">SCENE 05 · NUTRITION</span>
+              <span class="text-stone-400 text-[11px]">Priority 3</span>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-white">
+              Cafeteria Peer Food Rejection
+            </h4>
+            <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-stone-400">3 Forks · 10 min</span>
+            <a href="http://localhost:3000/academy" class="text-stageGold font-bold hover:underline">Rehearse Scene →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div class="flex items-center justify-between border-t border-white/10 pt-6 text-xs font-mono text-stone-400">
+      <a href="academy-design-10-spatial-glass-hud.html" class="hover:text-white">← Prev: 10 Spatial HUD</a>
+      <a href="academy-design-12-botanical-herbarium.html" class="font-bold text-stageGold hover:underline">Next: 12 Botanical Herbarium →</a>
+    </div>
+
+  </main>
+
+  <script>
+    function pickFork(type) {
+      const feedback = document.getElementById('rehearsal-feedback');
+      const tension = document.getElementById('tension-meter');
+      const forkTrap = document.getElementById('fork-trap');
+      const forkCoreg = document.getElementById('fork-coreg');
+
+      if (type === 'trap') {
+        forkTrap.className = "fork-btn text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-500/10 transition space-y-2";
+        forkCoreg.className = "fork-btn text-left p-4 rounded-xl border border-white/20 bg-white/5 transition space-y-2 opacity-60";
+        tension.textContent = "CRITICAL (Level 10/10) · Sympathetic Fight/Flight Triggered";
+        tension.className = "text-rose-500 font-bold";
+        feedback.className = "p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs font-mono text-rose-300 space-y-1";
+        feedback.innerHTML = `
+          <span class="font-bold uppercase tracking-wider text-rose-400">Outcome: Escalation Trap Triggered</span>
+          <p class="font-sans text-sm text-stone-200">
+            Threatening consequences while the child's amygdala is active forces her nervous system into defense. She perceives the punishment as an existential attack, leading to screaming, door-slamming, and zero lesson retention.
+          </p>
+        `;
+      } else {
+        forkCoreg.className = "fork-btn text-left p-4 rounded-xl border-2 border-stageGold bg-stageGold/15 transition space-y-2";
+        forkTrap.className = "fork-btn text-left p-4 rounded-xl border border-white/20 bg-white/5 transition space-y-2 opacity-60";
+        tension.textContent = "Settling (Level 3/10) · Vagal Brake Engaged";
+        tension.className = "text-emerald-400 font-bold";
+        feedback.className = "p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 space-y-1";
+        feedback.innerHTML = `
+          <span class="font-bold uppercase tracking-wider text-emerald-400">Outcome: Successful Co-Regulation</span>
+          <p class="font-sans text-sm text-stone-200">
+            By naming the emotional loss ("unfair", "interrupted") and lowering your physical stance, your parasympathetic calm communicates biological safety. The prefrontal cortex comes back online within 90 seconds.
+          </p>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

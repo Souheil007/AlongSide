@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Design 01: The Editorial Atelier | AlongSide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            linen: '#FAF8F5',
+            ink: '#1A1816',
+            forest: '#1E3A2F',
+            moss: '#2D5A46',
+            clay: '#D47355',
+            cream: '#F4EFEA',
+            ochre: '#C98A2C'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAF8F5;
+      color: #1A1816;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .paper-edge {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 20px 40px -15px rgba(30, 58, 47, 0.08);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #D8D2C8;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-forest selection:text-white pb-24">
+
+  <!-- Top Navigation Ribbon -->
+  <header class="border-b border-stone-200/80 bg-[#FAF8F5]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <span class="w-8 h-8 rounded-full bg-forest text-white flex items-center justify-center font-serif italic font-bold">A</span>
+          <span class="font-serif text-xl font-bold tracking-tight text-forest">AlongSide</span>
+        </a>
+        <span class="text-stone-300">|</span>
+        <span class="font-serif italic text-sm text-stone-600">The Academy Atelier</span>
+      </div>
+
+      <!-- Quick Switcher Between Designs -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 bg-stone-100 rounded-full px-2 py-1 text-xs font-mono">
+          <span class="text-stone-400 px-1">Design:</span>
+          <span class="bg-white font-bold text-forest px-2 py-0.5 rounded-full shadow-xs">01 Atelier</span>
+          <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-stone-500 hover:text-stone-900 px-1.5">02</a>
+          <a href="academy-design-3-neuroscience-fieldguide.html" class="text-stone-500 hover:text-stone-900 px-1.5">03</a>
+          <a href="academy-design-4-rhythms-learning-stream.html" class="text-stone-500 hover:text-stone-900 px-1.5">04</a>
+          <a href="academy-design-5-modern-bento-studio.html" class="text-stone-500 hover:text-stone-900 px-1.5">05</a>
+          <a href="index.html" class="text-forest hover:underline pl-1 font-sans font-semibold">All 10 →</a>
+        </div>
+        <a href="http://localhost:3000/academy" class="text-xs font-mono bg-forest text-white px-3.5 py-1.5 rounded-full hover:bg-forest/90 transition shadow-xs">
+          ← Live App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-10 space-y-12">
+
+    <!-- Masthead & Calibration Header -->
+    <section class="border-b border-stone-300 pb-10">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="space-y-4 max-w-3xl">
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-forest font-bold bg-[#EAF3EE] px-3 py-1 rounded-full border border-forest/15">
+              Volume IV · Fall Term 2026
+            </span>
+            <span class="font-mono text-xs text-stone-500">Curated by Dr. Aris Chen &amp; Child Development Faculty</span>
+          </div>
+          <h1 class="font-serif text-4xl sm:text-6xl text-ink leading-[1.08] font-light">
+            Parenting as a <em class="font-normal italic">Reflective Craft</em>, Grounded in Developmental Science.
+          </h1>
+          <p class="text-stone-600 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+            Bite-sized, neurobiologically sound micro-curriculums. Designed for working parents seeking calm conviction rather than reactive crisis control.
+          </p>
+        </div>
+
+        <!-- Integrated Child Calibration Card -->
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-xs shrink-0 w-full lg:w-80 space-y-3">
+          <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+            <span class="font-mono text-[10px] tracking-wider uppercase text-stone-400 font-bold">Calibrated Student</span>
+            <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Live Calibration
+            </span>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-forest text-white flex items-center justify-center font-serif text-lg font-bold shadow-xs">
+              M
+            </div>
+            <div>
+              <h2 class="font-bold text-ink text-base leading-tight">Maya</h2>
+              <p class="text-xs text-stone-500 font-mono">Age 8 · Tier 2: Explorer (7–9)</p>
+            </div>
+          </div>
+          <p class="text-xs text-stone-600 italic bg-[#FAF8F5] p-2.5 rounded-xl border border-stone-200/60 leading-relaxed">
+            “Curriculum focused on prefrontal cortex co-regulation, elementary impulse management &amp; healthy digital limits.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED MASTERCLASS COVER STORY (Hero Spotlight) -->
+    <section class="bg-white border border-stone-200 rounded-3xl p-8 sm:p-12 paper-edge relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-xs font-bold uppercase tracking-wider bg-ochre/15 text-ochre px-3 py-1 rounded-full">
+              ★ Essential Cover Feature
+            </span>
+            <span class="font-mono text-xs text-stone-400">• Chapter 02 of 05 Ready</span>
+          </div>
+
+          <h2 class="font-serif text-3xl sm:text-5xl text-ink leading-tight">
+            The Amygdala Storm: How to Co-Regulate an 8-Year-Old Without Yelling
+          </h2>
+
+          <p class="text-stone-600 text-base leading-relaxed">
+            When Maya hits an afternoon homework wall or throws a game controller, her prefrontal cortex has temporarily gone offline. Explore the precise 3-step physical decompression protocol that resets the nervous system in under 4 minutes.
+          </p>
+
+          <!-- Interactive Audio Masterclass Dock -->
+          <div class="bg-[#FAF8F5] border border-stone-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <button id="audio-play-btn" onclick="toggleAudio()" class="w-12 h-12 rounded-full bg-forest hover:bg-forest/90 text-white flex items-center justify-center shadow-md transition transform hover:scale-105 shrink-0">
+                <svg id="play-icon" class="w-5 h-5 ml-0.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pause-icon" class="w-5 h-5 hidden fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <div>
+                <span class="font-mono text-[10px] uppercase font-bold text-stone-400 tracking-wider">Audio Masterclass (3:45 min)</span>
+                <p class="text-xs sm:text-sm font-semibold text-ink">Narrated by Dr. Aris Chen · Pediatric Neurobiologist</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono text-stone-500">
+              <span id="audio-time">0:00</span>
+              <div class="w-24 sm:w-32 bg-stone-200 h-1.5 rounded-full overflow-hidden">
+                <div id="audio-progress" class="bg-forest h-full w-0 transition-all duration-300"></div>
+              </div>
+              <span>3:45</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="http://localhost:3000/academy" class="bg-forest hover:bg-forest/90 text-white font-medium text-sm px-6 py-3 rounded-full transition shadow-xs flex items-center gap-2">
+              <span>Read Full Lesson (4 min)</span>
+              <span>→</span>
+            </a>
+            <span class="text-xs font-mono text-stone-500">Includes printable conversation script card</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-cream/70 border border-stone-200/80 rounded-2xl p-6 sm:p-8 space-y-6">
+          <div class="flex items-center justify-between border-b border-stone-300/60 pb-3">
+            <span class="font-serif italic font-medium text-stone-700">Course Syllabus &amp; Progress</span>
+            <span class="font-mono text-xs text-forest font-bold">40% Completed</span>
+          </div>
+
+          <!-- Chapters Index -->
+          <ul class="space-y-3.5 text-xs font-mono">
+            <li class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-stone-200 text-stone-900 font-semibold shadow-2xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">✓</span>
+                <span>01. Anatomy of an Impulse Spill</span>
+              </div>
+              <span class="text-stone-400">Done</span>
+            </li>
+            <li class="flex items-center justify-between p-2.5 rounded-xl bg-forest/5 border border-forest/30 text-forest font-bold shadow-2xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-forest text-white flex items-center justify-center text-[10px]">▶</span>
+                <span>02. The 4-Minute Vagal Reset</span>
+              </div>
+              <span class="text-forest text-[11px]">Up Next</span>
+            </li>
+            <li class="flex items-center justify-between p-2.5 rounded-xl bg-white/60 border border-stone-200 text-stone-500">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[10px]">03</span>
+                <span>03. The "Not Right Now" Script</span>
+              </div>
+              <span>4 min</span>
+            </li>
+            <li class="flex items-center justify-between p-2.5 rounded-xl bg-white/60 border border-stone-200 text-stone-500">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[10px]">04</span>
+                <span>04. Restoring Post-Storm Connection</span>
+              </div>
+              <span>3 min</span>
+            </li>
+            <li class="flex items-center justify-between p-2.5 rounded-xl bg-white/60 border border-stone-200 text-stone-500">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center text-[10px]">05</span>
+                <span>05. Sibling Triangulation Shield</span>
+              </div>
+              <span>5 min</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURRICULUM DISCOVERY TABS & FILTER RIBBON -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-4">
+        <div>
+          <h3 class="font-serif text-2xl text-ink font-normal">Curated Field Volumes</h3>
+          <p class="text-xs text-stone-500 font-mono">Calibrated to 8-year-old middle childhood milestones</p>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scroll">
+          <button onclick="filterCurriculum('ALL')" id="tab-all" class="filter-btn active text-xs font-mono px-3.5 py-1.5 rounded-full bg-forest text-white transition font-medium shadow-xs">
+            All Volumes (6)
+          </button>
+          <button onclick="filterCurriculum('BEHAVIOR')" id="tab-behavior" class="filter-btn text-xs font-mono px-3.5 py-1.5 rounded-full bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 transition">
+            Behavior &amp; Emotions
+          </button>
+          <button onclick="filterCurriculum('HEALTH')" id="tab-health" class="filter-btn text-xs font-mono px-3.5 py-1.5 rounded-full bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 transition">
+            Health &amp; Sleep
+          </button>
+          <button onclick="filterCurriculum('DIGITAL')" id="tab-digital" class="filter-btn text-xs font-mono px-3.5 py-1.5 rounded-full bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 transition">
+            Digital World
+          </button>
+          <button onclick="filterCurriculum('NUTRITION')" id="tab-nutrition" class="filter-btn text-xs font-mono px-3.5 py-1.5 rounded-full bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 transition">
+            Nutrition &amp; Food
+          </button>
+        </div>
+      </div>
+
+      <!-- EDITORIAL COURSE CATALOG GRID (3 Columns, Magazine Layout) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="course-grid">
+
+        <!-- Course 1 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="BEHAVIOR">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Behavior &amp; Emotions</span>
+              <span class="text-amber-800 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold">Priority 1 · Urgent</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              Elementary Impulse Control &amp; Sibling Rivalry
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              When resource jealousy flares between age 8 and younger siblings, traditional time-outs escalate anxiety. Learn restorative turn-taking rituals.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>5 Chapters · 18 min</span>
+              <span class="text-emerald-700 font-medium">🎧 Audio Enabled</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>2 of 5 Complete</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Resume →
+            </a>
+          </div>
+        </article>
+
+        <!-- Course 2 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="HEALTH">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Health &amp; Sleep</span>
+              <span class="text-stone-500 bg-stone-100 px-2 py-0.5 rounded text-[11px]">Priority 2 · Routine</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              Bedtime Somatosensory Calming &amp; Melatonin Shifting
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Why 8-year-olds suddenly experience bedtime bedtime resistance and separation anxiety as cognitive imagination deepens after dusk.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>4 Chapters · 15 min</span>
+              <span class="text-emerald-700 font-medium">🎧 Audio Enabled</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-stone-300"></span>
+              <span>Not Started</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Begin Volume →
+            </a>
+          </div>
+        </article>
+
+        <!-- Course 3 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="DIGITAL">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Digital World</span>
+              <span class="text-amber-800 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold">Priority 1 · Urgent</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              Post-Screen Dopamine Crashes: The 10-Minute Decompression
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Eliminate explosive transitions after Roblox or iPad sessions with physiological sensory shifts and zero argumentative cross-examination.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>5 Chapters · 20 min</span>
+              <span class="text-emerald-700 font-medium">🎧 Audio Enabled</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>1 of 5 Complete</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Resume →
+            </a>
+          </div>
+        </article>
+
+        <!-- Course 4 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="NUTRITION">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Nutrition &amp; Food</span>
+              <span class="text-stone-500 bg-stone-100 px-2 py-0.5 rounded text-[11px]">Priority 3 · Scaffolding</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              School Lunchbox Co-Regulation &amp; Palate Expansion
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              How elementary cafeteria social comparison influences eating habits, and how to build agency in daily nutrition without power battles.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>3 Chapters · 12 min</span>
+              <span class="text-stone-400 font-mono">Text Guide</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-stone-300"></span>
+              <span>Not Started</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Begin Volume →
+            </a>
+          </div>
+        </article>
+
+        <!-- Course 5 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="DIGITAL">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Digital World</span>
+              <span class="text-stone-500 bg-stone-100 px-2 py-0.5 rounded text-[11px]">Priority 2 · Routine</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              Roblox &amp; Minecraft Voice Chat: Navigating Online Peer Pressure
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Equip your 8-year-old with situational awareness when older children enter multiplayer game servers, without installing spyware apps.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>4 Chapters · 16 min</span>
+              <span class="text-emerald-700 font-medium">🎧 Audio Enabled</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-stone-300"></span>
+              <span>Not Started</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Begin Volume →
+            </a>
+          </div>
+        </article>
+
+        <!-- Course 6 -->
+        <article class="course-card bg-white border border-stone-200/90 rounded-2xl p-6 paper-edge flex flex-col justify-between hover:border-forest/40 transition group" data-category="BEHAVIOR">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-forest font-bold uppercase tracking-wider bg-forest/5 px-2.5 py-1 rounded-md">Behavior &amp; Emotions</span>
+              <span class="text-stone-500 bg-stone-100 px-2 py-0.5 rounded text-[11px]">Priority 3 · Scaffolding</span>
+            </div>
+            <h4 class="font-serif text-2xl text-ink group-hover:text-forest transition leading-snug">
+              Theory of Mind &amp; Playground Conflict Resolution
+            </h4>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              Third-grade social dynamics shift from parallel play to complex friendship hierarchies. Scripts to help your child de-escalate cliques.
+            </p>
+            <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
+              <span>5 Chapters · 19 min</span>
+              <span class="text-emerald-700 font-medium">🎧 Audio Enabled</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-xs text-stone-400 font-mono">
+              <span class="w-2 h-2 rounded-full bg-stone-300"></span>
+              <span>Not Started</span>
+            </div>
+            <a href="http://localhost:3000/academy" class="text-xs font-mono text-forest font-bold hover:underline flex items-center gap-1">
+              Begin Volume →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- FACULTY INSIGHT FOOTER BLOCK -->
+    <section class="border-t border-stone-300 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-stone-500 text-xs font-mono">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-forest"></span>
+        <span>Academy Edition 2026 · Built with Parent-Calm Typography &amp; Neurobiology Principles</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="academy-design-2-atmospheric-glass-spatial.html" class="text-forest font-bold hover:underline">
+          Next Design: 02 Atmospheric Glass Spatial →
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Audio Player Toggle Simulation
+    let isPlaying = false;
+    let timer = null;
+    let currentSeconds = 0;
+    const totalSeconds = 225; // 3:45
+
+    function toggleAudio() {
+      isPlaying = !isPlaying;
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+      const audioBtn = document.getElementById('audio-play-btn');
+      const progress = document.getElementById('audio-progress');
+      const timeDisplay = document.getElementById('audio-time');
+
+      if (isPlaying) {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        audioBtn.classList.add('ring-4', 'ring-forest/20');
+        timer = setInterval(() => {
+          if (currentSeconds < totalSeconds) {
+            currentSeconds += 1;
+            const pct = (currentSeconds / totalSeconds) * 100;
+            progress.style.width = pct + '%';
+            const m = Math.floor(currentSeconds / 60);
+            const s = (currentSeconds % 60).toString().padStart(2, '0');
+            timeDisplay.textContent = m + ':' + s;
+          } else {
+            clearInterval(timer);
+            isPlaying = false;
+            playIcon.classList.remove('hidden');
+            pauseIcon.classList.add('hidden');
+          }
+        }, 1000);
+      } else {
+        clearInterval(timer);
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        audioBtn.classList.remove('ring-4', 'ring-forest/20');
+      }
+    }
+
+    // Category Filter Simulation
+    function filterCurriculum(category) {
+      const cards = document.querySelectorAll('.course-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-forest', 'text-white');
+        btn.classList.add('bg-white', 'text-stone-700', 'border', 'border-stone-200');
+      });
+
+      const activeBtn = document.getElementById('tab-' + category.toLowerCase());
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'text-stone-700', 'border', 'border-stone-200');
+        activeBtn.classList.add('bg-forest', 'text-white');
+      }
+
+      cards.forEach(card => {
+        if (category === 'ALL' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
