@@ -2,10 +2,16 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   type ReadinessAssessmentResult,
   ReadinessPreset,
 } from '@alongside/shared';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -118,8 +124,68 @@ export function ReadinessScoreCard({
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (overallScore / 100) * circumference;
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const scoreNumRef = React.useRef<HTMLSpanElement>(null);
+  const circleRef = React.useRef<SVGCircleElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // Smooth numeric counter rollup
+        const counter = { val: 0 };
+        gsap.to(counter, {
+          val: overallScore,
+          duration: 1.2,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (scoreNumRef.current) {
+              scoreNumRef.current.textContent = Math.round(counter.val).toString();
+            }
+          },
+        });
+
+        // Smooth circle strokeDashoffset draw
+        if (circleRef.current) {
+          gsap.fromTo(
+            circleRef.current,
+            { strokeDashoffset: circumference },
+            {
+              strokeDashoffset,
+              duration: 1.25,
+              ease: 'power2.out',
+            }
+          );
+        }
+
+        // Dimension breakdown rows staggered cascade
+        gsap.from('.gsap-dimension-row', {
+          y: 14,
+          opacity: 0,
+          stagger: 0.035,
+          duration: 0.45,
+          ease: 'power2.out',
+          delay: 0.25,
+        });
+
+        // Strengths & growth focus pills staggered pop
+        gsap.from('.gsap-readiness-pill', {
+          scale: 0.9,
+          opacity: 0,
+          stagger: 0.03,
+          duration: 0.35,
+          ease: 'back.out(1.4)',
+          delay: 0.15,
+        });
+      });
+
+      return () => mm.revert();
+    },
+    { scope: containerRef, dependencies: [overallScore, strokeDashoffset] }
+  );
+
   return (
-    <div className={cn('space-y-8 max-w-4xl mx-auto', className)}>
+    <div ref={containerRef} className={cn('space-y-8 max-w-4xl mx-auto', className)}>
       {/* Hero Summary Card */}
       <Card className="border-slate-200/90 shadow-sm overflow-hidden bg-white">
         <div className="bg-gradient-to-r from-teal-50 via-slate-50 to-emerald-50 p-6 sm:p-8 border-b border-slate-200/80">
@@ -169,6 +235,7 @@ export function ReadinessScoreCard({
                 />
                 {/* Progress Ring */}
                 <circle
+                  ref={circleRef}
                   cx="70"
                   cy="70"
                   r={radius}
@@ -177,13 +244,15 @@ export function ReadinessScoreCard({
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   strokeLinecap="round"
-                  className="transition-all duration-1000 ease-out"
                   fill="transparent"
                 />
               </svg>
               {/* Centered Score Number */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${scoreColor}`}>
+                <span
+                  ref={scoreNumRef}
+                  className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${scoreColor}`}
+                >
                   {overallScore}
                 </span>
                 <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -238,7 +307,7 @@ export function ReadinessScoreCard({
                   <Badge
                     key={dimKey}
                     variant="success"
-                    className="text-xs py-1 px-2.5 font-medium bg-emerald-50 text-emerald-800 border-emerald-200"
+                    className="gsap-readiness-pill text-xs py-1 px-2.5 font-medium bg-emerald-50 text-emerald-800 border-emerald-200"
                   >
                     {DIMENSION_DISPLAY_NAMES[dimKey] || dimKey}
                   </Badge>
@@ -263,7 +332,7 @@ export function ReadinessScoreCard({
                   <Badge
                     key={dimKey}
                     variant="accent"
-                    className="text-xs py-1 px-2.5 font-medium bg-amber-50 text-amber-800 border-amber-200"
+                    className="gsap-readiness-pill text-xs py-1 px-2.5 font-medium bg-amber-50 text-amber-800 border-amber-200"
                   >
                     {DIMENSION_DISPLAY_NAMES[dimKey] || dimKey}
                   </Badge>
@@ -314,7 +383,7 @@ export function ReadinessScoreCard({
             return (
               <div
                 key={key}
-                className="rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-xs transition-colors hover:border-slate-300"
+                className="gsap-dimension-row rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-xs transition-colors hover:border-slate-300"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5">
                   <div className="flex items-center gap-2.5">
