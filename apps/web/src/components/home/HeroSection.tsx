@@ -51,19 +51,29 @@ export function HeroSection() {
           // Sanctuary Hero entrance orchestrated timeline
           const tl = gsap.timeline({ defaults: { ease: MOTION_TOKENS.ease.calm } });
 
-          // Phase 1 (0.0s): Ambient arch aura blooms softly
+          // Phase 1 (0.0s): Ambient arch aura blooms softly, staying permanently luminous & gently breathing
           tl.fromTo(
             '.hero-ambient-aura',
-            { opacity: 0, scale: 0.85 },
+            { opacity: 0, scale: 0.88 },
             {
-              opacity: 0.8,
+              opacity: 0.9,
               scale: 1,
               duration: MOTION_TOKENS.duration.aura,
               ease: MOTION_TOKENS.ease.reassure,
-              clearProps: 'transform',
             },
             0
           );
+
+          // Continuous soothing breathing loop so the sanctuary aura remains permanently alive and never vanishes
+          gsap.to('.hero-ambient-aura', {
+            scale: 1.06,
+            opacity: 1,
+            duration: 5.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: MOTION_TOKENS.duration.aura,
+          });
 
           // Phase 2 (0.2s): Eyebrow badge descends
           tl.fromTo(
@@ -151,10 +161,10 @@ export function HeroSection() {
           );
         },
         () => {
-          // Reduced motion: gentle instant visibility, zero translation or scaling
+          // Reduced motion: instant opacity without clearing props or wiping background
+          gsap.set('.hero-ambient-aura', { opacity: 0.9, scale: 1 });
           gsap.fromTo(
             [
-              '.hero-ambient-aura',
               '.hero-eyebrow',
               '.hero-headline',
               '.hero-subheadline',
@@ -174,19 +184,23 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+      className="isolate relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
     >
-      {/* Editorial Archival Mesh Hero Aura */}
+      {/* Editorial Archival Mesh Hero Aura (Isolated z-0 stacking context; never drops behind body) */}
       <div
-        className="hero-ambient-aura absolute top-8 left-1/2 -translate-x-1/2 w-[720px] h-[400px] pointer-events-none -z-10 blur-3xl opacity-80"
-        style={{
-          background:
-            'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.16), transparent 60%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.12), transparent 55%), radial-gradient(circle at 50% 80%, rgba(17, 20, 19, 0.08), transparent 60%)',
-        }}
+        className="pointer-events-none absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-[760px] sm:w-[920px] lg:w-[1060px] h-[440px] sm:h-[500px] z-0 blur-3xl overflow-visible"
         aria-hidden="true"
-      />
+      >
+        <div
+          className="hero-ambient-aura w-full h-full"
+          style={{
+            background:
+              'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.32), transparent 65%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.24), transparent 60%), radial-gradient(circle at 50% 75%, rgba(20, 61, 43, 0.18), transparent 65%)',
+          }}
+        />
+      </div>
 
-      <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
+      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
         {/* Editorial Publication Eyebrow Pill */}
         <div className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-white px-3.5 py-1.5 text-xs font-medium text-[#494F4C] shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
           <span className="rounded-[4px] bg-[#EAF3EE] px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#143D2B]">
