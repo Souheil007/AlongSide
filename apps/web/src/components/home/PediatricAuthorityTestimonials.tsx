@@ -62,7 +62,38 @@ export function PediatricAuthorityTestimonials() {
   const containerRef = React.useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    (context, contextSafe) => {
+      // Safe card hover handlers
+      const onCardEnter = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: -4,
+              boxShadow: '0 8px 24px rgba(17, 20, 19, 0.08)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+            const icon = e.currentTarget.querySelector('.testimonial-icon-box');
+            if (icon) {
+              gsap.to(icon, { scale: 1.08, duration: 0.25, ease: 'power1.out' });
+            }
+          })
+        : undefined;
+
+      const onCardLeave = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: 0,
+              boxShadow: '0 1px 2px rgba(17, 20, 19, 0.04)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+            const icon = e.currentTarget.querySelector('.testimonial-icon-box');
+            if (icon) {
+              gsap.to(icon, { scale: 1, duration: 0.25, ease: 'power1.out' });
+            }
+          })
+        : undefined;
+
       setupReducedMotionMatch(
         () => {
           const tl = gsap.timeline({
@@ -101,7 +132,7 @@ export function PediatricAuthorityTestimonials() {
             '-=0.3'
           );
 
-          // Bottom institutional trust signals / citations
+          // Bottom citations banner container
           tl.fromTo(
             '.testimonials-citations',
             { opacity: 0, y: 16 },
@@ -114,10 +145,30 @@ export function PediatricAuthorityTestimonials() {
             },
             '-=0.2'
           );
+
+          // Stagger citation trust badges horizontally
+          tl.fromTo(
+            '.citation-item',
+            { opacity: 0, x: -10 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              ease: MOTION_TOKENS.ease.gentle,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
         },
         () => {
           gsap.fromTo(
-            ['.testimonials-header', '.testimonial-card', '.testimonials-citations'],
+            [
+              '.testimonials-header',
+              '.testimonial-card',
+              '.testimonials-citations',
+              '.citation-item',
+            ],
             { opacity: 0 },
             { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
           );
@@ -158,12 +209,12 @@ export function PediatricAuthorityTestimonials() {
           return (
             <Card
               key={idx}
-              className="testimonial-card border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:shadow-md hover:border-[#111413] transition-all flex flex-col justify-between rounded-[10px]"
+              className="testimonial-card border border-[#E3E3DC] bg-white shadow-[0_1px_2px_rgba(17,20,19,0.04)] hover:border-[#111413] transition-all flex flex-col justify-between rounded-[10px]"
             >
               <CardContent className="p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="h-10 w-10 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 flex items-center justify-center text-[#143D2B] shadow-xs">
+                    <div className="testimonial-icon-box h-10 w-10 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 flex items-center justify-center text-[#143D2B] shadow-xs transition-transform">
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="font-mono text-[11px] font-semibold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
@@ -191,28 +242,28 @@ export function PediatricAuthorityTestimonials() {
 
       {/* Institutional Trust Badges Banner */}
       <div className="testimonials-citations p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-around gap-6 text-center">
-        <div className="space-y-1">
+        <div className="citation-item space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
             <Award className="h-4 w-4 text-teal-700" /> Developmental Neurobiology
           </div>
           <div className="text-[11px] text-slate-500">Evidence-based cognitive and emotional science</div>
         </div>
 
-        <div className="space-y-1">
+        <div className="citation-item space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
             <CheckCircle2 className="h-4 w-4 text-emerald-700" /> CDC &amp; AAP Milestones
           </div>
           <div className="text-[11px] text-slate-500">0–18 Evidence-backed developmental norms</div>
         </div>
 
-        <div className="space-y-1">
+        <div className="citation-item space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
             <ShieldCheck className="h-4 w-4 text-teal-700" /> Zero-Spyware Privacy Pledge
           </div>
           <div className="text-[11px] text-slate-500">Zero chat spying, keystroke logging, or location resale</div>
         </div>
 
-        <div className="space-y-1">
+        <div className="citation-item space-y-1">
           <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5">
             <ShieldCheck className="h-4 w-4 text-teal-700" /> COPPA Safe Harbor Compliant
           </div>

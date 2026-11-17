@@ -60,7 +60,30 @@ export function PricingSection() {
   const containerRef = React.useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    (context, contextSafe) => {
+      // Safe card hover handlers
+      const onCardEnter = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: -4,
+              boxShadow: '0 8px 24px rgba(17, 20, 19, 0.08)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+          })
+        : undefined;
+
+      const onCardLeave = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: 0,
+              boxShadow: '0 1px 2px rgba(17, 20, 19, 0.04)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+          })
+        : undefined;
+
       setupReducedMotionMatch(
         () => {
           const tl = gsap.timeline({
@@ -99,6 +122,30 @@ export function PricingSection() {
             '-=0.3'
           );
 
+          // Sequential feature checklist ripple
+          tl.fromTo(
+            '.pricing-feature-item',
+            { opacity: 0, x: -8 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.45,
+              stagger: 0.04,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.4'
+          );
+
+          // Most Popular badge gentle breathing loop
+          gsap.to('.pricing-badge-popular', {
+            scale: 1.05,
+            duration: 2.8,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+          });
+
           // Guarantee footer
           tl.fromTo(
             '.pricing-footer',
@@ -115,7 +162,7 @@ export function PricingSection() {
         },
         () => {
           gsap.fromTo(
-            ['.pricing-header', '.pricing-card', '.pricing-footer'],
+            ['.pricing-header', '.pricing-card', '.pricing-feature-item', '.pricing-footer'],
             { opacity: 0 },
             { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
           );
@@ -152,14 +199,15 @@ export function PricingSection() {
           {PRICING_PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`pricing-card rounded-[10px] p-6 relative overflow-hidden flex flex-col justify-between ${
+              className={`pricing-card rounded-[10px] p-6 relative overflow-hidden flex flex-col justify-between transition-all ${
                 plan.isPopular
                   ? 'border-2 border-[#111413] bg-white shadow-md'
                   : 'border border-[#E3E3DC] bg-white shadow-xs'
               }`}
             >
               {plan.badge && (
-                <div className="absolute top-0 right-0 bg-[#111413] text-white font-mono text-[10px] font-bold px-3 py-1 rounded-bl-[8px] uppercase tracking-wider">
+                <div className="pricing-badge-popular absolute top-0 right-0 bg-[#111413] text-white font-mono text-[10px] font-bold px-3 py-1 rounded-bl-[8px] uppercase tracking-wider flex items-center gap-1 shadow-xs">
+                  <Sparkles className="h-3 w-3 text-amber-300" />
                   {plan.badge}
                 </div>
               )}
@@ -183,7 +231,7 @@ export function PricingSection() {
 
                 <ul className="space-y-2 text-xs text-[#494F4C] pt-2 border-t border-[#E3E3DC]">
                   {plan.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
+                    <li key={idx} className="pricing-feature-item flex items-center gap-2">
                       <CheckCircle2
                         className={`h-4 w-4 shrink-0 ${
                           plan.isPopular ? 'text-[#143D2B]' : 'text-[#858C88]'

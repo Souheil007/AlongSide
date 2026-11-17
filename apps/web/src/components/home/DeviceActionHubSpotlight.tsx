@@ -60,7 +60,30 @@ export function DeviceActionHubSpotlight() {
   const containerRef = React.useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    (context, contextSafe) => {
+      // Safe hover handlers
+      const onCardEnter = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: -4,
+              boxShadow: '0 8px 24px rgba(17, 20, 19, 0.08)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+          })
+        : undefined;
+
+      const onCardLeave = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: 0,
+              boxShadow: '0 1px 2px rgba(17, 20, 19, 0.04)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+          })
+        : undefined;
+
       setupReducedMotionMatch(
         () => {
           const tl = gsap.timeline({
@@ -84,7 +107,7 @@ export function DeviceActionHubSpotlight() {
             }
           );
 
-          // 3 Step cards stagger
+          // 3 Step cards stagger with smooth depth
           tl.fromTo(
             '.device-hub-step',
             { opacity: 0, y: MOTION_TOKENS.offset.section },
@@ -99,19 +122,54 @@ export function DeviceActionHubSpotlight() {
             '-=0.3'
           );
 
-          // Contrast comparison cards
+          // Step 1: Smooth Readiness Score count-up
           tl.fromTo(
-            '.device-hub-contrast',
+            '.readiness-score-val',
+            { textContent: '0' },
+            {
+              textContent: '84',
+              duration: 1.2,
+              ease: 'power2.out',
+              snap: { textContent: 1 },
+            },
+            '-=0.4'
+          );
+
+          // Step 3: Curfew Active radar ping loop
+          gsap.to('.curfew-pulse-aura', {
+            scale: 2.4,
+            opacity: 0,
+            duration: 2.2,
+            repeat: -1,
+            ease: 'power2.out',
+          });
+
+          // Contrast comparison cards (Legacy rigid entry vs Calm soothing entry)
+          tl.fromTo(
+            '.device-hub-contrast-legacy',
             { opacity: 0, y: 16 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.65,
-              stagger: 0.1,
+              duration: 0.6,
               ease: MOTION_TOKENS.ease.calm,
               clearProps: 'all',
             },
             '-=0.2'
+          );
+
+          tl.fromTo(
+            '.device-hub-contrast-calm',
+            { opacity: 0, y: 16, scale: 0.98 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.65,
+              ease: MOTION_TOKENS.ease.reassure,
+              clearProps: 'all',
+            },
+            '-=0.4'
           );
 
           // Bottom CTA action bar
@@ -177,7 +235,7 @@ export function DeviceActionHubSpotlight() {
           {DEVICE_HUB_STEPS.map((s) => (
             <div
               key={s.step}
-              className="device-hub-step rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-6 shadow-xs space-y-4 relative"
+              className="device-hub-step rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-6 shadow-xs space-y-4 relative transition-all"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#143D2B]">
@@ -197,7 +255,30 @@ export function DeviceActionHubSpotlight() {
               </div>
               <div className="p-3.5 rounded-[5px] bg-white border border-[#E3E3DC] space-y-1">
                 <div className="text-xs font-semibold text-[#111413]">
-                  {s.previewTitle}
+                  {s.step === 1 ? (
+                    <span className="flex items-center justify-between">
+                      <span>
+                        Sofia’s Readiness:{' '}
+                        <span className="readiness-score-val font-mono font-bold text-[#143D2B]">
+                          84
+                        </span>{' '}
+                        / 100
+                      </span>
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EAF3EE] text-[#143D2B]">
+                        Passed
+                      </span>
+                    </span>
+                  ) : s.step === 3 ? (
+                    <span className="flex items-center justify-between">
+                      <span>Curfew Status: Active 8:30 PM</span>
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="curfew-pulse-aura absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#143D2B]"></span>
+                      </span>
+                    </span>
+                  ) : (
+                    s.previewTitle
+                  )}
                 </div>
                 <div className="text-[11px] text-[#858C88] font-mono">
                   {s.previewDetail}
@@ -210,7 +291,7 @@ export function DeviceActionHubSpotlight() {
         {/* Contrast Comparison Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#E3E3DC]">
           {/* The Legacy Trap */}
-          <div className="device-hub-contrast p-6 rounded-[10px] bg-white border border-rose-200/80 space-y-3">
+          <div className="device-hub-contrast device-hub-contrast-legacy p-6 rounded-[10px] bg-white border border-rose-200/80 space-y-3 shadow-xs">
             <div className="flex items-center gap-2 text-rose-900 font-bold text-base font-serif">
               <XCircle className="h-5 w-5 text-rose-600 shrink-0" />
               <span>The Legacy Surveillance Trap</span>
@@ -232,7 +313,7 @@ export function DeviceActionHubSpotlight() {
           </div>
 
           {/* The AlongSide Way */}
-          <div className="device-hub-contrast p-6 rounded-[10px] bg-[#EAF3EE] border border-[#143D2B]/20 space-y-3">
+          <div className="device-hub-contrast device-hub-contrast-calm p-6 rounded-[10px] bg-[#EAF3EE] border border-[#143D2B]/20 space-y-3 shadow-xs">
             <div className="flex items-center gap-2 text-[#143D2B] font-bold text-base font-serif">
               <CheckCircle2 className="h-5 w-5 text-[#143D2B] shrink-0" />
               <span>The AlongSide Parent Calm Way</span>
