@@ -62,7 +62,38 @@ export function FaqSection() {
   const containerRef = React.useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    (context, contextSafe) => {
+      // Safe card hover handlers
+      const onCardEnter = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: -3,
+              boxShadow: '0 8px 20px rgba(17, 20, 19, 0.06)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+            const icon = e.currentTarget.querySelector('.faq-icon-box');
+            if (icon) {
+              gsap.to(icon, { scale: 1.1, duration: 0.25, ease: 'power1.out' });
+            }
+          })
+        : undefined;
+
+      const onCardLeave = contextSafe
+        ? contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+            gsap.to(e.currentTarget, {
+              y: 0,
+              boxShadow: '0 1px 2px rgba(17, 20, 19, 0.04)',
+              duration: 0.25,
+              ease: 'power1.out',
+            });
+            const icon = e.currentTarget.querySelector('.faq-icon-box');
+            if (icon) {
+              gsap.to(icon, { scale: 1, duration: 0.25, ease: 'power1.out' });
+            }
+          })
+        : undefined;
+
       setupReducedMotionMatch(
         () => {
           const tl = gsap.timeline({
@@ -86,15 +117,15 @@ export function FaqSection() {
             }
           );
 
-          // FAQ item cards stagger
+          // FAQ item cards stagger in a two-column wave
           tl.fromTo(
             '.faq-card',
-            { opacity: 0, y: 16 },
+            { opacity: 0, y: 18 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.6,
-              stagger: MOTION_TOKENS.stagger.tight,
+              duration: 0.65,
+              stagger: 0.08,
               ease: MOTION_TOKENS.ease.calm,
               clearProps: 'all',
             },
@@ -139,10 +170,10 @@ export function FaqSection() {
           return (
             <div
               key={idx}
-              className="faq-card p-6 rounded-[10px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-3 hover:border-[#111413] transition-colors"
+              className="faq-card p-6 rounded-[10px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] space-y-3 hover:border-[#111413] transition-all"
             >
               <div className="flex items-start gap-3">
-                <div className="p-1.5 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 text-[#143D2B] shrink-0 mt-0.5">
+                <div className="faq-icon-box p-1.5 rounded-[5px] bg-[#EAF3EE] border border-[#143D2B]/20 text-[#143D2B] shrink-0 mt-0.5 transition-transform">
                   <Icon className="h-4 w-4" />
                 </div>
                 <h3 className="font-serif font-bold text-[#111413] text-base leading-snug">
