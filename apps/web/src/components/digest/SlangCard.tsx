@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   ChevronDown,
   ChevronUp,
@@ -13,6 +15,10 @@ import {
 import type { SlangTermDTO } from '@alongside/shared';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 
 export interface SlangCardProps {
   slang: SlangTermDTO;
@@ -64,9 +70,28 @@ export function SlangCard({ slang, className }: SlangCardProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const toneDetails = getSlangToneDetails(slang.contextTone);
   const ToneIcon = toneDetails.icon;
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const drawerRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (!isExpanded || !drawerRef.current) return;
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.fromTo(
+          drawerRef.current,
+          { opacity: 0, y: -6 },
+          { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' }
+        );
+      });
+      return () => mm.revert();
+    },
+    { scope: cardRef, dependencies: [isExpanded] }
+  );
 
   return (
     <Card
+      ref={cardRef}
       className={cn(
         'group flex flex-col justify-between border-slate-200/80 bg-white shadow-sm transition-all duration-200 hover:border-teal-300 hover:shadow-md cursor-pointer select-none',
         toneDetails.type === 'TOXIC' && 'border-rose-200/80 hover:border-rose-300',
@@ -121,7 +146,10 @@ export function SlangCard({ slang, className }: SlangCardProps) {
 
           {/* Expanded Drawer: Example Sentence & Context */}
           {isExpanded && (
-            <div className="space-y-3 pt-3 border-t border-slate-100 animate-in fade-in duration-200">
+            <div
+              ref={drawerRef}
+              className="space-y-3 pt-3 border-t border-slate-100"
+            >
               {/* Example in Context */}
               <div className="rounded-xl bg-slate-50 border border-slate-200/60 p-3 space-y-1">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">

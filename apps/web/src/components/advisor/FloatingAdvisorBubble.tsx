@@ -3,6 +3,8 @@
 import * as React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   Bot,
   X,
@@ -45,6 +47,34 @@ export function FloatingAdvisorBubble() {
 
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const feedEndRef = React.useRef<HTMLDivElement>(null);
+  const bubbleBtnRef = React.useRef<HTMLButtonElement>(null);
+  const drawerRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (bubbleBtnRef.current && !isOpen) {
+          gsap.to(bubbleBtnRef.current, {
+            scale: 1.03,
+            yoyo: true,
+            repeat: -1,
+            duration: 2.2,
+            ease: 'sine.inOut',
+          });
+        }
+        if (drawerRef.current && isOpen) {
+          gsap.fromTo(
+            drawerRef.current,
+            { opacity: 0, y: 16, scale: 0.98 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: 'power2.out' }
+          );
+        }
+      });
+      return () => mm.revert();
+    },
+    { dependencies: [isOpen] }
+  );
 
   // Hide the floating bubble entirely on dedicated full-screen advisor routes
   const isAdvisorRoute = pathname?.startsWith('/advisor');
@@ -109,6 +139,7 @@ export function FloatingAdvisorBubble() {
       {/* 1. Collapsed Floating Action Button */}
       {!isOpen && (
         <button
+          ref={bubbleBtnRef}
           type="button"
           onClick={() => setIsOpen(true)}
           aria-expanded={false}
@@ -148,6 +179,7 @@ export function FloatingAdvisorBubble() {
           />
 
           <div
+            ref={drawerRef}
             role="dialog"
             aria-modal="true"
             aria-label="24/7 AI Child Advisor Chat"

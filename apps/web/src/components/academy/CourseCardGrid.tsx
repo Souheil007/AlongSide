@@ -1,11 +1,17 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
 import type { AcademyModuleDTO } from '@alongside/shared';
 import { ModuleCard } from '@/components/academy/ModuleCard';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 
 export interface CourseCardGridProps {
   modules: AcademyModuleDTO[];
@@ -28,6 +34,32 @@ export function CourseCardGrid({
   onResetFilters,
   className,
 }: CourseCardGridProps) {
+  const gridRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (modules.length === 0) return;
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (gridRef.current) {
+          gsap.fromTo(
+            '.gsap-academy-card',
+            { opacity: 0, y: 16, scale: 0.98 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.38,
+              stagger: 0.045,
+              ease: 'power2.out',
+            }
+          );
+        }
+      });
+      return () => mm.revert();
+    },
+    { scope: gridRef, dependencies: [modules.map((m) => m.id).join(',')] }
+  );
   if (isLoading) {
     return (
       <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6', className)}>
@@ -102,9 +134,14 @@ export function CourseCardGrid({
   }
 
   return (
-    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6', className)}>
+    <div
+      ref={gridRef}
+      className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6', className)}
+    >
       {modules.map((mod) => (
-        <ModuleCard key={mod.id} module={mod} showFormatPills={showFormatPills} />
+        <div key={mod.id} className="gsap-academy-card flex flex-col h-full">
+          <ModuleCard module={mod} showFormatPills={showFormatPills} />
+        </div>
       ))}
     </div>
   );

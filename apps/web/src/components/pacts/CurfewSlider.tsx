@@ -1,7 +1,13 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { Clock, Moon, ShieldCheck, Sparkles, AlertCircle } from 'lucide-react';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 import { usePactStore, formatCurfew12Hour } from '@/stores/usePactStore';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -33,11 +39,43 @@ export const CURFEW_PRESETS = [
 export function CurfewSlider() {
   const { curfewTime, setCurfewTime, childName } = usePactStore();
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const moonRef = React.useRef<HTMLDivElement>(null);
+  const calloutRef = React.useRef<HTMLDivElement>(null);
+
   const currentMinutes = timeToMinutes(curfewTime);
   // Slider range: 19:00 (1140 min) to 23:00 (1380 min) with 15 min steps
   const minSlider = 1140; // 7:00 PM
   const maxSlider = 1380; // 11:00 PM
   const step = 15;
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // Rotate celestial moon icon smoothly based on progression towards midnight
+        if (moonRef.current) {
+          const rotationAngle = ((currentMinutes - minSlider) / (maxSlider - minSlider)) * 120;
+          gsap.to(moonRef.current, {
+            rotation: rotationAngle,
+            duration: 0.35,
+            ease: 'power2.out',
+          });
+        }
+
+        // Micro-bounce callout on change
+        if (calloutRef.current) {
+          gsap.fromTo(
+            calloutRef.current,
+            { scale: 0.95 },
+            { scale: 1, duration: 0.22, ease: 'back.out(2)' }
+          );
+        }
+      });
+      return () => mm.revert();
+    },
+    { scope: containerRef, dependencies: [curfewTime] }
+  );
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const mins = parseInt(e.target.value, 10);
@@ -48,11 +86,14 @@ export function CurfewSlider() {
   const formattedDisplay = formatCurfew12Hour(curfewTime);
 
   return (
-    <div className="rounded-xl border border-violet-100 bg-white p-5 sm:p-6 shadow-sm space-y-6">
+    <div ref={containerRef} className="rounded-xl border border-violet-100 bg-white p-5 sm:p-6 shadow-sm space-y-6">
       {/* Header & Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div className="flex items-center gap-3.5">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-white shadow-sm">
+          <div
+            ref={moonRef}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-white shadow-sm"
+          >
             <Moon className="h-6 w-6" />
           </div>
           <div>
@@ -71,7 +112,10 @@ export function CurfewSlider() {
         </div>
 
         {/* Large Curfew Time Callout */}
-        <div className="flex items-center gap-3 self-start sm:self-center bg-violet-50/80 border border-violet-200/80 px-4 py-2 rounded-xl">
+        <div
+          ref={calloutRef}
+          className="flex items-center gap-3 self-start sm:self-center bg-violet-50/80 border border-violet-200/80 px-4 py-2 rounded-xl"
+        >
           <Clock className="h-5 w-5 text-violet-700" />
           <div className="text-right">
             <div className="text-xl font-extrabold text-violet-950 tracking-tight">
@@ -112,9 +156,9 @@ export function CurfewSlider() {
                 type="button"
                 onClick={() => setCurfewTime(preset.time)}
                 className={cn(
-                  'flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all min-h-[58px]',
+                  'gsap-curfew-preset-btn flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all min-h-[58px]',
                   isSelected
-                    ? 'border-violet-600 bg-violet-600 text-white shadow-sm ring-2 ring-violet-200'
+                    ? 'gsap-selected-preset border-violet-600 bg-violet-600 text-white shadow-sm ring-2 ring-violet-200'
                     : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                 )}
               >

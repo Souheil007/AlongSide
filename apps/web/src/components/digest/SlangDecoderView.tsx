@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   Search,
   Sparkles,
@@ -398,6 +400,32 @@ export function SlangDecoderView({
     });
   }, [termsList, searchQuery, selectedTier]);
 
+  const gridRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (gridRef.current) {
+          gsap.fromTo(
+            '.gsap-slang-card',
+            { opacity: 0, y: 12, scale: 0.98 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.35,
+              stagger: 0.035,
+              ease: 'power2.out',
+            }
+          );
+        }
+      });
+      return () => mm.revert();
+    },
+    { scope: gridRef, dependencies: [selectedTier, filteredTerms.length] }
+  );
+
   const toggleExpand = (id: string) => {
     setExpandedCardId((current) => (current === id ? null : id));
   };
@@ -530,6 +558,7 @@ export function SlangDecoderView({
         </div>
       ) : (
         <div
+          ref={gridRef}
           data-testid="slang-grid"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
         >
@@ -540,7 +569,7 @@ export function SlangDecoderView({
               <Card
                 key={slang.id}
                 data-testid={`slang-card-${slang.id}`}
-                className="group flex flex-col justify-between border-slate-200/80 bg-white shadow-xs hover:border-teal-300 hover:shadow-md transition-all select-none"
+                className="gsap-slang-card group flex flex-col justify-between border-slate-200/80 bg-white shadow-xs hover:border-teal-300 hover:shadow-md transition-all select-none"
               >
                 <div>
                   <CardHeader className="space-y-3 pb-2">

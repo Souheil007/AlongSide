@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   Shield,
   User,
@@ -35,6 +37,24 @@ export function ChatFeed({
 }: ChatFeedProps) {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const feedContainerRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (feedContainerRef.current) {
+          gsap.from('.gsap-chat-bubble:last-child', {
+            y: 8,
+            opacity: 0,
+            duration: 0.28,
+            ease: 'power2.out',
+          });
+        }
+      });
+      return () => mm.revert();
+    },
+    { scope: feedContainerRef, dependencies: [messages.length, isStreaming] }
+  );
 
   // Auto-scroll to bottom as tokens stream in
   React.useEffect(() => {
@@ -157,7 +177,7 @@ function MessageBubble({ message }: { message: AiMessageDTO }) {
   return (
     <div
       className={cn(
-        'flex items-start gap-3',
+        'gsap-chat-bubble flex items-start gap-3',
         isParent ? 'flex-row-reverse justify-start' : 'justify-start'
       )}
     >
@@ -237,7 +257,7 @@ function StreamingBubble({
   matchedFaqIds?: string[];
 }) {
   return (
-    <div className="flex items-start gap-3 justify-start animate-in fade-in duration-200">
+    <div className="gsap-chat-bubble flex items-start gap-3 justify-start animate-in fade-in duration-200">
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white shadow-sm">
         <Shield className="h-4 w-4 text-emerald-100" />
       </div>

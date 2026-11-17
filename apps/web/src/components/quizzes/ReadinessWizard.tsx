@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,6 +11,10 @@ import {
   Sparkles,
   ShieldAlert,
 } from 'lucide-react';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 import type { ChildDTO } from '@alongside/shared';
 import {
   CANONICAL_READINESS_QUESTIONS,
@@ -59,6 +65,7 @@ export function ReadinessWizard({
 
   const { submitReadiness } = useChild(targetChildId);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
+  const cardRef = React.useRef<HTMLDivElement>(null);
 
   // Sync child to store on mount
   React.useEffect(() => {
@@ -66,6 +73,28 @@ export function ReadinessWizard({
       setChild(targetChildId, targetChildName);
     }
   }, [targetChildId, targetChildName, setChild]);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (cardRef.current) {
+          gsap.fromTo(
+            cardRef.current,
+            { opacity: 0, x: 12 },
+            { opacity: 1, x: 0, duration: 0.32, ease: 'power2.out' }
+          );
+          gsap.fromTo(
+            '.gsap-wizard-option',
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, stagger: 0.04, duration: 0.28, ease: 'power2.out', delay: 0.05 }
+          );
+        }
+      });
+      return () => mm.revert();
+    },
+    { scope: cardRef, dependencies: [currentQuestionIndex] }
+  );
 
   const questions = CANONICAL_READINESS_QUESTIONS;
   const question: ReadinessQuestion | undefined = questions[currentQuestionIndex];
@@ -197,7 +226,7 @@ export function ReadinessWizard({
       </div>
 
       {/* Main Question Card */}
-      <Card className="border-slate-200 shadow-sm bg-white">
+      <Card ref={cardRef} className="border-slate-200 shadow-sm bg-white">
         <CardHeader className="space-y-3 pb-4">
           <div className="flex items-center gap-2">
             <Badge variant="roadPre" className="text-[11px] font-semibold">
@@ -238,7 +267,7 @@ export function ReadinessWizard({
                   role="radio"
                   aria-checked={isSelected}
                   tabIndex={0}
-                  className={`flex items-start gap-3.5 p-4 rounded-xl border transition-all cursor-pointer min-h-[56px] select-none ${
+                  className={`gsap-wizard-option flex items-start gap-3.5 p-4 rounded-xl border transition-all cursor-pointer min-h-[56px] select-none ${
                     isSelected
                       ? 'border-teal-600 bg-teal-50/50 shadow-sm ring-1 ring-teal-600'
                       : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/60'
