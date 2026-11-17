@@ -17,6 +17,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface SlangDemoItem {
   term: string;
@@ -34,7 +35,8 @@ export const DEMO_SLANG_TERMS: SlangDemoItem[] = [
     definition: 'An explosive overreaction to minor friction, a game loss, or being told no.',
     cringeLevel: 4,
     exampleSentence: '“Bro literally crashed out because his teammate didn’t drop extra shields.”',
-    parentContext: 'When your child says someone “crashed out”, they mean an amygdala meltdown where someone lost emotional control.',
+    parentContext:
+      'When your child says someone “crashed out”, they mean an amygdala meltdown where someone lost emotional control.',
   },
   {
     term: 'Rizz',
@@ -50,7 +52,8 @@ export const DEMO_SLANG_TERMS: SlangDemoItem[] = [
     definition: 'A nonsense filler word representing chaotic Gen-Alpha surreal humor or absurdity.',
     cringeLevel: 5,
     exampleSentence: '“What in the skibidi toilet is going on in this group chat?”',
-    parentContext: 'Derived from a viral YouTube animation. Used ironically or as playful absurdity with zero harmful intent.',
+    parentContext:
+      'Derived from a viral YouTube animation. Used ironically or as playful absurdity with zero harmful intent.',
   },
   {
     term: 'Cooked',
@@ -84,10 +87,93 @@ export function CulturePlaygroundDemo() {
   const [copied, setCopied] = React.useState<boolean>(false);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
+  const containerRef = React.useRef<HTMLElement>(null);
+  const detailRef = React.useRef<HTMLDivElement>(null);
+  const starterCardRef = React.useRef<HTMLDivElement>(null);
+
   const currentStarter = DEMO_DINNER_STARTERS[starterIndex % DEMO_DINNER_STARTERS.length]!;
+
+  const { contextSafe } = useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Section header entrance
+          tl.fromTo(
+            '.culture-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION_TOKENS.duration.standard,
+              clearProps: 'all',
+            }
+          );
+
+          // Stagger the two main playground panels
+          tl.fromTo(
+            ['.culture-slang-card', '.culture-starter-card'],
+            { opacity: 0, y: MOTION_TOKENS.offset.section },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              stagger: MOTION_TOKENS.stagger.cards,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.culture-header', '.culture-slang-card', '.culture-starter-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
+  // contextSafe hover animations for slang pills
+  const handlePillMouseEnter = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
+    gsap.to(e.currentTarget, { y: -2, duration: 0.2, ease: MOTION_TOKENS.ease.calm });
+  });
+
+  const handlePillMouseLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
+    gsap.to(e.currentTarget, { y: 0, duration: 0.2, ease: MOTION_TOKENS.ease.calm });
+  });
+
+  const handleSelectTerm = (term: SlangDemoItem) => {
+    setSelectedTerm(term);
+    if (detailRef.current) {
+      gsap.fromTo(
+        detailRef.current,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.25, ease: MOTION_TOKENS.ease.calm, clearProps: 'all' }
+      );
+    }
+  };
 
   const handleShuffleStarter = () => {
     setStarterIndex((prev) => prev + 1);
+    if (starterCardRef.current) {
+      gsap.fromTo(
+        starterCardRef.current,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.25, ease: MOTION_TOKENS.ease.calm, clearProps: 'all' }
+      );
+    }
   };
 
   const handleCopyStarter = async () => {
@@ -103,16 +189,21 @@ export function CulturePlaygroundDemo() {
   };
 
   const filteredTerms = searchQuery
-    ? DEMO_SLANG_TERMS.filter((s) =>
-        s.term.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        s.definition.toLowerCase().includes(searchQuery.toLowerCase())
+    ? DEMO_SLANG_TERMS.filter(
+        (s) =>
+          s.term.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          s.definition.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : DEMO_SLANG_TERMS;
 
   return (
-    <section id="digest" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
+    <section
+      id="digest"
+      ref={containerRef}
+      className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20"
+    >
       <div className="rounded-[10px] border border-[#E3E3DC] bg-white p-6 sm:p-10 shadow-[0_1px_2px_rgba(17,20,19,0.04)]">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-[#E3E3DC]">
+        <div className="culture-header flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-[#E3E3DC]">
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9] px-3.5 py-1 text-xs font-semibold text-[#143D2B]">
               <span className="font-mono text-[11px] uppercase tracking-wider">
@@ -120,7 +211,8 @@ export function CulturePlaygroundDemo() {
               </span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
-              Interactive Sunday Culture Radar &amp; <em className="italic font-normal text-[#143D2B]">Dinner Starters</em>
+              Interactive Sunday Culture Radar &amp;{' '}
+              <em className="italic font-normal text-[#143D2B]">Dinner Starters</em>
             </h2>
             <p className="text-sm text-[#494F4C] leading-relaxed">
               Never feel out of the loop again. Test out real youth culture slang terms, gauge their cringe rating, and draw Sunday dinner conversation starters.
@@ -141,7 +233,7 @@ export function CulturePlaygroundDemo() {
         {/* Interactive 2-Column Playground Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
           {/* Left Column (7 cols): Slang Radar & Cringe Meter */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="culture-slang-card lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between gap-2">
               <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider flex items-center gap-1.5">
                 <Flame className="h-4 w-4 text-[#B45309]" />
@@ -159,9 +251,11 @@ export function CulturePlaygroundDemo() {
                 return (
                   <button
                     key={item.term}
-                    onClick={() => setSelectedTerm(item)}
+                    onClick={() => handleSelectTerm(item)}
+                    onMouseEnter={handlePillMouseEnter}
+                    onMouseLeave={handlePillMouseLeave}
                     className={cn(
-                      'px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[38px] border',
+                      'px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer min-h-[38px] border',
                       isSelected
                         ? 'bg-[#111413] text-white border-[#111413] shadow-xs'
                         : 'bg-[#F4F4F0] border-[#E3E3DC] text-[#494F4C] hover:border-[#111413] hover:text-[#111413]'
@@ -174,7 +268,10 @@ export function CulturePlaygroundDemo() {
             </div>
 
             {/* Selected Word Detail Card with Cringe Meter */}
-            <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-5 space-y-3 shadow-xs">
+            <div
+              ref={detailRef}
+              className="rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-5 space-y-3 shadow-xs"
+            >
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E3E3DC] pb-3">
                 <div className="flex items-center gap-2">
                   <h3 className="font-serif text-2xl font-bold text-[#111413]">
@@ -233,7 +330,7 @@ export function CulturePlaygroundDemo() {
           </div>
 
           {/* Right Column (5 cols): Sunday Dinner Conversation Starters */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="culture-starter-card lg:col-span-5 space-y-4">
             <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider flex items-center gap-1.5">
               <MessageSquare className="h-4 w-4 text-[#143D2B]" />
               Sunday Dinner Table Starter:
@@ -263,7 +360,7 @@ export function CulturePlaygroundDemo() {
                   </button>
                 </div>
 
-                <div className="rounded-[5px] bg-white border border-[#E3E3DC] p-4">
+                <div ref={starterCardRef} className="rounded-[5px] bg-white border border-[#E3E3DC] p-4">
                   <p className="font-serif text-sm font-medium text-[#111413] leading-relaxed italic">
                     {currentStarter}
                   </p>

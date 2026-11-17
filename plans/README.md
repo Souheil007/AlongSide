@@ -59,6 +59,7 @@ graph TD
         P38["38: Academy Lesson Experience & Multi-Modal Reader Architecture (Joint)"]
         P39["39: Academy 8-Tier Curriculum Synthesis & Video Integration (Joint)"]
         P40["40: Academy Lesson Archetypes, Unified Blog Reader & De-Clinicalization (Joint)"]
+        P41["41: Homepage GSAP 'Parent Calm' Animation & Scroll UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -183,6 +184,7 @@ graph TD
 | [**`38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md`**](38-parent-intelligence-academy-lesson-experience-and-multi-modal-reader.md) | Academy Lesson Experience & Multi-Modal Reader Architecture | **Joint (FE & BE)** | PLAN-30, PLAN-31, PLAN-37 | Approved (Ready for Delegation) |
 | [**`39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md`**](39-parent-intelligence-academy-8-tier-curriculum-synthesis-and-video-integration.md) | Academy 8-Tier Curriculum Synthesis & Master Video Lecture Integration | **Joint (FE & BE)** | PLAN-36, PLAN-37, PLAN-38 | Approved (Ready for Delegation) |
 | [**`40-academy-lesson-archetypes-and-advisory-de-clinicalization.md`**](40-academy-lesson-archetypes-and-advisory-de-clinicalization.md) | Academy Lesson Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization | **Joint (FE & BE)** | PLAN-38, PLAN-39 | In Progress (Delegated via SOU-114 & SOU-115) |
+| [**`41-homepage-gsap-parent-calm-animation-ui.md`**](41-homepage-gsap-parent-calm-animation-ui.md) | Homepage GSAP 'Parent Calm' Animation & Scroll Experience | **Frontend Agent** | PLAN-23, PLAN-33 | Approved (Ready for Delegation) |
 
 ---
 
