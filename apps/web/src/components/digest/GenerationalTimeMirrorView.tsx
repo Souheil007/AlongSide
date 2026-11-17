@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { History, Sparkles, ArrowRightLeft, Lightbulb } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 import { formatChildAge } from '@/stores/useChildContextStore';
 import { cn } from '@/lib/utils';
 
@@ -133,6 +134,60 @@ export function GenerationalTimeMirrorView({
 }: GenerationalTimeMirrorViewProps) {
   const stage = resolveMirrorStage(child);
   const data = GENERATIONAL_MIRRORS_BY_STAGE[stage];
+  const containerRef = React.useRef<HTMLElement>(null);
+
+  // GSAP ScrollTrigger Entrance with Symmetrical Then/Now Reveal
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          tl.fromTo(
+            '.time-mirror-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            { opacity: 1, y: 0, duration: 0.5, clearProps: 'all' }
+          );
+
+          tl.fromTo(
+            '.time-mirror-then',
+            { opacity: 0, x: -MOTION_TOKENS.offset.section },
+            { opacity: 1, x: 0, duration: 0.65, clearProps: 'all' },
+            '-=0.2'
+          );
+
+          tl.fromTo(
+            '.time-mirror-now',
+            { opacity: 0, x: MOTION_TOKENS.offset.section },
+            { opacity: 1, x: 0, duration: 0.65, clearProps: 'all' },
+            '<0.08'
+          );
+
+          tl.fromTo(
+            '.time-mirror-insight',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            { opacity: 1, y: 0, duration: 0.5, clearProps: 'all' },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.time-mirror-header', '.time-mirror-then', '.time-mirror-now', '.time-mirror-insight'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
   const childName = child?.name ?? (stage === 'INFANT' ? 'Mateo' : stage === 'ELEMENTARY' ? 'Maya' : 'Julian');
   const childAgeLabel = child ? formatChildAge(child) : (stage === 'INFANT' ? '14 mo' : stage === 'ELEMENTARY' ? '8 yrs' : '14 yrs');
@@ -146,9 +201,9 @@ export function GenerationalTimeMirrorView({
     : data.nowTitle;
 
   return (
-    <section className={cn('space-y-5 max-w-7xl mx-auto', className)}>
+    <section ref={containerRef} className={cn('space-y-5 max-w-7xl mx-auto', className)}>
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+      <div className="time-mirror-header flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
         <div className="space-y-0.5">
           <span className="font-mono text-[11px] uppercase tracking-wider text-[#6D28D9] font-bold flex items-center gap-1.5">
             <History className="w-4 h-4 text-[#6D28D9]" />
@@ -166,7 +221,7 @@ export function GenerationalTimeMirrorView({
       {/* Side-by-Side Comparison Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Past Era: You in 1999 */}
-        <div className="rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-7 space-y-5 shadow-xs">
+        <div className="time-mirror-then rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-7 space-y-5 shadow-xs">
           <div className="flex items-center justify-between border-b border-[#E3E3DC] pb-3">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-[#F5F3FF] border border-[#6D28D9]/30 flex items-center justify-center text-xs font-bold text-[#6D28D9]">
@@ -196,7 +251,7 @@ export function GenerationalTimeMirrorView({
         </div>
 
         {/* Present Era: Child in 2026 */}
-        <div className="rounded-3xl border border-[#143D2B]/30 bg-white p-6 sm:p-7 space-y-5 shadow-xs ring-1 ring-[#143D2B]/10">
+        <div className="time-mirror-now rounded-3xl border border-[#143D2B]/30 bg-white p-6 sm:p-7 space-y-5 shadow-xs ring-1 ring-[#143D2B]/10">
           <div className="flex items-center justify-between border-b border-[#E3E3DC] pb-3">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-[#EAF3EE] border border-[#143D2B]/30 flex items-center justify-center text-xs font-bold text-[#143D2B]">
@@ -227,7 +282,7 @@ export function GenerationalTimeMirrorView({
       </div>
 
       {/* Pediatric Insight Callout */}
-      <div className="p-4 sm:p-5 bg-[#F4F4F0] rounded-2xl border border-[#E3E3DC] flex items-start gap-3.5">
+      <div className="time-mirror-insight p-4 sm:p-5 bg-[#F4F4F0] rounded-2xl border border-[#E3E3DC] flex items-start gap-3.5">
         <Lightbulb className="w-5 h-5 text-[#B45309] shrink-0 mt-0.5" />
         <div className="space-y-0.5">
           <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold block">

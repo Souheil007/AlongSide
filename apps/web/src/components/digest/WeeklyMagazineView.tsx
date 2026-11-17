@@ -11,6 +11,7 @@ import {
   Quote,
 } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 import { cn } from '@/lib/utils';
 
 export interface MagazineArticle {
@@ -203,7 +204,60 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
   const leadArticle = articles.find((a) => a.isLead) || articles[0];
   const companionArticles = articles.filter((a) => a.id !== leadArticle?.id);
 
+  const containerRef = React.useRef<HTMLElement>(null);
   const [activeArticle, setActiveArticle] = React.useState<MagazineArticle | null>(null);
+
+  // GSAP ScrollTrigger Entrance
+  useGSAP(
+    () => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          tl.fromTo(
+            '.magazine-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            { opacity: 1, y: 0, duration: 0.5, clearProps: 'all' }
+          );
+
+          tl.fromTo(
+            '.magazine-lead-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            { opacity: 1, y: 0, duration: 0.65, clearProps: 'all' },
+            '-=0.2'
+          );
+
+          tl.fromTo(
+            '.magazine-companion-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              clearProps: 'all',
+            },
+            '-=0.3'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.magazine-header', '.magazine-lead-card', '.magazine-companion-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
   React.useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -219,9 +273,9 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
   }, [activeArticle]);
 
   return (
-    <section className={cn('space-y-5 max-w-7xl mx-auto', className)}>
+    <section ref={containerRef} className={cn('space-y-5 max-w-7xl mx-auto', className)}>
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+      <div className="magazine-header flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
         <div className="space-y-0.5">
           <span className="font-mono text-[11px] uppercase tracking-wider text-[#143D2B] font-bold flex items-center gap-1.5">
             <BookOpen className="w-4 h-4 text-[#143D2B]" />
@@ -240,7 +294,7 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Lead Story (7 cols) */}
         {leadArticle && (
-          <article className="lg:col-span-7 rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xs">
+          <article className="magazine-lead-card lg:col-span-7 rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xs hover:border-[#143D2B]/30 transition">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="px-2.5 py-1 rounded-full bg-[#EAF3EE] text-[#143D2B] font-mono text-xs font-semibold">
@@ -292,7 +346,7 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
           {companionArticles.map((article) => (
             <article
               key={article.id}
-              className="flex-1 rounded-3xl border border-[#E3E3DC] bg-white p-6 flex flex-col justify-between space-y-3 shadow-xs hover:border-[#143D2B]/30 transition"
+              className="magazine-companion-card group flex-1 rounded-3xl border border-[#E3E3DC] bg-white p-6 flex flex-col justify-between space-y-3 shadow-xs hover:border-[#143D2B]/30 transition"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
@@ -318,7 +372,7 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
                   className="text-xs font-mono text-[#143D2B] font-semibold hover:underline flex items-center gap-1"
                 >
                   <span>Read Essay</span>
-                  <ArrowRight className="w-3 h-3" />
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </article>

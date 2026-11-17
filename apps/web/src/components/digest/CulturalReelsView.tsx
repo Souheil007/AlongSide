@@ -13,6 +13,7 @@ import {
   Copy,
 } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
+import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 import { cn } from '@/lib/utils';
 
 export interface ReelItem {
@@ -186,8 +187,57 @@ export interface CulturalReelsViewProps {
 export function CulturalReelsView({ child, className }: CulturalReelsViewProps) {
   const stage = resolveReelsStage(child);
   const reels = CULTURAL_REELS_BY_STAGE[stage];
+  const containerRef = React.useRef<HTMLElement>(null);
   const [activeReel, setActiveReel] = React.useState<ReelItem | null>(null);
   const [copiedScript, setCopiedScript] = React.useState(false);
+
+  // GSAP ScrollTrigger Entrance & Micro-Interactions
+  useGSAP(
+    (context, contextSafe) => {
+      setupReducedMotionMatch(
+        () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+            defaults: { ease: MOTION_TOKENS.ease.calm },
+          });
+
+          // Header reveal
+          tl.fromTo(
+            '.reels-header',
+            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
+            { opacity: 1, y: 0, duration: 0.5, clearProps: 'all' }
+          );
+
+          // Stagger 3 vertical reel cards
+          tl.fromTo(
+            '.reel-card',
+            { opacity: 0, y: MOTION_TOKENS.offset.standard },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              stagger: 0.1,
+              ease: MOTION_TOKENS.ease.calm,
+              clearProps: 'all',
+            },
+            '-=0.2'
+          );
+        },
+        () => {
+          gsap.fromTo(
+            ['.reels-header', '.reel-card'],
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
+          );
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
   // Close modal on Escape
   React.useEffect(() => {
@@ -212,9 +262,9 @@ export function CulturalReelsView({ child, className }: CulturalReelsViewProps) 
   };
 
   return (
-    <section className={cn('space-y-4 max-w-7xl mx-auto', className)}>
+    <section ref={containerRef} className={cn('space-y-4 max-w-7xl mx-auto', className)}>
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
+      <div className="reels-header flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E3DC] pb-3">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#143D2B] font-bold flex items-center gap-1.5">
@@ -240,7 +290,7 @@ export function CulturalReelsView({ child, className }: CulturalReelsViewProps) 
           <div
             key={reel.id}
             onClick={() => setActiveReel(reel)}
-            className="group rounded-2xl border border-[#E3E3DC] bg-white overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[#143D2B]/40"
+            className="reel-card group rounded-2xl border border-[#E3E3DC] bg-white overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[#143D2B]/40"
           >
             {/* Video Thumbnail Simulation */}
             <div
