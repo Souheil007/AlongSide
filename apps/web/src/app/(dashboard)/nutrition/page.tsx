@@ -6,7 +6,7 @@ import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Pediatric Nutrition & Feeding Hub — AlongSide',
+  title: 'Nutrition',
   description:
     'Pediatric nutrition from infancy to adolescence: Baby-led weaning, safe allergen introduction, and Ellyn Satter Division of Responsibility. Elevated into the Parent Intelligence Academy.',
 };

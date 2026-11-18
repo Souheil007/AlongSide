@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { PactDetailView } from '@/components/pacts/PactDetailView';
 
 export const metadata: Metadata = {
-  title: 'Family Tech Treaty — Refrigerator Print Edition • AlongSide',
+  title: 'Family Tech Treaty',
   description:
-    '1-page refrigerator-ready physical family agreement layout with bilateral signatures, 8:30 PM bedtime curfew, and AlongSide seal.',
+    '1-page refrigerator-ready physical family agreement layout with bilateral signatures, 8:30 PM bedtime curfew, and Alongside seal.',
 };
 
 interface PageProps {

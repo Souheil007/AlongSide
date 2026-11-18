@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { useAuth } from "@/hooks/useAuth";
 import { ApiClientError } from "@/lib/api/client";
 import { AlertCircle, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { AlongsideLogo } from "@/components/shared/AlongsideLogo";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -52,6 +53,11 @@ export function RegisterForm() {
   return (
     <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">
       <CardHeader className="space-y-1 text-center">
+        <div className="flex justify-center pb-2">
+          <Link href="/" aria-label="AlongSide Home">
+            <AlongsideLogo size="lg" showWordmark={false} />
+          </Link>
+        </div>
         <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] px-3 py-1 text-xs font-mono font-semibold text-[#143D2B] border border-[#143D2B]/20 mb-2">
           <ShieldCheck className="h-3.5 w-3.5 text-[#143D2B]" />
           7-DAY TRIAL • NO UPFRONT CHARGE

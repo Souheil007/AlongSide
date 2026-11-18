@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { PactWizard } from '@/components/pacts/PactWizard';
 
 export const metadata: Metadata = {
-  title: 'Bilateral Family Pact Wizard — AlongSide Parent OS',
+  title: 'Pact Wizard',
   description:
     'Co-negotiate family digital boundaries, configure the canonical 8:30 PM bedtime curfew, and seal with bilateral digital signatures.',
 };

@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .join(' ');
 
   return {
-    title: `${formattedTitle} — Parent Intelligence Academy`,
+    title: formattedTitle,
     description: 'Explore lessons and communication scripts for this neurodevelopmental milestone.',
   };
 }

@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/Badge';
 import { GraduationCap } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Parent Intelligence Academy — AlongSide',
+  title: 'Academy',
   description:
     'Pediatric neurobiology micro-lessons, conversational scripts, and developmental science to replace daily digital conflict.',
 };

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ReadinessWizardClient } from '@/components/quizzes/ReadinessWizardClient';
 
 export const metadata: Metadata = {
-  title: 'First-Phone Readiness Assessment • AlongSide',
+  title: 'Readiness Assessment',
   description:
     '10-dimension holistic evaluation of adolescent impulse control, bedtime sleep, and digital hazard awareness.',
 };

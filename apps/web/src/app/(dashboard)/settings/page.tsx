@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AccountSettingsView } from '@/components/settings/AccountSettingsView';
 
 export const metadata: Metadata = {
-  title: 'Account & Family Settings • AlongSide',
+  title: 'Settings',
   description:
     'Manage your guardian credentials, family children profiles, Annual Hero Pass subscription, and safety notification preferences.',
 };

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { DevicesManagementView } from '@/components/devices/DevicesManagementView';
 
 export const metadata: Metadata = {
-  title: 'Modern World & Devices Hub — AlongSide Family Operating System',
+  title: 'Devices',
   description:
     'Readiness diagnostic scoring, bilateral family pacts, automated 8:30 PM curfews, and Sunday youth culture digest.',
 };
