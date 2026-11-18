@@ -11,14 +11,14 @@ import type { ChildDTO } from '@alongside/shared';
 
 const mockTeenChild: ChildDTO = {
   id: 'child-teen',
-  familyId: 'family-1',
+  userId: 'user-1',
   name: 'Julian',
+  birthYear: 2012,
+  birthMonth: 5,
   age: 14,
   developmentalTier: 'TIER_4_ADOLESCENT' as any,
   roadType: 'ACTIVE_DEVICE' as any,
-  avatarUrl: null,
   birthDate: null,
-  grade: '9th',
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };

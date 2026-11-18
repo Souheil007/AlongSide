@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
 import { ChildSelector } from '@/components/shared/ChildSelector';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
+import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
 import { cn } from '@/lib/utils';
 
 export interface NavLinkItem {
@@ -127,17 +128,10 @@ export function Header() {
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           <Link
             href={isAuthenticated ? '/dashboard' : '/'}
-            className="flex items-center gap-2.5 group shrink-0"
+            className="group shrink-0"
             aria-label="AlongSide Home"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-[#143D2B] text-white shadow-sm transition-transform group-hover:scale-105">
-              <Shield className="h-4.5 w-4.5 text-emerald-100" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#111413] leading-tight">
-                AlongSide
-              </span>
-            </div>
+            <AlongsideLogo size="md" priority />
           </Link>
 
           {/* Child Selector embedded next to brand logo for authenticated parents */}

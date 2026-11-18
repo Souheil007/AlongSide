@@ -27,6 +27,7 @@ import { agreementsApi } from '@/lib/api/agreements';
 import { EnrollmentModal } from '@/components/devices/EnrollmentModal';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
 import { cn } from '@/lib/utils';
 
 export interface PactDetailViewProps {
@@ -227,9 +228,7 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
         <header className="border-b-2 border-slate-800 pb-6 mb-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white shadow-xs">
-                <Shield className="h-6 w-6 text-emerald-300" />
-              </div>
+              <AlongsideLogo size="lg" showWordmark={false} priority />
               <div>
                 <span className="text-[11px] font-bold tracking-widest uppercase text-slate-600 block">
                   Official Alongside Family Operating Charter

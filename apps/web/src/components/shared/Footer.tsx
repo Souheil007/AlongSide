@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Shield, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
 
 export function Footer() {
   return (
@@ -7,14 +8,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="space-y-3 md:col-span-1">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#143D2B] text-white">
-                <Shield className="h-4 w-4" />
-              </div>
-              <span className="font-serif font-bold text-[#111413] tracking-tight text-xl">
-                AlongSide
-              </span>
-            </div>
+            <Link href="/" className="inline-block group" aria-label="AlongSide Home">
+              <AlongsideLogo size="sm" />
+            </Link>
             <p className="text-sm text-[#494F4C] leading-relaxed">
               Replacing anxiety and conflict with calm developmental science,
               collaborative family agreements, and neutral automated enforcement.
