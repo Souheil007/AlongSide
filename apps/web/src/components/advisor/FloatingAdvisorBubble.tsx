@@ -293,7 +293,12 @@ export function FloatingAdvisorBubble() {
             </div>
 
             {/* Chat Messages Feed */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#FBFBF9]">
+            <div className="relative flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#FBFBF9]">
+              {/* Soft Aurora Ambient Layer */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-40 blur-[50px] filter animate-aurora [background-image:radial-gradient(ellipse_at_top,rgba(20,184,166,0.16)_0%,rgba(99,102,241,0.1)_40%,transparent_70%)]"
+                aria-hidden="true"
+              />
               {messages.length === 0 && !isStreaming && (
                 <div className="my-auto flex flex-col items-center justify-center text-center p-6 space-y-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#EAF3EE] text-[#143D2B] shadow-inner">

@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { CountUp } from '@/components/ui/CountUp';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export interface HubStep {
@@ -233,8 +235,10 @@ export function DeviceActionHubSpotlight() {
         {/* The 3-Step Transition Pipeline */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {DEVICE_HUB_STEPS.map((s) => (
-            <div
+            <SpotlightCard
               key={s.step}
+              spotlightColor="rgba(20, 61, 43, 0.08)"
+              borderColor="rgba(20, 61, 43, 0.2)"
               className="device-hub-step rounded-[10px] border border-[#E3E3DC] bg-[#FBFBF9] p-6 shadow-xs space-y-4 relative transition-all"
             >
               <div className="flex items-center justify-between">
@@ -260,7 +264,7 @@ export function DeviceActionHubSpotlight() {
                       <span>
                         Sofia’s Readiness:{' '}
                         <span className="readiness-score-val font-mono font-bold text-[#143D2B]">
-                          84
+                          <CountUp to={84} from={0} duration={1.5} />
                         </span>{' '}
                         / 100
                       </span>
@@ -284,7 +288,7 @@ export function DeviceActionHubSpotlight() {
                   {s.previewDetail}
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
 

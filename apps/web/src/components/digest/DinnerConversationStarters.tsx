@@ -22,6 +22,7 @@ import {
 } from '@/stores/useChildContextStore';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { cn } from '@/lib/utils';
 
 export interface DinnerQuestion {
@@ -334,7 +335,12 @@ export function DinnerConversationStarters({
         </div>
       )}
 
-      <div className="dinner-container-card relative overflow-hidden rounded-3xl border border-[#143D2B] bg-[#0E2B1E] p-6 sm:p-10 text-white shadow-xl">
+      <SpotlightCard
+        spotlightColor="rgba(52, 211, 153, 0.15)"
+        borderColor="rgba(52, 211, 153, 0.3)"
+        size={400}
+        className="dinner-container-card relative overflow-hidden rounded-3xl border border-[#143D2B] bg-[#0E2B1E] p-6 sm:p-10 text-white shadow-xl"
+      >
         {/* Ambient radial glow */}
         <div className="absolute top-0 right-0 -mt-12 -mr-12 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
 
@@ -472,7 +478,7 @@ export function DinnerConversationStarters({
             </Button>
           </div>
         </div>
-      </div>
+      </SpotlightCard>
     </section>
   );
 }
