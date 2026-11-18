@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
 import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { cn } from '@/lib/utils';
 
 export interface MagazineArticle {
@@ -294,7 +295,11 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Lead Story (7 cols) */}
         {leadArticle && (
-          <article className="magazine-lead-card lg:col-span-7 rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xs hover:border-[#143D2B]/30 transition">
+          <SpotlightCard
+            spotlightColor="rgba(20, 61, 43, 0.08)"
+            borderColor="rgba(20, 61, 43, 0.25)"
+            className="magazine-lead-card lg:col-span-7 rounded-3xl border border-[#E3E3DC] bg-white p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xs hover:border-[#143D2B]/30 transition"
+          >
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="px-2.5 py-1 rounded-full bg-[#EAF3EE] text-[#143D2B] font-mono text-xs font-semibold">
@@ -338,14 +343,16 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
-          </article>
+          </SpotlightCard>
         )}
 
         {/* 2 Companion Columns (5 cols) */}
         <div className="lg:col-span-5 flex flex-col justify-between gap-6">
           {companionArticles.map((article) => (
-            <article
+            <SpotlightCard
               key={article.id}
+              spotlightColor="rgba(20, 61, 43, 0.06)"
+              borderColor="rgba(20, 61, 43, 0.2)"
               className="magazine-companion-card group flex-1 rounded-3xl border border-[#E3E3DC] bg-white p-6 flex flex-col justify-between space-y-3 shadow-xs hover:border-[#143D2B]/30 transition"
             >
               <div className="space-y-2">
@@ -375,7 +382,7 @@ export function WeeklyMagazineView({ child, className }: WeeklyMagazineViewProps
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-            </article>
+            </SpotlightCard>
           ))}
         </div>
       </div>
