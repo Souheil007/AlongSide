@@ -6,7 +6,7 @@ import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Behavioral Psychology & De-escalation Scripts — AlongSide Family OS',
+  title: 'Behavior',
   description:
     'HALT tantrum diagnostic framework, authoritative Time-Ins, and word-for-word emotional co-regulation scripts. Elevated into the Parent Intelligence Academy.',
 };

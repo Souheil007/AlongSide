@@ -4,7 +4,7 @@ import { FaqExplorerView } from '@/components/advisor/FaqExplorerView';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Living Modern Parenting FAQ Explorer — AlongSide',
+  title: 'FAQ Explorer',
   description:
     'Pediatric and neurobiology-backed answers to 100+ digital dilemmas, screen battles, secret apps, and bedtime conflict.',
 };

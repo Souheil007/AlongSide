@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .join(' ');
 
   return {
-    title: `${formattedTitle} — Academy Reader | AlongSide`,
+    title: formattedTitle,
     description: 'Distraction-free developmental lesson reader with actionable parent dialogue scripts.',
   };
 }

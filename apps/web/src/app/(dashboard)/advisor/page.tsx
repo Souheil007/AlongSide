@@ -4,7 +4,7 @@ import { AdvisorDashboardView } from '@/components/advisor/AdvisorDashboardView'
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: '24/7 AI Child Advisor — AlongSide',
+  title: 'AI Advisor',
   description:
     'Real-time pediatric neurobiology advisor for tween tech conflict, boundary battles, and instant de-escalation conversation scripts.',
 };

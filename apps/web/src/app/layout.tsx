@@ -6,14 +6,17 @@ import { Footer } from '@/components/shared/Footer';
 import { OfflineBanner } from '@/components/shared/OfflineBanner';
 
 export const metadata: Metadata = {
-  title: 'AlongSide — Parent Intelligence & Family Operating System',
+  title: {
+    default: 'Alongside',
+    template: '%s | Alongside',
+  },
   description:
     'The empathetic digital-parenting platform replacing screen conflict with calm developmental science, bilateral family agreements, and neutral automated enforcement.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'AlongSide',
+    title: 'Alongside',
   },
 };
 

@@ -6,7 +6,7 @@ import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Restorative Sleep & Child Wellness — AlongSide',
+  title: 'Health & Sleep',
   description:
     'Developmental sleep architecture, circadian rhythm regulation, and soothing routines. Elevated into the Parent Intelligence Academy.',
 };

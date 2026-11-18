@@ -46,11 +46,11 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
       expect(mobileNavContent).not.toContain("{ href: '/dashboard', label: 'Today'");
     });
 
-    it('verifies Home page metadata title is updated to "Home • AlongSide Family Operating System"', () => {
+    it('verifies Home page metadata title is updated to "Home"', () => {
       const pagePath = path.resolve(__dirname, '../src/app/(dashboard)/dashboard/page.tsx');
       const pageContent = fs.readFileSync(pagePath, 'utf-8');
 
-      expect(pageContent).toContain("title: 'Home • AlongSide Family Operating System'");
+      expect(pageContent).toContain("title: 'Home'");
     });
   });
 

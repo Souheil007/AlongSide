@@ -45,7 +45,7 @@ export function AlongsideLogo({
       >
         <Image
           src="/brand/alongside-logo-full-256.png"
-          alt="AlongSide Fluid AS Monogram"
+          alt="Alongside Monogram Logo"
           width={config.px}
           height={config.px}
           className="h-full w-full object-contain rounded-[6px]"
@@ -62,7 +62,7 @@ export function AlongsideLogo({
               wordmarkClassName
             )}
           >
-            AlongSide
+            Alongside
           </span>
           {subtitle && (
             <span

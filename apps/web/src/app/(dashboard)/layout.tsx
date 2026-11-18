@@ -4,7 +4,6 @@ import { FloatingAdvisorBubble } from '@/components/advisor/FloatingAdvisorBubbl
 import { DashboardAuthGuard } from '@/components/auth/DashboardAuthGuard';
 
 export const metadata: Metadata = {
-  title: 'Family OS Dashboard — AlongSide',
   description:
     'The holistic child upbringing, pediatric health, developmental milestone and lifespan family operating system (Ages 0–18).',
 };

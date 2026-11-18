@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { DigestDashboardClient } from '@/components/digest/DigestDashboardClient';
 
 export const metadata: Metadata = {
-  title: 'Sunday Youth Culture Digest — AlongSide',
+  title: 'Digest',
   description:
     'Weekly youth culture briefings, emerging slang decoders, hidden exploit alerts, and Sunday dinner conversation starters.',
 };

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ChildOnboardingFlow } from '@/components/children/ChildOnboardingFlow';
 
 export const metadata: Metadata = {
-  title: 'Add Child Profile • AlongSide Parent Calm System',
+  title: 'Add Child',
   description:
     'Calibrate our developmental blueprints to your child’s age and select Road 1 (Pre-Device) or Road 2 (Active-Device).',
 };
