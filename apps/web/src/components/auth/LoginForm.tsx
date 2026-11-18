@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { useAuth } from "@/hooks/useAuth";
 import { ApiClientError } from "@/lib/api/client";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlongsideLogo } from "@/components/shared/AlongsideLogo";
 
 export function LoginForm() {
   const router = useRouter();
@@ -53,6 +54,11 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">
       <CardHeader className="space-y-1 text-center">
+        <div className="flex justify-center pb-2">
+          <Link href="/" aria-label="AlongSide Home">
+            <AlongsideLogo size="lg" showWordmark={false} />
+          </Link>
+        </div>
         <CardTitle className="font-serif text-3xl font-bold tracking-tight text-[#111413]">
           Welcome back
         </CardTitle>

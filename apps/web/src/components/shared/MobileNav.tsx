@@ -23,6 +23,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { ChildSelector } from '@/components/shared/ChildSelector';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
+import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
 import { cn } from '@/lib/utils';
 
 export interface NavItem {
@@ -163,14 +164,7 @@ export function MobileNav({ className }: MobileNavProps) {
           <div className="relative z-10 rounded-t-[16px] border-t border-[#E3E3DC] bg-white p-5 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-[#E3E3DC] pb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-[4px] bg-[#143D2B] text-white shadow-2xs">
-                  <Shield className="h-4 w-4" />
-                </div>
-                <h3 className="font-serif font-bold text-[#111413] text-sm">
-                  AlongSide Hubs
-                </h3>
-              </div>
+              <AlongsideLogo size="sm" showWordmark={true} subtitle="Platform Hubs" />
               <button
                 type="button"
                 onClick={() => setMoreDrawerOpen(false)}

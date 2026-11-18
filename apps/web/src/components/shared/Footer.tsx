@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="space-y-3 md:col-span-1">
             <Link href="/" className="inline-block group" aria-label="AlongSide Home">
-              <AlongsideLogo size="sm" />
+              <AlongsideLogo size="md" />
             </Link>
             <p className="text-sm text-[#494F4C] leading-relaxed">
               Replacing anxiety and conflict with calm developmental science,

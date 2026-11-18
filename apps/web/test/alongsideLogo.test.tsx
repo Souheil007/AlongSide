@@ -7,7 +7,7 @@ describe('AlongsideLogo Component', () => {
   it('renders the emblem image and editorial wordmark by default', () => {
     const html = renderToStaticMarkup(<AlongsideLogo />);
 
-    expect(html).toContain('alongside-emblem-128.png');
+    expect(html).toContain('alongside-logo-full-256.png');
     expect(html).toContain('alt="AlongSide Fluid AS Monogram"');
     expect(html).toContain('AlongSide');
   });
@@ -15,7 +15,7 @@ describe('AlongsideLogo Component', () => {
   it('hides the wordmark when showWordmark is false', () => {
     const html = renderToStaticMarkup(<AlongsideLogo showWordmark={false} />);
 
-    expect(html).toContain('alongside-emblem-128.png');
+    expect(html).toContain('alongside-logo-full-256.png');
     expect(html).not.toContain('>AlongSide<');
   });
 
@@ -28,9 +28,9 @@ describe('AlongsideLogo Component', () => {
 
   it('applies different size presets without errors', () => {
     const xsHtml = renderToStaticMarkup(<AlongsideLogo size="xs" />);
-    expect(xsHtml).toContain('h-6 w-6');
+    expect(xsHtml).toContain('h-7 w-7');
 
     const lgHtml = renderToStaticMarkup(<AlongsideLogo size="lg" />);
-    expect(lgHtml).toContain('h-12 w-12');
+    expect(lgHtml).toContain('h-14 w-14');
   });
 });
