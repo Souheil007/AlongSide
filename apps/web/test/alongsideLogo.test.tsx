@@ -8,7 +8,7 @@ describe('AlongsideLogo Component', () => {
     const html = renderToStaticMarkup(<AlongsideLogo />);
 
     expect(html).toContain('alongside-emblem-128.png');
-    expect(html).toContain('alt="AlongSide Minimalist Sanctuary Emblem"');
+    expect(html).toContain('alt="AlongSide Fluid AS Monogram"');
     expect(html).toContain('AlongSide');
   });
 

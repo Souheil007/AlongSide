@@ -39,13 +39,13 @@ export function AlongsideLogo({
     <div className={cn('flex items-center gap-2.5 shrink-0', className)}>
       <div
         className={cn(
-          'relative flex items-center justify-center overflow-hidden rounded-[7px] bg-[#143D2B] shadow-xs border border-[#143D2B]/15 transition-transform group-hover:scale-105',
+          'relative flex items-center justify-center overflow-hidden rounded-[8px] bg-[#FBFBF9] shadow-xs border border-[#E3E3DC] transition-transform group-hover:scale-105',
           config.box
         )}
       >
         <Image
           src="/brand/alongside-emblem-128.png"
-          alt="AlongSide Minimalist Sanctuary Emblem"
+          alt="AlongSide Fluid AS Monogram"
           width={config.px}
           height={config.px}
           className="h-full w-full object-cover"
