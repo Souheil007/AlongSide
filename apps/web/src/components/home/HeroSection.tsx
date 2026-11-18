@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { RotatingText } from '@/components/ui/RotatingText';
 import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
 
 export const HERO_TRUST_SIGNALS = [
@@ -177,7 +178,7 @@ export function HeroSection() {
         aria-hidden="true"
       >
         <div
-          className="hero-ambient-aura w-full h-full"
+          className="hero-ambient-aura w-full h-full animate-aurora"
           style={{
             background:
               'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.32), transparent 65%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.24), transparent 60%), radial-gradient(circle at 50% 75%, rgba(20, 61, 43, 0.18), transparent 65%)',
@@ -194,6 +195,22 @@ export function HeroSection() {
           </span>{' '}
           As They Grow.
         </h1>
+
+        {/* Dynamic Lifespan Focus Pill */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9]/90 px-3.5 py-1 text-xs font-mono text-[#494F4C] shadow-2xs">
+          <Sparkles className="h-3.5 w-3.5 text-[#143D2B]" />
+          <span>Real-time developmental guidance for:</span>
+          <RotatingText
+            words={[
+              'Sleep Regressions',
+              'Toddler Tantrums',
+              'Picky Eating Habits',
+              'First Smartphones',
+              'Teen Slang & Feeds',
+            ]}
+            className="font-bold text-[#143D2B]"
+          />
+        </div>
 
         {/* Empathetic Editorial Subheadline */}
         <p className="hero-subheadline text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
