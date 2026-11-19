@@ -26,9 +26,9 @@ export const GENERATIONAL_MIRRORS_BY_STAGE: Record<
   GenerationalMirrorData
 > = {
   ADOLESCENT: {
-    heading: 'When You Were 14 vs. Julian at 14',
+    heading: 'When You Were 14 vs. Your Teen at 14',
     thenTitle: 'You in 1999 (Age 14)',
-    nowTitle: 'Julian in 2026 (Age 14)',
+    nowTitle: 'Teens in 2026 (Age 14)',
     dimensions: [
       {
         label: 'Staying in Touch',
@@ -55,9 +55,9 @@ export const GENERATIONAL_MIRRORS_BY_STAGE: Record<
       'Every generation invents a cultural clubhouse that baffles their parents. The human need for peer belonging, identity experimentation, and autonomy remains identical across decades.',
   },
   ELEMENTARY: {
-    heading: 'When You Were 8 vs. Maya at 8',
+    heading: 'When You Were 8 vs. Your Child at 8',
     thenTitle: 'You in 1999 (Age 8)',
-    nowTitle: 'Maya in 2026 (Age 8)',
+    nowTitle: 'Kids in 2026 (Age 8)',
     dimensions: [
       {
         label: 'Playground Currency',
@@ -84,9 +84,9 @@ export const GENERATIONAL_MIRRORS_BY_STAGE: Record<
       'Elementary blacktop politics have not altered in four decades. Children are simply practicing how to establish agreements, negotiate perceived value, and repair broken trust.',
   },
   INFANT: {
-    heading: 'When You Were a Baby vs. Mateo at 14 Months',
+    heading: 'When You Were a Baby vs. Your Toddler at 14 Months',
     thenTitle: 'You as a Toddler (Early 1990s)',
-    nowTitle: 'Mateo in 2026 (14 Months)',
+    nowTitle: 'Toddlers in 2026 (14 Months)',
     dimensions: [
       {
         label: 'Sensory Audio & Tunes',
@@ -189,7 +189,7 @@ export function GenerationalTimeMirrorView({
     { scope: containerRef }
   );
 
-  const childName = child?.name ?? (stage === 'INFANT' ? 'Mateo' : stage === 'ELEMENTARY' ? 'Maya' : 'Julian');
+  const childName = child?.name ?? (stage === 'INFANT' ? 'Your Toddler' : stage === 'ELEMENTARY' ? 'Your Child' : 'Your Teen');
   const childAgeLabel = child ? formatChildAge(child) : (stage === 'INFANT' ? '14 mo' : stage === 'ELEMENTARY' ? '8 yrs' : '14 yrs');
 
   const customHeading = child

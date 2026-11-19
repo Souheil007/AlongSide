@@ -17,6 +17,7 @@ import {
   Check,
   Phone,
   Flame,
+  Plus,
 } from 'lucide-react';
 import {
   RoadType,
@@ -26,11 +27,11 @@ import {
 import {
   useChildContextStore,
   selectActiveChild,
-  DEMO_FAMILY_CHILDREN,
 } from '@/stores/useChildContextStore';
 import { useAuth } from '@/hooks/useAuth';
 import { formatCurfew12Hour } from '@/stores/usePactStore';
 import { EnrollmentModal } from './EnrollmentModal';
+import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import {
   Dialog,
   DialogContent,
@@ -88,14 +89,16 @@ export function DevicesManagementView({
   const { children: storeChildren, activeChildId } = useChildContextStore();
   const { user } = useAuth();
 
+  const [onboardingOpen, setOnboardingOpen] = React.useState(false);
+
   // Active child resolution with safe fallback and DI support
   const children = propChildren && propChildren.length > 0
     ? propChildren
     : storeChildren && storeChildren.length > 0
     ? storeChildren
-    : DEMO_FAMILY_CHILDREN;
+    : [];
 
-  const activeChild = propChild || selectActiveChild({ children, activeChildId }) || children[0];
+  const activeChild = propChild || selectActiveChild({ children, activeChildId }) || (children.length > 0 ? children[0] : null);
   const activeAge = activeChild?.age ?? 10;
   const isToddler = activeAge <= 3;
 
@@ -162,6 +165,40 @@ export function DevicesManagementView({
     activeChild?.latestAssessmentScore !== undefined;
 
   const score = activeChild?.latestAssessmentScore ?? 84;
+
+  if (!activeChild || children.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-4 shadow-sm">
+          <Smartphone className="h-7 w-7" />
+        </div>
+        <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#111413]">
+          No Child Profiles Registered
+        </h1>
+        <p className="text-xs sm:text-sm text-[#494F4C] max-w-md mx-auto mt-2 leading-relaxed">
+          Add your child's profile to unlock tailored device readiness diagnostics, co-signed family pacts, and automated bedtime locks.
+        </p>
+        <div className="mt-6">
+          <Button
+            onClick={() => setOnboardingOpen(true)}
+            className="min-h-[46px] gap-2 bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs px-6 rounded-full shadow-sm cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add First Child Profile</span>
+          </Button>
+        </div>
+        <ChildOnboardingModal
+          open={onboardingOpen}
+          onOpenChange={setOnboardingOpen}
+          onSuccess={(newChild) => {
+            setOnboardingOpen(false);
+            useChildContextStore.getState().setChildren([newChild]);
+            useChildContextStore.getState().setActiveChild(newChild.id);
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto px-2 sm:px-4 text-[#111413]">

@@ -41,7 +41,7 @@ export const CULTURAL_REELS_BY_STAGE: Record<'INFANT' | 'ELEMENTARY' | 'ADOLESCE
       caption: '"Bro had a complete crashout during 4th period..." It means an irreversible loss of emotional composure in front of peers.',
       pediatricTitle: 'Why Teens Dread Losing Composure',
       pediatricDesc:
-        "At 14, peer status is neurologically felt as biological survival. A 'crashout' is devastating because it signals a breakdown in emotional armor. When Julian seems tense after school, don't interrogate him about grades; ask if the day felt loud or chaotic.",
+        "At 14, peer status is neurologically felt as biological survival. A 'crashout' is devastating because it signals a breakdown in emotional armor. When your teen seems tense after school, don't interrogate them about grades; ask if the day felt loud or chaotic.",
       script:
         '"It sounds like people were on edge at school today. If you want to vent or just chill, I\'m around."',
     },
@@ -137,7 +137,7 @@ export const CULTURAL_REELS_BY_STAGE: Record<'INFANT' | 'ELEMENTARY' | 'ADOLESCE
       pediatricDesc:
         "Babies don't listen to words for semantic meaning; they listen to musical frequency contours. Speaking with higher pitch, elongated vowels, and exaggerated mouth shapes accelerates acoustic mapping in the temporal lobe.",
       script:
-        '"When talking with Mateo, pause for 3 full seconds after saying a word to let his brain mirror the mouth shape."',
+        '"When talking with your toddler, pause for 3 full seconds after saying a word to let their brain mirror the mouth shape."',
     },
     {
       id: 'b-reel-2',

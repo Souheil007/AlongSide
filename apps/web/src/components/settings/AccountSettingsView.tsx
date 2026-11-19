@@ -30,7 +30,6 @@ import {
   selectActiveChild,
   formatChildAge,
   getChildDevelopmentalHorizon,
-  DEMO_FAMILY_CHILDREN,
 } from '@/stores/useChildContextStore';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import { Button } from '@/components/ui/Button';
@@ -82,9 +81,8 @@ export function AccountSettingsView() {
   });
   const [notificationsSaved, setNotificationsSaved] = React.useState(false);
 
-  // Display Children (Store children or demo fallback)
-  const displayChildren: ChildDTO[] =
-    children && children.length > 0 ? children : DEMO_FAMILY_CHILDREN;
+  // Display Children (Store children)
+  const displayChildren: ChildDTO[] = children ?? [];
 
   // Initialize profile name from authenticated user
   React.useEffect(() => {
@@ -277,13 +275,32 @@ export function AccountSettingsView() {
                   className="bg-teal-600 hover:bg-teal-700 text-white min-h-[40px] px-3.5 text-xs font-semibold gap-1.5 self-start sm:self-auto shadow-2xs"
                 >
                   <Plus className="h-4 w-4" />
-                  <span>Add Another Child Profile</span>
+                  <span>{displayChildren.length === 0 ? 'Add First Child Profile' : 'Add Another Child Profile'}</span>
                 </Button>
               </div>
             </CardHeader>
 
             <CardContent className="p-6 space-y-4">
-              <div className="divide-y divide-slate-100">
+              {displayChildren.length === 0 ? (
+                <div className="text-center py-10 px-4 rounded-xl border border-dashed border-slate-200 bg-slate-50/50">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-50 text-teal-600 mb-3">
+                    <User className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-800">No child profiles added yet</h3>
+                  <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+                    Add your first child profile to personalize your family dashboard, developmental milestones, and age-tailored education.
+                  </p>
+                  <Button
+                    type="button"
+                    onClick={() => setOnboardingOpen(true)}
+                    className="mt-4 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 min-h-[38px] shadow-2xs"
+                  >
+                    <Plus className="h-4 w-4 mr-1.5" />
+                    <span>Add Your First Child</span>
+                  </Button>
+                </div>
+              ) : (
+                <div className="divide-y divide-slate-100">
                 {displayChildren.map((child) => {
                   const isActive = child.id === activeChildId;
                   const isPreDevice = child.roadType === RoadType.PRE_DEVICE;
@@ -390,6 +407,7 @@ export function AccountSettingsView() {
                   );
                 })}
               </div>
+              )}
             </CardContent>
           </Card>
 
