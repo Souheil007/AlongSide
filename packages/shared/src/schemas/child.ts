@@ -18,7 +18,9 @@ export const CreateChildSchema = z.object({
     .min(1, 'Birth month must be between 1 and 12')
     .max(12, 'Birth month must be between 1 and 12'),
   birthDate: z.string().datetime().or(z.string()).optional(),
-  gender: z.enum([Gender.MALE, Gender.FEMALE]).optional(),
+  gender: z.enum([Gender.MALE, Gender.FEMALE], {
+    errorMap: () => ({ message: 'Child gender is required (must be MALE or FEMALE)' }),
+  }),
   roadType: z.enum([RoadType.PRE_DEVICE, RoadType.ACTIVE_DEVICE], {
     errorMap: () => ({ message: 'roadType must be either PRE_DEVICE or ACTIVE_DEVICE' }),
   }),

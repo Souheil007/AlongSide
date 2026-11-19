@@ -13,6 +13,7 @@ describe('Parent Intelligence Academy Home Briefing Card', () => {
       id: 'child-1',
       userId: 'user-1',
       name: 'Emma',
+      gender: 'FEMALE',
       age: 8,
       birthYear: 2018,
       birthMonth: 5,

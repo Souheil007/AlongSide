@@ -66,6 +66,7 @@ describe('Bilateral Family Pact & Agreement Engine API (PLAN-06)', () => {
       headers: { cookie: userACookie },
       payload: {
         name: 'Leo',
+        gender: 'MALE',
         birthYear: 2015,
         birthMonth: 4,
         roadType: 'ACTIVE_DEVICE',

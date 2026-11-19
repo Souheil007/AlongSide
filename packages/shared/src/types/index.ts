@@ -81,7 +81,7 @@ export interface ChildDTO {
   id: string;
   userId: string;
   name: string;
-  gender?: Gender | null;
+  gender: Gender;
   birthYear: number;
   birthMonth: number;
   birthDate?: string | null;

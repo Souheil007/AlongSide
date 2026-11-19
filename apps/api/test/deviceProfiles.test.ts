@@ -75,6 +75,7 @@ describe('Pact-as-Code Apple/Android Device Profile Compiler & Enrollment API (P
       headers: { cookie: userACookie },
       payload: {
         name: 'Noah',
+        gender: 'MALE',
         birthYear: 2014,
         birthMonth: 8,
         roadType: 'ACTIVE_DEVICE',

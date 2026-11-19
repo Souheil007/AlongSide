@@ -196,7 +196,7 @@ export class ChildrenService {
       id: record.id,
       userId: record.userId,
       name: record.name,
-      gender: (record.gender as Gender) ?? null,
+      gender: record.gender as Gender,
       birthYear: record.birthYear,
       birthMonth: record.birthMonth,
       age,

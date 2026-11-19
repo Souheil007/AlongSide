@@ -93,6 +93,7 @@ export class AiAdvisorService {
           id: childRecord.id,
           userId: childRecord.userId,
           name: childRecord.name,
+          gender: childRecord.gender,
           birthYear: childRecord.birthYear,
           birthMonth: childRecord.birthMonth,
           roadType: childRecord.roadType,

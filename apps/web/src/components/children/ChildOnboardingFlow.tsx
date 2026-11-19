@@ -478,7 +478,9 @@ export function ChildOnboardingFlow({
         {/* Child's Gender */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-900 flex items-center justify-between">
-            <span>Child&apos;s Gender</span>
+            <span>
+              Child&apos;s Gender <span className="text-terracotta-600">*</span>
+            </span>
             <span className="text-xs font-normal text-slate-500">Tailors courses &amp; developmental guidance</span>
           </label>
           <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Child's Gender">
@@ -486,11 +488,7 @@ export function ChildOnboardingFlow({
               type="button"
               role="radio"
               aria-checked={watchedGender === Gender.MALE}
-              onClick={() =>
-                setValue('gender', watchedGender === Gender.MALE ? undefined : Gender.MALE, {
-                  shouldValidate: true,
-                })
-              }
+              onClick={() => setValue('gender', Gender.MALE, { shouldValidate: true })}
               className={cn(
                 'flex items-center justify-center gap-2.5 h-11 min-h-[44px] px-4 rounded-xl border-2 font-medium text-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-600/30',
                 watchedGender === Gender.MALE
@@ -506,11 +504,7 @@ export function ChildOnboardingFlow({
               type="button"
               role="radio"
               aria-checked={watchedGender === Gender.FEMALE}
-              onClick={() =>
-                setValue('gender', watchedGender === Gender.FEMALE ? undefined : Gender.FEMALE, {
-                  shouldValidate: true,
-                })
-              }
+              onClick={() => setValue('gender', Gender.FEMALE, { shouldValidate: true })}
               className={cn(
                 'flex items-center justify-center gap-2.5 h-11 min-h-[44px] px-4 rounded-xl border-2 font-medium text-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-600/30',
                 watchedGender === Gender.FEMALE
@@ -522,6 +516,9 @@ export function ChildOnboardingFlow({
               <span>Girl (Female)</span>
             </button>
           </div>
+          {errors.gender && (
+            <p className="text-xs text-red-600 font-medium">{errors.gender.message}</p>
+          )}
         </div>
 
         {/* Birth Month & Year */}

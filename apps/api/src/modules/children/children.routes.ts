@@ -22,7 +22,7 @@ const childDtoSchema = {
     id: { type: 'string' },
     userId: { type: 'string' },
     name: { type: 'string' },
-    gender: { type: ['string', 'null'], enum: ['MALE', 'FEMALE', null] },
+    gender: { type: 'string', enum: ['MALE', 'FEMALE'] },
     birthYear: { type: 'number' },
     birthMonth: { type: 'number' },
     age: { type: 'number' },
@@ -61,6 +61,7 @@ const childDtoSchema = {
     'id',
     'userId',
     'name',
+    'gender',
     'birthYear',
     'birthMonth',
     'age',
@@ -114,7 +115,7 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
       schema: {
         body: {
           type: 'object',
-          required: ['name', 'birthYear', 'birthMonth', 'roadType'],
+          required: ['name', 'gender', 'birthYear', 'birthMonth', 'roadType'],
           properties: {
             name: { type: 'string', minLength: 1, maxLength: 100 },
             gender: { type: 'string', enum: ['MALE', 'FEMALE'] },

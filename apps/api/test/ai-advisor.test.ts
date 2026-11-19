@@ -7,7 +7,7 @@ import { InMemoryFaqRepository } from '../src/modules/faqs/faqs.repository.js';
 import { InMemoryAiAdvisorRepository } from '../src/modules/ai-advisor/ai-advisor.repository.js';
 import { DeterministicAiAdvisorFake } from '../src/modules/ai-advisor/adapters/fake.adapter.js';
 import { MultiProviderLlmOrchestrator } from '../src/modules/ai-advisor/adapters/llm-orchestrator.js';
-import { RoadType } from '@alongside/shared';
+import { Gender, RoadType } from '@alongside/shared';
 
 function parseSseEvents(payload: string): Array<{ type: string; [key: string]: any }> {
   const events: Array<{ type: string; [key: string]: any }> = [];
@@ -213,6 +213,7 @@ describe('24/7 AI Child Advisor & Multi-LLM Fallback Engine API (PLAN-10)', () =
         },
         payload: {
           name: 'Leo',
+          gender: Gender.MALE,
           birthYear: 2014,
           birthMonth: 5,
           roadType: RoadType.PRE_DEVICE,
@@ -250,6 +251,7 @@ describe('24/7 AI Child Advisor & Multi-LLM Fallback Engine API (PLAN-10)', () =
         headers: { cookie: userACookie },
         payload: {
           name: 'Baby Liam',
+          gender: Gender.MALE,
           birthYear: 2026,
           birthMonth: 8,
           roadType: RoadType.PRE_DEVICE,
@@ -449,6 +451,7 @@ describe('24/7 AI Child Advisor & Multi-LLM Fallback Engine API (PLAN-10)', () =
         },
         payload: {
           name: 'Maya',
+          gender: Gender.FEMALE,
           birthYear: 2023,
           birthMonth: 8,
           roadType: RoadType.PRE_DEVICE,

@@ -6,4 +6,5 @@ EXCEPTION
 END $$;
 
 -- AlterTable
-ALTER TABLE "children" ADD COLUMN IF NOT EXISTS "gender" "Gender";
+ALTER TABLE "children" ADD COLUMN IF NOT EXISTS "gender" "Gender" NOT NULL DEFAULT 'MALE';
+ALTER TABLE "children" ALTER COLUMN "gender" DROP DEFAULT;
