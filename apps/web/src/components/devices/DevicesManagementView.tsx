@@ -164,7 +164,10 @@ export function DevicesManagementView({
     activeChild?.latestAssessmentScore !== null &&
     activeChild?.latestAssessmentScore !== undefined;
 
-  const score = activeChild?.latestAssessmentScore ?? 84;
+  const score =
+    hasAssessment && typeof activeChild?.latestAssessmentScore === 'number'
+      ? activeChild.latestAssessmentScore
+      : null;
 
   if (!activeChild || children.length === 0) {
     return (
@@ -347,12 +350,25 @@ export function DevicesManagementView({
 
               <div className="flex items-center gap-4 self-end sm:self-center">
                 <div className="text-right">
-                  <span className="font-mono text-sm font-bold text-[#143D2B] block">
-                    Score: {score}/100
-                  </span>
-                  <span className="text-[10px] font-mono text-[#858C88] block">
-                    {score >= 75 ? 'Passed for Bridge Device' : 'Scaffolding Recommended'}
-                  </span>
+                  {score !== null ? (
+                    <>
+                      <span className="font-mono text-sm font-bold text-[#143D2B] block">
+                        Score: {score}/100
+                      </span>
+                      <span className="text-[10px] font-mono text-[#858C88] block">
+                        {score >= 75 ? 'Passed for Bridge Device' : 'Scaffolding Recommended'}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-mono text-xs font-bold text-amber-700 block">
+                        Not Yet Assessed
+                      </span>
+                      <span className="text-[10px] font-mono text-[#858C88] block">
+                        Pending Diagnostic
+                      </span>
+                    </>
+                  )}
                 </div>
                 {activeChild && (
                   <Link href={`/children/${activeChild.id}/readiness`}>

@@ -80,6 +80,26 @@ describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SO
       expect(html).toContain('/children/test-leo-10/readiness');
     });
 
+    it('renders "Not Yet Assessed" and "Start Diagnostic" when child has no assessment score', () => {
+      const unassessedChild: ChildDTO = {
+        ...preteenLeo,
+        id: 'test-unassessed',
+        latestAssessmentScore: null,
+      };
+
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, {
+          child: unassessedChild,
+          children: [unassessedChild],
+        })
+      );
+
+      expect(html).toContain('Not Yet Assessed');
+      expect(html).toContain('Pending Diagnostic');
+      expect(html).toContain('Start Diagnostic');
+      expect(html).not.toContain('Score: 84/100');
+    });
+
     it('renders Step 2 & 3: Bilateral Family Treaty with verified seal and mutual pledges', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
