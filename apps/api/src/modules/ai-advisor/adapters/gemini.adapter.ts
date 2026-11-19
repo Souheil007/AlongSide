@@ -11,12 +11,15 @@ export interface GeminiAdapterOptions {
 
 export class GeminiAdapter implements LlmClientAdapter {
   readonly providerName = 'gemini';
+  readonly hasApiKey: boolean;
   private readonly apiKey: string;
   private readonly model: string;
   private readonly baseUrl: string;
 
   constructor(opts: GeminiAdapterOptions = {}) {
-    this.apiKey = opts.apiKey || process.env.GEMINI_API_KEY || '';
+    const rawApiKey = opts.apiKey || process.env.GEMINI_API_KEY || '';
+    this.apiKey = rawApiKey.trim().replace(/^["']|["']$/g, '');
+    this.hasApiKey = Boolean(this.apiKey);
     this.model = opts.model || process.env.GEMINI_MODEL || 'gemini-1.5-flash';
     this.baseUrl =
       opts.baseUrl || 'https://generativelanguage.googleapis.com/v1beta/models';

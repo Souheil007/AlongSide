@@ -31,11 +31,17 @@ export class MultiProviderLlmOrchestrator {
   private readonly logger: LoggerLike;
 
   constructor(opts: MultiProviderOrchestratorOptions = {}) {
-    this.adapters = opts.adapters ?? [
+    const defaultAdapters: LlmClientAdapter[] = [
       new OpenAiAdapter(),
       new GeminiAdapter(),
       new MistralAdapter(),
     ];
+    // Prioritize providers that have an active API key configured
+    this.adapters = opts.adapters ?? defaultAdapters.sort((a, b) => {
+      const aKey = a.hasApiKey ? 1 : 0;
+      const bKey = b.hasApiKey ? 1 : 0;
+      return bKey - aKey;
+    });
     this.logger = opts.logger ?? console;
   }
 

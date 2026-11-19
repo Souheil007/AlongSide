@@ -11,12 +11,15 @@ export interface OpenAiAdapterOptions {
 
 export class OpenAiAdapter implements LlmClientAdapter {
   readonly providerName = 'openai';
+  readonly hasApiKey: boolean;
   private readonly apiKey: string;
   private readonly model: string;
   private readonly baseUrl: string;
 
   constructor(opts: OpenAiAdapterOptions = {}) {
-    this.apiKey = opts.apiKey || process.env.OPENAI_API_KEY || '';
+    const rawApiKey = opts.apiKey || process.env.OPENAI_API_KEY || '';
+    this.apiKey = rawApiKey.trim().replace(/^["']|["']$/g, '');
+    this.hasApiKey = Boolean(this.apiKey);
     this.model = opts.model || process.env.OPENAI_MODEL || 'gpt-4o-mini';
     this.baseUrl = opts.baseUrl || 'https://api.openai.com/v1';
   }
