@@ -342,6 +342,14 @@ export function AccountSettingsView() {
 
                           <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
                             <span className="font-medium text-slate-700">{horizon.stage}</span>
+                            {child.gender && (
+                              <>
+                                <span>•</span>
+                                <span className="font-medium text-slate-600">
+                                  {child.gender === 'MALE' ? 'Boy' : 'Girl'}
+                                </span>
+                              </>
+                            )}
                             <span>•</span>
                             <span>
                               Born {child.birthMonth ? `Month ${child.birthMonth}/` : ''}

@@ -146,6 +146,7 @@ describe('Child Onboarding Modal Hardening & Lifespan Age Engine Specification (
         id: 'child-sophia-newborn',
         userId: 'demo-parent',
         name: 'Sophia',
+        gender: 'FEMALE',
         birthYear: currentYear,
         birthMonth: 2,
         age: 0,

@@ -65,6 +65,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Leo',
+          gender: 'MALE',
           birthYear: 2018,
           birthMonth: 6,
           roadType: 'PRE_DEVICE',
@@ -77,6 +78,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
       expect(payload.success).toBe(true);
       expect(payload.data.child).toBeDefined();
       expect(payload.data.child.name).toBe('Leo');
+      expect(payload.data.child.gender).toBe('MALE');
       expect(payload.data.child.birthYear).toBe(2018);
       expect(payload.data.child.birthMonth).toBe(6);
       expect(payload.data.child.roadType).toBe('PRE_DEVICE');
@@ -92,6 +94,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Maya',
+          gender: 'FEMALE',
           birthYear: 2014,
           birthMonth: 6,
           roadType: 'ACTIVE_DEVICE',
@@ -103,8 +106,43 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
       const payload = response.json();
       expect(payload.success).toBe(true);
       expect(payload.data.child.name).toBe('Maya');
+      expect(payload.data.child.gender).toBe('FEMALE');
       expect(payload.data.child.roadType).toBe('ACTIVE_DEVICE');
       expect(payload.data.child.developmentalTier).toBe('TIER_3_AGES_12_13');
+    });
+
+    it('creates child profile with gender MALE or FEMALE for future course tailoring', async () => {
+      const maleRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Noah',
+          gender: 'MALE',
+          birthYear: 2016,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+      expect(maleRes.statusCode).toBe(201);
+      const malePayload = maleRes.json();
+      expect(malePayload.data.child.gender).toBe('MALE');
+
+      const femaleRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Emma',
+          gender: 'FEMALE',
+          birthYear: 2014,
+          birthMonth: 8,
+          roadType: 'ACTIVE_DEVICE',
+        },
+      });
+      expect(femaleRes.statusCode).toBe(201);
+      const femalePayload = femaleRes.json();
+      expect(femalePayload.data.child.gender).toBe('FEMALE');
     });
 
     it('correctly assigns TIER_2_AGES_10_11 for age 10-11', async () => {
@@ -114,6 +152,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Ethan',
+          gender: 'MALE',
           birthYear: 2016,
           birthMonth: 1,
           roadType: 'PRE_DEVICE',
@@ -132,6 +171,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Chloe',
+          gender: 'FEMALE',
           birthYear: 2011,
           birthMonth: 1,
           roadType: 'ACTIVE_DEVICE',
@@ -150,6 +190,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Toby',
+          gender: 'MALE',
           birthYear: 2020,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -168,6 +209,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Noah',
+          gender: 'MALE',
           birthYear: 2025,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -191,6 +233,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Baby Mia',
+          gender: 'FEMALE',
           birthYear: currentYear,
           birthMonth: currentMonth,
           roadType: 'PRE_DEVICE',
@@ -211,6 +254,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Liam',
+          gender: 'MALE',
           birthYear: 2023,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -231,6 +275,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Sofia',
+          gender: 'FEMALE',
           birthYear: 2018,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -249,6 +294,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         url: '/api/v1/children',
         payload: {
           name: 'Ghost',
+          gender: 'MALE',
           birthYear: 2015,
           birthMonth: 1,
           roadType: 'PRE_DEVICE',
@@ -262,6 +308,21 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
     });
 
     it('rejects invalid input with 400 Bad Request and RFC 7807 envelope', async () => {
+      // Missing gender
+      const resMissingGender = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Kid',
+          birthYear: 2015,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+      expect(resMissingGender.statusCode).toBe(400);
+      expect(resMissingGender.json().error.code).toBe('VALIDATION_ERROR');
+
       // Empty name
       const resEmptyName = await app.inject({
         method: 'POST',
@@ -269,6 +330,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: '',
+          gender: 'MALE',
           birthYear: 2015,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -287,6 +349,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Future Kid',
+          gender: 'FEMALE',
           birthYear: 2099,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -302,6 +365,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Kid',
+          gender: 'MALE',
           birthYear: 2015,
           birthMonth: 5,
           roadType: 'INVALID_ROAD',
@@ -319,13 +383,13 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         method: 'POST',
         url: '/api/v1/children',
         headers: { cookie: userACookie },
-        payload: { name: 'Child A1', birthYear: 2015, birthMonth: 3, roadType: 'PRE_DEVICE' },
+        payload: { name: 'Child A1', gender: 'MALE', birthYear: 2015, birthMonth: 3, roadType: 'PRE_DEVICE' },
       });
       await app.inject({
         method: 'POST',
         url: '/api/v1/children',
         headers: { cookie: userACookie },
-        payload: { name: 'Child A2', birthYear: 2017, birthMonth: 8, roadType: 'ACTIVE_DEVICE' },
+        payload: { name: 'Child A2', gender: 'FEMALE', birthYear: 2017, birthMonth: 8, roadType: 'ACTIVE_DEVICE' },
       });
 
       // Create 1 child for Parent B
@@ -333,7 +397,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         method: 'POST',
         url: '/api/v1/children',
         headers: { cookie: userBCookie },
-        payload: { name: 'Child B1', birthYear: 2016, birthMonth: 4, roadType: 'ACTIVE_DEVICE' },
+        payload: { name: 'Child B1', gender: 'MALE', birthYear: 2016, birthMonth: 4, roadType: 'ACTIVE_DEVICE' },
       });
 
       // Parent A lists children
@@ -371,6 +435,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Sarahs Kid',
+          gender: 'FEMALE',
           birthYear: 2015,
           birthMonth: 5,
           roadType: 'PRE_DEVICE',
@@ -482,6 +547,7 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
         headers: { cookie: userACookie },
         payload: {
           name: 'Ready Leo',
+          gender: 'MALE',
           birthYear: 2015,
           birthMonth: 6,
           roadType: 'PRE_DEVICE',

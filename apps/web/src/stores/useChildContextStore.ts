@@ -3,6 +3,7 @@ import {
   type ChildDTO,
   RoadType,
   DevelopmentalTier,
+  Gender,
 } from '@alongside/shared';
 import { getChildren } from '@/lib/api/children';
 
@@ -275,6 +276,7 @@ export const DEMO_FAMILY_CHILDREN: ChildDTO[] = [
     id: 'demo-child-mateo',
     userId: 'demo-parent',
     name: 'Mateo',
+    gender: Gender.MALE,
     birthYear: new Date().getFullYear() - 1,
     birthMonth: (new Date().getMonth() + 11) % 12 || 12, // ~14 months old
     age: 1,
@@ -289,6 +291,7 @@ export const DEMO_FAMILY_CHILDREN: ChildDTO[] = [
     id: 'demo-child-maya',
     userId: 'demo-parent',
     name: 'Maya',
+    gender: Gender.FEMALE,
     birthYear: new Date().getFullYear() - 8,
     birthMonth: 5,
     age: 8,
@@ -303,6 +306,7 @@ export const DEMO_FAMILY_CHILDREN: ChildDTO[] = [
     id: 'demo-child-julian',
     userId: 'demo-parent',
     name: 'Julian',
+    gender: Gender.MALE,
     birthYear: new Date().getFullYear() - 14,
     birthMonth: 2,
     age: 14,

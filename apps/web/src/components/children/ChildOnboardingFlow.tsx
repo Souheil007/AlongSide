@@ -9,6 +9,7 @@ import {
   type CreateChildInput,
   type ChildDTO,
   RoadType,
+  Gender,
   calculateChildAge,
   calculateChildAgeMonths,
   calculateLifespanTier,
@@ -155,6 +156,7 @@ export function ChildOnboardingFlow({
     resolver: zodResolver(CreateChildSchema),
     defaultValues: {
       name: '',
+      gender: undefined,
       birthYear: currentYear - 8, // default ~8 years old (middle childhood baseline)
       birthMonth: 6,
       roadType: RoadType.PRE_DEVICE,
@@ -167,6 +169,7 @@ export function ChildOnboardingFlow({
   const watchedBirthMonth = watch('birthMonth');
   const watchedRoadType = watch('roadType');
   const watchedName = watch('name');
+  const watchedGender = watch('gender');
 
   const calculatedAge = React.useMemo(() => {
     if (!watchedBirthYear || !watchedBirthMonth) return 8;
@@ -205,6 +208,7 @@ export function ChildOnboardingFlow({
     try {
       const response = await createChildMutation({
         name: data.name.trim(),
+        gender: data.gender || undefined,
         birthYear: Number(data.birthYear),
         birthMonth: Number(data.birthMonth),
         roadType: data.roadType,
@@ -284,7 +288,8 @@ export function ChildOnboardingFlow({
                   </Badge>
                 </div>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Calculated age: {createdChild.age} yrs • Focus: {tierInfo.focus}
+                  Calculated age: {createdChild.age} yrs
+                  {createdChild.gender ? ` • ${createdChild.gender === 'MALE' ? 'Boy' : 'Girl'}` : ''} • Focus: {tierInfo.focus}
                 </p>
               </div>
             </div>
@@ -467,6 +472,52 @@ export function ChildOnboardingFlow({
           />
           {errors.name && (
             <p className="text-xs text-red-600 font-medium">{errors.name.message}</p>
+          )}
+        </div>
+
+        {/* Child's Gender */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-900 flex items-center justify-between">
+            <span>
+              Child&apos;s Gender <span className="text-terracotta-600">*</span>
+            </span>
+            <span className="text-xs font-normal text-slate-500">Tailors courses &amp; developmental guidance</span>
+          </label>
+          <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Child's Gender">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={watchedGender === Gender.MALE}
+              onClick={() => setValue('gender', Gender.MALE, { shouldValidate: true })}
+              className={cn(
+                'flex items-center justify-center gap-2.5 h-11 min-h-[44px] px-4 rounded-xl border-2 font-medium text-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-600/30',
+                watchedGender === Gender.MALE
+                  ? 'border-teal-700 bg-teal-50/80 text-teal-950 font-semibold ring-1 ring-teal-700/30 shadow-2xs'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/50'
+              )}
+            >
+              <span className="text-base" aria-hidden="true">👦</span>
+              <span>Boy (Male)</span>
+            </button>
+
+            <button
+              type="button"
+              role="radio"
+              aria-checked={watchedGender === Gender.FEMALE}
+              onClick={() => setValue('gender', Gender.FEMALE, { shouldValidate: true })}
+              className={cn(
+                'flex items-center justify-center gap-2.5 h-11 min-h-[44px] px-4 rounded-xl border-2 font-medium text-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-600/30',
+                watchedGender === Gender.FEMALE
+                  ? 'border-teal-700 bg-teal-50/80 text-teal-950 font-semibold ring-1 ring-teal-700/30 shadow-2xs'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/50'
+              )}
+            >
+              <span className="text-base" aria-hidden="true">👧</span>
+              <span>Girl (Female)</span>
+            </button>
+          </div>
+          {errors.gender && (
+            <p className="text-xs text-red-600 font-medium">{errors.gender.message}</p>
           )}
         </div>
 

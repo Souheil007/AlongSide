@@ -214,7 +214,9 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
               </Badge>
             </div>
             <span className="text-xs text-slate-500">
-              Age {activeChild.age} • {activeChild.schoolGrade || 'Grade unassigned'}
+              Age {activeChild.age}
+              {activeChild.gender ? ` • ${activeChild.gender === 'MALE' ? 'Boy' : 'Girl'}` : ''} •{' '}
+              {activeChild.schoolGrade || 'Grade unassigned'}
             </span>
           </div>
         </div>

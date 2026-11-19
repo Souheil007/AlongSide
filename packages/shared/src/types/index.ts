@@ -10,6 +10,7 @@ import type {
   DietaryStage,
   EarlyChildhoodTranche,
   ExploitSeverity,
+  Gender,
   MessageRole,
   MilestoneCategory,
   MilestoneStatus,
@@ -80,6 +81,7 @@ export interface ChildDTO {
   id: string;
   userId: string;
   name: string;
+  gender: Gender;
   birthYear: number;
   birthMonth: number;
   birthDate?: string | null;

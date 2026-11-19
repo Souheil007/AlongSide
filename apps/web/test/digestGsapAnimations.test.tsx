@@ -13,6 +13,7 @@ const mockTeenChild: ChildDTO = {
   id: 'child-teen',
   userId: 'user-1',
   name: 'Julian',
+  gender: 'MALE',
   birthYear: 2012,
   birthMonth: 4,
   birthDate: null,
