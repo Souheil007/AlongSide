@@ -21,16 +21,14 @@ import {
   resolveAdvisoryScript,
 } from '../src/components/dashboard/DailyAdvisoryScriptCard';
 import {
-  CANONICAL_6_LIFESPAN_STAGES,
-  LIFESPAN_STAGES,
-} from '../src/components/home/LifespanStageSelector';
-import {
-  THREE_CORE_PILLARS,
-} from '../src/components/home/PillarsShowcase';
-import {
-  DEMO_SLANG_TERMS,
-  DEMO_DINNER_STARTERS,
-} from '../src/components/home/CulturePlaygroundDemo';
+  HERO_AGE_MOMENTS,
+  STUDIO_ADVISOR_SCENARIOS,
+  STUDIO_ACADEMY_LESSONS,
+  STUDIO_SLANG_ITEMS,
+  STUDIO_DINNER_QUESTIONS,
+  SCREEN_PACT_POINTS,
+  SCIENCE_PRINCIPLES,
+} from '../src/components/home';
 
 describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', () => {
   const webRoot = path.resolve(__dirname, '..');
@@ -174,120 +172,62 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
     });
   });
 
-  describe('Part B: The Public Advisory Sanctuary Landing Homepage (/)', () => {
-    describe('1. Public Hero Section Advisory Positioning', () => {
-      it('verifies HeroSection reflects the v2.5.0 Advisory Sanctuary positioning', () => {
+  describe('Part B: The Streamlined Public Landing Homepage (/)', () => {
+    describe('1. Public Hero Section & Interactive Child Age Lens', () => {
+      it('verifies HeroSection covers ages 0 to 18 with live age-calibrated scripts', () => {
+        expect(HERO_AGE_MOMENTS).toHaveLength(5);
+        expect(HERO_AGE_MOMENTS.map((m) => m.id)).toEqual(['0-3', '4-6', '7-9', '10-12', '13-18']);
+
         const heroPath = path.join(webRoot, 'src/components/home/HeroSection.tsx');
         const content = fs.readFileSync(heroPath, 'utf8');
-
-        expect(content).toContain('The Parent Advisory Sanctuary');
-        expect(content).toContain('Keep Up With Your Child');
-        expect(content).toContain('Prioritized Parent Academy');
-        expect(content).toContain('Weekly Youth Culture Digest');
+        expect(content).toContain('Calm guidance for');
+        expect(content).toContain('Start 7-day free trial');
       });
     });
 
-    describe('2. Interactive 8-Stage Lifespan Advisory Explorer', () => {
-      it('provides all 8 canonical lifespan tiers with 5 category tailored courses each', () => {
-        expect(CANONICAL_6_LIFESPAN_STAGES).toHaveLength(8);
+    describe('2. Interactive Product Studio (Advisor, Academy & Culture Digest)', () => {
+      it('provides 3 advisor scenarios, 3 academy micro-lessons, 4 slang items, and dinner starters', () => {
+        expect(STUDIO_ADVISOR_SCENARIOS).toHaveLength(3);
+        expect(STUDIO_ACADEMY_LESSONS).toHaveLength(3);
+        expect(STUDIO_SLANG_ITEMS).toHaveLength(4);
 
-        const stageIds = CANONICAL_6_LIFESPAN_STAGES.map((s) => s.id);
-        expect(stageIds).toEqual([
-          'infancy-0-1',
-          'toddler-1-2',
-          'older-toddler-2-3',
-          'early-childhood',
-          'middle-childhood',
-          'pre-teens',
-          'early-adolescence',
-          'late-adolescence',
-        ]);
-
-        for (const stage of CANONICAL_6_LIFESPAN_STAGES) {
-          expect(stage.courses).toHaveLength(5);
-          expect(stage.title.length).toBeGreaterThan(10);
-          expect(stage.subtitle.length).toBeGreaterThan(20);
-
-          // All 5 canonical categories must be represented
-          const categories = stage.courses.map((c) => c.category);
-          expect(categories).toContain(AcademyCategory.BEHAVIOR_AND_EMOTIONS);
-          expect(categories).toContain(AcademyCategory.HEALTH_AND_WELLNESS);
-          expect(categories).toContain(AcademyCategory.NUTRITION_AND_FEEDING);
-          expect(categories).toContain(AcademyCategory.DEVELOPMENT_AND_PLAY);
-          expect(categories).toContain(AcademyCategory.DIGITAL_AND_DEVICES);
-
-          for (const course of stage.courses) {
-            expect(course.title.length).toBeGreaterThan(5);
-            expect(course.summary.length).toBeGreaterThan(20);
-            expect(course.slug.length).toBeGreaterThan(3);
-            expect(course.lessonCount).toBe(3);
-            expect(course.durationMinutes).toBeGreaterThanOrEqual(12);
-          }
-        }
-      });
-    });
-
-    describe('3. The 3 Core Pillars Architecture Showcase', () => {
-      it('defines the 3 core pillars (Academy, Culture Digest, Family Pacts) + 24/7 AI Advisor', () => {
-        expect(THREE_CORE_PILLARS).toHaveLength(3);
-
-        const titles = THREE_CORE_PILLARS.map((p) => p.title);
-        expect(titles).toContain('Parent Intelligence Academy');
-        expect(titles).toContain('Sunday Youth Culture Digest');
-        expect(titles).toContain('Bilateral Family Pacts & Devices');
-
-        const routes = THREE_CORE_PILLARS.map((p) => p.href);
-        expect(routes).toContain('/academy');
-        expect(routes).toContain('/digest');
-        expect(routes).toContain('/devices');
-      });
-    });
-
-    describe('4. Sunday Culture Playground Interactive Demo', () => {
-      it('provides realistic tween slang with definitions and visual cringe meters', () => {
-        expect(DEMO_SLANG_TERMS.length).toBeGreaterThanOrEqual(5);
-        const terms = DEMO_SLANG_TERMS.map((s) => s.term);
+        const terms = STUDIO_SLANG_ITEMS.map((s) => s.word);
         expect(terms).toContain('Crashout');
-        expect(terms).toContain('Rizz');
-        expect(terms).toContain('Skibidi');
         expect(terms).toContain('Cooked');
-        expect(terms).toContain('Fanum Tax');
+        expect(terms).toContain('Rizz');
+        expect(terms).toContain('Fanum tax');
 
-        for (const slang of DEMO_SLANG_TERMS) {
-          expect(slang.phonetic.length).toBeGreaterThan(2);
+        for (const slang of STUDIO_SLANG_ITEMS) {
           expect(slang.definition.length).toBeGreaterThan(10);
           expect(slang.cringeLevel).toBeGreaterThanOrEqual(1);
           expect(slang.cringeLevel).toBeLessThanOrEqual(5);
-          expect(slang.exampleSentence.length).toBeGreaterThan(10);
-          expect(slang.parentContext.length).toBeGreaterThan(15);
         }
-      });
 
-      it('provides authentic Sunday dinner conversation starters', () => {
-        expect(DEMO_DINNER_STARTERS.length).toBeGreaterThanOrEqual(5);
-        for (const starter of DEMO_DINNER_STARTERS) {
+        expect(STUDIO_DINNER_QUESTIONS.length).toBeGreaterThanOrEqual(3);
+        for (const starter of STUDIO_DINNER_QUESTIONS) {
           expect(starter.length).toBeGreaterThan(20);
           expect(starter.startsWith('“')).toBe(true);
         }
       });
     });
 
-    describe('5. Public Page Assembly & Retired Route Links Purge', () => {
-      it('verifies page.tsx mounts all 8 canonical sections in proper order', () => {
+    describe('3. Screen Pact & Scientific Grounding', () => {
+      it('defines the 3 bilateral pact pillars and 4 scientific principles', () => {
+        expect(SCREEN_PACT_POINTS).toHaveLength(3);
+        expect(SCIENCE_PRINCIPLES).toHaveLength(4);
+      });
+    });
+
+    describe('4. Public Page Assembly (5 Streamlined Editorial Chapters)', () => {
+      it('verifies page.tsx mounts all 5 streamlined sections in order', () => {
         const pagePath = path.join(webRoot, 'src/app/page.tsx');
         const content = fs.readFileSync(pagePath, 'utf8');
 
         expect(content).toContain('<HeroSection />');
-        expect(content).toContain('<PillarsShowcase />');
-        expect(content).toContain('<LifespanStageSelector />');
-        expect(content).toContain('<CulturePlaygroundDemo />');
-        expect(content).toContain('<DeviceActionHubSpotlight />');
-        expect(
-          content.includes('<PediatricAuthorityTestimonials />') ||
-            content.includes('<ClinicalAuthorityTestimonials />')
-        ).toBe(true);
-        expect(content).toContain('<PricingSection />');
-        expect(content).toContain('<FaqSection />');
+        expect(content).toContain('<ProductStudioSection />');
+        expect(content).toContain('<ScreenPactSection />');
+        expect(content).toContain('<ScienceFoundationSection />');
+        expect(content).toContain('<PricingAndFaqSection />');
       });
     });
   });

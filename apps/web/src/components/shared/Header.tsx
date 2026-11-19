@@ -45,9 +45,8 @@ export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
 export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [];
 
 export const PUBLIC_NAV_LINKS: NavLinkItem[] = [
-  { href: '/#pillars', label: 'Core Pillars' },
-  { href: '/#stages', label: 'Lifespan Stages' },
-  { href: '/#devices-hub', label: 'Family Pacts & Devices' },
+  { href: '/#studio', label: 'How it works' },
+  { href: '/#pact', label: 'Screen pact' },
   { href: '/#pricing', label: 'Pricing' },
 ];
 
@@ -170,7 +169,7 @@ export function Header() {
         ) : (
           <nav
             aria-label="Public Navigation"
-            className="hidden lg:flex items-center gap-6 text-xs font-semibold text-[#494F4C]"
+            className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-[#454D49]"
           >
             {PUBLIC_NAV_LINKS.map((link) => {
               const isActive =
@@ -182,10 +181,8 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'transition-colors hover:text-[#111413] py-1 border-b-2 border-transparent font-medium',
-                    isActive
-                      ? 'text-[#143D2B] font-bold border-[#143D2B]'
-                      : 'text-[#494F4C]'
+                    'transition-colors hover:text-[#131715] py-2',
+                    isActive ? 'text-[#143D2B] font-semibold' : 'text-[#454D49]'
                   )}
                 >
                   {link.label}
@@ -307,19 +304,20 @@ export function Header() {
               )}
             </div>
           ) : (
-            <>
-              <Link href="/login">
-                <Button variant="outline" size="sm">
-                  Log in
-                </Button>
+            <div className="flex items-center gap-5">
+              <Link
+                href="/login"
+                className="text-[14px] font-medium text-[#454D49] hover:text-[#131715] px-1 py-2 transition-colors"
+              >
+                Log in
               </Link>
-              <Link href="/register">
-                <Button variant="pill" size="sm" className="gap-1.5 shadow-sm">
-                  Start 7-Day Free Trial
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center min-h-[38px] px-4 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-medium transition-colors"
+              >
+                Start 7-day trial
               </Link>
-            </>
+            </div>
           )}
         </div>
 
@@ -460,16 +458,19 @@ export function Header() {
               </div>
             ) : (
               <>
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-center min-h-[44px]">
-                    Log in
-                  </Button>
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] border border-[rgba(19,23,21,0.14)] text-[14px] font-medium text-[#131715] hover:bg-[#F2F0E9] transition-colors"
+                >
+                  Log in
                 </Link>
-                <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="pill" className="w-full justify-center gap-1.5 min-h-[44px]">
-                    Start 7-Day Free Trial
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors"
+                >
+                  Start 7-day free trial
                 </Link>
               </>
             )}
