@@ -1,93 +1,55 @@
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
 import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
 
 export function Footer() {
   return (
-    <footer className="no-print border-t border-[#E3E3DC] bg-[#F4F4F0] py-12 text-[#494F4C]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-          <div className="space-y-3 md:col-span-1">
-            <Link href="/" className="inline-block group" aria-label="AlongSide Home">
-              <AlongsideLogo size="md" />
+    <footer className="no-print border-t border-[rgba(19,23,21,0.09)] bg-[#FAF9F5] pt-14 pb-8 text-[#454D49]">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-8 pb-6">
+          <div>
+            <Link href="/" className="inline-block group" aria-label="Alongside Home">
+              <AlongsideLogo size="sm" />
             </Link>
-            <p className="text-sm text-[#494F4C] leading-relaxed">
-              Replacing anxiety and conflict with calm developmental science,
-              collaborative family agreements, and neutral automated enforcement.
+            <p className="mt-3 max-w-[34ch] text-[14.5px] leading-[1.55] text-[#454D49]">
+              Developmental science, calm scripts, and zero-spyware family pacts for ages 0 to 18.
             </p>
           </div>
 
-          <div>
-            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#111413] mb-3">
-              The Architecture
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/#stages" className="hover:text-[#143D2B] transition-colors">
-                  Lifespan Stages (Ages 0–18)
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pillars" className="hover:text-[#143D2B] transition-colors">
-                  3 Core Advisory Pillars
-                </Link>
-              </li>
-              <li>
-                <Link href="/#devices-hub" className="hover:text-[#143D2B] transition-colors">
-                  Family Pacts &amp; Devices Hub
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#111413] mb-3">
-              Platform Pillars
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/#pillars" className="hover:text-[#143D2B] transition-colors">
-                  Parent Intelligence Academy
-                </Link>
-              </li>
-              <li>
-                <Link href="/#digest" className="hover:text-[#143D2B] transition-colors">
-                  Sunday Culture Digest
-                </Link>
-              </li>
-              <li>
-                <Link href="/#devices-hub" className="hover:text-[#143D2B] transition-colors">
-                  Bilateral Family Pacts &amp; Curfews
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#111413] mb-3">
-              Peace of Mind
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/register" className="hover:text-[#143D2B] transition-colors">
-                  7-Day Risk-Free Trial
-                </Link>
-              </li>
-              <li>
-                <span className="inline-flex items-center gap-1 text-[#858C88]">
-                  Built with <Heart className="h-3 w-3 text-red-500 fill-current" /> for parents
-                </span>
-              </li>
-            </ul>
-          </div>
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap items-center gap-x-7 gap-y-2 text-[14px] font-medium text-[#454D49]"
+          >
+            <Link href="/#studio" className="hover:text-[#143D2B] transition-colors">
+              How it works
+            </Link>
+            <Link href="/#pact" className="hover:text-[#143D2B] transition-colors">
+              Screen pact
+            </Link>
+            <Link href="/#science" className="hover:text-[#143D2B] transition-colors">
+              Philosophy
+            </Link>
+            <Link href="/#pricing" className="hover:text-[#143D2B] transition-colors">
+              Pricing
+            </Link>
+            <Link href="/login" className="hover:text-[#143D2B] transition-colors">
+              Log in
+            </Link>
+          </nav>
         </div>
 
-        <div className="pt-8 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between text-xs text-[#858C88] gap-4">
-          <p>© {new Date().getFullYear()} AlongSide Systems, Inc. All rights reserved.</p>
-          <div className="flex gap-6 font-mono text-[11px]">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Parent Calm Manifesto</span>
+        <div
+          aria-hidden="true"
+          className="font-serif font-normal text-[56px] sm:text-[108px] lg:text-[152px] leading-[0.9] tracking-[-0.04em] text-[#143D2B]/[0.08] select-none mb-4"
+        >
+          Alongside
+        </div>
+
+        <div className="pt-5 border-t border-[rgba(19,23,21,0.09)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[13px] text-[#69726D]">
+          <p>© {new Date().getFullYear()} Alongside Systems, Inc.</p>
+          <div className="flex flex-wrap gap-5">
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>Zero-Spyware Pledge</span>
           </div>
         </div>
       </div>

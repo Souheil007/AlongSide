@@ -197,13 +197,10 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
     });
 
     it('preserves clean public landing page navigation without authenticated leakage', () => {
-      expect(PUBLIC_NAV_LINKS).toHaveLength(4);
+      expect(PUBLIC_NAV_LINKS).toHaveLength(3);
       const publicHrefs = PUBLIC_NAV_LINKS.map((l) => l.href);
 
-      expect(publicHrefs).toContain('/#pillars');
-      expect(publicHrefs).toContain('/#stages');
-      expect(publicHrefs).toContain('/#devices-hub');
-      expect(publicHrefs).toContain('/#pricing');
+      expect(publicHrefs).toEqual(['/#studio', '/#pact', '/#pricing']);
 
       // Does not contain authenticated-only routes
       expect(publicHrefs).not.toContain('/dashboard');

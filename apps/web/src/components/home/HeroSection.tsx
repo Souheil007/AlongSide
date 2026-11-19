@@ -1,276 +1,279 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  ShieldCheck,
-  Stethoscope,
-  Sparkles,
-  CheckCircle2,
-  Lock,
-  Layers,
-  HeartPulse,
-  Brain,
-  Compass,
-} from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { RotatingText } from '@/components/ui/RotatingText';
-import { gsap, useGSAP, MOTION_TOKENS, setupReducedMotionMatch } from '@/lib/animations/gsap';
+import { cn } from '@/lib/utils';
 
-export const HERO_TRUST_SIGNALS = [
+export type AgeBandId = '0-3' | '4-6' | '7-9' | '10-12' | '13-18';
+
+export interface AgeMomentPreview {
+  id: AgeBandId;
+  label: string;
+  child: string;
+  tag: string;
+  momentTitle: string;
+  brainNote: string;
+  script: string;
+  pairedGuide: string;
+  readTime: string;
+}
+
+export const HERO_AGE_MOMENTS: AgeMomentPreview[] = [
   {
-    title: 'Neurobiology',
-    subtitle: 'Developmental Science',
-    icon: Brain,
+    id: '0-3',
+    label: '0–3',
+    child: 'Leo, 22 months',
+    tag: 'Co-regulation',
+    momentTitle: '“Full-body meltdown when shoes go on”',
+    brainNote:
+      "What's driving it: pre-verbal frustration plus an immature braking system. Lend your calm first.",
+    script:
+      "“You really want to stay playing. Putting on shoes feels frustrating. I'm right here — red sneakers or blue boots?”",
+    pairedGuide: 'Paired guide: Toddler nervous system resets',
+    readTime: '4 min read',
   },
   {
-    title: 'CDC & AAP',
-    subtitle: 'Milestones 0–18',
-    icon: Layers,
+    id: '4-6',
+    label: '4–6',
+    child: 'Chloe, age 5',
+    tag: 'Mealtime calm',
+    momentTitle: '“Refusing everything on the plate except bread”',
+    brainNote:
+      "What's driving it: developmental food neophobia peaks at 4–5. Pressure turns curiosity into resistance.",
+    script:
+      "“You don't have to eat the broccoli tonight. It can just sit next to your pasta while you decide.”",
+    pairedGuide: 'Paired guide: Division of Responsibility at dinner',
+    readTime: '5 min read',
   },
   {
-    title: 'Zero-Spyware',
-    subtitle: 'Privacy Pledge',
-    icon: Lock,
+    id: '7-9',
+    label: '7–9',
+    child: 'Sam, age 8',
+    tag: 'Screen transition',
+    momentTitle: '“Slamming the iPad shut when Roblox time ends”',
+    brainNote:
+      "What's driving it: variable-reward gaming loops make sudden cutoffs feel physically jarring.",
+    script:
+      "“I see you're mid-build. Show me your base for 60 seconds, then we'll park the tablet together.”",
+    pairedGuide: 'Paired guide: Dopamine loops & smooth landings',
+    readTime: '4 min read',
   },
   {
-    title: '1-Click Cancel',
-    subtitle: '7-Day Risk-Free',
-    icon: CheckCircle2,
+    id: '10-12',
+    label: '10–12',
+    child: 'Maya, age 11',
+    tag: 'Readiness 84/100',
+    momentTitle: '“Everyone in 5th grade has an iPhone except me”',
+    brainNote:
+      "What's driving it: peer belonging feels urgent at 11. Validate the feeling before setting the boundary.",
+    script:
+      "“It stinks feeling left out of the group chat. Let's look at the readiness checklist together so you know the exact steps to your first phone.”",
+    pairedGuide: 'Paired guide: First-phone bilateral pact',
+    readTime: '4 min read',
+  },
+  {
+    id: '13-18',
+    label: '13–18',
+    child: 'Noah, age 15',
+    tag: 'Circadian shift',
+    momentTitle: '“Still scrolling at 12:30 AM before a school day”',
+    brainNote:
+      "What's driving it: puberty shifts melatonin release 2 hours later, and infinite feeds hijack wind-down.",
+    script:
+      "“I know your brain isn't sleepy at 9 anymore. Let's agree on a realistic charging dock time that still protects tomorrow morning.”",
+    pairedGuide: 'Paired guide: Teen sleep & algorithmic feeds',
+    readTime: '5 min read',
   },
 ];
 
 export function HeroSection() {
-  const containerRef = React.useRef<HTMLElement>(null);
+  const [selectedAge, setSelectedAge] = React.useState<AgeBandId>('4-6');
+  const [copied, setCopied] = React.useState(false);
+  const copyTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useGSAP(
-    () => {
-      setupReducedMotionMatch(
-        () => {
-          // Sanctuary Hero entrance orchestrated timeline
-          const tl = gsap.timeline({ defaults: { ease: MOTION_TOKENS.ease.calm } });
+  React.useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
-          // Phase 1 (0.0s): Ambient arch aura blooms softly, staying permanently luminous & gently breathing
-          tl.fromTo(
-            '.hero-ambient-aura',
-            { opacity: 0, scale: 0.88 },
-            {
-              opacity: 0.9,
-              scale: 1,
-              duration: MOTION_TOKENS.duration.aura,
-              ease: MOTION_TOKENS.ease.reassure,
-            },
-            0
-          );
+  const activeMoment =
+    HERO_AGE_MOMENTS.find((m) => m.id === selectedAge) ?? HERO_AGE_MOMENTS[1]!;
 
-          // Continuous soothing breathing loop so the sanctuary aura remains permanently alive and never vanishes
-          gsap.to('.hero-ambient-aura', {
-            scale: 1.06,
-            opacity: 1,
-            duration: 5.5,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-            delay: MOTION_TOKENS.duration.aura,
-          });
+  const handleSelectAge = (id: AgeBandId) => {
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    setSelectedAge(id);
+    setCopied(false);
+  };
 
-          // Phase 2 (0.2s): Sanctuary headline unfolds
-          tl.fromTo(
-            '.hero-headline',
-            { opacity: 0, y: MOTION_TOKENS.offset.standard },
-            {
-              opacity: 1,
-              y: 0,
-              duration: MOTION_TOKENS.duration.hero,
-              ease: MOTION_TOKENS.ease.calm,
-              clearProps: 'all',
-            },
-            0.2
-          );
+  const handleAgeKeyDown = (e: React.KeyboardEvent, idx: number) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const next = HERO_AGE_MOMENTS[(idx + 1) % HERO_AGE_MOMENTS.length]!;
+      handleSelectAge(next.id);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prev =
+        HERO_AGE_MOMENTS[(idx - 1 + HERO_AGE_MOMENTS.length) % HERO_AGE_MOMENTS.length]!;
+      handleSelectAge(prev.id);
+    }
+  };
 
-          // Phase 3 (0.4s): Editorial subheadline glides up
-          tl.fromTo(
-            '.hero-subheadline',
-            { opacity: 0, y: 16 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: MOTION_TOKENS.ease.calm,
-              clearProps: 'all',
-            },
-            0.4
-          );
-
-          // Phase 4 (0.55s): Dual CTA buttons appear
-          tl.fromTo(
-            '.hero-ctas',
-            { opacity: 0, y: 14 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: MOTION_TOKENS.ease.gentle,
-              clearProps: 'all',
-            },
-            0.55
-          );
-
-          // Phase 5 (0.7s): 4 Trust signal badges stagger into view
-          tl.fromTo(
-            '.hero-trust-badge',
-            { opacity: 0, y: MOTION_TOKENS.offset.subtle },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              stagger: MOTION_TOKENS.stagger.tight,
-              ease: MOTION_TOKENS.ease.gentle,
-              clearProps: 'all',
-            },
-            0.7
-          );
-
-          // Phase 6 (0.9s): Reassurance micro-copy fades in
-          tl.fromTo(
-            '.hero-reassurance',
-            { opacity: 0, y: 8 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: MOTION_TOKENS.ease.reassure,
-              clearProps: 'all',
-            },
-            0.9
-          );
-        },
-        () => {
-          // Reduced motion: instant opacity without clearing props or wiping background
-          gsap.set('.hero-ambient-aura', { opacity: 0.9, scale: 1 });
-          gsap.fromTo(
-            [
-              '.hero-headline',
-              '.hero-subheadline',
-              '.hero-ctas',
-              '.hero-trust-badge',
-              '.hero-reassurance',
-            ],
-            { opacity: 0 },
-            { opacity: 1, duration: 0.2, stagger: 0.02, clearProps: 'all' }
-          );
-        }
-      );
-    },
-    { scope: containerRef }
-  );
+  const handleCopyScript = async () => {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(activeMoment.script);
+      }
+    } catch {
+      // Clipboard may be unavailable in restricted contexts
+    }
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    setCopied(true);
+    copyTimerRef.current = setTimeout(() => setCopied(false), 1600);
+  };
 
   return (
     <section
-      ref={containerRef}
-      className="isolate relative pt-12 md:pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+      id="top"
+      className="bg-[#FAF9F5] pt-11 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28"
     >
-      {/* Editorial Archival Mesh Hero Aura (Isolated z-0 stacking context; never drops behind body) */}
-      <div
-        className="pointer-events-none absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-[760px] sm:w-[920px] lg:w-[1060px] h-[440px] sm:h-[500px] z-0 blur-3xl overflow-visible"
-        aria-hidden="true"
-      >
-        <div
-          className="hero-ambient-aura w-full h-full animate-aurora"
-          style={{
-            background:
-              'radial-gradient(circle at 40% 30%, rgba(20, 61, 43, 0.32), transparent 65%), radial-gradient(circle at 65% 35%, rgba(180, 83, 9, 0.24), transparent 60%), radial-gradient(circle at 50% 75%, rgba(20, 61, 43, 0.18), transparent 65%)',
-          }}
-        />
-      </div>
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] gap-10 lg:gap-16 items-center">
+          {/* Left Column: Editorial Headline + Interactive Age Lens */}
+          <div className="flex flex-col gap-6">
+            <h1 className="font-serif font-normal text-[40px] sm:text-[54px] lg:text-[64px] leading-[1.04] tracking-[-0.028em] text-[#131715] max-w-[15.5ch] [text-wrap:balance]">
+              Calm guidance for every&nbsp;age,&nbsp;0–18
+            </h1>
 
-      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto space-y-6">
-        {/* Editorial Sanctuary Headline */}
-        <h1 className="hero-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#111413] leading-[1.12]">
-          The Parent Advisory Sanctuary: <br className="hidden sm:inline" />
-          <span className="font-serif italic font-normal text-[#143D2B] tracking-normal">
-            Keep Up With Your Child
-          </span>{' '}
-          As They Grow.
-        </h1>
+            <p className="text-base sm:text-[18px] leading-[1.55] text-[#454D49] max-w-[42ch]">
+              Exact words for hard moments, 5-minute developmental guides, and family screen pacts
+              built on trust — never spyware.
+            </p>
 
-        {/* Dynamic Lifespan Focus Pill */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E3E3DC] bg-[#FBFBF9]/90 px-3.5 py-1 text-xs font-mono text-[#494F4C] shadow-2xs">
-          <Sparkles className="h-3.5 w-3.5 text-[#143D2B]" />
-          <span>Real-time developmental guidance for:</span>
-          <RotatingText
-            words={[
-              'Sleep Regressions',
-              'Toddler Tantrums',
-              'Picky Eating Habits',
-              'First Smartphones',
-              'Teen Slang & Feeds',
-            ]}
-            className="font-bold text-[#143D2B]"
-          />
-        </div>
-
-        {/* Empathetic Editorial Subheadline */}
-        <p className="hero-subheadline text-lg sm:text-xl text-[#494F4C] leading-relaxed max-w-3xl">
-          Replace parenting anxiety, guilt, and exhaustion with evidence-based developmental science,
-          prioritized 5-minute micro-courses, weekly youth culture intelligence, and bilateral screen pacts (Ages 0–18).
-        </p>
-
-        {/* Dual Primary CTAs */}
-        <div className="hero-ctas flex flex-col sm:flex-row items-center gap-4 pt-3 w-full sm:w-auto">
-          <Link href="/register" className="w-full sm:w-auto">
-            <Button
-              variant="pill"
-              size="lg"
-              className="w-full sm:w-auto gap-2 text-base px-8 py-6 font-bold shadow-md"
-            >
-              Start 7-Day Risk-Free Trial
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-          </Link>
-          <a href="#stages" className="w-full sm:w-auto">
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto text-base px-7 py-6 border-[#E3E3DC] text-[#111413] hover:border-[#111413] font-semibold"
-            >
-              Explore 6-Stage Curriculum
-            </Button>
-          </a>
-        </div>
-
-        {/* Pediatric Authority & Trust Signals */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 w-full max-w-3xl text-left">
-          {HERO_TRUST_SIGNALS.map((badge, idx) => {
-            const Icon = badge.icon;
-            return (
+            {/* Interactive Age Selector */}
+            <div className="flex flex-col gap-2.5 pt-1">
+              <span id="hero-age-label" className="text-[13px] font-medium text-[#69726D]">
+                Pick your child&apos;s age to preview tonight&apos;s guidance
+              </span>
               <div
-                key={idx}
-                className="hero-trust-badge flex items-center gap-2.5 p-3 rounded-[5px] bg-white border border-[#E3E3DC] shadow-[0_1px_2px_rgba(17,20,19,0.04)] transition-colors hover:border-[#111413]"
+                role="tablist"
+                aria-labelledby="hero-age-label"
+                className="inline-flex flex-wrap gap-1.5 p-1 bg-[#F2F0E9] rounded-[10px] w-fit max-w-full"
               >
-                <Icon className="h-4 w-4 text-[#143D2B] shrink-0" />
-                <div className="text-xs">
-                  <span className="font-bold text-[#111413] block">{badge.title}</span>
-                  <span className="text-[#858C88] text-[11px] font-mono">{badge.subtitle}</span>
-                </div>
+                {HERO_AGE_MOMENTS.map((item, idx) => {
+                  const isSelected = item.id === selectedAge;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isSelected}
+                      onClick={() => handleSelectAge(item.id)}
+                      onKeyDown={(e) => handleAgeKeyDown(e, idx)}
+                      className={cn(
+                        'min-h-[40px] px-3.5 rounded-[7px] text-[13.5px] font-medium tabular-nums transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                        isSelected
+                          ? 'bg-white text-[#143D2B] shadow-[0_1px_2px_rgba(19,23,21,0.08)]'
+                          : 'text-[#454D49] hover:text-[#131715]'
+                      )}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
               </div>
-            );
-          })}
-        </div>
+            </div>
 
-        {/* Reassurance Micro-Copy */}
-        <div className="hero-reassurance flex flex-wrap items-center justify-center gap-y-2 gap-x-6 pt-2 text-xs text-[#858C88]">
-          <span className="flex items-center gap-1.5 font-medium">
-            <Brain className="h-3.5 w-3.5 text-[#143D2B]" /> Prioritized Parent Academy (Neurobiology)
-          </span>
-          <span className="flex items-center gap-1.5 font-medium">
-            <Sparkles className="h-3.5 w-3.5 text-[#143D2B]" /> Weekly Youth Culture Digest & Slang
-          </span>
-          <span className="flex items-center gap-1.5 font-medium">
-            <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B]" /> All Ages Supported Under One Family Pass
-          </span>
+            {/* Primary CTA + Quiet Secondary Link */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center min-h-[46px] px-5 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors duration-150 active:scale-[0.98] w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
+              >
+                Start 7-day free trial
+              </Link>
+              <a
+                href="#studio"
+                className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-medium text-[#131715] border-b border-[rgba(19,23,21,0.18)] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors duration-150"
+              >
+                See what&apos;s inside
+              </a>
+            </div>
+
+            {/* Single Quiet Metadata Line */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[#69726D]">
+              <span>All children</span>
+              <span className="text-[#143D2B]/35 select-none" aria-hidden="true">
+                ·
+              </span>
+              <span>Zero spyware</span>
+              <span className="text-[#143D2B]/35 select-none" aria-hidden="true">
+                ·
+              </span>
+              <span>Cancel anytime</span>
+            </div>
+          </div>
+
+          {/* Right Column: Editorial Photography + Tactile Live Product Card */}
+          <div className="relative pb-3">
+            <div className="rounded-[14px] overflow-hidden bg-[#F2F0E9] aspect-[4/3] relative">
+              <Image
+                src="/images/home/hero-sanctuary.jpg"
+                alt="Parent and child sitting side by side at a sunlit oak table sketching together"
+                width={1200}
+                height={896}
+                priority
+                sizes="(max-width: 1024px) 100vw, 48vw"
+                className="w-full h-full object-cover object-[center_22%]"
+              />
+            </div>
+
+            {/* Live Calibrated Script Card */}
+            <div
+              data-ui
+              aria-live="polite"
+              className="relative -mt-8 sm:-mt-10 sm:mx-5 bg-white border border-[rgba(19,23,21,0.09)] rounded-[14px] p-4 sm:p-5 shadow-[0_16px_40px_rgba(19,23,21,0.09)]"
+            >
+              <div className="flex items-center justify-between gap-3 pb-3 mb-3.5 border-b border-[rgba(19,23,21,0.09)]">
+                <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#131715]">
+                  <span
+                    className="w-[7px] h-[7px] rounded-full bg-[#143D2B] shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span>{activeMoment.child}</span>
+                </div>
+                <span className="text-[12px] font-medium text-[#143D2B] tabular-nums">
+                  {activeMoment.tag}
+                </span>
+              </div>
+
+              <div className="text-[15px] font-semibold text-[#131715] mb-1.5">
+                {activeMoment.momentTitle}
+              </div>
+              <p className="text-[13.5px] leading-[1.5] text-[#454D49] mb-3.5">
+                {activeMoment.brainNote}
+              </p>
+
+              <div className="bg-[#E8F1EC] rounded-[8px] px-3.5 py-3 flex items-start justify-between gap-3">
+                <p className="font-serif text-[16px] leading-[1.45] text-[#131715]">
+                  {activeMoment.script}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleCopyScript}
+                  className="shrink-0 min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+                >
+                  {copied ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between gap-3 text-[12.5px] text-[#69726D] tabular-nums">
+                <span>{activeMoment.pairedGuide}</span>
+                <span className="shrink-0">{activeMoment.readTime}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

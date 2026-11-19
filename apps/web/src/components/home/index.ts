@@ -1,25 +1,23 @@
-export { HeroSection, HERO_TRUST_SIGNALS } from './HeroSection';
+export { HeroSection, HERO_AGE_MOMENTS } from './HeroSection';
+export type { AgeBandId, AgeMomentPreview } from './HeroSection';
+
 export {
-  LifespanStageSelector,
-  LIFESPAN_STAGES,
-  CANONICAL_6_LIFESPAN_STAGES,
-  CANONICAL_8_LIFESPAN_STAGES,
-} from './LifespanStageSelector';
-export type { StageData, StageCourse } from './LifespanStageSelector';
-export { PillarsShowcase, FIVE_BALANCED_PILLARS, THREE_CORE_PILLARS } from './PillarsShowcase';
-export type { PillarData, CoreAdvisoryPillar } from './PillarsShowcase';
-export { CulturePlaygroundDemo, DEMO_SLANG_TERMS, DEMO_DINNER_STARTERS } from './CulturePlaygroundDemo';
-export type { SlangDemoItem } from './CulturePlaygroundDemo';
-export { DeviceActionHubSpotlight, DEVICE_HUB_STEPS } from './DeviceActionHubSpotlight';
-export type { HubStep } from './DeviceActionHubSpotlight';
+  ProductStudioSection,
+  STUDIO_ADVISOR_SCENARIOS,
+  STUDIO_ACADEMY_LESSONS,
+  STUDIO_SLANG_ITEMS,
+  STUDIO_DINNER_QUESTIONS,
+} from './ProductStudioSection';
+export type { StudioTabId, AdvisorScenario, SlangItem } from './ProductStudioSection';
+
+export { ScreenPactSection, SCREEN_PACT_POINTS } from './ScreenPactSection';
+
+export { ScienceFoundationSection, SCIENCE_PRINCIPLES } from './ScienceFoundationSection';
+
 export {
-  PediatricAuthorityTestimonials,
-  PediatricAuthorityTestimonials as ClinicalAuthorityTestimonials,
-  PEDIATRIC_TESTIMONIALS,
-  PEDIATRIC_TESTIMONIALS as CLINICAL_TESTIMONIALS,
-} from './PediatricAuthorityTestimonials';
-export type { Testimonial } from './PediatricAuthorityTestimonials';
-export { PricingSection, PRICING_PLANS } from './PricingSection';
-export type { PricingPlan } from './PricingSection';
-export { FaqSection, FAQS } from './FaqSection';
-export type { FaqItem } from './FaqSection';
+  PricingAndFaqSection,
+  FAMILY_PASS_OPTIONS,
+  FAMILY_PASS_INCLUSIONS,
+  HOME_FAQS,
+} from './PricingAndFaqSection';
+export type { FamilyPassBillingOption, HomeFaqItem } from './PricingAndFaqSection';
