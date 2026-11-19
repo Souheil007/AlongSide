@@ -12,7 +12,7 @@ Alongside is deployed across a decoupled, three-tier cloud architecture utilizin
 
 ```mermaid
 graph TD
-    User["Parent / Browser Client"] -->|"HTTPS / Web Visits"| Vercel["Vercel (Hobby Tier - $0/mo)<br/>apps/web (Next.js 15 App Router)<br/>https://alongside-*.vercel.app"]
+    User["Parent / Browser Client"] -->|"HTTPS / Web Visits"| Vercel["Vercel (Hobby Tier - $0/mo)<br/>apps/web (Next.js 15 App Router)<br/>https://along-side-theta.vercel.app"]
     Vercel -->|"REST API Requests & SSE Chat"| Render["Render (Free Web Service - $0/mo)<br/>apps/api (Fastify v5 + Node.js 22)<br/>https://alongside-api-2uqw.onrender.com"]
     Render -->|"Interactive OpenAPI Specs"| Swagger["Swagger UI Dashboard<br/>https://alongside-api-2uqw.onrender.com/docs"]
     Render -->|"PostgreSQL Pooler (IPv4 Port 5432)"| Supabase["Supabase (Free Tier - $0/mo)<br/>PostgreSQL 16 + pgvector<br/>aws-1-eu-west-1.pooler.supabase.com"]
@@ -26,7 +26,7 @@ graph TD
 | :--- | :--- | :--- | :--- |
 | **Database** | **Supabase** (`supabase.com`) | 500 MB PostgreSQL 16, dedicated `pgvector` vector extension, automatic backup snapshots, Supavisor connection pooling. | **Host:** `aws-1-eu-west-1.pooler.supabase.com:5432`<br/>**Project Ref:** `jegozhwbsegqyyqipzdf` |
 | **Backend API** | **Render** (`render.com`) | 512 MB RAM, 0.1 CPU, automated GitHub CI/CD, SSL certificates, zero-config Fastify server. | **URL:** [https://alongside-api-2uqw.onrender.com](https://alongside-api-2uqw.onrender.com)<br/>**Docs:** [https://alongside-api-2uqw.onrender.com/docs](https://alongside-api-2uqw.onrender.com/docs) |
-| **Frontend Web** | **Vercel** (`vercel.com`) | Global Edge CDN, automated Next.js 15 App Router builds, image optimization, HTTPS domains. | **Root Directory:** `apps/web`<br/>**URL:** `https://alongside-*.vercel.app` |
+| **Frontend Web** | **Vercel** (`vercel.com`) | Global Edge CDN, automated Next.js 15 App Router builds, image optimization, HTTPS domains. | **Root Directory:** `apps/web`<br/>**URL:** [https://along-side-theta.vercel.app](https://along-side-theta.vercel.app) |
 
 ---
 
@@ -51,7 +51,7 @@ graph TD
 | `DATABASE_URL` | `postgresql://postgres.jegozhwbsegqyyqipzdf:[PASSWORD]@aws-1-eu-west-1.pooler.supabase.com:5432/postgres` | Supabase IPv4 Session Pooler connection string. |
 | `JWT_SECRET` | `[64-character random string]` | Secret for signing stateless parent session tokens (min. 32 chars). |
 | `COOKIE_SECRET` | `[64-character random string]` | Secret for signing `alongside_session` cookies (min. 32 chars). |
-| `CORS_ORIGIN` | `https://alongside-*.vercel.app` | Matches your production Vercel frontend URL. |
+| `CORS_ORIGIN` | `https://along-side-theta.vercel.app` | Matches your production Vercel frontend URL. |
 | `OPENAI_API_KEY` | `sk-...` | Optional: for live 24/7 AI Child Advisor responses. |
 
 ---
@@ -64,7 +64,7 @@ graph TD
 | Variable | Environment | Value | Purpose |
 | :--- | :--- | :--- | :--- |
 | `NEXT_PUBLIC_API_URL` | Production & Preview | `https://alongside-api-2uqw.onrender.com` | Base URL of your live Render Fastify API. |
-| `NEXT_PUBLIC_APP_URL` | Production & Preview | `https://alongside-*.vercel.app` | Base URL of your Vercel frontend. |
+| `NEXT_PUBLIC_APP_URL` | Production & Preview | `https://along-side-theta.vercel.app` | Base URL of your Vercel frontend. |
 
 ---
 
