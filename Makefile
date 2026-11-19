@@ -11,7 +11,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help dev dev-all dev-frontend dev-backend frontend backend web api \
         install build test lint typecheck clean \
-        db-up db-down db-logs db-generate db-validate db-push db-seed db-setup db-studio
+        db-up db-down db-logs db-generate db-validate db-push db-migrate db-migrate-deploy db-seed db-setup db-studio
 
 # -----------------------------------------------------------------------------
 # Configuration & Binary Detection
@@ -39,7 +39,9 @@ help: ## Display available make targets
 	@echo "    make db-logs        Follow PostgreSQL container logs"
 	@echo "    make db-generate    Generate Prisma Client (@alongside/database)"
 	@echo "    make db-validate    Validate Prisma Schema"
-	@echo "    make db-push        Push Prisma schema to PostgreSQL"
+	@echo "    make db-push        Push Prisma schema to PostgreSQL (prototyping)"
+	@echo "    make db-migrate     Apply development migrations (prisma migrate dev)"
+	@echo "    make db-migrate-deploy Apply pending migrations (prisma migrate deploy)"
 	@echo "    make db-seed        Seed database with courses, lessons, and guides"
 	@echo "    make db-setup       Run generate, push schema, and seed database"
 	@echo "    make db-studio      Open Prisma Studio database browser"
@@ -95,6 +97,12 @@ db-validate: ## Validate Prisma Schema
 
 db-push: ## Push Prisma schema to PostgreSQL
 	@$(NPX) --workspace=@alongside/database prisma db push
+
+db-migrate: ## Run development migrations (prisma migrate dev)
+	@$(NPX) --workspace=@alongside/database prisma migrate dev
+
+db-migrate-deploy: ## Apply pending migrations (prisma migrate deploy)
+	@$(NPX) --workspace=@alongside/database prisma migrate deploy
 
 db-seed: ## Seed database with courses, lessons, and guides
 	@$(NPM) run db:seed

@@ -69,6 +69,7 @@ graph TD
         P13["13: Stripe Billing & 7-Day Trial (BE)"]
         P14["14: E2E Integration & Launch Hardening (Joint)"]
         P44["44: Security Env Validation & URL Fallbacks (Joint)"]
+        P45["45: Interactive Swagger UI & OpenAPI Docs (BE)"]
     end
 
     P01 --> P02
@@ -133,7 +134,8 @@ graph TD
     P38 --> P39
     P39 --> P40
     P43 --> P44
-    P44 --> P14
+    P44 --> P45
+    P45 --> P14
     P39 --> P14
     P40 --> P14
     P36 --> P14
@@ -192,7 +194,8 @@ graph TD
 | [**`41-homepage-gsap-parent-calm-animation-ui.md`**](41-homepage-gsap-parent-calm-animation-ui.md) | Homepage GSAP 'Parent Calm' Animation & Scroll Experience | **Frontend Agent** | PLAN-23, PLAN-33 | Complete (PR #142) |
 | [**`42-reactbits-ui-components-and-parent-calm-motion.md`**](42-reactbits-ui-components-and-parent-calm-motion.md) | React Bits UI Primitives & 'Parent Calm' Ambient Motion System | **Frontend Agent** | PLAN-41 | In Progress |
 | [**`43-purge-legacy-clinical-triage-and-ghost-tables.md`**](43-purge-legacy-clinical-triage-and-ghost-tables.md) | Purge Legacy Clinical Symptom Triage, Child Health Logs & Ghost Tables | **Joint (FE & BE)** | PLAN-40, PLAN-41, PLAN-42 | Complete (PR #143) |
-| [**`44-security-env-validation-and-url-fallbacks.md`**](44-security-env-validation-and-url-fallbacks.md) | Security Environment Validation, URL Fallback Hardening & Env Documentation | **Joint (FE & BE)** | PLAN-02, PLAN-03, PLAN-43 | In Progress |
+| [**`44-security-env-validation-and-url-fallbacks.md`**](44-security-env-validation-and-url-fallbacks.md) | Security Environment Validation, URL Fallback Hardening & Env Documentation | **Joint (FE & BE)** | PLAN-02, PLAN-03, PLAN-43 | Complete (PR #144) |
+| [**`45-interactive-swagger-openapi-documentation.md`**](45-interactive-swagger-openapi-documentation.md) | Interactive Swagger UI & OpenAPI Specification for Fastify Backend | **Backend Agent** | PLAN-02, PLAN-43, PLAN-44 | In Progress |
 
 ---
 
