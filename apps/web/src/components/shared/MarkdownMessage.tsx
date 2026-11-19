@@ -60,6 +60,44 @@ export interface MarkdownMessageProps {
   isStreaming?: boolean;
 }
 
+interface LineGroup {
+  type: 'p' | 'ul' | 'ol';
+  items: string[];
+}
+
+function parseBlockLines(lines: string[]): LineGroup[] {
+  const groups: LineGroup[] = [];
+  let currentGroup: LineGroup | null = null;
+
+  for (const line of lines) {
+    if (/^\s*[-*]\s+/.test(line)) {
+      if (currentGroup?.type === 'ul') {
+        currentGroup.items.push(line);
+      } else {
+        if (currentGroup) groups.push(currentGroup);
+        currentGroup = { type: 'ul', items: [line] };
+      }
+    } else if (/^\s*\d+\.\s+/.test(line)) {
+      if (currentGroup?.type === 'ol') {
+        currentGroup.items.push(line);
+      } else {
+        if (currentGroup) groups.push(currentGroup);
+        currentGroup = { type: 'ol', items: [line] };
+      }
+    } else {
+      if (currentGroup?.type === 'p') {
+        currentGroup.items.push(line);
+      } else {
+        if (currentGroup) groups.push(currentGroup);
+        currentGroup = { type: 'p', items: [line] };
+      }
+    }
+  }
+
+  if (currentGroup) groups.push(currentGroup);
+  return groups;
+}
+
 export function MarkdownMessage({
   content,
   className,
@@ -111,57 +149,59 @@ export function MarkdownMessage({
           );
         }
 
-        // 3. Mixed or Unordered list (- ... or * ...)
+        // 3. Process lines (paragraphs, unordered lists, ordered lists)
         const lines = trimmed.split('\n');
-        const isBulletList = lines.every((l) => /^\s*[-*]\s+/.test(l));
-        if (isBulletList) {
-          return (
-            <ul key={blockIdx} className="my-1.5 space-y-1 pl-1">
-              {lines.map((line, lineIdx) => {
-                const itemContent = line.replace(/^\s*[-*]\s+/, '');
-                return (
-                  <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
-                    <span className="text-[#143D2B] font-bold shrink-0 leading-tight">•</span>
-                    <span className="flex-1">{renderInline(itemContent)}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          );
-        }
+        const groups = parseBlockLines(lines);
 
-        // 4. Ordered list (1. ... 2. ...)
-        const isOrderedList = lines.every((l) => /^\s*\d+\.\s+/.test(l));
-        if (isOrderedList) {
-          return (
-            <ol key={blockIdx} className="my-1.5 space-y-1 pl-1">
-              {lines.map((line, lineIdx) => {
-                const numberMatch = line.match(/^\s*(\d+)\.\s+(.*)$/);
-                const num = numberMatch && numberMatch[1] ? numberMatch[1] : lineIdx + 1;
-                const itemContent = numberMatch && numberMatch[2] ? numberMatch[2] : line;
-                return (
-                  <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
-                    <span className="text-[#143D2B] font-mono font-bold text-[10px] shrink-0 w-3.5 pt-0.5">
-                      {num}.
-                    </span>
-                    <span className="flex-1">{renderInline(itemContent)}</span>
-                  </li>
-                );
-              })}
-            </ol>
-          );
-        }
-
-        // 5. Standard paragraph with potential single newlines inside
         return (
-          <p key={blockIdx} className="leading-relaxed">
-            {lines.map((line, lineIdx) => (
-              <React.Fragment key={lineIdx}>
-                {lineIdx > 0 && <br />}
-                {renderInline(line)}
-              </React.Fragment>
-            ))}
-          </p>
+          <div key={blockIdx} className="space-y-1.5">
+            {groups.map((group, groupIdx) => {
+              if (group.type === 'ul') {
+                return (
+                  <ul key={groupIdx} className="my-1.5 space-y-1 pl-1">
+                    {group.items.map((line, lineIdx) => {
+                      const itemContent = line.replace(/^\s*[-*]\s+/, '');
+                      return (
+                        <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
+                          <span className="text-[#143D2B] font-bold shrink-0 leading-tight">•</span>
+                          <span className="flex-1">{renderInline(itemContent)}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                );
+              }
+              if (group.type === 'ol') {
+                return (
+                  <ol key={groupIdx} className="my-1.5 space-y-1 pl-1">
+                    {group.items.map((line, lineIdx) => {
+                      const numberMatch = line.match(/^\s*(\d+)\.\s+(.*)$/);
+                      const num = numberMatch && numberMatch[1] ? numberMatch[1] : lineIdx + 1;
+                      const itemContent = numberMatch && numberMatch[2] ? numberMatch[2] : line;
+                      return (
+                        <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
+                          <span className="text-[#143D2B] font-mono font-bold text-[10px] shrink-0 w-3.5 pt-0.5">
+                            {num}.
+                          </span>
+                          <span className="flex-1">{renderInline(itemContent)}</span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                );
+              }
+              return (
+                <p key={groupIdx} className="leading-relaxed">
+                  {group.items.map((line, lineIdx) => (
+                    <React.Fragment key={lineIdx}>
+                      {lineIdx > 0 && <br />}
+                      {renderInline(line)}
+                    </React.Fragment>
+                  ))}
+                </p>
+              );
+            })}
+          </div>
         );
       })}
       {isStreaming && (

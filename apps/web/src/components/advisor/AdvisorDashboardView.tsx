@@ -3,10 +3,8 @@
 import * as React from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
-  Shield,
   Send,
   Square,
-  Sparkles,
   BookOpen,
   RotateCcw,
   AlertCircle,
@@ -98,21 +96,11 @@ export function AdvisorDashboardView() {
       {/* Top Header & Rehearsal Hero Banner */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1 font-mono">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] border border-[#E3E3DC] px-3 py-0.5 text-xs font-medium text-[#143D2B]">
-              <Shield className="h-3.5 w-3.5 text-[#143D2B]" />
-              Developmental Neurobiology Vault
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#F4F4F0] border border-[#E3E3DC] px-2.5 py-0.5 text-xs font-medium text-[#494F4C]">
-              SSE Real-Time Stream
-            </span>
-          </div>
           <h1 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#111413]">
             24/7 AI Child Advisor
           </h1>
           <p className="mt-1 text-sm text-[#494F4C] max-w-2xl leading-relaxed">
-            Instant, judgment-free developmental guidance for acute parenting conflict.
-            Transform dopamine crashes and phone battles into calm, collaborative agreements.
+            Instant, evidence-based guidance to navigate parenting friction with calm, collaborative scripts.
           </p>
         </div>
 
@@ -133,18 +121,27 @@ export function AdvisorDashboardView() {
       {/* Chat Area Card */}
       <div className="rounded-[10px] border border-[#E3E3DC] bg-[#FFFFFF] shadow-[0_1px_2px_rgba(17,20,19,0.04)] overflow-hidden flex flex-col min-h-[550px] max-h-[750px]">
         {/* Chat Header Bar */}
-        <div className="flex items-center justify-between border-b border-[#E3E3DC] bg-[#F4F4F0] px-4 py-3 sm:px-6 font-mono">
-          <div className="flex items-center gap-2">
-            <div className="flex h-2.5 w-2.5 rounded-full bg-[#143D2B] animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-wider text-[#111413]">
-              Active Consultation Session
-            </span>
+        <div className="flex items-center justify-between border-b border-[#E3E3DC] bg-[#F4F4F0] px-4 py-2.5 sm:px-6">
+          <div
+            data-testid="active-child-consultation-banner"
+            className="flex items-center gap-2 text-xs text-[#111413]"
+          >
+            <div className="h-2 w-2 rounded-full bg-[#143D2B] animate-pulse" />
+            {activeChild ? (
+              <span className="font-medium">
+                Calibrated for <strong className="font-semibold text-[#143D2B]">{activeChild.name}</strong> (Age {activeChild.age} · {activeHorizon?.stage || activeHorizon?.tierLabel})
+              </span>
+            ) : (
+              <span className="font-medium text-[#494F4C]">
+                Advisory Session (General Guidance)
+              </span>
+            )}
           </div>
           {messages.length > 0 && (
             <button
               type="button"
               onClick={clearConversation}
-              className="flex items-center gap-1.5 text-xs font-mono text-[#858C88] hover:text-[#DC2626] transition-colors p-1"
+              className="flex items-center gap-1.5 text-xs text-[#858C88] hover:text-[#DC2626] transition-colors p-1"
               title="Reset conversation"
             >
               <RotateCcw className="h-3.5 w-3.5" />
@@ -152,25 +149,6 @@ export function AdvisorDashboardView() {
             </button>
           )}
         </div>
-
-        {/* Active Child Consultation Banner */}
-        {activeChild && (
-          <div
-            data-testid="active-child-consultation-banner"
-            className="border-b border-[#E3E3DC] bg-[#EAF3EE] px-4 py-2.5 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-[#143D2B] font-mono"
-          >
-            <span className="flex items-center gap-1.5 font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
-              <span>
-                Active Consultation: Calibrated for {activeChild.name} (Age {activeChild.age} ·{' '}
-                {activeHorizon?.stage || activeHorizon?.tierLabel})
-              </span>
-            </span>
-            <span className="text-[11px] text-[#143D2B]/80 font-normal">
-              Responses grounded in this developmental neurobiology window
-            </span>
-          </div>
-        )}
 
         {/* Chat Feed */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#FBFBF9]">
