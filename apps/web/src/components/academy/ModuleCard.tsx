@@ -111,31 +111,37 @@ export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
     case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
       return {
         label: 'Behavior & Emotions',
+        shortLabel: 'Behavior',
         className: 'bg-rose-50 text-rose-800 border-rose-200',
       };
     case AcademyCategory.HEALTH_AND_WELLNESS:
       return {
         label: 'Pediatric Health & Sleep',
+        shortLabel: 'Health & Sleep',
         className: 'bg-teal-50 text-teal-800 border-teal-200',
       };
     case AcademyCategory.NUTRITION_AND_FEEDING:
       return {
         label: 'Nutrition & Feeding',
+        shortLabel: 'Nutrition',
         className: 'bg-amber-50 text-amber-800 border-amber-200',
       };
     case AcademyCategory.DEVELOPMENT_AND_PLAY:
       return {
         label: 'Development & Play',
+        shortLabel: 'Development',
         className: 'bg-indigo-50 text-indigo-800 border-indigo-200',
       };
     case AcademyCategory.DIGITAL_AND_DEVICES:
       return {
         label: 'Modern Digital World',
+        shortLabel: 'Digital World',
         className: 'bg-cyan-50 text-cyan-800 border-cyan-200',
       };
     default:
       return {
         label: 'Parent Intelligence',
+        shortLabel: 'Intelligence',
         className: 'bg-slate-50 text-slate-800 border-slate-200',
       };
   }
@@ -175,26 +181,26 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
   return (
     <Card
       className={cn(
-        'group flex flex-col justify-between border-slate-200/80 bg-white shadow-xs transition-all duration-200 hover:border-teal-300 hover:shadow-md',
+        'group flex h-full flex-col justify-between border-slate-200/80 bg-white shadow-xs transition-all duration-200 hover:border-teal-300 hover:shadow-md',
         module.isCompleted && 'border-emerald-200 bg-emerald-50/10',
         className
       )}
     >
-      <div>
-        <CardHeader className="space-y-3 pb-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex flex-wrap items-center gap-1.5">
+      <div className="flex flex-col flex-1">
+        <CardHeader className="space-y-2.5 pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-1.5">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 min-w-0">
               <span
                 className={cn(
-                  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-wide',
+                  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-tight whitespace-nowrap',
                   categoryInfo.className
                 )}
               >
-                {categoryInfo.label}
+                {categoryInfo.shortLabel ?? categoryInfo.label}
               </span>
               <span
                 className={cn(
-                  'inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium',
+                  'inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-medium whitespace-nowrap',
                   tierInfo.className
                 )}
               >
@@ -203,7 +209,7 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
               {hasMasterLecture && (
                 <span
                   data-testid="master-lecture-pill"
-                  className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-900"
+                  className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold text-amber-900 whitespace-nowrap"
                 >
                   <span aria-hidden="true">🎬</span>
                   <span>Master Lecture</span>
@@ -212,24 +218,24 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
             </div>
 
             {module.isCompleted && (
-              <Badge variant="outline" className="border-emerald-300 bg-emerald-50 text-emerald-800 text-[11px] gap-1">
+              <Badge variant="outline" className="border-emerald-300 bg-emerald-50 text-emerald-800 text-[10px] px-1.5 py-0.5 gap-1 shrink-0">
                 <CheckCircle2 className="h-3 w-3 text-emerald-600" />
                 Completed
               </Badge>
             )}
           </div>
 
-          <CardTitle className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-teal-900 transition-colors leading-snug">
+          <CardTitle className="text-base sm:text-lg font-bold tracking-tight text-slate-900 group-hover:text-teal-900 transition-colors leading-snug line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
             {displayTitle}
           </CardTitle>
 
           {module.reliefSubtitle && (
-            <p className="font-serif italic text-sm text-teal-800 leading-snug">
+            <p className="font-serif italic text-xs sm:text-sm text-teal-800 leading-snug line-clamp-1">
               {module.reliefSubtitle}
             </p>
           )}
 
-          <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
+          <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3 min-h-[3.25rem]">
             {module.summary}
           </CardDescription>
 
