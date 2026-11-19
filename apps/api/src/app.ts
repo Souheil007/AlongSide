@@ -200,10 +200,35 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   );
 
   // Cross-Origin Resource Sharing
+  // When credentials: true is enabled, the browser strictly forbids Access-Control-Allow-Origin: *
+  // We dynamically reflect the calling origin if it matches the configured CORS_ORIGIN,
+  // ends with .vercel.app (for Vercel production & preview deployments), or is localhost.
   await app.register(cors, {
-    origin: corsOrigin,
+    origin: (origin, cb) => {
+      // Allow requests with no origin (e.g. server-to-server, curl, mobile apps)
+      if (!origin) {
+        return cb(null, true);
+      }
+
+      const allowedOrigins = corsOrigin.split(',').map((o) => o.trim());
+
+      if (
+        corsOrigin === '*' ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')
+      ) {
+        // Return origin to reflect calling origin with credentials
+        return cb(null, origin);
+      }
+
+      cb(new Error(`Origin ${origin} not allowed by CORS`), false);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Cookie'],
+    exposedHeaders: ['Set-Cookie'],
   });
 
   // Cookie management with signing support

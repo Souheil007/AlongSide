@@ -136,10 +136,14 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
 
   // Decorate Reply with helper methods for session cookie handling
   fastify.decorateReply('setSessionCookie', function (this: FastifyReply, token: string) {
+    const isProduction = process.env.NODE_ENV === 'production';
     this.setCookie(SESSION_COOKIE_NAME, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      // In production with decoupled frontend and backend (e.g. vercel.app to onrender.com),
+      // sameSite must be 'none' with secure: true so browsers accept cross-site credentialed cookies.
+      // In local development and testing, sameSite defaults to 'strict'.
+      sameSite: isProduction ? 'none' : 'strict',
       path: '/',
       maxAge: SESSION_COOKIE_MAX_AGE,
     });
@@ -148,7 +152,7 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
 
   fastify.decorateReply('clearSessionCookie', function (this: FastifyReply) {
     const isProduction = process.env.NODE_ENV === 'production';
-    const sameSites: ('strict' | 'lax')[] = ['strict', 'lax'];
+    const sameSites: ('strict' | 'lax' | 'none')[] = ['strict', 'lax', 'none'];
     const domains = [undefined, 'localhost', '127.0.0.1'];
 
     // Emit comprehensive cookie clearance headers matching any potential domain/samesite combination

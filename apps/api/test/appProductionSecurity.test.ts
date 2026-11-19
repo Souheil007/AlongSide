@@ -63,4 +63,25 @@ describe('Production Environment Secret Hardening (PLAN-44)', () => {
     expect(app).toBeDefined();
     await app.close();
   });
+
+  it('reflects exact origin for Vercel preview/production domains and enables credentials', async () => {
+    const app = await buildApp({ logger: false });
+
+    const response = await app.inject({
+      method: 'OPTIONS',
+      url: '/api/v1/auth/register',
+      headers: {
+        origin: 'https://alongside-app-preview.vercel.app',
+        'access-control-request-method': 'POST',
+      },
+    });
+
+    expect(response.statusCode).toBe(204);
+    expect(response.headers['access-control-allow-origin']).toBe(
+      'https://alongside-app-preview.vercel.app'
+    );
+    expect(response.headers['access-control-allow-credentials']).toBe('true');
+
+    await app.close();
+  });
 });
