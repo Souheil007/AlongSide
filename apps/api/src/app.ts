@@ -6,6 +6,8 @@ import fastify, {
 import cors from '@fastify/cors';
 import cookie from '@fastify/cookie';
 import sensible from '@fastify/sensible';
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
 import { authPlugin } from './plugins/auth.plugin.js';
 import { healthRoutes } from './modules/health/health.routes.js';
 import { authRoutes } from './modules/auth/auth.routes.js';
@@ -218,6 +220,89 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
 
   // Fastify Sensible for standard HTTP errors and utility helpers
   await app.register(sensible);
+
+  // Register OpenAPI 3.0 / Swagger schema builder
+  await app.register(swagger, {
+    openapi: {
+      info: {
+        title: 'Alongside API',
+        description:
+          'Alongside Holistic Child Upbringing, Pediatric Health & Lifespan Family OS API',
+        version: '1.0.0',
+      },
+      servers: [
+        {
+          url: 'http://localhost:4000',
+          description: 'Local Development Server',
+        },
+      ],
+      tags: [
+        { name: 'Health', description: 'Server health and system checks' },
+        { name: 'Auth', description: 'Parent authentication and session lifecycle' },
+        { name: 'Children', description: 'Child profile CRUD, developmental tiers & readiness' },
+        { name: 'Academy', description: 'Parent Intelligence Academy courses & lessons' },
+        { name: 'AI Advisor', description: '24/7 AI Child Advisor & FAQ vault' },
+        { name: 'Agreements', description: 'Bilateral Family Pacts & PDF generation' },
+        { name: 'Devices', description: 'Pact-as-Code Apple/Android device profiles & enrollment' },
+        { name: 'Culture Digest', description: 'Sunday Youth Culture Digest & Slang Decoders' },
+        { name: 'Milestones', description: 'CDC & Bright Futures developmental milestones' },
+        { name: 'Nutrition', description: 'Pediatric nutrition guides & feeding protocols' },
+        { name: 'Brain Games', description: 'Purposeful play & developmental games' },
+        { name: 'Behavior', description: 'Behavioral translation & de-escalation guides' },
+      ],
+      components: {
+        securitySchemes: {
+          cookieAuth: {
+            type: 'apiKey',
+            in: 'cookie',
+            name: 'alongside_session',
+            description: 'Session cookie set upon successful login or registration',
+          },
+        },
+      },
+    },
+  });
+
+  // Register interactive Swagger UI on /docs
+  await app.register(swaggerUi, {
+    routePrefix: '/docs',
+    uiConfig: {
+      docExpansion: 'list',
+      deepLinking: true,
+    },
+    staticCSP: true,
+  });
+
+  // Convenience endpoint for browsing endpoints & redirecting browsers to /docs
+  app.get('/api/v1', async (request, reply) => {
+    if (request.headers.accept?.includes('text/html')) {
+      return reply.redirect('/docs');
+    }
+    return {
+      name: 'Alongside API',
+      version: '1.0.0',
+      documentationUrl: '/docs',
+      endpoints: {
+        health: '/api/v1/health',
+        auth: '/api/v1/auth',
+        children: '/api/v1/children',
+        academy: '/api/v1/academy',
+        aiAdvisor: '/api/v1/ai-advisor',
+        agreements: '/api/v1/agreements',
+        devices: '/api/v1/devices',
+        digest: '/api/v1/digest',
+        faqs: '/api/v1/faqs',
+        milestones: '/api/v1/milestones',
+        nutrition: '/api/v1/nutrition',
+        brainGames: '/api/v1/brain-games',
+        behavior: '/api/v1/behavior',
+      },
+    };
+  });
+
+  app.get('/documentation', async (_request, reply) => {
+    return reply.redirect('/docs');
+  });
 
   // Centralized Error Handler (Alongside RFC 7807 Standard Error Envelope)
   app.setErrorHandler((error: FastifyError, request, reply) => {
