@@ -11,13 +11,27 @@ export interface MistralAdapterOptions {
 
 export class MistralAdapter implements LlmClientAdapter {
   readonly providerName = 'mistral';
+  readonly hasApiKey: boolean;
   private readonly apiKey: string;
   private readonly model: string;
   private readonly baseUrl: string;
 
   constructor(opts: MistralAdapterOptions = {}) {
-    this.apiKey = opts.apiKey || process.env.MISTRAL_API_KEY || '';
-    this.model = opts.model || process.env.MISTRAL_MODEL || 'open-mistral-7b';
+    const rawApiKey =
+      opts.apiKey ||
+      process.env.MISTRAL_API_KEY ||
+      process.env.MISTRAL_KEY ||
+      process.env.MISTRAL_API_TOKEN ||
+      '';
+    this.apiKey = rawApiKey.trim().replace(/^["']|["']$/g, '');
+    this.hasApiKey = Boolean(this.apiKey);
+
+    const rawModel =
+      opts.model ||
+      process.env.MISTRAL_MODEL ||
+      process.env.MISTRAL_AI_MODEL ||
+      'mistral-small-latest';
+    this.model = rawModel.trim().replace(/^["']|["']$/g, '');
     this.baseUrl = opts.baseUrl || 'https://api.mistral.ai/v1';
   }
 
@@ -26,7 +40,7 @@ export class MistralAdapter implements LlmClientAdapter {
       throw new Error('MISTRAL_API_KEY is not configured.');
     }
 
-    const response = await fetch(`${this.baseUrl}/chat/completions`, {
+    let response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,8 +55,29 @@ export class MistralAdapter implements LlmClientAdapter {
       }),
     });
 
+    // If configured model fails with 400/404 (e.g. deprecated model name), retry with mistral-small-latest
+    if (!response.ok && (response.status === 400 || response.status === 404) && this.model !== 'mistral-small-latest') {
+      const initialError = await response.text().catch(() => '');
+      console.warn(`[MistralAdapter] Model '${this.model}' failed (${response.status}): ${initialError}. Retrying with 'mistral-small-latest'...`);
+      response = await fetch(`${this.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'mistral-small-latest',
+          messages: options.messages,
+          temperature: options.temperature ?? 0.7,
+          max_tokens: options.maxTokens ?? 1024,
+          stream: true,
+        }),
+      });
+    }
+
     if (!response.ok) {
       const errText = await response.text().catch(() => '');
+      console.error(`[MistralAdapter] Streaming request failed: status=${response.status} ${response.statusText}, body=${errText}`);
       throw new Error(
         `Mistral streaming failed (${response.status} ${response.statusText}): ${errText}`
       );

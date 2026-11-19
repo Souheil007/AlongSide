@@ -646,12 +646,17 @@ export async function streamAiAdvisorChat(
         }
       }
       return;
+    } else {
+      const errText = await response.text().catch(() => '');
+      console.warn(
+        `[AI Advisor] Backend stream returned status ${response.status}: ${errText}. Using clinical fallback simulator.`
+      );
     }
-  } catch {
+  } catch (err) {
     if (options?.signal?.aborted) {
       return;
     }
-    // Network error or 404/500: proceed to simulated fallback stream
+    console.warn('[AI Advisor] Fetch error calling backend chat endpoint:', err);
   }
 
   if (options?.signal?.aborted) {

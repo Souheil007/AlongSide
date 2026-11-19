@@ -16,5 +16,6 @@ export interface LlmStreamOptions {
 
 export interface LlmClientAdapter {
   readonly providerName: string;
+  readonly hasApiKey?: boolean;
   stream(options: LlmStreamOptions): AsyncIterable<string>;
 }
