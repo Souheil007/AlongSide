@@ -24,6 +24,12 @@ export const RoadType = {
 } as const;
 export type RoadType = (typeof RoadType)[keyof typeof RoadType];
 
+export const Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+} as const;
+export type Gender = (typeof Gender)[keyof typeof Gender];
+
 export const DevelopmentalTier = {
   // v2.6 8 Canonical Lifespan Tiers (Tier 0 decomposed)
   TIER_0A_INFANCY_0_1: 'TIER_0A_INFANCY_0_1',

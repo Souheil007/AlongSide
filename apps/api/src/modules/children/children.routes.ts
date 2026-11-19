@@ -22,6 +22,7 @@ const childDtoSchema = {
     id: { type: 'string' },
     userId: { type: 'string' },
     name: { type: 'string' },
+    gender: { type: ['string', 'null'], enum: ['MALE', 'FEMALE', null] },
     birthYear: { type: 'number' },
     birthMonth: { type: 'number' },
     age: { type: 'number' },
@@ -116,6 +117,7 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
           required: ['name', 'birthYear', 'birthMonth', 'roadType'],
           properties: {
             name: { type: 'string', minLength: 1, maxLength: 100 },
+            gender: { type: 'string', enum: ['MALE', 'FEMALE'] },
             birthYear: { type: 'number', minimum: 2000 },
             birthMonth: { type: 'number', minimum: 1, maximum: 12 },
             roadType: { type: 'string', enum: ['PRE_DEVICE', 'ACTIVE_DEVICE'] },
@@ -247,6 +249,7 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
           type: 'object',
           properties: {
             name: { type: 'string', minLength: 1, maxLength: 100 },
+            gender: { type: 'string', enum: ['MALE', 'FEMALE'] },
             birthYear: { type: 'number', minimum: 2000 },
             birthMonth: { type: 'number', minimum: 1, maximum: 12 },
             roadType: { type: 'string', enum: ['PRE_DEVICE', 'ACTIVE_DEVICE'] },

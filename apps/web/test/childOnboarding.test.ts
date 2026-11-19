@@ -3,6 +3,7 @@ import {
   CreateChildSchema,
   RoadType,
   DevelopmentalTier,
+  Gender,
   calculateChildAge,
   calculateDevelopmentalTier,
   mapAgeToDevelopmentalTier,
@@ -104,6 +105,46 @@ describe('Child Onboarding & Road Selection Validation', () => {
         roadType: RoadType.PRE_DEVICE,
       };
       expect(CreateChildSchema.safeParse(payloadOver).success).toBe(false);
+    });
+
+    it('validates a child with gender MALE or FEMALE', () => {
+      const malePayload = {
+        name: 'Noah',
+        gender: Gender.MALE,
+        birthYear: 2017,
+        birthMonth: 3,
+        roadType: RoadType.PRE_DEVICE,
+      };
+      const maleResult = CreateChildSchema.safeParse(malePayload);
+      expect(maleResult.success).toBe(true);
+      if (maleResult.success) {
+        expect(maleResult.data.gender).toBe(Gender.MALE);
+      }
+
+      const femalePayload = {
+        name: 'Sophia',
+        gender: Gender.FEMALE,
+        birthYear: 2015,
+        birthMonth: 8,
+        roadType: RoadType.ACTIVE_DEVICE,
+      };
+      const femaleResult = CreateChildSchema.safeParse(femalePayload);
+      expect(femaleResult.success).toBe(true);
+      if (femaleResult.success) {
+        expect(femaleResult.data.gender).toBe(Gender.FEMALE);
+      }
+    });
+
+    it('rejects invalid gender values', () => {
+      const invalidPayload = {
+        name: 'Alex',
+        gender: 'NON_BINARY' as any,
+        birthYear: 2016,
+        birthMonth: 5,
+        roadType: RoadType.PRE_DEVICE,
+      };
+      const result = CreateChildSchema.safeParse(invalidPayload);
+      expect(result.success).toBe(false);
     });
 
     it('rejects an invalid road type enum value', () => {

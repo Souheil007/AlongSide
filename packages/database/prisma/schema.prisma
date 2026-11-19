@@ -29,6 +29,11 @@ enum RoadType {
   ACTIVE_DEVICE     // Road 2: Already owns personal smartphone (Ages 9–14+)
 }
 
+enum Gender {
+  MALE              // Male / Boy
+  FEMALE            // Female / Girl
+}
+
 enum DevelopmentalTier {
   TIER_0A_INFANCY_0_1          // Ages 0–1 / 0–12m: Somatic Regulation, Sleep Architecture & Feeding Foundations
   TIER_0B_TODDLER_1_2          // Ages 1–2 / 12–24m: Locomotion, First Words & Amygdala Co-Regulation
@@ -194,6 +199,7 @@ model Child {
   birthDate         DateTime?
   roadType          RoadType          @default(PRE_DEVICE)
   developmentalTier DevelopmentalTier
+  gender            Gender?
   dietaryStage      DietaryStage      @default(TODDLER_TABLE)
   allergies         String[]          @default([])
   pediatricNotes    String?

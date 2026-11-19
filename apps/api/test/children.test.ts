@@ -107,6 +107,40 @@ describe('Child Profile CRUD, Contextual Road Fork & Readiness API (PLAN-04)', (
       expect(payload.data.child.developmentalTier).toBe('TIER_3_AGES_12_13');
     });
 
+    it('creates child profile with gender MALE or FEMALE for future course tailoring', async () => {
+      const maleRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Noah',
+          gender: 'MALE',
+          birthYear: 2016,
+          birthMonth: 5,
+          roadType: 'PRE_DEVICE',
+        },
+      });
+      expect(maleRes.statusCode).toBe(201);
+      const malePayload = maleRes.json();
+      expect(malePayload.data.child.gender).toBe('MALE');
+
+      const femaleRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/children',
+        headers: { cookie: userACookie },
+        payload: {
+          name: 'Emma',
+          gender: 'FEMALE',
+          birthYear: 2014,
+          birthMonth: 8,
+          roadType: 'ACTIVE_DEVICE',
+        },
+      });
+      expect(femaleRes.statusCode).toBe(201);
+      const femalePayload = femaleRes.json();
+      expect(femalePayload.data.child.gender).toBe('FEMALE');
+    });
+
     it('correctly assigns TIER_2_AGES_10_11 for age 10-11', async () => {
       const response = await app.inject({
         method: 'POST',

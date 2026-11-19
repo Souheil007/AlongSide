@@ -4,6 +4,7 @@ import type {
   CreateChildInput,
   DevelopmentalTier,
   DeviceProfileStatus,
+  Gender,
   RoadType,
   UpdateChildInput,
 } from '@alongside/shared';
@@ -18,6 +19,7 @@ export interface ChildRecord {
   id: string;
   userId: string;
   name: string;
+  gender?: Gender | string | null;
   birthYear: number;
   birthMonth: number;
   roadType: RoadType;
@@ -40,6 +42,7 @@ export interface CreateChildRecordData {
   ageMonths?: number | null;
   userId: string;
   name: string;
+  gender?: Gender | null;
   birthYear: number;
   birthMonth: number;
   roadType: RoadType;
@@ -49,6 +52,7 @@ export interface CreateChildRecordData {
 
 export interface UpdateChildRecordData {
   name?: string;
+  gender?: Gender | null;
   birthYear?: number;
   birthMonth?: number;
   roadType?: RoadType;
@@ -134,6 +138,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
       dataToCreate = {
         userId: arg1,
         name: arg2.name.trim(),
+        gender: (arg2.gender as Gender) ?? null,
         birthYear: arg2.birthYear,
         birthMonth: arg2.birthMonth,
         roadType: arg2.roadType,
@@ -148,6 +153,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
       data: {
         userId: dataToCreate.userId,
         name: dataToCreate.name.trim(),
+        gender: dataToCreate.gender ? (dataToCreate.gender as any) : null,
         birthYear: dataToCreate.birthYear,
         birthMonth: dataToCreate.birthMonth,
         roadType: dataToCreate.roadType as any,
@@ -253,6 +259,9 @@ export class PrismaChildrenRepository implements ChildrenRepository {
       where: { id: childId },
       data: {
         ...(data.name !== undefined && { name: data.name.trim() }),
+        ...(data.gender !== undefined && {
+          gender: data.gender ? (data.gender as any) : null,
+        }),
         ...(data.birthYear !== undefined && { birthYear: data.birthYear }),
         ...(data.birthMonth !== undefined && { birthMonth: data.birthMonth }),
         ...(data.roadType !== undefined && { roadType: data.roadType as any }),
@@ -417,6 +426,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
       id: raw.id,
       userId: raw.userId,
       name: raw.name,
+      gender: (raw.gender as Gender) ?? null,
       birthYear: raw.birthYear,
       birthMonth: raw.birthMonth,
       roadType: raw.roadType as RoadType,
@@ -456,6 +466,7 @@ export class InMemoryChildrenRepository implements ChildrenRepository {
       dataToCreate = {
         userId: arg1,
         name: arg2.name.trim(),
+        gender: (arg2.gender as Gender) ?? null,
         birthYear: arg2.birthYear,
         birthMonth: arg2.birthMonth,
         roadType: arg2.roadType,
@@ -477,6 +488,7 @@ export class InMemoryChildrenRepository implements ChildrenRepository {
       ageMonths: dataToCreate.ageMonths ?? null,
       userId: dataToCreate.userId,
       name: dataToCreate.name.trim(),
+      gender: dataToCreate.gender ?? null,
       birthYear: dataToCreate.birthYear,
       birthMonth: dataToCreate.birthMonth,
       roadType: dataToCreate.roadType,
@@ -561,6 +573,7 @@ export class InMemoryChildrenRepository implements ChildrenRepository {
     const updated: ChildRecord = {
       ...child,
       ...(data.name !== undefined && { name: data.name.trim() }),
+      ...(data.gender !== undefined && { gender: data.gender ?? null }),
       ...(data.birthYear !== undefined && { birthYear: data.birthYear }),
       ...(data.birthMonth !== undefined && { birthMonth: data.birthMonth }),
       ...(data.roadType !== undefined && { roadType: data.roadType }),
