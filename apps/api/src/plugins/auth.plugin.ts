@@ -57,17 +57,37 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
   fastify,
   opts
 ) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const defaultCookieSecret = 'dev_secret_cookie_signing_key_32_chars_min';
+  const defaultJwtSecret = 'dev_jwt_secret_must_be_at_least_32_characters_long_for_security';
+
+  const resolvedCookieSecret = opts.cookieSecret || process.env.COOKIE_SECRET || defaultCookieSecret;
+  const resolvedJwtSecret = opts.jwtSecret || process.env.JWT_SECRET || defaultJwtSecret;
+
+  if (isProduction) {
+    if (!resolvedJwtSecret || resolvedJwtSecret === defaultJwtSecret || resolvedJwtSecret.length < 32) {
+      throw new Error(
+        'FATAL CONFIGURATION ERROR: JWT_SECRET must be explicitly configured with at least 32 characters in production.'
+      );
+    }
+    if (!resolvedCookieSecret || resolvedCookieSecret === defaultCookieSecret || resolvedCookieSecret.length < 32) {
+      throw new Error(
+        'FATAL CONFIGURATION ERROR: COOKIE_SECRET must be explicitly configured with at least 32 characters in production.'
+      );
+    }
+  }
+
   // Ensure @fastify/cookie is registered
   if (!fastify.hasPlugin('@fastify/cookie')) {
     await fastify.register(fastifyCookie, {
-      secret: opts.cookieSecret || process.env.COOKIE_SECRET || 'dev_secret_cookie_signing_key_32_chars_min',
+      secret: resolvedCookieSecret,
       hook: 'onRequest',
     });
   }
 
   // Register @fastify/jwt with cookie extraction support
   await fastify.register(fastifyJwt, {
-    secret: opts.jwtSecret || process.env.JWT_SECRET || 'dev_jwt_secret_must_be_at_least_32_characters_long_for_security',
+    secret: resolvedJwtSecret,
     cookie: {
       cookieName: SESSION_COOKIE_NAME,
       signed: false,

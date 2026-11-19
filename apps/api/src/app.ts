@@ -128,10 +128,14 @@ export interface AppOptions extends FastifyServerOptions {
 }
 
 export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const defaultCookieSecret = 'dev_secret_cookie_signing_key_32_chars_min';
+  const defaultJwtSecret = 'dev_jwt_secret_must_be_at_least_32_characters_long_for_security';
+
   const {
     corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000',
-    cookieSecret = process.env.COOKIE_SECRET || 'dev_secret_cookie_signing_key_32_chars_min',
-    jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret_must_be_at_least_32_characters_long_for_security',
+    cookieSecret = process.env.COOKIE_SECRET || defaultCookieSecret,
+    jwtSecret = process.env.JWT_SECRET || defaultJwtSecret,
     authRepository,
     childrenRepository,
     childrenService,
@@ -152,6 +156,21 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     llmOrchestrator,
     ...fastifyOpts
   } = opts;
+
+  // Enforce strict fail-fast validation in production mode:
+  // Default development secrets must NEVER be used in production.
+  if (isProduction) {
+    if (!jwtSecret || jwtSecret === defaultJwtSecret || jwtSecret.length < 32) {
+      throw new Error(
+        'FATAL CONFIGURATION ERROR: JWT_SECRET must be explicitly configured with at least 32 characters in production.'
+      );
+    }
+    if (!cookieSecret || cookieSecret === defaultCookieSecret || cookieSecret.length < 32) {
+      throw new Error(
+        'FATAL CONFIGURATION ERROR: COOKIE_SECRET must be explicitly configured with at least 32 characters in production.'
+      );
+    }
+  }
 
   const app = fastify({
     logger: true,
