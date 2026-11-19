@@ -18,10 +18,7 @@ import type {
   RoadType,
   Role,
   SubscriptionTier,
-  TriageZone,
-  TemperatureMethod,
   NutritionStage,
-  AntipyreticMedication,
   LessonArchetype,
 } from '../constants/index.js';
 
@@ -461,7 +458,7 @@ export interface MilestoneDTO {
   title: string;
   description: string;
   signsToWatch: string;
-  clinicalAuthority: string;
+  clinicalAuthority?: string;
   sortOrder: number;
   status?: MilestoneStatus;
   achievedAt?: string | null;
@@ -477,39 +474,6 @@ export interface ChildMilestoneDTO {
   parentNotes?: string | null;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface SymptomProtocolDTO {
-  id: string;
-  slug?: string;
-  symptomKey?: string;
-  title: string;
-  category?: 'FEVER' | 'RESPIRATORY' | 'GASTROINTESTINAL' | 'SKIN' | 'NEUROLOGICAL' | 'ENT' | string;
-  summary: string;
-  targetTiers?: DevelopmentalTier[];
-  redFlags?: string[];
-  yellowFlags?: string[];
-  greenHomeCare?: string[];
-  contraindications?: string[];
-  clinicalAuthority?: string;
-  feverThresholdF?: number;
-  redZoneCriteria?: string[];
-  yellowZoneCriteria?: string[];
-  greenZoneHomeCare?: string[];
-  immediateActionRed?: string;
-  primarySources?: string[];
-}
-
-export interface ChildHealthLogDTO {
-  id: string;
-  childId: string;
-  protocolId?: string | null;
-  symptomTitle: string;
-  temperatureF?: number | null;
-  triageZone: TriageZone;
-  clinicalNotes?: string | null;
-  actionTaken?: string | null;
-  loggedAt: string;
 }
 
 export interface NutritionGuideDTO {
@@ -564,56 +528,6 @@ export interface BehaviorGuideDTO {
   coRegulationScript: string;
   authoritativeLimit: string;
 }
-
-// ----------------------------------------------------
-// PEDIATRIC HEALTH & SYMPTOM TRIAGE DTOS
-// ----------------------------------------------------
-
-export interface TriageAssessmentRequestDTO {
-  childId?: string;
-  childAgeMonths?: number;
-  temperatureF?: number;
-  temperatureMethod?: TemperatureMethod;
-  symptoms: string[];
-  durationHours?: number;
-  behaviorNotes?: string;
-}
-
-export interface AntipyreticDosingResultDTO {
-  medication: AntipyreticMedication;
-  isContraindicated: boolean;
-  contraindicationReason?: string;
-  weightLbs: number;
-  weightKg: number;
-  childAgeMonths: number;
-  recommendedDoseMg: number;
-  recommendedDoseMl: number;
-  liquidConcentration: string;
-  frequencyHours: number;
-  frequencyDescription: string;
-  maxDosesPer24h: number;
-  maxDailyMg: number;
-  clinicalSafetyNotes: string[];
-}
-
-export interface TriageResultDTO {
-  zone: TriageZone;
-  requiresEmergency911: boolean;
-  conditionSuspected: string;
-  clinicalRationale?: string;
-  immediateActions: string[];
-  homeCareMeasures: string[];
-  redFlagWarnings: string[];
-  recommendedDosing?: AntipyreticDosingResultDTO | {
-    medication: string;
-    dosageMg: number;
-    frequency: string;
-    notes?: string;
-  } | null;
-  clinicalAuthority: string;
-}
-
-export type TriageAssessmentResultDTO = TriageResultDTO;
 
 export interface AllergenScheduleItemDTO {
   id: string;

@@ -8,7 +8,7 @@ export interface MilestoneSeedData {
   title: string;
   description: string;
   signsToWatch: string;
-  clinicalAuthority: string;
+  clinicalAuthority?: string;
   sortOrder: number;
 }
 
@@ -474,21 +474,24 @@ export async function seedMilestones(prisma: PrismaClient): Promise<void> {
       },
     });
 
+    const milestoneData = {
+      targetTier: item.targetTier,
+      targetAgeMonths: item.targetAgeMonths,
+      category: item.category,
+      title: item.title,
+      description: item.description,
+      signsToWatch: item.signsToWatch,
+      sortOrder: item.sortOrder,
+    };
+
     if (existing) {
       await prisma.milestone.update({
         where: { id: existing.id },
-        data: {
-          targetAgeMonths: item.targetAgeMonths,
-          category: item.category,
-          description: item.description,
-          signsToWatch: item.signsToWatch,
-          clinicalAuthority: item.clinicalAuthority,
-          sortOrder: item.sortOrder,
-        },
+        data: milestoneData,
       });
     } else {
       await prisma.milestone.create({
-        data: item,
+        data: milestoneData,
       });
     }
   }

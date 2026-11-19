@@ -6,17 +6,14 @@ import {
 } from './children.repository.js';
 import { ChildrenService } from './children.service.js';
 import type { MilestonesService } from '../milestones/milestones.service.js';
-import type { HealthService } from '../health/health.service.js';
 import {
   TrackMilestoneSchema,
-  LogHealthEventSchema,
 } from '@alongside/shared';
 
 export interface ChildrenRoutesOptions {
   childrenService?: ChildrenService;
   childrenRepository?: ChildrenRepository;
   milestonesService?: MilestonesService;
-  healthService?: HealthService;
 }
 
 const childDtoSchema = {
@@ -447,73 +444,6 @@ export const childrenRoutes: FastifyPluginAsync<ChildrenRoutesOptions> = async (
           },
         });
       }
-    }
-  );
-
-  // GET /api/v1/children/:childId/health-logs
-  fastify.get(
-    '/:childId/health-logs',
-    {
-      preHandler: [fastify.authenticate],
-    },
-    async (request, reply) => {
-      const { childId } = request.params as { childId: string };
-      if (!opts.healthService) {
-        return reply.status(500).send({
-          success: false,
-          error: {
-            code: 'SERVICE_UNAVAILABLE',
-            message: 'Health service is not configured',
-          },
-        });
-      }
-
-      const healthLogs = await opts.healthService.getChildHealthLogs(childId);
-      return reply.status(200).send({
-        success: true,
-        data: { healthLogs },
-      });
-    }
-  );
-
-  // POST /api/v1/children/:childId/health-logs
-  fastify.post(
-    '/:childId/health-logs',
-    {
-      preHandler: [fastify.authenticate],
-    },
-    async (request, reply) => {
-      const { childId } = request.params as { childId: string };
-      const parsed = LogHealthEventSchema.safeParse(request.body);
-      if (!parsed.success) {
-        return reply.status(400).send({
-          success: false,
-          error: {
-            code: 'VALIDATION_ERROR',
-            message: 'Invalid health event log payload',
-            details: parsed.error.issues,
-          },
-        });
-      }
-
-      if (!opts.healthService) {
-        return reply.status(500).send({
-          success: false,
-          error: {
-            code: 'SERVICE_UNAVAILABLE',
-            message: 'Health service is not configured',
-          },
-        });
-      }
-
-      const healthLog = await opts.healthService.createChildHealthLog(
-        childId,
-        parsed.data
-      );
-      return reply.status(200).send({
-        success: true,
-        data: { healthLog },
-      });
     }
   );
 };

@@ -41,7 +41,6 @@ const milestoneDtoSchema = {
     title: { type: 'string' },
     description: { type: 'string' },
     signsToWatch: { type: 'string' },
-    clinicalAuthority: { type: 'string' },
     sortOrder: { type: 'number' },
   },
   required: [
@@ -52,7 +51,6 @@ const milestoneDtoSchema = {
     'title',
     'description',
     'signsToWatch',
-    'clinicalAuthority',
   ],
 };
 

@@ -57,7 +57,6 @@ export class PrismaMilestonesRepository implements MilestonesRepository {
       title: m.title,
       description: m.description,
       signsToWatch: m.signsToWatch,
-      clinicalAuthority: m.clinicalAuthority,
       sortOrder: m.sortOrder,
     }));
   }
@@ -76,7 +75,6 @@ export class PrismaMilestonesRepository implements MilestonesRepository {
       title: m.title,
       description: m.description,
       signsToWatch: m.signsToWatch,
-      clinicalAuthority: m.clinicalAuthority,
       sortOrder: m.sortOrder,
     };
   }
@@ -156,7 +154,6 @@ export class InMemoryMilestonesRepository implements MilestonesRepository {
       title: item.title,
       description: item.description,
       signsToWatch: item.signsToWatch,
-      clinicalAuthority: item.clinicalAuthority,
       sortOrder: item.sortOrder,
     }));
   }

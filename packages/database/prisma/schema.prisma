@@ -47,13 +47,7 @@ enum DevelopmentalTier {
   TIER_4_AGES_14_PLUS
 }
 
-// v2.4.0 Clinical & Holistic Enums
-enum TriageZone {
-  RED       // Emergency Room / 911 immediately
-  YELLOW    // Contact pediatrician within 24 hours
-  GREEN     // Supportive home care
-}
-
+// v2.4.0 Holistic Enums
 enum DietaryStage {
   MILK_ONLY           // Exclusive breastmilk / formula (0–6m)
   SOLIDS_INTRODUCED   // Purees & Baby-Led Weaning (6–12m)
@@ -166,7 +160,6 @@ model User {
   academyProgress   AcademyProgress[]
   aiConversations   AiConversation[]
   subscription      Subscription?
-  scriptBookmarks   UserScriptBookmark[]
 
   @@map("users")
 }
@@ -212,7 +205,6 @@ model Child {
   deviceProfiles    DeviceProfile[]
   quizAttempts      QuizAttempt[]
   milestones        ChildMilestone[]
-  healthLogs        ChildHealthLog[]
 
   @@index([userId])
   @@map("children")
@@ -566,17 +558,6 @@ model ExploitAlert {
   @@map("exploit_alerts")
 }
 
-model UserScriptBookmark {
-  id                 String             @id @default(uuid())
-  userId             String
-  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  scriptId           String
-  createdAt          DateTime           @default(now())
-
-  @@unique([userId, scriptId])
-  @@map("user_script_bookmarks")
-}
-
 // ----------------------------------------------------
 // HOLISTIC CHILD UPBRINGING & PEDIATRIC HEALTH (v2.4.0)
 // ----------------------------------------------------
@@ -589,7 +570,6 @@ model Milestone {
   title             String
   description       String
   signsToWatch      String
-  clinicalAuthority String            @default("CDC / AAP Bright Futures")
   sortOrder         Int               @default(0)
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
@@ -616,42 +596,6 @@ model ChildMilestone {
   @@unique([childId, milestoneId])
   @@index([childId])
   @@map("child_milestones")
-}
-
-model SymptomProtocol {
-  id                String            @id @default(uuid())
-  slug              String            @unique
-  title             String
-  summary           String
-  targetTiers       DevelopmentalTier[]
-  redFlags          String[]          // Immediate ER / 911 triggers
-  yellowFlags       String[]          // Doctor visit within 24h triggers
-  greenHomeCare     String[]          // Supportive comfort measures
-  contraindications String[]          // Medications / foods strictly prohibited
-  clinicalAuthority String            @default("Barton Schmitt Pediatric Telephone Protocols / AAP")
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-
-  healthLogs        ChildHealthLog[]
-
-  @@map("symptom_protocols")
-}
-
-model ChildHealthLog {
-  id                String            @id @default(uuid())
-  childId           String
-  child             Child             @relation(fields: [childId], references: [id], onDelete: Cascade)
-  protocolId        String?
-  protocol          SymptomProtocol?  @relation(fields: [protocolId], references: [id], onDelete: SetNull)
-  symptomTitle      String
-  temperatureF      Float?
-  triageZone        TriageZone
-  clinicalNotes     String?
-  actionTaken       String?
-  loggedAt          DateTime          @default(now())
-
-  @@index([childId])
-  @@map("child_health_logs")
 }
 
 model NutritionGuide {

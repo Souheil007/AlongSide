@@ -61,6 +61,7 @@ graph TD
         P40["40: Academy Lesson Archetypes, Unified Blog Reader & De-Clinicalization (Joint)"]
         P41["41: Homepage GSAP 'Parent Calm' Animation & Scroll UI (FE)"]
         P42["42: React Bits UI Primitives & Parent Calm Ambient Motion (FE)"]
+        P43["43: Purge Legacy Clinical Triage & Ghost Tables (Joint)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -187,6 +188,7 @@ graph TD
 | [**`40-academy-lesson-archetypes-and-advisory-de-clinicalization.md`**](40-academy-lesson-archetypes-and-advisory-de-clinicalization.md) | Academy Lesson Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization | **Joint (FE & BE)** | PLAN-38, PLAN-39 | In Progress (Delegated via SOU-114 & SOU-115) |
 | [**`41-homepage-gsap-parent-calm-animation-ui.md`**](41-homepage-gsap-parent-calm-animation-ui.md) | Homepage GSAP 'Parent Calm' Animation & Scroll Experience | **Frontend Agent** | PLAN-23, PLAN-33 | Complete (PR #142) |
 | [**`42-reactbits-ui-components-and-parent-calm-motion.md`**](42-reactbits-ui-components-and-parent-calm-motion.md) | React Bits UI Primitives & 'Parent Calm' Ambient Motion System | **Frontend Agent** | PLAN-41 | In Progress |
+| [**`43-purge-legacy-clinical-triage-and-ghost-tables.md`**](43-purge-legacy-clinical-triage-and-ghost-tables.md) | Purge Legacy Clinical Symptom Triage, Child Health Logs & Ghost Tables | **Joint (FE & BE)** | PLAN-40, PLAN-41, PLAN-42 | Ready for Delegation |
 
 ---
 

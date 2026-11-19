@@ -284,7 +284,6 @@ export function calculateChildMilestonesProgress(
     title: m.title,
     description: m.description,
     signsToWatch: m.signsToWatch,
-    clinicalAuthority: m.clinicalAuthority,
   }));
 
   const childMilestoneRecords = milestones.map((m) => ({
