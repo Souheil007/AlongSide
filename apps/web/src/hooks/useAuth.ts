@@ -96,9 +96,9 @@ export function useAuth() {
   });
 
   return {
-    user: isLoggedOutParam ? null : (data ?? null),
-    isLoading: isLoggedOutParam ? false : isLoading,
-    isAuthenticated: isLoggedOutParam ? false : Boolean(data),
+    user: isLoggedOutParam && !data ? null : (data ?? null),
+    isLoading: isLoggedOutParam && !data ? false : isLoading,
+    isAuthenticated: isLoggedOutParam && !data ? false : Boolean(data),
     isError,
     error,
     refetchUser: refetch,

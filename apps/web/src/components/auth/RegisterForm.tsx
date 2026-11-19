@@ -16,9 +16,16 @@ import { AlongsideLogo } from "@/components/shared/AlongsideLogo";
 
 export function RegisterForm() {
   const router = useRouter();
-  const { register: registerAuth, isRegistering } = useAuth();
+  const { register: registerAuth, isRegistering, isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
   const [registeredEmail, setRegisteredEmail] = React.useState<string | null>(null);
+
+  // If already authenticated, redirect to dashboard
+  React.useEffect(() => {
+    if (!isAuthLoading && isAuthenticated) {
+      window.location.replace("/dashboard");
+    }
+  }, [isAuthLoading, isAuthenticated]);
 
   const {
     register,
