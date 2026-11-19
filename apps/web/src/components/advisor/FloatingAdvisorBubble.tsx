@@ -335,15 +335,15 @@ export function FloatingAdvisorBubble() {
                     </div>
 
                     {!isUser && m.matchedFaqIds && m.matchedFaqIds.length > 0 && (
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        {m.matchedFaqIds.slice(0, 2).map((faqId) => (
+                      <div className="mt-1.5 flex flex-wrap gap-1">
+                        {m.matchedFaqIds.slice(0, 1).map((faqId) => (
                           <Link
                             key={faqId}
                             href={`/advisor/faqs?q=${encodeURIComponent(faqId.replace(/^faq-/, ''))}`}
                             onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center gap-1 rounded-[4px] bg-[#EAF3EE] px-1.5 py-0.5 text-[10px] font-mono font-medium text-[#143D2B] hover:bg-[#D1E7DD]"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] border border-[#143D2B]/15 px-2.5 py-0.5 text-[10px] font-mono font-medium text-[#143D2B] hover:bg-[#D1E7DD] transition-colors"
                           >
-                            <span>Advisory FAQ reference</span>
+                            <span>Explore related FAQ</span>
                             <ExternalLink className="h-2.5 w-2.5" />
                           </Link>
                         ))}

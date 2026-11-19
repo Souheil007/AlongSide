@@ -134,6 +134,48 @@ describe('24/7 AI Advisor & Living FAQ Explorer Specification (PLAN-11)', () => 
       // Since aborted before first token, no tokens should accumulate
       expect(tokens).toHaveLength(0);
     });
+
+    it('handles natural greetings with warm orientation rather than generic friction script', async () => {
+      const tokens: string[] = [];
+      let matchedFaqs: string[] = [];
+
+      await streamAiAdvisorChat(
+        { message: 'hello' },
+        {
+          onToken: (t) => tokens.push(t),
+          onContext: (ctx) => {
+            matchedFaqs = ctx.matchedFaqs;
+          },
+        },
+        { tokenDelayMs: 0 }
+      );
+
+      const combined = tokens.join('');
+      expect(combined).toContain('Alongside Pediatric Advisor');
+      expect(combined).toContain('Sleep & Bedtime battles');
+      expect(matchedFaqs).toHaveLength(0);
+    });
+
+    it('handles sleep queries with evidence-based pediatric sleep guidance', async () => {
+      const tokens: string[] = [];
+      let matchedFaqs: string[] = [];
+
+      await streamAiAdvisorChat(
+        { message: 'my child refuses to sleep at bedtime' },
+        {
+          onToken: (t) => tokens.push(t),
+          onContext: (ctx) => {
+            matchedFaqs = ctx.matchedFaqs;
+          },
+        },
+        { tokenDelayMs: 0 }
+      );
+
+      const combined = tokens.join('');
+      expect(combined).toContain('Evidence-Based Sleep Routine Anchors');
+      expect(combined).toContain('melatonin');
+      expect(matchedFaqs).toContain('faq-curfew-explosion');
+    });
   });
 
   describe('Situational Quick Prompts Specification', () => {

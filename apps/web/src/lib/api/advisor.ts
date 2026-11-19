@@ -387,13 +387,43 @@ function findSimulatedResponse(message: string): {
   matchedFaqs: string[];
   tokens: string[];
 } {
-  const lower = message.toLowerCase();
+  const lower = message.toLowerCase().trim();
 
-  if (lower.includes('snapchat') || lower.includes('everyone has') || lower.includes('ruining my life')) {
+  // 1. Natural Greetings and Introductions
+  if (
+    /^(hello|hi|hey|good\s+morning|good\s+afternoon|good\s+evening|howdy|greetings|hola)\b/i.test(lower) ||
+    lower.includes('who are you') ||
+    lower.includes('how are you') ||
+    lower.includes('what can you do')
+  ) {
+    return {
+      matchedFaqs: [],
+      tokens: [
+        'Hello! I am your **24/7 Alongside Pediatric Advisor**, grounded in child developmental neuroscience and parent-child co-regulation.\n\n',
+        'I am here to help you navigate everyday parenting friction with calm, evidence-based scripts and clinical guidance. You can ask me about:\n\n',
+        '- **Sleep & Bedtime battles** (melatonin preservation, bedtime resistance, wind-down routines)\n',
+        '- **Tantrums & Big feelings** (amygdala hijack de-escalation, somatic co-regulation)\n',
+        '- **Device & Screen boundaries** (curfews, dopamine crash transitions, phone readiness)\n',
+        '- **Nutrition & Mealtime resistance** (Division of Responsibility, picky eating)\n',
+        '- **Social dynamics & Online safety** (Discord/group chat drama, cyberbullying, peer pressure)\n\n',
+        'What situation or question can I help you work through right now?',
+      ],
+    };
+  }
+
+  // 2. First Phone & Social Media Pressure
+  if (
+    lower.includes('snapchat') ||
+    lower.includes('everyone has') ||
+    lower.includes('ruining my life') ||
+    lower.includes('tiktok') ||
+    lower.includes('instagram') ||
+    (lower.includes('phone') && (lower.includes('first') || lower.includes('buy') || lower.includes('wants') || lower.includes('ready')))
+  ) {
     return {
       matchedFaqs: ['faq-first-phone-plea'],
       tokens: [
-        'Take a deep breath—your 10-year-old’s plea is fueled by **adrenarche**, an evolutionary shift where peer approval suddenly triggers the brain’s social survival circuit.\n\n',
+        'Take a deep breath—your child’s plea is fueled by **adrenarche**, an evolutionary developmental shift where peer approval suddenly triggers the brain’s social survival circuit.\n\n',
         'When they scream *"Everyone else has it!"*, their limbic system genuinely feels the terror of being ostracized. However, algorithmic social feeds are empirically proven to trigger social comparison loops in brains that have not yet developed prefrontal executive filters.\n\n',
         '### Recommended De-Escalation Script:\n\n',
         '> "I hear how much staying connected with your friends matters to you, and I promise I am not trying to isolate you. Our family policy is that algorithmic social media waits until 8th grade because science shows young brains deserve time to grow without online popularity metrics. Let\'s host Maya and Sarah over this Saturday for a movie and pizza night instead."',
@@ -401,6 +431,85 @@ function findSimulatedResponse(message: string): {
     };
   }
 
+  // 3. Sleep & Bedtime Challenges
+  if (
+    lower.includes('sleep') ||
+    lower.includes('bedtime') ||
+    lower.includes("won't sleep") ||
+    lower.includes('night wake') ||
+    lower.includes('wake up') ||
+    lower.includes('nightmare') ||
+    /\bnaps?\b/i.test(lower)
+  ) {
+    return {
+      matchedFaqs: ['faq-curfew-explosion'],
+      tokens: [
+        'Pediatric sleep is the neurological foundation of emotional regulation, memory consolidation, and cellular growth.\n\n',
+        'When children fight sleep, their bodies often produce **cortisol (a stress hormone)** to fight exhaustion, giving them a paradoxical "second wind" that can look like hyperactivity or defiance.\n\n',
+        '### Evidence-Based Sleep Routine Anchors:\n\n',
+        '1. **Dim ambient lighting 60 minutes before bed**: Darkness signals the pineal gland to synthesize natural melatonin. Blue-enriched screens should dock at least 60 minutes before lights out.\n',
+        '2. **Replace interactive screens with sensory wind-downs**: Reading, warm baths, audiobooks, or light somatic stretching ease the nervous system into a relaxed parasympathetic state.\n',
+        '3. **Predictable bedtime cues**: Keep lights-out and wake-up times within 30 minutes of each other every day, even on weekends.\n\n',
+        '### What to Say When They Resist Bedtime:\n\n',
+        '> "I know your brain still wants to play, but your body needs rest so you can grow strong tomorrow. You don\'t have to fall asleep right away, but our bodies rest in bed now. I will sit beside you for five minutes while we take slow belly breaths together."',
+      ],
+    };
+  }
+
+  // 3. Tantrums, Meltdowns & Big Feelings
+  if (
+    lower.includes('tantrum') ||
+    lower.includes('meltdown') ||
+    lower.includes('screaming') ||
+    lower.includes('crying') ||
+    lower.includes('hitting') ||
+    lower.includes('bite') ||
+    lower.includes('angry') ||
+    lower.includes('temper')
+  ) {
+    return {
+      matchedFaqs: ['faq-screen-transitions'],
+      tokens: [
+        'During an emotional meltdown, your child is experiencing an **acute amygdala hijack**.\n\n',
+        'Their prefrontal cortex—the part of the brain that governs logic, speech, and consequence analysis—is temporarily offline. Rationalizing, lecturing, or shouting while they are in fight-or-flight only heightens danger signals in their nervous system.\n\n',
+        '### The 3-Step Somatic Co-Regulation Protocol:\n\n',
+        '1. **Lower your physical posture and tone**: Drop down to eye level, soften your shoulders, and speak in a slow, low voice. Your calm nervous system becomes the anchor that recalibrates theirs.\n',
+        '2. **Name the sensation without judgment**: *"Your body is feeling very big and angry right now. I am right here with you."*\n',
+        '3. **Protect physical safety neutrally**: If they are hitting or throwing, gently block their hands: *"I won\'t let you hit me, and I won\'t let you get hurt. You are safe."*\n\n',
+        '### What to Say Once Breathing Slows:\n\n',
+        '> "That felt huge, didn\'t it? You\'re not in trouble. When big feelings happen, we learn how to breathe through them together."',
+      ],
+    };
+  }
+
+  // 4. Picky Eating & Mealtime Resistance
+  if (
+    lower.includes('picky') ||
+    lower.includes('refuses to eat') ||
+    lower.includes('vegetable') ||
+    lower.includes('dinner battle') ||
+    lower.includes('mealtime') ||
+    lower.includes('food') ||
+    (lower.includes('eat') && (lower.includes('child') || lower.includes('kid') || lower.includes('toddler')))
+  ) {
+    return {
+      matchedFaqs: ['faq-screen-transitions'],
+      tokens: [
+        'Mealtimes frequently turn into power struggles because eating is one of the few physical domains a child has absolute bodily autonomy over.\n\n',
+        'The gold standard pediatric approach is **Ellyn Satter’s Division of Responsibility in Feeding**:\n\n',
+        '- **The Parent\'s Job**: Decide *what* is served, *when* it is served, and *where* it is served.\n',
+        '- **The Child\'s Job**: Decide *whether* to eat, and *how much* to eat from what is offered.\n\n',
+        '### De-Escalation Guidelines:\n\n',
+        '1. **Always include one "safe" familiar food** on the plate (e.g. bread, rice, sliced fruit) alongside new foods.\n',
+        '2. **Eliminate short-order cooking**: Do not prepare a second special meal if they refuse dinner, but do not punish them either.\n',
+        '3. **Remove food pressure**: Pressuring a child to "take two more bites" increases cortisol and reinforces food aversion.\n\n',
+        '### What to Say at the Table:\n\n',
+        '> "You do not have to eat the vegetables if your body doesn\'t want them tonight. You can leave them on your plate. We enjoy having you sit with us for dinner."',
+      ],
+    };
+  }
+
+  // 5. Curfew & Bedtime Device Docking
   if (lower.includes('curfew') || lower.includes('past curfew') || lower.includes('phone in bed')) {
     return {
       matchedFaqs: ['faq-curfew-explosion'],
@@ -413,7 +522,8 @@ function findSimulatedResponse(message: string): {
     };
   }
 
-  if (lower.includes('slammed door') || lower.includes('screen shutoff') || lower.includes('shut off') || lower.includes('explode')) {
+  // 7. Screen Shutoff Meltdowns & Gaming Cutoffs
+  if (lower.includes('slammed door') || lower.includes('screen shutoff') || lower.includes('shut off') || lower.includes('explode') || lower.includes('gaming') || lower.includes('video game')) {
     return {
       matchedFaqs: ['faq-screen-transitions'],
       tokens: [
@@ -426,6 +536,7 @@ function findSimulatedResponse(message: string): {
     };
   }
 
+  // 8. Hidden Apps & Vaults
   if (lower.includes('calculator') || lower.includes('vault') || lower.includes('hidden app')) {
     return {
       matchedFaqs: ['faq-calculator-vault'],
@@ -438,6 +549,7 @@ function findSimulatedResponse(message: string): {
     };
   }
 
+  // 9. Bullying & Discord
   if (lower.includes('discord') || lower.includes('bullied') || lower.includes('bullying') || lower.includes('group chat')) {
     return {
       matchedFaqs: ['faq-discord-bullying'],
@@ -450,18 +562,18 @@ function findSimulatedResponse(message: string): {
     };
   }
 
-  // General calm parenting response
+  // 10. General calm parenting response
   return {
-    matchedFaqs: ['faq-screen-transitions', 'faq-first-phone-plea'],
+    matchedFaqs: ['faq-screen-transitions'],
     tokens: [
-      'Parenting through digital friction requires **connection before correction**.\n\n',
-      'When emotions are high, a child\'s logical brain (prefrontal cortex) goes offline and their emotional alarm system (amygdala) takes control. Demanding obedience in that moment only accelerates conflict.\n\n',
+      'Parenting through digital and behavioral friction requires **connection before correction**.\n\n',
+      'When emotions are heightened, a child\'s logical brain (prefrontal cortex) temporarily disconnects, and their emotional alarm center (amygdala) takes control. Demanding immediate compliance in that state tends to accelerate the conflict.\n\n',
       '### Core Parent Calm Framework:\n\n',
-      '1. **Validate the emotional reality**: *"I can see how much this matters to you."*\n',
-      '2. **Anchor the biological boundary**: *"My job as your parent is protecting your sleep and brain health."*\n',
-      '3. **Offer collaborative agency**: *"Let\'s review our Bilateral Agreement tomorrow and figure out a system that feels fair to both of us."*\n\n',
+      '1. **Validate their emotional reality**: *"I hear how important this is to you, and I understand your frustration."*\n',
+      '2. **Anchor the biological boundary**: *"My responsibility as your parent is protecting your sleep, focus, and emotional well-being."*\n',
+      '3. **Offer collaborative agency**: *"Let\'s pause right now, and revisit this together tomorrow when we can both discuss it calmly."*\n\n',
       '### What to Say Right Now:\n\n',
-      '> "I love you too much to argue about this while we are both tired. Let\'s pause, take ten minutes to cool down, and talk this through together constructively."',
+      '> "I love you too much to argue about this while we are both upset. Let\'s take ten minutes to cool down, and talk through solutions together."',
     ],
   };
 }
