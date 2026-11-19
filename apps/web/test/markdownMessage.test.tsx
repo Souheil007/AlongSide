@@ -50,4 +50,14 @@ describe('MarkdownMessage Component', () => {
     expect(html).toContain('Script to Say:');
     expect(html).toContain('I love you too much to argue');
   });
+
+  it('renders mixed intro text followed directly by bullet list items', () => {
+    const markdown = `You can ask me about:\n- **Sleep battles** (melatonin preservation)\n- **Tantrums** (co-regulation)`;
+    const html = renderToStaticMarkup(<MarkdownMessage content={markdown} />);
+
+    expect(html).toContain('You can ask me about:');
+    expect(html).toContain('<ul');
+    expect(html).toContain('<li');
+    expect(html).toContain('Sleep battles</strong>');
+  });
 });

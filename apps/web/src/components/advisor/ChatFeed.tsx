@@ -17,6 +17,8 @@ import {
 import type { AiMessageDTO } from '@alongside/shared';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
+import { MarkdownMessage } from '@/components/shared/MarkdownMessage';
 
 interface ChatFeedProps {
   messages: AiMessageDTO[];
@@ -132,7 +134,9 @@ export function ChatFeed({
  * Message Bubble for standard parent and assistant messages
  */
 function MessageBubble({ message }: { message: AiMessageDTO }) {
+  const { user } = useAuth();
   const isParent = message.role === 'USER';
+  const parentName = user?.fullName?.trim() || 'Parent';
   const isEmergency =
     !isParent &&
     (message.content.includes('EMERGENCY MEDICAL DIRECTIVE') ||
@@ -213,7 +217,7 @@ function MessageBubble({ message }: { message: AiMessageDTO }) {
               isParent ? 'text-slate-400' : 'text-teal-700'
             )}
           >
-            {isParent ? 'Parent' : 'AlongSide AI Advisor'}
+            {isParent ? parentName : 'AlongSide AI Advisor'}
           </span>
           <span className="text-[10px] text-slate-400">
             {formatMessageTime(message.createdAt)}
@@ -324,12 +328,11 @@ function MessageContent({
           );
         }
         return (
-          <div
+          <MarkdownMessage
             key={`text-${index}`}
-            className="text-slate-700 leading-relaxed space-y-2 whitespace-pre-wrap"
-          >
-            {renderFormattedText(part.content)}
-          </div>
+            content={part.content}
+            className="text-sm text-slate-800 leading-relaxed"
+          />
         );
       })}
       {isStreaming && (
@@ -439,26 +442,6 @@ function splitScriptsAndText(content: string): ContentPart[] {
   }
 
   return parts.length > 0 ? parts : [{ type: 'text', content }];
-}
-
-function renderFormattedText(text: string) {
-  return text.split('\n').map((line, idx) => {
-    if (line.startsWith('### ')) {
-      return (
-        <h4 key={idx} className="font-bold text-slate-900 text-sm mt-2 mb-1">
-          {line.replace('### ', '')}
-        </h4>
-      );
-    }
-    if (line.startsWith('## ')) {
-      return (
-        <h3 key={idx} className="font-bold text-slate-900 text-base mt-2 mb-1">
-          {line.replace('## ', '')}
-        </h3>
-      );
-    }
-    return <span key={idx} className="block">{line}</span>;
-  });
 }
 
 function cleanFaqId(id: string): string {
