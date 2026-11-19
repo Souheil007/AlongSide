@@ -25,7 +25,7 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
       expect(links).toEqual([
         { href: '/dashboard', label: 'Home' },
         { href: '/academy', label: 'Academy' },
-        { href: '/digest', label: 'Digest' },
+        { href: '/digest', label: 'Culture & Trends' },
         { href: '/devices', label: 'Devices' },
       ]);
     });

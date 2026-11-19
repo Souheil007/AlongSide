@@ -180,7 +180,7 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       const expectedLinks = [
         { href: '/dashboard', label: 'Home' },
         { href: '/academy', label: 'Academy' },
-        { href: '/digest', label: 'Digest' },
+        { href: '/digest', label: 'Culture & Trends' },
         { href: '/devices', label: 'Devices' },
       ];
 
@@ -224,7 +224,7 @@ describe('Unified Navigation Shell & Session Logout Hardening Specification (PLA
       expect(hubs).toEqual([
         { href: '/dashboard', label: 'Home' },
         { href: '/academy', label: 'Academy' },
-        { href: '/digest', label: 'Digest' },
+        { href: '/digest', label: 'Culture & Trends' },
         { href: '/devices', label: 'Devices' },
       ]);
     });

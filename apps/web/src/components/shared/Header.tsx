@@ -35,7 +35,7 @@ export interface NavLinkItem {
 export const AUTHENTICATED_CORE_LINKS: NavLinkItem[] = [
   { href: '/dashboard', label: 'Home' },
   { href: '/academy', label: 'Academy', icon: BookOpen },
-  { href: '/digest', label: 'Digest', icon: Sparkles },
+  { href: '/digest', label: 'Culture & Trends', icon: Sparkles },
   { href: '/devices', label: 'Devices', icon: Shield },
 ];
 
