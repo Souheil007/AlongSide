@@ -18,6 +18,7 @@ export function RegisterForm() {
   const router = useRouter();
   const { register: registerAuth, isRegistering } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
+  const [registeredEmail, setRegisteredEmail] = React.useState<string | null>(null);
 
   const {
     register,
@@ -36,7 +37,7 @@ export function RegisterForm() {
     setServerError(null);
     try {
       await registerAuth(data);
-      router.push("/");
+      setRegisteredEmail(data.email);
     } catch (err) {
       if (err instanceof ApiClientError) {
         setServerError(err.message);
@@ -49,6 +50,36 @@ export function RegisterForm() {
   };
 
   const isLoading = isRegistering || isSubmitting;
+
+  if (registeredEmail) {
+    return (
+      <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white text-center p-6 sm:p-8">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-4 shadow-xs">
+          <CheckCircle2 className="h-7 w-7 text-[#143D2B]" />
+        </div>
+        <CardTitle className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
+          Account Created!
+        </CardTitle>
+        <p className="text-xs sm:text-sm text-[#494F4C] mt-2.5 leading-relaxed">
+          Your parent account for <span className="font-semibold text-slate-800">{registeredEmail}</span> has been successfully created.
+        </p>
+        <p className="text-xs text-[#858C88] mt-1.5 leading-relaxed">
+          Please sign in to set up your first child profile and begin your 7-day risk-free trial.
+        </p>
+        <div className="mt-6">
+          <Button
+            type="button"
+            onClick={() =>
+              router.push(`/login?registered=true&email=${encodeURIComponent(registeredEmail)}`)
+            }
+            className="w-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white min-h-[44px] font-semibold text-xs rounded-full shadow-sm cursor-pointer"
+          >
+            Proceed to Sign In
+          </Button>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">

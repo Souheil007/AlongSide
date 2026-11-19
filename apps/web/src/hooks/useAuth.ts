@@ -46,10 +46,17 @@ export function useAuth() {
   const registerMutation = useMutation({
     mutationFn: async (input: RegisterUserInput) => {
       const response = await authApi.register(input);
+      // Immediately revoke any server session cookie so user is NOT logged in directly on signup
+      try {
+        await authApi.logout();
+      } catch {
+        // Safe fallback
+      }
       return response.user;
     },
-    onSuccess: (user: UserDTO) => {
-      queryClient.setQueryData(AUTH_QUERY_KEY, user);
+    onSuccess: () => {
+      // Ensure auth query cache does NOT store active session on registration
+      queryClient.setQueryData(AUTH_QUERY_KEY, null);
     },
   });
 
