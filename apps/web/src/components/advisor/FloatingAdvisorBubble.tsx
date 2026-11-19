@@ -20,6 +20,7 @@ import { useAiAdvisorChat } from '@/hooks/useAiAdvisorChat';
 import { useChildContextStore, selectActiveChild, formatChildAge } from '@/stores/useChildContextStore';
 import { resolveContextualPrompts, type ContextualPrompt } from '@/lib/advisor-context';
 import { Button } from '@/components/ui/Button';
+import { MarkdownMessage } from '@/components/shared/MarkdownMessage';
 import { cn } from '@/lib/utils';
 
 export function FloatingAdvisorBubble() {
@@ -331,7 +332,11 @@ export function FloatingAdvisorBubble() {
                           : 'bg-white border border-[#E3E3DC] text-[#111413] rounded-bl-xs'
                       )}
                     >
-                      <p className="whitespace-pre-wrap">{m.content}</p>
+                      {isUser ? (
+                        <p className="whitespace-pre-wrap">{m.content}</p>
+                      ) : (
+                        <MarkdownMessage content={m.content} />
+                      )}
                     </div>
 
                     {!isUser && m.matchedFaqIds && m.matchedFaqIds.length > 0 && (
@@ -358,10 +363,7 @@ export function FloatingAdvisorBubble() {
                 <div className="flex flex-col items-start">
                   <div className="max-w-[85%] rounded-2xl rounded-bl-xs bg-white border border-[#E3E3DC] px-3.5 py-2.5 text-xs text-[#111413] shadow-2xs leading-relaxed">
                     {activeStreamingText ? (
-                      <p className="whitespace-pre-wrap">
-                        {activeStreamingText}
-                        <span className="inline-block h-3 w-1.5 ml-1 bg-[#143D2B] animate-pulse" />
-                      </p>
+                      <MarkdownMessage content={activeStreamingText} isStreaming />
                     ) : (
                       <div className="flex items-center gap-1.5 py-1 text-slate-400">
                         <span className="h-2 w-2 rounded-full bg-[#143D2B] animate-bounce [animation-delay:-0.3s]" />

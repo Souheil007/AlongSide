@@ -18,7 +18,7 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
     it('asserts AUTHENTICATED_CORE_LINKS contains the canonical advisory destinations', () => {
       expect(AUTHENTICATED_CORE_LINKS).toHaveLength(4);
       const labels = AUTHENTICATED_CORE_LINKS.map((link) => link.label);
-      expect(labels).toEqual(['Home', 'Academy', 'Digest', 'Devices']);
+      expect(labels).toEqual(['Home', 'Academy', 'Culture & Trends', 'Devices']);
     });
 
     it('asserts devices link is present in primary navigation', () => {
