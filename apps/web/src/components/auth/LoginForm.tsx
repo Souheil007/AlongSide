@@ -18,26 +18,40 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isLoggedOut = searchParams?.get("logged_out") === "true";
+  const isRegistered = searchParams?.get("registered") === "true";
+  const queryEmail = searchParams?.get("email") || "";
   const { login, isLoggingIn } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginUserInput>({
     resolver: zodResolver(LoginUserSchema),
     defaultValues: {
-      email: "",
+      email: queryEmail,
       password: "",
     },
   });
 
+  React.useEffect(() => {
+    if (queryEmail) {
+      setValue("email", queryEmail);
+    }
+  }, [queryEmail, setValue]);
+
   const onSubmit = async (data: LoginUserInput) => {
     setServerError(null);
     try {
-      await login(data);
-      router.push("/dashboard");
+      const user = await login(data);
+      // Route user with 0 children directly to first-child onboarding
+      if (!user?.childrenCount || user.childrenCount === 0) {
+        router.push("/children/new");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err) {
       if (err instanceof ApiClientError) {
         setServerError(err.message);
@@ -68,6 +82,20 @@ export function LoginForm() {
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <CardContent className="space-y-4">
+          {isRegistered && !serverError && (
+            <div
+              role="status"
+              className="flex items-start gap-2.5 rounded-[8px] border border-emerald-200 bg-emerald-50 p-3.5 text-xs text-emerald-900"
+            >
+              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-emerald-600" />
+              <div>
+                <p className="font-semibold">Account created successfully!</p>
+                <p className="text-emerald-700 mt-0.5">
+                  Please sign in with your password to set up your first child profile.
+                </p>
+              </div>
+            </div>
+          )}
           {isLoggedOut && !serverError && (
             <div
               role="status"

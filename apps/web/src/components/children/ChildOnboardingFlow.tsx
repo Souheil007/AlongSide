@@ -139,6 +139,9 @@ export function ChildOnboardingFlow({
   const [createdChild, setCreatedChild] = React.useState<ChildDTO | null>(null);
   const [apiError, setApiError] = React.useState<string | null>(null);
 
+  const { children: existingChildren } = useChildContextStore();
+  const hasExistingChildren = Boolean(existingChildren && existingChildren.length > 0);
+
   const { mutateAsync: createChildMutation, isPending: isSubmitting } = useCreateChild();
 
   const {
@@ -796,11 +799,15 @@ export function ChildOnboardingFlow({
           <span className="text-xs font-medium text-slate-500">Parent Calm Onboarding</span>
         </div>
         <CardTitle className="text-xl sm:text-2xl font-bold text-slate-900 mt-2">
-          {step === 1 ? 'Add Child Profile' : 'Choose Your Contextual Road'}
+          {step === 1
+            ? (hasExistingChildren ? 'Add Child Profile' : 'Create Your First Child Profile')
+            : 'Choose Your Contextual Road'}
         </CardTitle>
         <CardDescription className="text-sm text-slate-600">
           {step === 1
-            ? 'We customize developmentally calibrated blueprints based on your child’s age and developmental stage.'
+            ? (hasExistingChildren
+                ? 'We customize developmentally calibrated blueprints based on your child’s age and developmental stage.'
+                : 'Welcome to AlongSide! Let’s set up your child’s profile to personalize your family dashboard, developmental milestones, and age-tailored education.')
             : `Select the digital situation that accurately describes ${watchedName || 'your child'} today.`}
         </CardDescription>
       </CardHeader>
