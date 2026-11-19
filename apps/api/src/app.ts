@@ -65,15 +65,6 @@ import {
 import { AiAdvisorService } from './modules/ai-advisor/ai-advisor.service.js';
 import { MultiProviderLlmOrchestrator } from './modules/ai-advisor/adapters/llm-orchestrator.js';
 import { FaqRetrievalService } from './modules/ai-advisor/embedding.service.js';
-import {
-  type HealthRepository,
-  PrismaHealthRepository,
-} from './modules/health/health.repository.js';
-import {
-  type PediatricTriageEngine,
-  BartonSchmittTriageAdapter,
-} from './modules/health/triage.engine.js';
-import { HealthService } from './modules/health/health.service.js';
 import { milestonesRoutes } from './modules/milestones/milestones.routes.js';
 import {
   type MilestonesRepository,
@@ -127,9 +118,6 @@ export interface AppOptions extends FastifyServerOptions {
   llmOrchestrator?: MultiProviderLlmOrchestrator;
   milestonesRepository?: MilestonesRepository;
   milestonesService?: MilestonesService;
-  healthRepository?: HealthRepository;
-  healthService?: HealthService;
-  triageEngine?: PediatricTriageEngine;
   nutritionRepository?: NutritionRepository;
   nutritionService?: NutritionService;
   brainGamesRepository?: BrainGamesRepository;
@@ -306,18 +294,6 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     opts.milestonesService ??
     new MilestonesService(resolvedMilestonesRepository);
 
-  const resolvedTriageEngine =
-    opts.triageEngine ?? new BartonSchmittTriageAdapter();
-  const resolvedHealthRepository =
-    opts.healthRepository ?? new PrismaHealthRepository();
-  const resolvedHealthService =
-    opts.healthService ??
-    new HealthService(
-      resolvedHealthRepository,
-      resolvedTriageEngine,
-      resolvedChildrenRepository
-    );
-
   const resolvedNutritionRepository =
     opts.nutritionRepository ?? new PrismaNutritionRepository();
   const resolvedNutritionService =
@@ -345,10 +321,6 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   // Register domain route plugins with /api/v1 prefixes
   await app.register(healthRoutes, {
     prefix: '/api/v1/health',
-    healthRepository: resolvedHealthRepository,
-    healthService: resolvedHealthService,
-    triageEngine: resolvedTriageEngine,
-    childrenRepository: resolvedChildrenRepository,
   });
   await app.register(authRoutes, {
     prefix: '/api/v1/auth',
@@ -359,7 +331,6 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     childrenRepository: resolvedChildrenRepository,
     childrenService: resolvedChildrenService,
     milestonesService: resolvedMilestonesService,
-    healthService: resolvedHealthService,
   });
   await app.register(agreementsRoutes, {
     prefix: '/api/v1/agreements',

@@ -7,7 +7,6 @@ export * from './academy.js';
 export * from './digest.js';
 export * from './faq.js';
 export * from './milestones.js';
-export * from './health.js';
 export * from './nutrition.js';
 export * from './brainGames.js';
 export * from './behavior.js';

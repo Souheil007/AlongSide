@@ -78,13 +78,6 @@ export const ChapterPriority = {
 } as const;
 export type ChapterPriority = (typeof ChapterPriority)[keyof typeof ChapterPriority];
 
-export const TriageZone = {
-  RED: 'RED',
-  YELLOW: 'YELLOW',
-  GREEN: 'GREEN',
-} as const;
-export type TriageZone = (typeof TriageZone)[keyof typeof TriageZone];
-
 export const DietaryStage = {
   MILK_ONLY: 'MILK_ONLY',
   SOLIDS_INTRODUCED: 'SOLIDS_INTRODUCED',
@@ -198,9 +191,3 @@ export const NutritionStage = {
   PUBERTAL_GROWTH: 'PUBERTAL_GROWTH',
 } as const;
 export type NutritionStage = (typeof NutritionStage)[keyof typeof NutritionStage];
-
-export const AntipyreticMedication = {
-  ACETAMINOPHEN: 'ACETAMINOPHEN',
-  IBUPROFEN: 'IBUPROFEN',
-} as const;
-export type AntipyreticMedication = (typeof AntipyreticMedication)[keyof typeof AntipyreticMedication];
