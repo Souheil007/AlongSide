@@ -83,7 +83,7 @@ export async function compileAgreementProfile(
 }
 
 export function getAgreementPdfUrl(id: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
   return `${baseUrl.replace(/\/$/, '')}/api/v1/agreements/${id}/export-pdf`;
 }
 
