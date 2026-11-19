@@ -15,7 +15,6 @@ import {
   RotateCcw,
   AlertCircle,
   AlertTriangle,
-  Minimize2,
 } from 'lucide-react';
 import { useAiAdvisorChat } from '@/hooks/useAiAdvisorChat';
 import { useChildContextStore, selectActiveChild, formatChildAge } from '@/stores/useChildContextStore';
@@ -184,25 +183,31 @@ export function FloatingAdvisorBubble() {
             aria-modal="true"
             aria-label="24/7 AI Child Advisor Chat"
             className={cn(
-              'fixed z-50 flex flex-col bg-white shadow-2xl border border-[#E3E3DC] overflow-hidden no-print animate-in fade-in-0 duration-200',
+              'fixed z-50 flex flex-col bg-white shadow-2xl shadow-stone-900/15 border border-[#E3E3DC] overflow-hidden no-print animate-in fade-in-0 duration-200',
               // Mobile: slide up bottom sheet
-              'inset-x-0 bottom-0 top-14 rounded-t-[16px] sm:top-auto sm:inset-x-auto',
+              'inset-x-0 bottom-0 top-14 rounded-t-2xl sm:top-auto sm:inset-x-auto',
               // Desktop: anchored bottom-right card
-              'sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[640px] sm:max-h-[88vh] sm:rounded-[16px] sm:slide-in-from-bottom-5'
+              'sm:bottom-6 sm:right-6 sm:w-[450px] sm:h-[640px] sm:max-h-[88vh] sm:rounded-2xl sm:slide-in-from-bottom-5'
             )}
           >
+            {/* Mobile Sheet Drag Indicator */}
+            <div className="sm:hidden flex justify-center pt-2.5 pb-1 bg-[#FBFBF9]">
+              <div className="w-10 h-1 rounded-full bg-stone-300" />
+            </div>
+
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[#E3E3DC] bg-[#FBFBF9] px-4 py-3 shrink-0">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[5px] bg-[#143D2B] text-white shadow-xs">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#143D2B] text-white shadow-xs">
                   <Bot className="h-5 w-5" />
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <span className="font-serif font-bold text-[#111413] text-sm leading-tight truncate">
                       24/7 AI Child Advisor
                     </span>
-                    <span className="inline-flex items-center rounded-full bg-[#EAF3EE] border border-[#143D2B]/20 px-1.5 py-0.2 text-[10px] font-mono font-semibold text-[#143D2B] shrink-0">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#EAF3EE] border border-[#143D2B]/20 px-2 py-0.5 text-[10px] font-mono font-medium text-[#143D2B] shrink-0">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       Live
                     </span>
                   </div>
@@ -213,11 +218,11 @@ export function FloatingAdvisorBubble() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 <Link
                   href="/advisor"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-1 text-[11px] font-semibold text-[#143D2B] hover:text-[#0E2B1E] bg-[#EAF3EE] hover:bg-[#D1E7DD] border border-[#143D2B]/20 rounded-[5px] px-2.5 py-1.5 transition-colors font-mono"
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-[#143D2B] hover:text-[#0E2B1E] bg-[#EAF3EE] hover:bg-[#D1E7DD] border border-[#143D2B]/20 rounded-full px-2.5 py-1 transition-colors font-mono"
                   title="Open Full AI Advisor Studio"
                 >
                   <Sparkles className="h-3 w-3 text-[#143D2B]" />
@@ -228,15 +233,7 @@ export function FloatingAdvisorBubble() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-[5px] text-[#858C88] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
-                  aria-label="Minimize Advisor Chat"
-                >
-                  <Minimize2 className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-[5px] text-[#858C88] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-[#858C88] hover:bg-[#F4F4F0] hover:text-[#111413] transition-colors focus:outline-none focus:ring-2 focus:ring-[#143D2B]"
                   aria-label="Close Advisor Chat"
                 >
                   <X className="h-4 w-4" />
@@ -359,17 +356,17 @@ export function FloatingAdvisorBubble() {
               {/* Live Streaming Response */}
               {isStreaming && (
                 <div className="flex flex-col items-start">
-                  <div className="max-w-[85%] rounded-2xl rounded-bl-xs bg-white border border-slate-200 px-3.5 py-2.5 text-xs text-slate-900 shadow-2xs leading-relaxed">
+                  <div className="max-w-[85%] rounded-2xl rounded-bl-xs bg-white border border-[#E3E3DC] px-3.5 py-2.5 text-xs text-[#111413] shadow-2xs leading-relaxed">
                     {activeStreamingText ? (
                       <p className="whitespace-pre-wrap">
                         {activeStreamingText}
-                        <span className="inline-block h-3 w-1.5 ml-1 bg-teal-600 animate-pulse" />
+                        <span className="inline-block h-3 w-1.5 ml-1 bg-[#143D2B] animate-pulse" />
                       </p>
                     ) : (
                       <div className="flex items-center gap-1.5 py-1 text-slate-400">
-                        <span className="h-2 w-2 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.3s]" />
-                        <span className="h-2 w-2 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.15s]" />
-                        <span className="h-2 w-2 rounded-full bg-teal-600 animate-bounce" />
+                        <span className="h-2 w-2 rounded-full bg-[#143D2B] animate-bounce [animation-delay:-0.3s]" />
+                        <span className="h-2 w-2 rounded-full bg-[#143D2B] animate-bounce [animation-delay:-0.15s]" />
+                        <span className="h-2 w-2 rounded-full bg-[#143D2B] animate-bounce" />
                       </div>
                     )}
                   </div>
@@ -397,7 +394,7 @@ export function FloatingAdvisorBubble() {
             </div>
 
             {/* Input & Controls Bar */}
-            <div className="border-t border-slate-100 bg-white p-3 space-y-2 shrink-0">
+            <div className="border-t border-[#E3E3DC] bg-[#FBFBF9] p-3 space-y-2 shrink-0">
               <form onSubmit={handleSend} className="relative">
                 <textarea
                   ref={inputRef}
@@ -407,7 +404,7 @@ export function FloatingAdvisorBubble() {
                   onKeyDown={handleKeyDown}
                   disabled={isStreaming}
                   placeholder={`Ask about ${activeChild?.name || 'your child'}...`}
-                  className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/50 p-2.5 pr-20 text-xs text-slate-800 placeholder:text-slate-400 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20 disabled:opacity-60"
+                  className="w-full resize-none rounded-xl border border-[#E3E3DC] bg-white p-2.5 pr-20 text-xs text-[#111413] placeholder:text-[#858C88] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 disabled:opacity-60 transition-all"
                 />
 
                 <div className="absolute right-2 bottom-3 flex items-center gap-1">
@@ -428,7 +425,7 @@ export function FloatingAdvisorBubble() {
                       variant="default"
                       size="sm"
                       disabled={!inputMessage.trim()}
-                      className="h-7 px-2.5 text-[11px] bg-teal-700 hover:bg-teal-800"
+                      className="h-7 px-3 text-[11px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white rounded-lg shadow-xs"
                     >
                       <span>Send</span>
                       <Send className="h-3 w-3 ml-1" />
@@ -438,7 +435,7 @@ export function FloatingAdvisorBubble() {
               </form>
 
               {/* Footer Meta Row */}
-              <div className="flex items-center justify-between text-[10px] text-slate-400">
+              <div className="flex items-center justify-between text-[10px] text-[#858C88]">
                 <span>Enter to send • Shift+Enter for new line</span>
                 {messages.length > 0 && (
                   <button
