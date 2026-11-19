@@ -20,8 +20,19 @@ export function LoginForm() {
   const isLoggedOut = searchParams?.get("logged_out") === "true";
   const isRegistered = searchParams?.get("registered") === "true";
   const queryEmail = searchParams?.get("email") || "";
-  const { login, isLoggingIn } = useAuth();
+  const { login, isLoggingIn, isAuthenticated, user: authUser, isLoading: isAuthLoading } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
+
+  // If already authenticated and not explicitly viewing the logout banner, redirect to dashboard or onboarding
+  React.useEffect(() => {
+    if (!isAuthLoading && isAuthenticated && !isLoggedOut) {
+      const destination =
+        !authUser?.childrenCount || authUser.childrenCount === 0
+          ? "/children/new"
+          : "/dashboard";
+      window.location.replace(destination);
+    }
+  }, [isAuthLoading, isAuthenticated, authUser, isLoggedOut]);
 
   const {
     register,
@@ -46,12 +57,13 @@ export function LoginForm() {
     setServerError(null);
     try {
       const user = await login(data);
-      // Route user with 0 children directly to first-child onboarding
-      if (!user?.childrenCount || user.childrenCount === 0) {
-        router.push("/children/new");
-      } else {
-        router.push("/dashboard");
-      }
+      const destination =
+        !user?.childrenCount || user.childrenCount === 0
+          ? "/children/new"
+          : "/dashboard";
+      // Use window.location.replace to clear search parameters (e.g. logged_out=true)
+      // and ensure a clean navigation to the authenticated application layout
+      window.location.replace(destination);
     } catch (err) {
       if (err instanceof ApiClientError) {
         setServerError(err.message);
