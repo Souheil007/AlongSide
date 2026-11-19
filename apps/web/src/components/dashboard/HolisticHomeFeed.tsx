@@ -67,12 +67,10 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
 
   // Sync children from react-query into context store
   React.useEffect(() => {
-    if (queryChildren && queryChildren.length > 0) {
+    if (!queryLoading && queryChildren !== undefined) {
       setChildren(queryChildren);
-    } else if (!queryLoading && children.length === 0) {
-      fetchChildren();
     }
-  }, [queryChildren, queryLoading]);
+  }, [queryChildren, queryLoading, setChildren]);
 
   // Sync initialChildId from searchParams if present
   React.useEffect(() => {

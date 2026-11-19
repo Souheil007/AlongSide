@@ -384,14 +384,9 @@ export const useChildContextStore = create<ChildContextState>((set, get) => ({
     try {
       const res = await getChildren();
       const fetchedChildren = res?.children || [];
-      get().setChildren(fetchedChildren.length > 0 ? fetchedChildren : DEMO_FAMILY_CHILDREN);
+      get().setChildren(fetchedChildren);
       set({ isLoading: false });
     } catch (err: unknown) {
-      // Fallback gracefully to demo children if API is unseeded or network is offline
-      const currentChildren = get().children;
-      if (currentChildren.length === 0) {
-        get().setChildren(DEMO_FAMILY_CHILDREN);
-      }
       set({
         isLoading: false,
         error: err instanceof Error ? err.message : 'Failed to fetch children',

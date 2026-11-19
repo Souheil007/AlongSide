@@ -226,13 +226,13 @@ describe('useChildContextStore Specification (PLAN-17)', () => {
       expect(state.activeChildId).toBeNull();
     });
 
-    it('fetchChildren populates store with fallback demo children when API is unavailable', async () => {
+    it('fetchChildren retains empty children array when user has 0 registered children or API is unseeded', async () => {
       const store = useChildContextStore.getState();
       await store.fetchChildren();
 
       const state = useChildContextStore.getState();
-      expect(state.children.length).toBeGreaterThan(0);
-      expect(state.activeChildId).toBeDefined();
+      expect(state.children).toHaveLength(0);
+      expect(state.activeChildId).toBeNull();
     });
   });
 });

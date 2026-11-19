@@ -261,7 +261,7 @@ export const STAGE_VOCABULARY_DATA: Record<
         definition:
           'Pulling off an unexpected victory or crucial save right when defeat seemed certain, especially under high game pressure.',
         example:
-          '"Maya clutched the final 1v3 round on Bedwars with only 5 health left!"',
+          '"Your child clutched the final 1v3 round on Bedwars with only 5 health left!"',
         parentResponse:
           '"Staying calm when the pressure was high took serious focus. How did you manage that adrenaline?"',
       },
@@ -453,7 +453,7 @@ export const STAGE_VOCABULARY_DATA: Record<
         definition:
           'Extended index finger accompanied by eye checking to share discoveries with caregiver.',
         example:
-          'Mateo points at the garbage truck and looks back to confirm you are watching together.',
+          'Your toddler points at the garbage truck and looks back to confirm you are watching together.',
         parentResponse:
           '"Look at that big green truck lifting the bin! So loud and strong!"',
       },

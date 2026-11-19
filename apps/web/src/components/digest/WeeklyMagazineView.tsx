@@ -44,7 +44,7 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
       content: [
         'Over the past 18 months, algorithmic recommendation engines on major platforms have subtly re-indexed their engagement metrics. The content that keeps a 14-year-old boy scrolling past 10:00 PM is no longer dance videos or harmless gameplay clips; it is moral outrage, conflict sparring, and ideological rage-bait.',
         'Adolescent brain architecture makes teenagers uniquely vulnerable to this mechanic. The amygdala is in a state of hyper-reactivity, while the prefrontal cortex—which governs impulse suppression and perspective-taking—remains under construction until age 25.',
-        'Instead of criticizing what Julian watches, invite metacognition: "Do you ever notice how an app serves you a video that makes you instantly angry within 10 seconds? That\'s deliberate engineering." When teenagers realize they are being manipulated by Silicon Valley engineers, their natural desire for autonomy kicks in.',
+        'Instead of criticizing what your teen watches, invite metacognition: "Do you ever notice how an app serves you a video that makes you instantly angry within 10 seconds? That\'s deliberate engineering." When teenagers realize they are being manipulated by Silicon Valley engineers, their natural desire for autonomy kicks in.',
       ],
       takeaway:
         'Help your teen view outrage feeds as corporate manipulation rather than personal entertainment.',
@@ -96,7 +96,7 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
       content: [
         'Every elementary school blacktop operates an unregulated barter economy. Between the jungle gym and the four-square court, 8-year-olds negotiate trades involving holographic cards, mini plushies, and mechanical pencils.',
         'Jean Piaget identified age 8 as the transition into "concrete operational thinking." Children are intensely preoccupied with fairness, equity, and rules. However, their perspective-taking is still developing; what feels like a "fair swap" during recess can trigger tears on the bus ride home.',
-        'When Maya comes home upset about an uneven trade, resist the urge to email the teacher immediately. Instead, coach her: "What made you agree in the moment? Next time, let\'s practice taking a 24-hour pause before finalizing a big trade."',
+        'When your child comes home upset about an uneven trade, resist the urge to email the teacher immediately. Instead, coach them: "What made you agree in the moment? Next time, let\'s practice taking a 24-hour pause before finalizing a big trade."',
       ],
       takeaway:
         'Use playground trades as a real-world sandbox to practice negotiation and assertiveness.',
@@ -124,7 +124,7 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
       readTime: '4 min read',
       byline: 'By Dr. Aris Thorne · Developmental Science',
       summary:
-        'Why keeping Maya on Road 1 (Pre-Device) through grade school protects imaginative play and social resilience.',
+        'Why keeping your child on Road 1 (Pre-Device) through grade school protects imaginative play and social resilience.',
       content: [
         'Children without smartphones develop richer real-world problem-solving skills and higher tolerance for boredom. They learn to navigate playground disagreements face-to-face.',
         'AlongSide celebrates the Pre-Device journey as a badge of developmental honor, not technological deprivation.',
@@ -146,8 +146,8 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
         'Before babies understand vocabulary, their autonomic nervous systems regulate through vocal tone, breath rhythm, and maternal/paternal pitch.',
       content: [
         'At 14 months, an infant\'s brain is adding more than 1 million neural connections per second. While parents often worry about "early educational enrichment" or sensory flashcards, neuroscience confirms that human voice cadence is the ultimate cognitive catalyst.',
-        'Singing the same simple nursery melody (like "The Wheels on the Bus" or a calm bedtime lullaby) creates an auditory anchor. When Mateo hears that familiar contour, cortisol levels drop and oxytocin surges.',
-        'At 14 months, Mateo is in AlongSide\'s Pre-Device Sanctuary. The American Academy of Pediatrics advises zero digital media exposure (excluding live video chat with family). Mateo does not need a tablet; he needs pots, wooden spoons, grass, and your responsive eyes.',
+        'Singing the same simple nursery melody (like "The Wheels on the Bus" or a calm bedtime lullaby) creates an auditory anchor. When your baby hears that familiar contour, cortisol levels drop and oxytocin surges.',
+        'At 14 months, your baby is in AlongSide\'s Pre-Device Sanctuary. The American Academy of Pediatrics advises zero digital media exposure (excluding live video chat with family). Your toddler does not need a tablet; they need pots, wooden spoons, grass, and your responsive eyes.',
       ],
       takeaway:
         'Your voice and eye contact provide richer neurological wiring than any digital application.',
@@ -162,7 +162,7 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
       summary:
         'How referential pointing combined with repeated syllables marks the leap into symbolic thinking.',
       content: [
-        'When Mateo points at the dog and vocalizes "Da!", he is performing referential triangulation. He isn\'t just seeing the dog; he is checking if YOU see the dog.',
+        'When your toddler points at the dog and vocalizes "Da!", they are performing referential triangulation. They aren\'t just seeing the dog; they are checking if YOU see the dog.',
         'Confirm the referent: "Yes! That is the dog, Cooper. He is wagging his tail." This bridges gesture into language.',
       ],
       takeaway:
@@ -179,7 +179,7 @@ export const MAGAZINE_ARTICLES_BY_STAGE: Record<
         'Why smearing pureed carrots on the tray is necessary tactile feedback for motor planning.',
       content: [
         'Messy eating is motor learning. Feeling squishy avocado textures between fingers integrates tactile processing before oral acceptance.',
-        'Let Mateo squish, poke, and examine textures without rushing to wipe his hands every 30 seconds.',
+        'Let your toddler squish, poke, and examine textures without rushing to wipe hands every 30 seconds.',
       ],
       takeaway:
         'Tactile play during meals strengthens sensory processing and fine motor grip.',
