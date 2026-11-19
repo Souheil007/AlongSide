@@ -21,6 +21,7 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`parent-intelligence-academy-8-tier-curriculum-synthesis-spec.md`**](parent-intelligence-academy-8-tier-curriculum-synthesis-spec.md) — Parent Intelligence Academy: 8-Tier Curriculum Synthesis, 40-Course Taxonomy & Master Video Lecture Integration Specification (SOU-102 / PLAN-39).
 - [**`parent-intelligence-academy-lesson-content-audit-and-architecture.md`**](parent-intelligence-academy-lesson-content-audit-and-architecture.md) — Parent Intelligence Academy: Lesson Content Audit, 3 Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization Specification (SOU-113 / PLAN-40).
 - [**`tech-stack-decision.md`**](tech-stack-decision.md) — Technology stack choices, rationale, and monorepo structure. Authored by the CTO.
+- [**`deployment-guide.md`**](deployment-guide.md) — Production Deployment & Cloud Architecture Guide (100% Free Hosting on Supabase, Render & Vercel, CI/CD auto-deploy workflows).
 - [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
 - [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
 
