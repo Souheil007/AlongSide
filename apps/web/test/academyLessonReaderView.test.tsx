@@ -3,23 +3,18 @@ import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
   AcademyCategory,
-  DevelopmentalTier,
+  AlmanacVisualType,
   ChapterPriority,
+  DevelopmentalTier,
+  EditorialIllustrationKey,
+  EpisodeRole,
+  Gender,
   LessonArchetype,
   type AcademyLessonDTO,
 } from '@alongside/shared';
 import { LessonReaderView } from '../src/components/academy/LessonReaderView';
-import {
-  LessonReliefMasthead,
-  LessonThirtySecondGlance,
-  LessonActionChecklist,
-  LessonFooterNav,
-  NightstandModeToggle,
-  AudioMemoPlayer,
-  ScrollProgressBar,
-} from '../src/components/academy/reader';
+import { MOCK_LESSON_DETAIL_ADRENARCHE } from '../src/lib/api/mocks';
 
-// Mock Next.js navigation hooks
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn(),
@@ -30,61 +25,50 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/academy/behavior-toddler-tantrums/amygdala-surge',
 }));
 
-describe('Plan 38 & Plan 40: Unified Editorial Blog Post Reader & De-Clinicalization', () => {
-  const multiModalLesson: AcademyLessonDTO = {
-    id: 'les-plan-38-multi-modal',
+vi.mock('next/link', () => ({
+  default: ({
+    children,
+    href,
+    ...props
+  }: {
+    children: React.ReactNode;
+    href: string;
+    [key: string]: unknown;
+  }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
+
+describe('PLAN-48: Interactive Almanac v2 LessonReaderView', () => {
+  const legacyMarkdownLesson: AcademyLessonDTO = {
+    id: 'les-legacy-markdown',
     moduleId: 'mod-behavior-toddler',
     chapterId: 'ch-toddler-coregulation',
     slug: 'amygdala-surge',
-    title: 'The Immature Amygdala: Why Toddlers Melt Down & How to Anchor Calm',
+    title: 'Why Toddlers Melt Down & How to Anchor Calm',
     readingMinutes: 3,
     sortOrder: 1,
     isCompleted: false,
     archetype: LessonArchetype.EVERYDAY_BEHAVIOR,
-    reliefTagline: '💡 Why this is 100% normal at 24 months, not a discipline failure',
     audioUrl: 'https://cdn.alongside.care/audio/toddler-amygdala-briefing.mp3',
     audioDurationSeconds: 92,
-    thirtySecondGlance: {
-      coreProblem:
-        'A normal wave of big feelings as their brain builds self-regulation. Logic in the heat of the moment inflames friction.',
-      immediateShift:
-        'Drop your eye level below your child. Take a calm breath. Speak under 8 soft words to offer a steady anchor.',
-      exactWords:
-        'Your body feels big and stormy right now. I am right here. You are safe.',
-    },
     dialogueCards: [
       {
         instinctiveMistake: 'Stop crying right now! It is just a blue cup!',
         whyItBackfires:
-          'Shames the child’s somatic reality and confirms that big feelings overwhelm parents.',
+          'Raises nervous system alarm when the listening brain is already offline.',
         empatheticScript:
-          'Your body feels so big and stormy right now. It is hard when we wanted the yellow cup. I am right here. You are completely safe.',
-        deliveryTip:
-          'Drop voice 2 octaves. Sit 3 feet away at eye level. Relax your shoulders.',
-      },
-    ],
-    actionProtocolItems: [
-      {
-        id: 'step-1',
-        label: 'Somatic Eye-Level Drop',
-        detail: 'Kneel or sit before speaking to remove towering dominance.',
-      },
-      {
-        id: 'step-2',
-        label: 'The 8-Word Limit',
-        detail: 'Silence explanations until heart rate slows.',
-      },
-      {
-        id: 'step-3',
-        label: 'The Cold Water Reset',
-        detail: 'Offer a sip of cold water after the storm breaks.',
+          'Your body feels so big and stormy right now. I am right here. You are safe.',
+        deliveryTip: 'Drop voice lower. Sit at eye level. Relax your shoulders.',
       },
     ],
     contentMarkdown: `## Part 1: The Kitchen-Table Scenario
-When a toddler body arches in rage over a cup color, parents experience acute anxiety.
+When a toddler arches back in tears over the wrong cup color, every parent feels their heart rate spike.
 
 ## Part 2: Understanding Your Child
-At age two, the brain's emotional braking pathways are actively developing. Toddlers borrow your calm nervous system.
+At age two, the braking pathways in the upper brain are still wiring up. Toddlers borrow your steady calm first.
 
 > **Key Takeaway:** Toddlers do not melt down out of spite; when overwhelmed, the listening part of their mind temporarily goes offline.
 
@@ -99,7 +83,7 @@ At age two, the brain's emotional braking pathways are actively developing. Todd
 3. Offer comfort
 
 ### A Note for You as a Parent
-Take a breath. You are not a bad parent, and your child is not broken. Your calm presence is the strongest anchor.`,
+Take a breath. You are not failing, and your child is not broken. Your calm presence is the strongest anchor.`,
     module: {
       id: 'mod-behavior-toddler',
       slug: 'behavior-toddler-tantrums',
@@ -110,307 +94,171 @@ Take a breath. You are not a bad parent, and your child is not broken. Your calm
     chapter: {
       id: 'ch-toddler-coregulation',
       slug: 'toddler-brain-foundations',
-      title: 'Chapter 1: The Immature Brain',
+      title: 'Chapter 1: Immediate Calm & Fast Win',
       priority: ChapterPriority.PRIORITY_1_CRITICAL,
     },
   };
 
-  describe('1. The 10-Second Relief Masthead & Spoken Audio Memo Bar', () => {
-    it('renders breadcrumb navigation, badges, and decluttered masthead without redundant title', () => {
+  describe('1. 5-Beat Full-Bleed Almanac Composition & Founder Mandates', () => {
+    it('renders all 5 Almanac beats, sticky nav with 2px hairline, and quiet margin rail', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReliefMasthead, {
-          lesson: multiModalLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-          moduleTitle: 'Toddler Emotional Storms & Co-Regulation',
-        })
-      );
-
-      expect(html).toContain('Back to Toddler Emotional Storms');
-      expect(html).toContain('data-testid="lesson-relief-masthead"');
-      expect(html).not.toContain(
-        'The Immature Amygdala: Why Toddlers Melt Down &amp; How to Anchor Calm'
-      );
-      expect(html).not.toContain('3 min read');
-    });
-
-    it('renders completed status badge in masthead when isCompleted is true', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReliefMasthead, {
-          lesson: multiModalLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-          isCompleted: true,
-        })
-      );
-
-      expect(html).toContain('data-testid="lesson-completed-badge"');
-      expect(html).toContain('Completed');
-    });
-
-    it('renders minimalist audio memo player with de-clinicalized fallback intro and skip controls', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(AudioMemoPlayer, {
-          audioUrl: multiModalLesson.audioUrl,
-          audioDurationSeconds: multiModalLesson.audioDurationSeconds,
-          title: 'Lesson Briefing',
-        })
-      );
-
-      expect(html).toContain('data-testid="audio-memo-player"');
-      expect(html).toContain('data-testid="audio-play-toggle"');
-      expect(html).toContain('data-testid="audio-skip-back"');
-      expect(html).toContain('data-testid="audio-skip-forward"');
-      expect(html).toContain('data-testid="audio-speed-toggle"');
-      expect(html).not.toContain('Stop narration');
-      expect(html).toContain('Listen');
-      expect(html).toContain('1:32');
-    });
-  });
-
-  describe('2. The De-Clinicalized Quick 30-Second Summary Drawer', () => {
-    it('renders warm, parent-friendly labels: What\'s Going On, Your Best First Move, and What to Say', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonThirtySecondGlance, {
-          glance: multiModalLesson.thirtySecondGlance,
-        })
-      );
-
-      expect(html).toContain('data-testid="thirty-second-glance"');
-      expect(html).toContain('data-testid="thirty-second-glance-toggle"');
-      expect(html).toContain('⚡ Quick 30-Second Read');
-      expect(html).toContain('What&#x27;s Going On');
-      expect(html).toContain('Your Best First Move');
-      expect(html).toContain('What to Say');
-      expect(html).not.toContain('The Biological Trap (Core Problem)');
-      expect(html).not.toContain('Crisis Glance');
-      expect(html).not.toContain('Emergency Protocol');
-    });
-  });
-
-  describe('3. Interactive 3-Step Action Checklist', () => {
-    it('renders checklist items with interactive checkboxes', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonActionChecklist, {
-          lessonId: multiModalLesson.id,
-          items: multiModalLesson.actionProtocolItems,
-        })
-      );
-
-      expect(html).toContain('data-testid="action-checklist"');
-      expect(html).toContain('Your 3-Step Checklist');
-      expect(html).toContain('1. Somatic Eye-Level Drop');
-      expect(html).toContain('2. The 8-Word Limit');
-      expect(html).toContain('3. The Cold Water Reset');
-      expect(html).toContain('0 of 3 completed');
-    });
-  });
-
-  describe('4. Nightstand Dim Reading Mode Toggle', () => {
-    it('renders toggle button with accessible label and state', () => {
-      const onToggle = vi.fn();
-      const html = renderToStaticMarkup(
-        React.createElement(NightstandModeToggle, {
-          isNightstandMode: false,
-          onToggle,
-        })
-      );
-
-      expect(html).toContain('data-testid="nightstand-toggle"');
-      expect(html).toContain('🌙 Nightstand Dim');
-      expect(html).toContain('aria-pressed="false"');
-    });
-  });
-
-  describe('5. Master LessonReaderView Unified Blog Post Assembly (Plan 40)', () => {
-    it('assembles all 4 parts inside one continuous blog post container and eliminates friction widgets', () => {
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: multiModalLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-          moduleTitle: 'Toddler Emotional Storms & Co-Regulation',
-          nextLesson: {
+        <LessonReaderView
+          lesson={MOCK_LESSON_DETAIL_ADRENARCHE}
+          moduleSlug="behavior-tween-adrenarche"
+          moduleTitle="Tween Adrenarche & Emotional Volatility"
+          episodeNumber={1}
+          totalEpisodes={4}
+          activeChild={{
+            name: 'Maya',
+            gender: Gender.FEMALE,
+            age: 11,
+            developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+          }}
+          nextLesson={{
             id: 'les-next',
-            moduleId: 'mod-behavior-toddler',
-            slug: 'co-regulation-anchor',
-            title: 'Borrowing Your Nervous System',
+            moduleId: 'mod-tween',
+            slug: 'tween-adrenarche-and-dhea-neurobiology',
+            title: 'Adrenarche & DHEA: The Hidden Hormonal Engine of Mood Swings',
             readingMinutes: 4,
             sortOrder: 2,
             isCompleted: false,
-          },
-        })
+          }}
+        />
       );
 
-      // 1. Single continuous article container
+      // Core 5 beats & chrome
       expect(html).toContain('data-testid="lesson-reader-view"');
-      expect(html).toContain('data-testid="lesson-editorial-section"');
-      expect(html).toContain('data-testid="lesson-article-container"');
+      expect(html).toContain('data-testid="almanac-reader-nav"');
+      expect(html).toContain('data-testid="almanac-scroll-hairline"');
+      expect(html).toContain('data-testid="almanac-margin-rail"');
+      expect(html).toContain('data-testid="almanac-beat-1"');
+      expect(html).toContain('data-testid="almanac-beat-2"');
+      expect(html).toContain('data-testid="almanac-beat-3"');
+      expect(html).toContain('data-testid="almanac-beat-4"');
+      expect(html).toContain('data-testid="almanac-beat-5"');
+      expect(html).toContain('data-testid="almanac-pocket-card"');
+      expect(html).toContain('data-testid="almanac-next-episode-card"');
 
-      // 2. Blog header elements
-      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
-      expect(html).not.toContain('💡 Why this happens:');
-      expect(html).toContain('data-testid="lesson-narration-player"');
-      expect(html).toContain('data-testid="thirty-second-glance"');
+      // Read | Listen switch + Nightstand toggle
+      expect(html).toContain('data-testid="mode-read-btn"');
+      expect(html).toContain('data-testid="mode-listen-btn"');
+      expect(html).toContain('data-testid="nightstand-toggle"');
 
-      // 3. Four parts sequentially inside article body
-      expect(html).toContain('data-testid="lesson-part-1"');
-      expect(html).toContain('Part 1 · A Moment Every Parent Knows');
-      expect(html).toContain('What It Looks Like at Home');
+      // Child personalization interpolated cleanly with zero raw tokens
+      expect(html).toContain('For Maya (11 yrs)');
+      expect(html).toContain('Maya’s Playbook');
+      expect(html).toContain('Ask AI Advisor about Maya');
+      expect(html).not.toMatch(/\{[a-zA-Z]+\}/);
 
-      expect(html).toContain('data-testid="lesson-part-2"');
-      expect(html).toContain('Part 2 · Understanding Your Child');
-      expect(html).toContain('What&#x27;s Going On Inside Their Growing Mind');
-      expect(html).toContain('data-testid="lesson-clinical-insight"');
-      expect(html).toContain('The Key Takeaway to Remember');
-      expect(html).not.toContain('Clinical Neurobiology Takeaway');
-
-      expect(html).toContain('data-testid="lesson-part-3"');
-      expect(html).toContain('Part 3 · Words That Help');
-      expect(html).toContain('What to Say (and What If They Push Back?)');
-      expect(html).toContain('data-testid="comparative-dialogue-section"');
-      expect(html).toContain('🛑 Common Reaction');
-      expect(html).toContain('✅ Try Saying This Instead');
-      expect(html).toContain('🎙️ Tone &amp; Body Language Tip:');
-      expect(html).not.toContain('data-testid="copy-script-btn"');
-      expect(html).not.toContain('Copy Script');
-
-      expect(html).toContain('data-testid="lesson-part-4"');
-      expect(html).toContain('Part 4 · Putting It Into Practice');
-      expect(html).toContain('3 Simple Steps to Try at Home');
-      expect(html).toContain('data-testid="action-checklist"');
-      expect(html).toContain('data-testid="lesson-grounding-anchor"');
-      expect(html).toContain('A Note for You as a Parent');
-
-      // 4. Verification that obsolete widgets are removed
-      expect(html).not.toContain('data-testid="adaptive-module-container"');
-      expect(html).not.toContain('data-testid="tool-bridges"');
-      expect(html).not.toContain('Pin to Pocket Vault');
-      expect(html).not.toContain('Roleplay with AI');
-
-      // 5. Lesson title appears once in article header
-      const titleOccurrences = (
-        html.match(/The Immature Amygdala: Why Toddlers Melt Down &amp; How to Anchor Calm/g) || []
-      ).length;
-      expect(titleOccurrences).toBe(1);
+      // Founder hard constraints: ZERO 30s spoiler drawer, ZERO 6s calm-tone button, ZERO emojis
+      expect(html).not.toContain('data-testid="thirty-second-glance"');
+      expect(html).not.toContain('Quick 30-Second Read');
+      expect(html).not.toContain('30s Rescue');
+      expect(html).not.toContain('Hear the calm tone');
+      expect(html).not.toContain('🛑');
+      expect(html).not.toContain('✅');
+      expect(html).not.toContain('🎙️');
     });
 
-    it('renders CHILD_GROWTH_CONCEPT archetype headings cleanly without top banner', () => {
-      const growthLesson: AcademyLessonDTO = {
-        ...multiModalLesson,
-        id: 'les-growth',
-        slug: 'vocal-echo-game',
-        title: 'The Vocal Echo Game: Building First Sounds',
-        archetype: LessonArchetype.CHILD_GROWTH_CONCEPT,
-      };
-
+    it('gracefully adapts legacy markdown-only lessons without raw token leaks', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: growthLesson,
-          moduleSlug: 'play-language',
-        })
+        <LessonReaderView
+          lesson={legacyMarkdownLesson}
+          moduleSlug="behavior-toddler-tantrums"
+          moduleTitle="Toddler Emotional Storms & Co-Regulation"
+          activeChild={null}
+        />
       );
 
-      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
-      expect(html).not.toContain('🌱 How your child grows:');
-      expect(html).toContain('Part 1 · What You&#x27;ll Notice');
-      expect(html).toContain('A New Stage of Growth');
-      expect(html).toContain('Part 2 · Why This Milestone Matters');
-      expect(html).toContain('How This Builds Confidence &amp; Connection');
-      expect(html).toContain('Part 3 · Encouraging Their Curiosity');
-      expect(html).toContain('Part 4 · Fun Ideas for This Week');
-    });
-
-    it('renders PRACTICAL_FAMILY_GUIDE archetype headings cleanly without top banner', () => {
-      const guideLesson: AcademyLessonDTO = {
-        ...multiModalLesson,
-        id: 'les-guide',
-        slug: 'baby-fever-guide',
-        title: 'Baby & Toddler Fever Guide: When to Stay Calm',
-        archetype: LessonArchetype.PRACTICAL_FAMILY_GUIDE,
-      };
-
-      const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: guideLesson,
-          moduleSlug: 'health-fever',
-        })
-      );
-
-      expect(html).not.toContain('data-testid="lesson-archetype-banner"');
-      expect(html).not.toContain('🧭 Parent&#x27;s guide:');
-      expect(html).toContain('Part 1 · Why Clear Guidance Matters');
-      expect(html).toContain('The Everyday Family Decision');
-      expect(html).toContain('Part 2 · What Every Parent Should Know');
-      expect(html).toContain('Part 3 · Common Myths vs. Helpful Habits');
-      expect(html).toContain('Part 4 · Your Home Checklist');
+      expect(html).toContain('data-testid="almanac-beat-1"');
+      expect(html).toContain('data-testid="visual-brain-bridge"');
+      expect(html).toContain('data-testid="almanac-pocket-card"');
+      expect(html).toContain('Your Playbook');
+      expect(html).not.toMatch(/\{[a-zA-Z]+\}/);
+      expect(html).not.toContain('data-testid="thirty-second-glance"');
     });
   });
 
-  describe('6. Master Video Lecture Player Positioned BELOW Blog Post (Plan 40)', () => {
-    const videoLectureLesson: AcademyLessonDTO = {
-      ...multiModalLesson,
-      id: 'les-video-test',
+  describe('2. Bottom-Only Master Video Talk Placement', () => {
+    const lessonWithVideo: AcademyLessonDTO = {
+      ...MOCK_LESSON_DETAIL_ADRENARCHE,
+      id: 'les-video-almanac',
       videoLecture: {
         videoUrl: 'https://www.youtube.com/watch?v=XT_6Lvkhxvo',
         title: 'Protocols for Excellent Parenting & Nervous System Regulation',
-        presenter: 'Dr. Andrew Huberman & Dr. Becky Kennedy',
+        presenter: 'Dr. Becky Kennedy & Dr. Andrew Huberman',
         channel: 'Huberman Lab',
         durationMinutes: 18,
         parentHook:
-          'When parents learn to regulate their own nervous system first, children naturally down-regulate without coercive discipline.',
+          'When parents regulate their own nervous system first, children naturally settle without power struggles.',
         keyTakeaways: [
-          'Children detect parental dysregulation through heart-rate variability and vocal pitch.',
-          'The Repair Protocol: The most powerful parenting intervention is the repair that happens after a rupture.',
-          'Somatic pause before speech: Taking 3 physiological sighs shifts the parent from panic to calm.',
+          'Children detect parental dysregulation instantly through vocal pitch.',
+          'Repair after a rupture builds deeper trust than perfection.',
+          'A calm exhale before speaking shifts the entire room.',
         ],
-        actionPrompt:
-          'Practice a 3-breath physiological sigh before responding to your child the next time tension spikes.',
+        actionPrompt: 'Pause for one slow exhale before answering the next sharp tone.',
+        jumpChips: [
+          { seconds: 90, label: 'Why calm beats lectures' },
+          { seconds: 310, label: 'The repair sequence' },
+        ],
       },
     };
 
-    it('renders [ 🎬 Master Lecture ] badge in LessonReliefMasthead when videoLecture is present', () => {
+    it('renders Master Talk Shelf strictly BELOW Beat 5 Pocket Card and adds quiet Beat 1 anchor', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReliefMasthead, {
-          lesson: videoLectureLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-        })
+        <LessonReaderView
+          lesson={lessonWithVideo}
+          moduleSlug="behavior-tween-adrenarche"
+          moduleTitle="Tween Adrenarche & Emotional Volatility"
+        />
       );
 
-      expect(html).toContain('data-testid="master-lecture-badge"');
-      expect(html).toContain('Master Lecture');
+      expect(html).toContain('data-testid="meta-jump-video-btn"');
+      expect(html).toContain('18-min talk below');
+      expect(html).toContain('data-testid="almanac-video-shelf"');
+      expect(html).toContain('data-testid="video-jump-chip-0"');
+      expect(html).toContain('1:30');
+      expect(html).toContain('Read the 3 core ideas instead');
+
+      // Strictly below Pocket Card (Beat 5)
+      const pocketIdx = html.indexOf('data-testid="almanac-pocket-card"');
+      const videoIdx = html.indexOf('data-testid="almanac-video-shelf"');
+      expect(pocketIdx).toBeGreaterThan(-1);
+      expect(videoIdx).toBeGreaterThan(pocketIdx);
     });
 
-    it('renders LessonVideoPlayer BELOW the unified blog post under "Watch & Go Deeper"', () => {
+    it('omits Master Talk Shelf and Beat 1 anchor when lesson has no videoLecture', () => {
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: videoLectureLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-        })
+        <LessonReaderView
+          lesson={{ ...MOCK_LESSON_DETAIL_ADRENARCHE, videoLecture: null }}
+          moduleSlug="behavior-tween-adrenarche"
+        />
       );
 
-      expect(html).toContain('data-testid="lesson-video-section"');
-      expect(html).toContain('Watch &amp; Go Deeper');
-      expect(html).toContain('data-testid="lesson-video-player"');
-      expect(html).toContain('Why This Talk Matters');
-      expect(html).toContain('Key Takeaways (3 Core Ideas)');
-      expect(html).not.toContain('Clinical Video Hook');
-      expect(html).not.toContain('Clinical Key Takeaways');
-
-      // Critical Plan 40 Rule: Video appears BELOW the blog post
-      const editorialIdx = html.indexOf('data-testid="lesson-editorial-section"');
-      const videoIdx = html.indexOf('data-testid="lesson-video-section"');
-      expect(editorialIdx).toBeGreaterThan(-1);
-      expect(videoIdx).toBeGreaterThan(editorialIdx);
+      expect(html).not.toContain('data-testid="meta-jump-video-btn"');
+      expect(html).not.toContain('data-testid="almanac-video-shelf"');
     });
 
-    it('omits LessonVideoPlayer in LessonReaderView when lesson has no videoLecture', () => {
+    it('supports all Almanac visual types (e.g. SENSORY_LADDER) cleanly', () => {
+      const feedingLesson: AcademyLessonDTO = {
+        ...MOCK_LESSON_DETAIL_ADRENARCHE,
+        almanacPayload: {
+          ...MOCK_LESSON_DETAIL_ADRENARCHE.almanacPayload!,
+          episodeRole: EpisodeRole.FAST_WIN,
+          illustration: EditorialIllustrationKey.plate,
+          visualType: AlmanacVisualType.SENSORY_LADDER,
+        },
+      };
+
       const html = renderToStaticMarkup(
-        React.createElement(LessonReaderView, {
-          lesson: multiModalLesson,
-          moduleSlug: 'behavior-toddler-tantrums',
-        })
+        <LessonReaderView
+          lesson={feedingLesson}
+          moduleSlug="nutrition-older-toddler-independence-and-snacking"
+        />
       );
 
-      expect(html).not.toContain('data-testid="lesson-video-section"');
-      expect(html).not.toContain('data-testid="lesson-video-player"');
+      expect(html).toContain('data-testid="editorial-art-plate"');
+      expect(html).toContain('data-testid="visual-sensory-ladder"');
     });
   });
 });

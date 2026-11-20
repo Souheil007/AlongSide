@@ -1,6 +1,9 @@
 import {
   AcademyCategory,
+  AlmanacVisualType,
   DevelopmentalTier,
+  EditorialIllustrationKey,
+  EpisodeRole,
   ChapterPriority,
   type AcademyCategoryStatsDTO,
   type AcademyModuleDTO,
@@ -3091,12 +3094,53 @@ export const MOCK_MODULE_DETAIL_TWEEN_BEHAVIOR: AcademyModuleDetailDTO = {
   lessonCount: 4,
   completedLessonCount: 1,
   isCompleted: false,
+  featuredVideoLecture: {
+    videoUrl: 'https://www.youtube.com/watch?v=XT_6Lvkhxvo',
+    title: 'Protocols for Calm Parenting & Co-Regulation Under Stress',
+    presenter: 'Dr. Becky Kennedy & Dr. Andrew Huberman',
+    channel: 'Huberman Lab',
+    durationMinutes: 14,
+    parentHook:
+      'When you lower your own internal temperature first, sharp tween pushback softens without lectures or power struggles.',
+    keyTakeaways: [
+      'Children detect parental dysregulation instantly through vocal pitch and posture.',
+      'Repair after a tough moment builds deeper long-term trust than perfection ever could.',
+      'A 10-second calm exhale before answering keeps your steady authority intact.',
+    ],
+    actionPrompt:
+      'Try one slow exhale and a low steady voice before answering the next sharp tone.',
+    jumpChips: [
+      { seconds: 120, label: 'Why calm tone works faster than lectures' },
+      { seconds: 420, label: 'Holding warm boundaries cleanly' },
+      { seconds: 690, label: 'The 30-second repair script' },
+    ],
+  },
   chapters: MOCK_TWEEN_BEHAVIOR_CHAPTERS,
-  lessons: MOCK_TWEEN_BEHAVIOR_CHAPTERS.flatMap((c) => c.lessons),
+  lessons: MOCK_TWEEN_BEHAVIOR_CHAPTERS.flatMap((c) => c.lessons).map(
+    (lesson, idx) => ({
+      ...lesson,
+      episodeRole:
+        idx === 0
+          ? EpisodeRole.FAST_WIN
+          : idx === 1
+            ? EpisodeRole.BRAIN_DECODER
+            : idx === 2
+              ? EpisodeRole.RHYTHM_RESET
+              : EpisodeRole.LONG_TERM_BOND,
+      interactiveHighlights:
+        idx === 0
+          ? ['Brain Bridge Toggle', 'Annotated Script']
+          : idx === 1
+            ? ['Lens Flipper', 'Pushback Scripts']
+            : idx === 2
+              ? ['Routine Sequence', 'Partner Share']
+              : ['Serve & Return Loop', 'Repair Plan'],
+    })
+  ),
 };
 
 /**
- * Detailed Mock Lesson for Tween Adrenarche
+ * Detailed Mock Lesson for Tween Adrenarche (Full Interactive Almanac v2 payload)
  */
 export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
   id: 'les-tween-adrenarche-bio',
@@ -3107,6 +3151,131 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
   readingMinutes: 4,
   sortOrder: 1,
   isCompleted: true,
+  episodeRole: EpisodeRole.FAST_WIN,
+  almanacPayload: {
+    episodeRole: EpisodeRole.FAST_WIN,
+    illustration: EditorialIllustrationKey.compass_teen,
+    illustrationCaption: '4:15 PM · Navigating the status radar',
+    headline: 'When One Small Reminder Triggers an Instant Eye-Roll',
+    deck: 'Why pre-teen adrenarche turns tiny household requests into status alarms—and the calm neutral phrase that defuses tension in ten seconds.',
+    sceneTime: '4:15 PM · KITCHEN COUNTER',
+    sceneBody:
+      'You ask {name} one simple question about putting {poss} backpack away. Instantly {poss} shoulders tense, {poss} eyes roll, and {pronoun} snaps back, “Why are you always on my case?!” *A wave of heat rises in your chest—did I just lose my sweet kid overnight?*',
+    pollQuestion: 'Have sudden eye-rolls or sharp comebacks popped up lately?',
+    pollOptions: [
+      {
+        id: 'daily',
+        label: 'Almost every afternoon',
+        response:
+          'You haven’t lost your relationship—around ages 9 to 12, adrenal hormone surges supercharge the brain’s social-status radar before braking circuits catch up.',
+      },
+      {
+        id: 'sometimes',
+        label: 'Mostly right after school',
+        response:
+          'Classic after-school restraint collapse meets adrenarche sensitivity. Once you see the alarm underneath the snark, it stops feeling personal.',
+      },
+    ],
+    beat2Kicker: 'Inside {possessive} growing mind',
+    beat2Title: 'Why a normal reminder can sound like public criticism',
+    beat2Lead:
+      'During adrenarche, the emotional threat detector amplifies tone and scrutiny while the calm braking cortex is still under construction. Toggle below to compare both states.',
+    visualType: AlmanacVisualType.BRAIN_BRIDGE,
+    visualStageTitle: 'Calm connection vs. adrenarche status alarm',
+    visualStageHint: 'Toggle steady vs. flooded state',
+    almanacTruth:
+      'Pre-teen snark is usually an overloaded status alarm, not deliberate disrespect—your quiet, unbothered tone is what brings their logical brain back online.',
+    scienceDeepDive:
+      'Adrenarche begins around ages 8–10 as adrenal DHEA and DHEA-S rise, sensitizing amygdala and ventral striatum networks to social evaluation and autonomy threats years before visible puberty.',
+    beat3Kicker: 'Practice before 4:15 PM',
+    beat3Title: 'What changes the temperature in ten seconds',
+    rehearsalTriggerSpeaker: '{Name} snapping from the doorway',
+    rehearsalTriggerQuote: '“Ugh, stop micromanaging me—I was JUST about to do it!”',
+    rehearsalPrompt: 'Which split-second reaction jumps up first?',
+    instincts: [
+      {
+        id: 'snapback',
+        label: '“Do NOT use that tone with me—get back here right now!”',
+        whyTitle: 'Why that’s so tempting—and what happens next',
+        whyText:
+          'Anyone would bristle at sharp sarcasm! Yet matching volume confirms {possessive} status alarm and turns a 10-second backpack cue into a 40-minute standoff.',
+      },
+      {
+        id: 'lecture',
+        label: 'Give a 5-minute speech about gratitude and household teamwork.',
+        whyTitle: 'Why that’s so tempting—and what happens next',
+        whyText:
+          'While {poss} braking cortex is offline, long speeches blur into static—leaving both of you drained.',
+      },
+    ],
+    calmScriptPlain:
+      '“That sounded sharp, and I know today was a lot. Grab a snack first—we’ll tackle backpacks at 4:45.”',
+    calmScriptSegments: [
+      { text: '“' },
+      {
+        id: 'steady',
+        text: 'That sounded sharp, and I know today was a lot.',
+        tag: 'Zero-Bait Empathy',
+        note: 'Names the tone calmly without taking the emotional bait or shaming {name}.',
+      },
+      { text: ' ' },
+      {
+        id: 'buffer',
+        text: 'Grab a snack first—we’ll tackle backpacks at 4:45.',
+        tag: 'Clear Neutral Anchor',
+        note: 'Holds the boundary effortlessly while giving {poss} nervous system a short decompression buffer.',
+      },
+      { text: '”' },
+    ],
+    deliveryCues: [
+      'Drop vocal pitch and pace',
+      'Relax shoulders, stay neutral',
+      'Keep boundary under 15 words',
+    ],
+    pushbacks: [
+      {
+        id: 'door',
+        label: '“{Pronoun} slams the bedroom door”',
+        setup: 'Give 15 minutes of cooling air, then knock gently and keep it brief:',
+        script:
+          '“I’m not mad at you—we don’t slam doors in our house, and whenever you’re ready I’m happy to hear how school went.”',
+      },
+    ],
+    advisorPrompt:
+      '“{Name} ({age}) has been snapping with eye-rolls right after school—how can I stay steady without letting disrespect slide?”',
+    beat4Kicker: 'Tonight’s one tiny experiment',
+    beat4Title: 'Pick one small move to try this week',
+    beat4Lead: 'One calm pause shifts the whole evening rhythm.',
+    moves: [
+      {
+        id: 'buffer20',
+        title: 'Offer 20 minutes of zero-question decompression after school',
+        desc: 'Have a snack and water waiting before bringing up homework or chores.',
+      },
+      {
+        id: 'lowtone',
+        title: 'Pause for one slow exhale before answering any sharp tone',
+        desc: 'Keep your reply under 12 words and let silence do the work.',
+      },
+      {
+        id: 'repair',
+        title: 'Do a 30-second side-by-side check-in before bed',
+        desc: 'Reconnect warmly once both nervous systems are completely calm.',
+      },
+    ],
+    closingNote:
+      'Behind every spiky pre-teen eye-roll is a growing mind testing whether your steady love holds firm even on rough afternoons. Your calm voice is their safest harbor.',
+    pocketInsight:
+      'Meet pre-teen snark with calm brevity and a short decompression buffer—address respect warmly once nervous systems cool.',
+    nextEpisodeHook: {
+      kicker: 'Up Next · Episode 2 · 4 min',
+      mystery:
+        '“Why do pre-teen moods flip from laughing to storming out in thirty seconds flat?”',
+      title: 'Adrenarche & DHEA: The Hidden Hormonal Engine of Mood Swings',
+      targetSlug: 'tween-adrenarche-and-dhea-neurobiology',
+    },
+    interactiveHighlights: ['Brain Bridge Toggle', 'Annotated Script'],
+  },
   contentMarkdown: `Around ages 9 to 11, long before visible pubertal changes occur, the adrenal glands awaken in a biological event known as **adrenarche**. This chemical surge releases DHEA and adrenal androgens, fundamentally rewiring how your child interprets their social standing.
 
 > **Developmental Insight:** During adrenarche, the amygdala and striatum develop heightened sensitivity to social evaluation. A minor remark like "Please finish your homework" can be perceived by the tween brain not as parental guidance, but as a public threat to their emerging autonomy and status.

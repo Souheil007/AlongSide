@@ -2,21 +2,26 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import {
   formatCourseTitle,
+  getEpisodeRoleMeta,
+  interpolateChildCopy,
+  resolveEpisodeRoleFromSortOrder,
   type AcademyLessonSummaryDTO,
   type AcademyModuleDetailDTO,
+  type ChildPersonalizationContext,
 } from '@alongside/shared';
 import { getLocalCompletedLessonIds } from '@/lib/api/academy';
+import { AlmanacVideoShelf } from './almanac/AlmanacVideoShelf';
 import { cn } from '@/lib/utils';
 
 export interface BiteSizedCourseDetailViewProps {
   module: AcademyModuleDetailDTO;
-  activeChild?: {
-    id: string;
-    name: string;
-    age: number;
+  activeChild?: ChildPersonalizationContext & {
+    id?: string;
+    name?: string;
+    age?: number;
     developmentalTier?: string | null;
   } | null;
   className?: string;
@@ -30,7 +35,6 @@ export function resolveLessonTakeaway(
   lesson: AcademyLessonSummaryDTO,
   _moduleTitle?: string
 ): { subtitle: string; script: string } {
-  // If lesson summary already contains its authored empathetic script, prioritize it
   if (lesson.empatheticScript && lesson.empatheticScript.trim().length > 0) {
     return {
       subtitle:
@@ -43,11 +47,16 @@ export function resolveLessonTakeaway(
   const titleLower = lesson.title.toLowerCase();
   const slugLower = lesson.slug.toLowerCase();
 
-  // 1. Feeding & Nutrition Topics
-  if (slugLower.includes('dessert') || titleLower.includes('dessert') || titleLower.includes('sweet')) {
+  if (
+    slugLower.includes('dessert') ||
+    titleLower.includes('dessert') ||
+    titleLower.includes('sweet')
+  ) {
     return {
-      subtitle: 'De-weaponizing sweets by neutral dessert pairing alongside nutritious foods.',
-      script: 'You can enjoy your dessert alongside dinner. All foods have a neutral, safe place on our table.',
+      subtitle:
+        'De-weaponizing sweets by neutral dessert pairing alongside nutritious foods.',
+      script:
+        'You can enjoy your dessert alongside dinner. All foods have a neutral, safe place on our table.',
     };
   }
 
@@ -59,41 +68,65 @@ export function resolveLessonTakeaway(
     titleLower.includes('vegetable')
   ) {
     return {
-      subtitle: 'Rewiring gustatory neuroplasticity through unforced sensory food exposures.',
-      script: "You don't have to eat the unfamiliar food tonight; it can just sit on your learning plate. We have bread and noodles so your belly feels satisfied.",
+      subtitle:
+        'Rewiring gustatory neuroplasticity through unforced sensory food exposures.',
+      script:
+        "You don't have to eat the unfamiliar food tonight; it can just sit on your learning plate. We have bread and noodles so your belly feels satisfied.",
     };
   }
 
-  if (slugLower.includes('division-of-responsibility') || titleLower.includes('division of responsibility') || titleLower.includes('table')) {
+  if (
+    slugLower.includes('division-of-responsibility') ||
+    titleLower.includes('division of responsibility') ||
+    titleLower.includes('table')
+  ) {
     return {
-      subtitle: 'Installing the Ellyn Satter Division of Responsibility to eliminate mealtime power struggles.',
-      script: 'My job as your parent is to decide what we serve and when. Your job is to decide whether and how much your body needs.',
+      subtitle:
+        'Installing the Ellyn Satter Division of Responsibility to eliminate mealtime power struggles.',
+      script:
+        'My job as your parent is to decide what we serve and when. Your job is to decide whether and how much your body needs.',
     };
   }
 
   if (slugLower.includes('allergen') || titleLower.includes('allergen')) {
     return {
-      subtitle: 'Evidence-based pediatric allergen micro-dosing and nutritional scaffolding.',
-      script: 'We are introducing tiny, safe tastes together so your immune system learns to be calm and strong.',
+      subtitle:
+        'Evidence-based pediatric allergen micro-dosing and nutritional scaffolding.',
+      script:
+        'We are introducing tiny, safe tastes together so your immune system learns to be calm and strong.',
     };
   }
 
-  // 2. Health & Sleep Topics
-  if (slugLower.includes('growing-pains') || titleLower.includes('growing pains') || titleLower.includes('growth spurt')) {
+  if (
+    slugLower.includes('growing-pains') ||
+    titleLower.includes('growing pains') ||
+    titleLower.includes('growth spurt')
+  ) {
     return {
-      subtitle: 'Decoding nocturnal musculoskeletal growth spurts and soothing evening limb aches.',
-      script: "Your legs did so much running and growing today. Let's do a gentle warm massage so your muscles can rest.",
+      subtitle:
+        'Decoding nocturnal musculoskeletal growth spurts and soothing evening limb aches.',
+      script:
+        "Your legs did so much running and growing today. Let's do a gentle warm massage so your muscles can rest.",
     };
   }
 
-  if (slugLower.includes('outdoor') || titleLower.includes('outdoor') || titleLower.includes('vision')) {
+  if (
+    slugLower.includes('outdoor') ||
+    titleLower.includes('outdoor') ||
+    titleLower.includes('vision')
+  ) {
     return {
-      subtitle: 'Installing 60 minutes of daily outdoor light exposure for dopamine, mood, and myopia prevention.',
-      script: 'Fresh air and natural sunlight reset our circadian clock. Let’s step outside for a 15-minute neighborhood walk together.',
+      subtitle:
+        'Installing 60 minutes of daily outdoor light exposure for dopamine, mood, and myopia prevention.',
+      script:
+        'Fresh air and natural sunlight reset our circadian clock. Let’s step outside for a 15-minute neighborhood walk together.',
     };
   }
 
-  if (slugLower.includes('bedtime-dock') || titleLower.includes('bedtime dock')) {
+  if (
+    slugLower.includes('bedtime-dock') ||
+    titleLower.includes('bedtime dock')
+  ) {
     return {
       subtitle:
         "How to make the living-room charging station a neutral household law so bedtime isn't an argument every evening.",
@@ -132,7 +165,6 @@ export function resolveLessonTakeaway(
     };
   }
 
-  // 3. Behavior & Emotional Co-Regulation Topics
   if (slugLower.includes('adrenarche') || titleLower.includes('adrenarche')) {
     return {
       subtitle:
@@ -171,10 +203,17 @@ export function resolveLessonTakeaway(
     };
   }
 
-  if (slugLower.includes('autonomy') || titleLower.includes('autonomy') || titleLower.includes('potty') || titleLower.includes('no!')) {
+  if (
+    slugLower.includes('autonomy') ||
+    titleLower.includes('autonomy') ||
+    titleLower.includes('potty') ||
+    titleLower.includes('no!')
+  ) {
     return {
-      subtitle: 'Channeling the developing drive for autonomy into healthy cooperative choices.',
-      script: 'You have a strong voice and I respect that. You can decide whether we put on boots first or zip your jacket first.',
+      subtitle:
+        'Channeling the developing drive for autonomy into healthy cooperative choices.',
+      script:
+        'You have a strong voice and I respect that. You can decide whether we put on boots first or zip your jacket first.',
     };
   }
 
@@ -199,7 +238,6 @@ export function resolveLessonTakeaway(
     };
   }
 
-  // 4. Digital & Screens Topics
   if (
     slugLower.includes('group-chat') ||
     titleLower.includes('group chat') ||
@@ -226,10 +264,7 @@ export function resolveLessonTakeaway(
     };
   }
 
-  if (
-    slugLower.includes('boundar') ||
-    titleLower.includes('boundar')
-  ) {
+  if (slugLower.includes('boundar') || titleLower.includes('boundar')) {
     return {
       subtitle:
         'Setting firm, respectful household boundaries without emotional shame or confrontation.',
@@ -279,31 +314,49 @@ export function resolveLessonTakeaway(
     };
   }
 
-  // 5. Development & Play Topics
-  if (slugLower.includes('homework') || titleLower.includes('homework') || titleLower.includes('focus')) {
+  if (
+    slugLower.includes('homework') ||
+    titleLower.includes('homework') ||
+    titleLower.includes('focus')
+  ) {
     return {
-      subtitle: 'Scaffolding working memory and breaking overwhelming tasks into low-friction steps.',
-      script: "This task feels heavy, but you don't have to carry it alone. Let's just spend 5 calm minutes on the first step together.",
+      subtitle:
+        'Scaffolding working memory and breaking overwhelming tasks into low-friction steps.',
+      script:
+        "This task feels heavy, but you don't have to carry it alone. Let's just spend 5 calm minutes on the first step together.",
     };
   }
 
-  if (slugLower.includes('sports') || titleLower.includes('sports') || titleLower.includes('grit')) {
+  if (
+    slugLower.includes('sports') ||
+    titleLower.includes('sports') ||
+    titleLower.includes('grit')
+  ) {
     return {
-      subtitle: 'Fostering athletic resilience and post-game decompression without critical sideline coaching.',
-      script: 'I loved watching you play today. Hard games are where our resilience muscles grow the fastest.',
+      subtitle:
+        'Fostering athletic resilience and post-game decompression without critical sideline coaching.',
+      script:
+        'I loved watching you play today. Hard games are where our resilience muscles grow the fastest.',
     };
   }
 
-  if (slugLower.includes('boredom') || titleLower.includes('boredom') || titleLower.includes('play')) {
+  if (
+    slugLower.includes('boredom') ||
+    titleLower.includes('boredom') ||
+    titleLower.includes('play')
+  ) {
     return {
-      subtitle: 'Unlocking creative synaptic arborization by allowing healthy, unstructured boredom.',
-      script: "It's okay to feel bored. Boredom is just your brain clearing space for a brand new idea to arrive.",
+      subtitle:
+        'Unlocking creative synaptic arborization by allowing healthy, unstructured boredom.',
+      script:
+        "It's okay to feel bored. Boredom is just your brain clearing space for a brand new idea to arrive.",
     };
   }
 
-  // Dynamic fallback tailored to the lesson
   return {
-    subtitle: `Actionable developmental neurobiology and parent dialogue for ${lesson.title.toLowerCase()}.`,
+    subtitle:
+      lesson.reliefTagline ||
+      `Actionable developmental neurobiology and parent dialogue for ${lesson.title.toLowerCase()}.`,
     script:
       "I see how hard this moment is. We don't have to figure it all out at once—let's take one calm breath and work through it together.",
   };
@@ -319,29 +372,35 @@ export function formatSeconds(sec: number): string {
 }
 
 /**
- * Direction A2: Bite-Sized Micro-Stream Course Detail View
+ * Interactive Almanac v2: Course Episode Arc View (PLAN-48)
  *
- * Streamlined single-course layout:
- * - Newsreader serif typography & quiet child calibration tag
- * - Unified, sequential curriculum stream (no artificial "Parts" dividing the course)
- * - In-place expanded focus card: clicking ANY lesson expands its details right in its place
- * - Empathetic Script Box & Start Lesson CTA
- * - Accurate dynamic spoken audio briefing with real duration calculation
- * - Evidence-based pediatric reassurance footer
+ * Calm, sequential 3-4 episode roadmap matching indexv2.html:
+ * - Distinct EpisodeRole eyebrows (The Fast Win, The Brain Decoder, The Rhythm Reset, The Long-Term Bond)
+ * - Child-calibrated episode headlines via interpolateChildCopy()
+ * - Interactive highlight pills & Saved status
+ * - Direct 1-tap navigation into each episode (no accordion clutter)
+ * - Bottom-only Optional Course Master Talk Shelf when module.featuredVideoLecture is present
  */
 export function BiteSizedCourseDetailView({
   module,
-  activeChild: _activeChild,
+  activeChild,
   className,
 }: BiteSizedCourseDetailViewProps) {
-  // Local storage completion sync on mount
-  const [localCompletedSet, setLocalCompletedSet] = React.useState<Set<string>>(new Set());
+  const [localCompletedSet, setLocalCompletedSet] = React.useState<Set<string>>(
+    new Set()
+  );
+
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
-      const ids = getLocalCompletedLessonIds();
-      setLocalCompletedSet(ids);
+      setLocalCompletedSet(getLocalCompletedLessonIds());
     }
   }, []);
+
+  const t = React.useCallback(
+    (template: string) =>
+      interpolateChildCopy(template, activeChild, module.developmentalTier),
+    [activeChild, module.developmentalTier]
+  );
 
   const allLessons: AcademyLessonSummaryDTO[] = React.useMemo(() => {
     let list: AcademyLessonSummaryDTO[] = [];
@@ -359,320 +418,235 @@ export function BiteSizedCourseDetailView({
   }, [module.lessons, module.chapters, localCompletedSet]);
 
   const totalLessons = allLessons.length;
-  const completedLessons = allLessons.filter((l) => l.isCompleted);
-  const completedCount = completedLessons.length;
-  const remainingLessonsCount = allLessons.filter((l) => !l.isCompleted).length;
+  const completedCount = allLessons.filter((l) => l.isCompleted).length;
+  const remainingLessonsCount = totalLessons - completedCount;
   const isModuleCompleted =
     module.isCompleted || (totalLessons > 0 && completedCount === totalLessons);
 
-  // The hero lesson is the first uncompleted lesson, or the first lesson if none or all completed
-  const heroLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
+  const nextEpisode =
+    allLessons.find((l) => !l.isCompleted) ?? allLessons[0] ?? null;
 
-  // In-place accordion expansion state: default to hero lesson
-  const [expandedLessonId, setExpandedLessonId] = React.useState<string | null>(
-    heroLesson ? heroLesson.id : null
-  );
-
-  // Keep expanded lesson in sync if initial load or lesson completion updates
-  React.useEffect(() => {
-    if (!expandedLessonId && heroLesson) {
-      setExpandedLessonId(heroLesson.id);
-    }
-  }, [heroLesson, expandedLessonId]);
-
-  // Calculate remaining reading minutes across uncompleted lessons
   const remainingMinutes = allLessons
     .filter((l) => !l.isCompleted)
-    .reduce((sum, l) => sum + (l.readingMinutes || 4), 0);
-
-  // Handler to toggle in-place accordion expansion
-  const handleToggleLesson = (lessonId: string) => {
-    setExpandedLessonId((prev) => (prev === lessonId ? null : lessonId));
-  };
+    .reduce((sum, l) => sum + (l.readingMinutes || 3), 0);
 
   return (
     <div
       data-testid="bite-sized-stream-view"
-      className={cn('min-h-screen bg-linen text-ink font-sans pb-16', className)}
+      className={cn(
+        '-mx-4 -my-6 sm:-mx-6 lg:-mx-8 min-h-screen bg-[var(--canvas)] text-[var(--ink)] font-sans pb-20 xl:border-x xl:border-[var(--hairline-soft)] transition-colors',
+        className
+      )}
     >
-      {/* Sub-Header Bar (Breadcrumb & Telemetry) */}
-      <header className="border-b border-hairline/70 bg-linen/95 backdrop-blur-sm sticky top-0 z-20">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      {/* Sticky Almanac Top Sub-Header */}
+      <header className="sticky top-16 z-30 border-b border-[var(--hairline-soft)] bg-[var(--canvas)]">
+        <div className="mx-auto flex h-[58px] max-w-[780px] items-center justify-between gap-3 px-4 sm:px-6">
           <Link
             href="/academy"
-            className="text-xs font-mono text-mute hover:text-spruce transition-colors flex items-center gap-1.5 group"
+            className="group inline-flex min-h-[44px] items-center gap-2 text-[13px] font-medium text-[var(--body)] transition-colors hover:text-[var(--ink)] no-underline"
           >
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <ArrowLeft
+              className="h-4 w-4 transition-transform group-hover:-translate-x-0.5"
+              aria-hidden="true"
+            />
             <span>Parent Academy</span>
           </Link>
 
-          {/* Compact Progress Counter */}
-          <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="text-spruce font-semibold">
+          <div className="flex items-center gap-2 font-mono text-[12px]">
+            <span className="font-semibold text-[var(--spruce)]">
               {completedCount} of {totalLessons} done
             </span>
-            <span className="text-hairline">•</span>
-            <span className="text-mute">~{remainingMinutes}m left</span>
+            <span className="text-[var(--hairline)]" aria-hidden="true">
+              ·
+            </span>
+            <span className="text-[var(--mute)]">~{remainingMinutes}m left</span>
           </div>
         </div>
       </header>
 
-      {/* Main Reading Canvas */}
-      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-        {/* Masthead */}
+      {/* Main Course Episode Arc Canvas */}
+      <main className="mx-auto max-w-[780px] px-4 sm:px-6 pt-10 sm:pt-12 space-y-9">
+        {/* Editorial Course Masthead */}
         <section className="space-y-3">
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-ink tracking-tight leading-snug">
+          <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--spruce)]">
+            {totalLessons}-Episode Course Arc
+          </span>
+          <h1 className="font-serif-almanac text-[30px] sm:text-[38px] font-semibold leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
             {formatCourseTitle(module.title)}
           </h1>
-
-          <p className="text-body text-sm leading-relaxed">
-            {module.summary}
+          <p className="text-[16px] leading-[1.6] text-[var(--body)] max-w-[60ch]">
+            {t(module.summary)}
           </p>
         </section>
 
-        {/* UNIFIED COURSE CURRICULUM STREAM (Single sequential list - no artificial Parts) */}
+        {/* Sequential Episode Arc Cards */}
         <section className="space-y-4" aria-label="Course Curriculum">
-          <div className="flex items-center justify-between text-xs font-mono">
-            <span className="font-bold text-ink uppercase tracking-wider flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-spruce shrink-0" />
+          <div className="flex items-center justify-between font-mono text-[11.5px]">
+            <span className="font-semibold uppercase tracking-[0.06em] text-[var(--ink)]">
               Course Curriculum
             </span>
-            <span className="text-spruce font-medium">
+            <span className="font-medium text-[var(--spruce)]">
               {remainingLessonsCount > 0
-                ? `${remainingLessonsCount} lesson${remainingLessonsCount === 1 ? '' : 's'} remaining`
-                : 'All complete'}
+                ? `${remainingLessonsCount} episode${remainingLessonsCount === 1 ? '' : 's'} remaining`
+                : 'All episodes saved'}
             </span>
           </div>
 
-          {/* Lessons List: Clicking any lesson row expands its focus card in place */}
-          <div className="space-y-3" data-testid="curriculum-lessons-list">
-            {allLessons.map((lesson) => {
-              const isExpanded = expandedLessonId === lesson.id;
+          <div className="grid gap-4" data-testid="curriculum-lessons-list">
+            {allLessons.map((lesson, idx) => {
+              const epNum = idx + 1;
+              const role =
+                lesson.episodeRole ??
+                resolveEpisodeRoleFromSortOrder(lesson.sortOrder || epNum);
+              const roleMeta = getEpisodeRoleMeta(role);
               const isCompleted = lesson.isCompleted;
+              const isNextUp =
+                !isModuleCompleted && nextEpisode?.id === lesson.id;
               const takeaway = resolveLessonTakeaway(lesson, module.title);
+              const interpolatedTitle = t(lesson.title);
+              const interpolatedHook = t(
+                lesson.reliefTagline || takeaway.subtitle
+              );
 
               return (
-                <div
+                <Link
                   key={lesson.id}
+                  href={`/academy/${module.slug}/${lesson.slug}`}
                   data-testid={`lesson-card-${lesson.id}`}
                   className={cn(
-                    'rounded-2xl border transition-all duration-200 overflow-hidden shadow-2xs',
-                    isExpanded
-                      ? isCompleted
-                        ? 'border-stone-300 dark:border-stone-700 bg-stone-50/90 dark:bg-stone-900/80 ring-1 ring-stone-300/40 shadow-xs'
-                        : 'border-spruce/40 bg-spruce-soft/30 ring-1 ring-spruce/30 shadow-xs'
+                    'group grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center gap-5 rounded-[16px] border p-5 sm:p-6 transition-all duration-200 no-underline',
+                    isNextUp
+                      ? 'border-[var(--spruce-border)] bg-[var(--elevated)] ring-1 ring-[var(--spruce-border)] shadow-sm hover:border-[var(--spruce)] hover:-translate-y-0.5 hover:shadow-md'
                       : isCompleted
-                        ? 'border-stone-200/70 dark:border-stone-800/60 bg-stone-50/70 dark:bg-stone-900/30 opacity-60 hover:opacity-90'
-                        : 'border-hairline bg-white hover:border-spruce/30'
+                        ? 'border-[var(--hairline)] bg-[var(--canvas-subtle)] opacity-85 hover:opacity-100 hover:border-[var(--spruce-border)]'
+                        : 'border-[var(--hairline)] bg-[var(--elevated)] hover:border-[var(--spruce)] hover:-translate-y-0.5 hover:shadow-md'
                   )}
                 >
-                  {/* Clickable Lesson Row Header: Click whole box to toggle focus card in place */}
-                  <div
-                    onClick={() => handleToggleLesson(lesson.id)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleToggleLesson(lesson.id);
-                      }
-                    }}
-                    className={cn(
-                      'p-4 sm:p-4.5 flex items-center justify-between gap-3 cursor-pointer select-none transition-colors',
-                      isExpanded
-                        ? isCompleted
-                          ? 'bg-stone-100/70 dark:bg-stone-800/50'
-                          : 'bg-spruce-soft/40'
-                        : isCompleted
-                          ? 'hover:bg-stone-100/50 dark:hover:bg-stone-800/40'
-                          : 'hover:bg-linen-subtle/40'
-                    )}
-                    aria-expanded={isExpanded}
-                  >
-                    <div className="flex items-center gap-3 min-w-0 pr-2">
+                  <div className="min-w-0">
+                    {/* Distinct Episode Role Eyebrow */}
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
                       <span
+                        data-testid={`episode-role-badge-${epNum}`}
                         className={cn(
-                          'h-6 w-6 rounded-full text-xs font-mono flex items-center justify-center shrink-0 transition-colors',
-                          isCompleted
-                            ? 'bg-stone-200 dark:bg-stone-800 text-stone-500 dark:text-stone-400 font-bold border border-stone-300/60 dark:border-stone-700'
-                            : isExpanded
-                              ? 'bg-spruce text-white font-semibold'
-                              : 'bg-linen-subtle text-mute'
+                          'font-mono text-[11px] font-semibold uppercase tracking-[0.05em]',
+                          roleMeta.accent === 'amber'
+                            ? 'text-[var(--amber)]'
+                            : 'text-[var(--spruce)]'
                         )}
                       >
-                        {isCompleted ? '✓' : lesson.sortOrder}
+                        Episode {epNum} · {roleMeta.label}
                       </span>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3
-                            className={cn(
-                              'text-xs sm:text-sm font-semibold transition-colors truncate',
-                              isCompleted
-                                ? 'text-stone-500 dark:text-stone-400 line-through decoration-stone-300 dark:decoration-stone-600 font-medium'
-                                : isExpanded
-                                  ? 'text-spruce font-bold'
-                                  : 'text-ink'
-                            )}
-                          >
-                            {lesson.sortOrder}. {lesson.title}
-                          </h3>
-                          {isCompleted && (
-                            <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500 bg-stone-100 dark:bg-stone-800/80 px-1.5 py-0.5 rounded-full border border-stone-200/60 dark:border-stone-700/60">
-                              Completed
-                            </span>
-                          )}
-                        </div>
-                        {!isExpanded && (
-                          <p
-                            className={cn(
-                              'text-[11px] line-clamp-1 mt-0.5',
-                              isCompleted ? 'text-stone-400 dark:text-stone-500' : 'text-mute'
-                            )}
-                          >
-                            {takeaway.subtitle}
-                          </p>
-                        )}
-                      </div>
+
+                      {isNextUp && (
+                        <span className="rounded-full bg-[var(--spruce-soft)] px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--spruce)]">
+                          Up Next
+                        </span>
+                      )}
+
+                      {isCompleted && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[var(--spruce-border)] bg-[var(--spruce-soft)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--spruce)]">
+                          <Check className="h-3 w-3" aria-hidden="true" />
+                          <span>Saved</span>
+                        </span>
+                      )}
                     </div>
 
-                    <div className="flex items-center gap-2.5 shrink-0">
-                      <span
-                        className={cn(
-                          'text-xs font-mono',
-                          isCompleted ? 'text-stone-400 dark:text-stone-500' : 'text-mute'
-                        )}
-                      >
-                        {lesson.readingMinutes || 4}m
+                    {/* Newsreader Episode Headline */}
+                    <h2
+                      className={cn(
+                        'font-serif-almanac text-[21px] sm:text-[23px] font-semibold leading-[1.24] mb-2 transition-colors',
+                        isCompleted
+                          ? 'text-[var(--body)]'
+                          : 'text-[var(--ink)] group-hover:text-[var(--spruce)]'
+                      )}
+                    >
+                      {interpolatedTitle}
+                    </h2>
+
+                    {/* Concise Parent Hook */}
+                    <p className="text-[14.5px] leading-[1.55] text-[var(--body)] mb-3 m-0">
+                      {interpolatedHook}
+                    </p>
+
+                    {/* Signature Meta & Interactive Highlights */}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[12.5px] text-[var(--mute)]">
+                      <span className="font-mono text-[11.5px] tabular-nums">
+                        {lesson.readingMinutes || 3} min read
                       </span>
-                      <ChevronDown
-                        className={cn(
-                          'w-4 h-4 transition-transform duration-200',
-                          isExpanded
-                            ? isCompleted
-                              ? 'rotate-180 text-stone-500'
-                              : 'rotate-180 text-spruce'
-                            : isCompleted
-                              ? 'text-stone-400'
-                              : 'text-mute'
-                        )}
-                      />
+
+                      {lesson.interactiveHighlights?.map((tag, tagIdx) => (
+                        <React.Fragment key={`${tag}-${tagIdx}`}>
+                          <span
+                            className="text-[var(--hairline)]"
+                            aria-hidden="true"
+                          >
+                            ·
+                          </span>
+                          <span className="text-[var(--body)] font-medium">
+                            {t(tag)}
+                          </span>
+                        </React.Fragment>
+                      ))}
+
+                      {lesson.videoLecture && (
+                        <>
+                          <span
+                            className="text-[var(--hairline)]"
+                            aria-hidden="true"
+                          >
+                            ·
+                          </span>
+                          <span className="font-medium text-[var(--amber)]">
+                            {lesson.videoLecture.durationMinutes}-min talk below
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
 
-                  {/* IN-PLACE EXPANDED FOCUS BOX (Opens directly in its place under the clicked lesson) */}
-                  {isExpanded && (
-                    <div
-                      data-testid="hero-focus-card"
+                  {/* Direct Action Pill */}
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center shrink-0">
+                    <span
                       className={cn(
-                        'border-t p-5 sm:p-6 space-y-4 animate-in fade-in duration-200',
-                        isCompleted
-                          ? 'border-stone-200/80 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-900/60'
-                          : 'border-spruce/20 bg-white/70'
+                        'inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold transition-all',
+                        isNextUp
+                          ? 'bg-[var(--spruce)] text-[var(--elevated)] group-hover:bg-[var(--spruce-hover)]'
+                          : isCompleted
+                            ? 'border border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] group-hover:border-[var(--spruce-border)] group-hover:text-[var(--ink)]'
+                            : 'border border-[var(--hairline)] bg-[var(--canvas-subtle)] text-[var(--ink)] group-hover:border-[var(--spruce)] group-hover:bg-[var(--spruce-soft)] group-hover:text-[var(--spruce)]'
                       )}
-                      onClick={(e) => e.stopPropagation()}
                     >
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span
-                          className={cn(
-                            'px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase',
-                            isCompleted
-                              ? 'bg-stone-200 text-stone-600 dark:bg-stone-800 dark:text-stone-300 border border-stone-300/60'
-                              : 'bg-spruce text-white'
-                          )}
-                        >
-                          {isCompleted
-                            ? 'Course Completed · Review'
-                            : lesson.id === heroLesson?.id && !isModuleCompleted
-                              ? "Tonight's Objective"
-                              : `Lesson ${lesson.sortOrder} Objective`}
-                        </span>
-                        <span
-                          className={cn(
-                            'font-medium',
-                            isCompleted ? 'text-stone-500 dark:text-stone-400' : 'text-spruce'
-                          )}
-                        >
-                          {lesson.readingMinutes || 4} min read
-                        </span>
-                      </div>
-
-                      <div>
-                        <h2
-                          className={cn(
-                            'text-lg sm:text-xl font-serif font-bold leading-tight',
-                            isCompleted ? 'text-stone-700 dark:text-stone-200' : 'text-ink'
-                          )}
-                        >
-                          {lesson.sortOrder}. {lesson.title}
-                        </h2>
-                        <p className="text-xs sm:text-sm text-body leading-relaxed mt-1.5">
-                          {takeaway.subtitle}
-                        </p>
-                      </div>
-
-                      {/* Empathetic / Clinician Script Box */}
-                      <div
-                        className={cn(
-                          'rounded-xl p-3.5 border text-xs shadow-2xs',
-                          isCompleted
-                            ? 'bg-white/80 dark:bg-stone-800/80 border-stone-200 dark:border-stone-700'
-                            : 'bg-white border-spruce/20'
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            'text-[10px] font-mono font-semibold uppercase tracking-wider block mb-1',
-                            isCompleted ? 'text-stone-500 dark:text-stone-400' : 'text-spruce'
-                          )}
-                        >
-                          Empathetic Script to Use
-                        </span>
-                        <p className="font-serif italic text-ink text-sm">
-                          &ldquo;{takeaway.script}&rdquo;
-                        </p>
-                      </div>
-
-                      {/* Action Bar */}
-                      <div className="flex flex-wrap items-center gap-3 pt-1">
-                        <Link
-                          href={`/academy/${module.slug}/${lesson.slug}`}
-                          className={cn(
-                            'flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold transition-all shadow-xs',
-                            isCompleted
-                              ? 'bg-stone-700 hover:bg-stone-800 text-white'
-                              : 'bg-spruce hover:bg-spruce-hover text-white'
-                          )}
-                        >
-                          <span>
-                            {isCompleted ? 'Review' : 'Start'} Lesson {lesson.sortOrder} (
-                            {lesson.readingMinutes || 4} min)
-                          </span>
-                          <svg
-                            className="w-3.5 h-3.5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                          </svg>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                      <span>
+                        {isCompleted
+                          ? 'Review'
+                          : isNextUp
+                            ? 'Start Episode'
+                            : 'Open'}
+                      </span>
+                      <ArrowRight
+                        className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </div>
+                </Link>
               );
             })}
           </div>
         </section>
 
-        {/* Calming Footer Reassurance */}
-        <footer className="pt-4 border-t border-hairline text-center text-xs font-mono text-mute">
-          <span>Evidence-based pediatric framework · Dr. Aris Thorne, MD</span>
+        {/* Bottom-Only Optional Course Master Talk Shelf */}
+        {module.featuredVideoLecture && (
+          <AlmanacVideoShelf
+            video={module.featuredVideoLecture}
+            kickerLabel="Optional · Course Master Talk"
+            t={t}
+          />
+        )}
+
+        {/* Quiet Evidence-Based Reassurance Footer */}
+        <footer className="border-t border-[var(--hairline)] pt-5 text-center font-mono text-[12px] text-[var(--mute)]">
+          <span>Evidence-based pediatric framework · AlongSide Editorial</span>
         </footer>
       </main>
     </div>
