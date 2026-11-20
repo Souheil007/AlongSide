@@ -833,14 +833,49 @@ export function resolveAlmanacLessonPayload(
     part1Paras[0] ||
     `It is the middle of a busy week, and the moment you were hoping would go smoothly with {name} starts slipping sideways. *You pause and wonder what actually helps right now.*`;
 
-  const beat2Lead =
-    part2Paras[0] ||
+  const rawPart2First = (part2Paras[0] || '').trim();
+  const rawPart2Rest = part2Paras
+    .slice(1)
+    .map((p) => p.trim())
+    .filter((p) => p.length > 0 && p !== rawPart2First)
+    .join(' ');
+
+  const categoryScienceNote = (() => {
+    switch (category) {
+      case AcademyCategory.HEALTH_AND_WELLNESS:
+        return 'Circadian pacemaker neurons in the suprachiasmatic nucleus respond strongly to light, temperature, and predictable timing cues, gradually stabilizing sleep architecture and autonomic recovery across childhood.';
+      case AcademyCategory.NUTRITION_AND_FEEDING:
+        return 'Sensory-integration and appetite-regulation pathways mature through repeated low-pressure exposures; removing mealtime threat signals keeps the insula and gustatory cortex receptive to gradual curiosity.';
+      case AcademyCategory.DEVELOPMENT_AND_PLAY:
+        return 'Self-directed play and back-and-forth caregiver attunement stimulate prefrontal-striatal networks, strengthening working memory, cognitive flexibility, and intrinsic motivation far more effectively than drills.';
+      case AcademyCategory.DIGITAL_AND_DEVICES:
+        return 'Variable-ratio digital rewards engage dopaminergic prediction loops faster than still-myelinating prefrontal braking circuits can disengage; predictable environmental boundaries protect sleep and attention without willpower battles.';
+      case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
+      default:
+        return 'During acute emotional surges, limbic threat circuits temporarily outpace prefrontal braking pathways; calm caregiver co-regulation lowers autonomic arousal so reflective thinking and skill learning can re-engage.';
+    }
+  })();
+
+  let beat2Lead =
+    rawPart2First ||
     `Understanding what is happening underneath {possessive} behavior shifts the entire room from frustration into calm curiosity.`;
 
-  const scienceDeepDive =
-    part2Paras[1] ||
-    part2Paras[0] ||
-    'During developmental transitions, emotional and sensory arousal rises faster than self-regulation capacity. Warm co-regulation and predictable environmental cues gradually wire durable executive pathways.';
+  let scienceDeepDive = rawPart2Rest;
+  if (!scienceDeepDive) {
+    const sentences = rawPart2First
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (sentences.length >= 3) {
+      beat2Lead = sentences.slice(0, 2).join(' ');
+      scienceDeepDive = sentences.slice(2).join(' ');
+    } else {
+      scienceDeepDive = categoryScienceNote;
+    }
+  }
+  if (scienceDeepDive.trim().toLowerCase() === beat2Lead.trim().toLowerCase()) {
+    scienceDeepDive = categoryScienceNote;
+  }
 
   const primaryCard = dialogueCards[0];
   const secondaryCard = dialogueCards[1];

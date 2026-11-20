@@ -125,6 +125,9 @@ Evening cortisol rises when transitions feel sudden. A dim, predictable wind-dow
       expect(payload.visualType).toBe(AlmanacVisualType.CIRCADIAN_CURVE);
       expect(payload.illustration).toBe(EditorialIllustrationKey.moon_bed);
       expect(payload.almanacTruth).toContain('Predictable sensory dimming');
+      expect(payload.beat2Lead.trim().toLowerCase()).not.toBe(
+        payload.scienceDeepDive.trim().toLowerCase()
+      );
       expect(payload.instincts.length).toBeGreaterThanOrEqual(2);
       expect(payload.calmScriptSegments.some((s) => Boolean(s.tag))).toBe(true);
       expect(payload.moves).toHaveLength(3);
