@@ -117,11 +117,17 @@ describe('Academy Curriculum Zero-Bluff & Content Integrity Guard (PLAN-47 Full 
     expect(MASTER_VIDEO_LECTURES_BY_LESSON_SLUG['teen-zero-distracted-driving-pledge']).toBeUndefined();
     expect(MASTER_VIDEO_LECTURES_BY_LESSON_SLUG['teen-deep-work-block']?.presenter).toContain('Cal Newport');
 
-    // 3. Every Master Talk slug maps to a real surviving episode and includes 2+ jumpChips
+    // 3. Every Master Talk slug maps to a real surviving episode, includes 2+ jumpChips, and stays within duration
     const survivingSlugs = new Set(allLessons.map(({ lesson }) => lesson.slug));
     for (const [slug, video] of Object.entries(MASTER_VIDEO_LECTURES_BY_LESSON_SLUG)) {
       expect(survivingSlugs.has(slug), `Master video mapped to missing episode slug: ${slug}`).toBe(true);
       expect(video.jumpChips?.length ?? 0, `Missing jumpChips on ${slug}`).toBeGreaterThanOrEqual(2);
+      for (const chip of video.jumpChips ?? []) {
+        expect(
+          chip.seconds,
+          `Jump chip ${chip.seconds}s exceeds duration ${video.durationMinutes}m on ${slug}`
+        ).toBeLessThan(video.durationMinutes * 60);
+      }
     }
 
     // 4. Zero duplicate videoUrls inside any single course
@@ -170,6 +176,11 @@ describe('Academy Curriculum Zero-Bluff & Content Integrity Guard (PLAN-47 Full 
       ).toBe(true);
 
       const payload = lesson.almanacPayload!;
+      expect(
+        payload.beat2Lead.trim().toLowerCase(),
+        `beat2Lead and scienceDeepDive are identical on ${lesson.slug}`
+      ).not.toBe(payload.scienceDeepDive.trim().toLowerCase());
+
       const annotatedSegments = payload.calmScriptSegments.filter(
         (s) => Boolean(s.id && s.tag && s.note)
       );

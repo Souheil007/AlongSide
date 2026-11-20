@@ -476,12 +476,12 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(payload.data.lesson.videoLecture).toBeDefined();
 
       const video = payload.data.lesson.videoLecture;
-      expect(video.title).toBe("The Calming Reflex & The 5 S's");
-      expect(video.presenter).toBe('Dr. Harvey Karp, MD, FAAP');
-      expect(video.channel).toBe('Happiest Baby');
-      expect(video.videoUrl).toBe('https://www.youtube.com/watch?v=f-m2YcdMdFw');
-      expect(video.durationMinutes).toBe(12);
-      expect(video.parentHook).toContain('Babies are born 3 months too soon');
+      expect(video.title).toContain("5 S's");
+      expect(video.presenter).toContain('Danielle');
+      expect(video.channel).toBe('Soft Healing by Danielle');
+      expect(video.videoUrl).toBe('https://www.youtube.com/watch?v=BiXIs_-tCdo');
+      expect(video.durationMinutes).toBe(10);
+      expect(video.parentHook).toContain('calming reflex');
       expect(Array.isArray(video.keyTakeaways)).toBe(true);
       expect(video.keyTakeaways.length).toBe(3);
       expect(video.actionPrompt).toBeDefined();
@@ -502,7 +502,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       );
       expect(flagshipLesson).toBeDefined();
       expect(flagshipLesson.videoLecture).toBeDefined();
-      expect(flagshipLesson.videoLecture.title).toBe("The Calming Reflex & The 5 S's");
+      expect(flagshipLesson.videoLecture.title).toContain("5 S's");
     });
 
     it('returns videoLecture for adolescent master lecture (Dr. Matthew Walker sleep shift)', async () => {
@@ -517,7 +517,7 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(payload.data.lesson.videoLecture).toBeDefined();
 
       const video = payload.data.lesson.videoLecture;
-      expect(video.title).toBe('How Do Teenagers Sleep Differently?');
+      expect(video.title).toBe('Sleep Is Your Superpower');
       expect(video.presenter).toBe('Dr. Matthew Walker, PhD');
       expect(video.videoUrl).toBe('https://www.youtube.com/watch?v=5MuIMqhT8DM');
       expect(video.keyTakeaways.length).toBe(3);

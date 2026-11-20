@@ -8,6 +8,7 @@ import {
   DevelopmentalTier,
 } from '@alongside/shared';
 import {
+  AlmanacBrainBeat,
   AlmanacListenDock,
   AlmanacRehearsalBeat,
   AlmanacVideoShelf,
@@ -99,6 +100,26 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
     // Founder removal check
     expect(html).not.toContain('Hear the calm tone');
     expect(html).not.toMatch(/\{[a-zA-Z]+\}/);
+  });
+
+  it('hides Beat 2 neuroscience disclosure when scienceDeepDive duplicates beat2Lead', () => {
+    const duplicatePayload = {
+      ...MOCK_LESSON_DETAIL_ADRENARCHE.almanacPayload!,
+      beat2Lead: 'Identical explanation text for {name}.',
+      scienceDeepDive: 'Identical explanation text for {name}.',
+    };
+    const html = renderToStaticMarkup(
+      <AlmanacBrainBeat
+        payload={duplicatePayload}
+        bookmarkedTruth={false}
+        onToggleBookmarkTruth={vi.fn()}
+        isNarrating={false}
+        t={tMaya}
+      />
+    );
+
+    expect(html).toContain('Identical explanation text for Maya.');
+    expect(html).not.toContain('data-testid="science-deep-dive-toggle"');
   });
 
   it('renders Beat 3 skip hatch before an instinct is chosen', () => {

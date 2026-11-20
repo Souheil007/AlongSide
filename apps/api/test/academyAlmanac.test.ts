@@ -158,6 +158,9 @@ describe('Academy Interactive Almanac v2 API & Playbook Persistence (PLAN-46)', 
     const mod = res.json().data.module;
     expect(mod.hasMasterLecture).toBe(true);
     expect(mod.featuredVideoLecture).toBeDefined();
-    expect(mod.featuredVideoLecture.presenter).toContain('Harvey Karp');
+    expect(mod.featuredVideoLecture.title).toContain("5 S's");
+    expect(mod.featuredVideoLecture.videoUrl).toBe(
+      'https://www.youtube.com/watch?v=BiXIs_-tCdo'
+    );
   });
 });
