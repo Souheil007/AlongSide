@@ -554,25 +554,9 @@ export async function getModuleBySlug(
   return { module };
 }
 
-/**
- * Fetch a single lesson by its ID.
- */
-export async function getLesson(
-  id: string
-): Promise<LessonDetailResponse> {
-  let res: LessonDetailResponse;
-  try {
-    res = await apiClient<LessonDetailResponse>(`/api/v1/academy/lessons/${id}`, {
-      method: 'GET',
-    });
-  } catch (err) {
-    if (id === MOCK_LESSON_DETAIL_ADRENARCHE.id) {
-      res = { lesson: MOCK_LESSON_DETAIL_ADRENARCHE };
-    } else {
-      throw err;
-    }
-  }
-
+function mergeLocalLessonProgress(
+  res: LessonDetailResponse
+): LessonDetailResponse {
   const localCompleted = getLocalCompletedLessonIds();
   const localPlaybook = getLocalLessonPlaybook(res.lesson.id);
   if (localCompleted.has(res.lesson.id)) {
@@ -597,6 +581,55 @@ export async function getLesson(
     };
   }
   return res;
+}
+
+/**
+ * Fetch a single lesson by its ID.
+ */
+export async function getLesson(
+  id: string
+): Promise<LessonDetailResponse> {
+  let res: LessonDetailResponse;
+  try {
+    res = await apiClient<LessonDetailResponse>(`/api/v1/academy/lessons/${id}`, {
+      method: 'GET',
+    });
+  } catch (err) {
+    if (id === MOCK_LESSON_DETAIL_ADRENARCHE.id) {
+      res = { lesson: MOCK_LESSON_DETAIL_ADRENARCHE };
+    } else {
+      throw err;
+    }
+  }
+
+  return mergeLocalLessonProgress(res);
+}
+
+/**
+ * Fetch a single lesson directly by its immutable semantic slug.
+ * Avoids stale cached UUID mismatches after database reseeds and supports
+ * backend LESSON_SLUG_ALIASES redirects for retired/renamed slugs.
+ */
+export async function getLessonBySlug(
+  slug: string
+): Promise<LessonDetailResponse> {
+  let res: LessonDetailResponse;
+  try {
+    res = await apiClient<LessonDetailResponse>(
+      `/api/v1/academy/lessons/by-slug/${encodeURIComponent(slug)}`,
+      {
+        method: 'GET',
+      }
+    );
+  } catch (err) {
+    if (slug === MOCK_LESSON_DETAIL_ADRENARCHE.slug) {
+      res = { lesson: MOCK_LESSON_DETAIL_ADRENARCHE };
+    } else {
+      throw err;
+    }
+  }
+
+  return mergeLocalLessonProgress(res);
 }
 
 /**

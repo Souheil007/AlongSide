@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
-import { getAcademyModuleBySlug, getLesson } from '@/lib/api/academy';
+import { getAcademyModuleBySlug, getLessonBySlug } from '@/lib/api/academy';
 import {
   useChildContextStore,
   selectActiveChild,
@@ -38,11 +38,8 @@ export function LessonReaderClient({
     queryFn: () => getAcademyModuleBySlug(moduleSlug),
   });
 
-  const currentLessonSummary = module?.lessons?.find(
-    (l) => l.slug === lessonSlug
-  );
-
-  // 2. Fetch lesson detail once we have the lesson summary ID
+  // 2. Fetch lesson directly by immutable slug in parallel (avoids stale UUID 404s
+  //    from cached module responses and enables backend LESSON_SLUG_ALIASES redirects)
   const {
     data: lessonData,
     isLoading: isLessonLoading,
@@ -50,9 +47,9 @@ export function LessonReaderClient({
     error: lessonError,
     refetch: refetchLesson,
   } = useQuery({
-    queryKey: ['academy-lesson', currentLessonSummary?.id],
-    queryFn: () => getLesson(currentLessonSummary!.id),
-    enabled: !!currentLessonSummary?.id,
+    queryKey: ['academy-lesson-by-slug', lessonSlug],
+    queryFn: () => getLessonBySlug(lessonSlug),
+    enabled: !!lessonSlug,
   });
 
   const lesson = lessonData?.lesson;
@@ -62,14 +59,17 @@ export function LessonReaderClient({
       queryKey: ['academy-module-detail', moduleSlug],
     });
     queryClient.invalidateQueries({ queryKey: ['academy-modules'] });
-    if (currentLessonSummary?.id) {
+    queryClient.invalidateQueries({
+      queryKey: ['academy-lesson-by-slug', lessonSlug],
+    });
+    if (lesson?.id) {
       queryClient.invalidateQueries({
-        queryKey: ['academy-lesson', currentLessonSummary.id],
+        queryKey: ['academy-lesson', lesson.id],
       });
     }
   };
 
-  if (isModuleLoading || (currentLessonSummary && isLessonLoading)) {
+  if (isLessonLoading || (isModuleLoading && !lesson)) {
     return (
       <div className="mx-auto max-w-[700px] space-y-6 py-10 px-4 animate-pulse">
         <div className="h-4 w-44 rounded bg-[var(--canvas-subtle)]" />
@@ -80,7 +80,7 @@ export function LessonReaderClient({
     );
   }
 
-  if (isModuleError || !module) {
+  if ((isModuleError || !module) && !lesson) {
     return (
       <div className="mx-auto max-w-md py-16 text-center space-y-4 px-4">
         <AlertCircle className="mx-auto h-10 w-10 text-[var(--amber)]" />
@@ -102,26 +102,6 @@ export function LessonReaderClient({
     );
   }
 
-  if (!currentLessonSummary) {
-    return (
-      <div className="mx-auto max-w-md py-16 text-center space-y-4 px-4">
-        <AlertCircle className="mx-auto h-10 w-10 text-[var(--amber)]" />
-        <h2 className="font-serif-almanac text-2xl font-semibold text-[var(--ink)]">
-          Episode Not Found
-        </h2>
-        <p className="text-sm text-[var(--body)]">
-          This episode does not exist in the &ldquo;{module.title}&rdquo; course.
-        </p>
-        <Link href={`/academy/${moduleSlug}`}>
-          <Button variant="outline" size="sm" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Course Arc
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
   if (isLessonError || !lesson) {
     return (
       <div className="mx-auto max-w-md py-16 text-center space-y-4 px-4">
@@ -134,23 +114,31 @@ export function LessonReaderClient({
             ? lessonError.message
             : 'Could not load the episode content.'}
         </p>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => refetchLesson()}
-          className="gap-2"
-        >
-          Try Again
-        </Button>
+        <div className="flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => refetchLesson()}
+            className="gap-2"
+          >
+            Try Again
+          </Button>
+          <Link href={`/academy/${moduleSlug}`}>
+            <Button variant="outline" size="sm" className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Course Arc
+            </Button>
+          </Link>
+        </div>
       </div>
     );
   }
 
-  const orderedLessons = [...module.lessons].sort(
+  const orderedLessons = [...(module?.lessons ?? [])].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
   const currentIdx = orderedLessons.findIndex(
-    (l) => l.id === currentLessonSummary.id
+    (l) => l.id === lesson.id || l.slug === lesson.slug
   );
   const prevLesson = currentIdx > 0 ? orderedLessons[currentIdx - 1] : null;
   const nextLesson =
@@ -161,8 +149,8 @@ export function LessonReaderClient({
   return (
     <LessonReaderView
       lesson={lesson}
-      moduleSlug={moduleSlug}
-      moduleTitle={module.title}
+      moduleSlug={lesson.module?.slug ?? moduleSlug}
+      moduleTitle={module?.title ?? lesson.module?.title}
       activeChild={activeChild}
       episodeNumber={currentIdx >= 0 ? currentIdx + 1 : lesson.sortOrder}
       totalEpisodes={orderedLessons.length || 4}
