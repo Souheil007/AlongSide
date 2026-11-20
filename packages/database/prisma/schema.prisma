@@ -375,21 +375,22 @@ model QuizResponse {
 // ----------------------------------------------------
 
 model AcademyModule {
-  id                 String             @id @default(uuid())
-  category           AcademyCategory    @default(DIGITAL_AND_DEVICES)
-  developmentalTier  DevelopmentalTier
-  slug               String             @unique
-  title              String
-  summary            String
-  reliefSubtitle     String?
+  id                   String             @id @default(uuid())
+  category             AcademyCategory    @default(DIGITAL_AND_DEVICES)
+  developmentalTier    DevelopmentalTier
+  slug                 String             @unique
+  title                String
+  summary              String
+  reliefSubtitle       String?
   tonightQuickWinTitle String?
-  coverImageUrl      String?
-  sortOrder          Int                @default(0)
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
+  coverImageUrl        String?
+  featuredVideoLecture Json?
+  sortOrder            Int                @default(0)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 
-  chapters           AcademyChapter[]
-  lessons            AcademyLesson[]
+  chapters             AcademyChapter[]
+  lessons              AcademyLesson[]
 
   @@index([category, developmentalTier])
   @@map("academy_modules")
@@ -422,6 +423,7 @@ model AcademyLesson {
   slug               String
   title              String
   archetype          String             @default("EVERYDAY_BEHAVIOR")
+  episodeRole        String             @default("FAST_WIN")
   contentMarkdown    String
   readingMinutes     Int                @default(4)
   sortOrder          Int                @default(0)
@@ -434,6 +436,7 @@ model AcademyLesson {
   adaptiveModuleType String?
   dialogueCards      Json?
   videoLecture       Json?
+  almanacPayload     Json?
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 
@@ -451,6 +454,9 @@ model AcademyProgress {
   lesson             AcademyLesson      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   isCompleted        Boolean            @default(true)
   completedAt        DateTime           @default(now())
+  chosenMoveId       String?
+  bookmarkedTruth    Boolean            @default(false)
+  savedPushbackIds   String[]           @default([])
 
   @@unique([userId, lessonId])
   @@map("academy_progress")

@@ -84,15 +84,26 @@ export function FloatingAdvisorBubble() {
     return resolveContextualPrompts(pathname || '/dashboard', activeChild);
   }, [pathname, activeChild]);
 
-  // Handle ESC key to dismiss drawer
+  // Handle ESC key to dismiss drawer and custom event to open with contextual lesson prompt
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         setIsOpen(false);
       }
     };
+    const handleOpenAdvisor = (e: Event) => {
+      const custom = e as CustomEvent<{ prompt?: string }>;
+      if (custom.detail?.prompt) {
+        setInputMessage(custom.detail.prompt);
+      }
+      setIsOpen(true);
+    };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('alongside:open-advisor', handleOpenAdvisor);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('alongside:open-advisor', handleOpenAdvisor);
+    };
   }, [isOpen]);
 
   // Focus input when opened

@@ -6,6 +6,8 @@ import type {
   AcademyModuleDetailDTO,
   AcademyLessonDTO,
   AcademyLessonCompletionResponseDTO,
+  LessonPlaybookInputDTO,
+  LessonPlaybookStateDTO,
 } from '@alongside/shared';
 import type { AcademyRepository } from './academy.repository.js';
 
@@ -100,7 +102,8 @@ export class AcademyService {
 
   async markLessonComplete(
     userId: string,
-    lessonId: string
+    lessonId: string,
+    playbookInput?: LessonPlaybookInputDTO
   ): Promise<AcademyLessonCompletionResponseDTO> {
     // Validate lesson existence before completing
     const existing = await this.repository.findLessonById(lessonId, userId);
@@ -110,6 +113,21 @@ export class AcademyService {
       );
     }
 
-    return this.repository.markLessonComplete(userId, lessonId);
+    return this.repository.markLessonComplete(userId, lessonId, playbookInput);
+  }
+
+  async saveLessonPlaybook(
+    userId: string,
+    lessonId: string,
+    playbookInput: LessonPlaybookInputDTO
+  ): Promise<LessonPlaybookStateDTO> {
+    const existing = await this.repository.findLessonById(lessonId, userId);
+    if (!existing) {
+      throw new AcademyLessonNotFoundError(
+        `Academy lesson not found with id: ${lessonId}`
+      );
+    }
+
+    return this.repository.saveLessonPlaybook(userId, lessonId, playbookInput);
   }
 }

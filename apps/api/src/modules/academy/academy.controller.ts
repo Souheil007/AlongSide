@@ -1,5 +1,10 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import type { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
+import {
+  LessonPlaybookInputSchema,
+  type AcademyCategory,
+  type DevelopmentalTier,
+  type LessonPlaybookInputDTO,
+} from '@alongside/shared';
 import type { AcademyService } from './academy.service.js';
 
 export class AcademyController {
@@ -101,17 +106,80 @@ export class AcademyController {
   async markLessonComplete(
     request: FastifyRequest<{
       Params: { id: string };
+      Body?: LessonPlaybookInputDTO;
     }>,
     reply: FastifyReply
   ): Promise<void> {
     const { id } = request.params;
     const userId = request.user.id;
+    let playbookInput: LessonPlaybookInputDTO | undefined;
 
-    const result = await this.service.markLessonComplete(userId, id);
+    if (request.body !== undefined && request.body !== null) {
+      const parsed = LessonPlaybookInputSchema.safeParse(request.body);
+      if (!parsed.success) {
+        return reply.status(400).send({
+          success: false,
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'Invalid playbook input payload.',
+            details: parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.'),
+              message: issue.message,
+            })),
+          },
+        });
+      }
+      playbookInput = parsed.data;
+    }
+
+    const result = await this.service.markLessonComplete(
+      userId,
+      id,
+      playbookInput
+    );
 
     return reply.status(200).send({
       success: true,
       data: result,
+    });
+  }
+
+  async saveLessonPlaybook(
+    request: FastifyRequest<{
+      Params: { id: string };
+      Body: LessonPlaybookInputDTO;
+    }>,
+    reply: FastifyReply
+  ): Promise<void> {
+    const { id } = request.params;
+    const userId = request.user.id;
+    const parsed = LessonPlaybookInputSchema.safeParse(request.body ?? {});
+
+    if (!parsed.success) {
+      return reply.status(400).send({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Invalid playbook input payload.',
+          details: parsed.error.issues.map((issue) => ({
+            field: issue.path.join('.'),
+            message: issue.message,
+          })),
+        },
+      });
+    }
+
+    const playbookState = await this.service.saveLessonPlaybook(
+      userId,
+      id,
+      parsed.data
+    );
+
+    return reply.status(200).send({
+      success: true,
+      data: {
+        playbookState,
+      },
     });
   }
 }

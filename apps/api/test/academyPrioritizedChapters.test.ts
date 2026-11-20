@@ -86,7 +86,9 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
         expect(cat.description).toBeDefined();
         expect(cat.description.length).toBeGreaterThan(0);
         expect(cat.moduleCount).toBe(8);
-        expect(cat.lessonCount).toBe(32);
+        // Flexible 3-4 episode curriculum (PLAN-47 Wave 1 trimmed padded lessons)
+        expect(cat.lessonCount).toBeGreaterThanOrEqual(24);
+        expect(cat.lessonCount).toBeLessThanOrEqual(32);
       }
     });
 
@@ -149,7 +151,8 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
 
       for (const cat of payload.data.categories) {
         expect(cat.moduleCount).toBe(1);
-        expect(cat.lessonCount).toBe(4);
+        expect(cat.lessonCount).toBeGreaterThanOrEqual(3);
+        expect(cat.lessonCount).toBeLessThanOrEqual(4);
       }
     });
   });
@@ -168,7 +171,8 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
 
       for (const mod of payload.data.modules) {
         expect(mod.category).toBe(AcademyCategory.BEHAVIOR_AND_EMOTIONS);
-        expect(mod.lessonCount).toBe(4);
+        expect(mod.lessonCount).toBeGreaterThanOrEqual(3);
+        expect(mod.lessonCount).toBeLessThanOrEqual(4);
       }
     });
 
@@ -188,7 +192,7 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       expect(mod.category).toBe(AcademyCategory.HEALTH_AND_WELLNESS);
       expect(mod.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
       expect(mod.title).toContain('Infant Sleep');
-      expect(mod.lessonCount).toBe(4);
+      expect(mod.lessonCount).toBe(3);
     });
 
     it('returns all 40 courses when no filter is provided (backward compatibility)', async () => {
@@ -235,22 +239,22 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
 
       // Verify strict priority ascending order: 1 -> 2 -> 3
       expect(mod.chapters[0].priority).toBe(ChapterPriority.PRIORITY_1_CRITICAL);
-      expect(mod.chapters[0].title).toContain('Critical Win');
+      expect(mod.chapters[0].title).toContain('Fast Win');
       expect(mod.chapters[0].lessons).toHaveLength(1);
 
       expect(mod.chapters[1].priority).toBe(ChapterPriority.PRIORITY_2_ROUTINES);
-      expect(mod.chapters[1].title).toContain('Biological Root & Routines');
+      expect(mod.chapters[1].title).toContain('Daily Rhythms');
       expect(mod.chapters[1].lessons).toHaveLength(2);
 
       expect(mod.chapters[2].priority).toBe(ChapterPriority.PRIORITY_3_SCAFFOLDING);
-      expect(mod.chapters[2].title).toContain('Scaffolding & Long-Term Repair');
+      expect(mod.chapters[2].title).toContain('Long-Term Bond');
       expect(mod.chapters[2].lessons).toHaveLength(1);
 
       // Backward compatibility: verify flat lessons array also exists
       expect(mod.lessons).toHaveLength(4);
     });
 
-    it('ensures lesson content includes clinical insights and What to Say script blocks', async () => {
+    it('ensures lesson content includes key takeaways and dialogue scripts', async () => {
       const response = await app.inject({
         method: 'GET',
         url: '/api/v1/academy/lessons/les-nutrition-infant-first-foods-early-allergen-introduction-science',
@@ -261,9 +265,10 @@ describe('Parent Intelligence Academy Categories & Prioritized Chapters API (PLA
       expect(payload.success).toBe(true);
 
       const lesson = payload.data.lesson;
-      expect(lesson.title).toContain('The Critical 4-11 Month Window');
+      expect(lesson.title).toContain('Introducing Peanut & Egg Safely Without Panic');
       expect(lesson.contentMarkdown).toContain('> **Key Takeaway:**');
       expect(lesson.contentMarkdown).toContain('What to Say');
+      expect(lesson.almanacPayload).toBeDefined();
       expect(lesson.module).toBeDefined();
       expect(lesson.module.category).toBe(AcademyCategory.NUTRITION_AND_FEEDING);
       expect(lesson.chapter).toBeDefined();

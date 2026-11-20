@@ -1,5 +1,9 @@
 import type { FastifyPluginAsync, FastifyRequest } from 'fastify';
-import type { AcademyCategory, DevelopmentalTier } from '@alongside/shared';
+import type {
+  AcademyCategory,
+  DevelopmentalTier,
+  LessonPlaybookInputDTO,
+} from '@alongside/shared';
 import { AcademyController } from './academy.controller.js';
 import {
   type AcademyRepository,
@@ -69,6 +73,13 @@ const archetypeEnum = [
   'PRACTICAL_FAMILY_GUIDE',
 ];
 
+const episodeRoleEnum = [
+  'FAST_WIN',
+  'BRAIN_DECODER',
+  'RHYTHM_RESET',
+  'LONG_TERM_BOND',
+];
+
 const academyCategoryStatsSchema = {
   type: 'object',
   properties: {
@@ -79,6 +90,15 @@ const academyCategoryStatsSchema = {
     lessonCount: { type: 'number' },
   },
   required: ['category', 'title', 'description', 'moduleCount', 'lessonCount'],
+};
+
+const videoJumpChipSchema = {
+  type: 'object',
+  properties: {
+    seconds: { type: 'number' },
+    label: { type: 'string' },
+  },
+  required: ['seconds', 'label'],
 };
 
 const masterVideoLectureSchema = {
@@ -95,8 +115,37 @@ const masterVideoLectureSchema = {
       items: { type: 'string' },
     },
     actionPrompt: { type: ['string', 'null'] },
+    jumpChips: {
+      type: ['array', 'null'],
+      items: videoJumpChipSchema,
+    },
   },
   required: ['videoUrl', 'title', 'presenter', 'channel', 'durationMinutes'],
+};
+
+const lessonPlaybookStateSchema = {
+  type: ['object', 'null'],
+  properties: {
+    isCompleted: { type: 'boolean' },
+    chosenMoveId: { type: ['string', 'null'] },
+    bookmarkedTruth: { type: 'boolean' },
+    savedPushbackIds: {
+      type: 'array',
+      items: { type: 'string' },
+    },
+    completedAt: { type: ['string', 'null'] },
+  },
+  required: [
+    'isCompleted',
+    'chosenMoveId',
+    'bookmarkedTruth',
+    'savedPushbackIds',
+  ],
+};
+
+const almanacPayloadSchema = {
+  type: ['object', 'null'],
+  additionalProperties: true,
 };
 
 const academyLessonSummarySchema = {
@@ -118,6 +167,11 @@ const academyLessonSummarySchema = {
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
     archetype: { type: ['string', 'null'], enum: archetypeEnum },
+    episodeRole: { type: ['string', 'null'], enum: episodeRoleEnum },
+    interactiveHighlights: {
+      type: ['array', 'null'],
+      items: { type: 'string' },
+    },
   },
   required: [
     'id',
@@ -151,6 +205,7 @@ const academyModuleDtoSchema = {
     completedLessonCount: { type: 'number' },
     isCompleted: { type: 'boolean' },
     hasMasterLecture: { type: 'boolean' },
+    featuredVideoLecture: masterVideoLectureSchema,
     lessons: {
       type: 'array',
       items: academyLessonSummarySchema,
@@ -298,6 +353,9 @@ const academyLessonDtoSchema = {
     deliveryTip: { type: ['string', 'null'] },
     videoLecture: masterVideoLectureSchema,
     archetype: { type: ['string', 'null'], enum: archetypeEnum },
+    episodeRole: { type: ['string', 'null'], enum: episodeRoleEnum },
+    almanacPayload: almanacPayloadSchema,
+    playbookState: lessonPlaybookStateSchema,
     module: {
       type: 'object',
       properties: {
@@ -347,9 +405,16 @@ const completionResponseSchema = {
             lessonId: { type: 'string' },
             isCompleted: { type: 'boolean' },
             completedAt: { type: 'string' },
+            chosenMoveId: { type: ['string', 'null'] },
+            bookmarkedTruth: { type: 'boolean' },
+            savedPushbackIds: {
+              type: 'array',
+              items: { type: 'string' },
+            },
           },
           required: ['id', 'userId', 'lessonId', 'isCompleted', 'completedAt'],
         },
+        playbookState: lessonPlaybookStateSchema,
         module: {
           type: 'object',
           properties: {
@@ -583,8 +648,8 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
     controller.getLessonById.bind(controller)
   );
 
-  // POST /lessons/:id/complete - Mark Lesson Complete
-  fastify.post<{ Params: { id: string } }>(
+  // POST /lessons/:id/complete - Mark Lesson Complete (with optional Playbook sealing)
+  fastify.post<{ Params: { id: string }; Body?: LessonPlaybookInputDTO }>(
     '/lessons/:id/complete',
     {
       preHandler: [fastify.authenticate],
@@ -598,11 +663,61 @@ export const academyRoutes: FastifyPluginAsync<AcademyRoutesOptions> = async (
         },
         response: {
           200: completionResponseSchema,
+          400: errorResponseSchema,
           401: errorResponseSchema,
           404: errorResponseSchema,
         },
       },
     },
     controller.markLessonComplete.bind(controller)
+  );
+
+  // PATCH /lessons/:id/playbook - Persist Mid-Lesson Bookmarks & Tonight Move
+  fastify.patch<{ Params: { id: string }; Body: LessonPlaybookInputDTO }>(
+    '/lessons/:id/playbook',
+    {
+      preHandler: [fastify.authenticate],
+      schema: {
+        params: {
+          type: 'object',
+          required: ['id'],
+          properties: {
+            id: { type: 'string', minLength: 1 },
+          },
+        },
+        body: {
+          type: 'object',
+          properties: {
+            chosenMoveId: { type: ['string', 'null'] },
+            bookmarkedTruth: { type: 'boolean' },
+            savedPushbackIds: {
+              type: 'array',
+              items: { type: 'string' },
+            },
+          },
+          additionalProperties: false,
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean', enum: [true] },
+              data: {
+                type: 'object',
+                properties: {
+                  playbookState: lessonPlaybookStateSchema,
+                },
+                required: ['playbookState'],
+              },
+            },
+            required: ['success', 'data'],
+          },
+          400: errorResponseSchema,
+          401: errorResponseSchema,
+          404: errorResponseSchema,
+        },
+      },
+    },
+    controller.saveLessonPlaybook.bind(controller)
   );
 };

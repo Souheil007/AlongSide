@@ -19,6 +19,21 @@
     --accent-amber-soft: #fef3c7;
     --destructive-almanac: #dc2626;
 
+    /* Interactive Almanac v2 Tonal Chapter Bands & Surface Tokens (PLAN-48) */
+    --band-sand: #f3efe6;
+    --band-spruce: #edf4f0;
+    --art-wash: #ede6d8;
+    --art-wash-spruce: #dcebe2;
+    --spruce: #143d2b;
+    --spruce-hover: #0e2b1e;
+    --spruce-soft: #e6f2eb;
+    --spruce-border: #c5decf;
+    --amber: #b45309;
+    --amber-soft: #fdf3dc;
+    --amber-border: #edd49b;
+    --trigger-bg: #f5efe3;
+    --seal-ink: #143d2b;
+
     /* shadcn / Tailwind HSL Semantic Mapping */
     --background: 60 14% 98%; /* #FBFBF9 Archival Linen */
     --foreground: 160 7% 7%;  /* #111413 Ink */
@@ -284,9 +299,57 @@
   animation: auroraDriftReverse 22s ease-in-out infinite;
 }
 
+/* Interactive Almanac v2 Nightstand Warm Charcoal Scope (PLAN-48) */
+.almanac-nightstand {
+  --canvas: #151412;
+  --canvas-subtle: #1e1c18;
+  --band-sand: #1b1915;
+  --band-spruce: #161c18;
+  --elevated: #221f1b;
+  --ink: #f2ece1;
+  --body: #c5bdb0;
+  --mute: #8d867a;
+  --hairline: #34302a;
+  --hairline-soft: #292621;
+  --accent-forest: #72bc94;
+  --accent-forest-soft: #1b2c23;
+  --spruce: #72bc94;
+  --spruce-hover: #89cda8;
+  --spruce-soft: #1b2c23;
+  --spruce-border: #2a4738;
+  --accent-amber: #e5a657;
+  --accent-amber-soft: #2e2416;
+  --amber: #e5a657;
+  --amber-soft: #2e2416;
+  --amber-border: #4d3b20;
+  --trigger-bg: #29241d;
+  --art-wash: #29241d;
+  --art-wash-spruce: #1b2a22;
+  --seal-ink: #72bc94;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes almanacRiseIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.almanac-rise-in {
+  animation: almanacRiseIn 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-aurora,
-  .animate-aurora-reverse {
+  .animate-aurora-reverse,
+  .almanac-rise-in {
     animation: none !important;
   }
 }

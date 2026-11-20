@@ -1,6 +1,7 @@
 import type {
   AcademyCategory,
   AgreementStatus,
+  AlmanacVisualType,
   ChapterPriority,
   ClauseCategory,
   CommitmentParty,
@@ -9,6 +10,8 @@ import type {
   DeviceProfileStatus,
   DietaryStage,
   EarlyChildhoodTranche,
+  EditorialIllustrationKey,
+  EpisodeRole,
   ExploitSeverity,
   Gender,
   MessageRole,
@@ -23,7 +26,13 @@ import type {
   LessonArchetype,
 } from '../constants/index.js';
 
-export type { EarlyChildhoodTranche, LessonArchetype };
+export type {
+  AlmanacVisualType,
+  EarlyChildhoodTranche,
+  EditorialIllustrationKey,
+  EpisodeRole,
+  LessonArchetype,
+};
 
 export interface LessonArchetypeHeadings {
   bannerPrefix: string;
@@ -276,6 +285,7 @@ export interface AcademyModuleDTO {
   completedLessonCount: number;
   isCompleted: boolean;
   hasMasterLecture?: boolean;
+  featuredVideoLecture?: MasterVideoLectureDTO | null;
   lessons?: AcademyLessonSummaryDTO[];
 }
 
@@ -301,6 +311,11 @@ export interface DialogueCardDTO {
 }
 export type DialogueCardItem = DialogueCardDTO;
 
+export interface VideoJumpChip {
+  seconds: number;
+  label: string;
+}
+
 export interface MasterVideoLectureDTO {
   videoUrl: string;
   title: string;
@@ -310,6 +325,109 @@ export interface MasterVideoLectureDTO {
   parentHook?: string;
   keyTakeaways?: string[];
   actionPrompt?: string;
+  jumpChips?: VideoJumpChip[];
+}
+
+export interface AnnotatedScriptSegment {
+  id?: string;
+  text: string;
+  tag?: string;
+  note?: string;
+}
+
+export interface AlmanacPollOption {
+  id: string;
+  label: string;
+  response: string;
+}
+
+export interface AlmanacInstinctOption {
+  id: string;
+  label: string;
+  whyTitle: string;
+  whyText: string;
+}
+
+export interface AlmanacPushbackOption {
+  id: string;
+  label: string;
+  setup: string;
+  script: string;
+}
+
+export interface AlmanacMoveOption {
+  id: string;
+  title: string;
+  desc: string;
+}
+
+export interface AlmanacNextEpisodeHook {
+  kicker?: string;
+  mystery: string;
+  title?: string;
+  targetSlug?: string;
+}
+
+export interface AlmanacLessonPayload {
+  episodeRole: EpisodeRole;
+  illustration: EditorialIllustrationKey;
+  illustrationCaption: string;
+  headline: string;
+  deck: string;
+  sceneTime: string;
+  sceneBody: string;
+  pollQuestion: string;
+  pollOptions: AlmanacPollOption[];
+  beat2Kicker: string;
+  beat2Title: string;
+  beat2Lead: string;
+  visualType: AlmanacVisualType;
+  visualStageTitle: string;
+  visualStageHint: string;
+  visualConfig?: Record<string, unknown>;
+  almanacTruth: string;
+  scienceDeepDive: string;
+  beat3Kicker: string;
+  beat3Title: string;
+  rehearsalTriggerSpeaker: string;
+  rehearsalTriggerQuote: string;
+  rehearsalPrompt: string;
+  instincts: AlmanacInstinctOption[];
+  calmScriptPlain: string;
+  calmScriptSegments: AnnotatedScriptSegment[];
+  deliveryCues: string[];
+  pushbacks: AlmanacPushbackOption[];
+  advisorPrompt: string;
+  beat4Kicker: string;
+  beat4Title: string;
+  beat4Lead: string;
+  moves: AlmanacMoveOption[];
+  closingNote: string;
+  pocketInsight: string;
+  nextEpisodeHook?: AlmanacNextEpisodeHook | null;
+  interactiveHighlights?: string[];
+}
+
+export interface LessonPlaybookStateDTO {
+  isCompleted: boolean;
+  chosenMoveId: string | null;
+  bookmarkedTruth: boolean;
+  savedPushbackIds: string[];
+  completedAt?: string | null;
+}
+
+export interface LessonPlaybookInputDTO {
+  chosenMoveId?: string | null;
+  bookmarkedTruth?: boolean;
+  savedPushbackIds?: string[];
+}
+
+export interface ChildPersonalizationContext {
+  name?: string | null;
+  gender?: Gender | string | null;
+  age?: number | null;
+  ageMonths?: number | null;
+  developmentalTier?: DevelopmentalTier | string | null;
 }
 
 export interface ActionProtocolItem {
@@ -335,6 +453,8 @@ export interface AcademyLessonSummaryDTO {
   deliveryTip?: string;
   videoLecture?: MasterVideoLectureDTO | null;
   archetype?: LessonArchetype;
+  episodeRole?: EpisodeRole;
+  interactiveHighlights?: string[];
 }
 
 export interface AcademyLessonDTO {
@@ -359,6 +479,9 @@ export interface AcademyLessonDTO {
   deliveryTip?: string;
   videoLecture?: MasterVideoLectureDTO | null;
   archetype?: LessonArchetype;
+  episodeRole?: EpisodeRole;
+  almanacPayload?: AlmanacLessonPayload | null;
+  playbookState?: LessonPlaybookStateDTO;
   module?: {
     id: string;
     slug: string;
@@ -385,10 +508,14 @@ export interface AcademyProgressDTO {
   lessonId: string;
   isCompleted: boolean;
   completedAt: string;
+  chosenMoveId?: string | null;
+  bookmarkedTruth?: boolean;
+  savedPushbackIds?: string[];
 }
 
 export interface AcademyLessonCompletionResponseDTO {
   progress: AcademyProgressDTO;
+  playbookState?: LessonPlaybookStateDTO;
   module: {
     id: string;
     slug: string;

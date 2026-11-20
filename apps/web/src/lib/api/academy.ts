@@ -6,6 +6,8 @@ import {
   AcademyModuleDetailDTO,
   AcademyLessonDTO,
   AcademyLessonCompletionResponseDTO,
+  type LessonPlaybookInputDTO,
+  type LessonPlaybookStateDTO,
 } from '@alongside/shared';
 import { apiClient } from './client';
 import {
@@ -82,6 +84,62 @@ export async function getAcademyCategories(params?: {
 
 export const LOCAL_STORAGE_COMPLETED_KEY = 'alongside-completed-lessons';
 export const LOCAL_STORAGE_ACTIVITY_KEY = 'alongside-learning-activity-v1';
+export const LOCAL_STORAGE_PLAYBOOK_PREFIX = 'alongside-almanac-playbook-v2:';
+
+export function getLocalLessonPlaybook(
+  lessonId: string
+): Partial<LessonPlaybookStateDTO> | null {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return null;
+  }
+  try {
+    const raw = window.localStorage.getItem(
+      `${LOCAL_STORAGE_PLAYBOOK_PREFIX}${lessonId}`
+    );
+    if (!raw) return null;
+    return JSON.parse(raw) as Partial<LessonPlaybookStateDTO>;
+  } catch {
+    return null;
+  }
+}
+
+export function saveLocalLessonPlaybook(
+  lessonId: string,
+  patch: Partial<LessonPlaybookStateDTO>
+): LessonPlaybookStateDTO {
+  const existing = getLocalLessonPlaybook(lessonId);
+  const merged: LessonPlaybookStateDTO = {
+    isCompleted: patch.isCompleted ?? existing?.isCompleted ?? false,
+    chosenMoveId:
+      patch.chosenMoveId !== undefined
+        ? patch.chosenMoveId
+        : (existing?.chosenMoveId ?? null),
+    bookmarkedTruth:
+      patch.bookmarkedTruth !== undefined
+        ? patch.bookmarkedTruth
+        : (existing?.bookmarkedTruth ?? false),
+    savedPushbackIds:
+      patch.savedPushbackIds !== undefined
+        ? patch.savedPushbackIds
+        : (existing?.savedPushbackIds ?? []),
+    completedAt:
+      patch.completedAt !== undefined
+        ? patch.completedAt
+        : (existing?.completedAt ?? null),
+  };
+
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      window.localStorage.setItem(
+        `${LOCAL_STORAGE_PLAYBOOK_PREFIX}${lessonId}`,
+        JSON.stringify(merged)
+      );
+    } catch {
+      // silent storage fallback
+    }
+  }
+  return merged;
+}
 
 export interface LearningActivityRecord {
   lessonId: string;
@@ -516,31 +574,90 @@ export async function getLesson(
   }
 
   const localCompleted = getLocalCompletedLessonIds();
+  const localPlaybook = getLocalLessonPlaybook(res.lesson.id);
   if (localCompleted.has(res.lesson.id)) {
     res.lesson.isCompleted = true;
+  }
+  if (localPlaybook) {
+    const remote = res.lesson.playbookState;
+    res.lesson.playbookState = {
+      isCompleted: Boolean(
+        res.lesson.isCompleted || remote?.isCompleted || localPlaybook.isCompleted
+      ),
+      chosenMoveId:
+        remote?.chosenMoveId ?? localPlaybook.chosenMoveId ?? null,
+      bookmarkedTruth: Boolean(
+        remote?.bookmarkedTruth || localPlaybook.bookmarkedTruth
+      ),
+      savedPushbackIds:
+        remote?.savedPushbackIds && remote.savedPushbackIds.length > 0
+          ? remote.savedPushbackIds
+          : (localPlaybook.savedPushbackIds ?? []),
+      completedAt: remote?.completedAt ?? localPlaybook.completedAt ?? null,
+    };
   }
   return res;
 }
 
 /**
- * Mark a lesson complete for the authenticated parent (with local storage fallback).
+ * Persist mid-lesson bookmarks (`Save idea`, `Add phrase to Pocket Card`) or selected Tonight Move.
+ * Optimistically saves to localStorage immediately and syncs with PATCH /playbook when online.
+ */
+export async function updateLessonPlaybook(
+  lessonId: string,
+  playbookInput: LessonPlaybookInputDTO
+): Promise<LessonPlaybookStateDTO> {
+  const optimistic = saveLocalLessonPlaybook(lessonId, {
+    chosenMoveId: playbookInput.chosenMoveId,
+    bookmarkedTruth: playbookInput.bookmarkedTruth,
+    savedPushbackIds: playbookInput.savedPushbackIds,
+  });
+
+  try {
+    const res = await apiClient<{ playbookState: LessonPlaybookStateDTO }>(
+      `/api/v1/academy/lessons/${lessonId}/playbook`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(playbookInput),
+      }
+    );
+    if (res?.playbookState) {
+      saveLocalLessonPlaybook(lessonId, res.playbookState);
+      return res.playbookState;
+    }
+    return optimistic;
+  } catch {
+    return optimistic;
+  }
+}
+
+/**
+ * Mark a lesson complete for the authenticated parent (with atomic Playbook sealing & localStorage fallback).
  */
 export async function markLessonComplete(
   id: string,
-  readingMinutes?: number
+  readingMinutes?: number,
+  playbookInput?: LessonPlaybookInputDTO
 ): Promise<AcademyLessonCompletionResponseDTO> {
   // Always mark completed in local storage for instant optimistic persistence
   saveLocalCompletedLessonId(id, readingMinutes || 4);
+  const localPlaybook = saveLocalLessonPlaybook(id, {
+    isCompleted: true,
+    completedAt: new Date().toISOString(),
+    chosenMoveId: playbookInput?.chosenMoveId,
+    bookmarkedTruth: playbookInput?.bookmarkedTruth,
+    savedPushbackIds: playbookInput?.savedPushbackIds,
+  });
 
   try {
     return await apiClient<AcademyLessonCompletionResponseDTO>(
       `/api/v1/academy/lessons/${id}/complete`,
       {
         method: 'POST',
-        body: JSON.stringify({}),
+        body: JSON.stringify(playbookInput ?? {}),
       }
     );
-  } catch (err) {
+  } catch {
     // If guest, offline, or session expired, return successful optimistic response
     return {
       progress: {
@@ -548,8 +665,12 @@ export async function markLessonComplete(
         userId: 'local-parent',
         lessonId: id,
         isCompleted: true,
-        completedAt: new Date().toISOString(),
+        completedAt: localPlaybook.completedAt ?? new Date().toISOString(),
+        chosenMoveId: localPlaybook.chosenMoveId,
+        bookmarkedTruth: localPlaybook.bookmarkedTruth,
+        savedPushbackIds: localPlaybook.savedPushbackIds,
       },
+      playbookState: localPlaybook,
       module: {
         id: 'local-module',
         slug: 'current-course',

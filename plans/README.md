@@ -62,6 +62,9 @@ graph TD
         P41["41: Homepage GSAP 'Parent Calm' Animation & Scroll UI (FE)"]
         P42["42: React Bits UI Primitives & Parent Calm Ambient Motion (FE)"]
         P43["43: Purge Legacy Clinical Triage & Ghost Tables (Joint)"]
+        P46["46: Academy Interactive Almanac v2 Contracts, Schema & API (BE)"]
+        P47["47: Zero-Bluff Academy Curriculum Tailoring & Seed Guard (BE)"]
+        P48["48: Academy Interactive Almanac v2 Course Arc & Reader UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -133,6 +136,12 @@ graph TD
     P37 --> P38
     P38 --> P39
     P39 --> P40
+    P40 --> P46
+    P43 --> P46
+    P46 --> P47
+    P46 --> P48
+    P47 --> P14
+    P48 --> P14
     P43 --> P44
     P44 --> P45
     P45 --> P14
@@ -196,6 +205,9 @@ graph TD
 | [**`43-purge-legacy-clinical-triage-and-ghost-tables.md`**](43-purge-legacy-clinical-triage-and-ghost-tables.md) | Purge Legacy Clinical Symptom Triage, Child Health Logs & Ghost Tables | **Joint (FE & BE)** | PLAN-40, PLAN-41, PLAN-42 | Complete (PR #143) |
 | [**`44-security-env-validation-and-url-fallbacks.md`**](44-security-env-validation-and-url-fallbacks.md) | Security Environment Validation, URL Fallback Hardening & Env Documentation | **Joint (FE & BE)** | PLAN-02, PLAN-03, PLAN-43 | Complete (PR #144) |
 | [**`45-interactive-swagger-openapi-documentation.md`**](45-interactive-swagger-openapi-documentation.md) | Interactive Swagger UI & OpenAPI Specification for Fastify Backend | **Backend Agent** | PLAN-02, PLAN-43, PLAN-44 | In Progress |
+| [**`46-academy-interactive-almanac-v2-schema-and-api.md`**](46-academy-interactive-almanac-v2-schema-and-api.md) | Academy Interactive Almanac v2 Contracts, Schema & API | **Backend Agent** | PLAN-39, PLAN-40, PLAN-43 | Queued (Awaiting Phase 0 Audit Sign-Off) |
+| [**`47-academy-zero-bluff-curriculum-tailoring-and-seed.md`**](47-academy-zero-bluff-curriculum-tailoring-and-seed.md) | Zero-Bluff Academy Curriculum Tailoring & Modular Seed Guard (Waves 1–3) | **Backend Agent** | PLAN-46 | Queued (Awaiting Phase 0 Audit Sign-Off) |
+| [**`48-academy-interactive-almanac-v2-reader-ui.md`**](48-academy-interactive-almanac-v2-reader-ui.md) | Academy Interactive Almanac v2 Course Arc & 5-Beat Reader UI | **Frontend Agent** | PLAN-46 | Queued (Awaiting Phase 0 Audit Sign-Off) |
 
 ---
 

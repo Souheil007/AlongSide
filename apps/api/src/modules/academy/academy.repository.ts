@@ -10,6 +10,7 @@ import {
 import {
   AcademyCategory,
   ChapterPriority,
+  EpisodeRole,
   LessonArchetype,
   type DevelopmentalTier,
   type AcademyCategoryStatsDTO,
@@ -20,13 +21,17 @@ import {
   type AcademyModuleDetailDTO,
   type AcademyLessonCompletionResponseDTO,
   type AdaptiveModuleType,
+  type AlmanacLessonPayload,
   type DialogueCardDTO,
   type ThirtySecondGlanceDTO,
   type MasterVideoLectureDTO,
   type ActionProtocolItem,
+  type LessonPlaybookInputDTO,
+  type LessonPlaybookStateDTO,
   getEquivalentTiers,
   formatCourseTitle,
   resolveAdaptiveModuleType,
+  resolveEpisodeRoleFromSortOrder,
   resolveLessonArchetype,
   resolveReliefTagline,
   parseDialogueCards,
@@ -57,8 +62,14 @@ export interface AcademyRepository {
   ): Promise<AcademyLessonDTO | null>;
   markLessonComplete(
     userId: string,
-    lessonId: string
+    lessonId: string,
+    playbookInput?: LessonPlaybookInputDTO
   ): Promise<AcademyLessonCompletionResponseDTO>;
+  saveLessonPlaybook(
+    userId: string,
+    lessonId: string,
+    playbookInput: LessonPlaybookInputDTO
+  ): Promise<LessonPlaybookStateDTO>;
 }
 
 const ACADEMY_CATEGORY_METADATA: Record<
@@ -106,6 +117,54 @@ const SLUG_ALIASES: Record<string, string> = {
   'teen-autonomy-and-graduated-privileges': 'behavior-teen-autonomy',
   'how-algorithms-shape-teen-brains': 'digital-adolescent-algorithmic-feeds',
 };
+
+const LESSON_SLUG_ALIASES: Record<string, string> = {
+  // Wave 1 (Ages 0–3) SOU-86 renames & merged/retired padding slugs
+  'infant-temperature-and-fever-triage': 'infant-sick-night-comfort-prep',
+  'infant-nocturnal-settling-routines': 'infant-safe-sleep-and-circadian-reset',
+  'gagging-vs-choking-triage': 'gagging-reflex-and-safe-first-bites',
+  'video-chatting-exception-and-relatives': 'sensory-hyperstimulation-and-dopamine',
+  'toddler-illness-recovery-and-hydration': 'toddler-cot-containment-and-winddown',
+  'toddler-physiological-anorexia-neurobiology': 'toddler-appetite-slowdown-biology',
+  'older-toddler-symbolic-representation-brain': 'older-toddler-open-ended-blocks',
+  'older-toddler-orienting-reflex-overload': 'older-toddler-slow-paced-media-audit',
+  // Wave 2 (Ages 4–9) merged/retired padding slugs
+  'preschool-preventive-wellness-foundations': 'preschool-daycare-viral-comfort',
+  'preschool-drawing-and-fine-motor-mastery': 'preschool-nature-loose-parts-play',
+  'elementary-daily-movement-routines': 'elementary-growth-plates-and-growing-pains',
+  'elementary-glycemic-index-attention': 'elementary-morning-protein-focus',
+  'elementary-parietal-cortex-spatial-logic': 'elementary-family-board-game-night',
+  // Wave 3 (Ages 10–18) SOU-86 renames & merged/retired padding slugs
+  'adolescent-concussion-and-overuse-triage': 'adolescent-stress-and-somatic-resilience',
+  'adolescent-bone-density-iron-needs': 'adolescent-post-workout-recovery',
+  'adolescent-eating-disorder-red-flags': 'adolescent-body-confidence-and-support',
+  'adolescent-metacognition-and-logic': 'adolescent-devils-advocate-debate',
+  'teen-frontal-lobe-maturation-25': 'teen-consultant-shift-protocol',
+  'teen-lifelong-health-maintenance': 'teen-no-questions-ride-home-pact',
+  'teen-intuitive-eating-adult-covenant': 'teen-independent-meal-prepping',
+  'teen-creative-expression-schedules': 'teen-life-strategy-and-goal-mapping',
+  'teen-continuous-partial-attention-brain': 'teen-self-directed-app-curation',
+};
+
+function buildDefaultPlaybookState(
+  progress?: {
+    isCompleted: boolean;
+    chosenMoveId?: string | null;
+    bookmarkedTruth?: boolean;
+    savedPushbackIds?: string[];
+    completedAt?: Date | null;
+  } | null
+): LessonPlaybookStateDTO {
+  return {
+    isCompleted: progress?.isCompleted ?? false,
+    chosenMoveId: progress?.chosenMoveId ?? null,
+    bookmarkedTruth: progress?.bookmarkedTruth ?? false,
+    savedPushbackIds: progress?.savedPushbackIds ?? [],
+    completedAt: progress?.isCompleted && progress.completedAt
+      ? progress.completedAt.toISOString()
+      : null,
+  };
+}
 
 export class PrismaAcademyRepository implements AcademyRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
@@ -195,6 +254,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
             slug: true,
             title: true,
             archetype: true,
+            episodeRole: true,
             readingMinutes: true,
             sortOrder: true,
             audioUrl: true,
@@ -202,6 +262,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
             whatNotToSay: true,
             deliveryTip: true,
             videoLecture: true,
+            almanacPayload: true,
           },
         },
       },
@@ -229,22 +290,35 @@ export class PrismaAcademyRepository implements AcademyRepository {
       const lessonsSummary = m.lessons
         .slice()
         .sort((a, b) => a.sortOrder - b.sortOrder)
-        .map((l) => ({
-          id: l.id,
-          moduleId: l.moduleId,
-          chapterId: l.chapterId,
-          slug: l.slug,
-          title: l.title,
-          readingMinutes: l.readingMinutes,
-          sortOrder: l.sortOrder,
-          isCompleted: completedLessonIds.has(l.id),
-          audioUrl: l.audioUrl ?? undefined,
-          audioDurationSeconds: l.audioDurationSeconds ?? undefined,
-          whatNotToSay: l.whatNotToSay ?? undefined,
-          deliveryTip: l.deliveryTip ?? undefined,
-          videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
-          archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, m.category as AcademyCategory),
-        }));
+        .map((l) => {
+          const almanac = l.almanacPayload as unknown as AlmanacLessonPayload | null;
+          return {
+            id: l.id,
+            moduleId: l.moduleId,
+            chapterId: l.chapterId,
+            slug: l.slug,
+            title: l.title,
+            readingMinutes: l.readingMinutes,
+            sortOrder: l.sortOrder,
+            isCompleted: completedLessonIds.has(l.id),
+            audioUrl: l.audioUrl ?? undefined,
+            audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+            whatNotToSay: l.whatNotToSay ?? undefined,
+            deliveryTip: l.deliveryTip ?? undefined,
+            videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
+            archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, m.category as AcademyCategory),
+            episodeRole:
+              (l.episodeRole as EpisodeRole) ||
+              almanac?.episodeRole ||
+              resolveEpisodeRoleFromSortOrder(l.sortOrder),
+            interactiveHighlights: almanac?.interactiveHighlights ?? undefined,
+          };
+        });
+
+      const featuredVideoLecture =
+        (m.featuredVideoLecture as unknown as MasterVideoLectureDTO) ??
+        lessonsSummary.find((l) => l.videoLecture)?.videoLecture ??
+        undefined;
 
       return {
         id: m.id,
@@ -261,6 +335,8 @@ export class PrismaAcademyRepository implements AcademyRepository {
         lessonCount,
         completedLessonCount,
         isCompleted,
+        hasMasterLecture: Boolean(featuredVideoLecture),
+        featuredVideoLecture,
         lessons: lessonsSummary,
       };
     });
@@ -306,26 +382,9 @@ export class PrismaAcademyRepository implements AcademyRepository {
       completedLessonIds = new Set(progress.map((p) => p.lessonId));
     }
 
-    const flatLessons: AcademyLessonSummaryDTO[] = moduleRecord.lessons.map((l) => ({
-      id: l.id,
-      moduleId: l.moduleId,
-      chapterId: l.chapterId,
-      slug: l.slug,
-      title: l.title,
-      readingMinutes: l.readingMinutes,
-      sortOrder: l.sortOrder,
-      isCompleted: completedLessonIds.has(l.id),
-      audioUrl: l.audioUrl ?? undefined,
-      audioDurationSeconds: l.audioDurationSeconds ?? undefined,
-      whatNotToSay: l.whatNotToSay ?? undefined,
-      empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
-      deliveryTip: l.deliveryTip ?? undefined,
-      videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
-      archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, moduleRecord.category as AcademyCategory),
-    }));
-
-    const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
-      const chLessons: AcademyLessonSummaryDTO[] = ch.lessons.map((l) => ({
+    const flatLessons: AcademyLessonSummaryDTO[] = moduleRecord.lessons.map((l) => {
+      const almanac = l.almanacPayload as unknown as AlmanacLessonPayload | null;
+      return {
         id: l.id,
         moduleId: l.moduleId,
         chapterId: l.chapterId,
@@ -336,12 +395,51 @@ export class PrismaAcademyRepository implements AcademyRepository {
         isCompleted: completedLessonIds.has(l.id),
         audioUrl: l.audioUrl ?? undefined,
         audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+        reliefTagline:
+          l.reliefTagline ??
+          resolveReliefTagline(l.title, moduleRecord.category as AcademyCategory),
         whatNotToSay: l.whatNotToSay ?? undefined,
         empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
         videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
         archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, moduleRecord.category as AcademyCategory),
-      }));
+        episodeRole:
+          (l.episodeRole as EpisodeRole) ||
+          almanac?.episodeRole ||
+          resolveEpisodeRoleFromSortOrder(l.sortOrder),
+        interactiveHighlights: almanac?.interactiveHighlights ?? undefined,
+      };
+    });
+
+    const chapters: AcademyChapterDTO[] = moduleRecord.chapters.map((ch) => {
+      const chLessons: AcademyLessonSummaryDTO[] = ch.lessons.map((l) => {
+        const almanac = l.almanacPayload as unknown as AlmanacLessonPayload | null;
+        return {
+          id: l.id,
+          moduleId: l.moduleId,
+          chapterId: l.chapterId,
+          slug: l.slug,
+          title: l.title,
+          readingMinutes: l.readingMinutes,
+          sortOrder: l.sortOrder,
+          isCompleted: completedLessonIds.has(l.id),
+          audioUrl: l.audioUrl ?? undefined,
+          audioDurationSeconds: l.audioDurationSeconds ?? undefined,
+          reliefTagline:
+            l.reliefTagline ??
+            resolveReliefTagline(l.title, moduleRecord.category as AcademyCategory),
+          whatNotToSay: l.whatNotToSay ?? undefined,
+          empatheticScript: (l.dialogueCards as unknown as DialogueCardDTO[])?.[0]?.empatheticScript ?? undefined,
+          deliveryTip: l.deliveryTip ?? undefined,
+          videoLecture: (l.videoLecture as unknown as MasterVideoLectureDTO) ?? undefined,
+          archetype: (l.archetype as LessonArchetype) || resolveLessonArchetype(l.slug, l.title, moduleRecord.category as AcademyCategory),
+          episodeRole:
+            (l.episodeRole as EpisodeRole) ||
+            almanac?.episodeRole ||
+            resolveEpisodeRoleFromSortOrder(l.sortOrder),
+          interactiveHighlights: almanac?.interactiveHighlights ?? undefined,
+        };
+      });
 
       const chLessonCount = chLessons.length;
       const chCompletedCount = chLessons.filter((l) => l.isCompleted).length;
@@ -365,6 +463,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
     const lessonCount = flatLessons.length;
     const completedLessonCount = flatLessons.filter((l) => l.isCompleted).length;
     const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
+    const featuredVideoLecture =
+      (moduleRecord.featuredVideoLecture as unknown as MasterVideoLectureDTO) ??
+      flatLessons.find((l) => l.videoLecture)?.videoLecture ??
+      undefined;
 
     return {
       id: moduleRecord.id,
@@ -380,6 +482,8 @@ export class PrismaAcademyRepository implements AcademyRepository {
       lessonCount,
       completedLessonCount,
       isCompleted,
+      hasMasterLecture: Boolean(featuredVideoLecture),
+      featuredVideoLecture,
       chapters,
       lessons: flatLessons,
     };
@@ -389,9 +493,10 @@ export class PrismaAcademyRepository implements AcademyRepository {
     lessonId: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null> {
+    const resolvedSlug = LESSON_SLUG_ALIASES[lessonId] ?? lessonId;
     const lesson = await this.prisma.academyLesson.findFirst({
       where: {
-        OR: [{ id: lessonId }, { slug: lessonId }],
+        OR: [{ id: lessonId }, { slug: lessonId }, { slug: resolvedSlug }],
       },
       include: {
         module: {
@@ -418,9 +523,9 @@ export class PrismaAcademyRepository implements AcademyRepository {
       return null;
     }
 
-    let isCompleted = false;
+    let progressRecord: any = null;
     if (userId) {
-      const progress = await this.prisma.academyProgress.findUnique({
+      progressRecord = await this.prisma.academyProgress.findUnique({
         where: {
           userId_lessonId: {
             userId,
@@ -428,18 +533,18 @@ export class PrismaAcademyRepository implements AcademyRepository {
           },
         },
       });
-      isCompleted = progress?.isCompleted ?? false;
     }
 
-    return this.mapPrismaLessonToDTO(lesson, isCompleted);
+    return this.mapPrismaLessonToDTO(lesson, progressRecord);
   }
 
   async findLessonBySlug(
     slug: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null> {
+    const targetSlug = LESSON_SLUG_ALIASES[slug] ?? slug;
     const lesson = await this.prisma.academyLesson.findFirst({
-      where: { slug },
+      where: { slug: targetSlug },
       include: {
         module: {
           select: {
@@ -465,9 +570,9 @@ export class PrismaAcademyRepository implements AcademyRepository {
       return null;
     }
 
-    let isCompleted = false;
+    let progressRecord: any = null;
     if (userId) {
-      const progress = await this.prisma.academyProgress.findUnique({
+      progressRecord = await this.prisma.academyProgress.findUnique({
         where: {
           userId_lessonId: {
             userId,
@@ -475,16 +580,16 @@ export class PrismaAcademyRepository implements AcademyRepository {
           },
         },
       });
-      isCompleted = progress?.isCompleted ?? false;
     }
 
-    return this.mapPrismaLessonToDTO(lesson, isCompleted);
+    return this.mapPrismaLessonToDTO(lesson, progressRecord);
   }
 
   private mapPrismaLessonToDTO(
     lesson: any,
-    isCompleted: boolean
+    progressRecord: any | null
   ): AcademyLessonDTO {
+    const isCompleted = progressRecord?.isCompleted ?? false;
     const category = lesson.module.category as AcademyCategory;
     const adaptiveModuleType =
       (lesson.adaptiveModuleType as AdaptiveModuleType) ||
@@ -501,6 +606,12 @@ export class PrismaAcademyRepository implements AcademyRepository {
         dialogueCards,
         lesson.title
       );
+    const almanacPayload =
+      (lesson.almanacPayload as unknown as AlmanacLessonPayload | null) ?? null;
+    const episodeRole =
+      (lesson.episodeRole as EpisodeRole) ||
+      almanacPayload?.episodeRole ||
+      resolveEpisodeRoleFromSortOrder(lesson.sortOrder);
 
     return {
       id: lesson.id,
@@ -519,6 +630,9 @@ export class PrismaAcademyRepository implements AcademyRepository {
       adaptiveModuleType,
       dialogueCards,
       archetype: (lesson.archetype as LessonArchetype) || resolveLessonArchetype(lesson.slug, lesson.title, category),
+      episodeRole,
+      almanacPayload,
+      playbookState: buildDefaultPlaybookState(progressRecord),
       actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??
@@ -546,10 +660,14 @@ export class PrismaAcademyRepository implements AcademyRepository {
 
   async markLessonComplete(
     userId: string,
-    lessonId: string
+    lessonId: string,
+    playbookInput?: LessonPlaybookInputDTO
   ): Promise<AcademyLessonCompletionResponseDTO> {
-    const lesson = await this.prisma.academyLesson.findUnique({
-      where: { id: lessonId },
+    const resolvedSlug = LESSON_SLUG_ALIASES[lessonId] ?? lessonId;
+    const lesson = await this.prisma.academyLesson.findFirst({
+      where: {
+        OR: [{ id: lessonId }, { slug: lessonId }, { slug: resolvedSlug }],
+      },
       include: {
         module: {
           include: {
@@ -565,22 +683,36 @@ export class PrismaAcademyRepository implements AcademyRepository {
       throw new Error(`Lesson not found with id: ${lessonId}`);
     }
 
+    const updateData: Record<string, unknown> = {
+      isCompleted: true,
+      completedAt: new Date(),
+    };
+    if (playbookInput?.chosenMoveId !== undefined) {
+      updateData.chosenMoveId = playbookInput.chosenMoveId;
+    }
+    if (playbookInput?.bookmarkedTruth !== undefined) {
+      updateData.bookmarkedTruth = playbookInput.bookmarkedTruth;
+    }
+    if (playbookInput?.savedPushbackIds !== undefined) {
+      updateData.savedPushbackIds = playbookInput.savedPushbackIds;
+    }
+
     const progressRecord = await this.prisma.academyProgress.upsert({
       where: {
         userId_lessonId: {
           userId,
-          lessonId,
+          lessonId: lesson.id,
         },
       },
-      update: {
-        isCompleted: true,
-        completedAt: new Date(),
-      },
+      update: updateData,
       create: {
         userId,
-        lessonId,
+        lessonId: lesson.id,
         isCompleted: true,
         completedAt: new Date(),
+        chosenMoveId: playbookInput?.chosenMoveId ?? null,
+        bookmarkedTruth: playbookInput?.bookmarkedTruth ?? false,
+        savedPushbackIds: playbookInput?.savedPushbackIds ?? [],
       },
     });
 
@@ -606,7 +738,11 @@ export class PrismaAcademyRepository implements AcademyRepository {
         lessonId: progressRecord.lessonId,
         isCompleted: progressRecord.isCompleted,
         completedAt: progressRecord.completedAt.toISOString(),
+        chosenMoveId: progressRecord.chosenMoveId,
+        bookmarkedTruth: progressRecord.bookmarkedTruth,
+        savedPushbackIds: progressRecord.savedPushbackIds,
       },
+      playbookState: buildDefaultPlaybookState(progressRecord),
       module: {
         id: lesson.module.id,
         slug: lesson.module.slug,
@@ -618,6 +754,55 @@ export class PrismaAcademyRepository implements AcademyRepository {
       },
     };
   }
+
+  async saveLessonPlaybook(
+    userId: string,
+    lessonId: string,
+    playbookInput: LessonPlaybookInputDTO
+  ): Promise<LessonPlaybookStateDTO> {
+    const resolvedSlug = LESSON_SLUG_ALIASES[lessonId] ?? lessonId;
+    const lesson = await this.prisma.academyLesson.findFirst({
+      where: {
+        OR: [{ id: lessonId }, { slug: lessonId }, { slug: resolvedSlug }],
+      },
+      select: { id: true },
+    });
+
+    if (!lesson) {
+      throw new Error(`Lesson not found with id: ${lessonId}`);
+    }
+
+    const updateData: Record<string, unknown> = {};
+    if (playbookInput.chosenMoveId !== undefined) {
+      updateData.chosenMoveId = playbookInput.chosenMoveId;
+    }
+    if (playbookInput.bookmarkedTruth !== undefined) {
+      updateData.bookmarkedTruth = playbookInput.bookmarkedTruth;
+    }
+    if (playbookInput.savedPushbackIds !== undefined) {
+      updateData.savedPushbackIds = playbookInput.savedPushbackIds;
+    }
+
+    const progressRecord = await this.prisma.academyProgress.upsert({
+      where: {
+        userId_lessonId: {
+          userId,
+          lessonId: lesson.id,
+        },
+      },
+      update: updateData,
+      create: {
+        userId,
+        lessonId: lesson.id,
+        isCompleted: false,
+        chosenMoveId: playbookInput.chosenMoveId ?? null,
+        bookmarkedTruth: playbookInput.bookmarkedTruth ?? false,
+        savedPushbackIds: playbookInput.savedPushbackIds ?? [],
+      },
+    });
+
+    return buildDefaultPlaybookState(progressRecord);
+  }
 }
 
 interface InMemoryProgress {
@@ -626,6 +811,9 @@ interface InMemoryProgress {
   lessonId: string;
   isCompleted: boolean;
   completedAt: Date;
+  chosenMoveId: string | null;
+  bookmarkedTruth: boolean;
+  savedPushbackIds: string[];
 }
 
 interface InMemoryModule {
@@ -637,6 +825,7 @@ interface InMemoryModule {
   reliefSubtitle?: string | null;
   tonightQuickWinTitle?: string | null;
   coverImageUrl: string | null;
+  featuredVideoLecture?: MasterVideoLectureDTO | null;
   developmentalTier: DevelopmentalTier;
   sortOrder: number;
 }
@@ -670,6 +859,8 @@ interface InMemoryLesson {
   deliveryTip?: string | null;
   videoLecture?: MasterVideoLectureDTO | null;
   archetype?: LessonArchetype;
+  episodeRole?: EpisodeRole;
+  almanacPayload?: AlmanacLessonPayload | null;
 }
 
 export class InMemoryAcademyRepository implements AcademyRepository {
@@ -696,6 +887,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         reliefSubtitle: mod.reliefSubtitle ?? null,
         tonightQuickWinTitle: mod.tonightQuickWinTitle ?? null,
         coverImageUrl: mod.coverImageUrl ?? null,
+        featuredVideoLecture:
+          (mod.featuredVideoLecture as MasterVideoLectureDTO) ?? null,
         developmentalTier: mod.developmentalTier,
         sortOrder: mod.sortOrder,
       };
@@ -735,6 +928,14 @@ export class InMemoryAcademyRepository implements AcademyRepository {
             ((lesson as any).archetype as LessonArchetype) ??
             resolveLessonArchetype(lesson.slug, lesson.title, category);
 
+          const almanacPayload =
+            (lesson.almanacPayload as AlmanacLessonPayload | null | undefined) ??
+            null;
+          const episodeRole =
+            lesson.episodeRole ??
+            almanacPayload?.episodeRole ??
+            resolveEpisodeRoleFromSortOrder(lesson.sortOrder);
+
           const lessonRecord: InMemoryLesson = {
             id: lessonId,
             moduleId,
@@ -742,6 +943,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
             slug: lesson.slug,
             title: lesson.title,
             archetype,
+            episodeRole,
+            almanacPayload,
             contentMarkdown: lesson.contentMarkdown,
             readingMinutes: lesson.readingMinutes,
             sortOrder: lesson.sortOrder,
@@ -856,10 +1059,20 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           deliveryTip: l.deliveryTip ?? undefined,
           videoLecture: l.videoLecture ?? undefined,
           archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, m.category),
+          episodeRole:
+            l.episodeRole ??
+            l.almanacPayload?.episodeRole ??
+            resolveEpisodeRoleFromSortOrder(l.sortOrder),
+          interactiveHighlights:
+            l.almanacPayload?.interactiveHighlights ?? undefined,
         };
       });
 
       const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
+      const featuredVideoLecture =
+        m.featuredVideoLecture ??
+        lessonsSummary.find((l) => l.videoLecture)?.videoLecture ??
+        undefined;
 
       return {
         id: m.id,
@@ -876,6 +1089,8 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         lessonCount,
         completedLessonCount,
         isCompleted,
+        hasMasterLecture: Boolean(featuredVideoLecture),
+        featuredVideoLecture,
         lessons: lessonsSummary,
       };
     });
@@ -925,9 +1140,16 @@ export class InMemoryAcademyRepository implements AcademyRepository {
           reliefTagline:
             l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
           whatNotToSay: l.whatNotToSay ?? undefined,
+          empatheticScript: l.dialogueCards?.[0]?.empatheticScript ?? undefined,
           deliveryTip: l.deliveryTip ?? undefined,
           videoLecture: l.videoLecture ?? undefined,
           archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, mod.category),
+          episodeRole:
+            l.episodeRole ??
+            l.almanacPayload?.episodeRole ??
+            resolveEpisodeRoleFromSortOrder(l.sortOrder),
+          interactiveHighlights:
+            l.almanacPayload?.interactiveHighlights ?? undefined,
         };
       });
 
@@ -970,15 +1192,26 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         reliefTagline:
           l.reliefTagline ?? resolveReliefTagline(l.title, mod.category),
         whatNotToSay: l.whatNotToSay ?? undefined,
+        empatheticScript: l.dialogueCards?.[0]?.empatheticScript ?? undefined,
         deliveryTip: l.deliveryTip ?? undefined,
         videoLecture: l.videoLecture ?? undefined,
         archetype: l.archetype ?? resolveLessonArchetype(l.slug, l.title, mod.category),
+        episodeRole:
+          l.episodeRole ??
+          l.almanacPayload?.episodeRole ??
+          resolveEpisodeRoleFromSortOrder(l.sortOrder),
+        interactiveHighlights:
+          l.almanacPayload?.interactiveHighlights ?? undefined,
       };
     });
 
     const lessonCount = flatLessons.length;
     const completedLessonCount = flatLessons.filter((l) => l.isCompleted).length;
     const isCompleted = lessonCount > 0 && completedLessonCount === lessonCount;
+    const featuredVideoLecture =
+      mod.featuredVideoLecture ??
+      flatLessons.find((l) => l.videoLecture)?.videoLecture ??
+      undefined;
 
     return {
       id: mod.id,
@@ -994,20 +1227,19 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       lessonCount,
       completedLessonCount,
       isCompleted,
+      hasMasterLecture: Boolean(featuredVideoLecture),
+      featuredVideoLecture,
       chapters,
       lessons: flatLessons,
     };
   }
 
-  async findLessonById(
-    lessonId: string,
-    userId?: string
-  ): Promise<AcademyLessonDTO | null> {
-    let lesson = this.lessons.get(lessonId);
+  private resolveInMemoryLesson(lessonIdOrSlug: string): InMemoryLesson | undefined {
+    let lesson = this.lessons.get(lessonIdOrSlug);
     if (!lesson) {
       for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
-        if (lessonId.includes(alias)) {
-          const targetLessonId = lessonId.replace(alias, target);
+        if (lessonIdOrSlug.includes(alias)) {
+          const targetLessonId = lessonIdOrSlug.replace(alias, target);
           lesson = this.lessons.get(targetLessonId);
           if (lesson) break;
         }
@@ -1015,13 +1247,23 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     }
 
     if (!lesson) {
+      const targetSlug = LESSON_SLUG_ALIASES[lessonIdOrSlug] ?? lessonIdOrSlug;
       for (const l of this.lessons.values()) {
-        if (l.slug === lessonId) {
+        if (l.slug === lessonIdOrSlug || l.slug === targetSlug) {
           lesson = l;
           break;
         }
       }
     }
+
+    return lesson;
+  }
+
+  async findLessonById(
+    lessonId: string,
+    userId?: string
+  ): Promise<AcademyLessonDTO | null> {
+    const lesson = this.resolveInMemoryLesson(lessonId);
 
     if (!lesson) {
       return null;
@@ -1034,14 +1276,13 @@ export class InMemoryAcademyRepository implements AcademyRepository {
 
     const ch = lesson.chapterId ? this.chapters.get(lesson.chapterId) : null;
 
-    let isCompleted = false;
+    let progressRecord: InMemoryProgress | undefined;
     if (userId) {
-      const key = `${userId}:${lesson.id}`;
-      isCompleted =
-        this.progressRecords.get(key)?.isCompleted ??
-        this.progressRecords.get(`${userId}:${lessonId}`)?.isCompleted ??
-        false;
+      progressRecord =
+        this.progressRecords.get(`${userId}:${lesson.id}`) ??
+        this.progressRecords.get(`${userId}:${lessonId}`);
     }
+    const isCompleted = progressRecord?.isCompleted ?? false;
 
     let moduleSlug = mod.slug;
     for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
@@ -1066,6 +1307,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         dialogueCards,
         lesson.title
       );
+    const episodeRole =
+      lesson.episodeRole ??
+      lesson.almanacPayload?.episodeRole ??
+      resolveEpisodeRoleFromSortOrder(lesson.sortOrder);
 
     return {
       id: lesson.id,
@@ -1084,6 +1329,9 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       adaptiveModuleType,
       dialogueCards,
       archetype: (lesson.archetype as LessonArchetype) || resolveLessonArchetype(lesson.slug, lesson.title, category),
+      episodeRole,
+      almanacPayload: lesson.almanacPayload ?? null,
+      playbookState: buildDefaultPlaybookState(progressRecord),
       actionProtocolItems: parseActionProtocolItems(lesson.contentMarkdown),
       whatNotToSay:
         lesson.whatNotToSay ??
@@ -1113,8 +1361,9 @@ export class InMemoryAcademyRepository implements AcademyRepository {
     slug: string,
     userId?: string
   ): Promise<AcademyLessonDTO | null> {
+    const targetSlug = LESSON_SLUG_ALIASES[slug] ?? slug;
     for (const l of this.lessons.values()) {
-      if (l.slug === slug) {
+      if (l.slug === slug || l.slug === targetSlug) {
         return this.findLessonById(l.id, userId);
       }
     }
@@ -1123,22 +1372,10 @@ export class InMemoryAcademyRepository implements AcademyRepository {
 
   async markLessonComplete(
     userId: string,
-    lessonId: string
+    lessonId: string,
+    playbookInput?: LessonPlaybookInputDTO
   ): Promise<AcademyLessonCompletionResponseDTO> {
-    let resolvedLessonId = lessonId;
-    let lesson = this.lessons.get(lessonId);
-    if (!lesson) {
-      for (const [alias, target] of Object.entries(SLUG_ALIASES)) {
-        if (lessonId.includes(alias)) {
-          const targetLessonId = lessonId.replace(alias, target);
-          lesson = this.lessons.get(targetLessonId);
-          if (lesson) {
-            resolvedLessonId = targetLessonId;
-            break;
-          }
-        }
-      }
-    }
+    const lesson = this.resolveInMemoryLesson(lessonId);
 
     if (!lesson) {
       throw new Error(`Lesson not found with id: ${lessonId}`);
@@ -1149,14 +1386,27 @@ export class InMemoryAcademyRepository implements AcademyRepository {
       throw new Error(`Module not found for lesson: ${lessonId}`);
     }
 
+    const existing = this.progressRecords.get(`${userId}:${lesson.id}`);
     const progress: InMemoryProgress = {
-      id: randomUUID(),
+      id: existing?.id ?? randomUUID(),
       userId,
-      lessonId: resolvedLessonId,
+      lessonId: lesson.id,
       isCompleted: true,
       completedAt: new Date(),
+      chosenMoveId:
+        playbookInput?.chosenMoveId !== undefined
+          ? playbookInput.chosenMoveId
+          : (existing?.chosenMoveId ?? null),
+      bookmarkedTruth:
+        playbookInput?.bookmarkedTruth !== undefined
+          ? playbookInput.bookmarkedTruth
+          : (existing?.bookmarkedTruth ?? false),
+      savedPushbackIds:
+        playbookInput?.savedPushbackIds !== undefined
+          ? playbookInput.savedPushbackIds
+          : (existing?.savedPushbackIds ?? []),
     };
-    this.progressRecords.set(`${userId}:${resolvedLessonId}`, progress);
+    this.progressRecords.set(`${userId}:${lesson.id}`, progress);
     this.progressRecords.set(`${userId}:${lessonId}`, progress);
 
     const modLessons = Array.from(this.lessons.values()).filter(
@@ -1179,7 +1429,11 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         lessonId,
         isCompleted: progress.isCompleted,
         completedAt: progress.completedAt.toISOString(),
+        chosenMoveId: progress.chosenMoveId,
+        bookmarkedTruth: progress.bookmarkedTruth,
+        savedPushbackIds: progress.savedPushbackIds,
       },
+      playbookState: buildDefaultPlaybookState(progress),
       module: {
         id: mod.id,
         slug: mod.slug,
@@ -1190,5 +1444,41 @@ export class InMemoryAcademyRepository implements AcademyRepository {
         isCompleted,
       },
     };
+  }
+
+  async saveLessonPlaybook(
+    userId: string,
+    lessonId: string,
+    playbookInput: LessonPlaybookInputDTO
+  ): Promise<LessonPlaybookStateDTO> {
+    const lesson = this.resolveInMemoryLesson(lessonId);
+    if (!lesson) {
+      throw new Error(`Lesson not found with id: ${lessonId}`);
+    }
+
+    const existing = this.progressRecords.get(`${userId}:${lesson.id}`);
+    const progress: InMemoryProgress = {
+      id: existing?.id ?? randomUUID(),
+      userId,
+      lessonId: lesson.id,
+      isCompleted: existing?.isCompleted ?? false,
+      completedAt: existing?.completedAt ?? new Date(),
+      chosenMoveId:
+        playbookInput.chosenMoveId !== undefined
+          ? playbookInput.chosenMoveId
+          : (existing?.chosenMoveId ?? null),
+      bookmarkedTruth:
+        playbookInput.bookmarkedTruth !== undefined
+          ? playbookInput.bookmarkedTruth
+          : (existing?.bookmarkedTruth ?? false),
+      savedPushbackIds:
+        playbookInput.savedPushbackIds !== undefined
+          ? playbookInput.savedPushbackIds
+          : (existing?.savedPushbackIds ?? []),
+    };
+    this.progressRecords.set(`${userId}:${lesson.id}`, progress);
+    this.progressRecords.set(`${userId}:${lessonId}`, progress);
+
+    return buildDefaultPlaybookState(progress);
   }
 }
