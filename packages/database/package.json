@@ -13,6 +13,7 @@
     "generate": "prisma generate",
     "validate": "prisma validate",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "seed": "tsx prisma/seed/index.ts",
     "db:seed": "tsx prisma/seed/index.ts"
   },
