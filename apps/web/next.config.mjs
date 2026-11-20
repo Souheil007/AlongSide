@@ -9,12 +9,13 @@ const withPWA = withPWAInit({
     runtimeCaching: [
       {
         urlPattern: /^https?:\/\/.*\/api\/v1\/academy\/.*/i,
-        handler: "CacheFirst",
+        handler: "NetworkFirst",
         options: {
-          cacheName: "alongside-academy-cache",
+          cacheName: "alongside-academy-cache-v2",
+          networkTimeoutSeconds: 4,
           expiration: {
-            maxEntries: 100,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+            maxEntries: 150,
+            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days offline fallback
           },
           cacheableResponse: {
             statuses: [0, 200],

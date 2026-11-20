@@ -31,6 +31,12 @@ export function AlmanacBrainBeat({
 }: AlmanacBrainBeatProps) {
   const [scienceOpen, setScienceOpen] = React.useState(false);
 
+  const renderedLead = t(payload.beat2Lead).trim();
+  const renderedScience = t(payload.scienceDeepDive).trim();
+  const hasDistinctScience =
+    renderedScience.length > 0 &&
+    renderedScience.toLowerCase() !== renderedLead.toLowerCase();
+
   const renderVisual = () => {
     const props = { config: payload.visualConfig, t };
     switch (payload.visualType) {
@@ -129,33 +135,35 @@ export function AlmanacBrainBeat({
         </aside>
 
         {/* Optional Collapsible Research / Neuroscience Disclosure */}
-        <div>
-          <button
-            type="button"
-            onClick={() => setScienceOpen((prev) => !prev)}
-            aria-expanded={scienceOpen}
-            data-testid="science-deep-dive-toggle"
-            className="inline-flex min-h-[44px] items-center gap-2 bg-transparent border-0 py-2 text-[14px] font-semibold text-[var(--spruce)] cursor-pointer"
-          >
-            <span>Curious about the neuroscience behind this?</span>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 transition-transform duration-200',
-                scienceOpen && 'rotate-180'
-              )}
-              aria-hidden="true"
-            />
-          </button>
-
-          {scienceOpen && (
-            <div
-              data-testid="science-deep-dive-panel"
-              className="mt-2 rounded-[12px] border border-[var(--hairline)] bg-[var(--elevated)] px-5 py-4 text-[14px] leading-[1.65] text-[var(--body)] almanac-rise-in"
+        {hasDistinctScience && (
+          <div>
+            <button
+              type="button"
+              onClick={() => setScienceOpen((prev) => !prev)}
+              aria-expanded={scienceOpen}
+              data-testid="science-deep-dive-toggle"
+              className="inline-flex min-h-[44px] items-center gap-2 bg-transparent border-0 py-2 text-[14px] font-semibold text-[var(--spruce)] cursor-pointer"
             >
-              {t(payload.scienceDeepDive)}
-            </div>
-          )}
-        </div>
+              <span>Curious about the neuroscience behind this?</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  scienceOpen && 'rotate-180'
+                )}
+                aria-hidden="true"
+              />
+            </button>
+
+            {scienceOpen && (
+              <div
+                data-testid="science-deep-dive-panel"
+                className="mt-2 rounded-[12px] border border-[var(--hairline)] bg-[var(--elevated)] px-5 py-4 text-[14px] leading-[1.65] text-[var(--body)] almanac-rise-in"
+              >
+                {renderedScience}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
