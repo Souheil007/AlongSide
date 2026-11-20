@@ -5,6 +5,7 @@ import {
   getModulesByTier,
   getModuleBySlug,
   getLesson,
+  getLessonBySlug,
   markLessonComplete,
   calculateHabitStreakAndMinutes,
   recordLearningActivity,
@@ -284,6 +285,38 @@ describe('Parent Intelligence Academy Component & API Specification', () => {
         expect.any(Object)
       );
       expect(res.lesson.id).toBe('les-123');
+    });
+
+    it('invokes GET /api/v1/academy/lessons/by-slug/:slug to fetch lesson resilient to UUID changes', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        json: async () => ({
+          success: true,
+          data: {
+            lesson: {
+              id: 'fresh-uuid-456',
+              moduleId: 'mod-1',
+              slug: 'infant-sick-night-comfort-prep',
+              title: 'Preparing for Sick Nights',
+              contentMarkdown: '# Content',
+              readingMinutes: 3,
+              sortOrder: 3,
+              isCompleted: false,
+            },
+          },
+        }),
+      });
+
+      const res = await getLessonBySlug('infant-temperature-and-fever-triage');
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          '/api/v1/academy/lessons/by-slug/infant-temperature-and-fever-triage'
+        ),
+        expect.any(Object)
+      );
+      expect(res.lesson.slug).toBe('infant-sick-night-comfort-prep');
     });
 
     it('invokes POST /api/v1/academy/lessons/:id/complete to mark lesson complete', async () => {
