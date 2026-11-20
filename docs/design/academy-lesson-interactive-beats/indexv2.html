@@ -1,0 +1,4112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlongSide Academy — Interactive Almanac Lesson v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* AlongSide Canonical Palette — Taste 2: Editorial Pediatric Almanac */
+      --canvas: #FBFBF9;
+      --canvas-subtle: #F4F4F0;
+      --band-sand: #F3EFE6;
+      --band-spruce: #EDF4F0;
+      --elevated: #FFFFFF;
+      --ink: #111413;
+      --body: #494F4C;
+      --mute: #757C78;
+      --hairline: #E3E3DC;
+      --hairline-soft: #EBEBE5;
+      --spruce: #143D2B;
+      --spruce-hover: #0E2B1E;
+      --spruce-soft: #E6F1EB;
+      --spruce-border: rgba(20, 61, 43, 0.22);
+      --amber: #B45309;
+      --amber-soft: #FDF3E1;
+      --amber-border: rgba(180, 83, 9, 0.25);
+      --sand-warm: #F5EFE3;
+      --art-wash: #EDE6D8;
+      --art-wash-spruce: #DCEBE2;
+
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 1px 2px rgba(17, 20, 19, 0.04);
+      --shadow-md: 0 8px 24px rgba(17, 20, 19, 0.06);
+      --shadow-lg: 0 18px 44px rgba(17, 20, 19, 0.11);
+    }
+
+    html[data-theme="nightstand"] {
+      --canvas: #151412;
+      --canvas-subtle: #1D1B18;
+      --band-sand: #1B1915;
+      --band-spruce: #161C18;
+      --elevated: #221F1B;
+      --ink: #F2ECE1;
+      --body: #C5BEB2;
+      --mute: #928B7E;
+      --hairline: #302C26;
+      --hairline-soft: #26231E;
+      --spruce: #72BC94;
+      --spruce-hover: #87CCA6;
+      --spruce-soft: rgba(114, 188, 148, 0.13);
+      --spruce-border: rgba(114, 188, 148, 0.30);
+      --amber: #E5A657;
+      --amber-soft: rgba(229, 166, 87, 0.13);
+      --amber-border: rgba(229, 166, 87, 0.30);
+      --sand-warm: #24201A;
+      --art-wash: #28241D;
+      --art-wash-spruce: #1E2A23;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30);
+      --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.40);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      transition: background-color 280ms var(--ease-out), color 280ms var(--ease-out);
+      overflow-x: hidden;
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--spruce);
+      outline-offset: 2px;
+    }
+
+    /* ----------------------------------------------------
+       PROTOTYPE SWITCHER RIBBON
+    ---------------------------------------------------- */
+    .proto-bar {
+      background: var(--canvas-subtle);
+      border-bottom: 1px solid var(--hairline);
+      padding: 10px 20px;
+      font-size: 12px;
+      color: var(--body);
+    }
+
+    .proto-bar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .proto-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--mute);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .proto-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--spruce);
+      flex-shrink: 0;
+    }
+
+    .proto-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .proto-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--body);
+      padding: 6px 12px;
+      min-height: 34px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+    }
+
+    .proto-tab:hover {
+      background: var(--elevated);
+      border-color: var(--hairline);
+      color: var(--ink);
+    }
+
+    .proto-tab[aria-selected="true"] {
+      background: var(--elevated);
+      border-color: var(--spruce-border);
+      color: var(--spruce);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .child-switcher {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--mute);
+    }
+
+    .child-select {
+      background: var(--elevated);
+      color: var(--ink);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      min-height: 34px;
+      cursor: pointer;
+    }
+
+    /* ----------------------------------------------------
+       ALMANAC STICKY READING BAR + 2PX PROGRESS HAIRLINE
+    ---------------------------------------------------- */
+    .reader-nav {
+      position: sticky;
+      top: 0;
+      z-index: 45;
+      background: color-mix(in srgb, var(--canvas) 93%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--hairline-soft);
+      transition: background-color 280ms var(--ease-out);
+    }
+
+    .reader-nav-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* Enhancement #5: Razor-thin 2px scroll progress hairline for all viewports (especially mobile!) */
+    .scroll-progress-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .scroll-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--spruce);
+      transition: width 90ms linear;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      padding: 8px 4px;
+      min-height: 44px;
+      color: var(--body);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 150ms ease;
+      min-width: 0;
+    }
+
+    .back-btn span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .back-btn:hover {
+      color: var(--ink);
+    }
+
+    .beat-tracker {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+
+    .beat-dot {
+      width: 22px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--hairline);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 240ms var(--ease-out);
+    }
+
+    .beat-dot.passed {
+      background: color-mix(in srgb, var(--spruce) 45%, transparent);
+    }
+
+    .beat-dot.active {
+      width: 34px;
+      background: var(--spruce);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .mode-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      color: var(--body);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 13px;
+      min-height: 34px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 180ms var(--ease-out);
+    }
+
+    .mode-btn[aria-pressed="true"] {
+      background: var(--elevated);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .icon-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: var(--elevated);
+      color: var(--body);
+      cursor: pointer;
+      transition: all 180ms var(--ease-out);
+    }
+
+    .icon-toggle:hover {
+      border-color: var(--spruce-border);
+      color: var(--ink);
+    }
+
+    .icon-toggle[aria-pressed="true"] {
+      background: var(--amber-soft);
+      border-color: var(--amber-border);
+      color: var(--amber);
+    }
+
+    /* ----------------------------------------------------
+       ENHANCEMENT #3: QUIET DESKTOP MARGIN CHAPTER RAIL
+    ---------------------------------------------------- */
+    .margin-rail {
+      position: fixed;
+      top: 168px;
+      left: max(22px, calc(50% - 575px));
+      width: 158px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 20;
+    }
+
+    @media (min-width: 1180px) {
+      .margin-rail.visible {
+        display: flex;
+      }
+    }
+
+    .rail-item {
+      background: none;
+      border: none;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--mute);
+      font-size: 12px;
+      font-weight: 500;
+      transition: color 180ms ease;
+    }
+
+    .rail-item:hover {
+      color: var(--ink);
+    }
+
+    .rail-dash {
+      width: 10px;
+      height: 1.5px;
+      background: var(--hairline);
+      transition: all 220ms var(--ease-out);
+      flex-shrink: 0;
+    }
+
+    .rail-item.passed .rail-dash {
+      background: color-mix(in srgb, var(--spruce) 45%, transparent);
+    }
+
+    .rail-item.active {
+      color: var(--spruce);
+      font-weight: 600;
+    }
+
+    .rail-item.active .rail-dash {
+      width: 20px;
+      height: 2px;
+      background: var(--spruce);
+    }
+
+    .rail-num {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      opacity: 0.72;
+    }
+
+    /* ----------------------------------------------------
+       COMPANION LISTEN DOCK
+    ---------------------------------------------------- */
+    .listen-dock {
+      max-width: 720px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+      display: none;
+      animation: riseIn 260ms var(--ease-out) both;
+    }
+
+    .listen-dock.visible {
+      display: block;
+    }
+
+    .listen-card {
+      background: var(--elevated);
+      border: 1px solid var(--spruce-border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .listen-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .play-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: none;
+      background: var(--spruce);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 150ms var(--ease-out), background-color 150ms ease;
+    }
+
+    html[data-theme="nightstand"] .play-circle {
+      color: #111413;
+    }
+
+    .play-circle:hover {
+      background: var(--spruce-hover);
+      transform: scale(1.03);
+    }
+
+    .listen-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+    }
+
+    .listen-beat-label {
+      font-size: 12px;
+      color: var(--mute);
+      display: block;
+    }
+
+    .listen-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 20px;
+      padding: 0 4px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      border-radius: 999px;
+      background: var(--spruce);
+      opacity: 0.4;
+      height: 6px;
+    }
+
+    .listen-card.playing .wave-bar {
+      opacity: 1;
+      animation: wavePulse 0.95s ease-in-out infinite;
+    }
+
+    .listen-card.playing .wave-bar:nth-child(2) { animation-delay: 0.14s; }
+    .listen-card.playing .wave-bar:nth-child(3) { animation-delay: 0.28s; }
+    .listen-card.playing .wave-bar:nth-child(4) { animation-delay: 0.08s; }
+    .listen-card.playing .wave-bar:nth-child(5) { animation-delay: 0.22s; }
+    .listen-card.playing .wave-bar:nth-child(6) { animation-delay: 0.35s; }
+
+    @keyframes wavePulse {
+      0%, 100% { height: 5px; }
+      50% { height: 19px; }
+    }
+
+    .speed-btn {
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      min-height: 34px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .time-stamp {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--mute);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ----------------------------------------------------
+       ENHANCEMENT #3: FULL-BLEED TONAL CHAPTER BANDS
+    ---------------------------------------------------- */
+    .beat-band {
+      width: 100%;
+      padding: 64px 24px;
+      scroll-margin-top: 64px;
+      transition: background-color 280ms var(--ease-out);
+      position: relative;
+    }
+
+    .beat-band.band-first {
+      padding-top: 46px;
+      padding-bottom: 64px;
+      background: var(--canvas);
+    }
+
+    .beat-band.band-sand {
+      background: var(--band-sand);
+    }
+
+    .beat-band.band-linen {
+      background: var(--canvas);
+    }
+
+    .beat-band.band-spruce {
+      background: var(--band-spruce);
+    }
+
+    .beat-band.band-last {
+      background: var(--canvas);
+      padding-bottom: 108px;
+    }
+
+    .beat-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .beat-band.narrating .beat-inner::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      border-radius: 999px;
+      background: var(--spruce);
+    }
+
+    /* Meta Row */
+    .meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--mute);
+      margin-bottom: 18px;
+    }
+
+    .meta-course {
+      color: var(--spruce);
+      font-weight: 600;
+    }
+
+    .meta-sep {
+      color: var(--hairline);
+    }
+
+    .meta-child {
+      color: var(--body);
+      font-weight: 500;
+    }
+
+    .meta-mono {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--mute);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .meta-jump-link {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--amber);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-jump-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Beat 1 Hero + Unboxed Editorial Spot Art (Enhancement #5) */
+    .lesson-h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(33px, 5vw, 48px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+
+    .lesson-deck {
+      font-size: 18px;
+      line-height: 1.56;
+      color: var(--body);
+      margin: 0 0 40px;
+      max-width: 56ch;
+    }
+
+    .mirror-editorial {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+      padding: 10px 0 34px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .scene-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--amber);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .scene-lines {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      line-height: 1.52;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .scene-lines em {
+      font-style: italic;
+      color: var(--spruce);
+    }
+
+    .unboxed-art {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .unboxed-art svg {
+      width: 100%;
+      max-width: 245px;
+      height: auto;
+      display: block;
+    }
+
+    .art-caption {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--mute);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* Micro Check-In Poll */
+    .checkin-box {
+      padding-top: 4px;
+    }
+
+    .checkin-q {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+
+    .checkin-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .choice-pill {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 10px 18px;
+      min-height: 44px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 180ms var(--ease-out);
+    }
+
+    .choice-pill:hover {
+      border-color: var(--spruce);
+      transform: translateY(-1px);
+    }
+
+    .choice-pill[aria-pressed="true"] {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFFFFF;
+    }
+
+    html[data-theme="nightstand"] .choice-pill[aria-pressed="true"] {
+      color: #111413;
+    }
+
+    .checkin-response {
+      margin-top: 16px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: var(--spruce-soft);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.62;
+      display: none;
+      animation: riseIn 240ms var(--ease-out) both;
+    }
+
+    .checkin-response.visible {
+      display: block;
+    }
+
+    /* Section Headings */
+    .beat-kicker {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--spruce);
+      margin: 0 0 8px;
+      display: block;
+    }
+
+    .beat-h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 3.8vw, 34px);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0 0 14px;
+      text-wrap: balance;
+    }
+
+    .beat-lead {
+      font-size: 16px;
+      line-height: 1.66;
+      color: var(--body);
+      margin: 0 0 28px;
+      max-width: 60ch;
+    }
+
+    /* ----------------------------------------------------
+       ENHANCEMENT #2: LIVE ANIMATED VISUAL STORYTELLING
+    ---------------------------------------------------- */
+    .visual-stage {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stage-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stage-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .stage-hint {
+      font-size: 12.5px;
+      color: var(--mute);
+    }
+
+    /* Sensory Ladder Live Scene + Stepped Rungs */
+    .ladder-scene-wrap {
+      background: var(--canvas-subtle);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .ladder-svg-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ladder-svg-box svg {
+      width: 100%;
+      max-width: 196px;
+      height: auto;
+    }
+
+    .ladder-scene-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+
+    .ladder-scene-desc {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--body);
+      margin: 0 0 12px;
+    }
+
+    .ladder-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ladder-status-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--spruce);
+      background: var(--spruce-soft);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .ladder-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .ladder-rung {
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      color: var(--body);
+      transition: all 200ms var(--ease-out);
+      text-align: center;
+    }
+
+    /* Subtle visual stair ascent */
+    .ladder-rung[data-ladder-idx="0"] { min-height: 64px; }
+    .ladder-rung[data-ladder-idx="1"] { min-height: 70px; }
+    .ladder-rung[data-ladder-idx="2"] { min-height: 76px; }
+    .ladder-rung[data-ladder-idx="3"] { min-height: 82px; }
+    .ladder-rung[data-ladder-idx="4"] { min-height: 88px; }
+
+    .ladder-rung:hover {
+      border-color: var(--spruce-border);
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .ladder-rung.reached {
+      background: var(--spruce-soft);
+      border-color: var(--spruce-border);
+      color: var(--spruce);
+    }
+
+    .ladder-rung.active {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFFFFF;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    html[data-theme="nightstand"] .ladder-rung.active {
+      color: #111413;
+    }
+
+    .rung-num {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      opacity: 0.78;
+    }
+
+    .rung-name {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* Ep 2: Lens Flip + Tactile 20-Dot Exposure Matrix */
+    .lens-toggle-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .lens-btn {
+      padding: 12px 16px;
+      min-height: 48px;
+      border-radius: 10px;
+      border: 1px solid var(--hairline);
+      background: var(--canvas-subtle);
+      color: var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 180ms var(--ease-out);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .lens-btn[aria-pressed="true"].lens-adult {
+      background: var(--amber-soft);
+      border-color: var(--amber-border);
+      color: var(--amber);
+    }
+
+    .lens-btn[aria-pressed="true"].lens-child {
+      background: var(--spruce-soft);
+      border-color: var(--spruce-border);
+      color: var(--spruce);
+    }
+
+    .lens-panel {
+      background: var(--canvas-subtle);
+      border-radius: 12px;
+      padding: 22px 24px;
+      animation: riseIn 200ms var(--ease-out) both;
+    }
+
+    .lens-quote {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      line-height: 1.45;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+
+    .lens-sub {
+      font-size: 14px;
+      color: var(--body);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .exposure-wrap {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline-soft);
+    }
+
+    .exposure-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .exposure-dots {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .exp-dot {
+      aspect-ratio: 1;
+      border-radius: 999px;
+      border: 1.5px solid var(--hairline);
+      background: var(--canvas);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--mute);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 180ms var(--ease-out);
+      padding: 0;
+    }
+
+    .exp-dot:hover {
+      border-color: var(--spruce);
+      transform: scale(1.08);
+    }
+
+    .exp-dot.caution {
+      background: var(--amber-soft);
+      border-color: var(--amber-border);
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .exp-dot.warming {
+      background: var(--spruce-soft);
+      border-color: var(--spruce-border);
+      color: var(--spruce);
+      font-weight: 600;
+    }
+
+    .exp-dot.trusted {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    html[data-theme="nightstand"] .exp-dot.trusted {
+      color: #111413;
+    }
+
+    .exposure-status {
+      font-size: 14.5px;
+      color: var(--body);
+      margin: 0;
+      line-height: 1.6;
+      min-height: 46px;
+    }
+
+    /* Behavior: Editorial Brain-Bridge Illustrated Stage */
+    .brain-stage-grid {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 24px;
+      align-items: center;
+      background: var(--canvas-subtle);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .brain-svg-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brain-svg-wrap svg {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+    }
+
+    .brain-readout-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .brain-readout-item {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .brain-readout-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .brain-readout-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .brain-readout-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .brain-readout-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--body);
+      margin: 0;
+    }
+
+    /* Almanac Truth Pull-Quote + Bookmark (Enhancement #4) */
+    .almanac-truth {
+      border-left: 3px solid var(--amber);
+      padding: 6px 0 6px 22px;
+      margin: 28px 0 22px;
+      position: relative;
+    }
+
+    .almanac-truth-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .almanac-truth-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber);
+    }
+
+    .bookmark-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid var(--hairline);
+      color: var(--mute);
+      padding: 4px 11px;
+      min-height: 32px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+    }
+
+    .bookmark-btn:hover {
+      border-color: var(--spruce-border);
+      color: var(--ink);
+    }
+
+    .bookmark-btn[aria-pressed="true"] {
+      background: var(--spruce-soft);
+      border-color: var(--spruce-border);
+      color: var(--spruce);
+      font-weight: 600;
+    }
+
+    .almanac-truth p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.46;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .science-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      padding: 8px 0;
+      min-height: 44px;
+      color: var(--spruce);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .science-toggle svg {
+      transition: transform 200ms var(--ease-out);
+    }
+
+    .science-toggle[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .science-panel {
+      display: none;
+      margin-top: 8px;
+      padding: 18px 20px;
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--body);
+      animation: riseIn 220ms var(--ease-out) both;
+    }
+
+    .science-panel.open {
+      display: block;
+    }
+
+    /* ----------------------------------------------------
+       ENHANCEMENT #1: BEAT 3 REHEARSAL + ANNOTATED PHRASES
+    ---------------------------------------------------- */
+    .rehearsal-card {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .rehearsal-trigger {
+      background: var(--sand-warm);
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .trigger-speaker {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .trigger-quote {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.34;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .rehearsal-body {
+      padding: 24px 28px;
+    }
+
+    .rehearsal-prompt {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+
+    .instinct-options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .instinct-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--canvas);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      padding: 15px 18px;
+      min-height: 52px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.45;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 180ms var(--ease-out);
+    }
+
+    .instinct-btn:hover {
+      border-color: var(--spruce-border);
+      background: var(--canvas-subtle);
+    }
+
+    .instinct-btn[aria-pressed="true"] {
+      border-color: var(--amber-border);
+      background: var(--amber-soft);
+    }
+
+    .skip-instinct-btn {
+      margin-top: 10px;
+      background: none;
+      border: none;
+      padding: 8px 2px;
+      min-height: 40px;
+      color: var(--mute);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 150ms ease;
+    }
+
+    .skip-instinct-btn:hover {
+      color: var(--spruce);
+    }
+
+    .reframe-reveal {
+      display: none;
+      margin-top: 20px;
+      padding-top: 22px;
+      border-top: 1px solid var(--hairline-soft);
+      animation: riseIn 260ms var(--ease-out) both;
+    }
+
+    .reframe-reveal.visible {
+      display: block;
+    }
+
+    .empathy-why {
+      background: var(--canvas-subtle);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 14px;
+      line-height: 1.62;
+      color: var(--body);
+      margin-bottom: 18px;
+    }
+
+    .empathy-why strong {
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .calm-script-box {
+      background: var(--spruce-soft);
+      border: 1px solid var(--spruce-border);
+      border-radius: 14px;
+      padding: 22px 24px;
+    }
+
+    .calm-script-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .calm-script-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--spruce);
+    }
+
+    .annot-hint {
+      font-size: 12px;
+      color: var(--mute);
+    }
+
+    .calm-script-words {
+      font-family: var(--font-serif);
+      font-size: 22.5px;
+      line-height: 1.55;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+
+    /* Interactive Annotated Script Phrases */
+    .script-annot {
+      display: inline;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      background: color-mix(in srgb, var(--elevated) 68%, transparent);
+      border: none;
+      border-bottom: 1.5px dashed var(--spruce);
+      padding: 1px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+    }
+
+    .script-annot:hover {
+      background: var(--elevated);
+    }
+
+    .script-annot[aria-pressed="true"] {
+      background: var(--spruce);
+      color: #FFFFFF;
+      border-bottom-color: transparent;
+    }
+
+    html[data-theme="nightstand"] .script-annot[aria-pressed="true"] {
+      color: #111413;
+    }
+
+    .annot-callout {
+      background: var(--elevated);
+      border: 1px solid var(--spruce-border);
+      border-radius: 10px;
+      padding: 12px 15px;
+      margin-bottom: 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--body);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      animation: riseIn 200ms var(--ease-out) both;
+    }
+
+    .annot-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--spruce);
+      background: var(--spruce-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .delivery-cues {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .cue-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--spruce);
+      background: var(--elevated);
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--spruce-border);
+    }
+
+    /* Pushback Scenarios + Save Phrase */
+    .pushback-section {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline-soft);
+    }
+
+    .pushback-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 12px;
+    }
+
+    .pushback-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .pushback-chip {
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      color: var(--body);
+      padding: 8px 14px;
+      min-height: 40px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+    }
+
+    .pushback-chip:hover {
+      border-color: var(--spruce-border);
+      color: var(--ink);
+    }
+
+    .pushback-chip[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--canvas);
+    }
+
+    .pushback-answer {
+      background: var(--canvas-subtle);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink);
+      display: none;
+      animation: riseIn 200ms var(--ease-out) both;
+    }
+
+    .pushback-answer.visible {
+      display: block;
+    }
+
+    .pushback-answer em {
+      font-family: var(--font-serif);
+      font-size: 17.5px;
+      color: var(--spruce);
+      display: block;
+      margin-top: 8px;
+    }
+
+    .pushback-foot {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Advisor Bridge */
+    .advisor-bridge {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: var(--canvas-subtle);
+    }
+
+    .advisor-bridge-text {
+      font-size: 13.5px;
+      color: var(--body);
+    }
+
+    .advisor-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: var(--spruce);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 6px 4px;
+      min-height: 40px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .advisor-link-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* ----------------------------------------------------
+       ENHANCEMENT #4: BEAT 4 → LIVE POCKET CARD FLOW
+    ---------------------------------------------------- */
+    .move-cards {
+      display: grid;
+      gap: 12px;
+    }
+
+    .move-card {
+      width: 100%;
+      text-align: left;
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 14px;
+      align-items: start;
+      transition: all 200ms var(--ease-out);
+    }
+
+    .move-card:hover {
+      border-color: var(--spruce-border);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .move-card[aria-pressed="true"] {
+      background: var(--elevated);
+      border-color: var(--spruce);
+      box-shadow: 0 0 0 1px var(--spruce), var(--shadow-sm);
+    }
+
+    .move-radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1.5px solid var(--mute);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 180ms ease;
+    }
+
+    .move-card[aria-pressed="true"] .move-radio {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFFFFF;
+    }
+
+    html[data-theme="nightstand"] .move-card[aria-pressed="true"] .move-radio {
+      color: #111413;
+    }
+
+    .move-title {
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .move-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--body);
+      margin: 0;
+    }
+
+    .move-live-cue {
+      margin-top: 16px;
+      font-size: 13.5px;
+      color: var(--spruce);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 24px;
+    }
+
+    /* Beat 5 Closing + Live-Populating Almanac Pocket Card */
+    .closing-note {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      line-height: 1.54;
+      color: var(--ink);
+      margin: 0 0 34px;
+      max-width: 56ch;
+    }
+
+    .pocket-card {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 18px;
+      padding: 28px 30px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 280ms ease, box-shadow 280ms ease;
+    }
+
+    .pocket-card.sealed {
+      border-color: var(--spruce);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pocket-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .pocket-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--spruce);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .almanac-seal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mute);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px dashed var(--hairline);
+      transition: all 260ms var(--ease-out);
+    }
+
+    .pocket-card.sealed .almanac-seal {
+      background: var(--spruce-soft);
+      border: 1px solid var(--spruce-border);
+      color: var(--spruce);
+      animation: stampPop 340ms var(--ease-out) both;
+    }
+
+    @keyframes stampPop {
+      0% { transform: scale(1.18); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .pocket-grid {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .pocket-item-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mute);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .pocket-item-text {
+      font-size: 15px;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.56;
+    }
+
+    .pocket-item-text.serif {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18.5px;
+      color: var(--spruce);
+    }
+
+    .pocket-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--hairline-soft);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--ink);
+      color: var(--canvas);
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 24px;
+      min-height: 46px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 180ms var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary.done {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFFFFF;
+    }
+
+    html[data-theme="nightstand"] .btn-primary.done {
+      color: #111413;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--elevated);
+      color: var(--ink);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      padding: 11px 18px;
+      min-height: 46px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 160ms ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--spruce-border);
+    }
+
+    /* Optional Master Talk Shelf */
+    .video-shelf {
+      margin: 0 0 36px;
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 76px;
+    }
+
+    .video-shelf-head {
+      padding: 20px 24px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .video-shelf-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .video-shelf-title {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .video-presenter {
+      font-size: 12.5px;
+      color: var(--mute);
+      white-space: nowrap;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #141412;
+      overflow: hidden;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .video-poster {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0;
+      background: #191815;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .video-poster img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.84;
+      transition: transform 320ms var(--ease-out), opacity 220ms ease;
+    }
+
+    .video-poster:hover img {
+      transform: scale(1.02);
+      opacity: 0.92;
+    }
+
+    .video-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17, 20, 19, 0.12) 0%, rgba(17, 20, 19, 0.68) 100%);
+    }
+
+    .video-play-btn {
+      position: relative;
+      z-index: 2;
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      background: #FBFBF9;
+      color: #143D2B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      transition: transform 200ms var(--ease-out);
+    }
+
+    .video-poster:hover .video-play-btn {
+      transform: scale(1.08);
+    }
+
+    .video-poster-meta {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 16px;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      color: #FBFBF9;
+    }
+
+    .video-poster-caption {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.92;
+    }
+
+    .video-duration-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(17, 20, 19, 0.78);
+      color: #FBFBF9;
+      padding: 4px 9px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .video-shelf-body {
+      padding: 18px 24px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .video-why {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 16.5px;
+      line-height: 1.5;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .jump-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mute);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .jump-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .jump-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 7px 12px;
+      min-height: 38px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 160ms var(--ease-out);
+    }
+
+    .jump-chip:hover {
+      border-color: var(--spruce);
+      background: var(--spruce-soft);
+      color: var(--spruce);
+    }
+
+    .video-takeaways-list {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .video-takeaways-list li {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--body);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .video-takeaways-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--spruce);
+    }
+
+    /* Up Next Curiosity Bridge */
+    .next-hook-card {
+      width: 100%;
+      text-align: left;
+      background: var(--canvas-subtle);
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      padding: 26px 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      transition: all 200ms var(--ease-out);
+    }
+
+    .next-hook-card:hover {
+      border-color: var(--spruce);
+      background: var(--elevated);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .next-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--spruce);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .next-mystery {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.38;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+
+    .next-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--body);
+      margin: 0;
+    }
+
+    .next-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      color: var(--spruce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 180ms var(--ease-out);
+    }
+
+    .next-hook-card:hover .next-arrow {
+      transform: translateX(4px);
+      background: var(--spruce);
+      color: #FFFFFF;
+      border-color: var(--spruce);
+    }
+
+    /* ----------------------------------------------------
+       COURSE ARC VIEW
+    ---------------------------------------------------- */
+    .course-view {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    .episode-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .episode-card {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      padding: 24px 26px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      transition: all 200ms var(--ease-out);
+    }
+
+    .episode-card.interactive {
+      cursor: pointer;
+    }
+
+    .episode-card.interactive:hover {
+      border-color: var(--spruce);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .episode-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--spruce);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .episode-role.amber {
+      color: var(--amber);
+    }
+
+    .episode-title {
+      font-family: var(--font-serif);
+      font-size: 23px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+
+    .episode-hook {
+      font-size: 14.5px;
+      color: var(--body);
+      margin: 0 0 12px;
+      line-height: 1.55;
+    }
+
+    .episode-signature {
+      font-size: 12.5px;
+      color: var(--mute);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    /* ----------------------------------------------------
+       MODALS
+    ---------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 20, 19, 0.48);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: fadeIn 180ms ease both;
+    }
+
+    .modal-dialog {
+      background: var(--elevated);
+      border: 1px solid var(--hairline);
+      border-radius: 18px;
+      max-width: 480px;
+      width: 100%;
+      padding: 26px 28px;
+      box-shadow: var(--shadow-lg);
+      animation: riseIn 240ms var(--ease-out) both;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: var(--canvas-subtle);
+      color: var(--body);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .share-preview-card {
+      background: var(--canvas);
+      border: 1px solid var(--spruce-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 14px 0 18px;
+    }
+
+    .advisor-bubble-preview {
+      background: var(--spruce-soft);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+      margin: 14px 0 18px;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 720px) {
+      .proto-bar { padding: 8px 14px; }
+      .proto-bar-inner { gap: 8px; }
+      .proto-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 2px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .proto-tabs::-webkit-scrollbar { display: none; }
+      .proto-tab { white-space: nowrap; flex-shrink: 0; }
+      .reader-nav-inner { padding: 0 14px; }
+      .beat-band { padding: 48px 18px; }
+      .beat-band.band-first { padding-top: 32px; }
+      .mirror-editorial { grid-template-columns: 1fr; gap: 20px; padding-bottom: 24px; }
+      .unboxed-art { order: -1; }
+      .unboxed-art svg { max-width: 190px; }
+      .ladder-scene-wrap { grid-template-columns: 1fr; text-align: left; gap: 16px; padding: 18px; }
+      .ladder-svg-box svg { max-width: 168px; }
+      .ladder-steps { gap: 5px; }
+      .ladder-rung { padding: 10px 4px; min-height: 64px !important; }
+      .rung-name { font-size: 11px; }
+      .brain-stage-grid { grid-template-columns: 1fr; }
+      .lens-toggle-row { grid-template-columns: 1fr; }
+      .exposure-dots { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+      .rehearsal-trigger, .rehearsal-body { padding: 20px; }
+      .pocket-card { padding: 22px 20px; }
+      .beat-tracker { display: none; }
+      .episode-card { grid-template-columns: 1fr; }
+      .next-hook-card { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Prototype Switcher Bar -->
+  <div class="proto-bar" role="region" aria-label="Prototype Explorer Controls">
+    <div class="proto-bar-inner">
+      <div class="proto-label">
+        <span class="proto-dot"></span>
+        <span>AlongSide Academy · Interactive Almanac v2</span>
+      </div>
+
+      <div class="proto-tabs" role="tablist" aria-label="Switch Prototype Views">
+        <button class="proto-tab" role="tab" data-view="course" aria-selected="false">Course Arc (4 Episodes)</button>
+        <button class="proto-tab" role="tab" data-view="ep1" aria-selected="true">Ep. 1 · Safe Food</button>
+        <button class="proto-tab" role="tab" data-view="ep2" aria-selected="false">Ep. 2 · Beige Phase</button>
+        <button class="proto-tab" role="tab" data-view="behavior" aria-selected="false">Bonus · Wrong Cup</button>
+      </div>
+
+      <div class="child-switcher">
+        <label for="childSelect">Child:</label>
+        <select id="childSelect" class="child-select">
+          <option value="maya" selected>Maya · 2y 6m</option>
+          <option value="leo">Leo · 3y 1m</option>
+          <option value="generic">No child selected</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Almanac Header + Live 2px Progress Hairline -->
+  <header class="reader-nav" id="readerNav">
+    <div class="reader-nav-inner">
+      <button type="button" class="back-btn" id="backToCourseBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <span id="backBtnLabel">Mealtimes Course</span>
+      </button>
+
+      <nav class="beat-tracker" id="beatTracker" aria-label="Lesson progress beats">
+        <button type="button" class="beat-dot active" data-beat="0" aria-label="Jump to Beat 1"></button>
+        <button type="button" class="beat-dot" data-beat="1" aria-label="Jump to Beat 2"></button>
+        <button type="button" class="beat-dot" data-beat="2" aria-label="Jump to Beat 3"></button>
+        <button type="button" class="beat-dot" data-beat="3" aria-label="Jump to Beat 4"></button>
+        <button type="button" class="beat-dot" data-beat="4" aria-label="Jump to Beat 5"></button>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="mode-switch" id="modeSwitch" role="group" aria-label="Read or listen mode">
+          <button type="button" class="mode-btn" id="readModeBtn" aria-pressed="true">Read</button>
+          <button type="button" class="mode-btn" id="listenModeBtn" aria-pressed="false">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+            <span>Listen</span>
+          </button>
+        </div>
+
+        <button type="button" class="icon-toggle" id="nightstandBtn" aria-pressed="false" aria-label="Toggle Nightstand dim mode" title="Nightstand warm dim mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="scroll-progress-track" aria-hidden="true">
+      <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+    </div>
+  </header>
+
+  <!-- Quiet Desktop Left-Margin Chapter Rail (Enhancement #3) -->
+  <aside class="margin-rail" id="marginRail" aria-label="Lesson chapters">
+    <button type="button" class="rail-item active" data-beat="0"><span class="rail-dash"></span><span class="rail-num">01</span><span>The Mirror</span></button>
+    <button type="button" class="rail-item" data-beat="1"><span class="rail-dash"></span><span class="rail-num">02</span><span>Inside Mind</span></button>
+    <button type="button" class="rail-item" data-beat="2"><span class="rail-dash"></span><span class="rail-num">03</span><span>Practice</span></button>
+    <button type="button" class="rail-item" data-beat="3"><span class="rail-dash"></span><span class="rail-num">04</span><span>One Move</span></button>
+    <button type="button" class="rail-item" data-beat="4"><span class="rail-dash"></span><span class="rail-num">05</span><span>Pocket Card</span></button>
+  </aside>
+
+  <!-- Docked Companion Audio Player (Only appears in Listen Mode) -->
+  <div class="listen-dock" id="listenDock" aria-live="polite">
+    <div class="listen-card" id="listenCard">
+      <div class="listen-left">
+        <button type="button" class="play-circle" id="audioPlayBtn" aria-label="Play narrated lesson">
+          <svg id="playIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          <svg id="pauseIcon" style="display:none" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <div>
+          <span class="listen-title" id="audioTitle">Narrated Companion · 2:45 listen</span>
+          <span class="listen-beat-label" id="audioBeatStatus">Ready — follows each chapter as you relax</span>
+        </div>
+      </div>
+      <div class="listen-controls">
+        <div class="wave-bars" aria-hidden="true">
+          <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+          <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+        </div>
+        <span class="time-stamp" id="audioTimer">0:00 / 2:45</span>
+        <button type="button" class="speed-btn" id="audioSpeedBtn" aria-label="Playback speed">1x</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dynamic Root -->
+  <main id="appRoot"></main>
+
+  <!-- Co-Parent Share Modal -->
+  <div class="modal-backdrop" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3 class="modal-title" id="shareModalTitle">Send a 20-second card to your partner</h3>
+        <button type="button" class="close-btn" data-close-modal="shareModal" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <p style="font-size:14px;color:var(--body);margin:0;">So you’re both on the same page tonight—without forwarding a 10-minute article.</p>
+      <div class="share-preview-card" id="sharePreviewContent"></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="btn-ghost" data-close-modal="shareModal">Close</button>
+        <button type="button" class="btn-primary" id="copyShareBtn">Copy Partner Note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Advisor Contextual Handoff Modal -->
+  <div class="modal-backdrop" id="advisorModal" role="dialog" aria-modal="true" aria-labelledby="advisorModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3 class="modal-title" id="advisorModalTitle">Continue with your AI Advisor</h3>
+        <button type="button" class="close-btn" data-close-modal="advisorModal" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <p style="font-size:14px;color:var(--body);margin:0;">Need immediate, in-the-moment help for a specific twist? Your Advisor opens already calibrated to this lesson and child profile.</p>
+      <div class="advisor-bubble-preview" id="advisorContextText"></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="btn-ghost" data-close-modal="advisorModal">Back to Lesson</button>
+        <button type="button" class="btn-primary" data-close-modal="advisorModal">Open Advisor Thread →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       CHILD PERSONALIZATION & APP STATE
+    ===================================================================== */
+    const CHILDREN = {
+      maya: { name: 'Maya', possessive: "Maya's", pronoun: 'she', obj: 'her', poss: 'her', age: '2 yrs 6 mos', ageShort: '2.5-year-old' },
+      leo: { name: 'Leo', possessive: "Leo's", pronoun: 'he', obj: 'him', poss: 'his', age: '3 yrs 1 mo', ageShort: '3-year-old' },
+      generic: { name: 'your toddler', possessive: "your toddler's", pronoun: 'they', obj: 'them', poss: 'their', age: 'Ages 2–3', ageShort: 'toddler' }
+    };
+
+    const state = {
+      view: 'ep1',
+      childKey: 'maya',
+      nightstand: false,
+      listenMode: false,
+      isPlaying: false,
+      playbackSpeed: 1,
+      audioSeconds: 0,
+      audioTimerId: null,
+      polls: {},
+      ladderStep: 2,
+      lensSide: 'child',
+      exposureCount: 7,
+      brainScenario: 'storm',
+      selectedInstinct: {},
+      skippedInstinct: {},
+      activeAnnot: {},
+      selectedPushback: {},
+      bookmarkedTruth: {},
+      savedPushbacks: {},
+      chosenMove: {},
+      completed: {},
+      playingVideoId: null,
+      videoStartSec: 0
+    };
+
+    function t(str) {
+      const c = CHILDREN[state.childKey];
+      const capPronoun = c.pronoun.charAt(0).toUpperCase() + c.pronoun.slice(1);
+      const isPlural = c.pronoun === 'they';
+      return str
+        .replace(/\{name\}/g, c.name)
+        .replace(/\{Name\}/g, c.name.charAt(0).toUpperCase() + c.name.slice(1))
+        .replace(/\{possessive\}/g, c.possessive)
+        .replace(/\{pronoun\}/g, c.pronoun)
+        .replace(/\{Pronoun\}/g, capPronoun)
+        .replace(/\{obj\}/g, c.obj)
+        .replace(/\{poss\}/g, c.poss)
+        .replace(/\{age\}/g, c.age)
+        .replace(/\{ageShort\}/g, c.ageShort)
+        .replace(/\{eats\}/g, isPlural ? 'eat' : 'eats')
+        .replace(/\{Eats\}/g, isPlural ? 'Eat' : 'Eats')
+        .replace(/\{pushes\}/g, isPlural ? 'push' : 'pushes')
+        .replace(/\{is\}/g, isPlural ? 'are' : 'is')
+        .replace(/\{cries\}/g, isPlural ? 'cry' : 'cries')
+        .replace(/\{throws\}/g, isPlural ? 'throw' : 'throws');
+    }
+
+    /* =====================================================================
+       ENHANCEMENT #5: UNBOXED EDITORIAL INK-AND-WASH SPOT ILLUSTRATIONS
+    ===================================================================== */
+    const EDITORIAL_ART = {
+      plate: {
+        caption: 'Evening place setting · One calm anchor',
+        svg: `
+          <svg viewBox="0 0 260 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Soft organic watercolor wash (unboxed) -->
+            <path d="M44 134C22 92 48 36 106 26C166 16 226 48 232 104C238 158 186 194 122 188C74 184 58 160 44 134Z" fill="var(--art-wash)" />
+            <!-- Linen napkin edge -->
+            <path d="M188 52L224 62L210 156L176 146Z" fill="var(--art-wash-spruce)" stroke="var(--spruce)" stroke-width="1.3" stroke-linejoin="round" opacity="0.85"/>
+            <!-- Ceramic dinner plate (organic ink stroke) -->
+            <ellipse cx="126" cy="108" rx="68" ry="62" fill="var(--elevated)" stroke="var(--ink)" stroke-width="1.5"/>
+            <ellipse cx="126" cy="108" rx="53" ry="48" stroke="var(--hairline)" stroke-width="1.2" stroke-dasharray="3 4"/>
+            <!-- Warm bread slice (safe anchor) -->
+            <path d="M84 102C84 87 96 78 110 78C124 78 134 87 134 102V125C134 130 130 134 125 134H93C88 134 84 130 84 125V102Z" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.6"/>
+            <path d="M97 96C104 92 114 92 121 96" stroke="var(--amber)" stroke-width="1.3" stroke-linecap="round"/>
+            <!-- Salmon fillet -->
+            <path d="M142 84C152 80 166 84 170 94C173 102 167 109 156 111C146 113 138 106 138 97C138 91 139 86 142 84Z" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.5"/>
+            <path d="M145 93L164 99M144 101L160 105" stroke="var(--spruce)" stroke-width="1.1" stroke-linecap="round" opacity="0.65"/>
+            <!-- Untouched little green sprig -->
+            <path d="M144 132C151 124 161 120 172 119" stroke="var(--spruce)" stroke-width="1.6" stroke-linecap="round"/>
+            <ellipse cx="156" cy="120" rx="6" ry="3.2" transform="rotate(-26 156 120)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.3"/>
+            <ellipse cx="168" cy="124" rx="5.5" ry="3" transform="rotate(14 168 124)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.3"/>
+            <!-- Minimal fork on left -->
+            <path d="M36 74V146M30 74V94C30 98 33 100 36 100C39 100 42 98 42 94V74M36 74V98" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.72"/>
+          </svg>
+        `
+      },
+      leaf: {
+        caption: 'Botanical radar · Built around age two',
+        svg: `
+          <svg viewBox="0 0 260 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M48 118C34 72 72 28 134 26C194 24 234 66 222 122C210 174 156 196 104 184C68 176 56 146 48 118Z" fill="var(--art-wash-spruce)" />
+            <!-- Editorial botanical stem & leaves -->
+            <path d="M126 174C126 130 128 84 134 40" stroke="var(--spruce)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M128 74C154 58 180 62 186 80C172 96 148 96 128 74Z" fill="var(--elevated)" stroke="var(--spruce)" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M127 110C96 92 70 98 66 118C84 134 108 130 127 110Z" fill="var(--elevated)" stroke="var(--spruce)" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M127 142C152 128 174 132 178 148C164 162 144 160 127 142Z" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Subtle sensory waves -->
+            <path d="M196 58C206 69 210 84 207 99" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 5"/>
+            <path d="M54 88C46 99 44 114 48 128" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 5"/>
+            <circle cx="134" cy="36" r="3.5" fill="var(--amber)"/>
+          </svg>
+        `
+      },
+      cup: {
+        caption: '5:45 PM · The final drop in a full day',
+        svg: `
+          <svg viewBox="0 0 260 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M40 126C28 78 66 32 130 28C194 24 232 68 224 124C216 174 164 192 106 184C68 178 48 156 40 126Z" fill="var(--art-wash)" />
+            <!-- Table line -->
+            <path d="M52 154H208" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round" opacity="0.35"/>
+            <!-- Toddler tumbler cup -->
+            <path d="M96 64H164L156 144C155.3 150 150.5 154 144.5 154H115.5C109.5 154 104.7 150 104 144L96 64Z" fill="var(--elevated)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M101 102C112 96 126 108 138 102C146 98 154 100 159 103L156 144C155.3 150 150.5 154 144.5 154H115.5C109.5 154 104.7 150 104 144L101 102Z" fill="var(--spruce-soft)"/>
+            <ellipse cx="130" cy="64" rx="34" ry="7.5" fill="var(--elevated)" stroke="var(--ink)" stroke-width="1.6"/>
+            <!-- Single falling drop & ripples -->
+            <path d="M130 34C130 34 136 44 136 48C136 51.3 133.3 54 130 54C126.7 54 124 51.3 124 48C124 44 130 34 130 34Z" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+            <path d="M74 88C66 96 66 114 74 122" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M186 88C194 96 194 114 186 122" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        `
+      }
+    };
+
+    /* =====================================================================
+       ENHANCEMENT #2: LIVE ANIMATED VISUAL STORYTELLING SVGS
+    ===================================================================== */
+    function renderSensorySceneSvg(stepIdx) {
+      // Overhead table scene that evolves visibly from Step 0 (Table) -> Step 4 (Taste)
+      const bowlSprigOpacity = stepIdx === 0 ? '1' : '0.35';
+      const plateSprigVisible = stepIdx >= 1;
+      const touchCue = stepIdx === 2;
+      const smellCue = stepIdx === 3;
+      const tasteRing = stepIdx === 4;
+
+      return `
+        <svg viewBox="0 0 210 164" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Shared table bowl at top-right -->
+          <circle cx="166" cy="36" r="24" fill="var(--elevated)" stroke="var(--hairline)" stroke-width="1.5"/>
+          <g opacity="${bowlSprigOpacity}">
+            <path d="M156 40C162 34 170 31 178 30" stroke="var(--spruce)" stroke-width="1.6" stroke-linecap="round"/>
+            <ellipse cx="166" cy="32" rx="4.5" ry="2.5" transform="rotate(-24 166 32)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.2"/>
+            <ellipse cx="174" cy="36" rx="4.5" ry="2.5" transform="rotate(14 174 36)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.2"/>
+          </g>
+          ${stepIdx === 0 ? `<path d="M138 48C128 54 122 60 116 68" stroke="var(--amber)" stroke-width="1.4" stroke-dasharray="3 4" stroke-linecap="round"/>` : ''}
+
+          <!-- Child's dinner plate -->
+          <circle cx="88" cy="102" r="52" fill="var(--elevated)" stroke="${tasteRing ? 'var(--spruce)' : 'var(--ink)'}" stroke-width="${tasteRing ? '2.4' : '1.5'}"/>
+          ${tasteRing ? `<circle cx="88" cy="102" r="58" stroke="var(--spruce)" stroke-width="1.3" stroke-dasharray="4 4" opacity="0.65"/>` : ''}
+          <circle cx="88" cy="102" r="40" stroke="var(--hairline)" stroke-width="1.1" stroke-dasharray="3 3"/>
+
+          <!-- Safe warm bread anchor -->
+          <path d="M56 96C56 86 64 80 74 80C84 80 91 86 91 96V113C91 117 88 120 84 120H63C59 120 56 117 56 113V96Z" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+
+          <!-- Moving unfamiliar green sprig on plate from Step 2+ -->
+          ${plateSprigVisible ? `
+            <g>
+              <path d="M100 112C106 105 113 102 121 101" stroke="var(--spruce)" stroke-width="1.8" stroke-linecap="round"/>
+              <ellipse cx="109" cy="102" rx="5" ry="2.8" transform="rotate(-26 109 102)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.3"/>
+              <ellipse cx="117" cy="106" rx="5" ry="2.8" transform="rotate(14 117 106)" fill="var(--spruce-soft)" stroke="var(--spruce)" stroke-width="1.3"/>
+            </g>
+          ` : ''}
+
+          <!-- Step 3: Playful fork touch + curiosity sparks -->
+          ${touchCue ? `
+            <path d="M150 132L124 110" stroke="var(--amber)" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M120 106L127 113M124 103L130 109" stroke="var(--amber)" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M112 88V82M123 91L127 87" stroke="var(--spruce)" stroke-width="1.5" stroke-linecap="round"/>
+          ` : ''}
+
+          <!-- Step 4: Gentle aroma curls rising -->
+          ${smellCue ? `
+            <path d="M106 90C103 83 109 78 106 71" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M116 88C113 81 119 76 116 69" stroke="var(--spruce)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M126 91C123 85 129 80 126 74" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/>
+          ` : ''}
+
+          <!-- Step 5: Trust badge -->
+          ${tasteRing ? `
+            <circle cx="132" cy="64" r="12" fill="var(--spruce)"/>
+            <path d="M127 64L130.5 67.5L137.5 60.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          ` : ''}
+        </svg>
+      `;
+    }
+
+    function renderBrainBridgeSvg(isStorm) {
+      return `
+        <svg viewBox="0 0 220 190" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Calm background halo -->
+          <circle cx="110" cy="102" r="76" fill="${isStorm ? 'var(--amber-soft)' : 'var(--spruce-soft)'}" opacity="0.65"/>
+
+          <!-- UPPER THINKING & BRAKING CORTEX (lifts open when lid flips!) -->
+          <g transform="${isStorm ? 'translate(0, -18) rotate(-14 110 72)' : 'translate(0, 0)'}" style="transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);">
+            <path d="M54 90C54 58 78 38 110 38C142 38 166 58 166 90" fill="var(--elevated)" stroke="var(--spruce)" stroke-width="${isStorm ? '1.6' : '2.2'}" stroke-dasharray="${isStorm ? '4 4' : 'none'}" stroke-linecap="round"/>
+            <text x="110" y="66" text-anchor="middle" fill="var(--spruce)" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600">${isStorm ? 'BRAKES OFFLINE' : 'CALM BRAKES'}</text>
+          </g>
+
+          <!-- Connection neural threads (visible when calm, broken in storm) -->
+          ${!isStorm ? `
+            <path d="M88 88V108M110 84V104M132 88V108" stroke="var(--spruce)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2 3"/>
+          ` : `
+            <path d="M72 90L78 96M148 90L142 96" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+          `}
+
+          <!-- LOWER EMOTIONAL GAS PEDAL / ALARM CORE -->
+          ${isStorm ? `
+            <circle cx="110" cy="126" r="42" stroke="var(--amber)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.7"/>
+            <circle cx="110" cy="126" r="32" fill="var(--amber)" opacity="0.18"/>
+          ` : ''}
+          <circle cx="110" cy="126" r="${isStorm ? '26' : '21'}" fill="${isStorm ? 'var(--amber)' : 'var(--elevated)'}" stroke="var(--amber)" stroke-width="2"/>
+          <text x="110" y="129" text-anchor="middle" fill="${isStorm ? '#FFFFFF' : 'var(--amber)'}" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600">${isStorm ? 'ALARM' : 'STEADY'}</text>
+
+          <text x="110" y="182" text-anchor="middle" fill="var(--mute)" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="0.05em">${isStorm ? 'LID FLIPPED · CONNECT FIRST' : 'UPSTAIRS & DOWNSTAIRS LINKED'}</text>
+        </svg>
+      `;
+    }
+
+    /* =====================================================================
+       CURRICULUM DATA (WITH ANNOTATED CALM PHRASES + MASTER TALKS)
+    ===================================================================== */
+    const LESSONS = {
+      ep1: {
+        id: 'ep1',
+        courseName: 'Toddler Mealtimes Without Battles',
+        episodeTag: 'Episode 1 of 4 · The Fast Win',
+        readMinutes: '3 min read',
+        audioDuration: '2:45',
+        illustration: 'plate',
+        headline: 'Why {Name} Suddenly Only {Eats} Beige Food',
+        deck: 'And the quiet one-plate shift that stops dinner standoffs—without becoming a short-order cook.',
+        sceneTime: '6:05 PM · THE DINNER TABLE',
+        sceneHtml: 'You spent thirty minutes making salmon, asparagus, and rice. The second the plate lands, {name} {pushes} it away: <em>“Yucky! I want crackers!”</em> Your chest tightens—you just wanted one peaceful meal.',
+        pollQuestion: 'Does this sound like your week?',
+        pollOptions: [
+          { id: 'daily', label: 'Almost every dinner', response: 'Take a slow breath—you did not break {possessive} appetite. Around {age}, mealtime refusal spikes almost overnight for nearly every family. Here’s why one safe anchor changes the whole table.' },
+          { id: 'sometimes', label: 'A few nights a week', response: 'That inconsistency is actually the biggest clue: {name} isn’t being stubborn—{poss} nervous system is just checking whether the plate feels safe tonight.' },
+          { id: 'ahead', label: 'Just preparing ahead', response: 'Smart timing. Knowing this rhythm before the first plate gets pushed away saves months of table tension.' }
+        ],
+        beat2Kicker: 'Inside {possessive} growing mind',
+        beat2Title: 'Eating is step five—not step one',
+        beat2Lead: 'When a plate has zero familiar foods, a toddler’s threat center fires before they even pick up a fork. Putting one trusted “safe food” beside the new food lowers the alarm so curiosity can return.',
+        visualType: 'sensory_ladder',
+        almanacTruth: 'A single familiar food on the plate lowers dinner-table refusal dramatically—not because you gave in, but because a calm nervous system can finally stay curious.',
+        scienceDeepDive: 'Between 20 and 36 months, unfamiliar textures and bitter flavors activate the amygdala’s threat-detection loop. When a trusted carbohydrate anchor (plain rice, warm bread, sliced fruit) sits on the same plate, sensory predictability keeps cortisol low so the prefrontal and gustatory cortices can gradually map the new food as safe.',
+        beat3Kicker: 'Practice before 6:00 PM',
+        beat3Title: 'What happens in the first ten seconds',
+        rehearsalTriggerSpeaker: '{Name} pushes the plate back',
+        rehearsalTriggerQuote: '“YUCKY! I don’t like salmon! Make me nuggets!”',
+        rehearsalPrompt: 'Which response feels closest to your honest instinct? Tap to see how {name} hears it:',
+        instincts: [
+          {
+            id: 'bite',
+            label: '“Take just one polite bite of salmon, then you can have your bread.”',
+            whyTitle: 'Why that’s so tempting—and what {poss} brain hears',
+            whyText: 'It feels completely reasonable to an adult. But to a cautious {ageShort}, turning salmon into a gatekeeper makes bread look like forbidden treasure and confirms that salmon must be something unpleasant you have to suffer through.'
+          },
+          {
+            id: 'nuggets',
+            label: '“Fine, I’ll go heat up a separate plate of nuggets so you eat something.”',
+            whyTitle: 'Why that’s so tempting—and what {poss} brain hears',
+            whyText: 'Every loving parent worries about a hungry child going to bed. Yet short-order cooking accidentally teaches {obj} that rejecting the family meal is the fastest way to summon familiar comfort food—so the plate push gets louder tomorrow.'
+          }
+        ],
+        calmScriptPlain: '“You don’t have to eat the salmon tonight. There’s warm bread and rice right here on your plate—you can eat whatever your belly feels ready for.”',
+        calmScriptSegments: [
+          { text: '“' },
+          { id: 'drop', text: 'You don’t have to eat the salmon tonight.', tag: 'Drops Alarm', note: 'Immediately dissolves the power struggle—when pressure vanishes, her nervous system stops fighting the plate.' },
+          { text: ' ' },
+          { id: 'anchor', text: 'There’s warm bread and rice right here on your plate', tag: 'Safe Anchor', note: 'Points calmly to familiar food already on the shared meal—holding the family boundary with zero short-order cooking.' },
+          { text: '—' },
+          { id: 'belly', text: 'you can eat whatever your belly feels ready for.', tag: 'Body Trust', note: 'Hands eating autonomy back to her body (Ellyn Satter’s Division of Responsibility), building lifelong hunger awareness.' },
+          { text: '”' }
+        ],
+        deliveryCues: ['Safe food on the same plate', 'Zero commentary on bites', 'Warm, matter-of-fact tone'],
+        pushbacks: [
+          {
+            id: 'louder',
+            label: '“{Pronoun} {cries} louder for nuggets”',
+            setup: 'Hold the boundary like weather—calm, steady, no lecture:',
+            script: '“I hear you really wanted nuggets tonight. Dinner is salmon, rice, and bread. You can eat the bread or sit with us until you’re done.”'
+          },
+          {
+            id: 'throws',
+            label: '“{Pronoun} {throws} the asparagus”',
+            setup: 'Keep your voice low and matter-of-fact—no big reaction that turns throwing into a show:',
+            script: '“Food stays on the plate or in the ‘no-thank-you’ bowl. Let’s put the green piece in this little bowl so your plate feels comfy.”'
+          },
+          {
+            id: 'partner',
+            label: '“My partner says ‘just try one bite’”',
+            setup: 'Save the debrief for after bedtime, and gently steady the moment at the table:',
+            script: '“We’re letting {name} listen to {poss} belly tonight—no pressure on the salmon, just enjoying dinner together.”'
+          }
+        ],
+        advisorPrompt: '“{Name} ({age}) pushed away dinner even with bread on {poss} plate and is asking for snacks 20 minutes later—what should I say right now?”',
+        beat4Kicker: 'Tonight’s small experiment',
+        beat4Title: 'Pick just one move for your next meal',
+        beat4Lead: 'Your pick automatically fills in your Pocket Card below—so you walk away with one clear, low-stress plan.',
+        moves: [
+          { id: 'anchor', title: 'Place one safe anchor right on the main plate', desc: 'Include one food {name} reliably eats (warm bread, plain pasta, banana) alongside dinner—no separate meal required.' },
+          { id: 'nobites', title: 'Retire the “one polite bite” rule tonight', desc: 'Serve the plate, sit down to enjoy your own food, and skip all commentary on what gets eaten.' },
+          { id: 'scoop', title: 'Put one dish in the center to scoop together', desc: 'Letting {obj} scoop even a single spoonful of rice gives back the autonomy {pronoun} {is} craving.' }
+        ],
+        closingNote: 'Tonight, measure dinner by the warmth at the table—not the empty space on the plate. A child who feels safe beside unfamiliar food eventually gets curious enough to taste it.',
+        pocketInsight: 'One familiar “safe food” on the main plate calms the threat alarm so curiosity can return—no short-order cooking needed.',
+        nextEpisode: {
+          targetView: 'ep2',
+          kicker: 'Up Next · Episode 2 · 3.5 min',
+          mystery: '“Wait—why did {name} happily eat broccoli at 10 months and suddenly fear it at age 2?”',
+          title: 'The Ancient Survival Instinct Behind the “Beige Phase”'
+        }
+      },
+
+      ep2: {
+        id: 'ep2',
+        courseName: 'Toddler Mealtimes Without Battles',
+        episodeTag: 'Episode 2 of 4 · The Brain Decoder',
+        readMinutes: '3.5 min read',
+        audioDuration: '3:15',
+        illustration: 'leaf',
+        headline: 'The Ancient Survival Instinct Behind the “Beige Phase”',
+        deck: 'Why {possessive} sudden suspicion of anything green isn’t a regression—it’s a 200,000-year-old safety radar switching on.',
+        sceneTime: '8:45 PM · LOOKING BACK AT BABY PHOTOS',
+        sceneHtml: 'You scroll past a photo from ten months ago: {name} beaming with spinach puree across both cheeks. Tonight {pronoun} looked at one tiny green pea like it was a spider. <em>“Did I do something wrong?”</em>',
+        pollQuestion: 'Have you wondered how your once-adventurous eater changed overnight?',
+        pollOptions: [
+          { id: 'yes', label: 'Yes—it happened like a light switch', response: 'That “light switch” timing is actually the proof. It switches on almost to the month when toddlers start walking independently—and nature built it on purpose.' },
+          { id: 'always', label: 'They’ve always been cautious', response: 'Some children have naturally sharper bitter-taste sensors. The exact same low-pressure exposure curve works for them—just with a touch more patience.' }
+        ],
+        beat2Kicker: 'The brain decoder',
+        beat2Title: 'Flip the lens on “picky eating”',
+        beat2Lead: 'Before {name} could walk, caregivers controlled everything that reached {poss} mouth. The moment toddlers became mobile in ancestral environments, eating random bitter green leaves was lethal. Nature installed a temporary bitter-alarm right around age two.',
+        visualType: 'lens_and_exposure',
+        almanacTruth: 'Beige foods mean “predictable calories, zero poison” to an ancient toddler brain. It takes 15 to 20 calm sightings—not bites—before a green food graduates to “familiar friend.”',
+        scienceDeepDive: 'Developmental psychologists call this Food Neophobia. Cruciferous vegetables contain bitter glucosinolates that trigger heightened TAS2R bitter receptors in early childhood. Repeated neutral visual and olfactory exposure gradually recruits hippocampal familiarity circuits, extinguishing the innate alarm.',
+        beat3Kicker: 'When old myths show up',
+        beat3Title: 'What to say when vegetables spark resistance',
+        rehearsalTriggerSpeaker: 'At the table, eyeing a green bean',
+        rehearsalTriggerQuote: '“Ew! Take the green stuff OFF my plate!”',
+        rehearsalPrompt: 'Which instinct feels most natural in that split second?',
+        instincts: [
+          { id: 'usedto', label: '“You used to love green beans as a baby! Why are you being so picky now?”', whyTitle: 'Why that’s so tempting—and what {poss} brain hears', whyText: 'It’s genuinely baffling to remember how they used to eat! But framing a biological phase as a personal flaw adds shame on top of genuine sensory sensitivity.' },
+          { id: 'dessert', label: '“No strawberries or dessert until you eat two green beans.”', whyTitle: 'Why that’s so tempting—and what {poss} brain hears', whyText: 'Bargaining makes vegetables feel like a chore you endure to earn the “good” food—which research shows actually decreases long-term liking for the vegetable.' }
+        ],
+        calmScriptPlain: '“Your tongue is extra sensitive to green flavors right now—lots of {ageShort}s feel that way. It can just rest in your ‘learning corner’ while you eat.”',
+        calmScriptSegments: [
+          { text: '“' },
+          { id: 'tongue', text: 'Your tongue is extra sensitive to green flavors right now', tag: 'Validates Biology', note: 'Tells {name} you believe {poss} sensory experience instead of calling {obj} dramatic or picky.' },
+          { text: '—lots of {ageShort}s feel that way. ' },
+          { id: 'corner', text: 'It can just rest in your ‘learning corner’ while you eat.', tag: 'Keeps Sighting', note: 'Preserves the calm visual exposure (building toward 20 sightings!) without forcing a bite.' },
+          { text: '”' }
+        ],
+        deliveryCues: ['Normalize the feeling', 'Keep one tiny piece visible', 'Zero bargaining'],
+        pushbacks: [
+          { id: 'touching', label: '“The green bean touched {poss} pasta!”', setup: 'Treat sensory overlap seriously without making a fuss:', script: '“Let’s move the green bean onto this little side plate right next to yours so your pasta stays just how you like it.”' },
+          { id: 'spits', label: '“{Pronoun} licked it and spat it out”', setup: 'Quietly celebrate—spitting out is actually step 4.5 of trusting a new food:', script: '“You checked it out with your tongue and decided not today. Put it right on your napkin—good listening to your mouth.”' }
+        ],
+        advisorPrompt: '“{Name} ({age}) refuses every vegetable and my family is worried about nutrition—what easy high-iron safe pairings can we rotate this week?”',
+        beat4Kicker: 'This week’s calm rhythm',
+        beat4Title: 'Pick one tiny exposure habit',
+        beat4Lead: 'Remember: a food simply sharing the table peacefully still counts toward the 20 exposures.',
+        moves: [
+          { id: 'singlepea', title: 'Serve a “micro-portion” of one rejected food', desc: 'Put just two peas or one tiny broccoli floret on the plate—small enough not to look intimidating.' },
+          { id: 'paint', title: 'Invite playful, non-eating contact', desc: 'Ask: “Want to use that carrot stick like a paintbrush in the hummus?” Zero pressure to taste.' },
+          { id: 'model', title: 'Enjoy it yourself with quiet curiosity', desc: 'Describe texture neutrally (“Ooh, this asparagus is crunchy tonight”) instead of pitching it to {name}.' }
+        ],
+        closingNote: 'You didn’t miss a window, and {name} won’t live on toast forever. Every peaceful dinner where a green food simply shares the table is quietly rewiring {poss} map of safe foods.',
+        pocketInsight: 'Beige-food preference at age 2–3 is an evolutionary bitter-alarm. Aim for 15–20 zero-pressure sightings, not forced bites.',
+        masterVideo: {
+          youtubeId: 'PHpPtdk9rco',
+          title: 'The Single Most Important Parenting Strategy',
+          presenter: 'Dr. Becky Kennedy, PhD',
+          channel: 'TED',
+          duration: '14 min',
+          why: '“If last night’s dinner already turned into a tug-of-war, this 3-minute segment on repair resets the warmth at the table tomorrow.”',
+          jumps: [
+            { sec: 185, label: '3:05 · Why perfection isn’t the goal' },
+            { sec: 430, label: '7:10 · The two-step repair phrase' },
+            { sec: 615, label: '10:15 · Rewriting a tense moment' }
+          ],
+          takeaways: [
+            'Repair after a tense dinner builds more trust than never losing patience at all.',
+            'Name what happened calmly without shame: “I got stressed about dinner and pushed too hard.”',
+            'When kids feel emotionally safe with us, curiosity around hard things (like new foods) returns.'
+          ]
+        },
+        nextEpisode: {
+          targetView: 'behavior',
+          kicker: 'Bonus Cross-Category Preview · Behavior',
+          mystery: '“How can handing over a blue cup instead of a yellow one ignite a 20-minute meltdown?”',
+          title: 'Inside the 5:45 PM Storm: Gas Pedal vs. Bicycle Brakes'
+        }
+      },
+
+      behavior: {
+        id: 'behavior',
+        courseName: 'Big Feelings & Calm Co-Regulation',
+        episodeTag: 'Episode 2 of 4 · The Brain Decoder',
+        readMinutes: '3 min read',
+        audioDuration: '2:50',
+        illustration: 'cup',
+        headline: 'Why the Wrong Color Cup Triggers a 5:45 PM Storm',
+        deck: 'When logic disappears mid-meltdown, it’s not defiance—it’s a supercharged gas pedal running on bicycle brakes.',
+        sceneTime: '5:45 PM · KITCHEN FLOOR',
+        sceneHtml: 'You pour water into the blue cup because the yellow one is in the dishwasher. One second later, {name} arches backward, tears flood {poss} cheeks, and the room erupts. <em>“It’s literally just a cup!”</em>',
+        pollQuestion: 'Have you ever felt stunned by how tiny the trigger was?',
+        pollOptions: [
+          { id: 'constantly', label: 'Yes—it feels like walking on eggshells', response: 'It’s never really about the cup. By 5:45 PM, {possessive} emotional backpack is already 99% full from holding it together all day—the blue cup is just the final drop.' },
+          { id: 'evening', label: 'Mostly right before dinner', response: 'That late-afternoon window is peak blood-sugar dip + sensory overload. Seeing the brain mechanics makes that hour so much less personal.' }
+        ],
+        beat2Kicker: 'Inside {possessive} growing mind',
+        beat2Title: 'Supercharged gas pedal, bicycle brakes',
+        beat2Lead: 'Toggle between a calm morning and a 5:45 PM meltdown to see why explaining “the yellow cup is dirty” cannot physically land until the lid closes again.',
+        visualType: 'gas_vs_brakes',
+        almanacTruth: 'A toddler cannot “calm down” on command because their braking hardware is still under construction. In a storm, they borrow your steady nervous system first—and hear logic later.',
+        scienceDeepDive: 'During acute autonomic arousal, sympathetic norepinephrine floods the amygdala while the immature ventromedial prefrontal cortex goes functionally offline. Calm proximity, lowered vocal pitch, and fewer than 10 words recruit the child’s ventral vagal pathway through neuroception.',
+        beat3Kicker: 'Practice the shift',
+        beat3Title: 'What to say when logic won’t land',
+        rehearsalTriggerSpeaker: '{Name} sobbing on the kitchen floor',
+        rehearsalTriggerQuote: '“NO! NOT BLUE! I WANTED THE YELLOW CUP!!”',
+        rehearsalPrompt: 'Which instinct hits first when you’re tired and cooking dinner?',
+        instincts: [
+          { id: 'logic', label: '“The yellow cup is dirty in the dishwasher! It’s the exact same water, stop crying!”', whyTitle: 'Why that’s so tempting—and what {poss} brain hears', whyText: 'You’re using crystal-clear adult logic. The catch is that {possessive} language-processing center is temporarily offline—so fast reasoning just sounds like loud noise on top of an alarm.' },
+          { id: 'fix', label: '“Okay, okay, stop screaming—I’ll wash the yellow cup right this second!”', whyTitle: 'Why that’s so tempting—and what {poss} brain hears', whyText: 'Totally understandable when you just want quiet. Occasionally washing it is fine, but rushing to fix every distress teaches {obj} that big feelings are emergencies too scary to ride out.' }
+        ],
+        calmScriptPlain: '“You really wanted the yellow cup. That feels so frustrating. I’m right here with you.”',
+        calmScriptSegments: [
+          { text: '“' },
+          { id: 'name', text: 'You really wanted the yellow cup.', tag: 'Mirrors Reality', note: 'Shows {obj} {pronoun} was heard without debating the dishwasher—immediately taking wind out of the escalation.' },
+          { text: ' That feels so frustrating. ' },
+          { id: 'anchor', text: 'I’m right here with you.', tag: 'Borrowed Brakes', note: 'Short, warm, low-voice presence signals physical safety so the upstairs braking bridge can come back online.' },
+          { text: '”' }
+        ],
+        deliveryCues: ['Drop below eye level', 'Under 15 slow words', 'Pause & breathe out'],
+        pushbacks: [
+          { id: 'hits', label: '“{Pronoun} swings a hand at the cup”', setup: 'Hold the physical boundary calmly and protect bodies first:', script: '“I won’t let you throw the cup. You can be mad, and I’m setting it on the counter while we breathe.”' },
+          { id: 'stillcrying', label: '“{Pronoun} keeps crying for 5 minutes”', setup: 'Your job isn’t to turn off tears like a light switch—it’s to be the sturdy dock while the wave passes:', script: '“(Soft hum, steady hand nearby): I’m right here. Take your time—the wave will pass.”' }
+        ],
+        advisorPrompt: '“{Name} ({age}) has a big meltdown almost every evening around 5:30 PM right when we get home—how can we build a 15-minute decompression routine?”',
+        beat4Kicker: 'Tomorrow’s small experiment',
+        beat4Title: 'Pick one steady anchor to try next time',
+        beat4Lead: 'You only need to remember one thing when the storm hits—it slots right into your Pocket Card below.',
+        moves: [
+          { id: 'kneel', title: 'Drop your shoulders and kneel before speaking', desc: 'Lowering your physical posture signals safety to {possessive} nervous system before a single word comes out.' },
+          { id: 'eightwords', title: 'Use the “under 10 words” rule', desc: 'Pause the explanation about the dishwasher until {poss} breathing slows back down.' },
+          { id: 'snack', title: 'Pre-empt 5:30 PM with a quiet snack + dim light', desc: 'Lowering sensory load and refilling blood sugar catches half of evening storms before they start.' }
+        ],
+        closingNote: 'When you stay calm beside a screaming toddler, you aren’t “letting them win.” You are lending them the brakes their brain is still building—one stormy evening at a time.',
+        pocketInsight: 'Big feelings offline the logic brain. Kneel, soften your voice, speak under 10 words, and explain only after the wave passes.',
+        masterVideo: {
+          youtubeId: 'gm9CIJ74Oxw',
+          title: 'The Hand Model of the Brain',
+          presenter: 'Dr. Daniel J. Siegel, MD',
+          channel: 'PsychAlive',
+          duration: '7 min',
+          why: '“Watch Dr. Siegel hold up his own hand—in under two minutes you’ll permanently see what ‘flipping the lid’ looks like in real time.”',
+          jumps: [
+            { sec: 42, label: '0:42 · Upstairs vs. downstairs brain' },
+            { sec: 165, label: '2:45 · Watch the lid flip in real time' },
+            { sec: 290, label: '4:50 · Helping the brakes come back online' }
+          ],
+          takeaways: [
+            'Fold your thumb inside your fingers: the thumb is the emotional alarm; the curled fingers are the calm braking cortex.',
+            'During a 5:45 PM meltdown, the fingers literally lift open—reasoning cannot connect until the hand closes again.',
+            'Your calm posture and warm low voice act as the external handrail while their cortex reconnects.'
+          ]
+        },
+        nextEpisode: {
+          targetView: 'course',
+          kicker: 'See the Full Picture',
+          mystery: '“How do all 4 episodes fit together without repeating the same template?”',
+          title: 'Explore the 4-Episode Course Architecture'
+        }
+      }
+    };
+
+    const LADDER_DATA = [
+      { num: '01', name: 'Table', title: 'On the Table', desc: 'Seeing the unfamiliar food sitting calmly in a shared bowl—zero expectation to take any—starts teaching {possessive} brain it belongs in your home.', calmLabel: 'Safe Distance' },
+      { num: '02', name: 'Plate', title: 'Beside the Safe Anchor', desc: 'A tiny green sprig rests next to {poss} warm bread without triggering tears. Even without a single touch, this is real progress.', calmLabel: 'Alarm Quieting' },
+      { num: '03', name: 'Touch', title: 'Poke, Tear, or Paint', desc: 'Poking salmon with a fork or using a carrot like a paintbrush lets hand receptors confirm the texture isn’t dangerous—huge sensory win.', calmLabel: 'Curiosity Online' },
+      { num: '04', name: 'Smell', title: 'Sniff or “Kiss” It', desc: 'Bringing a food close enough to smell or tap against lips builds olfactory familiarity—often the final bridge right before tasting.', calmLabel: 'Familiar Friend' },
+      { num: '05', name: 'Taste', title: 'Lick, Chew, or Swallow', desc: 'Even licking a pea and setting it on a napkin counts as Step 5 mastery. Trust stays intact, so {pronoun} stays willing to try again next week.', calmLabel: 'Trust Built' }
+    ];
+
+    /* =====================================================================
+       RENDERING ENGINE
+    ===================================================================== */
+    const appRoot = document.getElementById('appRoot');
+    const beatTracker = document.getElementById('beatTracker');
+    const modeSwitch = document.getElementById('modeSwitch');
+    const backBtnLabel = document.getElementById('backBtnLabel');
+    const listenDock = document.getElementById('listenDock');
+    const marginRail = document.getElementById('marginRail');
+    const scrollProgressFill = document.getElementById('scrollProgressFill');
+
+    function render() {
+      document.querySelectorAll('.proto-tab').forEach(btn => {
+        btn.setAttribute('aria-selected', btn.dataset.view === state.view ? 'true' : 'false');
+      });
+
+      stopAudio();
+      state.playingVideoId = null;
+      state.videoStartSec = 0;
+
+      if (state.view === 'course') {
+        beatTracker.style.visibility = 'hidden';
+        modeSwitch.style.visibility = 'hidden';
+        listenDock.classList.remove('visible');
+        marginRail.classList.remove('visible');
+        scrollProgressFill.style.width = '0%';
+        backBtnLabel.textContent = 'All Courses';
+        renderCourseView();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
+
+      beatTracker.style.visibility = 'visible';
+      modeSwitch.style.visibility = 'visible';
+      marginRail.classList.add('visible');
+      const lesson = LESSONS[state.view];
+      backBtnLabel.textContent = lesson.courseName;
+      document.getElementById('audioTitle').textContent = `Narrated Companion · ${lesson.audioDuration} listen`;
+      document.getElementById('audioTimer').textContent = `0:00 / ${lesson.audioDuration}`;
+      listenDock.classList.toggle('visible', state.listenMode);
+
+      renderLessonView(lesson);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      setupScrollObserver();
+      updateScrollHairline();
+    }
+
+    function renderCourseView() {
+      const c = CHILDREN[state.childKey];
+      const completedCount = ['ep1', 'ep2'].filter(id => state.completed[id]).length;
+      appRoot.innerHTML = `
+        <section class="course-view">
+          <div class="meta-line">
+            <span class="meta-course">Nutrition &amp; Feeding</span>
+            <span class="meta-sep">·</span>
+            <span class="meta-child">Calibrated for ${c.name === 'your toddler' ? 'Toddlers (2–3 yrs)' : `${c.name} (${c.age})`}</span>
+            <span class="meta-sep">·</span>
+            <span class="meta-mono">${completedCount} of 4 episodes saved · 12 min total</span>
+          </div>
+
+          <h1 class="lesson-h1">Toddler Mealtimes Without Battles</h1>
+          <p class="lesson-deck">
+            Instead of four identical essays, every episode plays a distinct role—moving from tonight’s fast relief to brain insight, daily rhythm, and joyful long-term habits.
+          </p>
+
+          <div class="episode-list">
+            <article class="episode-card interactive" data-open-lesson="ep1" tabindex="0" role="button" aria-label="Open Episode 1">
+              <div>
+                <span class="episode-role">Episode 1 · The Fast Win ${state.completed.ep1 ? '· Saved ✓' : ''}</span>
+                <h2 class="episode-title">${t(LESSONS.ep1.headline)}</h2>
+                <p class="episode-hook">${t(LESSONS.ep1.deck)}</p>
+                <div class="episode-signature">
+                  <span>Animated 5-Rung Sensory Ladder</span><span>·</span><span>Annotated Rehearsal</span><span>·</span><span>3 min</span>
+                </div>
+              </div>
+              <span class="btn-primary" style="pointer-events:none;">${state.completed.ep1 ? 'Revisit →' : 'Open Episode →'}</span>
+            </article>
+
+            <article class="episode-card interactive" data-open-lesson="ep2" tabindex="0" role="button" aria-label="Open Episode 2">
+              <div>
+                <span class="episode-role amber">Episode 2 · The Brain Decoder ${state.completed.ep2 ? '· Saved ✓' : ''}</span>
+                <h2 class="episode-title">${t(LESSONS.ep2.headline)}</h2>
+                <p class="episode-hook">${t(LESSONS.ep2.deck)}</p>
+                <div class="episode-signature">
+                  <span>Lens Flip</span><span>·</span><span>20-Sighting Dot Matrix</span><span>·</span><span>Optional Master Talk</span>
+                </div>
+              </div>
+              <span class="btn-ghost" style="pointer-events:none;">${state.completed.ep2 ? 'Revisit →' : 'Open Episode →'}</span>
+            </article>
+
+            <article class="episode-card" style="opacity:0.86;">
+              <div>
+                <span class="episode-role">Episode 3 · The Rhythm Reset</span>
+                <h2 class="episode-title">Closing the Kitchen Between Snacks</h2>
+                <p class="episode-hook">How shifting from all-day grazing to a predictable 3-hour rhythm brings genuine hunger back to the dinner table.</p>
+                <div class="episode-signature">
+                  <span>Interactive Daily Rhythm Timeline</span><span>·</span><span>“Kitchen Resting” Script</span><span>·</span><span>3 min</span>
+                </div>
+              </div>
+              <span class="meta-mono">Rhythm Blueprint</span>
+            </article>
+
+            <article class="episode-card" style="opacity:0.86;">
+              <div>
+                <span class="episode-role amber">Episode 4 · The Long-Term Bond</span>
+                <h2 class="episode-title">Tiny Sous-Chef: Low-Pressure Kitchen Bridges</h2>
+                <p class="episode-hook">Why washing cherry tomatoes and snapping green beans at the counter triples voluntary tasting at dinner.</p>
+                <div class="episode-signature">
+                  <span>Kitchen Playbook</span><span>·</span><span>Printable Course Cheat Sheet</span><span>·</span><span>3 min</span>
+                </div>
+              </div>
+              <span class="meta-mono">Course Capstone</span>
+            </article>
+          </div>
+
+          <div style="margin-top:44px;padding-top:34px;border-top:1px solid var(--hairline-soft);">
+            <span class="beat-kicker">1 Curated Talk for the Whole Course</span>
+            <p class="beat-lead" style="margin-bottom:20px;">Rather than repeating the same video across every lesson, each course anchors one optional expert talk you can enjoy with coffee or jump straight to a 2-minute highlight.</p>
+            <div id="courseVideoMount">
+              ${renderMasterVideoShelf(LESSONS.ep2.masterVideo, 'Featured Course Master Talk · Optional')}
+            </div>
+          </div>
+
+          <div style="margin-top:44px;padding-top:34px;border-top:1px solid var(--hairline-soft);">
+            <span class="beat-kicker">Cross-Category Contrast</span>
+            <button type="button" class="next-hook-card" data-open-lesson="behavior">
+              <div>
+                <span class="next-kicker">Behavior &amp; Emotions Preview · 3 min</span>
+                <p class="next-mystery">“See how a Behavior lesson uses an animated Brain-Bridge visual (Gas Pedal vs. Bicycle Brakes).”</p>
+                <p class="next-title">${t(LESSONS.behavior.headline)}</p>
+              </div>
+              <span class="next-arrow" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </button>
+          </div>
+        </section>
+      `;
+
+      appRoot.querySelectorAll('[data-open-lesson]').forEach(el => {
+        const go = () => { state.view = el.dataset.openLesson; render(); };
+        el.addEventListener('click', go);
+        el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      });
+
+      bindMasterVideoEvents(LESSONS.ep2.masterVideo, 'courseVideoMount', 'Featured Course Master Talk · Optional');
+    }
+
+    function renderMasterVideoShelf(video, kicker = 'Watch & Go Deeper · Optional Master Talk') {
+      if (!video) return '';
+      const isPlayingHere = state.playingVideoId === video.youtubeId;
+      const thumbUrl = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+      const embedUrl = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&start=${state.videoStartSec || 0}&rel=0`;
+
+      return `
+        <aside class="video-shelf" aria-label="Optional Master Talk: ${video.title}">
+          <div class="video-shelf-head">
+            <div>
+              <span class="video-shelf-kicker">${kicker}</span>
+              <h3 class="video-shelf-title">${video.title}</h3>
+            </div>
+            <span class="video-presenter">${video.presenter} · ${video.channel}</span>
+          </div>
+
+          <div class="video-frame">
+            ${isPlayingHere ? `
+              <iframe src="${embedUrl}" title="${video.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
+            ` : `
+              <button type="button" class="video-poster" data-play-video="${video.youtubeId}" aria-label="Play ${video.title}">
+                <img src="${thumbUrl}" alt="${video.title}" loading="lazy" />
+                <span class="video-scrim" aria-hidden="true"></span>
+                <span class="video-play-btn" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px;"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                </span>
+                <span class="video-poster-meta">
+                  <span class="video-poster-caption">Watch full talk or jump to a 2-minute highlight below</span>
+                  <span class="video-duration-tag">${video.duration}</span>
+                </span>
+              </button>
+            `}
+          </div>
+
+          <div class="video-shelf-body">
+            <p class="video-why">${video.why}</p>
+            <div>
+              <span class="jump-label">Short on time? Jump straight to a key moment:</span>
+              <div class="jump-chips">
+                ${video.jumps.map(j => `
+                  <button type="button" class="jump-chip" data-jump-video="${video.youtubeId}" data-jump-sec="${j.sec}">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:var(--spruce);" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                    <span>${j.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+            <div>
+              <button type="button" class="science-toggle" data-video-takeaways-toggle aria-expanded="false" style="padding:4px 0;min-height:36px;">
+                <span>Prefer a 15-second skim? See 3 core ideas from this talk</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="science-panel" data-video-takeaways-panel>
+                <ul class="video-takeaways-list">
+                  ${video.takeaways.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </aside>
+      `;
+    }
+
+    function bindMasterVideoEvents(video, mountId, kicker) {
+      const mount = document.getElementById(mountId);
+      if (!mount || !video) return;
+      const poster = mount.querySelector('[data-play-video]');
+      if (poster) {
+        poster.addEventListener('click', () => {
+          stopAudio();
+          state.playingVideoId = video.youtubeId;
+          state.videoStartSec = 0;
+          mount.innerHTML = renderMasterVideoShelf(video, kicker);
+          bindMasterVideoEvents(video, mountId, kicker);
+        });
+      }
+      mount.querySelectorAll('[data-jump-video]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopAudio();
+          state.playingVideoId = btn.dataset.jumpVideo;
+          state.videoStartSec = Number(btn.dataset.jumpSec) || 0;
+          mount.innerHTML = renderMasterVideoShelf(video, kicker);
+          bindMasterVideoEvents(video, mountId, kicker);
+        });
+      });
+      const toggle = mount.querySelector('[data-video-takeaways-toggle]');
+      const panel = mount.querySelector('[data-video-takeaways-panel]');
+      if (toggle && panel) {
+        toggle.addEventListener('click', () => {
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!isOpen));
+          panel.classList.toggle('open', !isOpen);
+        });
+      }
+    }
+
+    function renderVisualModel(lesson) {
+      if (lesson.visualType === 'sensory_ladder') {
+        const active = LADDER_DATA[state.ladderStep];
+        return `
+          <div class="visual-stage">
+            <div class="stage-header">
+              <span class="stage-title">The 5-Rung Sensory Ladder</span>
+              <span class="stage-hint">Tap each step and watch the plate evolve</span>
+            </div>
+
+            <div class="ladder-scene-wrap">
+              <div class="ladder-svg-box">
+                ${renderSensorySceneSvg(state.ladderStep)}
+              </div>
+              <div>
+                <h3 class="ladder-scene-title">Step ${state.ladderStep + 1}: ${active.title}</h3>
+                <p class="ladder-scene-desc">${t(active.desc)}</p>
+                <div class="ladder-badge-row">
+                  <span class="ladder-status-tag">${active.calmLabel}</span>
+                  <span class="meta-mono">Win ${state.ladderStep + 1} of 5</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ladder-steps" role="group" aria-label="Sensory exposure rungs">
+              ${LADDER_DATA.map((step, idx) => `
+                <button type="button"
+                  class="ladder-rung ${idx < state.ladderStep ? 'reached' : ''} ${idx === state.ladderStep ? 'active' : ''}"
+                  data-ladder-idx="${idx}"
+                  aria-pressed="${idx === state.ladderStep}">
+                  <span class="rung-num">${step.num}</span>
+                  <span class="rung-name">${step.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (lesson.visualType === 'lens_and_exposure') {
+        const isAdult = state.lensSide === 'adult';
+        const exp = state.exposureCount;
+        let expText = '';
+        if (exp <= 4) {
+          expText = `<strong>Sighting ${exp} of 20:</strong> Still flagged as “suspicious green object.” Simply letting it sit calmly on the table without commentary is doing quiet neurological work.`;
+        } else if (exp <= 11) {
+          expText = `<strong>Sighting ${exp} of 20:</strong> The bitter-alarm is quieting. {Name} may tolerate it beside {poss} pasta or poke it with a fork—a genuine milestone.`;
+        } else if (exp <= 17) {
+          expText = `<strong>Sighting ${exp} of 20:</strong> Familiarity is winning. Expect sniffing, licking, or nibbling and setting it down—the bridge right before eating.`;
+        } else {
+          expText = `<strong>Sighting ${exp} of 20:</strong> Categorized as “familiar family food.” Voluntary bites happen naturally because pressure never broke trust.`;
+        }
+
+        const dotsHtml = Array.from({ length: 20 }, (_, i) => {
+          const n = i + 1;
+          let cls = '';
+          if (n <= exp) {
+            cls = n <= 4 ? 'caution' : n <= 14 ? 'warming' : 'trusted';
+          }
+          return `<button type="button" class="exp-dot ${cls}" data-exp-dot="${n}" aria-label="Set calm sightings to ${n} of 20" aria-pressed="${n === exp}">${n}</button>`;
+        }).join('');
+
+        return `
+          <div class="visual-stage">
+            <div class="stage-header">
+              <span class="stage-title">Flip the Lens</span>
+              <span class="stage-hint">Compare what we feel vs. what’s firing inside</span>
+            </div>
+
+            <div class="lens-toggle-row" role="group" aria-label="Perspective switcher">
+              <button type="button" class="lens-btn lens-adult" data-lens="adult" aria-pressed="${isAdult}">
+                <span>What it feels like to us</span>
+                <span style="font-family:var(--font-mono);font-size:11px;">ADULT LENS</span>
+              </button>
+              <button type="button" class="lens-btn lens-child" data-lens="child" aria-pressed="${!isAdult}">
+                <span>${t('What’s firing inside {name}')}</span>
+                <span style="font-family:var(--font-mono);font-size:11px;">BRAIN LENS</span>
+              </button>
+            </div>
+
+            <div class="lens-panel">
+              ${isAdult ? `
+                <p class="lens-quote">${t('“I cooked a healthy dinner and {pronoun} won’t even try one bite. {Pronoun} {is} being stubborn.”')}</p>
+                <p class="lens-sub">When refusal feels personal, our own stress rises—and we naturally start coaxing, bribing, or negotiating.</p>
+              ` : `
+                <p class="lens-quote">“Whoa—bright green and unfamiliar texture. My ancient radar says: check if it’s safe before swallowing!”</p>
+                <p class="lens-sub">${t('At {age}, bitter flavors taste roughly twice as intense as they do to adults. Beige carbs signal instant, safe energy.')}</p>
+              `}
+            </div>
+
+            <div class="exposure-wrap">
+              <div class="exposure-top">
+                <span class="stage-title">The 20-Sighting Trust Matrix</span>
+                <span class="meta-mono">Tap any dinner sighting (${exp} / 20)</span>
+              </div>
+              <div class="exposure-dots" role="group" aria-label="20 food exposure sightings">
+                ${dotsHtml}
+              </div>
+              <p class="exposure-status">${t(expText)}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Behavior visual: Illustrated Brain-Bridge SVG
+      const isStorm = state.brainScenario === 'storm';
+      return `
+        <div class="visual-stage">
+          <div class="stage-header">
+            <span class="stage-title">Inside the Toddler Brain</span>
+            <span class="stage-hint">Switch moments to watch the braking bridge respond</span>
+          </div>
+
+          <div class="lens-toggle-row" role="group" aria-label="Emotional state toggle">
+            <button type="button" class="lens-btn lens-child" data-brain-state="calm" aria-pressed="${!isStorm}">
+              <span>9:30 AM · Rested &amp; Playful</span>
+            </button>
+            <button type="button" class="lens-btn lens-adult" data-brain-state="storm" aria-pressed="${isStorm}">
+              <span>5:45 PM · Wrong Color Cup</span>
+            </button>
+          </div>
+
+          <div class="brain-stage-grid">
+            <div class="brain-svg-wrap">
+              ${renderBrainBridgeSvg(isStorm)}
+            </div>
+            <div class="brain-readout-list">
+              <div class="brain-readout-item">
+                <div class="brain-readout-top">
+                  <span class="brain-readout-name">Emotional Gas Pedal</span>
+                  <span class="brain-readout-val" style="color:var(--amber);">${isStorm ? '98% · Surging' : '28% · Steady'}</span>
+                </div>
+                <p class="brain-readout-desc">${isStorm ? 'Alarm system at full throttle. Heart rate spikes; disappointment feels like a real physical threat.' : 'Calm baseline. Curious, playful, and open to simple transitions.'}</p>
+              </div>
+              <div class="brain-readout-item">
+                <div class="brain-readout-top">
+                  <span class="brain-readout-name">Logic &amp; Listening Brakes</span>
+                  <span class="brain-readout-val" style="color:var(--spruce);">${isStorm ? '8% · Offline' : '62% · Connected'}</span>
+                </div>
+                <p class="brain-readout-desc">${isStorm ? 'Upstairs bridge has temporarily lifted. Reasoning about the dishwasher cannot register yet.' : 'Connected enough for short instructions—still fragile when tired or hungry.'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAnnotatedScript(lesson) {
+      const annotId = state.activeAnnot[lesson.id] || lesson.calmScriptSegments.find(s => s.id)?.id;
+      const activeSeg = lesson.calmScriptSegments.find(s => s.id === annotId);
+
+      const inlineHtml = lesson.calmScriptSegments.map(seg => {
+        if (!seg.id) return t(seg.text);
+        const pressed = seg.id === annotId;
+        return `<button type="button" class="script-annot" data-annot-id="${seg.id}" aria-pressed="${pressed}">${t(seg.text)}</button>`;
+      }).join('');
+
+      return `
+        <div class="calm-script-top">
+          <span class="calm-script-label">Try This Calm Reframe Instead</span>
+          <span class="annot-hint">Tap underlined words to see why they work</span>
+        </div>
+        <p class="calm-script-words">${inlineHtml}</p>
+        ${activeSeg ? `
+          <div class="annot-callout" aria-live="polite">
+            <span class="annot-badge">${activeSeg.tag}</span>
+            <span>${t(activeSeg.note)}</span>
+          </div>
+        ` : ''}
+        <div class="delivery-cues">
+          ${lesson.deliveryCues.map(cue => `<span class="cue-tag">${cue}</span>`).join('')}
+        </div>
+      `;
+    }
+
+    function renderLessonView(lesson) {
+      const pollChoice = state.polls[lesson.id];
+      const pollOptionObj = lesson.pollOptions.find(o => o.id === pollChoice);
+      const chosenInstinctId = state.selectedInstinct[lesson.id];
+      const chosenInstinct = lesson.instincts.find(i => i.id === chosenInstinctId);
+      const isReframeVisible = Boolean(chosenInstinct || state.skippedInstinct[lesson.id]);
+      const chosenPushbackId = state.selectedPushback[lesson.id];
+      const chosenPushback = lesson.pushbacks.find(p => p.id === chosenPushbackId);
+      const chosenMoveId = state.chosenMove[lesson.id] || lesson.moves[0].id;
+      const chosenMoveObj = lesson.moves.find(m => m.id === chosenMoveId);
+      const hasExplicitMove = Boolean(state.chosenMove[lesson.id]);
+      const isCompleted = !!state.completed[lesson.id];
+      const isTruthSaved = !!state.bookmarkedTruth[lesson.id];
+      const savedPbKey = chosenPushback ? `${lesson.id}:${chosenPushback.id}` : '';
+      const isPbSaved = Boolean(savedPbKey && state.savedPushbacks[savedPbKey]);
+      const art = EDITORIAL_ART[lesson.illustration];
+      const c = CHILDREN[state.childKey];
+
+      // Gather any saved pushback for this lesson to reflect inside Pocket Card
+      const savedPbObj = lesson.pushbacks.find(p => state.savedPushbacks[`${lesson.id}:${p.id}`]);
+
+      appRoot.innerHTML = `
+        <article>
+          <!-- BEAT 1: PURE ARCHIVAL LINEN — THE MIRROR -->
+          <section class="beat-band band-first" data-beat-section="0" id="beat-0">
+            <div class="beat-inner">
+              <div class="meta-line">
+                <span class="meta-course">${lesson.episodeTag}</span>
+                <span class="meta-sep">·</span>
+                <span class="meta-child">${c.name === 'your toddler' ? 'Ages 2–3' : `For ${c.name} (${c.age})`}</span>
+                <span class="meta-sep">·</span>
+                <span class="meta-mono">${lesson.readMinutes}</span>
+                ${lesson.masterVideo ? `
+                  <span class="meta-sep">·</span>
+                  <button type="button" class="meta-jump-link" id="jumpToTalkTop">${lesson.masterVideo.duration} talk below ↓</button>
+                ` : ''}
+              </div>
+
+              <h1 class="lesson-h1">${t(lesson.headline)}</h1>
+              <p class="lesson-deck">${t(lesson.deck)}</p>
+
+              <div class="mirror-editorial">
+                <div>
+                  <span class="scene-time">${lesson.sceneTime}</span>
+                  <p class="scene-lines">${t(lesson.sceneHtml)}</p>
+                </div>
+                <div class="unboxed-art">
+                  ${art.svg}
+                  <span class="art-caption">${art.caption}</span>
+                </div>
+              </div>
+
+              <div class="checkin-box">
+                <p class="checkin-q">${t(lesson.pollQuestion)}</p>
+                <div class="checkin-options" role="group" aria-label="Quick reflection check-in">
+                  ${lesson.pollOptions.map(opt => `
+                    <button type="button" class="choice-pill" data-poll="${opt.id}" aria-pressed="${pollChoice === opt.id}">
+                      ${opt.label}
+                    </button>
+                  `).join('')}
+                </div>
+                <div class="checkin-response ${pollOptionObj ? 'visible' : ''}" id="pollResponse">
+                  ${pollOptionObj ? t(pollOptionObj.response) : ''}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- BEAT 2: FULL-BLEED WARM SAND BAND — INSIDE THEIR MIND -->
+          <section class="beat-band band-sand" data-beat-section="1" id="beat-1">
+            <div class="beat-inner">
+              <span class="beat-kicker">${t(lesson.beat2Kicker)}</span>
+              <h2 class="beat-h2">${t(lesson.beat2Title)}</h2>
+              <p class="beat-lead">${t(lesson.beat2Lead)}</p>
+
+              <div id="visualModelMount">
+                ${renderVisualModel(lesson)}
+              </div>
+
+              <blockquote class="almanac-truth">
+                <div class="almanac-truth-top">
+                  <span class="almanac-truth-label">The Key Idea to Keep</span>
+                  <button type="button" class="bookmark-btn" id="bookmarkTruthBtn" aria-pressed="${isTruthSaved}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="${isTruthSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                    <span>${isTruthSaved ? 'Saved to Playbook' : 'Save idea'}</span>
+                  </button>
+                </div>
+                <p>“${t(lesson.almanacTruth)}”</p>
+              </blockquote>
+
+              <button type="button" class="science-toggle" id="scienceToggle" aria-expanded="false" aria-controls="sciencePanel">
+                <span>Curious about the neuroscience behind this?</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="science-panel" id="sciencePanel">
+                ${t(lesson.scienceDeepDive)}
+              </div>
+            </div>
+          </section>
+
+          <!-- BEAT 3: PURE ARCHIVAL LINEN — ANNOTATED REHEARSAL -->
+          <section class="beat-band band-linen" data-beat-section="2" id="beat-2">
+            <div class="beat-inner">
+              <span class="beat-kicker">${t(lesson.beat3Kicker)}</span>
+              <h2 class="beat-h2">${t(lesson.beat3Title)}</h2>
+
+              <div class="rehearsal-card">
+                <div class="rehearsal-trigger">
+                  <span class="trigger-speaker">${t(lesson.rehearsalTriggerSpeaker)}</span>
+                  <p class="trigger-quote">${t(lesson.rehearsalTriggerQuote)}</p>
+                </div>
+
+                <div class="rehearsal-body">
+                  <p class="rehearsal-prompt">${t(lesson.rehearsalPrompt)}</p>
+
+                  <div class="instinct-options" role="group" aria-label="Choose an instinctive response to explore">
+                    ${lesson.instincts.map(inst => `
+                      <button type="button" class="instinct-btn" data-instinct="${inst.id}" aria-pressed="${chosenInstinctId === inst.id}">
+                        <span>${t(inst.label)}</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--mute);" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                      </button>
+                    `).join('')}
+                  </div>
+
+                  ${!isReframeVisible ? `
+                    <button type="button" class="skip-instinct-btn" id="skipInstinctBtn">
+                      <span>Neither sounds like me — jump straight to the calm reframe →</span>
+                    </button>
+                  ` : ''}
+
+                  <div class="reframe-reveal ${isReframeVisible ? 'visible' : ''}" id="reframeReveal">
+                    ${chosenInstinct ? `
+                      <div class="empathy-why">
+                        <strong>${t(chosenInstinct.whyTitle)}</strong>
+                        ${t(chosenInstinct.whyText)}
+                      </div>
+                    ` : ''}
+
+                    <div class="calm-script-box" id="calmScriptMount">
+                      ${renderAnnotatedScript(lesson)}
+                    </div>
+
+                    <div class="pushback-section">
+                      <p class="pushback-title">What if ${c.pronoun === 'they' ? 'they push' : `${c.pronoun} pushes`} back? Tap a real-life twist:</p>
+                      <div class="pushback-chips" role="group" aria-label="Pushback scenarios">
+                        ${lesson.pushbacks.map(pb => `
+                          <button type="button" class="pushback-chip" data-pushback="${pb.id}" aria-pressed="${chosenPushbackId === pb.id}">
+                            ${t(pb.label)}
+                          </button>
+                        `).join('')}
+                      </div>
+                      <div class="pushback-answer ${chosenPushback ? 'visible' : ''}" id="pushbackAnswer">
+                        ${chosenPushback ? `
+                          <span>${t(chosenPushback.setup)}</span>
+                          <em>${t(chosenPushback.script)}</em>
+                          <div class="pushback-foot">
+                            <button type="button" class="bookmark-btn" id="bookmarkPushbackBtn" aria-pressed="${isPbSaved}">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="${isPbSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                              <span>${isPbSaved ? 'Added to Pocket Card' : 'Add phrase to Pocket Card'}</span>
+                            </button>
+                          </div>
+                        ` : ''}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="advisor-bridge">
+                <span class="advisor-bridge-text">Facing a trickier moment right now? Academy builds the foundation—Advisor handles live twists.</span>
+                <button type="button" class="advisor-link-btn" id="openAdvisorBtn">
+                  <span>Ask AI Advisor about ${c.name}</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- BEAT 4: FULL-BLEED SOFT SPRUCE WASH — PICK ONE MOVE -->
+          <section class="beat-band band-spruce" data-beat-section="3" id="beat-3">
+            <div class="beat-inner">
+              <span class="beat-kicker">${t(lesson.beat4Kicker)}</span>
+              <h2 class="beat-h2">${t(lesson.beat4Title)}</h2>
+              <p class="beat-lead">${t(lesson.beat4Lead)}</p>
+
+              <div class="move-cards" role="group" aria-label="Select one small experiment">
+                ${lesson.moves.map(m => {
+                  const selected = hasExplicitMove && chosenMoveId === m.id;
+                  return `
+                    <button type="button" class="move-card" data-move="${m.id}" aria-pressed="${selected}">
+                      <span class="move-radio" aria-hidden="true">
+                        ${selected ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>` : ''}
+                      </span>
+                      <span>
+                        <span class="move-title">${t(m.title)}</span>
+                        <p class="move-desc">${t(m.desc)}</p>
+                      </span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="move-live-cue" id="moveLiveCue" aria-live="polite">
+                ${hasExplicitMove ? `
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Added to ${c.possessive} Pocket Card right below ↓</span>
+                ` : ''}
+              </div>
+            </div>
+          </section>
+
+          <!-- BEAT 5: PURE LINEN — CLOSING + UNIFIED LIVE POCKET CARD + OPTIONAL TALK + NEXT -->
+          <section class="beat-band band-last" data-beat-section="4" id="beat-4">
+            <div class="beat-inner">
+              <span class="beat-kicker">Before you close this page</span>
+              <p class="closing-note">${t(lesson.closingNote)}</p>
+
+              <!-- Unified Live-Populating Pocket Card (Zero Double-Button Fatigue!) -->
+              <div class="pocket-card ${isCompleted ? 'sealed' : ''}" id="pocketCard">
+                <div class="pocket-head">
+                  <span class="pocket-eyebrow">Your Pocket Card · ${c.name === 'your toddler' ? 'Toddler Almanac' : `${c.name} · ${c.age}`}</span>
+                  <span class="almanac-seal" id="almanacSeal">
+                    ${isCompleted ? `
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span>SAVED · ALMANAC</span>
+                    ` : 'READY TO SAVE'}
+                  </span>
+                </div>
+
+                <div class="pocket-grid">
+                  <div>
+                    <span class="pocket-item-label">The Big Idea ${isTruthSaved ? '· Bookmarked' : ''}</span>
+                    <p class="pocket-item-text">${t(lesson.pocketInsight)}</p>
+                  </div>
+                  <div>
+                    <span class="pocket-item-label">The Calm Line</span>
+                    <p class="pocket-item-text serif">${t(lesson.calmScriptPlain)}</p>
+                  </div>
+                  <div>
+                    <span class="pocket-item-label">Tonight’s Chosen Move</span>
+                    <p class="pocket-item-text" id="pocketChosenMove">${t(chosenMoveObj.title)}</p>
+                  </div>
+                  <div id="pocketBonusPhraseWrap" style="${savedPbObj ? '' : 'display:none;'}">
+                    <span class="pocket-item-label">Saved Pushback Backup</span>
+                    <p class="pocket-item-text serif" id="pocketBonusPhrase">${savedPbObj ? t(savedPbObj.script) : ''}</p>
+                  </div>
+                </div>
+
+                <div class="pocket-actions">
+                  <button type="button" class="btn-primary ${isCompleted ? 'done' : ''}" id="completeLessonBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                    <span>${isCompleted ? `Saved to ${c.possessive} Playbook` : `Seal & Save to ${c.possessive} Playbook`}</span>
+                  </button>
+
+                  <button type="button" class="btn-ghost" id="secondaryShareBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+                    <span>Send 20-sec note to partner</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Optional Master Talk (Cleanly BELOW Beat 5) -->
+              ${lesson.masterVideo ? `
+                <div id="lessonVideoMount">
+                  ${renderMasterVideoShelf(lesson.masterVideo)}
+                </div>
+              ` : ''}
+
+              <!-- Curiosity Cliffhanger to Next Episode -->
+              <button type="button" class="next-hook-card" id="nextEpisodeBtn" data-next-view="${lesson.nextEpisode.targetView}">
+                <div>
+                  <span class="next-kicker">${lesson.nextEpisode.kicker}</span>
+                  <p class="next-mystery">${t(lesson.nextEpisode.mystery)}</p>
+                  <p class="next-title">${t(lesson.nextEpisode.title)}</p>
+                </div>
+                <span class="next-arrow" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </button>
+            </div>
+          </section>
+        </article>
+      `;
+
+      bindLessonInteractions(lesson);
+    }
+
+    function bindAnnotatedScriptEvents(lesson) {
+      const mount = document.getElementById('calmScriptMount');
+      if (!mount) return;
+      mount.querySelectorAll('[data-annot-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeAnnot[lesson.id] = btn.dataset.annotId;
+          mount.innerHTML = renderAnnotatedScript(lesson);
+          bindAnnotatedScriptEvents(lesson);
+        });
+      });
+    }
+
+    function bindLessonInteractions(lesson) {
+      const c = CHILDREN[state.childKey];
+
+      // Jump to bottom talk link (subtle top meta cue)
+      const jumpTop = document.getElementById('jumpToTalkTop');
+      if (jumpTop) {
+        jumpTop.addEventListener('click', () => {
+          const target = document.getElementById('lessonVideoMount');
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+
+      // 1. Poll Check-In
+      appRoot.querySelectorAll('[data-poll]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.polls[lesson.id] = btn.dataset.poll;
+          appRoot.querySelectorAll('[data-poll]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+          const opt = lesson.pollOptions.find(o => o.id === btn.dataset.poll);
+          const box = document.getElementById('pollResponse');
+          box.textContent = t(opt.response);
+          box.classList.add('visible');
+        });
+      });
+
+      // 2. Visual Model
+      bindVisualModelEvents(lesson);
+
+      // 2b. Bookmark Key Idea
+      const bmTruth = document.getElementById('bookmarkTruthBtn');
+      if (bmTruth) {
+        bmTruth.addEventListener('click', () => {
+          const next = !state.bookmarkedTruth[lesson.id];
+          state.bookmarkedTruth[lesson.id] = next;
+          bmTruth.setAttribute('aria-pressed', String(next));
+          bmTruth.querySelector('svg').setAttribute('fill', next ? 'currentColor' : 'none');
+          bmTruth.querySelector('span').textContent = next ? 'Saved to Playbook' : 'Save idea';
+          const ideaLbl = document.querySelector('#pocketCard .pocket-grid > div:first-child .pocket-item-label');
+          if (ideaLbl) ideaLbl.textContent = next ? 'The Big Idea · Bookmarked' : 'The Big Idea';
+        });
+      }
+
+      // 3. Science disclosure
+      const sciBtn = document.getElementById('scienceToggle');
+      const sciPanel = document.getElementById('sciencePanel');
+      if (sciBtn && sciPanel) {
+        sciBtn.addEventListener('click', () => {
+          const open = sciBtn.getAttribute('aria-expanded') === 'true';
+          sciBtn.setAttribute('aria-expanded', String(!open));
+          sciPanel.classList.toggle('open', !open);
+        });
+      }
+
+      // 4. Rehearsal instincts + Skip to Reframe + Annotated Words
+      appRoot.querySelectorAll('[data-instinct]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.selectedInstinct[lesson.id] = btn.dataset.instinct;
+          state.skippedInstinct[lesson.id] = false;
+          const inst = lesson.instincts.find(i => i.id === btn.dataset.instinct);
+          appRoot.querySelectorAll('[data-instinct]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+          const skipBtn = document.getElementById('skipInstinctBtn');
+          if (skipBtn) skipBtn.style.display = 'none';
+          const reveal = document.getElementById('reframeReveal');
+          let whyEl = reveal.querySelector('.empathy-why');
+          if (!whyEl) {
+            whyEl = document.createElement('div');
+            whyEl.className = 'empathy-why';
+            reveal.prepend(whyEl);
+          }
+          whyEl.innerHTML = `<strong>${t(inst.whyTitle)}</strong>${t(inst.whyText)}`;
+          reveal.classList.add('visible');
+        });
+      });
+
+      const skipBtn = document.getElementById('skipInstinctBtn');
+      if (skipBtn) {
+        skipBtn.addEventListener('click', () => {
+          state.skippedInstinct[lesson.id] = true;
+          skipBtn.style.display = 'none';
+          document.getElementById('reframeReveal').classList.add('visible');
+        });
+      }
+
+      bindAnnotatedScriptEvents(lesson);
+
+      // 5. Pushback scenario chips + bookmark phrase
+      function bindPushbackSave(pb) {
+        const pbSaveBtn = document.getElementById('bookmarkPushbackBtn');
+        if (!pbSaveBtn) return;
+        const key = `${lesson.id}:${pb.id}`;
+        pbSaveBtn.addEventListener('click', () => {
+          const next = !state.savedPushbacks[key];
+          state.savedPushbacks[key] = next;
+          pbSaveBtn.setAttribute('aria-pressed', String(next));
+          pbSaveBtn.querySelector('svg').setAttribute('fill', next ? 'currentColor' : 'none');
+          pbSaveBtn.querySelector('span').textContent = next ? 'Added to Pocket Card' : 'Add phrase to Pocket Card';
+          const wrap = document.getElementById('pocketBonusPhraseWrap');
+          const el = document.getElementById('pocketBonusPhrase');
+          const anySaved = lesson.pushbacks.find(p => state.savedPushbacks[`${lesson.id}:${p.id}`]);
+          if (wrap && el) {
+            wrap.style.display = anySaved ? '' : 'none';
+            el.textContent = anySaved ? t(anySaved.script) : '';
+          }
+        });
+      }
+
+      const initialPb = lesson.pushbacks.find(p => p.id === state.selectedPushback[lesson.id]);
+      if (initialPb) bindPushbackSave(initialPb);
+
+      appRoot.querySelectorAll('[data-pushback]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.selectedPushback[lesson.id] = btn.dataset.pushback;
+          const pb = lesson.pushbacks.find(p => p.id === btn.dataset.pushback);
+          const saved = !!state.savedPushbacks[`${lesson.id}:${pb.id}`];
+          appRoot.querySelectorAll('[data-pushback]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+          const ans = document.getElementById('pushbackAnswer');
+          ans.innerHTML = `
+            <span>${t(pb.setup)}</span>
+            <em>${t(pb.script)}</em>
+            <div class="pushback-foot">
+              <button type="button" class="bookmark-btn" id="bookmarkPushbackBtn" aria-pressed="${saved}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                <span>${saved ? 'Added to Pocket Card' : 'Add phrase to Pocket Card'}</span>
+              </button>
+            </div>
+          `;
+          ans.classList.add('visible');
+          bindPushbackSave(pb);
+        });
+      });
+
+      // 6. Pick One Move (Live-populates Pocket Card directly below!)
+      appRoot.querySelectorAll('[data-move]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.chosenMove[lesson.id] = btn.dataset.move;
+          const mv = lesson.moves.find(m => m.id === btn.dataset.move);
+          appRoot.querySelectorAll('[data-move]').forEach(b => {
+            const isSel = b === btn;
+            b.setAttribute('aria-pressed', String(isSel));
+            b.querySelector('.move-radio').innerHTML = isSel
+              ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`
+              : '';
+          });
+          document.getElementById('moveLiveCue').innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Added to ${c.possessive} Pocket Card right below ↓</span>
+          `;
+          const pocketMove = document.getElementById('pocketChosenMove');
+          if (pocketMove) pocketMove.textContent = t(mv.title);
+        });
+      });
+
+      // 7. Seal & Save Unified Pocket Card
+      const completeBtn = document.getElementById('completeLessonBtn');
+      const pocketCard = document.getElementById('pocketCard');
+      const seal = document.getElementById('almanacSeal');
+      completeBtn.addEventListener('click', () => {
+        state.completed[lesson.id] = true;
+        pocketCard.classList.add('sealed');
+        completeBtn.classList.add('done');
+        completeBtn.querySelector('span').textContent = `Saved to ${c.possessive} Playbook`;
+        seal.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>SAVED · ALMANAC</span>
+        `;
+      });
+
+      // 8. Share & Advisor Modals
+      document.getElementById('secondaryShareBtn').addEventListener('click', () => openShareModal(lesson));
+      document.getElementById('openAdvisorBtn').addEventListener('click', () => {
+        document.getElementById('advisorContextText').innerHTML = `
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--spruce);margin-bottom:6px;text-transform:uppercase;">Pre-loaded Lesson Context</div>
+          <div>${t(lesson.advisorPrompt)}</div>
+        `;
+        document.getElementById('advisorModal').classList.add('open');
+      });
+
+      // 9. Optional Lesson Master Talk & Next Bridge
+      if (lesson.masterVideo) {
+        bindMasterVideoEvents(lesson.masterVideo, 'lessonVideoMount');
+      }
+
+      document.getElementById('nextEpisodeBtn').addEventListener('click', e => {
+        state.view = e.currentTarget.dataset.nextView;
+        render();
+      });
+    }
+
+    function bindVisualModelEvents(lesson) {
+      const mount = document.getElementById('visualModelMount');
+      if (!mount) return;
+
+      mount.querySelectorAll('[data-ladder-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.ladderStep = Number(btn.dataset.ladderIdx);
+          mount.innerHTML = renderVisualModel(lesson);
+          bindVisualModelEvents(lesson);
+        });
+      });
+
+      mount.querySelectorAll('[data-lens]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.lensSide = btn.dataset.lens;
+          mount.innerHTML = renderVisualModel(lesson);
+          bindVisualModelEvents(lesson);
+        });
+      });
+
+      mount.querySelectorAll('[data-exp-dot]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.exposureCount = Number(btn.dataset.expDot);
+          mount.innerHTML = renderVisualModel(lesson);
+          bindVisualModelEvents(lesson);
+        });
+      });
+
+      mount.querySelectorAll('[data-brain-state]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.brainScenario = btn.dataset.brainState;
+          mount.innerHTML = renderVisualModel(lesson);
+          bindVisualModelEvents(lesson);
+        });
+      });
+    }
+
+    /* =====================================================================
+       MODALS, AUDIO COMPANION, MARGIN RAIL & SCROLL PROGRESS HAIRLINE
+    ===================================================================== */
+    function openShareModal(lesson) {
+      const chosenMoveObj = lesson.moves.find(m => m.id === state.chosenMove[lesson.id]) || lesson.moves[0];
+      const c = CHILDREN[state.childKey];
+      const preview = document.getElementById('sharePreviewContent');
+      preview.innerHTML = `
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--spruce);margin-bottom:8px;text-transform:uppercase;">AlongSide Partner Note · ${c.name}</div>
+        <p style="font-size:14px;color:var(--ink);margin:0 0 10px;"><strong>What I’m trying tonight:</strong> ${t(chosenMoveObj.title)}</p>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--spruce);margin:0 0 10px;">${t(lesson.calmScriptPlain)}</p>
+        <p style="font-size:12.5px;color:var(--mute);margin:0;">${t(lesson.pocketInsight)}</p>
+      `;
+      document.getElementById('copyShareBtn').textContent = 'Copy Partner Note';
+      document.getElementById('shareModal').classList.add('open');
+    }
+
+    document.getElementById('copyShareBtn').addEventListener('click', () => {
+      const text = document.getElementById('sharePreviewContent').innerText;
+      if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+      document.getElementById('copyShareBtn').textContent = 'Copied for texting ✓';
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => document.getElementById(btn.dataset.closeModal).classList.remove('open'));
+    });
+
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+      backdrop.addEventListener('click', e => { if (e.target === backdrop) backdrop.classList.remove('open'); });
+    });
+
+    // Live 2px scroll hairline for mobile + desktop
+    function updateScrollHairline() {
+      if (state.view === 'course') {
+        scrollProgressFill.style.width = '0%';
+        return;
+      }
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
+      scrollProgressFill.style.width = `${pct.toFixed(1)}%`;
+    }
+
+    window.addEventListener('scroll', updateScrollHairline, { passive: true });
+
+    let beatObserver = null;
+    function setupScrollObserver() {
+      if (beatObserver) beatObserver.disconnect();
+      const sections = document.querySelectorAll('[data-beat-section]');
+      const dots = document.querySelectorAll('.beat-dot');
+      const rails = document.querySelectorAll('.rail-item');
+      if (!sections.length) return;
+
+      beatObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.dataset.beatSection);
+            dots.forEach((d, i) => {
+              d.classList.toggle('active', i === idx);
+              d.classList.toggle('passed', i < idx);
+            });
+            rails.forEach((r, i) => {
+              r.classList.toggle('active', i === idx);
+              r.classList.toggle('passed', i < idx);
+            });
+          }
+        });
+      }, { rootMargin: '-25% 0px -55% 0px', threshold: 0.01 });
+
+      sections.forEach(s => beatObserver.observe(s));
+    }
+
+    document.querySelectorAll('.beat-dot, .rail-item').forEach(ctrl => {
+      ctrl.addEventListener('click', () => {
+        const target = document.getElementById(`beat-${ctrl.dataset.beat}`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Listen Companion Narration
+    function formatMMSS(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function stopAudio() {
+      state.isPlaying = false;
+      clearInterval(state.audioTimerId);
+      state.audioTimerId = null;
+      state.audioSeconds = 0;
+      document.getElementById('listenCard').classList.remove('playing');
+      document.getElementById('playIcon').style.display = 'block';
+      document.getElementById('pauseIcon').style.display = 'none';
+      document.getElementById('audioBeatStatus').textContent = 'Ready — follows each chapter as you relax';
+      document.querySelectorAll('.beat-band.narrating').forEach(b => b.classList.remove('narrating'));
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    const BEAT_NAMES = [
+      'Now narrating · 01 The Mirror',
+      'Now narrating · 02 Inside Mind',
+      'Now narrating · 03 Practice',
+      'Now narrating · 04 One Move',
+      'Now narrating · 05 Pocket Card'
+    ];
+
+    document.getElementById('audioPlayBtn').addEventListener('click', () => {
+      const lesson = LESSONS[state.view];
+      if (!lesson) return;
+      if (state.isPlaying) {
+        state.isPlaying = false;
+        clearInterval(state.audioTimerId);
+        document.getElementById('listenCard').classList.remove('playing');
+        document.getElementById('playIcon').style.display = 'block';
+        document.getElementById('pauseIcon').style.display = 'none';
+        document.getElementById('audioBeatStatus').textContent = 'Paused — tap play to resume right here';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        return;
+      }
+
+      state.isPlaying = true;
+      document.getElementById('listenCard').classList.add('playing');
+      document.getElementById('playIcon').style.display = 'none';
+      document.getElementById('pauseIcon').style.display = 'block';
+
+      const totalSec = 165;
+      const updateHighlight = () => {
+        const beatIdx = Math.min(4, Math.floor((state.audioSeconds / totalSec) * 5));
+        document.getElementById('audioBeatStatus').textContent = BEAT_NAMES[beatIdx];
+        document.getElementById('audioTimer').textContent = `${formatMMSS(state.audioSeconds)} / ${lesson.audioDuration}`;
+        document.querySelectorAll('.beat-band').forEach((b, i) => b.classList.toggle('narrating', i === beatIdx));
+      };
+      updateHighlight();
+
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(t(`${lesson.headline}. ${lesson.deck} ${lesson.beat2Lead} ${lesson.almanacTruth}`));
+        utter.rate = state.playbackSpeed;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      }
+
+      state.audioTimerId = setInterval(() => {
+        state.audioSeconds += 1;
+        if (state.audioSeconds >= totalSec) { stopAudio(); return; }
+        updateHighlight();
+      }, Math.round(1000 / state.playbackSpeed));
+    });
+
+    document.getElementById('audioSpeedBtn').addEventListener('click', e => {
+      state.playbackSpeed = state.playbackSpeed === 1 ? 1.25 : state.playbackSpeed === 1.25 ? 1.5 : 1;
+      e.currentTarget.textContent = `${state.playbackSpeed}x`;
+    });
+
+    // Global Controls
+    document.querySelectorAll('.proto-tab').forEach(tab => {
+      tab.addEventListener('click', () => { state.view = tab.dataset.view; render(); });
+    });
+
+    document.getElementById('childSelect').addEventListener('change', e => {
+      state.childKey = e.target.value;
+      render();
+    });
+
+    document.getElementById('backToCourseBtn').addEventListener('click', () => {
+      state.view = 'course';
+      render();
+    });
+
+    document.getElementById('readModeBtn').addEventListener('click', () => {
+      state.listenMode = false;
+      document.getElementById('readModeBtn').setAttribute('aria-pressed', 'true');
+      document.getElementById('listenModeBtn').setAttribute('aria-pressed', 'false');
+      listenDock.classList.remove('visible');
+      stopAudio();
+    });
+
+    document.getElementById('listenModeBtn').addEventListener('click', () => {
+      state.listenMode = true;
+      document.getElementById('readModeBtn').setAttribute('aria-pressed', 'false');
+      document.getElementById('listenModeBtn').setAttribute('aria-pressed', 'true');
+      listenDock.classList.add('visible');
+    });
+
+    document.getElementById('nightstandBtn').addEventListener('click', e => {
+      state.nightstand = !state.nightstand;
+      e.currentTarget.setAttribute('aria-pressed', String(state.nightstand));
+      document.documentElement.setAttribute('data-theme', state.nightstand ? 'nightstand' : 'light');
+    });
+
+    render();
+  </script>
+</body>
+</html>
