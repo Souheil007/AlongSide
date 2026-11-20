@@ -77,6 +77,40 @@ export const LessonArchetype = {
 } as const;
 export type LessonArchetype = (typeof LessonArchetype)[keyof typeof LessonArchetype];
 
+export const EpisodeRole = {
+  FAST_WIN: 'FAST_WIN',
+  BRAIN_DECODER: 'BRAIN_DECODER',
+  RHYTHM_RESET: 'RHYTHM_RESET',
+  LONG_TERM_BOND: 'LONG_TERM_BOND',
+} as const;
+export type EpisodeRole = (typeof EpisodeRole)[keyof typeof EpisodeRole];
+
+export const AlmanacVisualType = {
+  SENSORY_LADDER: 'SENSORY_LADDER',
+  LENS_EXPOSURE_MATRIX: 'LENS_EXPOSURE_MATRIX',
+  BRAIN_BRIDGE: 'BRAIN_BRIDGE',
+  CIRCADIAN_CURVE: 'CIRCADIAN_CURVE',
+  ROUTINE_TIMELINE: 'ROUTINE_TIMELINE',
+  SERVE_RETURN_LOOP: 'SERVE_RETURN_LOOP',
+  HABIT_GUARDRAIL: 'HABIT_GUARDRAIL',
+} as const;
+export type AlmanacVisualType =
+  (typeof AlmanacVisualType)[keyof typeof AlmanacVisualType];
+
+export const EditorialIllustrationKey = {
+  plate: 'plate',
+  leaf: 'leaf',
+  cup: 'cup',
+  moon_bed: 'moon_bed',
+  clock_rhythm: 'clock_rhythm',
+  blocks_play: 'blocks_play',
+  device_dock: 'device_dock',
+  heart_bridge: 'heart_bridge',
+  compass_teen: 'compass_teen',
+} as const;
+export type EditorialIllustrationKey =
+  (typeof EditorialIllustrationKey)[keyof typeof EditorialIllustrationKey];
+
 export const ChapterPriority = {
   PRIORITY_1_CRITICAL: 1,
   PRIORITY_2_ROUTINES: 2,
