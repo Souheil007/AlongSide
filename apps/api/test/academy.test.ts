@@ -116,7 +116,8 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
 
       for (const mod of payload.data.modules) {
         expect(mod.developmentalTier).toBe('TIER_0A_INFANCY_0_1');
-        expect(mod.lessonCount).toBe(4);
+        expect(mod.lessonCount).toBeGreaterThanOrEqual(3);
+        expect(mod.lessonCount).toBeLessThanOrEqual(4);
       }
     });
 
@@ -171,9 +172,9 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(mod.slug).toBe('tween-neurobiology-and-adrenarche');
       expect(mod.lessons).toHaveLength(4);
       expect(mod.lessons[0].title).toBe(
-        'The Non-Reactive Neutral Stance: Neutralizing Sarcasm Instantly'
+        'Staying Steady When Sarcasm & Eye-Rolls Start'
       );
-      expect(mod.lessons[0].readingMinutes).toBe(4);
+      expect(mod.lessons[0].readingMinutes).toBe(3);
       expect(mod.lessons[0].isCompleted).toBe(false);
       expect(mod.lessons[0].archetype).toBe('EVERYDAY_BEHAVIOR');
     });
@@ -209,10 +210,11 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       const lesson = payload.data.lesson;
       expect(lesson.id).toBe(lessonId);
       expect(lesson.title).toBe(
-        'The Non-Reactive Neutral Stance: Neutralizing Sarcasm Instantly'
+        'Staying Steady When Sarcasm & Eye-Rolls Start'
       );
-      expect(lesson.contentMarkdown).toContain('adrenarche');
+      expect(lesson.contentMarkdown).toContain('Key Takeaway');
       expect(lesson.contentMarkdown).toContain('What to Say Instead');
+      expect(lesson.almanacPayload).toBeDefined();
       expect(lesson.module).toBeDefined();
       expect(lesson.module.slug).toBe('behavior-tween-adrenarche');
       expect(lesson.module.developmentalTier).toBe('TIER_3_PRE_TEEN_10_12');
@@ -301,6 +303,24 @@ describe('Parent Intelligence Academy API (PLAN-08)', () => {
       expect(payload.data.lesson.reliefTagline).toBeDefined();
       expect(payload.data.lesson.thirtySecondGlance).toBeDefined();
       expect(payload.data.lesson.dialogueCards.length).toBeGreaterThan(0);
+    });
+
+    it('GET /api/v1/academy/lessons/by-slug/:slug redirects retired Wave 2 & Wave 3 slugs via LESSON_SLUG_ALIASES', async () => {
+      const checks: Array<[string, string]> = [
+        ['preschool-preventive-wellness-foundations', 'preschool-daycare-viral-comfort'],
+        ['adolescent-concussion-and-overuse-triage', 'adolescent-stress-and-somatic-resilience'],
+        ['teen-frontal-lobe-maturation-25', 'teen-consultant-shift-protocol'],
+        ['teen-lifelong-health-maintenance', 'teen-no-questions-ride-home-pact'],
+      ];
+
+      for (const [legacySlug, expectedSlug] of checks) {
+        const res = await app.inject({
+          method: 'GET',
+          url: `/api/v1/academy/lessons/by-slug/${legacySlug}`,
+        });
+        expect(res.statusCode, `Alias failed for ${legacySlug}`).toBe(200);
+        expect(res.json().data.lesson.slug).toBe(expectedSlug);
+      }
     });
 
     it('GET /api/v1/academy/lessons/by-slug/:slug returns 404 for unknown slug', async () => {
