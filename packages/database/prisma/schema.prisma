@@ -138,6 +138,24 @@ enum ExploitSeverity {
   CRITICAL
 }
 
+enum DigestIssueStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum DigestContentStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum DigestItemType {
+  ARTICLE
+  VIDEO
+  DINNER_PROMPT
+}
+
 enum AcademyCategory {
   BEHAVIOR_AND_EMOTIONS
   HEALTH_AND_WELLNESS
@@ -162,9 +180,10 @@ model User {
   children          Child[]
   agreements        Agreement[]
   quizAttempts      QuizAttempt[]
-  academyProgress   AcademyProgress[]
-  aiConversations   AiConversation[]
-  subscription      Subscription?
+  academyProgress    AcademyProgress[]
+  aiConversations    AiConversation[]
+  digestInteractions UserDigestInteraction[]
+  subscription       Subscription?
 
   @@map("users")
 }
@@ -529,18 +548,139 @@ model FaqItem {
 // ----------------------------------------------------
 
 model CultureDigest {
-  id                 String             @id @default(uuid())
-  issueNumber        Int                @unique
-  publishDate        DateTime           @default(now())
-  title              String
-  summary            String
-  conversationStarter String            // Sunday dinner question
-  createdAt          DateTime           @default(now())
+  id                  String               @id @default(uuid())
+  issueNumber         Int                  @unique
+  publishDate         DateTime             @default(now())
+  weekStart           DateTime             @default(now())
+  weekEnd             DateTime             @default(now())
+  title               String
+  summary             String
+  conversationStarter String               // Sunday dinner question
+  status              DigestIssueStatus    @default(PUBLISHED)
+  curatedAt           DateTime?
+  createdAt           DateTime             @default(now())
 
-  slangTerms         SlangTerm[]
-  exploitAlerts      ExploitAlert[]
+  slangTerms          SlangTerm[]
+  exploitAlerts       ExploitAlert[]
+  articles            DigestArticle[]
+  videos              DigestVideo[]
+  dinnerPrompts       DigestDinnerPrompt[]
+  phrases             DigestPhrase[]
 
   @@map("culture_digests")
+}
+
+model DigestArticle {
+  id                  String              @id @default(uuid())
+  digestId            String
+  digest              CultureDigest       @relation(fields: [digestId], references: [id], onDelete: Cascade)
+  canonicalHash       String
+  sourceUrl           String
+  sourceName          String
+  sourceDomain        String
+  authorName          String?
+  imageUrl            String?
+  publishedAt         DateTime
+  isOriginalEditorial Boolean             @default(false)
+  topicLabel          String
+  readMinutes         Int                 @default(3)
+  title               String
+  summary             String
+  keyShift            String
+  perspectiveNote     String?
+  contentMarkdown     String?
+  sourcesText         String?
+  targetTiers         DevelopmentalTier[]
+  isLead              Boolean             @default(false)
+  sortOrder           Int                 @default(0)
+  ingestionStatus     DigestContentStatus @default(APPROVED)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@unique([digestId, canonicalHash])
+  @@index([digestId, ingestionStatus, sortOrder])
+  @@map("digest_articles")
+}
+
+model DigestVideo {
+  id              String              @id @default(uuid())
+  digestId        String
+  digest          CultureDigest       @relation(fields: [digestId], references: [id], onDelete: Cascade)
+  youtubeVideoId  String
+  videoUrl        String
+  title           String
+  presenter       String
+  channelName     String
+  channelId       String?
+  publishedAt     DateTime
+  durationMinutes Int
+  formatLabel     String
+  takeaway        String
+  jumpChips       Json?
+  skimBullets     String[]            @default([])
+  targetTiers     DevelopmentalTier[]
+  isEmbeddable    Boolean             @default(true)
+  sortOrder       Int                 @default(0)
+  ingestionStatus DigestContentStatus @default(APPROVED)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@unique([digestId, youtubeVideoId])
+  @@index([digestId, ingestionStatus, sortOrder])
+  @@map("digest_videos")
+}
+
+model DigestDinnerPrompt {
+  id          String              @id @default(uuid())
+  digestId    String
+  digest      CultureDigest       @relation(fields: [digestId], references: [id], onDelete: Cascade)
+  question    String
+  parentTip   String
+  followUp    String
+  targetTiers DevelopmentalTier[]
+  sortOrder   Int                 @default(0)
+  createdAt   DateTime            @default(now())
+
+  @@index([digestId, sortOrder])
+  @@map("digest_dinner_prompts")
+}
+
+model DigestPhrase {
+  id           String              @id @default(uuid())
+  digestId     String
+  digest       CultureDigest       @relation(fields: [digestId], references: [id], onDelete: Cascade)
+  word         String
+  shortMeaning String
+  fullMeaning  String
+  cringeLevel  Int                 @default(2)
+  cringeLabel  String
+  calmScript   String
+  targetTiers  DevelopmentalTier[]
+  sortOrder    Int                 @default(0)
+  createdAt    DateTime            @default(now())
+
+  @@index([digestId, sortOrder])
+  @@map("digest_phrases")
+}
+
+model UserDigestInteraction {
+  id        String         @id @default(uuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  childId   String?
+  itemType  DigestItemType
+  itemId    String
+  isRead    Boolean        @default(false)
+  readAt    DateTime?
+  isSaved   Boolean        @default(false)
+  savedAt   DateTime?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId, isSaved])
+  @@index([userId, itemType, isRead])
+  @@map("user_digest_interactions")
 }
 
 model SlangTerm {

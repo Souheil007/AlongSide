@@ -2,3 +2,8 @@ export * from './digest.repository.js';
 export * from './digest.service.js';
 export * from './digest.controller.js';
 export * from './digest.routes.js';
+export * from './ingestion/curatedSources.js';
+export * from './ingestion/adapters/blogFeedFetcher.js';
+export * from './ingestion/adapters/youtubeFeedFetcher.js';
+export * from './ingestion/adapters/digestCurator.js';
+export * from './ingestion/digestIngestion.orchestrator.js';

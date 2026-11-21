@@ -65,6 +65,9 @@ graph TD
         P46["46: Academy Interactive Almanac v2 Contracts, Schema & API (BE)"]
         P47["47: Zero-Bluff Academy Curriculum Tailoring & Seed Guard (BE)"]
         P48["48: Academy Interactive Almanac v2 Course Arc & Reader UI (FE)"]
+        P49["49: Culture & Trends Weekly Schema, Contracts & Archive API (BE)"]
+        P50["50: Culture & Trends Live RSS/YouTube Weekly Sourcing Pipeline (BE)"]
+        P51["51: Culture & Trends Calm Weekly Hub & Week-Scoped UI (FE)"]
     end
 
     subgraph CommercialAndHardening ["Commercialization & Production Hardening (Queued)"]
@@ -142,6 +145,12 @@ graph TD
     P46 --> P48
     P47 --> P14
     P48 --> P14
+    P43 --> P49
+    P36 --> P49
+    P49 --> P50
+    P49 --> P51
+    P50 --> P14
+    P51 --> P14
     P43 --> P44
     P44 --> P45
     P45 --> P14
@@ -208,6 +217,9 @@ graph TD
 | [**`46-academy-interactive-almanac-v2-schema-and-api.md`**](46-academy-interactive-almanac-v2-schema-and-api.md) | Academy Interactive Almanac v2 Contracts, Schema & API | **Backend Agent** | PLAN-39, PLAN-40, PLAN-43 | Queued (Awaiting Phase 0 Audit Sign-Off) |
 | [**`47-academy-zero-bluff-curriculum-tailoring-and-seed.md`**](47-academy-zero-bluff-curriculum-tailoring-and-seed.md) | Zero-Bluff Academy Curriculum Tailoring & Modular Seed Guard (Waves 1–3) | **Backend Agent** | PLAN-46 | Queued (Awaiting Phase 0 Audit Sign-Off) |
 | [**`48-academy-interactive-almanac-v2-reader-ui.md`**](48-academy-interactive-almanac-v2-reader-ui.md) | Academy Interactive Almanac v2 Course Arc & 5-Beat Reader UI | **Frontend Agent** | PLAN-46 | Queued (Awaiting Phase 0 Audit Sign-Off) |
+| [**`49-culture-digest-weekly-schema-and-api.md`**](49-culture-digest-weekly-schema-and-api.md) | Culture & Trends Weekly Schema, Shared Contracts & Archive API | **Backend Agent** | PLAN-08, PLAN-36, PLAN-43 | Queued |
+| [**`50-culture-digest-live-sourcing-and-curation-pipeline.md`**](50-culture-digest-live-sourcing-and-curation-pipeline.md) | Culture & Trends Live Weekly Blog (RSS) & Fresh YouTube Sourcing Pipeline | **Backend Agent** | PLAN-49 | Queued |
+| [**`51-culture-digest-weekly-editorial-redesign-ui.md`**](51-culture-digest-weekly-editorial-redesign-ui.md) | Culture & Trends Calm Weekly Hub, Week-Scoped Blogs/Videos & Saved UI | **Frontend Agent** | PLAN-49 | Queued |
 
 ---
 

@@ -215,6 +215,27 @@ export const ExploitSeverity = {
 } as const;
 export type ExploitSeverity = (typeof ExploitSeverity)[keyof typeof ExploitSeverity];
 
+export const DigestIssueStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+export type DigestIssueStatus = (typeof DigestIssueStatus)[keyof typeof DigestIssueStatus];
+
+export const DigestContentStatus = {
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+} as const;
+export type DigestContentStatus = (typeof DigestContentStatus)[keyof typeof DigestContentStatus];
+
+export const DigestItemType = {
+  ARTICLE: 'ARTICLE',
+  VIDEO: 'VIDEO',
+  DINNER_PROMPT: 'DINNER_PROMPT',
+} as const;
+export type DigestItemType = (typeof DigestItemType)[keyof typeof DigestItemType];
+
 export const TemperatureMethod = {
   RECTAL: 'RECTAL',
   AXILLARY: 'AXILLARY',

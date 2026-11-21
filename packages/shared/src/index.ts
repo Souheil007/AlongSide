@@ -8,3 +8,4 @@ export * from './algorithms/milestones.js';
 export * from './algorithms/nutrition.js';
 export * from './algorithms/courseTitle.js';
 export * from './algorithms/academy.js';
+export * from './algorithms/digest.js';
