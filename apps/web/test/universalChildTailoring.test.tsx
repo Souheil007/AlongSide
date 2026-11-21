@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import {
   DevelopmentalTier,
   RoadType,
-  ExploitSeverity,
+  isSlangEligibleTier,
   type ChildDTO,
 } from '@alongside/shared';
 import {
@@ -16,7 +16,7 @@ import {
   getChildDevelopmentalHorizon,
 } from '../src/stores/useChildContextStore';
 import { normalizeChildTier } from '../src/components/academy/AcademyCatalogClient';
-import { isHighRelevanceForChild, type RichExploitAlert } from '../src/components/digest/ExploitAlertsView';
+import { resolveActiveDigestTier } from '../src/hooks/useCultureDigest';
 import { getRecommendedCurfew } from '../src/components/devices/DevicesManagementView';
 
 describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Specification', () => {
@@ -119,46 +119,23 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
       });
     });
 
-    describe('isHighRelevanceForChild', () => {
-      const gamblingAlert: RichExploitAlert = {
-        id: 'alert-1',
-        category: 'GAMBLING',
-        severity: ExploitSeverity.HIGH,
-        severityLabel: 'High Alert',
-        title: 'Roblox In-Game Wheels',
-        affectedPlatforms: ['Roblox', 'Fortnite'],
-        calmSummary: 'Summary',
-        howMechanicWorks: 'Mechanic',
-        parentActionProtocol: ['Step 1'],
-        neutralEnforcementTip: 'Tip',
-      };
-
-      const raidBotsAlert: RichExploitAlert = {
-        id: 'alert-2',
-        category: 'RAID_BOTS',
-        severity: ExploitSeverity.MEDIUM,
-        severityLabel: 'Medium Alert',
-        title: 'Discord Server Raids',
-        affectedPlatforms: ['Discord', 'Snapchat'],
-        calmSummary: 'Summary',
-        howMechanicWorks: 'Mechanic',
-        parentActionProtocol: ['Step 1'],
-        neutralEnforcementTip: 'Tip',
-      };
-
-      it('flags gambling and loot box alerts as highly relevant for elementary / tweens (7-12)', () => {
-        expect(isHighRelevanceForChild(gamblingAlert, maya)).toBe(true);
-        expect(isHighRelevanceForChild(raidBotsAlert, maya)).toBe(false);
+    describe('Culture & Trends Canonical Tier & Phrase Eligibility Calibration', () => {
+      it('normalizes all lifespan sub-tranches and legacy aliases into 6 digest buckets', () => {
+        expect(resolveActiveDigestTier(mateo)).toBe(
+          DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
+        );
+        expect(resolveActiveDigestTier(maya)).toBe(
+          DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9
+        );
+        expect(resolveActiveDigestTier(julian)).toBe(
+          DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18
+        );
       });
 
-      it('flags raid bots and ephemeral messaging alerts as highly relevant for teens (13+)', () => {
-        expect(isHighRelevanceForChild(raidBotsAlert, julian)).toBe(true);
-        expect(isHighRelevanceForChild(gamblingAlert, julian)).toBe(false);
-      });
-
-      it('returns false for infants in screen-free window', () => {
-        expect(isHighRelevanceForChild(gamblingAlert, mateo)).toBe(false);
-        expect(isHighRelevanceForChild(raidBotsAlert, mateo)).toBe(false);
+      it('enforces phrase strip eligibility strictly for ages 7-18 and omits ages 0-6', () => {
+        expect(isSlangEligibleTier(resolveActiveDigestTier(mateo))).toBe(false);
+        expect(isSlangEligibleTier(resolveActiveDigestTier(maya))).toBe(true);
+        expect(isSlangEligibleTier(resolveActiveDigestTier(julian))).toBe(true);
       });
     });
   });
@@ -277,13 +254,23 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
       expect(isMayaMatch).toBe(false);
 
       // When a 11-year-old tween is active: Matching stage
-      const tweenChild: ChildDTO = { ...maya, age: 11, developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12 };
-      const tweenNormalizedTier = normalizeChildTier(tweenChild.developmentalTier, tweenChild.age);
+      const tweenChild: ChildDTO = {
+        ...maya,
+        age: 11,
+        developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+      };
+      const tweenNormalizedTier = normalizeChildTier(
+        tweenChild.developmentalTier,
+        tweenChild.age
+      );
       const isTweenMatch = tweenNormalizedTier === courseTierPreTeen;
       expect(isTweenMatch).toBe(true);
 
       // When Mateo (Infant / Tier 0) is active: Differing stage
-      const mateoNormalizedTier = normalizeChildTier(mateo.developmentalTier, mateo.age);
+      const mateoNormalizedTier = normalizeChildTier(
+        mateo.developmentalTier,
+        mateo.age
+      );
       expect(mateoNormalizedTier === courseTierPreTeen).toBe(false);
     });
 
@@ -293,7 +280,9 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
       useChildContextStore.getState().setActiveChild(julian.id);
 
       const active = selectActiveChild(useChildContextStore.getState())!;
-      const horizon = getChildDevelopmentalHorizon(active.developmentalTier || active.age);
+      const horizon = getChildDevelopmentalHorizon(
+        active.developmentalTier || active.age
+      );
 
       const consultationBanner = `Active Consultation: Calibrated for ${active.name} (Age ${active.age} · ${horizon.stage || horizon.tierLabel})`;
       expect(consultationBanner).toContain('Calibrated for Julian');
@@ -301,7 +290,9 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
       expect(consultationBanner).toContain('Late Adolescence');
 
       const placeholder = `Ask about ${active.name}... (e.g. tantrums, bedtime stalls, phone boundaries)`;
-      expect(placeholder).toBe('Ask about Julian... (e.g. tantrums, bedtime stalls, phone boundaries)');
+      expect(placeholder).toBe(
+        'Ask about Julian... (e.g. tantrums, bedtime stalls, phone boundaries)'
+      );
     });
 
     it('prioritizes and sorts active child profile to top in Devices Hub list', () => {
@@ -322,17 +313,9 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
     });
 
     it('adapts dinner conversation starters and slang recommendations across developmental horizons', () => {
-      // Early childhood (Mateo)
-      const mateoSlang = resolveChildSlangTier(mateo);
-      expect(mateoSlang).toBe('EARLY_CHILDHOOD');
-
-      // Elementary (Maya)
-      const mayaSlang = resolveChildSlangTier(maya);
-      expect(mayaSlang).toBe('ELEMENTARY');
-
-      // Teen (Julian)
-      const julianSlang = resolveChildSlangTier(julian);
-      expect(julianSlang).toBe('TEEN');
+      expect(resolveChildSlangTier(mateo)).toBe('EARLY_CHILDHOOD');
+      expect(resolveChildSlangTier(maya)).toBe('ELEMENTARY');
+      expect(resolveChildSlangTier(julian)).toBe('TEEN');
     });
   });
 });

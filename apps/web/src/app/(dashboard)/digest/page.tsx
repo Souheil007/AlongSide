@@ -3,23 +3,29 @@ import { Suspense } from 'react';
 import { DigestDashboardClient } from '@/components/digest/DigestDashboardClient';
 
 export const metadata: Metadata = {
-  title: 'Digest',
+  title: 'Culture & Trends',
   description:
-    'Weekly youth culture briefings, emerging slang decoders, hidden exploit alerts, and Sunday dinner conversation starters.',
+    'Calm weekly blogs, curated parent talks, and Sunday dinner conversation prompts calibrated to your child’s developmental stage.',
 };
 
 export default function DigestPage() {
   return (
-    <main className="min-h-screen py-2">
+    <div className="min-h-screen">
       <Suspense
         fallback={
-          <div className="max-w-7xl mx-auto h-96 rounded-3xl border border-slate-200 bg-white p-8 animate-pulse flex items-center justify-center">
-            <p className="text-sm text-slate-400">Loading Sunday Digest briefing...</p>
+          <div className="mx-auto w-full max-w-[1180px] space-y-6 pt-4">
+            <div className="h-10 w-64 rounded-[8px] bg-[#F3F1EA]" />
+            <div className="h-px w-full bg-[#131715]/10" />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+              <div className="aspect-video rounded-[10px] bg-[#F3F1EA]" />
+              <div className="aspect-video rounded-[10px] bg-[#F3F1EA]" />
+              <div className="aspect-video rounded-[10px] bg-[#F3F1EA]" />
+            </div>
           </div>
         }
       >
         <DigestDashboardClient />
       </Suspense>
-    </main>
+    </div>
   );
 }
