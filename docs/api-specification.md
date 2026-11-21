@@ -338,29 +338,225 @@ data: {"type": "done", "conversationId": "conv-123"}
 
 ---
 
-## 9. Youth Culture Digest & Exploit Alerts (`/api/v1/digest`)
+## 9. Culture & Trends Weekly Hub & Legacy Digest (`/api/v1/digest`)
 
-### 9.1 Latest Sunday Digest
-- **Endpoint:** `GET /api/v1/digest/latest`
+### 9.1 List Published Weekly Editions
+- **Endpoint:** `GET /api/v1/digest/issues`
+- **Authentication:** Optional (anonymous allowed)
+- **Query Parameters:**
+  - `tier` *(optional)*: Any `DevelopmentalTier` (automatically normalized into one of the 6 canonical Culture & Trends buckets `0–3`, `4–6`, `7–9`, `10–12`, `13–15`, `16–18`)
 - **Response (200 OK):**
 ```json
 {
   "success": true,
   "data": {
-    "digest": {
-      "issueNumber": 42,
-      "title": "Decoding 'Crashout' & The Calculator Vault Bypass",
-      "conversationStarter": "Ask your tween what the funniest meme they saw this week was and why it made them laugh.",
-      "slangTerms": [
-        { "term": "Crashout", "definition": "Explosive, irrational overreaction to a minor frustration", "contextTone": "Playful or venting" }
-      ],
-      "exploitAlerts": [
-        { "appName": "Calculator+", "exploitDescription": "Disguised photo vault behind a working calculator", "severity": "HIGH", "parentRemedy": "Check Settings > iPhone Storage for duplicate calculator apps." }
-      ]
+    "issues": [
+      {
+        "id": "digest-issue-42",
+        "issueNumber": 42,
+        "publishDate": "2026-11-15T00:00:00.000Z",
+        "weekStart": "2026-11-08T00:00:00.000Z",
+        "weekEnd": "2026-11-15T00:00:00.000Z",
+        "title": "Decoding 'Crashout' & The Calculator Vault Bypass",
+        "summary": "This week's Sunday briefing...",
+        "status": "PUBLISHED",
+        "articleCount": 3,
+        "videoCount": 3
+      }
+    ]
+  }
+}
+```
+
+### 9.2 Fetch Weekly Edition by Issue Number (or `'latest'`)
+- **Endpoint:** `GET /api/v1/digest/issues/:issueNumber`
+- **Path Parameter:** `issueNumber`: positive integer (e.g. `42`, `41`) or `'latest'`
+- **Authentication:** Optional — when a valid session cookie or Bearer token is present, hydrates `isRead`/`isSaved` flags and resolves `childId` against the parent's owned children without returning `401` for anonymous callers.
+- **Query Parameters:**
+  - `tier` *(optional)*: `DevelopmentalTier`
+  - `childId` *(optional)*: UUID of the parent's active child (used when `tier` is omitted)
+- **Domain Invariants:**
+  - Ages `0–3` (`TIER_0_INFANCY_TODDLER_0_3`, including `0A`/`0B`/`0C`) and `4–6` (`TIER_1_EARLY_CHILDHOOD_4_6`) **always** return `phrases: []`.
+  - Ages `7–18` (`TIER_2` through `TIER_5`) return 3 age-calibrated weekly phrases.
+  - Only `APPROVED` articles and `APPROVED` embeddable (`isEmbeddable: true`) videos are returned.
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "edition": {
+      "issue": {
+        "id": "digest-issue-42",
+        "issueNumber": 42,
+        "publishDate": "2026-11-15T00:00:00.000Z",
+        "weekStart": "2026-11-08T00:00:00.000Z",
+        "weekEnd": "2026-11-15T00:00:00.000Z",
+        "title": "Decoding 'Crashout' & The Calculator Vault Bypass",
+        "summary": "...",
+        "status": "PUBLISHED",
+        "articleCount": 3,
+        "videoCount": 3
+      },
+      "resolvedTier": "TIER_3_PRE_TEEN_10_12",
+      "videos": [],
+      "articles": [],
+      "dinnerPrompts": [],
+      "phrases": [],
+      "readArticleCount": 0,
+      "totalArticleCount": 3
     }
   }
 }
 ```
+- **Error Responses:** `400 VALIDATION_ERROR` (invalid `issueNumber` or `tier`), `404 NOT_FOUND` (issue does not exist).
+
+### 9.3 List Week-Scoped or Archive-Wide Curated Blogs
+- **Endpoint:** `GET /api/v1/digest/articles`
+- **Authentication:** Optional (hydrates `isRead`/`isSaved` and `unreadOnly` when authenticated)
+- **Query Parameters:**
+  - `issueNumber` *(optional integer >= 1)*: Target weekly issue; when omitted with `scope=issue`, defaults to the latest published issue.
+  - `scope` *(optional, default `'issue'`)*: `'issue'` (strictly selected week) | `'all'` (all published issues)
+  - `tier` *(optional)*: `DevelopmentalTier`
+  - `childId` *(optional)*: Owned child ID
+  - `unreadOnly` *(optional boolean)*: When `true`, returns only unread articles
+  - `q` *(optional string, max 120 chars)*: Case-insensitive search across title, summary, keyShift, topicLabel, and sourceName
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "articles": [
+      {
+        "id": "art-42-t3-1",
+        "digestId": "digest-issue-42",
+        "issueNumber": 42,
+        "title": "How to read readiness cues before the first smartphone conversation",
+        "summary": "...",
+        "keyShift": "Treat device autonomy as a graduated driving permit rather than an all-or-nothing birthday switch.",
+        "perspectiveNote": "...",
+        "topicLabel": "Media & Tech",
+        "readMinutes": 5,
+        "sourceName": "Child Mind Institute",
+        "sourceDomain": "childmind.org",
+        "sourceUrl": "https://childmind.org/article/when-should-you-get-your-kid-a-phone/",
+        "authorName": null,
+        "imageUrl": null,
+        "publishedAt": "2026-11-14T13:30:00.000Z",
+        "isOriginalEditorial": false,
+        "contentMarkdown": null,
+        "sourcesText": "Child Mind Institute (childmind.org)",
+        "targetTiers": ["TIER_3_PRE_TEEN_10_12"],
+        "isLead": true,
+        "sortOrder": 1,
+        "isRead": false,
+        "isSaved": false
+      }
+    ],
+    "unreadCount": 3,
+    "totalInScope": 3,
+    "issueNumber": 42
+  }
+}
+```
+
+### 9.4 List Week-Scoped or Archive-Wide Embeddable Videos
+- **Endpoint:** `GET /api/v1/digest/videos`
+- **Authentication:** Optional (hydrates `isSaved` when authenticated)
+- **Query Parameters:**
+  - `issueNumber` *(optional integer >= 1)*: Target weekly issue; defaults to latest published issue when `scope=issue`.
+  - `scope` *(optional, default `'issue'`)*: `'issue'` | `'all'`
+  - `tier` *(optional)*: `DevelopmentalTier`
+  - `childId` *(optional)*: Owned child ID
+  - `durationBucket` *(optional, default `'all'`)*: `'all'` | `'short'` (`< 12 min`) | `'medium'` (`12–25 min`) | `'deep'` (`> 25 min`)
+  - `q` *(optional string, max 120 chars)*: Case-insensitive search across title, presenter, channelName, formatLabel, and takeaway
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "videos": [
+      {
+        "id": "vid-42-t3-2",
+        "digestId": "digest-issue-42",
+        "issueNumber": 42,
+        "youtubeVideoId": "6zVS8HIPUng",
+        "videoUrl": "https://www.youtube.com/watch?v=6zVS8HIPUng",
+        "title": "The Mysterious Workings of the Adolescent Brain",
+        "presenter": "Dr. Sarah-Jayne Blakemore, PhD",
+        "channelName": "TED",
+        "channelId": null,
+        "publishedAt": "2026-11-13T14:00:00.000Z",
+        "durationMinutes": 14,
+        "formatLabel": "Brain Science",
+        "takeaway": "...",
+        "jumpChips": [
+          { "seconds": 110, "label": "1:50 · The remodeling social brain" }
+        ],
+        "skimBullets": ["..."],
+        "targetTiers": ["TIER_3_PRE_TEEN_10_12"],
+        "isEmbeddable": true,
+        "sortOrder": 2,
+        "isSaved": false
+      }
+    ],
+    "totalInScope": 3,
+    "issueNumber": 42
+  }
+}
+```
+
+### 9.5 Saved Digest Shortlist (Authenticated)
+- **Endpoint:** `GET /api/v1/digest/saved`
+- **Authentication:** Required (`401 UNAUTHORIZED` if unauthenticated)
+- **Query Parameters:**
+  - `tier` *(optional)*: Filter saved items to a canonical tier bucket
+  - `childId` *(optional)*: Resolve tier filter from an owned child profile
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "articles": [],
+    "videos": [],
+    "dinnerPrompts": [],
+    "totalCount": 0
+  }
+}
+```
+
+### 9.6 Persist Read / Saved Interaction (Authenticated)
+- **Endpoint:** `PUT /api/v1/digest/interactions`
+- **Authentication:** Required (`401 UNAUTHORIZED` if unauthenticated)
+- **Request Body:** *(at least one of `isRead` or `isSaved` required)*
+```json
+{
+  "itemType": "ARTICLE",
+  "itemId": "art-42-t3-1",
+  "childId": "f47ac10b-...",
+  "isRead": true,
+  "isSaved": true
+}
+```
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "interaction": {
+      "itemType": "ARTICLE",
+      "itemId": "art-42-t3-1",
+      "isRead": true,
+      "isSaved": true
+    }
+  }
+}
+```
+- **Error Responses:** `400 VALIDATION_ERROR`, `401 UNAUTHORIZED`, `404 NOT_FOUND` (if `itemId` does not exist).
+
+### 9.7 Legacy Endpoints (Preserved Backward-Compatibly)
+- **`GET /api/v1/digest/latest`**: Returns the latest `CultureDigestDTO` with `slangTerms` and `exploitAlerts`.
+- **`GET /api/v1/digest/slang?term=&q=`**: Case-insensitive search over legacy `SlangTerm` catalog.
+- **`GET /api/v1/digest/exploits?severity=`**: Filterable list of legacy `ExploitAlert` entries (`LOW` | `MEDIUM` | `HIGH` | `CRITICAL`).
 
 ---
 

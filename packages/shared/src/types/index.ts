@@ -9,6 +9,9 @@ import type {
   DevicePlatform,
   DeviceProfileStatus,
   DietaryStage,
+  DigestContentStatus,
+  DigestIssueStatus,
+  DigestItemType,
   EarlyChildhoodTranche,
   EditorialIllustrationKey,
   EpisodeRole,
@@ -245,6 +248,134 @@ export interface CultureDigestDTO {
   conversationStarter: string;
   slangTerms: SlangTermDTO[];
   exploitAlerts: ExploitAlertDTO[];
+}
+
+export type DigestQueryScope = 'issue' | 'all';
+export type DigestVideoDurationBucket = 'all' | 'short' | 'medium' | 'deep';
+
+export interface DigestIssueSummaryDTO {
+  id: string;
+  issueNumber: number;
+  publishDate: string;
+  weekStart: string;
+  weekEnd: string;
+  title: string;
+  summary: string;
+  status: DigestIssueStatus;
+  articleCount: number;
+  videoCount: number;
+}
+
+export interface DigestArticleDTO {
+  id: string;
+  digestId: string;
+  issueNumber: number;
+  title: string;
+  summary: string;
+  keyShift: string;
+  perspectiveNote?: string | null;
+  topicLabel: string;
+  readMinutes: number;
+  sourceName: string;
+  sourceDomain: string;
+  sourceUrl: string;
+  authorName?: string | null;
+  imageUrl?: string | null;
+  publishedAt: string;
+  isOriginalEditorial: boolean;
+  contentMarkdown?: string | null;
+  sourcesText?: string | null;
+  targetTiers: DevelopmentalTier[];
+  isLead: boolean;
+  sortOrder: number;
+  isRead: boolean;
+  isSaved: boolean;
+}
+
+export interface DigestVideoDTO {
+  id: string;
+  digestId: string;
+  issueNumber: number;
+  youtubeVideoId: string;
+  videoUrl: string;
+  title: string;
+  presenter: string;
+  channelName: string;
+  channelId?: string | null;
+  publishedAt: string;
+  durationMinutes: number;
+  formatLabel: string;
+  takeaway: string;
+  jumpChips?: VideoJumpChip[];
+  skimBullets: string[];
+  targetTiers: DevelopmentalTier[];
+  isEmbeddable: boolean;
+  sortOrder: number;
+  isSaved: boolean;
+}
+
+export interface DigestDinnerPromptDTO {
+  id: string;
+  digestId: string;
+  issueNumber: number;
+  question: string;
+  parentTip: string;
+  followUp: string;
+  targetTiers: DevelopmentalTier[];
+  sortOrder: number;
+  isSaved: boolean;
+}
+
+export interface DigestPhraseDTO {
+  id: string;
+  digestId: string;
+  issueNumber: number;
+  word: string;
+  shortMeaning: string;
+  fullMeaning: string;
+  cringeLevel: number;
+  cringeLabel: string;
+  calmScript: string;
+  targetTiers: DevelopmentalTier[];
+  sortOrder: number;
+}
+
+export interface WeeklyDigestEditionDTO {
+  issue: DigestIssueSummaryDTO;
+  resolvedTier: DevelopmentalTier;
+  videos: DigestVideoDTO[];
+  articles: DigestArticleDTO[];
+  dinnerPrompts: DigestDinnerPromptDTO[];
+  phrases: DigestPhraseDTO[];
+  readArticleCount: number;
+  totalArticleCount: number;
+}
+
+export interface SavedDigestShortlistDTO {
+  articles: DigestArticleDTO[];
+  videos: DigestVideoDTO[];
+  dinnerPrompts: DigestDinnerPromptDTO[];
+  totalCount: number;
+}
+
+export interface DigestInteractionResultDTO {
+  itemType: DigestItemType;
+  itemId: string;
+  isRead: boolean;
+  isSaved: boolean;
+}
+
+export interface DigestArticlesResponseDTO {
+  articles: DigestArticleDTO[];
+  unreadCount: number;
+  totalInScope: number;
+  issueNumber?: number;
+}
+
+export interface DigestVideosResponseDTO {
+  videos: DigestVideoDTO[];
+  totalInScope: number;
+  issueNumber?: number;
 }
 
 export interface AcademyCategoryStatsDTO {

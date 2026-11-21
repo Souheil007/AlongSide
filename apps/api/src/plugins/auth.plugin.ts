@@ -46,6 +46,7 @@ declare module '@fastify/jwt' {
 declare module 'fastify' {
   interface FastifyInstance {
     authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    optionalAuthenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
   }
   interface FastifyReply {
     setSessionCookie: (token: string) => this;
@@ -130,6 +131,28 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
             message: 'Authentication required to access this resource.',
           },
         });
+      }
+    }
+  );
+
+  // Optional authentication preHandler: populates request.user when a valid non-revoked
+  // session cookie or Bearer token is present, without blocking anonymous callers.
+  fastify.decorate(
+    'optionalAuthenticate',
+    async (request: FastifyRequest): Promise<void> => {
+      const cookieToken = request.cookies[SESSION_COOKIE_NAME];
+      const authHeader = request.headers.authorization;
+      const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+      const rawToken = cookieToken || bearerToken;
+
+      if (!rawToken || isTokenRevoked(rawToken)) {
+        return;
+      }
+
+      try {
+        await request.jwtVerify();
+      } catch {
+        // Invalid or expired token on public read route: proceed as anonymous
       }
     }
   );

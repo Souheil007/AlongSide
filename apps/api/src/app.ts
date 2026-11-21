@@ -393,7 +393,8 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   const resolvedDigestRepository =
     digestRepository ?? new PrismaDigestRepository();
   const resolvedDigestService =
-    digestService ?? new DigestService(resolvedDigestRepository);
+    digestService ??
+    new DigestService(resolvedDigestRepository, resolvedChildrenRepository);
 
   const resolvedFaqsRepository =
     faqsRepository ?? new PrismaFaqRepository();
@@ -489,6 +490,7 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     prefix: '/api/v1/digest',
     digestRepository: resolvedDigestRepository,
     digestService: resolvedDigestService,
+    childrenRepository: resolvedChildrenRepository,
   });
   await app.register(faqsRoutes, {
     prefix: '/api/v1/faqs',
