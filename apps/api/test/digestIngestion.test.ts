@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { FastifyInstance } from 'fastify';
+import type { PrismaClient } from '@alongside/database';
 import {
   CANONICAL_DIGEST_TIERS,
   DevelopmentalTier,
@@ -9,7 +10,10 @@ import {
 import { buildApp } from '../src/app.js';
 import { InMemoryAuthRepository } from '../src/modules/auth/auth.repository.js';
 import { InMemoryChildrenRepository } from '../src/modules/children/children.repository.js';
-import { InMemoryDigestRepository } from '../src/modules/digest/digest.repository.js';
+import {
+  InMemoryDigestRepository,
+  PrismaDigestRepository,
+} from '../src/modules/digest/digest.repository.js';
 import {
   buildYouTubeChannelFeedUrl,
   CURATED_BLOG_FEEDS,
@@ -28,6 +32,10 @@ import {
   sanitizeRssExcerpt,
   type RawBlogCandidate,
 } from '../src/modules/digest/ingestion/adapters/blogFeedFetcher.js';
+import {
+  DEFAULT_MAX_RESPONSE_BYTES,
+  fetchSafeText,
+} from '../src/modules/digest/ingestion/adapters/safeFetch.js';
 import {
   FakeYouTubeFeedFetcher,
   parseIso8601DurationSeconds,
@@ -120,9 +128,12 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
         'https://192.168.1.25/feed',
         'https://169.254.169.254/latest/meta-data/',
         'https://[::1]/feed',
+        'https://[::]/feed',
         'https://[fe80::1]/feed',
         'https://[fc00::1]/feed',
         'https://[::ffff:127.0.0.1]/feed',
+        'https://[::ffff:0:127.0.0.1]/feed',
+        'https://[64:ff9b::7f00:1]/feed',
         'https://user:pass@childmind.org/feed/',
         'https://2130706433/feed',
       ];
@@ -134,6 +145,67 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
       expect(assertSafeExternalUrl('https://childmind.org/feed/').hostname).toBe(
         'childmind.org'
       );
+    });
+
+    it('rejects SSRF redirect hops (302 -> cloud metadata) and oversized >2MB response bodies', async () => {
+      let redirectFetchCalls = 0;
+      const redirectFetch: typeof fetch = async () => {
+        redirectFetchCalls += 1;
+        return new Response(null, {
+          status: 302,
+          headers: { location: 'http://169.254.169.254/latest/meta-data/' },
+        });
+      };
+
+      await expect(
+        fetchSafeText('https://childmind.org/feed/', {
+          fetchImpl: redirectFetch,
+        })
+      ).rejects.toThrow(/HTTPS required|Private or reserved/i);
+      expect(redirectFetchCalls).toBe(1);
+
+      let httpsMetadataCalls = 0;
+      const httpsMetadataRedirect: typeof fetch = async () => {
+        httpsMetadataCalls += 1;
+        return new Response(null, {
+          status: 302,
+          headers: { location: 'https://169.254.169.254/latest/meta-data/' },
+        });
+      };
+
+      await expect(
+        fetchSafeText('https://childmind.org/feed/', {
+          fetchImpl: httpsMetadataRedirect,
+        })
+      ).rejects.toThrow(/Private or reserved IPv4/i);
+      expect(httpsMetadataCalls).toBe(1);
+
+      // Streamed response exceeding 2 MiB without Content-Length header must be rejected
+      const oversizedFetch: typeof fetch = async () => {
+        const chunk = new Uint8Array(512 * 1024).fill(65); // 512 KiB of 'A'
+        let chunksEmitted = 0;
+        const stream = new ReadableStream<Uint8Array>({
+          pull(controller) {
+            if (chunksEmitted < 5) {
+              chunksEmitted += 1; // 5 * 512 KiB = 2.5 MiB > 2 MiB
+              controller.enqueue(chunk);
+            } else {
+              controller.close();
+            }
+          },
+        });
+        return new Response(stream, {
+          status: 200,
+          headers: { 'content-type': 'application/xml' },
+        });
+      };
+
+      await expect(
+        fetchSafeText('https://childmind.org/feed/', {
+          fetchImpl: oversizedFetch,
+          maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+        })
+      ).rejects.toThrow(/exceeds maximum allowed size/i);
     });
 
     it('normalizes canonical URLs by stripping tracking params and producing deterministic hashes', () => {
@@ -150,7 +222,7 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
       expect(computeCanonicalHash(a)).toHaveLength(64);
     });
 
-    it('strips HTML/scripts cleanly and caps plain-text excerpts strictly to <= 600 chars', () => {
+    it('strips HTML/scripts cleanly (including double-encoded RSS entities) and caps plain-text excerpts strictly to <= 600 chars', () => {
       const longBody = `<script>alert('xss')</script><p>Evidence-based &amp; calm parenting tips: ${'word '.repeat(220)}</p>`;
       const excerpt = sanitizeRssExcerpt(longBody);
 
@@ -158,6 +230,16 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
       expect(excerpt).not.toContain('<p>');
       expect(excerpt).toContain('Evidence-based & calm parenting tips:');
       expect(excerpt.length).toBeLessThanOrEqual(MAX_RSS_EXCERPT_CHARS);
+
+      // Double-encoded entities must decode BEFORE tag stripping so zero <p> markup leaks
+      expect(sanitizeRssExcerpt('&amp;lt;p&amp;gt;Hello&amp;lt;/p&amp;gt;')).toBe(
+        'Hello'
+      );
+      expect(
+        sanitizeRssExcerpt(
+          '&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;p&amp;gt;Calm &amp;amp; clear&amp;lt;/p&amp;gt;'
+        )
+      ).toBe('Calm & clear');
     });
   });
 
@@ -1018,6 +1100,296 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
       expect(report.issue).toBeUndefined();
       expect(await repo.listPublishedIssues()).toHaveLength(0);
     });
+
+    it('aborts persistence with persisted=false and warning on total feed failure without wiping existing published issues', async () => {
+      const repo = new InMemoryDigestRepository(true);
+      const beforeEdition42 = await repo.findEditionByIssueNumber(
+        42,
+        DevelopmentalTier.TIER_3_PRE_TEEN_10_12
+      );
+      expect(beforeEdition42).not.toBeNull();
+      const beforeArticleIds = beforeEdition42!.articles.map((a) => a.id);
+      const beforeVideoIds = beforeEdition42!.videos.map((v) => v.id);
+      const beforePromptIds = beforeEdition42!.dinnerPrompts.map((p) => p.id);
+
+      const orchestrator = new DigestIngestionOrchestrator({
+        blogFeedFetcher: {
+          fetchCandidates: vi.fn().mockRejectedValue(new Error('All RSS feeds unreachable')),
+        },
+        youtubeFeedFetcher: {
+          fetchFreshVideos: vi.fn().mockRejectedValue(new Error('YouTube Atom outage')),
+        },
+        curator: new DeterministicDigestCuratorFake(),
+        repository: repo,
+        logger: { warn: () => {} },
+      });
+
+      const report = await orchestrator.syncWeeklyEdition({
+        issueNumber: 42,
+        weekStart: new Date('2026-11-08T00:00:00.000Z'),
+        weekEnd: new Date('2026-11-15T00:00:00.000Z'),
+      });
+
+      expect(report.persisted).toBe(false);
+      expect(report.issue).toBeUndefined();
+      expect(report.articles.selected).toBe(0);
+      expect(report.articles.persisted).toBe(0);
+      expect(report.videos.selected).toBe(0);
+      expect(report.videos.persisted).toBe(0);
+      expect(
+        report.warnings.some((w) => w.includes('Sync aborted: all upstream blog and video feeds'))
+      ).toBe(true);
+
+      // Existing Issue #42 must remain completely intact
+      const afterEdition42 = await repo.findEditionByIssueNumber(
+        42,
+        DevelopmentalTier.TIER_3_PRE_TEEN_10_12
+      );
+      expect(afterEdition42).not.toBeNull();
+      expect(afterEdition42!.articles.map((a) => a.id)).toEqual(beforeArticleIds);
+      expect(afterEdition42!.videos.map((v) => v.id)).toEqual(beforeVideoIds);
+      expect(afterEdition42!.dinnerPrompts.map((p) => p.id)).toEqual(beforePromptIds);
+    });
+  });
+
+  describe('PrismaDigestRepository.upsertWeeklyEdition (transactional safeguards)', () => {
+    it('passes { timeout: 30_000 }, preserves dinner-prompt UUIDs in place across re-sync, and guards empty arrays against wiping existing rows', async () => {
+      const capturedTxOptions: unknown[] = [];
+      let promptSeq = 0;
+      let phraseSeq = 0;
+
+      const storedPrompts = new Map<
+        string,
+        {
+          id: string;
+          digestId: string;
+          question: string;
+          parentTip: string;
+          followUp: string;
+          targetTiers: string[];
+          sortOrder: number;
+        }
+      >();
+      const storedPhrases = new Map<
+        string,
+        {
+          id: string;
+          digestId: string;
+          word: string;
+          shortMeaning: string;
+          fullMeaning: string;
+          cringeLevel: number;
+          cringeLabel: string;
+          calmScript: string;
+          targetTiers: string[];
+          sortOrder: number;
+        }
+      >();
+
+      const articleDeleteMany = vi.fn().mockResolvedValue({ count: 0 });
+      const articleUpsert = vi.fn().mockResolvedValue({});
+      const videoDeleteMany = vi.fn().mockResolvedValue({ count: 0 });
+      const videoUpsert = vi.fn().mockResolvedValue({});
+      const promptUpdate = vi.fn(async ({ where, data }: any) => {
+        const existing = storedPrompts.get(where.id)!;
+        const updated = { ...existing, ...data };
+        storedPrompts.set(where.id, updated);
+        return updated;
+      });
+      const promptCreate = vi.fn(async ({ data }: any) => {
+        promptSeq += 1;
+        const id = `dp-uuid-preserved-${promptSeq}`;
+        const row = { id, ...data };
+        storedPrompts.set(id, row);
+        return row;
+      });
+      const promptDeleteMany = vi.fn(async ({ where }: any) => {
+        for (const id of where.id.in as string[]) {
+          storedPrompts.delete(id);
+        }
+        return { count: where.id.in.length };
+      });
+
+      const txMock = {
+        cultureDigest: {
+          upsert: vi.fn(async ({ create }: any) => ({
+            id: 'digest-uuid-43',
+            ...create,
+          })),
+        },
+        digestArticle: {
+          deleteMany: articleDeleteMany,
+          upsert: articleUpsert,
+        },
+        digestVideo: {
+          deleteMany: videoDeleteMany,
+          upsert: videoUpsert,
+        },
+        digestDinnerPrompt: {
+          findMany: vi.fn(async () => Array.from(storedPrompts.values())),
+          update: promptUpdate,
+          create: promptCreate,
+          deleteMany: promptDeleteMany,
+        },
+        digestPhrase: {
+          findMany: vi.fn(async () => Array.from(storedPhrases.values())),
+          update: vi.fn(async ({ where, data }: any) => {
+            const existing = storedPhrases.get(where.id)!;
+            const updated = { ...existing, ...data };
+            storedPhrases.set(where.id, updated);
+            return updated;
+          }),
+          create: vi.fn(async ({ data }: any) => {
+            phraseSeq += 1;
+            const id = `ph-uuid-preserved-${phraseSeq}`;
+            const row = { id, ...data };
+            storedPhrases.set(id, row);
+            return row;
+          }),
+          deleteMany: vi.fn(async ({ where }: any) => {
+            for (const id of where.id.in as string[]) {
+              storedPhrases.delete(id);
+            }
+            return { count: where.id.in.length };
+          }),
+        },
+      };
+
+      const prismaMock = {
+        $transaction: vi.fn(async (fn: any, options?: unknown) => {
+          capturedTxOptions.push(options);
+          return fn(txMock);
+        }),
+      } as unknown as PrismaClient;
+
+      const prismaRepo = new PrismaDigestRepository(prismaMock);
+
+      const basePayload = {
+        issueNumber: 43,
+        publishDate: WEEK_43_END,
+        weekStart: WEEK_43_START,
+        weekEnd: WEEK_43_END,
+        title: 'Week of Nov 15–Nov 22',
+        summary: 'Summary',
+        conversationStarter: 'Starter',
+        articles: [
+          {
+            canonicalHash: 'hash-1',
+            sourceUrl: 'https://childmind.org/articles/a1',
+            sourceName: 'Child Mind Institute',
+            sourceDomain: 'childmind.org',
+            publishedAt: new Date('2026-11-18T10:00:00.000Z'),
+            topicLabel: 'Media & Tech',
+            readMinutes: 4,
+            title: 'Article 1',
+            summary: 'Calm summary.',
+            keyShift: 'Calm shift.',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            isLead: true,
+            sortOrder: 1,
+          },
+        ],
+        videos: [
+          {
+            youtubeVideoId: 'vidTxGuard1',
+            videoUrl: 'https://www.youtube.com/watch?v=vidTxGuard1',
+            title: 'Video 1',
+            presenter: 'Presenter',
+            channelName: 'Channel',
+            publishedAt: new Date('2026-11-18T10:00:00.000Z'),
+            durationMinutes: 10,
+            formatLabel: 'Quick Briefing',
+            takeaway: 'Calm takeaway.',
+            skimBullets: ['Bullet 1'],
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            isEmbeddable: true,
+            sortOrder: 1,
+          },
+        ],
+        dinnerPrompts: [
+          {
+            question: 'Original dinner question 1?',
+            parentTip: 'Original tip 1',
+            followUp: 'Original follow-up 1',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            sortOrder: 1,
+          },
+          {
+            question: 'Original dinner question 2?',
+            parentTip: 'Original tip 2',
+            followUp: 'Original follow-up 2',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            sortOrder: 2,
+          },
+        ],
+        phrases: [
+          {
+            word: 'Locked in',
+            shortMeaning: 'Focused',
+            fullMeaning: 'Deeply focused on a task.',
+            cringeLevel: 1,
+            cringeLabel: 'Positive',
+            calmScript: 'Calm script.',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            sortOrder: 1,
+          },
+        ],
+      };
+
+      // Run 1: initial creation
+      await prismaRepo.upsertWeeklyEdition(basePayload);
+      expect(capturedTxOptions[0]).toEqual({ timeout: 30_000 });
+      expect(promptCreate).toHaveBeenCalledTimes(2);
+      expect(promptUpdate).toHaveBeenCalledTimes(0);
+      const initialPromptIds = Array.from(storedPrompts.keys());
+      expect(initialPromptIds).toEqual([
+        'dp-uuid-preserved-1',
+        'dp-uuid-preserved-2',
+      ]);
+
+      articleDeleteMany.mockClear();
+      videoDeleteMany.mockClear();
+      promptCreate.mockClear();
+      promptUpdate.mockClear();
+      promptDeleteMany.mockClear();
+
+      // Run 2: re-sync updates dinner prompts IN PLACE (preserving UUIDs) and skips article/video wipe when empty
+      await prismaRepo.upsertWeeklyEdition({
+        ...basePayload,
+        articles: [],
+        videos: [],
+        dinnerPrompts: [
+          {
+            question: 'Updated dinner question 1?',
+            parentTip: 'Updated tip 1',
+            followUp: 'Updated follow-up 1',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            sortOrder: 1,
+          },
+          {
+            question: 'Updated dinner question 2?',
+            parentTip: 'Updated tip 2',
+            followUp: 'Updated follow-up 2',
+            targetTiers: [DevelopmentalTier.TIER_3_PRE_TEEN_10_12],
+            sortOrder: 2,
+          },
+        ],
+      });
+
+      expect(capturedTxOptions[1]).toEqual({ timeout: 30_000 });
+      expect(articleDeleteMany).not.toHaveBeenCalled();
+      expect(videoDeleteMany).not.toHaveBeenCalled();
+      expect(promptCreate).not.toHaveBeenCalled();
+      expect(promptDeleteMany).not.toHaveBeenCalled();
+      expect(promptUpdate).toHaveBeenCalledTimes(2);
+      expect(Array.from(storedPrompts.keys())).toEqual(initialPromptIds);
+      expect(storedPrompts.get('dp-uuid-preserved-1')?.question).toBe(
+        'Updated dinner question 1?'
+      );
+      expect(storedPrompts.get('dp-uuid-preserved-2')?.question).toBe(
+        'Updated dinner question 2?'
+      );
+    });
   });
 
   describe('POST /api/v1/digest/issues/sync (Fastify .inject() auth & integration)', () => {
@@ -1197,6 +1569,158 @@ describe('Culture & Trends Live Weekly Sourcing & Curation Pipeline (PLAN-50)', 
       });
       expect(badLookback.statusCode).toBe(400);
       expect(badLookback.json().error.code).toBe('VALIDATION_ERROR');
+    });
+
+    it('returns 409 CONFLICT (SYNC_IN_PROGRESS) when a concurrent sync is already running', async () => {
+      let notifyFetchStarted!: () => void;
+      const fetchStarted = new Promise<void>((resolve) => {
+        notifyFetchStarted = resolve;
+      });
+      let releaseFirstFetch!: () => void;
+      const holdFirstFetch = new Promise<void>((resolve) => {
+        releaseFirstFetch = resolve;
+      });
+
+      const baseBlogFetcher = new FakeBlogFeedFetcher();
+      let firstCall = true;
+      const lockedOrchestrator = new DigestIngestionOrchestrator({
+        blogFeedFetcher: {
+          async fetchCandidates(window) {
+            if (firstCall) {
+              firstCall = false;
+              notifyFetchStarted();
+              await holdFirstFetch;
+            }
+            return baseBlogFetcher.fetchCandidates(window);
+          },
+        },
+        youtubeFeedFetcher: new FakeYouTubeFeedFetcher(),
+        curator: new DeterministicDigestCuratorFake(),
+        repository: new InMemoryDigestRepository(true),
+        logger: { warn: () => {} },
+      });
+
+      const concurrentApp = await buildApp({
+        logger: false,
+        authRepository: authRepo,
+        childrenRepository: new InMemoryChildrenRepository(),
+        digestRepository: new InMemoryDigestRepository(true),
+        digestIngestionOrchestrator: lockedOrchestrator,
+        digestSyncSecret: SYNC_SECRET,
+        jwtSecret: 'test_jwt_secret_key_at_least_32_characters_long_for_security',
+        cookieSecret: 'test_cookie_secret_key_at_least_32_chars_long',
+      });
+
+      try {
+        const firstSyncPromise = concurrentApp.inject({
+          method: 'POST',
+          url: '/api/v1/digest/issues/sync',
+          headers: { 'x-digest-sync-secret': SYNC_SECRET },
+          payload: {
+            weekStart: '2026-11-15',
+            weekEnd: '2026-11-22',
+            dryRun: true,
+          },
+        });
+
+        await fetchStarted;
+
+        const secondSyncRes = await concurrentApp.inject({
+          method: 'POST',
+          url: '/api/v1/digest/issues/sync',
+          headers: { 'x-digest-sync-secret': SYNC_SECRET },
+          payload: {
+            weekStart: '2026-11-15',
+            weekEnd: '2026-11-22',
+            dryRun: true,
+          },
+        });
+
+        expect(secondSyncRes.statusCode).toBe(409);
+        expect(secondSyncRes.json().success).toBe(false);
+        expect(secondSyncRes.json().error.code).toBe('SYNC_IN_PROGRESS');
+
+        releaseFirstFetch();
+        const firstSyncRes = await firstSyncPromise;
+        expect(firstSyncRes.statusCode).toBe(200);
+        expect(firstSyncRes.json().success).toBe(true);
+      } finally {
+        releaseFirstFetch();
+        await concurrentApp.close();
+      }
+    });
+
+    it('rejects sync secret auth with 401 UNAUTHORIZED when DIGEST_SYNC_SECRET is unset or empty', async () => {
+      const previousEnvSecret = process.env.DIGEST_SYNC_SECRET;
+      delete process.env.DIGEST_SYNC_SECRET;
+
+      const unsetSecretApp = await buildApp({
+        logger: false,
+        authRepository: authRepo,
+        childrenRepository: new InMemoryChildrenRepository(),
+        digestRepository: new InMemoryDigestRepository(true),
+        digestIngestionOrchestrator: new DigestIngestionOrchestrator({
+          blogFeedFetcher: new FakeBlogFeedFetcher(),
+          youtubeFeedFetcher: new FakeYouTubeFeedFetcher(),
+          curator: new DeterministicDigestCuratorFake(),
+          repository: new InMemoryDigestRepository(true),
+          logger: { warn: () => {} },
+        }),
+        jwtSecret: 'test_jwt_secret_key_at_least_32_characters_long_for_security',
+        cookieSecret: 'test_cookie_secret_key_at_least_32_chars_long',
+      });
+
+      const emptySecretApp = await buildApp({
+        logger: false,
+        authRepository: authRepo,
+        childrenRepository: new InMemoryChildrenRepository(),
+        digestRepository: new InMemoryDigestRepository(true),
+        digestIngestionOrchestrator: new DigestIngestionOrchestrator({
+          blogFeedFetcher: new FakeBlogFeedFetcher(),
+          youtubeFeedFetcher: new FakeYouTubeFeedFetcher(),
+          curator: new DeterministicDigestCuratorFake(),
+          repository: new InMemoryDigestRepository(true),
+          logger: { warn: () => {} },
+        }),
+        digestSyncSecret: '',
+        jwtSecret: 'test_jwt_secret_key_at_least_32_characters_long_for_security',
+        cookieSecret: 'test_cookie_secret_key_at_least_32_chars_long',
+      });
+
+      try {
+        const unsetRes = await unsetSecretApp.inject({
+          method: 'POST',
+          url: '/api/v1/digest/issues/sync',
+          headers: { 'x-digest-sync-secret': 'some-secret-attempt' },
+          payload: { dryRun: true },
+        });
+        expect(unsetRes.statusCode).toBe(401);
+        expect(unsetRes.json().error.code).toBe('UNAUTHORIZED');
+
+        const emptyHeaderRes = await unsetSecretApp.inject({
+          method: 'POST',
+          url: '/api/v1/digest/issues/sync',
+          headers: { 'x-digest-sync-secret': '' },
+          payload: { dryRun: true },
+        });
+        expect(emptyHeaderRes.statusCode).toBe(401);
+        expect(emptyHeaderRes.json().error.code).toBe('UNAUTHORIZED');
+
+        const emptyConfigRes = await emptySecretApp.inject({
+          method: 'POST',
+          url: '/api/v1/digest/issues/sync',
+          headers: { 'x-digest-sync-secret': 'another-secret-attempt' },
+          payload: { dryRun: true },
+        });
+        expect(emptyConfigRes.statusCode).toBe(401);
+        expect(emptyConfigRes.json().error.code).toBe('UNAUTHORIZED');
+      } finally {
+        if (previousEnvSecret !== undefined) {
+          process.env.DIGEST_SYNC_SECRET = previousEnvSecret;
+        }
+        await unsetSecretApp.close();
+        await emptySecretApp.close();
+      }
     });
   });
 });

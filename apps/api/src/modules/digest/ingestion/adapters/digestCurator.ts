@@ -702,10 +702,13 @@ export function hasConfiguredLlmApiKey(): boolean {
   });
 }
 
+export const DEFAULT_LLM_CURATION_TIMEOUT_MS = 25_000;
+
 export interface LlmDigestCuratorAdapterOptions {
   llmOrchestrator?: MultiProviderLlmOrchestrator;
   fallbackCurator?: DigestContentCurator;
   batchSize?: number;
+  timeoutMs?: number;
   logger?: LoggerLike;
 }
 
@@ -730,6 +733,7 @@ export class LlmDigestCuratorAdapter implements DigestContentCurator {
   private readonly llmOrchestrator?: MultiProviderLlmOrchestrator;
   private readonly fallbackCurator: DigestContentCurator;
   private readonly batchSize: number;
+  private readonly timeoutMs: number;
   private readonly logger: LoggerLike;
 
   constructor(opts: LlmDigestCuratorAdapterOptions = {}) {
@@ -737,6 +741,7 @@ export class LlmDigestCuratorAdapter implements DigestContentCurator {
     this.fallbackCurator =
       opts.fallbackCurator ?? new DeterministicDigestCuratorFake();
     this.batchSize = opts.batchSize ?? 12;
+    this.timeoutMs = opts.timeoutMs ?? DEFAULT_LLM_CURATION_TIMEOUT_MS;
     this.logger = opts.logger ?? console;
   }
 
@@ -977,18 +982,50 @@ Return JSON: {"dinnerPrompts":[{"question":"...","parentTip":"...","followUp":".
       throw new Error('No LLM orchestrator configured.');
     }
 
-    let output = '';
-    for await (const chunk of this.llmOrchestrator.stream({
-      messages: [
-        { role: 'system', content: PARENT_CALM_SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.2,
-      maxTokens: 2048,
-    })) {
-      output += chunk;
-    }
+    const iterator = this.llmOrchestrator
+      .stream({
+        messages: [
+          { role: 'system', content: PARENT_CALM_SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.2,
+        maxTokens: 2048,
+      })
+      [Symbol.asyncIterator]();
 
-    return extractJsonObject(output);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeoutPromise = new Promise<never>((_resolve, reject) => {
+      timer = setTimeout(() => {
+        reject(
+          new Error(
+            `LLM curation request timed out after ${this.timeoutMs}ms.`
+          )
+        );
+      }, this.timeoutMs);
+      timer.unref?.();
+    });
+
+    const readAll = (async (): Promise<string> => {
+      let output = '';
+      while (true) {
+        const { done, value } = await iterator.next();
+        if (done) break;
+        output += value;
+      }
+      return output;
+    })();
+
+    try {
+      const output = await Promise.race([readAll, timeoutPromise]);
+      return extractJsonObject(output);
+    } catch (err) {
+      void iterator.return?.().catch(() => {});
+      void readAll.catch(() => {});
+      throw err;
+    } finally {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    }
   }
 }

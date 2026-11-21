@@ -81,19 +81,6 @@ export type ExploitAlertsQuery = z.infer<typeof ExploitAlertsQuerySchema>;
 // WEEKLY CULTURE & TRENDS HUB SCHEMAS (PLAN-49)
 // ----------------------------------------------------
 
-export const DigestIssuesQuerySchema = z.object({
-  tier: DigestDevelopmentalTierSchema.optional(),
-});
-
-export type DigestIssuesQuery = z.infer<typeof DigestIssuesQuerySchema>;
-
-export const DigestEditionQuerySchema = z.object({
-  tier: DigestDevelopmentalTierSchema.optional(),
-  childId: z.string().trim().min(1).optional(),
-});
-
-export type DigestEditionQuery = z.infer<typeof DigestEditionQuerySchema>;
-
 export const DigestArticlesQuerySchema = z.object({
   issueNumber: z.coerce.number().int().positive().optional(),
   scope: z.enum(['issue', 'all']).default('issue'),
@@ -115,13 +102,6 @@ export const DigestVideosQuerySchema = z.object({
 });
 
 export type DigestVideosQuery = z.infer<typeof DigestVideosQuerySchema>;
-
-export const DigestSavedQuerySchema = z.object({
-  tier: DigestDevelopmentalTierSchema.optional(),
-  childId: z.string().trim().min(1).optional(),
-});
-
-export type DigestSavedQuery = z.infer<typeof DigestSavedQuerySchema>;
 
 export const DigestInteractionMutationSchema = z
   .object({

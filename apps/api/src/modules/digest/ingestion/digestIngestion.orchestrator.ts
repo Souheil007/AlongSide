@@ -44,6 +44,18 @@ export const DEFAULT_DEDUP_LOOKBACK_ISSUES = 4;
 export const DEFAULT_FALLBACK_LOOKBACK_DAYS = 14;
 export const MAX_FALLBACK_LOOKBACK_DAYS = 30;
 
+export class DigestSyncConflictError extends Error {
+  readonly statusCode = 409;
+  readonly code = 'SYNC_IN_PROGRESS';
+
+  constructor(
+    message = 'A weekly digest sync is already in progress. Please retry once it completes.'
+  ) {
+    super(message);
+    this.name = 'DigestSyncConflictError';
+  }
+}
+
 export interface DigestSyncRequestInput {
   weekStart?: Date | string;
   weekEnd?: Date | string;
@@ -155,6 +167,7 @@ export class DigestIngestionOrchestrator {
   private readonly maxVideosPerTier: number;
   private readonly dedupLookbackIssues: number;
   private readonly now: () => Date;
+  private activeSync = false;
 
   constructor(deps: DigestIngestionOrchestratorDeps) {
     this.blogFeedFetcher = deps.blogFeedFetcher;
@@ -175,6 +188,20 @@ export class DigestIngestionOrchestrator {
 
   async syncWeeklyEdition(
     input: DigestSyncRequestInput = {}
+  ): Promise<DigestSyncReportDTO> {
+    if (this.activeSync) {
+      throw new DigestSyncConflictError();
+    }
+    this.activeSync = true;
+    try {
+      return await this.executeSyncWeeklyEdition(input);
+    } finally {
+      this.activeSync = false;
+    }
+  }
+
+  private async executeSyncWeeklyEdition(
+    input: DigestSyncRequestInput
   ): Promise<DigestSyncReportDTO> {
     const dryRun = Boolean(input.dryRun);
     const fallbackLookbackDays =
@@ -239,20 +266,42 @@ export class DigestIngestionOrchestrator {
     let videosRejected = 0;
     let videosDeduplicated = 0;
 
-    // 4. Primary strict-window concurrent fetch (blogs + fresh videos)
+    // 4. Single concurrent fetch across [fetchStart, weekEnd], then partition in memory
+    //    into strict [weekStart, weekEnd] vs fallback [expandedStart, weekStart) pools
+    const expandedStart = new Date(
+      weekEnd.getTime() - fallbackLookbackDays * MS_PER_DAY
+    );
+    const hasFallbackWindow =
+      fallbackLookbackDays > 0 && expandedStart.getTime() < weekStart.getTime();
+    const fetchWindow = {
+      weekStart: hasFallbackWindow ? expandedStart : weekStart,
+      weekEnd,
+    };
+
     const [blogFetchSettled, videoFetchSettled] = await Promise.allSettled([
-      this.blogFeedFetcher.fetchCandidates({ weekStart, weekEnd }),
-      this.youtubeFeedFetcher.fetchFreshVideos(
-        { weekStart, weekEnd },
-        { minPerTier: this.minVideosPerTier }
-      ),
+      this.blogFeedFetcher.fetchCandidates(fetchWindow),
+      this.youtubeFeedFetcher.fetchFreshVideos(fetchWindow, {
+        minPerTier: this.minVideosPerTier,
+      }),
     ]);
 
-    let primaryBlogCandidates: RawBlogCandidate[] = [];
+    const primaryBlogCandidates: RawBlogCandidate[] = [];
+    const fallbackBlogCandidates: RawBlogCandidate[] = [];
     if (blogFetchSettled.status === 'fulfilled') {
       warnings.push(...blogFetchSettled.value.warnings);
       articlesRejected += blogFetchSettled.value.rejectedCount;
-      primaryBlogCandidates = blogFetchSettled.value.candidates;
+      for (const candidate of blogFetchSettled.value.candidates) {
+        const ts = candidate.publishedAt.getTime();
+        if (ts >= weekStart.getTime() && ts <= weekEnd.getTime()) {
+          primaryBlogCandidates.push(candidate);
+        } else if (
+          hasFallbackWindow &&
+          ts >= expandedStart.getTime() &&
+          ts < weekStart.getTime()
+        ) {
+          fallbackBlogCandidates.push(candidate);
+        }
+      }
       articlesFetched += primaryBlogCandidates.length;
     } else {
       const reason =
@@ -262,11 +311,23 @@ export class DigestIngestionOrchestrator {
       warnings.push(`Primary blog fetch failed: ${reason}`);
     }
 
-    let primaryVideoCandidates: RawVideoCandidate[] = [];
+    const primaryVideoCandidates: RawVideoCandidate[] = [];
+    const fallbackVideoCandidates: RawVideoCandidate[] = [];
     if (videoFetchSettled.status === 'fulfilled') {
       warnings.push(...videoFetchSettled.value.warnings);
       videosRejected += videoFetchSettled.value.rejectedCount;
-      primaryVideoCandidates = videoFetchSettled.value.candidates;
+      for (const candidate of videoFetchSettled.value.candidates) {
+        const ts = candidate.publishedAt.getTime();
+        if (ts >= weekStart.getTime() && ts <= weekEnd.getTime()) {
+          primaryVideoCandidates.push(candidate);
+        } else if (
+          hasFallbackWindow &&
+          ts >= expandedStart.getTime() &&
+          ts < weekStart.getTime()
+        ) {
+          fallbackVideoCandidates.push(candidate);
+        }
+      }
       videosFetched += primaryVideoCandidates.length;
     } else {
       const reason =
@@ -333,7 +394,8 @@ export class DigestIngestionOrchestrator {
       }
     }
 
-    // 7. Selective sparse-tier lookback fallback (ONLY for under-filled tiers)
+    // 7. Selective sparse-tier lookback fallback (ONLY for under-filled tiers,
+    //    reusing the already-fetched fallback pool without a second HTTP fetch)
     const sparseArticleTiers = this.findSparseTiers(
       approvedBlogs,
       this.minArticlesPerTier
@@ -346,40 +408,12 @@ export class DigestIngestionOrchestrator {
     const articleFallbackUsedTiers = new Set<CanonicalDigestTier>();
     const videoFallbackUsedTiers = new Set<CanonicalDigestTier>();
 
-    const expandedStart = new Date(
-      weekEnd.getTime() - fallbackLookbackDays * MS_PER_DAY
-    );
-
     if (
-      fallbackLookbackDays > 0 &&
-      expandedStart.getTime() < weekStart.getTime() &&
+      hasFallbackWindow &&
       (sparseArticleTiers.length > 0 || sparseVideoTiers.length > 0)
     ) {
-      const [fallbackBlogSettled, fallbackVideoSettled] =
-        await Promise.allSettled([
-          sparseArticleTiers.length > 0
-            ? this.blogFeedFetcher.fetchCandidates({
-                weekStart: expandedStart,
-                weekEnd,
-              })
-            : Promise.resolve(null),
-          sparseVideoTiers.length > 0
-            ? this.youtubeFeedFetcher.fetchFreshVideos(
-                { weekStart: expandedStart, weekEnd },
-                {
-                  minPerTier: this.minVideosPerTier,
-                  sparseTiers: sparseVideoTiers,
-                }
-              )
-            : Promise.resolve(null),
-        ]);
-
-      if (
-        fallbackBlogSettled.status === 'fulfilled' &&
-        fallbackBlogSettled.value !== null
-      ) {
-        const res = fallbackBlogSettled.value;
-        const freshFallbackCandidates = res.candidates.filter(
+      if (sparseArticleTiers.length > 0 && fallbackBlogCandidates.length > 0) {
+        const freshFallbackCandidates = fallbackBlogCandidates.filter(
           (c) => !seenHashes.has(c.canonicalHash)
         );
         articlesFetched += freshFallbackCandidates.length;
@@ -426,22 +460,10 @@ export class DigestIngestionOrchestrator {
             isFallback: true,
           });
         }
-      } else if (fallbackBlogSettled.status === 'rejected') {
-        warnings.push(
-          `Fallback blog lookback failed: ${
-            fallbackBlogSettled.reason instanceof Error
-              ? fallbackBlogSettled.reason.message
-              : String(fallbackBlogSettled.reason)
-          }`
-        );
       }
 
-      if (
-        fallbackVideoSettled.status === 'fulfilled' &&
-        fallbackVideoSettled.value !== null
-      ) {
-        const res = fallbackVideoSettled.value;
-        const freshFallbackVideos = res.candidates.filter(
+      if (sparseVideoTiers.length > 0 && fallbackVideoCandidates.length > 0) {
+        const freshFallbackVideos = fallbackVideoCandidates.filter(
           (c) => !seenVideoIds.has(c.youtubeVideoId)
         );
         videosFetched += freshFallbackVideos.length;
@@ -487,14 +509,6 @@ export class DigestIngestionOrchestrator {
             isFallback: true,
           });
         }
-      } else if (fallbackVideoSettled.status === 'rejected') {
-        warnings.push(
-          `Fallback video lookback failed: ${
-            fallbackVideoSettled.reason instanceof Error
-              ? fallbackVideoSettled.reason.message
-              : String(fallbackVideoSettled.reason)
-          }`
-        );
       }
     }
 
@@ -712,8 +726,18 @@ export class DigestIngestionOrchestrator {
       allDinnerPrompts[0]?.question ??
       'What was one moment this week that felt surprisingly good—and one moment that felt a little tricky?';
 
+    const totalFeedFailure =
+      editionArticles.length === 0 && editionVideos.length === 0;
+    if (totalFeedFailure) {
+      warnings.push(
+        'Sync aborted: all upstream blog and video feeds returned zero valid items; existing published editions preserved.'
+      );
+    }
+
+    const shouldPersist = !dryRun && !totalFeedFailure;
+
     let persistedIssue: DigestIssueSummaryDTO | undefined;
-    if (!dryRun) {
+    if (shouldPersist) {
       persistedIssue = await this.repository.upsertWeeklyEdition({
         issueNumber,
         publishDate,
@@ -746,7 +770,7 @@ export class DigestIngestionOrchestrator {
     return {
       issueNumber,
       dryRun,
-      persisted: !dryRun,
+      persisted: shouldPersist,
       publishDate: publishDate.toISOString(),
       weekStart: weekStart.toISOString(),
       weekEnd: weekEnd.toISOString(),
@@ -757,17 +781,17 @@ export class DigestIngestionOrchestrator {
         rejected: articlesRejected,
         deduplicated: articlesDeduplicated,
         selected: editionArticles.length,
-        persisted: dryRun ? 0 : editionArticles.length,
+        persisted: shouldPersist ? editionArticles.length : 0,
       },
       videos: {
         fetched: videosFetched,
         rejected: videosRejected,
         deduplicated: videosDeduplicated,
         selected: editionVideos.length,
-        persisted: dryRun ? 0 : editionVideos.length,
+        persisted: shouldPersist ? editionVideos.length : 0,
       },
-      dinnerPromptsPersisted: dryRun ? 0 : allDinnerPrompts.length,
-      phrasesPersisted: dryRun ? 0 : allPhrases.length,
+      dinnerPromptsPersisted: shouldPersist ? allDinnerPrompts.length : 0,
+      phrasesPersisted: shouldPersist ? allPhrases.length : 0,
       perTier,
       warnings,
       ...(persistedIssue ? { issue: persistedIssue } : {}),

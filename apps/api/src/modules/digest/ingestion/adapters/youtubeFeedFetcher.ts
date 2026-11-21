@@ -12,11 +12,14 @@ import {
   TIER_FALLBACK_SEARCH_QUERIES,
   type CuratedYouTubeChannel,
 } from '../curatedSources.js';
+import type { DigestFetchWindow } from './blogFeedFetcher.js';
 import {
-  assertSafeExternalUrl,
+  asArray,
   DEFAULT_FEED_TIMEOUT_MS,
-  type DigestFetchWindow,
-} from './blogFeedFetcher.js';
+  DEFAULT_MAX_RESPONSE_BYTES,
+  fetchSafeText,
+  SafeFetchHttpError,
+} from './safeFetch.js';
 
 export const MIN_VIDEO_DURATION_SECONDS = 90;
 const YOUTUBE_VIDEO_ID_REGEX = /^[a-zA-Z0-9_-]{11}$/;
@@ -89,11 +92,6 @@ export function parseIso8601DurationSeconds(isoDuration: string): number | null 
 
   const total = days * 86_400 + hours * 3_600 + minutes * 60 + seconds;
   return total > 0 ? total : null;
-}
-
-function asArray<T>(value: T | T[] | undefined | null): T[] {
-  if (value === undefined || value === null) return [];
-  return Array.isArray(value) ? value : [value];
 }
 
 function extractString(node: unknown): string {
@@ -278,24 +276,19 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
 
     const settled = await Promise.allSettled(
       enabledChannels.map(async (channel) => {
-        const feedUrl = assertSafeExternalUrl(
-          buildYouTubeChannelFeedUrl(channel.channelId)
-        ).toString();
+        const xmlText = await fetchSafeText(
+          buildYouTubeChannelFeedUrl(channel.channelId),
+          {
+            timeoutMs: this.timeoutMs,
+            maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+            fetchImpl: this.fetchImpl,
+            headers: {
+              Accept: 'application/atom+xml, application/xml, text/xml;q=0.9',
+              'User-Agent': this.userAgent,
+            },
+          }
+        );
 
-        const response = await this.fetchImpl(feedUrl, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/atom+xml, application/xml, text/xml;q=0.9',
-            'User-Agent': this.userAgent,
-          },
-          signal: AbortSignal.timeout(this.timeoutMs),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} ${response.statusText}`);
-        }
-
-        const xmlText = await response.text();
         return parseYouTubeAtomFeedXml(xmlText, channel, window);
       })
     );
@@ -453,21 +446,17 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
       q: query,
       key: this.apiKey,
     });
-    const url = assertSafeExternalUrl(
-      `https://www.googleapis.com/youtube/v3/search?${params.toString()}`
-    ).toString();
+    const bodyText = await fetchSafeText(
+      `https://www.googleapis.com/youtube/v3/search?${params.toString()}`,
+      {
+        timeoutMs: this.timeoutMs,
+        maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+        fetchImpl: this.fetchImpl,
+        headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
+      }
+    );
 
-    const response = await this.fetchImpl(url, {
-      method: 'GET',
-      headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
-      signal: AbortSignal.timeout(this.timeoutMs),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} ${response.statusText}`);
-    }
-
-    const payload = (await response.json()) as {
+    const payload = JSON.parse(bodyText) as {
       items?: Array<{
         id?: { videoId?: string };
         snippet?: {
@@ -532,22 +521,18 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
         id: chunk.join(','),
         key: this.apiKey,
       });
-      const url = assertSafeExternalUrl(
-        `https://www.googleapis.com/youtube/v3/videos?${params.toString()}`
-      ).toString();
-
       try {
-        const response = await this.fetchImpl(url, {
-          method: 'GET',
-          headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
-          signal: AbortSignal.timeout(this.timeoutMs),
-        });
+        const bodyText = await fetchSafeText(
+          `https://www.googleapis.com/youtube/v3/videos?${params.toString()}`,
+          {
+            timeoutMs: this.timeoutMs,
+            maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+            fetchImpl: this.fetchImpl,
+            headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
+          }
+        );
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} ${response.statusText}`);
-        }
-
-        const payload = (await response.json()) as {
+        const payload = JSON.parse(bodyText) as {
           items?: Array<{
             id?: string;
             contentDetails?: { duration?: string };
@@ -648,21 +633,28 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
       const batch = discovered.slice(i, i + OEMBED_CONCURRENCY);
       const settled = await Promise.allSettled(
         batch.map(async (item) => {
-          const oembedUrl = assertSafeExternalUrl(
-            `https://www.youtube.com/oembed?url=${encodeURIComponent(item.videoUrl)}&format=json`
-          ).toString();
-
-          const response = await this.fetchImpl(oembedUrl, {
-            method: 'GET',
-            headers: { Accept: 'application/json', 'User-Agent': this.userAgent },
-            signal: AbortSignal.timeout(this.timeoutMs),
-          });
-
-          if (!response.ok) {
-            return { ok: false as const, item };
+          let bodyText: string;
+          try {
+            bodyText = await fetchSafeText(
+              `https://www.youtube.com/oembed?url=${encodeURIComponent(item.videoUrl)}&format=json`,
+              {
+                timeoutMs: this.timeoutMs,
+                maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+                fetchImpl: this.fetchImpl,
+                headers: {
+                  Accept: 'application/json',
+                  'User-Agent': this.userAgent,
+                },
+              }
+            );
+          } catch (err) {
+            if (err instanceof SafeFetchHttpError) {
+              return { ok: false as const, item };
+            }
+            throw err;
           }
 
-          const data = (await response.json()) as {
+          const data = JSON.parse(bodyText) as {
             title?: string;
             author_name?: string;
             html?: string;

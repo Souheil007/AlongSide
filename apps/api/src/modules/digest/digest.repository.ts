@@ -16,6 +16,7 @@ import {
   DigestIssueStatus,
   DigestItemType,
   matchesVideoDurationBucket,
+  resolveDigestTierBucket,
   type CultureDigestDTO,
   type DevelopmentalTier,
   type DigestArticleDTO,
@@ -178,6 +179,23 @@ export interface DigestRepository {
   upsertWeeklyEdition(
     payload: UpsertWeeklyEditionInput
   ): Promise<DigestIssueSummaryDTO>;
+}
+
+const ARCHIVE_QUERY_LIMIT = 60;
+const UPSERT_EDITION_TRANSACTION_TIMEOUT_MS = 30_000;
+
+function buildTierSortKey(
+  targetTiers: readonly string[],
+  sortOrder: number
+): string {
+  const canonicalTiers = Array.from(
+    new Set(
+      targetTiers.map((tier) =>
+        resolveDigestTierBucket(tier as DevelopmentalTier)
+      )
+    )
+  ).sort();
+  return `${canonicalTiers.join(',')}:${sortOrder}`;
 }
 
 function normalizeJumpChips(raw: unknown): VideoJumpChip[] | undefined {
@@ -450,24 +468,33 @@ export class PrismaDigestRepository implements DigestRepository {
   async listPublishedIssues(
     tier?: DevelopmentalTier
   ): Promise<DigestIssueSummaryDTO[]> {
+    const articleWhere: Prisma.DigestArticleWhereInput = {
+      ingestionStatus: DigestContentStatus.APPROVED,
+      ...(tier ? { targetTiers: { has: tier } } : {}),
+    };
+    const videoWhere: Prisma.DigestVideoWhereInput = {
+      ingestionStatus: DigestContentStatus.APPROVED,
+      isEmbeddable: true,
+      ...(tier ? { targetTiers: { has: tier } } : {}),
+    };
+
     const digests = await this.prisma.cultureDigest.findMany({
       where: { status: DigestIssueStatus.PUBLISHED },
       orderBy: { issueNumber: 'desc' },
-      include: {
-        articles: {
-          where: {
-            ingestionStatus: DigestContentStatus.APPROVED,
-            ...(tier ? { targetTiers: { has: tier } } : {}),
+      select: {
+        id: true,
+        issueNumber: true,
+        publishDate: true,
+        weekStart: true,
+        weekEnd: true,
+        title: true,
+        summary: true,
+        status: true,
+        _count: {
+          select: {
+            articles: { where: articleWhere },
+            videos: { where: videoWhere },
           },
-          select: { id: true },
-        },
-        videos: {
-          where: {
-            ingestionStatus: DigestContentStatus.APPROVED,
-            isEmbeddable: true,
-            ...(tier ? { targetTiers: { has: tier } } : {}),
-          },
-          select: { id: true },
         },
       },
     });
@@ -481,8 +508,8 @@ export class PrismaDigestRepository implements DigestRepository {
       title: digest.title,
       summary: digest.summary,
       status: digest.status as DigestIssueStatus,
-      articleCount: digest.articles.length,
-      videoCount: digest.videos.length,
+      articleCount: digest._count.articles,
+      videoCount: digest._count.videos,
     }));
   }
 
@@ -624,30 +651,52 @@ export class PrismaDigestRepository implements DigestRepository {
       targetIssueNumber = latest.issueNumber;
     }
 
-    const rows = await this.prisma.digestArticle.findMany({
-      where: {
-        ingestionStatus: DigestContentStatus.APPROVED,
-        targetTiers: { has: params.tier },
-        digest:
-          params.scope === 'issue'
-            ? {
-                issueNumber: targetIssueNumber,
-                status: {
-                  in: [DigestIssueStatus.PUBLISHED, DigestIssueStatus.ARCHIVED],
-                },
-              }
-            : { status: DigestIssueStatus.PUBLISHED },
-      },
-      include: {
-        digest: { select: { issueNumber: true } },
-      },
-      orderBy: [
-        { digest: { issueNumber: 'desc' } },
-        { isLead: 'desc' },
-        { sortOrder: 'asc' },
-        { publishedAt: 'desc' },
-      ],
-    });
+    const baseWhere: Prisma.DigestArticleWhereInput = {
+      ingestionStatus: DigestContentStatus.APPROVED,
+      targetTiers: { has: params.tier },
+      digest:
+        params.scope === 'issue'
+          ? {
+              issueNumber: targetIssueNumber,
+              status: {
+                in: [DigestIssueStatus.PUBLISHED, DigestIssueStatus.ARCHIVED],
+              },
+            }
+          : { status: DigestIssueStatus.PUBLISHED },
+    };
+
+    const needle = params.q?.trim();
+    const searchWhere: Prisma.DigestArticleWhereInput = needle
+      ? {
+          OR: [
+            { title: { contains: needle, mode: 'insensitive' } },
+            { summary: { contains: needle, mode: 'insensitive' } },
+            { keyShift: { contains: needle, mode: 'insensitive' } },
+            { topicLabel: { contains: needle, mode: 'insensitive' } },
+            { sourceName: { contains: needle, mode: 'insensitive' } },
+          ],
+        }
+      : {};
+
+    const [rows, totalInScope] = await Promise.all([
+      this.prisma.digestArticle.findMany({
+        where: {
+          ...baseWhere,
+          ...searchWhere,
+        },
+        include: {
+          digest: { select: { issueNumber: true } },
+        },
+        orderBy: [
+          { digest: { issueNumber: 'desc' } },
+          { isLead: 'desc' },
+          { sortOrder: 'asc' },
+          { publishedAt: 'desc' },
+        ],
+        ...(params.scope === 'all' ? { take: ARCHIVE_QUERY_LIMIT } : {}),
+      }),
+      this.prisma.digestArticle.count({ where: baseWhere }),
+    ]);
 
     const interactions = params.userId
       ? await this.loadInteractionMap(
@@ -656,7 +705,7 @@ export class PrismaDigestRepository implements DigestRepository {
         )
       : new Map<string, { isRead: boolean; isSaved: boolean }>();
 
-    const allScoped = rows.map((article) =>
+    const matched = rows.map((article) =>
       toArticleDto(
         article,
         article.digest.issueNumber,
@@ -664,14 +713,12 @@ export class PrismaDigestRepository implements DigestRepository {
       )
     );
 
-    const totalInScope = allScoped.length;
-    const unreadCount = allScoped.filter((a) => !a.isRead).length;
-    const filtered = allScoped.filter((article) => {
-      if (params.unreadOnly && article.isRead) {
-        return false;
-      }
-      return matchesArticleSearch(article, params.q);
-    });
+    const unreadCount = params.userId
+      ? matched.filter((a) => !a.isRead).length
+      : totalInScope;
+    const filtered = params.unreadOnly
+      ? matched.filter((article) => !article.isRead)
+      : matched;
 
     return {
       articles: filtered,
@@ -700,30 +747,62 @@ export class PrismaDigestRepository implements DigestRepository {
       targetIssueNumber = latest.issueNumber;
     }
 
-    const rows = await this.prisma.digestVideo.findMany({
-      where: {
-        ingestionStatus: DigestContentStatus.APPROVED,
-        isEmbeddable: true,
-        targetTiers: { has: params.tier },
-        digest:
-          params.scope === 'issue'
-            ? {
-                issueNumber: targetIssueNumber,
-                status: {
-                  in: [DigestIssueStatus.PUBLISHED, DigestIssueStatus.ARCHIVED],
-                },
-              }
-            : { status: DigestIssueStatus.PUBLISHED },
-      },
-      include: {
-        digest: { select: { issueNumber: true } },
-      },
-      orderBy: [
-        { digest: { issueNumber: 'desc' } },
-        { sortOrder: 'asc' },
-        { publishedAt: 'desc' },
-      ],
-    });
+    const baseWhere: Prisma.DigestVideoWhereInput = {
+      ingestionStatus: DigestContentStatus.APPROVED,
+      isEmbeddable: true,
+      targetTiers: { has: params.tier },
+      digest:
+        params.scope === 'issue'
+          ? {
+              issueNumber: targetIssueNumber,
+              status: {
+                in: [DigestIssueStatus.PUBLISHED, DigestIssueStatus.ARCHIVED],
+              },
+            }
+          : { status: DigestIssueStatus.PUBLISHED },
+    };
+
+    const durationWhere: Prisma.DigestVideoWhereInput =
+      params.durationBucket === 'short'
+        ? { durationMinutes: { lt: 12 } }
+        : params.durationBucket === 'medium'
+          ? { durationMinutes: { gte: 12, lte: 25 } }
+          : params.durationBucket === 'deep'
+            ? { durationMinutes: { gt: 25 } }
+            : {};
+
+    const needle = params.q?.trim();
+    const searchWhere: Prisma.DigestVideoWhereInput = needle
+      ? {
+          OR: [
+            { title: { contains: needle, mode: 'insensitive' } },
+            { presenter: { contains: needle, mode: 'insensitive' } },
+            { channelName: { contains: needle, mode: 'insensitive' } },
+            { formatLabel: { contains: needle, mode: 'insensitive' } },
+            { takeaway: { contains: needle, mode: 'insensitive' } },
+          ],
+        }
+      : {};
+
+    const [rows, totalInScope] = await Promise.all([
+      this.prisma.digestVideo.findMany({
+        where: {
+          ...baseWhere,
+          ...durationWhere,
+          ...searchWhere,
+        },
+        include: {
+          digest: { select: { issueNumber: true } },
+        },
+        orderBy: [
+          { digest: { issueNumber: 'desc' } },
+          { sortOrder: 'asc' },
+          { publishedAt: 'desc' },
+        ],
+        ...(params.scope === 'all' ? { take: ARCHIVE_QUERY_LIMIT } : {}),
+      }),
+      this.prisma.digestVideo.count({ where: baseWhere }),
+    ]);
 
     const interactions = params.userId
       ? await this.loadInteractionMap(
@@ -732,7 +811,7 @@ export class PrismaDigestRepository implements DigestRepository {
         )
       : new Map<string, { isRead: boolean; isSaved: boolean }>();
 
-    const allScoped = rows.map((video) =>
+    const videos = rows.map((video) =>
       toVideoDto(
         video,
         video.digest.issueNumber,
@@ -740,21 +819,8 @@ export class PrismaDigestRepository implements DigestRepository {
       )
     );
 
-    const totalInScope = allScoped.length;
-    const filtered = allScoped.filter((video) => {
-      if (
-        !matchesVideoDurationBucket(
-          video.durationMinutes,
-          params.durationBucket ?? 'all'
-        )
-      ) {
-        return false;
-      }
-      return matchesVideoSearch(video, params.q);
-    });
-
     return {
-      videos: filtered,
+      videos,
       totalInScope,
       ...(params.scope === 'issue' && targetIssueNumber !== undefined
         ? { issueNumber: targetIssueNumber }
@@ -1028,222 +1094,300 @@ export class PrismaDigestRepository implements DigestRepository {
     const status = payload.status ?? DigestIssueStatus.PUBLISHED;
     const curatedAt = payload.curatedAt ?? new Date();
 
-    return this.prisma.$transaction(async (tx) => {
-      const digest = await tx.cultureDigest.upsert({
-        where: { issueNumber: payload.issueNumber },
-        update: {
-          publishDate: payload.publishDate,
-          weekStart: payload.weekStart,
-          weekEnd: payload.weekEnd,
-          title: payload.title,
-          summary: payload.summary,
-          conversationStarter: payload.conversationStarter,
-          status,
-          curatedAt,
-        },
-        create: {
-          issueNumber: payload.issueNumber,
-          publishDate: payload.publishDate,
-          weekStart: payload.weekStart,
-          weekEnd: payload.weekEnd,
-          title: payload.title,
-          summary: payload.summary,
-          conversationStarter: payload.conversationStarter,
-          status,
-          curatedAt,
-        },
-      });
+    return this.prisma.$transaction(
+      async (tx) => {
+        const digest = await tx.cultureDigest.upsert({
+          where: { issueNumber: payload.issueNumber },
+          update: {
+            publishDate: payload.publishDate,
+            weekStart: payload.weekStart,
+            weekEnd: payload.weekEnd,
+            title: payload.title,
+            summary: payload.summary,
+            conversationStarter: payload.conversationStarter,
+            status,
+            curatedAt,
+          },
+          create: {
+            issueNumber: payload.issueNumber,
+            publishDate: payload.publishDate,
+            weekStart: payload.weekStart,
+            weekEnd: payload.weekEnd,
+            title: payload.title,
+            summary: payload.summary,
+            conversationStarter: payload.conversationStarter,
+            status,
+            curatedAt,
+          },
+        });
 
-      const incomingArticleHashes = payload.articles.map((a) => a.canonicalHash);
-      await tx.digestArticle.deleteMany({
-        where: {
-          digestId: digest.id,
-          ...(incomingArticleHashes.length > 0
-            ? { canonicalHash: { notIn: incomingArticleHashes } }
-            : {}),
-        },
-      });
+        const incomingArticleHashes = payload.articles.map(
+          (a) => a.canonicalHash
+        );
+        if (incomingArticleHashes.length > 0) {
+          await tx.digestArticle.deleteMany({
+            where: {
+              digestId: digest.id,
+              canonicalHash: { notIn: incomingArticleHashes },
+            },
+          });
+        }
 
-      for (const article of payload.articles) {
-        const ingestionStatus =
-          article.ingestionStatus ?? DigestContentStatus.APPROVED;
-        await tx.digestArticle.upsert({
-          where: {
-            digestId_canonicalHash: {
+        for (const article of payload.articles) {
+          const ingestionStatus =
+            article.ingestionStatus ?? DigestContentStatus.APPROVED;
+          await tx.digestArticle.upsert({
+            where: {
+              digestId_canonicalHash: {
+                digestId: digest.id,
+                canonicalHash: article.canonicalHash,
+              },
+            },
+            update: {
+              sourceUrl: article.sourceUrl,
+              sourceName: article.sourceName,
+              sourceDomain: article.sourceDomain,
+              authorName: article.authorName ?? null,
+              imageUrl: article.imageUrl ?? null,
+              publishedAt: article.publishedAt,
+              isOriginalEditorial: article.isOriginalEditorial ?? false,
+              topicLabel: article.topicLabel,
+              readMinutes: article.readMinutes,
+              title: article.title,
+              summary: article.summary,
+              keyShift: article.keyShift,
+              perspectiveNote: article.perspectiveNote ?? null,
+              contentMarkdown: article.contentMarkdown ?? null,
+              sourcesText: article.sourcesText ?? null,
+              targetTiers: article.targetTiers,
+              isLead: article.isLead,
+              sortOrder: article.sortOrder,
+              ingestionStatus,
+            },
+            create: {
               digestId: digest.id,
               canonicalHash: article.canonicalHash,
+              sourceUrl: article.sourceUrl,
+              sourceName: article.sourceName,
+              sourceDomain: article.sourceDomain,
+              authorName: article.authorName ?? null,
+              imageUrl: article.imageUrl ?? null,
+              publishedAt: article.publishedAt,
+              isOriginalEditorial: article.isOriginalEditorial ?? false,
+              topicLabel: article.topicLabel,
+              readMinutes: article.readMinutes,
+              title: article.title,
+              summary: article.summary,
+              keyShift: article.keyShift,
+              perspectiveNote: article.perspectiveNote ?? null,
+              contentMarkdown: article.contentMarkdown ?? null,
+              sourcesText: article.sourcesText ?? null,
+              targetTiers: article.targetTiers,
+              isLead: article.isLead,
+              sortOrder: article.sortOrder,
+              ingestionStatus,
             },
-          },
-          update: {
-            sourceUrl: article.sourceUrl,
-            sourceName: article.sourceName,
-            sourceDomain: article.sourceDomain,
-            authorName: article.authorName ?? null,
-            imageUrl: article.imageUrl ?? null,
-            publishedAt: article.publishedAt,
-            isOriginalEditorial: article.isOriginalEditorial ?? false,
-            topicLabel: article.topicLabel,
-            readMinutes: article.readMinutes,
-            title: article.title,
-            summary: article.summary,
-            keyShift: article.keyShift,
-            perspectiveNote: article.perspectiveNote ?? null,
-            contentMarkdown: article.contentMarkdown ?? null,
-            sourcesText: article.sourcesText ?? null,
-            targetTiers: article.targetTiers,
-            isLead: article.isLead,
-            sortOrder: article.sortOrder,
-            ingestionStatus,
-          },
-          create: {
-            digestId: digest.id,
-            canonicalHash: article.canonicalHash,
-            sourceUrl: article.sourceUrl,
-            sourceName: article.sourceName,
-            sourceDomain: article.sourceDomain,
-            authorName: article.authorName ?? null,
-            imageUrl: article.imageUrl ?? null,
-            publishedAt: article.publishedAt,
-            isOriginalEditorial: article.isOriginalEditorial ?? false,
-            topicLabel: article.topicLabel,
-            readMinutes: article.readMinutes,
-            title: article.title,
-            summary: article.summary,
-            keyShift: article.keyShift,
-            perspectiveNote: article.perspectiveNote ?? null,
-            contentMarkdown: article.contentMarkdown ?? null,
-            sourcesText: article.sourcesText ?? null,
-            targetTiers: article.targetTiers,
-            isLead: article.isLead,
-            sortOrder: article.sortOrder,
-            ingestionStatus,
-          },
-        });
-      }
+          });
+        }
 
-      const incomingVideoIds = payload.videos.map((v) => v.youtubeVideoId);
-      await tx.digestVideo.deleteMany({
-        where: {
-          digestId: digest.id,
-          ...(incomingVideoIds.length > 0
-            ? { youtubeVideoId: { notIn: incomingVideoIds } }
-            : {}),
-        },
-      });
+        const incomingVideoIds = payload.videos.map((v) => v.youtubeVideoId);
+        if (incomingVideoIds.length > 0) {
+          await tx.digestVideo.deleteMany({
+            where: {
+              digestId: digest.id,
+              youtubeVideoId: { notIn: incomingVideoIds },
+            },
+          });
+        }
 
-      for (const video of payload.videos) {
-        const ingestionStatus =
-          video.ingestionStatus ?? DigestContentStatus.APPROVED;
-        const jumpChipsJson =
-          video.jumpChips && video.jumpChips.length > 0
-            ? (video.jumpChips as unknown as Prisma.InputJsonValue)
-            : Prisma.JsonNull;
+        for (const video of payload.videos) {
+          const ingestionStatus =
+            video.ingestionStatus ?? DigestContentStatus.APPROVED;
+          const jumpChipsJson =
+            video.jumpChips && video.jumpChips.length > 0
+              ? (video.jumpChips as unknown as Prisma.InputJsonValue)
+              : Prisma.JsonNull;
 
-        await tx.digestVideo.upsert({
-          where: {
-            digestId_youtubeVideoId: {
+          await tx.digestVideo.upsert({
+            where: {
+              digestId_youtubeVideoId: {
+                digestId: digest.id,
+                youtubeVideoId: video.youtubeVideoId,
+              },
+            },
+            update: {
+              videoUrl: video.videoUrl,
+              title: video.title,
+              presenter: video.presenter,
+              channelName: video.channelName,
+              channelId: video.channelId ?? null,
+              publishedAt: video.publishedAt,
+              durationMinutes: video.durationMinutes,
+              formatLabel: video.formatLabel,
+              takeaway: video.takeaway,
+              jumpChips: jumpChipsJson,
+              skimBullets: video.skimBullets,
+              targetTiers: video.targetTiers,
+              isEmbeddable: video.isEmbeddable,
+              sortOrder: video.sortOrder,
+              ingestionStatus,
+            },
+            create: {
               digestId: digest.id,
               youtubeVideoId: video.youtubeVideoId,
+              videoUrl: video.videoUrl,
+              title: video.title,
+              presenter: video.presenter,
+              channelName: video.channelName,
+              channelId: video.channelId ?? null,
+              publishedAt: video.publishedAt,
+              durationMinutes: video.durationMinutes,
+              formatLabel: video.formatLabel,
+              takeaway: video.takeaway,
+              jumpChips: jumpChipsJson,
+              skimBullets: video.skimBullets,
+              targetTiers: video.targetTiers,
+              isEmbeddable: video.isEmbeddable,
+              sortOrder: video.sortOrder,
+              ingestionStatus,
             },
-          },
-          update: {
-            videoUrl: video.videoUrl,
-            title: video.title,
-            presenter: video.presenter,
-            channelName: video.channelName,
-            channelId: video.channelId ?? null,
-            publishedAt: video.publishedAt,
-            durationMinutes: video.durationMinutes,
-            formatLabel: video.formatLabel,
-            takeaway: video.takeaway,
-            jumpChips: jumpChipsJson,
-            skimBullets: video.skimBullets,
-            targetTiers: video.targetTiers,
-            isEmbeddable: video.isEmbeddable,
-            sortOrder: video.sortOrder,
-            ingestionStatus,
-          },
-          create: {
-            digestId: digest.id,
-            youtubeVideoId: video.youtubeVideoId,
-            videoUrl: video.videoUrl,
-            title: video.title,
-            presenter: video.presenter,
-            channelName: video.channelName,
-            channelId: video.channelId ?? null,
-            publishedAt: video.publishedAt,
-            durationMinutes: video.durationMinutes,
-            formatLabel: video.formatLabel,
-            takeaway: video.takeaway,
-            jumpChips: jumpChipsJson,
-            skimBullets: video.skimBullets,
-            targetTiers: video.targetTiers,
-            isEmbeddable: video.isEmbeddable,
-            sortOrder: video.sortOrder,
-            ingestionStatus,
-          },
+          });
+        }
+
+        // Preserve dinner-prompt UUIDs referenced by user_digest_interactions on re-sync
+        const existingPrompts = await tx.digestDinnerPrompt.findMany({
+          where: { digestId: digest.id },
         });
-      }
+        const existingPromptsByKey = new Map<string, Array<{ id: string }>>();
+        for (const row of existingPrompts) {
+          const key = buildTierSortKey(row.targetTiers, row.sortOrder);
+          const bucket = existingPromptsByKey.get(key) ?? [];
+          bucket.push({ id: row.id });
+          existingPromptsByKey.set(key, bucket);
+        }
 
-      await tx.digestDinnerPrompt.deleteMany({
-        where: { digestId: digest.id },
-      });
-      if (payload.dinnerPrompts.length > 0) {
-        await tx.digestDinnerPrompt.createMany({
-          data: payload.dinnerPrompts.map((prompt) => ({
-            digestId: digest.id,
-            question: prompt.question,
-            parentTip: prompt.parentTip,
-            followUp: prompt.followUp,
-            targetTiers: prompt.targetTiers,
-            sortOrder: prompt.sortOrder,
-          })),
+        const matchedPromptIds = new Set<string>();
+        for (const prompt of payload.dinnerPrompts) {
+          const key = buildTierSortKey(prompt.targetTiers, prompt.sortOrder);
+          const matched = existingPromptsByKey.get(key)?.shift();
+          if (matched) {
+            matchedPromptIds.add(matched.id);
+            await tx.digestDinnerPrompt.update({
+              where: { id: matched.id },
+              data: {
+                question: prompt.question,
+                parentTip: prompt.parentTip,
+                followUp: prompt.followUp,
+                targetTiers: prompt.targetTiers,
+                sortOrder: prompt.sortOrder,
+              },
+            });
+          } else {
+            await tx.digestDinnerPrompt.create({
+              data: {
+                digestId: digest.id,
+                question: prompt.question,
+                parentTip: prompt.parentTip,
+                followUp: prompt.followUp,
+                targetTiers: prompt.targetTiers,
+                sortOrder: prompt.sortOrder,
+              },
+            });
+          }
+        }
+
+        const surplusPromptIds = existingPrompts
+          .filter((row) => !matchedPromptIds.has(row.id))
+          .map((row) => row.id);
+        if (surplusPromptIds.length > 0) {
+          await tx.digestDinnerPrompt.deleteMany({
+            where: { id: { in: surplusPromptIds } },
+          });
+        }
+
+        // Preserve weekly phrase UUIDs in place by canonical tier key + sortOrder
+        const existingPhrases = await tx.digestPhrase.findMany({
+          where: { digestId: digest.id },
         });
-      }
+        const existingPhrasesByKey = new Map<string, Array<{ id: string }>>();
+        for (const row of existingPhrases) {
+          const key = buildTierSortKey(row.targetTiers, row.sortOrder);
+          const bucket = existingPhrasesByKey.get(key) ?? [];
+          bucket.push({ id: row.id });
+          existingPhrasesByKey.set(key, bucket);
+        }
 
-      await tx.digestPhrase.deleteMany({
-        where: { digestId: digest.id },
-      });
-      if (payload.phrases.length > 0) {
-        await tx.digestPhrase.createMany({
-          data: payload.phrases.map((phrase) => ({
-            digestId: digest.id,
-            word: phrase.word,
-            shortMeaning: phrase.shortMeaning,
-            fullMeaning: phrase.fullMeaning,
-            cringeLevel: phrase.cringeLevel,
-            cringeLabel: phrase.cringeLabel,
-            calmScript: phrase.calmScript,
-            targetTiers: phrase.targetTiers,
-            sortOrder: phrase.sortOrder,
-          })),
-        });
-      }
+        const matchedPhraseIds = new Set<string>();
+        for (const phrase of payload.phrases) {
+          const key = buildTierSortKey(phrase.targetTiers, phrase.sortOrder);
+          const matched = existingPhrasesByKey.get(key)?.shift();
+          if (matched) {
+            matchedPhraseIds.add(matched.id);
+            await tx.digestPhrase.update({
+              where: { id: matched.id },
+              data: {
+                word: phrase.word,
+                shortMeaning: phrase.shortMeaning,
+                fullMeaning: phrase.fullMeaning,
+                cringeLevel: phrase.cringeLevel,
+                cringeLabel: phrase.cringeLabel,
+                calmScript: phrase.calmScript,
+                targetTiers: phrase.targetTiers,
+                sortOrder: phrase.sortOrder,
+              },
+            });
+          } else {
+            await tx.digestPhrase.create({
+              data: {
+                digestId: digest.id,
+                word: phrase.word,
+                shortMeaning: phrase.shortMeaning,
+                fullMeaning: phrase.fullMeaning,
+                cringeLevel: phrase.cringeLevel,
+                cringeLabel: phrase.cringeLabel,
+                calmScript: phrase.calmScript,
+                targetTiers: phrase.targetTiers,
+                sortOrder: phrase.sortOrder,
+              },
+            });
+          }
+        }
 
-      const approvedArticleCount = payload.articles.filter(
-        (a) =>
-          (a.ingestionStatus ?? DigestContentStatus.APPROVED) ===
-          DigestContentStatus.APPROVED
-      ).length;
-      const approvedVideoCount = payload.videos.filter(
-        (v) =>
-          (v.ingestionStatus ?? DigestContentStatus.APPROVED) ===
-            DigestContentStatus.APPROVED && v.isEmbeddable
-      ).length;
+        const surplusPhraseIds = existingPhrases
+          .filter((row) => !matchedPhraseIds.has(row.id))
+          .map((row) => row.id);
+        if (surplusPhraseIds.length > 0) {
+          await tx.digestPhrase.deleteMany({
+            where: { id: { in: surplusPhraseIds } },
+          });
+        }
 
-      return {
-        id: digest.id,
-        issueNumber: digest.issueNumber,
-        publishDate: digest.publishDate.toISOString(),
-        weekStart: digest.weekStart.toISOString(),
-        weekEnd: digest.weekEnd.toISOString(),
-        title: digest.title,
-        summary: digest.summary,
-        status: digest.status as DigestIssueStatus,
-        articleCount: approvedArticleCount,
-        videoCount: approvedVideoCount,
-      };
-    });
+        const approvedArticleCount = payload.articles.filter(
+          (a) =>
+            (a.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+            DigestContentStatus.APPROVED
+        ).length;
+        const approvedVideoCount = payload.videos.filter(
+          (v) =>
+            (v.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+              DigestContentStatus.APPROVED && v.isEmbeddable
+        ).length;
+
+        return {
+          id: digest.id,
+          issueNumber: digest.issueNumber,
+          publishDate: digest.publishDate.toISOString(),
+          weekStart: digest.weekStart.toISOString(),
+          weekEnd: digest.weekEnd.toISOString(),
+          title: digest.title,
+          summary: digest.summary,
+          status: digest.status as DigestIssueStatus,
+          articleCount: approvedArticleCount,
+          videoCount: approvedVideoCount,
+        };
+      },
+      { timeout: UPSERT_EDITION_TRANSACTION_TIMEOUT_MS }
+    );
   }
 
   private async loadInteractionMap(
@@ -1758,7 +1902,10 @@ export class InMemoryDigestRepository implements DigestRepository {
     });
 
     return {
-      articles: filtered,
+      articles:
+        params.scope === 'all'
+          ? filtered.slice(0, ARCHIVE_QUERY_LIMIT)
+          : filtered,
       unreadCount,
       totalInScope,
       ...(params.scope === 'issue' && targetIssueNumber !== undefined
@@ -1830,7 +1977,10 @@ export class InMemoryDigestRepository implements DigestRepository {
     });
 
     return {
-      videos: filtered,
+      videos:
+        params.scope === 'all'
+          ? filtered.slice(0, ARCHIVE_QUERY_LIMIT)
+          : filtered,
       totalInScope,
       ...(params.scope === 'issue' && targetIssueNumber !== undefined
         ? { issueNumber: targetIssueNumber }
@@ -2060,93 +2210,106 @@ export class InMemoryDigestRepository implements DigestRepository {
     };
     this.digests.set(digestId, storedDigest);
 
-    // Preserve existing IDs for matching canonicalHash on idempotent re-runs
-    const existingArticleIdByHash = new Map<string, string>();
-    for (const [id, article] of this.articles.entries()) {
-      if (article.digestId === digestId) {
-        existingArticleIdByHash.set(article.canonicalHash, id);
-        this.articles.delete(id);
+    // Guard against wiping existing articles when payload.articles is empty; preserve IDs on re-sync
+    if (payload.articles.length > 0) {
+      const existingArticleIdByHash = new Map<string, string>();
+      for (const [id, article] of this.articles.entries()) {
+        if (article.digestId === digestId) {
+          existingArticleIdByHash.set(article.canonicalHash, id);
+          this.articles.delete(id);
+        }
+      }
+
+      for (const article of payload.articles) {
+        const id =
+          existingArticleIdByHash.get(article.canonicalHash) ??
+          `art-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
+        this.articles.set(id, {
+          id,
+          digestId,
+          issueNumber: payload.issueNumber,
+          canonicalHash: article.canonicalHash,
+          sourceUrl: article.sourceUrl,
+          sourceName: article.sourceName,
+          sourceDomain: article.sourceDomain,
+          authorName: article.authorName ?? null,
+          imageUrl: article.imageUrl ?? null,
+          publishedAt: article.publishedAt,
+          isOriginalEditorial: article.isOriginalEditorial ?? false,
+          topicLabel: article.topicLabel,
+          readMinutes: article.readMinutes,
+          title: article.title,
+          summary: article.summary,
+          keyShift: article.keyShift,
+          perspectiveNote: article.perspectiveNote ?? null,
+          contentMarkdown: article.contentMarkdown ?? null,
+          sourcesText: article.sourcesText ?? null,
+          targetTiers: article.targetTiers,
+          isLead: article.isLead,
+          sortOrder: article.sortOrder,
+          ingestionStatus:
+            article.ingestionStatus ?? DigestContentStatus.APPROVED,
+        });
       }
     }
 
-    for (const article of payload.articles) {
-      const id =
-        existingArticleIdByHash.get(article.canonicalHash) ??
-        `art-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
-      this.articles.set(id, {
-        id,
-        digestId,
-        issueNumber: payload.issueNumber,
-        canonicalHash: article.canonicalHash,
-        sourceUrl: article.sourceUrl,
-        sourceName: article.sourceName,
-        sourceDomain: article.sourceDomain,
-        authorName: article.authorName ?? null,
-        imageUrl: article.imageUrl ?? null,
-        publishedAt: article.publishedAt,
-        isOriginalEditorial: article.isOriginalEditorial ?? false,
-        topicLabel: article.topicLabel,
-        readMinutes: article.readMinutes,
-        title: article.title,
-        summary: article.summary,
-        keyShift: article.keyShift,
-        perspectiveNote: article.perspectiveNote ?? null,
-        contentMarkdown: article.contentMarkdown ?? null,
-        sourcesText: article.sourcesText ?? null,
-        targetTiers: article.targetTiers,
-        isLead: article.isLead,
-        sortOrder: article.sortOrder,
-        ingestionStatus:
-          article.ingestionStatus ?? DigestContentStatus.APPROVED,
-      });
-    }
+    // Guard against wiping existing videos when payload.videos is empty; preserve IDs on re-sync
+    if (payload.videos.length > 0) {
+      const existingVideoIdByYtId = new Map<string, string>();
+      for (const [id, video] of this.videos.entries()) {
+        if (video.digestId === digestId) {
+          existingVideoIdByYtId.set(video.youtubeVideoId, id);
+          this.videos.delete(id);
+        }
+      }
 
-    // Preserve existing IDs for matching youtubeVideoId on idempotent re-runs
-    const existingVideoIdByYtId = new Map<string, string>();
-    for (const [id, video] of this.videos.entries()) {
-      if (video.digestId === digestId) {
-        existingVideoIdByYtId.set(video.youtubeVideoId, id);
-        this.videos.delete(id);
+      for (const video of payload.videos) {
+        const id =
+          existingVideoIdByYtId.get(video.youtubeVideoId) ??
+          `vid-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
+        this.videos.set(id, {
+          id,
+          digestId,
+          issueNumber: payload.issueNumber,
+          youtubeVideoId: video.youtubeVideoId,
+          videoUrl: video.videoUrl,
+          title: video.title,
+          presenter: video.presenter,
+          channelName: video.channelName,
+          channelId: video.channelId ?? null,
+          publishedAt: video.publishedAt,
+          durationMinutes: video.durationMinutes,
+          formatLabel: video.formatLabel,
+          takeaway: video.takeaway,
+          jumpChips:
+            video.jumpChips && video.jumpChips.length > 0
+              ? video.jumpChips
+              : undefined,
+          skimBullets: video.skimBullets,
+          targetTiers: video.targetTiers,
+          isEmbeddable: video.isEmbeddable,
+          sortOrder: video.sortOrder,
+          ingestionStatus: video.ingestionStatus ?? DigestContentStatus.APPROVED,
+        });
       }
     }
 
-    for (const video of payload.videos) {
-      const id =
-        existingVideoIdByYtId.get(video.youtubeVideoId) ??
-        `vid-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
-      this.videos.set(id, {
-        id,
-        digestId,
-        issueNumber: payload.issueNumber,
-        youtubeVideoId: video.youtubeVideoId,
-        videoUrl: video.videoUrl,
-        title: video.title,
-        presenter: video.presenter,
-        channelName: video.channelName,
-        channelId: video.channelId ?? null,
-        publishedAt: video.publishedAt,
-        durationMinutes: video.durationMinutes,
-        formatLabel: video.formatLabel,
-        takeaway: video.takeaway,
-        jumpChips:
-          video.jumpChips && video.jumpChips.length > 0
-            ? video.jumpChips
-            : undefined,
-        skimBullets: video.skimBullets,
-        targetTiers: video.targetTiers,
-        isEmbeddable: video.isEmbeddable,
-        sortOrder: video.sortOrder,
-        ingestionStatus: video.ingestionStatus ?? DigestContentStatus.APPROVED,
-      });
-    }
-
+    // Preserve dinner-prompt IDs matched by canonical tier key + sortOrder
+    const existingPromptIdsByKey = new Map<string, string[]>();
     for (const [id, prompt] of this.dinnerPrompts.entries()) {
       if (prompt.digestId === digestId) {
+        const key = buildTierSortKey(prompt.targetTiers, prompt.sortOrder);
+        const bucket = existingPromptIdsByKey.get(key) ?? [];
+        bucket.push(id);
+        existingPromptIdsByKey.set(key, bucket);
         this.dinnerPrompts.delete(id);
       }
     }
-    payload.dinnerPrompts.forEach((prompt, idx) => {
-      const id = `dp-${payload.issueNumber}-${idx + 1}`;
+    payload.dinnerPrompts.forEach((prompt) => {
+      const key = buildTierSortKey(prompt.targetTiers, prompt.sortOrder);
+      const id =
+        existingPromptIdsByKey.get(key)?.shift() ??
+        `dp-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
       this.dinnerPrompts.set(id, {
         id,
         digestId,
@@ -2159,13 +2322,22 @@ export class InMemoryDigestRepository implements DigestRepository {
       });
     });
 
+    // Preserve phrase IDs matched by canonical tier key + sortOrder
+    const existingPhraseIdsByKey = new Map<string, string[]>();
     for (const [id, phrase] of this.phrases.entries()) {
       if (phrase.digestId === digestId) {
+        const key = buildTierSortKey(phrase.targetTiers, phrase.sortOrder);
+        const bucket = existingPhraseIdsByKey.get(key) ?? [];
+        bucket.push(id);
+        existingPhraseIdsByKey.set(key, bucket);
         this.phrases.delete(id);
       }
     }
-    payload.phrases.forEach((phrase, idx) => {
-      const id = `ph-${payload.issueNumber}-${idx + 1}`;
+    payload.phrases.forEach((phrase) => {
+      const key = buildTierSortKey(phrase.targetTiers, phrase.sortOrder);
+      const id =
+        existingPhraseIdsByKey.get(key)?.shift() ??
+        `ph-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
       this.phrases.set(id, {
         id,
         digestId,

@@ -260,6 +260,45 @@ describe('Culture & Trends Weekly Hub API (PLAN-49)', () => {
       );
     });
 
+    it('derives tier from birthYear/birthMonth before stored legacy tier so a 14-year-old with TIER_4_AGES_14_PLUS resolves to TIER_4_EARLY_ADOLESCENCE_13_15', async () => {
+      const now = new Date();
+      const teen14 = await childrenRepo.create({
+        userId: parentUserId,
+        name: 'Jordan',
+        gender: Gender.MALE,
+        birthYear: now.getFullYear() - 14,
+        birthMonth: 1,
+        roadType: RoadType.ACTIVE_DEVICE,
+        developmentalTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
+      });
+
+      const editionRes = await app.inject({
+        method: 'GET',
+        url: `/api/v1/digest/issues/42?childId=${teen14.id}`,
+        headers: { cookie: parentCookie },
+      });
+
+      expect(editionRes.statusCode).toBe(200);
+      const edition = editionRes.json().data.edition;
+      expect(edition.resolvedTier).toBe(
+        DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15
+      );
+      expect(edition.phrases).toHaveLength(3);
+
+      const articlesRes = await app.inject({
+        method: 'GET',
+        url: `/api/v1/digest/articles?issueNumber=42&childId=${teen14.id}`,
+        headers: { cookie: parentCookie },
+      });
+      expect(articlesRes.statusCode).toBe(200);
+      expect(articlesRes.json().data.articles.length).toBeGreaterThan(0);
+      for (const article of articlesRes.json().data.articles) {
+        expect(article.targetTiers).toContain(
+          DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15
+        );
+      }
+    });
+
     it('returns 400 for invalid issueNumber and 404 for unknown issueNumber', async () => {
       const invalidRes = await app.inject({
         method: 'GET',

@@ -1,5 +1,4 @@
 import { createHash } from 'node:crypto';
-import { isIP } from 'node:net';
 import { XMLParser } from 'fast-xml-parser';
 import {
   CANONICAL_DIGEST_TIERS,
@@ -10,9 +9,17 @@ import {
   CURATED_BLOG_FEEDS,
   type CuratedBlogFeed,
 } from '../curatedSources.js';
+import {
+  asArray,
+  assertSafeExternalUrl,
+  DEFAULT_FEED_TIMEOUT_MS,
+  DEFAULT_MAX_RESPONSE_BYTES,
+  fetchSafeText,
+} from './safeFetch.js';
+
+export { assertSafeExternalUrl, DEFAULT_FEED_TIMEOUT_MS };
 
 export const MAX_RSS_EXCERPT_CHARS = 600;
-export const DEFAULT_FEED_TIMEOUT_MS = 8_000;
 
 export interface DigestFetchWindow {
   weekStart: Date;
@@ -64,10 +71,8 @@ const TRACKING_QUERY_PARAMS = new Set([
   'spm',
 ]);
 
-const NAMED_HTML_ENTITIES: Record<string, string> = {
+const SAFE_TEXT_HTML_ENTITIES: Record<string, string> = {
   amp: '&',
-  lt: '<',
-  gt: '>',
   quot: '"',
   apos: "'",
   nbsp: ' ',
@@ -80,6 +85,12 @@ const NAMED_HTML_ENTITIES: Record<string, string> = {
   rdquo: '”',
 };
 
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  ...SAFE_TEXT_HTML_ENTITIES,
+  lt: '<',
+  gt: '>',
+};
+
 const XML_PARSER = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
@@ -87,139 +98,6 @@ const XML_PARSER = new XMLParser({
   parseTagValue: false,
   processEntities: true,
 });
-
-function isPrivateOrReservedIpv4Octets(
-  a: number,
-  b: number,
-  c: number,
-  d: number
-): boolean {
-  if ([a, b, c, d].some((n) => !Number.isInteger(n) || n < 0 || n > 255)) {
-    return true;
-  }
-  if (a === 0) return true; // 0.0.0.0/8
-  if (a === 10) return true; // 10.0.0.0/8 (RFC 1918)
-  if (a === 100 && b >= 64 && b <= 127) return true; // 100.64.0.0/10 (CGNAT)
-  if (a === 127) return true; // 127.0.0.0/8 (loopback)
-  if (a === 169 && b === 254) return true; // 169.254.0.0/16 (link-local / cloud metadata)
-  if (a === 172 && b >= 16 && b <= 31) return true; // 172.16.0.0/12 (RFC 1918)
-  if (a === 192 && b === 0 && c === 0) return true; // 192.0.0.0/24
-  if (a === 192 && b === 0 && c === 2) return true; // TEST-NET-1
-  if (a === 192 && b === 168) return true; // 192.168.0.0/16 (RFC 1918)
-  if (a === 198 && (b === 18 || b === 19)) return true; // Benchmarking
-  if (a === 198 && b === 51 && c === 100) return true; // TEST-NET-2
-  if (a === 203 && b === 0 && c === 113) return true; // TEST-NET-3
-  if (a >= 224) return true; // Multicast & reserved
-  return false;
-}
-
-function isPrivateOrReservedIpv6(rawHost: string): boolean {
-  const host = rawHost.toLowerCase();
-  if (host === '::' || host === '::1' || host === '0:0:0:0:0:0:0:1') {
-    return true;
-  }
-  // Unique-local (fc00::/7), link-local (fe80::/10), multicast (ff00::/8)
-  if (/^(?:fc|fd|fe[89ab]|ff)/i.test(host)) {
-    return true;
-  }
-  // IPv4-mapped IPv6 dotted form: ::ffff:127.0.0.1
-  const dottedMapped = /^::ffff:(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/i.exec(
-    host
-  );
-  if (dottedMapped) {
-    return isPrivateOrReservedIpv4Octets(
-      Number(dottedMapped[1]),
-      Number(dottedMapped[2]),
-      Number(dottedMapped[3]),
-      Number(dottedMapped[4])
-    );
-  }
-  // IPv4-mapped IPv6 canonicalized hex form from WHATWG URL parser: ::ffff:7f00:1
-  const hexMapped = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/i.exec(host);
-  if (hexMapped) {
-    const hi = parseInt(hexMapped[1]!, 16);
-    const lo = parseInt(hexMapped[2]!, 16);
-    return isPrivateOrReservedIpv4Octets(
-      (hi >> 8) & 0xff,
-      hi & 0xff,
-      (lo >> 8) & 0xff,
-      lo & 0xff
-    );
-  }
-  return false;
-}
-
-/**
- * Enforces HTTPS-only SSRF validation, rejecting non-HTTPS schemes, embedded
- * credentials, localhost, link-local, loopback, and private RFC 1918 hosts.
- */
-export function assertSafeExternalUrl(rawUrl: string): URL {
-  if (!rawUrl || typeof rawUrl !== 'string') {
-    throw new Error('URL must be a non-empty string.');
-  }
-
-  let parsed: URL;
-  try {
-    parsed = new URL(rawUrl.trim());
-  } catch {
-    throw new Error(`Malformed URL rejected: ${rawUrl}`);
-  }
-
-  if (parsed.protocol !== 'https:') {
-    throw new Error(
-      `Unsafe URL protocol rejected (HTTPS required): ${parsed.protocol}`
-    );
-  }
-
-  if (parsed.username || parsed.password) {
-    throw new Error('URLs with embedded credentials are rejected.');
-  }
-
-  const normalizedHost = parsed.hostname
-    .toLowerCase()
-    .replace(/^\[|\]$/g, '')
-    .replace(/\.$/, '');
-
-  if (!normalizedHost) {
-    throw new Error('URL hostname must not be empty.');
-  }
-
-  if (
-    normalizedHost === 'localhost' ||
-    normalizedHost.endsWith('.localhost') ||
-    normalizedHost.endsWith('.local') ||
-    normalizedHost.endsWith('.internal') ||
-    normalizedHost.endsWith('.home.arpa')
-  ) {
-    throw new Error(`Local/internal host rejected: ${normalizedHost}`);
-  }
-
-  const ipVersion = isIP(normalizedHost);
-  if (ipVersion === 4) {
-    const parts = normalizedHost.split('.').map((p) => Number(p));
-    if (
-      parts.length !== 4 ||
-      isPrivateOrReservedIpv4Octets(parts[0]!, parts[1]!, parts[2]!, parts[3]!)
-    ) {
-      throw new Error(`Private or reserved IPv4 host rejected: ${normalizedHost}`);
-    }
-    return parsed;
-  }
-
-  if (ipVersion === 6) {
-    if (isPrivateOrReservedIpv6(normalizedHost)) {
-      throw new Error(`Private or reserved IPv6 host rejected: ${normalizedHost}`);
-    }
-    return parsed;
-  }
-
-  // Reject single-label hostnames or numeric/hex obfuscated IPs without public TLD
-  if (!normalizedHost.includes('.') || /^(?:0x[0-9a-f]+|\d+)$/i.test(normalizedHost)) {
-    throw new Error(`Non-public hostname rejected: ${normalizedHost}`);
-  }
-
-  return parsed;
-}
 
 /**
  * Normalizes a safe HTTPS publisher URL by stripping tracking query parameters
@@ -258,30 +136,38 @@ export function computeCanonicalHash(canonicalUrl: string): string {
     .digest('hex');
 }
 
-function decodeHtmlEntities(input: string): string {
+function decodeHtmlEntities(input: string, safeTextOnly = false): string {
+  const table = safeTextOnly ? SAFE_TEXT_HTML_ENTITIES : NAMED_HTML_ENTITIES;
   return input.replace(
     /&(#x?[0-9a-f]+|[a-z]+);/gi,
     (full, entity: string) => {
       if (entity.startsWith('#x') || entity.startsWith('#X')) {
         const code = parseInt(entity.slice(2), 16);
+        if (safeTextOnly && (code === 60 || code === 62)) {
+          return full;
+        }
         return Number.isFinite(code) && code > 0 && code <= 0x10ffff
           ? String.fromCodePoint(code)
           : full;
       }
       if (entity.startsWith('#')) {
         const code = parseInt(entity.slice(1), 10);
+        if (safeTextOnly && (code === 60 || code === 62)) {
+          return full;
+        }
         return Number.isFinite(code) && code > 0 && code <= 0x10ffff
           ? String.fromCodePoint(code)
           : full;
       }
-      return NAMED_HTML_ENTITIES[entity.toLowerCase()] ?? full;
+      return table[entity.toLowerCase()] ?? full;
     }
   );
 }
 
 /**
- * Strips all HTML/script/style markup from RSS summaries and enforces a hard
- * plain-text length cap (`<= 600` characters) to respect publisher copyright.
+ * Strips all HTML/script/style markup (including double-encoded RSS entities)
+ * from RSS summaries and enforces a hard plain-text length cap (`<= 600` chars)
+ * to respect publisher copyright.
  */
 export function sanitizeRssExcerpt(
   rawHtml: string,
@@ -293,13 +179,21 @@ export function sanitizeRssExcerpt(
 
   const effectiveMax = Math.min(Math.max(1, maxChars), MAX_RSS_EXCERPT_CHARS);
 
-  const plain = decodeHtmlEntities(
-    rawHtml
-      .replace(/<!--[\s\S]*?-->/g, ' ')
-      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
-      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
-      .replace(/<[^>]+>/g, ' ')
-  )
+  // Decode up to 2 passes before tag stripping so single- and double-encoded HTML tags are removed cleanly
+  let decoded = rawHtml;
+  for (let pass = 0; pass < 2; pass += 1) {
+    const next = decodeHtmlEntities(decoded, false);
+    if (next === decoded) break;
+    decoded = next;
+  }
+
+  const stripped = decoded
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+
+  const plain = decodeHtmlEntities(stripped, true)
     .replace(/\s+/g, ' ')
     .trim();
 
@@ -314,11 +208,6 @@ export function sanitizeRssExcerpt(
       ? slice.slice(0, lastSpace)
       : slice;
   return `${clipped.trimEnd()}…`;
-}
-
-function asArray<T>(value: T | T[] | undefined | null): T[] {
-  if (value === undefined || value === null) return [];
-  return Array.isArray(value) ? value : [value];
 }
 
 function extractText(node: unknown): string {
@@ -594,23 +483,17 @@ export class RssBlogFeedAdapter implements BlogFeedFetcher {
 
     const settled = await Promise.allSettled(
       enabledFeeds.map(async (feed) => {
-        const safeFeedUrl = assertSafeExternalUrl(feed.feedUrl).toString();
-
-        const response = await this.fetchImpl(safeFeedUrl, {
-          method: 'GET',
+        const xmlText = await fetchSafeText(feed.feedUrl, {
+          timeoutMs: this.timeoutMs,
+          maxBytes: DEFAULT_MAX_RESPONSE_BYTES,
+          fetchImpl: this.fetchImpl,
           headers: {
             Accept:
               'application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9',
             'User-Agent': this.userAgent,
           },
-          signal: AbortSignal.timeout(this.timeoutMs),
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} ${response.statusText}`);
-        }
-
-        const xmlText = await response.text();
         if (
           !xmlText.trimStart().startsWith('<') ||
           (!xmlText.includes('<rss') &&

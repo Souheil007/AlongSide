@@ -1,4 +1,5 @@
 import {
+  calculateLifespanTier,
   DEFAULT_DIGEST_TIER,
   isSlangEligibleTier,
   resolveDigestTierBucket,
@@ -219,6 +220,17 @@ export class DigestService {
         options.userId
       );
       if (child) {
+        if (
+          Number.isInteger(child.birthYear) &&
+          child.birthYear >= 1900 &&
+          Number.isInteger(child.birthMonth) &&
+          child.birthMonth >= 1 &&
+          child.birthMonth <= 12
+        ) {
+          return resolveDigestTierBucket(
+            calculateLifespanTier(child.birthYear, child.birthMonth)
+          );
+        }
         return resolveDigestTierBucket(child.developmentalTier);
       }
     }
