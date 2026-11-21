@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import { z } from 'zod';
 import {
   DigestArticlesQuerySchema,
   DigestInteractionMutationSchema,
@@ -10,9 +11,21 @@ import {
   type ExploitSeverity,
 } from '@alongside/shared';
 import type { DigestService } from './digest.service.js';
+import type { DigestIngestionOrchestrator } from './ingestion/digestIngestion.orchestrator.js';
+
+const DigestSyncBodySchema = z.object({
+  weekStart: z.string().trim().min(1).optional(),
+  weekEnd: z.string().trim().min(1).optional(),
+  issueNumber: z.number().int().positive().optional(),
+  dryRun: z.boolean().optional(),
+  fallbackLookbackDays: z.number().int().min(0).max(30).optional(),
+});
 
 export class DigestController {
-  constructor(private readonly service: DigestService) {}
+  constructor(
+    private readonly service: DigestService,
+    private readonly ingestionOrchestrator?: DigestIngestionOrchestrator
+  ) {}
 
   // ----------------------------------------------------
   // LEGACY PLAN-08 HANDLERS (PRESERVED)
@@ -241,6 +254,59 @@ export class DigestController {
       success: true,
       data: {
         interaction,
+      },
+    });
+  }
+
+  // ----------------------------------------------------
+  // LIVE WEEKLY SOURCING & CURATION SYNC (PLAN-50)
+  // ----------------------------------------------------
+
+  async syncWeeklyEdition(
+    request: FastifyRequest<{
+      Body: {
+        weekStart?: string;
+        weekEnd?: string;
+        issueNumber?: number;
+        dryRun?: boolean;
+        fallbackLookbackDays?: number;
+      };
+    }>,
+    reply: FastifyReply
+  ): Promise<void> {
+    if (!this.ingestionOrchestrator) {
+      return reply.status(503).send({
+        success: false,
+        error: {
+          code: 'SERVICE_UNAVAILABLE',
+          message: 'Digest ingestion pipeline is not configured.',
+        },
+      });
+    }
+
+    const parsed = DigestSyncBodySchema.safeParse(request.body ?? {});
+    if (!parsed.success) {
+      return reply.status(400).send({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Invalid weekly digest sync payload.',
+          details: parsed.error.issues.map((issue) => ({
+            field: issue.path.join('.') || undefined,
+            message: issue.message,
+          })),
+        },
+      });
+    }
+
+    const report = await this.ingestionOrchestrator.syncWeeklyEdition(
+      parsed.data
+    );
+
+    return reply.status(200).send({
+      success: true,
+      data: {
+        report,
       },
     });
   }

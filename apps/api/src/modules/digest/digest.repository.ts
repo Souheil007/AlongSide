@@ -1,5 +1,7 @@
+import { randomUUID } from 'node:crypto';
 import {
   prisma as defaultPrisma,
+  Prisma,
   type PrismaClient,
   EXPLOIT_SEED_ALERTS,
   SLANG_SEED_TERMS,
@@ -60,6 +62,83 @@ export interface UpsertDigestInteractionInput {
   isSaved?: boolean;
 }
 
+export interface UpsertWeeklyEditionArticleInput {
+  canonicalHash: string;
+  sourceUrl: string;
+  sourceName: string;
+  sourceDomain: string;
+  authorName?: string | null;
+  imageUrl?: string | null;
+  publishedAt: Date;
+  isOriginalEditorial?: boolean;
+  topicLabel: string;
+  readMinutes: number;
+  title: string;
+  summary: string;
+  keyShift: string;
+  perspectiveNote?: string | null;
+  contentMarkdown?: string | null;
+  sourcesText?: string | null;
+  targetTiers: DevelopmentalTier[];
+  isLead: boolean;
+  sortOrder: number;
+  ingestionStatus?: DigestContentStatus;
+}
+
+export interface UpsertWeeklyEditionVideoInput {
+  youtubeVideoId: string;
+  videoUrl: string;
+  title: string;
+  presenter: string;
+  channelName: string;
+  channelId?: string | null;
+  publishedAt: Date;
+  durationMinutes: number;
+  formatLabel: string;
+  takeaway: string;
+  jumpChips?: VideoJumpChip[];
+  skimBullets: string[];
+  targetTiers: DevelopmentalTier[];
+  isEmbeddable: boolean;
+  sortOrder: number;
+  ingestionStatus?: DigestContentStatus;
+}
+
+export interface UpsertWeeklyEditionDinnerPromptInput {
+  question: string;
+  parentTip: string;
+  followUp: string;
+  targetTiers: DevelopmentalTier[];
+  sortOrder: number;
+}
+
+export interface UpsertWeeklyEditionPhraseInput {
+  word: string;
+  shortMeaning: string;
+  fullMeaning: string;
+  cringeLevel: number;
+  cringeLabel: string;
+  calmScript: string;
+  targetTiers: DevelopmentalTier[];
+  sortOrder: number;
+}
+
+export interface UpsertWeeklyEditionInput {
+  issueNumber: number;
+  publishDate: Date;
+  weekStart: Date;
+  weekEnd: Date;
+  title: string;
+  summary: string;
+  conversationStarter: string;
+  status?: DigestIssueStatus;
+  curatedAt?: Date;
+  articles: UpsertWeeklyEditionArticleInput[];
+  videos: UpsertWeeklyEditionVideoInput[];
+  dinnerPrompts: UpsertWeeklyEditionDinnerPromptInput[];
+  phrases: UpsertWeeklyEditionPhraseInput[];
+}
+
 export interface DigestRepository {
   // Legacy PLAN-08 contracts (preserved backward-compatibly)
   findLatestDigest(): Promise<CultureDigestDTO | null>;
@@ -84,6 +163,21 @@ export interface DigestRepository {
     userId: string,
     input: UpsertDigestInteractionInput
   ): Promise<DigestInteractionResultDTO>;
+
+  // Live Weekly Sourcing & Ingestion Persistence Seam (PLAN-50)
+  findRecentCanonicalHashes(
+    lookbackIssues?: number,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>>;
+  findRecentYouTubeVideoIds(
+    lookbackIssues?: number,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>>;
+  findLatestIssueNumber(): Promise<number | null>;
+  findIssueNumberByWindow(weekStart: Date, weekEnd: Date): Promise<number | null>;
+  upsertWeeklyEdition(
+    payload: UpsertWeeklyEditionInput
+  ): Promise<DigestIssueSummaryDTO>;
 }
 
 function normalizeJumpChips(raw: unknown): VideoJumpChip[] | undefined {
@@ -847,6 +941,311 @@ export class PrismaDigestRepository implements DigestRepository {
     };
   }
 
+  async findRecentCanonicalHashes(
+    lookbackIssues = 4,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>> {
+    const digests = await this.prisma.cultureDigest.findMany({
+      where: {
+        status: DigestIssueStatus.PUBLISHED,
+        ...(excludeIssueNumber !== undefined
+          ? { issueNumber: { not: excludeIssueNumber } }
+          : {}),
+      },
+      orderBy: { issueNumber: 'desc' },
+      take: Math.max(0, lookbackIssues),
+      select: {
+        articles: {
+          select: { canonicalHash: true },
+        },
+      },
+    });
+
+    const hashes = new Set<string>();
+    for (const digest of digests) {
+      for (const article of digest.articles) {
+        hashes.add(article.canonicalHash);
+      }
+    }
+    return hashes;
+  }
+
+  async findRecentYouTubeVideoIds(
+    lookbackIssues = 4,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>> {
+    const digests = await this.prisma.cultureDigest.findMany({
+      where: {
+        status: DigestIssueStatus.PUBLISHED,
+        ...(excludeIssueNumber !== undefined
+          ? { issueNumber: { not: excludeIssueNumber } }
+          : {}),
+      },
+      orderBy: { issueNumber: 'desc' },
+      take: Math.max(0, lookbackIssues),
+      select: {
+        videos: {
+          select: { youtubeVideoId: true },
+        },
+      },
+    });
+
+    const videoIds = new Set<string>();
+    for (const digest of digests) {
+      for (const video of digest.videos) {
+        videoIds.add(video.youtubeVideoId);
+      }
+    }
+    return videoIds;
+  }
+
+  async findLatestIssueNumber(): Promise<number | null> {
+    const latest = await this.prisma.cultureDigest.findFirst({
+      orderBy: { issueNumber: 'desc' },
+      select: { issueNumber: true },
+    });
+    return latest?.issueNumber ?? null;
+  }
+
+  async findIssueNumberByWindow(
+    weekStart: Date,
+    weekEnd: Date
+  ): Promise<number | null> {
+    const existing = await this.prisma.cultureDigest.findFirst({
+      where: {
+        weekStart,
+        weekEnd,
+      },
+      orderBy: { issueNumber: 'desc' },
+      select: { issueNumber: true },
+    });
+    return existing?.issueNumber ?? null;
+  }
+
+  async upsertWeeklyEdition(
+    payload: UpsertWeeklyEditionInput
+  ): Promise<DigestIssueSummaryDTO> {
+    const status = payload.status ?? DigestIssueStatus.PUBLISHED;
+    const curatedAt = payload.curatedAt ?? new Date();
+
+    return this.prisma.$transaction(async (tx) => {
+      const digest = await tx.cultureDigest.upsert({
+        where: { issueNumber: payload.issueNumber },
+        update: {
+          publishDate: payload.publishDate,
+          weekStart: payload.weekStart,
+          weekEnd: payload.weekEnd,
+          title: payload.title,
+          summary: payload.summary,
+          conversationStarter: payload.conversationStarter,
+          status,
+          curatedAt,
+        },
+        create: {
+          issueNumber: payload.issueNumber,
+          publishDate: payload.publishDate,
+          weekStart: payload.weekStart,
+          weekEnd: payload.weekEnd,
+          title: payload.title,
+          summary: payload.summary,
+          conversationStarter: payload.conversationStarter,
+          status,
+          curatedAt,
+        },
+      });
+
+      const incomingArticleHashes = payload.articles.map((a) => a.canonicalHash);
+      await tx.digestArticle.deleteMany({
+        where: {
+          digestId: digest.id,
+          ...(incomingArticleHashes.length > 0
+            ? { canonicalHash: { notIn: incomingArticleHashes } }
+            : {}),
+        },
+      });
+
+      for (const article of payload.articles) {
+        const ingestionStatus =
+          article.ingestionStatus ?? DigestContentStatus.APPROVED;
+        await tx.digestArticle.upsert({
+          where: {
+            digestId_canonicalHash: {
+              digestId: digest.id,
+              canonicalHash: article.canonicalHash,
+            },
+          },
+          update: {
+            sourceUrl: article.sourceUrl,
+            sourceName: article.sourceName,
+            sourceDomain: article.sourceDomain,
+            authorName: article.authorName ?? null,
+            imageUrl: article.imageUrl ?? null,
+            publishedAt: article.publishedAt,
+            isOriginalEditorial: article.isOriginalEditorial ?? false,
+            topicLabel: article.topicLabel,
+            readMinutes: article.readMinutes,
+            title: article.title,
+            summary: article.summary,
+            keyShift: article.keyShift,
+            perspectiveNote: article.perspectiveNote ?? null,
+            contentMarkdown: article.contentMarkdown ?? null,
+            sourcesText: article.sourcesText ?? null,
+            targetTiers: article.targetTiers,
+            isLead: article.isLead,
+            sortOrder: article.sortOrder,
+            ingestionStatus,
+          },
+          create: {
+            digestId: digest.id,
+            canonicalHash: article.canonicalHash,
+            sourceUrl: article.sourceUrl,
+            sourceName: article.sourceName,
+            sourceDomain: article.sourceDomain,
+            authorName: article.authorName ?? null,
+            imageUrl: article.imageUrl ?? null,
+            publishedAt: article.publishedAt,
+            isOriginalEditorial: article.isOriginalEditorial ?? false,
+            topicLabel: article.topicLabel,
+            readMinutes: article.readMinutes,
+            title: article.title,
+            summary: article.summary,
+            keyShift: article.keyShift,
+            perspectiveNote: article.perspectiveNote ?? null,
+            contentMarkdown: article.contentMarkdown ?? null,
+            sourcesText: article.sourcesText ?? null,
+            targetTiers: article.targetTiers,
+            isLead: article.isLead,
+            sortOrder: article.sortOrder,
+            ingestionStatus,
+          },
+        });
+      }
+
+      const incomingVideoIds = payload.videos.map((v) => v.youtubeVideoId);
+      await tx.digestVideo.deleteMany({
+        where: {
+          digestId: digest.id,
+          ...(incomingVideoIds.length > 0
+            ? { youtubeVideoId: { notIn: incomingVideoIds } }
+            : {}),
+        },
+      });
+
+      for (const video of payload.videos) {
+        const ingestionStatus =
+          video.ingestionStatus ?? DigestContentStatus.APPROVED;
+        const jumpChipsJson =
+          video.jumpChips && video.jumpChips.length > 0
+            ? (video.jumpChips as unknown as Prisma.InputJsonValue)
+            : Prisma.JsonNull;
+
+        await tx.digestVideo.upsert({
+          where: {
+            digestId_youtubeVideoId: {
+              digestId: digest.id,
+              youtubeVideoId: video.youtubeVideoId,
+            },
+          },
+          update: {
+            videoUrl: video.videoUrl,
+            title: video.title,
+            presenter: video.presenter,
+            channelName: video.channelName,
+            channelId: video.channelId ?? null,
+            publishedAt: video.publishedAt,
+            durationMinutes: video.durationMinutes,
+            formatLabel: video.formatLabel,
+            takeaway: video.takeaway,
+            jumpChips: jumpChipsJson,
+            skimBullets: video.skimBullets,
+            targetTiers: video.targetTiers,
+            isEmbeddable: video.isEmbeddable,
+            sortOrder: video.sortOrder,
+            ingestionStatus,
+          },
+          create: {
+            digestId: digest.id,
+            youtubeVideoId: video.youtubeVideoId,
+            videoUrl: video.videoUrl,
+            title: video.title,
+            presenter: video.presenter,
+            channelName: video.channelName,
+            channelId: video.channelId ?? null,
+            publishedAt: video.publishedAt,
+            durationMinutes: video.durationMinutes,
+            formatLabel: video.formatLabel,
+            takeaway: video.takeaway,
+            jumpChips: jumpChipsJson,
+            skimBullets: video.skimBullets,
+            targetTiers: video.targetTiers,
+            isEmbeddable: video.isEmbeddable,
+            sortOrder: video.sortOrder,
+            ingestionStatus,
+          },
+        });
+      }
+
+      await tx.digestDinnerPrompt.deleteMany({
+        where: { digestId: digest.id },
+      });
+      if (payload.dinnerPrompts.length > 0) {
+        await tx.digestDinnerPrompt.createMany({
+          data: payload.dinnerPrompts.map((prompt) => ({
+            digestId: digest.id,
+            question: prompt.question,
+            parentTip: prompt.parentTip,
+            followUp: prompt.followUp,
+            targetTiers: prompt.targetTiers,
+            sortOrder: prompt.sortOrder,
+          })),
+        });
+      }
+
+      await tx.digestPhrase.deleteMany({
+        where: { digestId: digest.id },
+      });
+      if (payload.phrases.length > 0) {
+        await tx.digestPhrase.createMany({
+          data: payload.phrases.map((phrase) => ({
+            digestId: digest.id,
+            word: phrase.word,
+            shortMeaning: phrase.shortMeaning,
+            fullMeaning: phrase.fullMeaning,
+            cringeLevel: phrase.cringeLevel,
+            cringeLabel: phrase.cringeLabel,
+            calmScript: phrase.calmScript,
+            targetTiers: phrase.targetTiers,
+            sortOrder: phrase.sortOrder,
+          })),
+        });
+      }
+
+      const approvedArticleCount = payload.articles.filter(
+        (a) =>
+          (a.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+          DigestContentStatus.APPROVED
+      ).length;
+      const approvedVideoCount = payload.videos.filter(
+        (v) =>
+          (v.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+            DigestContentStatus.APPROVED && v.isEmbeddable
+      ).length;
+
+      return {
+        id: digest.id,
+        issueNumber: digest.issueNumber,
+        publishDate: digest.publishDate.toISOString(),
+        weekStart: digest.weekStart.toISOString(),
+        weekEnd: digest.weekEnd.toISOString(),
+        title: digest.title,
+        summary: digest.summary,
+        status: digest.status as DigestIssueStatus,
+        articleCount: approvedArticleCount,
+        videoCount: approvedVideoCount,
+      };
+    });
+  }
+
   private async loadInteractionMap(
     userId: string,
     itemIds: string[]
@@ -1561,6 +1960,249 @@ export class InMemoryDigestRepository implements DigestRepository {
       itemId: record.itemId,
       isRead: record.isRead,
       isSaved: record.isSaved,
+    };
+  }
+
+  async findRecentCanonicalHashes(
+    lookbackIssues = 4,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>> {
+    const recentDigests = Array.from(this.digests.values())
+      .filter(
+        (d) =>
+          d.status === DigestIssueStatus.PUBLISHED &&
+          (excludeIssueNumber === undefined ||
+            d.issueNumber !== excludeIssueNumber)
+      )
+      .sort((a, b) => b.issueNumber - a.issueNumber)
+      .slice(0, Math.max(0, lookbackIssues));
+
+    const recentIds = new Set(recentDigests.map((d) => d.id));
+    const hashes = new Set<string>();
+    for (const article of this.articles.values()) {
+      if (recentIds.has(article.digestId)) {
+        hashes.add(article.canonicalHash);
+      }
+    }
+    return hashes;
+  }
+
+  async findRecentYouTubeVideoIds(
+    lookbackIssues = 4,
+    excludeIssueNumber?: number
+  ): Promise<Set<string>> {
+    const recentDigests = Array.from(this.digests.values())
+      .filter(
+        (d) =>
+          d.status === DigestIssueStatus.PUBLISHED &&
+          (excludeIssueNumber === undefined ||
+            d.issueNumber !== excludeIssueNumber)
+      )
+      .sort((a, b) => b.issueNumber - a.issueNumber)
+      .slice(0, Math.max(0, lookbackIssues));
+
+    const recentIds = new Set(recentDigests.map((d) => d.id));
+    const videoIds = new Set<string>();
+    for (const video of this.videos.values()) {
+      if (recentIds.has(video.digestId)) {
+        videoIds.add(video.youtubeVideoId);
+      }
+    }
+    return videoIds;
+  }
+
+  async findLatestIssueNumber(): Promise<number | null> {
+    let maxIssue: number | null = null;
+    for (const digest of this.digests.values()) {
+      if (maxIssue === null || digest.issueNumber > maxIssue) {
+        maxIssue = digest.issueNumber;
+      }
+    }
+    return maxIssue;
+  }
+
+  async findIssueNumberByWindow(
+    weekStart: Date,
+    weekEnd: Date
+  ): Promise<number | null> {
+    const matches = Array.from(this.digests.values())
+      .filter(
+        (d) =>
+          d.weekStart.getTime() === weekStart.getTime() &&
+          d.weekEnd.getTime() === weekEnd.getTime()
+      )
+      .sort((a, b) => b.issueNumber - a.issueNumber);
+
+    return matches[0]?.issueNumber ?? null;
+  }
+
+  async upsertWeeklyEdition(
+    payload: UpsertWeeklyEditionInput
+  ): Promise<DigestIssueSummaryDTO> {
+    const existingDigest = Array.from(this.digests.values()).find(
+      (d) => d.issueNumber === payload.issueNumber
+    );
+    const digestId = existingDigest?.id ?? `digest-issue-${payload.issueNumber}`;
+    const status = payload.status ?? DigestIssueStatus.PUBLISHED;
+    const curatedAt = payload.curatedAt ?? new Date();
+
+    const storedDigest: StoredDigestIssue = {
+      id: digestId,
+      issueNumber: payload.issueNumber,
+      publishDate: payload.publishDate,
+      weekStart: payload.weekStart,
+      weekEnd: payload.weekEnd,
+      title: payload.title,
+      summary: payload.summary,
+      conversationStarter: payload.conversationStarter,
+      status,
+      curatedAt,
+    };
+    this.digests.set(digestId, storedDigest);
+
+    // Preserve existing IDs for matching canonicalHash on idempotent re-runs
+    const existingArticleIdByHash = new Map<string, string>();
+    for (const [id, article] of this.articles.entries()) {
+      if (article.digestId === digestId) {
+        existingArticleIdByHash.set(article.canonicalHash, id);
+        this.articles.delete(id);
+      }
+    }
+
+    for (const article of payload.articles) {
+      const id =
+        existingArticleIdByHash.get(article.canonicalHash) ??
+        `art-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
+      this.articles.set(id, {
+        id,
+        digestId,
+        issueNumber: payload.issueNumber,
+        canonicalHash: article.canonicalHash,
+        sourceUrl: article.sourceUrl,
+        sourceName: article.sourceName,
+        sourceDomain: article.sourceDomain,
+        authorName: article.authorName ?? null,
+        imageUrl: article.imageUrl ?? null,
+        publishedAt: article.publishedAt,
+        isOriginalEditorial: article.isOriginalEditorial ?? false,
+        topicLabel: article.topicLabel,
+        readMinutes: article.readMinutes,
+        title: article.title,
+        summary: article.summary,
+        keyShift: article.keyShift,
+        perspectiveNote: article.perspectiveNote ?? null,
+        contentMarkdown: article.contentMarkdown ?? null,
+        sourcesText: article.sourcesText ?? null,
+        targetTiers: article.targetTiers,
+        isLead: article.isLead,
+        sortOrder: article.sortOrder,
+        ingestionStatus:
+          article.ingestionStatus ?? DigestContentStatus.APPROVED,
+      });
+    }
+
+    // Preserve existing IDs for matching youtubeVideoId on idempotent re-runs
+    const existingVideoIdByYtId = new Map<string, string>();
+    for (const [id, video] of this.videos.entries()) {
+      if (video.digestId === digestId) {
+        existingVideoIdByYtId.set(video.youtubeVideoId, id);
+        this.videos.delete(id);
+      }
+    }
+
+    for (const video of payload.videos) {
+      const id =
+        existingVideoIdByYtId.get(video.youtubeVideoId) ??
+        `vid-${payload.issueNumber}-${randomUUID().slice(0, 8)}`;
+      this.videos.set(id, {
+        id,
+        digestId,
+        issueNumber: payload.issueNumber,
+        youtubeVideoId: video.youtubeVideoId,
+        videoUrl: video.videoUrl,
+        title: video.title,
+        presenter: video.presenter,
+        channelName: video.channelName,
+        channelId: video.channelId ?? null,
+        publishedAt: video.publishedAt,
+        durationMinutes: video.durationMinutes,
+        formatLabel: video.formatLabel,
+        takeaway: video.takeaway,
+        jumpChips:
+          video.jumpChips && video.jumpChips.length > 0
+            ? video.jumpChips
+            : undefined,
+        skimBullets: video.skimBullets,
+        targetTiers: video.targetTiers,
+        isEmbeddable: video.isEmbeddable,
+        sortOrder: video.sortOrder,
+        ingestionStatus: video.ingestionStatus ?? DigestContentStatus.APPROVED,
+      });
+    }
+
+    for (const [id, prompt] of this.dinnerPrompts.entries()) {
+      if (prompt.digestId === digestId) {
+        this.dinnerPrompts.delete(id);
+      }
+    }
+    payload.dinnerPrompts.forEach((prompt, idx) => {
+      const id = `dp-${payload.issueNumber}-${idx + 1}`;
+      this.dinnerPrompts.set(id, {
+        id,
+        digestId,
+        issueNumber: payload.issueNumber,
+        question: prompt.question,
+        parentTip: prompt.parentTip,
+        followUp: prompt.followUp,
+        targetTiers: prompt.targetTiers,
+        sortOrder: prompt.sortOrder,
+      });
+    });
+
+    for (const [id, phrase] of this.phrases.entries()) {
+      if (phrase.digestId === digestId) {
+        this.phrases.delete(id);
+      }
+    }
+    payload.phrases.forEach((phrase, idx) => {
+      const id = `ph-${payload.issueNumber}-${idx + 1}`;
+      this.phrases.set(id, {
+        id,
+        digestId,
+        issueNumber: payload.issueNumber,
+        word: phrase.word,
+        shortMeaning: phrase.shortMeaning,
+        fullMeaning: phrase.fullMeaning,
+        cringeLevel: phrase.cringeLevel,
+        cringeLabel: phrase.cringeLabel,
+        calmScript: phrase.calmScript,
+        targetTiers: phrase.targetTiers,
+        sortOrder: phrase.sortOrder,
+      });
+    });
+
+    const approvedArticleCount = payload.articles.filter(
+      (a) =>
+        (a.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+        DigestContentStatus.APPROVED
+    ).length;
+    const approvedVideoCount = payload.videos.filter(
+      (v) =>
+        (v.ingestionStatus ?? DigestContentStatus.APPROVED) ===
+          DigestContentStatus.APPROVED && v.isEmbeddable
+    ).length;
+
+    return {
+      id: storedDigest.id,
+      issueNumber: storedDigest.issueNumber,
+      publishDate: storedDigest.publishDate.toISOString(),
+      weekStart: storedDigest.weekStart.toISOString(),
+      weekEnd: storedDigest.weekEnd.toISOString(),
+      title: storedDigest.title,
+      summary: storedDigest.summary,
+      status: storedDigest.status,
+      articleCount: approvedArticleCount,
+      videoCount: approvedVideoCount,
     };
   }
 

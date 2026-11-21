@@ -53,6 +53,13 @@ import {
   PrismaDigestRepository,
 } from './modules/digest/digest.repository.js';
 import { DigestService } from './modules/digest/digest.service.js';
+import { RssBlogFeedAdapter } from './modules/digest/ingestion/adapters/blogFeedFetcher.js';
+import {
+  hasConfiguredLlmApiKey,
+  LlmDigestCuratorAdapter,
+} from './modules/digest/ingestion/adapters/digestCurator.js';
+import { YouTubeWeeklyFeedAdapter } from './modules/digest/ingestion/adapters/youtubeFeedFetcher.js';
+import { DigestIngestionOrchestrator } from './modules/digest/ingestion/digestIngestion.orchestrator.js';
 import { faqsRoutes } from './modules/faqs/faqs.routes.js';
 import {
   type FaqRepository,
@@ -113,6 +120,8 @@ export interface AppOptions extends FastifyServerOptions {
   academyService?: AcademyService;
   digestRepository?: DigestRepository;
   digestService?: DigestService;
+  digestIngestionOrchestrator?: DigestIngestionOrchestrator;
+  digestSyncSecret?: string;
   faqsRepository?: FaqRepository;
   faqsService?: FaqsService;
   aiAdvisorRepository?: AiAdvisorRepository;
@@ -151,6 +160,8 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     academyService,
     digestRepository,
     digestService,
+    digestIngestionOrchestrator,
+    digestSyncSecret,
     faqsRepository,
     faqsService,
     aiAdvisorRepository,
@@ -227,7 +238,13 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Cookie'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Cookie',
+      'X-Digest-Sync-Secret',
+    ],
     exposedHeaders: ['Set-Cookie'],
   });
 
@@ -406,6 +423,20 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   const resolvedLlmOrchestrator =
     llmOrchestrator ??
     new MultiProviderLlmOrchestrator({ logger: app.log });
+  const resolvedDigestIngestionOrchestrator =
+    digestIngestionOrchestrator ??
+    new DigestIngestionOrchestrator({
+      blogFeedFetcher: new RssBlogFeedAdapter(),
+      youtubeFeedFetcher: new YouTubeWeeklyFeedAdapter(),
+      curator: new LlmDigestCuratorAdapter({
+        llmOrchestrator: hasConfiguredLlmApiKey()
+          ? resolvedLlmOrchestrator
+          : undefined,
+        logger: app.log,
+      }),
+      repository: resolvedDigestRepository,
+      logger: app.log,
+    });
   const resolvedFaqRetrievalService = new FaqRetrievalService(
     resolvedFaqsRepository
   );
@@ -491,6 +522,8 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     digestRepository: resolvedDigestRepository,
     digestService: resolvedDigestService,
     childrenRepository: resolvedChildrenRepository,
+    digestIngestionOrchestrator: resolvedDigestIngestionOrchestrator,
+    digestSyncSecret,
   });
   await app.register(faqsRoutes, {
     prefix: '/api/v1/faqs',

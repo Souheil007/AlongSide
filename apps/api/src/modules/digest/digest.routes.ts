@@ -1,10 +1,12 @@
+import { createHash, timingSafeEqual } from 'node:crypto';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
-import type {
-  DevelopmentalTier,
-  DigestItemType,
-  DigestQueryScope,
-  DigestVideoDurationBucket,
-  ExploitSeverity,
+import {
+  Role,
+  type DevelopmentalTier,
+  type DigestItemType,
+  type DigestQueryScope,
+  type DigestVideoDurationBucket,
+  type ExploitSeverity,
 } from '@alongside/shared';
 import type { ChildrenRepository } from '../children/children.repository.js';
 import { DigestController } from './digest.controller.js';
@@ -13,11 +15,29 @@ import {
   PrismaDigestRepository,
 } from './digest.repository.js';
 import { DigestService } from './digest.service.js';
+import { RssBlogFeedAdapter } from './ingestion/adapters/blogFeedFetcher.js';
+import { LlmDigestCuratorAdapter } from './ingestion/adapters/digestCurator.js';
+import { YouTubeWeeklyFeedAdapter } from './ingestion/adapters/youtubeFeedFetcher.js';
+import { DigestIngestionOrchestrator } from './ingestion/digestIngestion.orchestrator.js';
 
 export interface DigestRoutesOptions {
   digestService?: DigestService;
   digestRepository?: DigestRepository;
   childrenRepository?: ChildrenRepository;
+  digestIngestionOrchestrator?: DigestIngestionOrchestrator;
+  digestSyncSecret?: string;
+}
+
+function verifySyncSecretConstantTime(
+  provided: string,
+  expected: string
+): boolean {
+  if (!provided || !expected) {
+    return false;
+  }
+  const providedDigest = createHash('sha256').update(provided, 'utf8').digest();
+  const expectedDigest = createHash('sha256').update(expected, 'utf8').digest();
+  return timingSafeEqual(providedDigest, expectedDigest);
 }
 
 const tierEnum = [
@@ -365,6 +385,79 @@ const digestInteractionResultDtoSchema = {
   required: ['itemType', 'itemId', 'isRead', 'isSaved'],
 };
 
+const digestSyncMetricsSchema = {
+  type: 'object',
+  properties: {
+    fetched: { type: 'number' },
+    rejected: { type: 'number' },
+    deduplicated: { type: 'number' },
+    selected: { type: 'number' },
+    persisted: { type: 'number' },
+  },
+  required: ['fetched', 'rejected', 'deduplicated', 'selected', 'persisted'],
+};
+
+const digestTierSyncMetricsSchema = {
+  type: 'object',
+  properties: {
+    tier: { type: 'string', enum: tierEnum },
+    articlesSelected: { type: 'number' },
+    videosSelected: { type: 'number' },
+    dinnerPromptsGenerated: { type: 'number' },
+    phrasesGenerated: { type: 'number' },
+    usedFallbackLookback: { type: 'boolean' },
+    articleLookbackDaysUsed: { type: 'number' },
+    videoLookbackDaysUsed: { type: 'number' },
+  },
+  required: [
+    'tier',
+    'articlesSelected',
+    'videosSelected',
+    'dinnerPromptsGenerated',
+    'phrasesGenerated',
+    'usedFallbackLookback',
+    'articleLookbackDaysUsed',
+    'videoLookbackDaysUsed',
+  ],
+};
+
+const digestSyncReportDtoSchema = {
+  type: 'object',
+  properties: {
+    issueNumber: { type: 'number' },
+    dryRun: { type: 'boolean' },
+    persisted: { type: 'boolean' },
+    publishDate: { type: 'string' },
+    weekStart: { type: 'string' },
+    weekEnd: { type: 'string' },
+    title: { type: 'string' },
+    summary: { type: 'string' },
+    articles: digestSyncMetricsSchema,
+    videos: digestSyncMetricsSchema,
+    dinnerPromptsPersisted: { type: 'number' },
+    phrasesPersisted: { type: 'number' },
+    perTier: { type: 'array', items: digestTierSyncMetricsSchema },
+    warnings: { type: 'array', items: { type: 'string' } },
+    issue: digestIssueSummaryDtoSchema,
+  },
+  required: [
+    'issueNumber',
+    'dryRun',
+    'persisted',
+    'publishDate',
+    'weekStart',
+    'weekEnd',
+    'title',
+    'summary',
+    'articles',
+    'videos',
+    'dinnerPromptsPersisted',
+    'phrasesPersisted',
+    'perTier',
+    'warnings',
+  ],
+};
+
 export const digestRoutes: FastifyPluginAsync<DigestRoutesOptions> = async (
   fastify,
   opts
@@ -372,7 +465,61 @@ export const digestRoutes: FastifyPluginAsync<DigestRoutesOptions> = async (
   const repository = opts.digestRepository ?? new PrismaDigestRepository();
   const service =
     opts.digestService ?? new DigestService(repository, opts.childrenRepository);
-  const controller = new DigestController(service);
+  const ingestionOrchestrator =
+    opts.digestIngestionOrchestrator ??
+    new DigestIngestionOrchestrator({
+      blogFeedFetcher: new RssBlogFeedAdapter(),
+      youtubeFeedFetcher: new YouTubeWeeklyFeedAdapter(),
+      curator: new LlmDigestCuratorAdapter({ logger: fastify.log }),
+      repository,
+      logger: fastify.log,
+    });
+  const controller = new DigestController(service, ingestionOrchestrator);
+
+  const requireAdminOrSyncSecret = async (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ): Promise<void> => {
+    const rawHeaderSecret = request.headers['x-digest-sync-secret'];
+    const providedSecret =
+      typeof rawHeaderSecret === 'string' ? rawHeaderSecret.trim() : '';
+
+    if (providedSecret) {
+      const expectedSecret = (
+        opts.digestSyncSecret ??
+        process.env.DIGEST_SYNC_SECRET ??
+        ''
+      ).trim();
+
+      if (verifySyncSecretConstantTime(providedSecret, expectedSecret)) {
+        return;
+      }
+
+      return reply.status(401).send({
+        success: false,
+        error: {
+          code: 'UNAUTHORIZED',
+          message: 'Invalid digest sync secret.',
+        },
+      });
+    }
+
+    await fastify.authenticate(request, reply);
+    if (reply.sent) {
+      return;
+    }
+
+    if (request.user?.role !== Role.ADMIN) {
+      return reply.status(403).send({
+        success: false,
+        error: {
+          code: 'FORBIDDEN',
+          message:
+            'Administrator privileges are required to sync weekly digest issues.',
+        },
+      });
+    }
+  };
 
   const optionalAuth = async (request: FastifyRequest, reply: FastifyReply) => {
     if (typeof fastify.optionalAuthenticate === 'function') {
@@ -783,5 +930,60 @@ export const digestRoutes: FastifyPluginAsync<DigestRoutesOptions> = async (
       },
     },
     controller.upsertInteraction.bind(controller)
+  );
+
+  // ====================================================
+  // ADMIN / CRON WEEKLY SYNC ROUTE (PLAN-50)
+  // ====================================================
+
+  // POST /api/v1/digest/issues/sync - Trigger Live Weekly Blog & Video Sourcing Pipeline
+  fastify.post<{
+    Body: {
+      weekStart?: string;
+      weekEnd?: string;
+      issueNumber?: number;
+      dryRun?: boolean;
+      fallbackLookbackDays?: number;
+    };
+  }>(
+    '/issues/sync',
+    {
+      preHandler: [requireAdminOrSyncSecret],
+      schema: {
+        tags: ['Culture Digest'],
+        body: {
+          type: 'object',
+          properties: {
+            weekStart: { type: 'string', minLength: 1 },
+            weekEnd: { type: 'string', minLength: 1 },
+            issueNumber: { type: 'integer', minimum: 1 },
+            dryRun: { type: 'boolean' },
+            fallbackLookbackDays: { type: 'integer', minimum: 0, maximum: 30 },
+          },
+          additionalProperties: false,
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean', enum: [true] },
+              data: {
+                type: 'object',
+                properties: {
+                  report: digestSyncReportDtoSchema,
+                },
+                required: ['report'],
+              },
+            },
+            required: ['success', 'data'],
+          },
+          400: errorResponseSchema,
+          401: errorResponseSchema,
+          403: errorResponseSchema,
+          503: errorResponseSchema,
+        },
+      },
+    },
+    controller.syncWeeklyEdition.bind(controller)
   );
 };
