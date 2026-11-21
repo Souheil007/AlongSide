@@ -12,7 +12,7 @@ import { WeeklyPhrasesStrip } from './WeeklyPhrasesStrip';
 import { cn } from '@/lib/utils';
 
 export interface SundayTableCloserBandProps {
-  issueNumber: number;
+  issueNumber: number | null;
   tier: DevelopmentalTier;
   shortAges: string;
   childName: string;
@@ -70,7 +70,10 @@ export function SundayTableCloserBand({
           className="flex flex-col gap-4 rounded-[14px] bg-[#10251C] p-6 sm:p-9 text-[#FAF9F5]"
         >
           <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-[#FAF9F5]/75 tabular-nums">
-            <span>Tonight&apos;s dinner question · Issue #{issueNumber}</span>
+            <span>
+              Tonight&apos;s dinner question
+              {issueNumber !== null ? ` · Issue #${issueNumber}` : ''}
+            </span>
             <span>
               {(dinnerPromptIndex % dinnerPrompts.length) + 1} of {dinnerPrompts.length}
             </span>

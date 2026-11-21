@@ -95,13 +95,22 @@ export function SavedShortlistView({
                       className="grid grid-cols-1 items-start gap-2.5 border-b border-[#131715]/10 py-5 md:grid-cols-[185px_minmax(0,1fr)_auto] md:gap-6"
                     >
                       <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 pt-0.5 text-[12.5px] text-[#59625D] tabular-nums md:flex-col md:items-start">
-                        <span className="font-medium text-[#131715]">
+                        <span className="font-medium leading-[1.35] text-[#131715]">
                           {article.sourceName}
-                          {pubDate ? ` · ${pubDate}` : ''}
                         </span>
-                        <span>{article.topicLabel}</span>
+                        <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                          {pubDate && (
+                            <>
+                              <span className="whitespace-nowrap">{pubDate}</span>
+                              <span aria-hidden="true">·</span>
+                            </>
+                          )}
+                          <span className="whitespace-nowrap">
+                            {article.readMinutes} min read
+                          </span>
+                        </span>
                         <span>
-                          Issue #{article.issueNumber} · {article.readMinutes} min read
+                          Issue #{article.issueNumber} · {article.topicLabel}
                         </span>
                       </div>
 

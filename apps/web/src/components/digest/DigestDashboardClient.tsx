@@ -28,7 +28,9 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
         digest.edition.issue.weekStart,
         digest.edition.issue.weekEnd
       )
-    : `Issue #${digest.resolvedIssueNumber}`;
+    : digest.resolvedIssueNumber !== null
+      ? `Issue #${digest.resolvedIssueNumber}`
+      : 'This week';
 
   const handleSwitchTabAndScrollTop = (tab: 'week' | 'blogs' | 'videos' | 'saved') => {
     digest.setActiveTab(tab);

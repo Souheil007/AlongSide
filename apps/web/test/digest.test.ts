@@ -179,13 +179,13 @@ describe('Culture & Trends Digest API Client Specification (PLAN-08 + PLAN-49/51
       expect(issues[0]?.issueNumber).toBe(42);
     });
 
-    it('falls back cleanly to 3-issue mock fixtures when network is offline', async () => {
+    it('falls back cleanly to trimmed 2-issue offline mock fixtures when network is offline', async () => {
       global.fetch = vi.fn().mockRejectedValue(new Error('Network offline'));
 
       const issues = await listDigestIssues(
         DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3
       );
-      expect(issues.map((i) => i.issueNumber)).toEqual([42, 41, 40]);
+      expect(issues.map((i) => i.issueNumber)).toEqual([42, 41]);
 
       const edition = await getWeeklyDigestEdition(42, {
         tier: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3,
@@ -278,6 +278,101 @@ describe('Culture & Trends Digest API Client Specification (PLAN-08 + PLAN-49/51
       expect(saved).toHaveProperty('articles');
       expect(saved).toHaveProperty('videos');
       expect(saved).toHaveProperty('dinnerPrompts');
+    });
+
+    it('persists live-UUID guest bookmark snapshots in localStorage across reload without leaking onto signed-in accounts', async () => {
+      const storage = new Map<string, string>();
+      vi.stubGlobal('window', {
+        localStorage: {
+          getItem: (key: string) => storage.get(key) ?? null,
+          setItem: (key: string, value: string) => {
+            storage.set(key, value);
+          },
+          removeItem: (key: string) => {
+            storage.delete(key);
+          },
+        },
+      });
+
+      try {
+        const liveUuidArticle = {
+          id: 'uuid-live-issue-45',
+          digestId: 'digest-issue-45',
+          issueNumber: 45,
+          title: 'How teen sleep rhythms recover after finals week',
+          summary: 'Pediatric sleep clinicians share calm two-night reset routines.',
+          keyShift: 'Keep wake times within 90 minutes on weekends to avoid Monday fog.',
+          perspectiveNote: null,
+          topicLabel: 'Sleep & Routines',
+          readMinutes: 4,
+          sourceName: 'HealthyChildren.org (AAP)',
+          sourceDomain: 'healthychildren.org',
+          sourceUrl: 'https://www.healthychildren.org/English/healthy-living/sleep/',
+          authorName: null,
+          imageUrl: null,
+          publishedAt: '2026-12-05T14:00:00.000Z',
+          isOriginalEditorial: false,
+          contentMarkdown: null,
+          sourcesText: 'HealthyChildren.org (AAP)',
+          targetTiers: [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15],
+          isLead: true,
+          sortOrder: 1,
+          isRead: false,
+          isSaved: false,
+        };
+
+        const fetchSpy = vi.fn().mockResolvedValue({
+          ok: true,
+          status: 200,
+          headers: new Headers({ 'content-type': 'application/json' }),
+          json: async () => ({
+            success: true,
+            data: {
+              articles: [],
+              videos: [],
+              dinnerPrompts: [],
+              totalCount: 0,
+            },
+          }),
+        });
+        global.fetch = fetchSpy;
+
+        // 1. Guest saves a live-synced Issue #45 UUID article
+        const result = await upsertDigestInteraction({
+          itemType: DigestItemType.ARTICLE,
+          itemId: liveUuidArticle.id,
+          isSaved: true,
+          isGuest: true,
+          articleSnapshot: liveUuidArticle,
+        });
+        expect(result.isSaved).toBe(true);
+        expect(fetchSpy).not.toHaveBeenCalled();
+
+        // 2. Simulated page reload: guest Saved shortlist reads persisted snapshot from localStorage
+        const guestSaved = await getSavedDigestShortlist({
+          tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+          isGuest: true,
+        });
+        expect(guestSaved.totalCount).toBe(1);
+        expect(guestSaved.articles).toHaveLength(1);
+        expect(guestSaved.articles[0]?.id).toBe('uuid-live-issue-45');
+        expect(guestSaved.articles[0]?.issueNumber).toBe(45);
+        expect(guestSaved.articles[0]?.isSaved).toBe(true);
+
+        // 3. Signed-in user (isGuest: false) reads server shortlist, NEVER leaking guest localStorage
+        const authedSaved = await getSavedDigestShortlist({
+          tier: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15,
+          isGuest: false,
+        });
+        expect(fetchSpy).toHaveBeenCalledWith(
+          expect.stringContaining('/api/v1/digest/saved'),
+          expect.any(Object)
+        );
+        expect(authedSaved.totalCount).toBe(0);
+        expect(authedSaved.articles).toEqual([]);
+      } finally {
+        vi.unstubAllGlobals();
+      }
     });
   });
 });

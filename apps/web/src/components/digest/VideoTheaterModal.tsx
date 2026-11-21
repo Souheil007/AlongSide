@@ -29,19 +29,22 @@ export function VideoTheaterModal({
   const [embedKey, setEmbedKey] = React.useState(0);
   const [skimOpen, setSkimOpen] = React.useState(false);
   const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+  const onCloseRef = React.useRef(onClose);
+  onCloseRef.current = onClose;
+  const activeId = video?.id ?? null;
 
   React.useEffect(() => {
     setStartSeconds(initialStartSeconds);
     setEmbedKey((prev) => prev + 1);
     setSkimOpen(false);
-  }, [video?.id, initialStartSeconds]);
+  }, [activeId, initialStartSeconds]);
 
   React.useEffect(() => {
-    if (!video) return;
+    if (!activeId) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        onCloseRef.current();
       }
     };
 
@@ -54,7 +57,7 @@ export function VideoTheaterModal({
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [video, onClose]);
+  }, [activeId]);
 
   if (!video) {
     return null;

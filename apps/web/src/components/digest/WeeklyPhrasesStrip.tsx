@@ -105,15 +105,17 @@ export function WeeklyPhrasesStrip({
             <div className="flex flex-wrap items-center gap-2.5 text-[12px] text-[#59625D]">
               <span>Parent-use gauge: {activePhrase.cringeLabel}</span>
               <span
+                data-testid="phrase-cringe-gauge"
                 className="inline-flex items-center gap-1"
-                aria-label={`Parent-use gauge ${activePhrase.cringeLevel} of 5`}
+                aria-label={`Parent-use gauge ${Math.min(3, Math.max(1, activePhrase.cringeLevel))} of 3`}
               >
-                {[1, 2, 3, 4, 5].map((dot) => (
+                {[1, 2, 3].map((dot) => (
                   <span
                     key={dot}
+                    data-testid={`phrase-gauge-dot-${dot}`}
                     className={cn(
                       'h-[7px] w-[7px] rounded-full',
-                      dot <= activePhrase.cringeLevel
+                      dot <= Math.min(3, Math.max(1, activePhrase.cringeLevel))
                         ? 'bg-[#143D2B]'
                         : 'bg-[#131715]/15'
                     )}

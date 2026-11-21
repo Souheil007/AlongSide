@@ -44,13 +44,16 @@ export function BlogReaderDrawer({
   onAskAdvisor,
 }: BlogReaderDrawerProps) {
   const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+  const onCloseRef = React.useRef(onClose);
+  onCloseRef.current = onClose;
+  const activeId = article?.id ?? null;
 
   React.useEffect(() => {
-    if (!article) return;
+    if (!activeId) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        onCloseRef.current();
       }
     };
 
@@ -63,7 +66,7 @@ export function BlogReaderDrawer({
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [article, onClose]);
+  }, [activeId]);
 
   if (!article) {
     return null;

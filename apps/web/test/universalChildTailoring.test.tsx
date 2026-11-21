@@ -127,9 +127,19 @@ describe('Plan 34: Universal Cross-Tab Reactive Child Context Synchronization Sp
         expect(resolveActiveDigestTier(maya)).toBe(
           DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9
         );
+        // Julian is 14 yrs old (birthYear = currentYear - 14) with legacy TIER_4_AGES_14_PLUS;
+        // birthYear/birthMonth lifespan calculation takes precedence -> Early Adolescence (13-15)
         expect(resolveActiveDigestTier(julian)).toBe(
-          DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18
+          DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15
         );
+        expect(
+          resolveActiveDigestTier({
+            ...julian,
+            birthYear: new Date().getFullYear() - 17,
+            birthMonth: 1,
+            age: 17,
+          })
+        ).toBe(DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18);
       });
 
       it('enforces phrase strip eligibility strictly for ages 7-18 and omits ages 0-6', () => {

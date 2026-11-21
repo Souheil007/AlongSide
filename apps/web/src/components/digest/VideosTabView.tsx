@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
 
 export interface VideosTabViewProps {
   videos: DigestVideoDTO[];
-  issueNumber: number;
+  issueNumber: number | null;
   isArchiveEdition: boolean;
   childName: string;
   shortAges: string;
@@ -92,9 +92,12 @@ export function VideosTabView({
     }
   };
 
-  const issueScopeLabel = isArchiveEdition
-    ? `Issue #${issueNumber}`
-    : `This week (#${issueNumber})`;
+  const issueScopeLabel =
+    issueNumber === null
+      ? 'This week'
+      : isArchiveEdition
+        ? `Issue #${issueNumber}`
+        : `This week (#${issueNumber})`;
 
   return (
     <section
@@ -415,7 +418,9 @@ export function VideosTabView({
           <div className="mb-4">
             <h3 className="font-serif text-[22px] font-normal tracking-[-0.015em] text-[#131715]">
               {scope === 'issue'
-                ? `Issue #${issueNumber} talks for ${childName} · ${shortAges}`
+                ? issueNumber !== null
+                  ? `Issue #${issueNumber} talks for ${childName} · ${shortAges}`
+                  : `This week's talks for ${childName} · ${shortAges}`
                 : `All curated talks for ${childName} · ${shortAges}`}
             </h3>
             <p className="mt-0.5 text-[13.5px] text-[#59625D]">

@@ -6,10 +6,19 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import {
   CANONICAL_DIGEST_TIERS,
   DevelopmentalTier,
+  DigestItemType,
+  Gender,
+  RoadType,
   isSlangEligibleTier,
+  type ChildDTO,
   type DigestArticleDTO,
   type DigestVideoDTO,
 } from '@alongside/shared';
+import {
+  getSavedDigestShortlist,
+  writeGuestDigestInteraction,
+} from '@/lib/api/digest';
+import { DIGEST_TIER_METADATA } from '@/lib/digestTierMeta';
 import {
   getMockDigestArticles,
   getMockDigestIssues,
@@ -28,6 +37,7 @@ import {
   formatWeekDateRange,
   getSafeExternalHref,
   parseDigestUrlParams,
+  resolveActiveDigestTier,
   splitJumpChipLabel,
 } from '@/hooks/useCultureDigest';
 import { DigestFeedHeader } from '../DigestFeedHeader';
@@ -252,6 +262,61 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(html).toContain('You&#x27;re all caught up');
       expect(html).toContain('Show all blogs');
     });
+
+    it('renders "No blogs published for this week yet." with "Browse all weeks" on blank-search empty state', () => {
+      const html = renderToStaticMarkup(
+        <BlogsTabView
+          articles={[]}
+          unreadCount={0}
+          issueNumber={42}
+          isArchiveEdition={false}
+          childName="Maya"
+          shortAges="Ages 13–15"
+          scope="issue"
+          readFilter="all"
+          searchQuery=""
+          onChangeScope={vi.fn()}
+          onChangeReadFilter={vi.fn()}
+          onChangeSearch={vi.fn()}
+          onOpenArticle={vi.fn()}
+          onToggleSaveArticle={vi.fn()}
+        />
+      );
+
+      expect(html).toContain('data-testid="blogs-empty-state"');
+      expect(html).toContain('No blogs published for this week yet.');
+      expect(html).toContain('Browse all weeks');
+      expect(html).not.toContain('No blogs matched');
+    });
+
+    it('renders left-margin sourceName on its own line and publish date with whitespace-nowrap', () => {
+      const edition = getMockWeeklyEdition(42, teenTier);
+      const html = renderToStaticMarkup(
+        <BlogsTabView
+          articles={edition.articles}
+          unreadCount={edition.articles.length}
+          issueNumber={42}
+          isArchiveEdition={false}
+          childName="Maya"
+          shortAges="Ages 13–15"
+          scope="issue"
+          readFilter="all"
+          searchQuery=""
+          onChangeScope={vi.fn()}
+          onChangeReadFilter={vi.fn()}
+          onChangeSearch={vi.fn()}
+          onOpenArticle={vi.fn()}
+          onToggleSaveArticle={vi.fn()}
+        />
+      );
+
+      // Stream rows put sourceName on its own font-medium line and keep short date non-wrapping
+      const companion = edition.articles[1]!;
+      const companionDate = formatShortPublishDate(companion.publishedAt);
+      expect(html).toContain(`>${companion.sourceName}</span>`);
+      expect(html).toContain(`<span class="whitespace-nowrap">${companionDate}</span>`);
+      expect(html).toContain(`<span class="whitespace-nowrap">${companion.readMinutes} min read</span>`);
+    });
   });
 
   describe('3. Strict Age-Gated Weekly Phrases Strip (Omitted 0–6, Rendered & Expanded 7–18)', () => {
@@ -331,6 +396,14 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(html).toContain('data-testid="phrase-expanded-panel"');
       expect(html).toContain('Parent-use gauge:');
       expect(html).toContain('Heard another word? Ask AI Advisor');
+      // 1-3 Parent-use gauge scale (3 dots, "of 3", never 5)
+      expect(html).toContain('of 3');
+      expect(html).not.toContain('of 5');
+      expect(html).toContain('data-testid="phrase-gauge-dot-1"');
+      expect(html).toContain('data-testid="phrase-gauge-dot-2"');
+      expect(html).toContain('data-testid="phrase-gauge-dot-3"');
+      expect(html).not.toContain('data-testid="phrase-gauge-dot-4"');
+      expect(html).not.toContain('data-testid="phrase-gauge-dot-5"');
     });
   });
 
@@ -583,6 +656,123 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(source).toContain('Suspense');
       expect(source).toContain('DigestDashboardClient');
       expect(source).toContain("title: 'Culture & Trends'");
+    });
+  });
+
+  describe('6. Hardening Regressions (Age Tier, Live-UUID Guest Snapshots, No #42 Loading Flash)', () => {
+    it('resolves a 14-year-old with legacy TIER_4_AGES_14_PLUS to TIER_4_EARLY_ADOLESCENCE_13_15 (Ages 13–15)', () => {
+      const legacyFourteenYearOld: ChildDTO = {
+        id: 'child-14-legacy',
+        userId: 'parent-1',
+        name: 'Julian',
+        gender: Gender.MALE,
+        birthYear: new Date().getFullYear() - 14,
+        birthMonth: 1,
+        age: 14,
+        roadType: RoadType.ACTIVE_DEVICE,
+        developmentalTier: DevelopmentalTier.TIER_4_AGES_14_PLUS,
+        schoolGrade: '9th Grade',
+        latestAssessmentScore: null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const resolved = resolveActiveDigestTier(legacyFourteenYearOld);
+      expect(resolved).toBe(DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15);
+      expect(DIGEST_TIER_METADATA[resolved].shortAges).toBe('Ages 13–15');
+    });
+
+    it('persists a live-UUID article (uuid-live-issue-45) in guest localStorage snapshots across reload in Saved', async () => {
+      const storage = new Map<string, string>();
+      vi.stubGlobal('window', {
+        localStorage: {
+          getItem: (key: string) => storage.get(key) ?? null,
+          setItem: (key: string, value: string) => {
+            storage.set(key, value);
+          },
+          removeItem: (key: string) => {
+            storage.delete(key);
+          },
+        },
+      });
+
+      try {
+        const liveArticle: DigestArticleDTO = {
+          ...getMockWeeklyEdition(42, teenTier).articles[0]!,
+          id: 'uuid-live-issue-45',
+          digestId: 'digest-issue-45',
+          issueNumber: 45,
+          title: 'Live-synced Issue 45 study on teen circadian shifts',
+          targetTiers: [teenTier],
+          isRead: false,
+          isSaved: false,
+        };
+
+        writeGuestDigestInteraction({
+          itemType: DigestItemType.ARTICLE,
+          itemId: liveArticle.id,
+          isSaved: true,
+          articleSnapshot: liveArticle,
+        });
+
+        const persisted = await getSavedDigestShortlist({
+          tier: teenTier,
+          isGuest: true,
+        });
+
+        expect(persisted.totalCount).toBe(1);
+        expect(persisted.articles[0]?.id).toBe('uuid-live-issue-45');
+        expect(persisted.articles[0]?.issueNumber).toBe(45);
+
+        const savedHtml = renderToStaticMarkup(
+          <SavedShortlistView
+            shortlist={persisted}
+            childName="Julian"
+            shortAges="Ages 13–15"
+            onBrowseThisWeek={vi.fn()}
+            onOpenArticle={vi.fn()}
+            onRemoveArticle={vi.fn()}
+            onOpenVideo={vi.fn()}
+            onRemoveVideo={vi.fn()}
+            onCopyDinnerQuestion={vi.fn()}
+            onRemoveDinner={vi.fn()}
+          />
+        );
+        expect(savedHtml).toContain('Live-synced Issue 45 study on teen circadian shifts');
+        expect(savedHtml).toContain('Issue #45');
+      } finally {
+        vi.unstubAllGlobals();
+      }
+    });
+
+    it('renders DigestFeedHeader cleanly with null issueNumber during initial load without flashing #42 or #null', () => {
+      const html = renderToStaticMarkup(
+        <DigestFeedHeader
+          issueNumber={null}
+          latestIssueNumber={null}
+          childName="Julian"
+          childAgeLabel="14 yrs"
+          tierLabel="Early Adolescence"
+          shortAges="Ages 13–15"
+          readArticleCount={0}
+          totalArticleCount={0}
+          issues={[]}
+          isArchiveEdition={false}
+          activeTab="week"
+          weekArticleCount={0}
+          weekVideoCount={0}
+          savedTotalCount={0}
+          onSelectIssue={vi.fn()}
+          onReturnToLatest={vi.fn()}
+          onSelectTab={vi.fn()}
+        />
+      );
+
+      expect(html).toContain('Latest weekly edition');
+      expect(html).toContain('Loading issues…');
+      expect(html).not.toContain('#42');
+      expect(html).not.toContain('No. 42');
+      expect(html).not.toContain('null');
     });
   });
 });

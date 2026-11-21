@@ -11,6 +11,7 @@ import {
   DEFAULT_DIGEST_TIER,
   DevelopmentalTier,
   DigestItemType,
+  calculateLifespanTier,
   isSlangEligibleTier,
   matchesVideoDurationBucket,
   resolveDigestTierBucket,
@@ -35,7 +36,8 @@ import {
   listDigestVideos,
   upsertDigestInteraction,
 } from '@/lib/api/digest';
-import { DIGEST_TIER_METADATA } from '@/lib/api/mocks/digestMocks';
+import { DIGEST_TIER_METADATA } from '@/lib/digestTierMeta';
+import { useAuth } from '@/hooks/useAuth';
 import {
   formatChildAge,
   selectActiveChild,
@@ -68,11 +70,27 @@ const MONTHS_SHORT = [
 
 /**
  * Resolves a child profile into one of the 6 canonical Culture & Trends developmental buckets.
+ * Prefers birthYear + birthMonth via canonical lifespan tiering so legacy TIER_4_AGES_14_PLUS
+ * records for 14-year-olds resolve accurately to Early Adolescence (Ages 13–15).
  */
 export function resolveActiveDigestTier(
   child: ChildDTO | null | undefined
 ): CanonicalDigestTier {
   if (!child) return DEFAULT_DIGEST_TIER;
+
+  if (
+    typeof child.birthYear === 'number' &&
+    Number.isFinite(child.birthYear) &&
+    child.birthYear > 0 &&
+    typeof child.birthMonth === 'number' &&
+    Number.isFinite(child.birthMonth) &&
+    child.birthMonth >= 1 &&
+    child.birthMonth <= 12
+  ) {
+    return resolveDigestTierBucket(
+      calculateLifespanTier(child.birthYear, child.birthMonth)
+    );
+  }
 
   if (child.developmentalTier) {
     const knownTiers = Object.values(DevelopmentalTier) as string[];
@@ -342,7 +360,12 @@ interface InteractionMutationInput {
 export function useCultureDigest() {
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const activeChild = useChildContextStore(selectActiveChild);
+
+  // Guest localStorage overlays strictly run only when confirmed unauthenticated
+  const isGuestSession: boolean | undefined = isAuthLoading ? undefined : !isAuthenticated;
+  const isGuestOverlayActive = isGuestSession === true;
 
   const resolvedTier = React.useMemo(
     () => resolveActiveDigestTier(activeChild),
@@ -370,10 +393,19 @@ export function useCultureDigest() {
 
   // Overlays
   const [openArticleId, setOpenArticleId] = React.useState<string | null>(null);
+  const [drawerArticle, setDrawerArticle] = React.useState<DigestArticleDTO | null>(null);
   const [modalVideo, setModalVideo] = React.useState<{
     video: DigestVideoDTO;
     startSeconds: number;
   } | null>(null);
+
+  const drawerArticleRef = React.useRef<DigestArticleDTO | null>(drawerArticle);
+  drawerArticleRef.current = drawerArticle;
+  const modalVideoRef = React.useRef<{
+    video: DigestVideoDTO;
+    startSeconds: number;
+  } | null>(modalVideo);
+  modalVideoRef.current = modalVideo;
 
   // Calm ephemeral toast
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
@@ -403,6 +435,7 @@ export function useCultureDigest() {
       prevChildKeyRef.current = nextKey;
       setFilters((prev) => applyChildSwitchReset(prev));
       setOpenArticleId(null);
+      setDrawerArticle(null);
       setModalVideo(null);
     }
   }, [activeChild?.id, resolvedTier]);
@@ -441,41 +474,49 @@ export function useCultureDigest() {
       filters.selectedIssueNumber ?? 'latest',
       resolvedTier,
       activeChild?.id ?? null,
+      isGuestOverlayActive,
     ],
     queryFn: () =>
       getWeeklyDigestEdition(filters.selectedIssueNumber ?? 'latest', {
         tier: resolvedTier,
         childId: activeChild?.id,
+        isGuest: isGuestSession,
       }),
     staleTime: 2 * 60 * 1000,
   });
 
   const issues = issuesQuery.data ?? [];
   const edition = editionQuery.data ?? null;
-  const latestIssueNumber =
+  const latestIssueNumber: number | null =
     issues.length > 0
       ? Math.max(...issues.map((i) => i.issueNumber))
-      : (edition?.issue.issueNumber ?? filters.selectedIssueNumber ?? 42);
-  const resolvedIssueNumber =
+      : (edition?.issue.issueNumber ?? null);
+  const resolvedIssueNumber: number | null =
     edition?.issue.issueNumber ?? filters.selectedIssueNumber ?? latestIssueNumber;
   const isArchiveEdition =
-    issues.length > 0 && resolvedIssueNumber !== latestIssueNumber;
+    issues.length > 0 &&
+    resolvedIssueNumber !== null &&
+    latestIssueNumber !== null &&
+    resolvedIssueNumber !== latestIssueNumber;
 
   // 3. Query: Week-scoped or All-weeks Blogs (Tab 2)
   const articlesQuery = useQuery({
     queryKey: [
       'digest-articles',
-      resolvedIssueNumber,
+      resolvedIssueNumber ?? 'latest',
       filters.blogsScope,
       resolvedTier,
       activeChild?.id ?? null,
+      isGuestOverlayActive,
     ],
     queryFn: () =>
       listDigestArticles({
-        issueNumber: filters.blogsScope === 'issue' ? resolvedIssueNumber : undefined,
+        issueNumber:
+          filters.blogsScope === 'issue' ? (resolvedIssueNumber ?? undefined) : undefined,
         scope: filters.blogsScope,
         tier: resolvedTier,
         childId: activeChild?.id,
+        isGuest: isGuestSession,
       }),
     enabled: activeTab === 'blogs',
     staleTime: 2 * 60 * 1000,
@@ -485,17 +526,20 @@ export function useCultureDigest() {
   const videosQuery = useQuery({
     queryKey: [
       'digest-videos',
-      resolvedIssueNumber,
+      resolvedIssueNumber ?? 'latest',
       filters.videosScope,
       resolvedTier,
       activeChild?.id ?? null,
+      isGuestOverlayActive,
     ],
     queryFn: () =>
       listDigestVideos({
-        issueNumber: filters.videosScope === 'issue' ? resolvedIssueNumber : undefined,
+        issueNumber:
+          filters.videosScope === 'issue' ? (resolvedIssueNumber ?? undefined) : undefined,
         scope: filters.videosScope,
         tier: resolvedTier,
         childId: activeChild?.id,
+        isGuest: isGuestSession,
       }),
     enabled: activeTab === 'videos',
     staleTime: 2 * 60 * 1000,
@@ -503,12 +547,19 @@ export function useCultureDigest() {
 
   // 5. Query: Saved shortlist (Tab 4 + tab badge count)
   const savedQuery = useQuery({
-    queryKey: ['digest-saved', resolvedTier, activeChild?.id ?? null],
+    queryKey: [
+      'digest-saved',
+      resolvedTier,
+      activeChild?.id ?? null,
+      isGuestOverlayActive,
+    ],
     queryFn: () =>
       getSavedDigestShortlist({
         tier: resolvedTier,
         childId: activeChild?.id,
+        isGuest: isGuestSession,
       }),
+    enabled: !isAuthLoading,
     staleTime: 60 * 1000,
   });
 
@@ -563,6 +614,10 @@ export function useCultureDigest() {
         childId: activeChild?.id,
         isRead: input.isRead,
         isSaved: input.isSaved,
+        isGuest: isGuestSession,
+        articleSnapshot: input.articleSnapshot,
+        videoSnapshot: input.videoSnapshot,
+        dinnerSnapshot: input.dinnerSnapshot,
       }),
     onMutate: async (input) => {
       // Cancel outgoing refetches so optimistic state is not overwritten
@@ -585,6 +640,8 @@ export function useCultureDigest() {
       const prevSaved = queryClient.getQueriesData<SavedDigestShortlistDTO>({
         queryKey: ['digest-saved'],
       });
+      const prevModalVideo = modalVideoRef.current;
+      const prevDrawerArticle = drawerArticleRef.current;
 
       // Patch all cached editions
       queryClient.setQueriesData<WeeklyDigestEditionDTO>(
@@ -746,7 +803,27 @@ export function useCultureDigest() {
         );
       }
 
-      return { prevEditions, prevArticles, prevVideos, prevSaved };
+      // Update active reader drawer snapshot if open
+      if (input.itemType === DigestItemType.ARTICLE) {
+        setDrawerArticle((prev) =>
+          prev && prev.id === input.itemId
+            ? {
+                ...prev,
+                isRead: input.isRead !== undefined ? input.isRead : prev.isRead,
+                isSaved: input.isSaved !== undefined ? input.isSaved : prev.isSaved,
+              }
+            : prev
+        );
+      }
+
+      return {
+        prevEditions,
+        prevArticles,
+        prevVideos,
+        prevSaved,
+        prevModalVideo,
+        prevDrawerArticle,
+      };
     },
     onError: (_err, _input, context) => {
       if (!context) return;
@@ -754,6 +831,18 @@ export function useCultureDigest() {
       context.prevArticles.forEach(([key, data]) => queryClient.setQueryData(key, data));
       context.prevVideos.forEach(([key, data]) => queryClient.setQueryData(key, data));
       context.prevSaved.forEach(([key, data]) => queryClient.setQueryData(key, data));
+      if (context.prevModalVideo) {
+        const snapshot = context.prevModalVideo;
+        setModalVideo((curr) =>
+          curr && curr.video.id === snapshot.video.id ? snapshot : curr
+        );
+      }
+      if (context.prevDrawerArticle) {
+        const snapshot = context.prevDrawerArticle;
+        setDrawerArticle((curr) =>
+          curr && curr.id === snapshot.id ? snapshot : curr
+        );
+      }
       showToast('Could not save that change. Please try again.');
     },
     onSuccess: (_data, input) => {
@@ -783,9 +872,15 @@ export function useCultureDigest() {
       scopedArticles.find((a) => a.id === openArticleId) ??
       edition?.articles.find((a) => a.id === openArticleId) ??
       savedShortlist.articles.find((a) => a.id === openArticleId) ??
-      null
+      (drawerArticle?.id === openArticleId ? drawerArticle : null)
     );
-  }, [openArticleId, scopedArticles, edition?.articles, savedShortlist.articles]);
+  }, [
+    openArticleId,
+    scopedArticles,
+    edition?.articles,
+    savedShortlist.articles,
+    drawerArticle,
+  ]);
 
   // Actions
   const setActiveTab = React.useCallback(
@@ -805,6 +900,7 @@ export function useCultureDigest() {
   );
 
   const returnToLatestIssue = React.useCallback(() => {
+    if (latestIssueNumber === null) return;
     setFilters((prev) => applyIssueSwitchReset(prev, latestIssueNumber));
     syncUrlParams(activeTab, latestIssueNumber);
   }, [activeTab, latestIssueNumber, syncUrlParams]);
@@ -916,6 +1012,7 @@ export function useCultureDigest() {
   const openArticleReader = React.useCallback(
     (article: DigestArticleDTO) => {
       setOpenArticleId(article.id);
+      setDrawerArticle(article);
       markArticleRead(article);
     },
     [markArticleRead]
@@ -923,6 +1020,7 @@ export function useCultureDigest() {
 
   const closeArticleReader = React.useCallback(() => {
     setOpenArticleId(null);
+    setDrawerArticle(null);
   }, []);
 
   const openVideoTheater = React.useCallback(

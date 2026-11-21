@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 export interface BlogsTabViewProps {
   articles: DigestArticleDTO[];
   unreadCount: number;
-  issueNumber: number;
+  issueNumber: number | null;
   isArchiveEdition: boolean;
   childName: string;
   shortAges: string;
@@ -44,9 +44,12 @@ export function BlogsTabView({
   onOpenArticle,
   onToggleSaveArticle,
 }: BlogsTabViewProps) {
-  const issueScopeLabel = isArchiveEdition
-    ? `Issue #${issueNumber}`
-    : `This week (#${issueNumber})`;
+  const issueScopeLabel =
+    issueNumber === null
+      ? 'This week'
+      : isArchiveEdition
+        ? `Issue #${issueNumber}`
+        : `This week (#${issueNumber})`;
 
   const trimmedQuery = searchQuery.trim();
   const showFeatured = !trimmedQuery && readFilter === 'all' && articles.length > 0;
@@ -168,8 +171,13 @@ export function BlogsTabView({
                 You&apos;re all caught up
               </p>
               <p className="max-w-[46ch] text-[14.5px] text-[#59625D]">
-                Every blog in {scope === 'issue' ? `Issue #${issueNumber}` : 'this archive'} for{' '}
-                {childName} · {shortAges} has been read.
+                Every blog in{' '}
+                {scope === 'issue'
+                  ? issueNumber !== null
+                    ? `Issue #${issueNumber}`
+                    : 'this week'
+                  : 'this archive'}{' '}
+                for {childName} · {shortAges} has been read.
               </p>
               <div className="mt-1 flex flex-wrap items-center justify-center gap-2.5">
                 <button
@@ -190,10 +198,33 @@ export function BlogsTabView({
                 )}
               </div>
             </>
+          ) : !trimmedQuery ? (
+            <>
+              <p className="font-serif text-[22px] font-normal text-[#131715]">
+                {scope === 'issue'
+                  ? 'No blogs published for this week yet.'
+                  : 'No blogs published for this age tier yet.'}
+              </p>
+              <p className="max-w-[46ch] text-[14.5px] text-[#59625D]">
+                {scope === 'issue'
+                  ? `Check back on Sunday, or browse earlier weeks tailored for ${childName} · ${shortAges}.`
+                  : `New curated reads for ${childName} · ${shortAges} arrive each Sunday.`}
+              </p>
+              {scope === 'issue' && (
+                <button
+                  type="button"
+                  data-testid="blogs-empty-browse-all-btn"
+                  onClick={() => onChangeScope('all')}
+                  className="mt-1 inline-flex min-h-[44px] items-center rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-[#0E2B1E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
+                >
+                  Browse all weeks
+                </button>
+              )}
+            </>
           ) : (
             <>
               <p className="text-[14.5px] text-[#59625D]">
-                No blogs matched &ldquo;{searchQuery}&rdquo; for {shortAges}.
+                No blogs matched &ldquo;{trimmedQuery}&rdquo; for {shortAges}.
               </p>
               <button
                 type="button"
@@ -323,15 +354,27 @@ export function BlogsTabView({
                     className="grid grid-cols-1 items-start gap-2.5 border-b border-[#131715]/10 py-5 md:grid-cols-[185px_minmax(0,1fr)_auto] md:gap-6"
                   >
                     <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 pt-0.5 text-[12.5px] text-[#59625D] tabular-nums md:flex-col md:items-start">
-                      <span className="font-medium text-[#131715]">
+                      <span className="font-medium leading-[1.35] text-[#131715]">
                         {article.sourceName}
-                        {pubDate ? ` · ${pubDate}` : ''}
+                      </span>
+                      <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                        {pubDate && (
+                          <>
+                            <span className="whitespace-nowrap">{pubDate}</span>
+                            <span aria-hidden="true">·</span>
+                          </>
+                        )}
+                        <span className="whitespace-nowrap">
+                          {article.readMinutes} min read
+                        </span>
+                        {article.isRead && (
+                          <>
+                            <span aria-hidden="true">·</span>
+                            <span className="font-medium text-[#143D2B]">Read</span>
+                          </>
+                        )}
                       </span>
                       <span>{article.topicLabel}</span>
-                      <span>
-                        {article.readMinutes} min read
-                        {article.isRead ? ' · Read' : ''}
-                      </span>
                     </div>
 
                     <div className="flex items-start justify-between gap-3 md:contents">
