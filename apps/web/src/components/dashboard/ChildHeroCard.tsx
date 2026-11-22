@@ -1,21 +1,20 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
-  Sparkles,
-  Calendar,
   Compass,
-  FileCheck2,
   Shield,
-  Brain,
   Flame,
+  Moon,
+  Baby,
 } from 'lucide-react';
 import {
   type ChildDTO,
   DevelopmentalTier,
+  RoadType,
 } from '@alongside/shared';
-import { Card, CardContent } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
+import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +25,8 @@ export interface ChildHeroCardProps {
   parentName?: string;
   streakDays?: number;
   minsLearnedThisWeek?: number;
+  variant?: 'default' | 'photo-cockpit';
+  advisorSlot?: React.ReactNode;
 }
 
 export interface LeapInfo {
@@ -214,6 +215,14 @@ export function getDailyParentCompassReflection(isEarlyTier: boolean, customDate
   return pool[dayOfYear % pool.length]!;
 }
 
+function getTimeOfDayGreeting(now = new Date()): { eyebrow: string; promptMoment: string } {
+  const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(now);
+  const hour = now.getHours();
+  if (hour < 12) return { eyebrow: `${day} Morning`, promptMoment: 'this morning' };
+  if (hour < 17) return { eyebrow: `${day} Afternoon`, promptMoment: 'today' };
+  return { eyebrow: `${day} Evening`, promptMoment: 'tonight' };
+}
+
 export function ChildHeroCard({
   child,
   className,
@@ -221,12 +230,14 @@ export function ChildHeroCard({
   parentName = 'Parent',
   streakDays = 0,
   minsLearnedThisWeek = 0,
+  variant = 'default',
+  advisorSlot,
 }: ChildHeroCardProps) {
   if (!child) {
     return (
       <Card
         className={cn(
-          'border-dashed border-2 border-[#143D2B]/30 bg-white/70 backdrop-blur-xl p-8 sm:p-12 text-center shadow-xs rounded-[2.5rem]',
+          'border-dashed border-2 border-[#143D2B]/30 bg-white/80 backdrop-blur-xl p-8 sm:p-12 text-center shadow-xs rounded-[2rem]',
           className
         )}
       >
@@ -251,16 +262,137 @@ export function ChildHeroCard({
     );
   }
 
-  const isToddler = (child.age !== undefined && child.age !== null && child.age <= 3) ||
+  const childAge = child.age ?? 10;
+  const isInfant = childAge <= 1;
+  const isToddler =
+    (childAge >= 2 && childAge <= 3) ||
     String(child.developmentalTier || '').includes('TIER_0');
-  const compassReflection = getDailyParentCompassReflection(isToddler);
+  const isEarlyChildhood =
+    (childAge >= 4 && childAge <= 6) ||
+    String(child.developmentalTier || '').includes('TIER_1_EARLY');
+  const isEarlyTier = isInfant || isToddler || isEarlyChildhood;
+  const isPreDevice = child.roadType === RoadType.PRE_DEVICE;
+  const hasAssessment =
+    typeof child.latestAssessmentScore === 'number' && !Number.isNaN(child.latestAssessmentScore);
+  const readinessScore = hasAssessment
+    ? Math.min(100, Math.max(0, Math.round(child.latestAssessmentScore!)))
+    : null;
 
-  // Friendly date formatting
-  const todayFormatted = new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-  }).format(new Date());
+  if (variant === 'photo-cockpit') {
+    const { eyebrow, promptMoment } = getTimeOfDayGreeting();
+
+    const statusBadge = isEarlyTier
+      ? {
+          href: `/brain-games?childId=${child.id}`,
+          metric: isInfant ? '0m' : isEarlyChildhood ? '60m' : '30m',
+          icon: Baby,
+          title: 'Daily Media Limit',
+          subtitle: isInfant ? 'AAP Screen-Free · Play →' : 'AAP Co-Viewing · Play →',
+        }
+      : !isPreDevice
+        ? {
+            href: `/devices?childId=${child.id}`,
+            metric: '8:30',
+            icon: Moon,
+            title: 'Bedtime Dock',
+            subtitle: 'Road 2 · Family Pact →',
+          }
+        : readinessScore !== null
+          ? {
+              href: `/children/${child.id}/readiness`,
+              metric: String(readinessScore),
+              icon: null,
+              title: 'Readiness Score',
+              subtitle: 'Road 1 · View radar →',
+            }
+          : {
+              href: `/children/${child.id}/readiness`,
+              metric: null,
+              icon: Compass,
+              title: 'Readiness Radar',
+              subtitle: 'Take 3-min check →',
+            };
+
+    const StatusIcon = statusBadge.icon;
+
+    return (
+      <section
+        aria-label="Welcome & Advisor Spotlight"
+        className={cn(
+          'grid grid-cols-1 lg:grid-cols-[1.38fr_0.92fr] rounded-[2rem] overflow-hidden bg-[#123727] text-white shadow-[0_22px_48px_rgba(14,43,30,0.22)]',
+          className
+        )}
+      >
+        {/* Left Panel: Greeting + Frosted Dr. Alongside Spotlight */}
+        <div className="p-6 sm:p-8 lg:p-9 flex flex-col justify-between gap-6 bg-gradient-to-br from-[#103223] via-[#174B34] to-[#174B34]/95">
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.06em] text-[#F0BC46]">
+                {eyebrow} · Calibrated to {child.name}, {childAge}
+              </span>
+
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-3 py-1 text-[11px] font-mono text-[#E6F3EC]">
+                <Flame
+                  className={cn(
+                    'w-3.5 h-3.5',
+                    streakDays > 0 ? 'text-[#F0BC46]' : 'text-white/60'
+                  )}
+                />
+                <span className="font-semibold">{streakDays}-Day Streak</span>
+                <span className="text-white/60">·</span>
+                <span className="text-white/80">
+                  {minsLearnedThisWeek > 0 ? `${minsLearnedThisWeek}m this week` : 'Start Today'}
+                </span>
+              </span>
+            </div>
+
+            <h1 className="font-serif text-[28px] sm:text-4xl lg:text-[40px] font-normal leading-[1.08] tracking-[-0.02em] text-white">
+              Welcome home, {parentName}.
+              <span className="block text-white/90 mt-1">
+                What&apos;s happening with {child.name} {promptMoment}?
+              </span>
+            </h1>
+          </div>
+
+          {advisorSlot}
+        </div>
+
+        {/* Right Panel: Real Sunlit Home Photography + Floating Live Status Pill */}
+        <div className="relative min-h-[210px] lg:min-h-[285px] overflow-hidden">
+          <img
+            src="/images/home/hero-sanctuary.jpg"
+            alt="Warm sunlit family living space"
+            className="w-full h-full object-cover object-[center_25%] block"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-[#174B34] via-[#174B34]/15 to-transparent"
+          />
+
+          <Link
+            href={statusBadge.href}
+            className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 z-10 flex items-center gap-3 rounded-2xl bg-white/95 hover:bg-white backdrop-blur-md px-4 py-3 text-[#131715] shadow-[0_12px_28px_rgba(0,0,0,0.22)] transition-transform hover:-translate-y-0.5"
+          >
+            {statusBadge.metric ? (
+              <span className="font-serif text-2xl sm:text-[28px] font-semibold text-[#143D2B] leading-none">
+                {statusBadge.metric}
+              </span>
+            ) : StatusIcon ? (
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF3EE] text-[#143D2B]">
+                <StatusIcon className="w-5 h-5" />
+              </span>
+            ) : null}
+            <div className="leading-tight">
+              <div className="text-xs font-bold text-[#131715]">{statusBadge.title}</div>
+              <div className="text-[11px] text-[#5B645F] mt-0.5">{statusBadge.subtitle}</div>
+            </div>
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  const compassReflection = getDailyParentCompassReflection(isToddler);
 
   return (
     <div className={cn('space-y-4', className)}>

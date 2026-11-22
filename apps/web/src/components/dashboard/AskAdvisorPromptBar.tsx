@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { type ChildDTO } from '@alongside/shared';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -10,30 +10,83 @@ import { cn } from '@/lib/utils';
 
 export interface AskAdvisorPromptBarProps {
   child: ChildDTO | null;
+  variant?: 'default' | 'hero';
   className?: string;
 }
 
 interface QuickPrompt {
   label: string;
+  shortLabel: string;
   query: string;
 }
 
 export const QUICK_ADVISOR_PROMPTS: QuickPrompt[] = [
   {
     label: '🎮 Console Meltdown',
+    shortLabel: 'Console Meltdown',
     query: 'How do I de-escalate a video game console shutdown meltdown?',
   },
   {
     label: '📱 Peer Phone Pressure',
+    shortLabel: 'Peer Phone Pressure',
     query: 'How do I handle peer phone pressure when everyone in class has one?',
   },
   {
     label: '🚪 Slammed Bedroom Door',
+    shortLabel: 'Slammed Bedroom Door',
     query: 'How should I respond when my child slams their bedroom door in frustration?',
   },
 ];
 
-export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarProps) {
+const TODDLER_QUICK_PROMPTS: QuickPrompt[] = [
+  {
+    label: 'TV Shutoff Tantrum',
+    shortLabel: 'TV Shutoff Tantrum',
+    query: 'How do I calm a toddler meltdown right after turning off the TV?',
+  },
+  {
+    label: 'Bedtime Stalls',
+    shortLabel: 'Bedtime Stalls',
+    query: 'How should I handle repeated toddler bedtime stalls without power struggles?',
+  },
+  {
+    label: 'Throwing Toys',
+    shortLabel: 'Throwing Toys',
+    query: 'What exact words should I use when my toddler throws blocks in frustration?',
+  },
+];
+
+const EARLY_CHILDHOOD_QUICK_PROMPTS: QuickPrompt[] = [
+  {
+    label: 'Screen Timer Tears',
+    shortLabel: 'Screen Timer Tears',
+    query: 'How do I help my preschooler transition smoothly when the screen timer ends?',
+  },
+  {
+    label: 'Bedtime Stalls',
+    shortLabel: 'Bedtime Stalls',
+    query: 'How do I build a predictable bedtime routine that stops stalling?',
+  },
+  {
+    label: 'Toy Sharing Fight',
+    shortLabel: 'Toy Sharing Fight',
+    query: 'How should I mediate a frustration meltdown over sharing toys?',
+  },
+];
+
+function resolveHeroQuickPrompts(child: ChildDTO | null): QuickPrompt[] {
+  const age = child?.age ?? 10;
+  const tier = String(child?.developmentalTier || '');
+  if (age <= 3 || tier.includes('TIER_0')) return TODDLER_QUICK_PROMPTS;
+  if (age <= 6 || tier.includes('TIER_1_EARLY')) return EARLY_CHILDHOOD_QUICK_PROMPTS;
+  return QUICK_ADVISOR_PROMPTS;
+}
+
+export function AskAdvisorPromptBar({
+  child,
+  variant = 'default',
+  className,
+}: AskAdvisorPromptBarProps) {
   let router: any = null;
   try {
     router = useRouter();
@@ -59,6 +112,53 @@ export function AskAdvisorPromptBar({ child, className }: AskAdvisorPromptBarPro
     if (!query) return;
     navigateToAdvisor(query);
   };
+
+  if (variant === 'hero') {
+    const heroPrompts = resolveHeroQuickPrompts(child);
+    const placeholder = child
+      ? (child.age ?? 10) <= 6
+        ? `Ask Dr. Alongside anything about ${child.name} — e.g. 'Bedtime stalls' or 'TV shutoff tears'...`
+        : `Ask Dr. Alongside anything about ${child.name} — e.g. 'She won’t get off Roblox'...`
+      : "Ask Dr. Alongside anything — e.g. 'How to handle bedtime stalls'...";
+
+    return (
+      <div className={cn('space-y-3', className)}>
+        <form
+          onSubmit={handleSubmit}
+          className="flex items-center gap-2 rounded-full bg-white/95 p-1.5 pl-5 shadow-[0_12px_30px_rgba(0,0,0,0.22)] focus-within:ring-2 focus-within:ring-[#F0BC46]/70 transition"
+        >
+          <input
+            type="text"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder={placeholder}
+            aria-label={`Ask Dr. Alongside about ${child ? child.name : 'your child'}`}
+            className="w-full min-w-0 bg-transparent text-xs sm:text-sm text-[#131715] placeholder:text-[#6C7570] focus:outline-none"
+          />
+          <Button
+            type="submit"
+            className="shrink-0 min-h-[42px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold text-xs sm:text-[13px] px-5 rounded-full shadow-sm cursor-pointer flex items-center gap-1.5"
+          >
+            <span>Ask</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Button>
+        </form>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {heroPrompts.map((prompt) => (
+            <button
+              key={prompt.shortLabel}
+              type="button"
+              onClick={() => navigateToAdvisor(prompt.query)}
+              className="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 text-[#F4F7F5] border border-white/20 hover:border-white/40 transition cursor-pointer"
+            >
+              {prompt.shortLabel}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Card

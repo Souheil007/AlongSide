@@ -321,7 +321,9 @@ export function ActiveChapterContinueCard({
         return {
           id: idx + 1,
           title: formatLessonNodeTitle(les.title, idx),
+          fullTitle: les.title,
           slug: les.slug,
+          readingMinutes: les.readingMinutes ?? fallbackAnchor.readingMinutes,
           completed: les.isCompleted,
           isCurrent,
         };
@@ -331,11 +333,57 @@ export function ActiveChapterContinueCard({
     return fallbackAnchor.chapters.map((ch) => ({
       id: ch.id,
       title: ch.shortTitle.replace(/^Ch \d+:\s*/, ''),
+      fullTitle: ch.fullTitle,
       slug: fallbackAnchor.lessonSlug,
+      readingMinutes: fallbackAnchor.readingMinutes,
       completed: ch.completed,
       isCurrent: ch.isCurrent,
     }));
   }, [allLessons, fallbackAnchor]);
+
+  const defaultActiveNodeId = React.useMemo(() => {
+    const active = roadmapNodes.find((n) => n.isCurrent);
+    return active?.id ?? roadmapNodes[0]?.id ?? 1;
+  }, [roadmapNodes]);
+
+  const [selectedNodeId, setSelectedNodeId] = React.useState<number | null>(null);
+
+  // Reset node preview whenever child or active course changes
+  React.useEffect(() => {
+    setSelectedNodeId(null);
+  }, [moduleSlug, effectiveTier]);
+
+  const activeNodeIndex = Math.max(
+    0,
+    roadmapNodes.findIndex((n) => n.isCurrent)
+  );
+  const railFillPercent =
+    roadmapNodes.length > 1
+      ? Math.min(100, Math.max(0, (activeNodeIndex / (roadmapNodes.length - 1)) * 100))
+      : 100;
+
+  const displayedNode =
+    roadmapNodes.find((n) => n.id === (selectedNodeId ?? defaultActiveNodeId)) ??
+    roadmapNodes[0];
+
+  const displayedLessonSlug =
+    selectedNodeId !== null && displayedNode ? displayedNode.slug : lessonSlug;
+  const displayedLessonTitle =
+    selectedNodeId !== null && displayedNode ? displayedNode.fullTitle : lessonTitle;
+  const displayedReadingMinutes =
+    selectedNodeId !== null && displayedNode ? displayedNode.readingMinutes : readingMinutes;
+  const displayedBadgeText =
+    displayedNode && !displayedNode.isCurrent
+      ? displayedNode.completed
+        ? 'Completed Lesson'
+        : 'Upcoming Lesson Preview'
+      : "Today's Active Lesson";
+  const displayedCtaLabel =
+    displayedNode && !displayedNode.isCurrent
+      ? displayedNode.completed
+        ? 'Review Lesson'
+        : 'Preview Lesson'
+      : 'Read Lesson';
 
   if (isAwaitingLiveRoadmap) {
     return (
@@ -344,13 +392,13 @@ export function ActiveChapterContinueCard({
         aria-busy="true"
         aria-label="Loading curriculum roadmap"
         className={cn(
-          'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] p-6 sm:p-10 space-y-7',
+          'rounded-[2.25rem] bg-white border border-[#143D2B]/10 shadow-[0_14px_40px_-10px_rgba(20,61,43,0.08)] p-6 sm:p-9 space-y-6',
           className
         )}
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 pb-5">
           <div className="flex items-center gap-3.5 min-w-0 flex-1">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-sm">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-sm">
               <BookOpen className="h-5 w-5" />
             </span>
             <div className="min-w-0 flex-1 space-y-2">
@@ -384,7 +432,7 @@ export function ActiveChapterContinueCard({
           </div>
         </div>
 
-        <div className="bg-white/80 p-6 sm:p-7 rounded-3xl border border-white flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+        <div className="bg-[#FAF7F1] p-6 sm:p-7 rounded-3xl border border-[#143D2B]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
           <div className="space-y-2.5 flex-1">
             <div className="h-5 w-44 rounded-full bg-[#EAF3EE]" />
             <div className="h-6 w-72 max-w-full rounded-lg bg-[#ECEAE2]" />
@@ -399,23 +447,23 @@ export function ActiveChapterContinueCard({
   return (
     <div
       className={cn(
-        'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] p-6 sm:p-10 space-y-7 transition-all hover:border-[#143D2B]/30',
+        'rounded-[2.25rem] bg-white border border-[#143D2B]/10 shadow-[0_14px_40px_-10px_rgba(20,61,43,0.08)] p-6 sm:p-9 space-y-6 transition-all hover:border-[#143D2B]/25',
         className
       )}
     >
       {/* 1. Top Header: Course Identification & Real-Time Progress Badge */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 pb-5">
-        <div className="flex items-center gap-3.5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-sm">
+        <div className="flex items-center gap-3.5 min-w-0">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-md">
             <BookOpen className="h-5 w-5" />
           </span>
           <div className="min-w-0">
-            <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
+            <span className="text-[10.5px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
               Parent Intelligence Academy • Active Course
             </span>
             <Link
               href={`/academy/${moduleSlug}`}
-              className="font-serif text-lg sm:text-2xl font-bold text-[#111815] leading-snug hover:text-[#143D2B] hover:underline transition-colors block truncate"
+              className="font-serif text-xl sm:text-[27px] font-semibold text-[#131715] leading-snug hover:text-[#143D2B] hover:underline transition-colors block truncate"
             >
               {courseTitle}
             </Link>
@@ -423,116 +471,140 @@ export function ActiveChapterContinueCard({
         </div>
 
         <div className="shrink-0 self-start sm:self-auto font-mono text-xs">
-          <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-emerald-900/10 px-3.5 py-1.5 rounded-full shadow-2xs">
+          <span className="inline-flex items-center text-xs font-bold text-[#143D2B] bg-[#EAF3EE] border border-[#143D2B]/15 px-3.5 py-1.5 rounded-full">
             {progressPercent}% Completed ({completedLessons} of {totalLessons} Lessons)
           </span>
         </div>
       </div>
 
-      {/* 2. Fully Dynamic Visual Curriculum Roadmap */}
-      <div className="space-y-4 pt-1">
-        <div className="flex items-center justify-between text-xs font-mono">
+      {/* 2. Fully Dynamic Interactive Visual Curriculum Roadmap */}
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
           <span className="font-bold text-[#143D2B] uppercase tracking-wider text-[11px]">
             Curriculum Roadmap
           </span>
-          <span className="text-[#858C88] text-[11px]">
-            Next Lesson: {readingMinutes} min read
+          <span className="text-[#6C7570] text-[11px]">
+            Next Lesson: {displayedReadingMinutes} min read • Click any chapter node
           </span>
         </div>
 
         {/* Dynamic Connected Node Track */}
-        <div className="relative pt-2 pb-3 overflow-x-auto">
-          <div className="min-w-[520px] flex items-center justify-between relative px-6 sm:px-8">
-            {/* Background Grey Track Line */}
-            <div className="absolute left-8 right-8 top-5 h-1 bg-stone-200/80 -z-0" />
-            {/* Real Progress Fill Line */}
-            <div
-              className="absolute left-8 top-5 h-1 bg-[#143D2B] -z-0 transition-all duration-500"
-              style={{ width: `${Math.min(92, Math.max(0, (completedLessons / Math.max(1, totalLessons)) * 92))}%` }}
-            />
+        <div className="relative pt-2 pb-2 overflow-x-auto">
+          <div className="min-w-[540px] relative px-6 sm:px-8">
+            {/* Background & Active Progress Rail bounded between first & last node centers */}
+            <div className="absolute left-12 right-12 top-5 h-1 rounded-full bg-[#E7E3D9]">
+              <div
+                className="h-full rounded-full bg-[#143D2B] transition-all duration-500"
+                style={{ width: `${railFillPercent}%` }}
+              />
+            </div>
 
-            {roadmapNodes.map((node) => {
-              if (node.completed) {
+            <div className="flex items-start justify-between relative">
+              {roadmapNodes.map((node) => {
+                const isSelected = displayedNode?.id === node.id;
+
+                if (node.completed) {
+                  return (
+                    <button
+                      key={node.id}
+                      type="button"
+                      onClick={() => setSelectedNodeId(node.id)}
+                      className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer focus:outline-none"
+                    >
+                      <span
+                        className={cn(
+                          'w-10 h-10 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-md ring-4 transition-transform group-hover/node:scale-105',
+                          isSelected ? 'ring-[#C85A2B]/40' : 'ring-[#EAF3EE]'
+                        )}
+                      >
+                        <Check className="w-4 h-4 text-emerald-300" />
+                      </span>
+                      <span className="font-mono text-[10.5px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate group-hover/node:underline">
+                        {node.title}
+                      </span>
+                      <span className="font-mono text-[9.5px] text-[#143D2B]/70 font-medium">
+                        Completed
+                      </span>
+                    </button>
+                  );
+                }
+
+                if (node.isCurrent) {
+                  return (
+                    <button
+                      key={node.id}
+                      type="button"
+                      onClick={() => setSelectedNodeId(node.id)}
+                      className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer focus:outline-none"
+                    >
+                      <span className="w-11 h-11 -mt-0.5 rounded-full bg-[#143D2B] text-emerald-300 font-mono text-sm font-black flex items-center justify-center shadow-lg ring-4 ring-emerald-300/75 transition-transform group-hover/node:scale-105">
+                        {node.id}
+                      </span>
+                      <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate group-hover/node:underline">
+                        {node.title}
+                      </span>
+                      <span className="font-mono text-[9.5px] text-[#B45309] font-bold bg-[#FEF3C7] px-2.5 py-0.5 rounded-full">
+                        Active Now
+                      </span>
+                    </button>
+                  );
+                }
+
                 return (
-                  <Link
+                  <button
                     key={node.id}
-                    href={`/academy/${moduleSlug}/${node.slug}`}
-                    className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer"
+                    type="button"
+                    onClick={() => setSelectedNodeId(node.id)}
+                    className={cn(
+                      'flex flex-col items-center gap-2 z-10 transition-opacity cursor-pointer focus:outline-none',
+                      isSelected ? 'opacity-100' : 'opacity-70 hover:opacity-100'
+                    )}
                   >
-                    <span className="w-10 h-10 rounded-full bg-[#143D2B] text-white font-mono text-xs font-bold flex items-center justify-center shadow-md ring-4 ring-[#EAF3EE] transition-transform group-hover/node:scale-110">
-                      <Check className="w-4 h-4 text-emerald-300" />
+                    <span
+                      className={cn(
+                        'w-10 h-10 rounded-full bg-white border-2 text-stone-600 font-mono text-xs font-bold flex items-center justify-center shadow-2xs transition-all',
+                        isSelected
+                          ? 'border-[#C85A2B] ring-4 ring-[#C85A2B]/20 text-[#143D2B]'
+                          : 'border-stone-300'
+                      )}
+                    >
+                      {node.id}
                     </span>
-                    <span className="font-mono text-[10px] text-[#143D2B] font-semibold text-center whitespace-nowrap max-w-[120px] truncate group-hover/node:underline">
+                    <span className="font-mono text-[10.5px] text-[#6C7570] text-center whitespace-nowrap max-w-[120px] truncate">
                       {node.title}
                     </span>
-                    <span className="font-mono text-[9px] text-[#143D2B]/70 font-medium">Completed</span>
-                  </Link>
+                    <span className="font-mono text-[9.5px] text-[#858C88]">Upcoming</span>
+                  </button>
                 );
-              }
-
-              if (node.isCurrent) {
-                return (
-                  <Link
-                    key={node.id}
-                    href={`/academy/${moduleSlug}/${node.slug}`}
-                    className="flex flex-col items-center gap-2 z-10 group/node cursor-pointer"
-                  >
-                    <span className="w-11 h-11 -mt-0.5 rounded-full bg-[#143D2B] text-white font-mono text-sm font-black flex items-center justify-center shadow-xl ring-4 ring-emerald-300/80 animate-pulse transition-transform group-hover/node:scale-105">
-                      <span className="text-emerald-300">{node.id}</span>
-                    </span>
-                    <span className="font-mono text-[11px] text-[#143D2B] font-bold text-center whitespace-nowrap max-w-[130px] truncate group-hover/node:underline">
-                      {node.title}
-                    </span>
-                    <span className="font-mono text-[9px] text-[#B45309] font-bold bg-[#FEF3C7] px-2 py-0.5 rounded-full shadow-2xs">Active Now</span>
-                  </Link>
-                );
-              }
-
-              return (
-                <Link
-                  key={node.id}
-                  href={`/academy/${moduleSlug}/${node.slug}`}
-                  className="flex flex-col items-center gap-2 z-10 opacity-60 hover:opacity-90 transition-opacity cursor-pointer"
-                >
-                  <span className="w-10 h-10 rounded-full bg-white border-2 border-stone-300 text-stone-600 font-mono text-xs font-bold flex items-center justify-center shadow-2xs">
-                    {node.id}
-                  </span>
-                  <span className="font-mono text-[10px] text-[#858C88] text-center whitespace-nowrap max-w-[120px] truncate">
-                    {node.title}
-                  </span>
-                  <span className="font-mono text-[9px] text-[#858C88]">Upcoming</span>
-                </Link>
-              );
-            })}
+              })}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 3. Today's Active Incomplete Lesson & Read Action */}
-      <div className="bg-gradient-to-br from-white/95 to-white/70 p-6 sm:p-7 rounded-3xl border border-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+      {/* 3. Today's Active Incomplete Lesson (or Clicked Chapter Preview) & Read Action */}
+      <div className="bg-gradient-to-br from-white via-[#FCFBF7] to-[#F7F3EA]/80 p-5 sm:p-7 rounded-3xl border border-[#143D2B]/10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-5">
         <div className="space-y-1.5 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-emerald-900/10 uppercase tracking-wider">
-              Today&apos;s Active Lesson
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="font-mono text-[10px] font-bold text-[#143D2B] bg-[#EAF3EE] px-2.5 py-0.5 rounded-full border border-[#143D2B]/15 uppercase tracking-wider">
+              {displayedBadgeText}
             </span>
-            <span className="font-mono text-xs text-[#858C88] font-medium">
-              {readingMinutes} min read • Audio &amp; Text
+            <span className="font-mono text-xs text-[#6C7570] font-medium">
+              {displayedReadingMinutes} min read • Audio &amp; Text
             </span>
           </div>
-          <h3 className="font-serif text-base sm:text-xl font-bold text-[#111815] leading-snug">
-            {lessonTitle}
+          <h3 className="font-serif text-lg sm:text-[22px] font-semibold text-[#131715] leading-snug">
+            {displayedLessonTitle}
           </h3>
-          <p className="text-xs text-[#494F4C] leading-relaxed max-w-2xl line-clamp-2">
+          <p className="text-xs sm:text-[13.5px] text-[#424A46] leading-relaxed max-w-2xl line-clamp-2">
             {summary}
           </p>
         </div>
 
         <div className="shrink-0 self-end sm:self-auto pt-1 sm:pt-0">
-          <Link href={`/academy/${moduleSlug}/${lessonSlug}`}>
-            <Button
-              className="min-h-[44px] px-6 py-3 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs font-mono font-bold shadow-sm transition-all flex items-center gap-2 cursor-pointer hover:shadow"
-            >
-              <span>Read Lesson</span>
+          <Link href={`/academy/${moduleSlug}/${displayedLessonSlug}`}>
+            <Button className="min-h-[46px] px-6 py-3 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs sm:text-[13px] font-semibold shadow-sm transition-all flex items-center gap-2 cursor-pointer">
+              <span>{displayedCtaLabel}</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>

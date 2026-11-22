@@ -95,10 +95,10 @@ describe('Plan 25: Streamlined Navigation & Account Menu Decluttering Specificat
       expect(homeFeedContent).not.toContain('Family OS Domain Hubs');
       expect(homeFeedContent).not.toContain('7 Canonical Hubs');
 
-      // Right column contains SundayCultureDigestCard, BilateralPactStatusCard, and AskAdvisorPromptBar
-      expect(homeFeedContent).toContain('<SundayCultureDigestCard child={activeChild} />');
+      // Home feed mounts SundayCultureDigestCard, BilateralPactStatusCard, and AskAdvisorPromptBar
+      expect(homeFeedContent).toContain('<SundayCultureDigestCard');
       expect(homeFeedContent).toContain('<BilateralPactStatusCard child={activeChild} />');
-      expect(homeFeedContent).toContain('<AskAdvisorPromptBar child={activeChild} />');
+      expect(homeFeedContent).toContain('<AskAdvisorPromptBar child={activeChild}');
     });
   });
 });

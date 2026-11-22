@@ -22,6 +22,7 @@ import { cn } from '@/lib/utils';
 
 export interface DailyAdvisoryScriptCardProps {
   child: ChildDTO | null;
+  variant?: 'default' | 'spruce';
   className?: string;
 }
 
@@ -135,12 +136,46 @@ export function resolveAdvisoryScript(tierOrAge?: string | number | null): Advis
 
 export function DailyAdvisoryScriptCard({
   child,
+  variant = 'default',
   className,
 }: DailyAdvisoryScriptCardProps) {
   const [copied, setCopied] = React.useState(false);
+  const [scriptMode, setScriptMode] = React.useState<'calm' | 'reactive'>('calm');
+  const [usedTonight, setUsedTonight] = React.useState(false);
+
   const script = resolveAdvisoryScript(child?.developmentalTier ?? child?.age);
   const childName = child?.name ?? 'Your Child';
   const childAge = child?.age ?? 10;
+
+  const storageKey = React.useMemo(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    return `alongside_script_used_${child?.id ?? 'default'}_${today}`;
+  }, [child?.id]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      setUsedTonight(window.localStorage.getItem(storageKey) === '1');
+    } catch {
+      setUsedTonight(false);
+    }
+  }, [storageKey]);
+
+  const handleToggleUsedTonight = () => {
+    const next = !usedTonight;
+    setUsedTonight(next);
+    if (typeof window !== 'undefined') {
+      try {
+        if (next) {
+          window.localStorage.setItem(storageKey, '1');
+        } else {
+          window.localStorage.removeItem(storageKey);
+        }
+      } catch {
+        // ignore storage restrictions
+      }
+    }
+  };
 
   const handleCopyScript = async () => {
     try {
@@ -153,6 +188,119 @@ export function DailyAdvisoryScriptCard({
       // ignore
     }
   };
+
+  if (variant === 'spruce') {
+    const isReactive = scriptMode === 'reactive';
+    const personalizedContext = script.scenarioContext
+      .replace(/your tween/gi, childName)
+      .replace(/your teen/gi, childName)
+      .replace(/your toddler/gi, childName)
+      .replace(/your child/gi, childName);
+
+    return (
+      <aside
+        aria-label="Tonight's 10-second empathy script"
+        className={cn(
+          'rounded-[1.75rem] bg-gradient-to-br from-[#164430] to-[#0E2B1E] text-[#FAF7F1] p-6 border border-white/10 shadow-[0_20px_44px_rgba(14,43,30,0.2)] flex flex-col justify-between gap-4 h-full',
+          className
+        )}
+      >
+        <div className="space-y-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-[0.06em] text-[#F0BC46]">
+              Tonight&apos;s 10-Second Script
+            </span>
+
+            <div
+              role="group"
+              aria-label="Compare reactive versus calm script"
+              className="inline-flex items-center gap-1 rounded-full bg-white/10 p-0.5"
+            >
+              <button
+                type="button"
+                onClick={() => setScriptMode('reactive')}
+                className={cn(
+                  'px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer',
+                  isReactive
+                    ? 'bg-[#E56A4E] text-white'
+                    : 'text-[#FAF7F1]/75 hover:text-white'
+                )}
+              >
+                Instead of
+              </button>
+              <button
+                type="button"
+                onClick={() => setScriptMode('calm')}
+                className={cn(
+                  'px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer',
+                  !isReactive
+                    ? 'bg-[#F0BC46] text-[#131715]'
+                    : 'text-[#FAF7F1]/75 hover:text-white'
+                )}
+              >
+                Try saying
+              </button>
+            </div>
+          </div>
+
+          <p className="text-xs sm:text-[13px] text-[#FAF7F1]/80 leading-relaxed">
+            {personalizedContext}
+          </p>
+
+          <div
+            className={cn(
+              'p-4 rounded-2xl border-l-[3px] transition-colors space-y-2',
+              isReactive
+                ? 'bg-[#E56A4E]/15 border-[#E56A4E]'
+                : 'bg-white/10 border-[#F0BC46]'
+            )}
+          >
+            <blockquote className="font-serif text-lg sm:text-[19px] leading-[1.38] text-white">
+              {isReactive ? script.whatNotToSay : script.whatToSay}
+            </blockquote>
+            <p className="text-xs text-[#FAF7F1]/75 leading-relaxed">
+              {isReactive ? script.notToSayWhy : script.toSayWhy}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <button
+            type="button"
+            onClick={handleCopyScript}
+            className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 rounded-full border border-white/25 hover:border-white/50 hover:bg-white/10 text-xs font-medium text-[#FAF7F1] transition cursor-pointer"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-[#76C69A]" />
+                <span>Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5" />
+                <span>Copy words</span>
+              </>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleToggleUsedTonight}
+            aria-pressed={usedTonight}
+            className={cn(
+              'inline-flex items-center gap-1.5 min-h-[36px] px-3.5 rounded-full text-xs font-bold transition cursor-pointer',
+              usedTonight
+                ? 'bg-[#76C69A] text-[#0C2318]'
+                : 'bg-[#E8AE49] hover:bg-[#F0BC46] text-[#131715]'
+            )}
+          >
+            <Check className="w-3.5 h-3.5" />
+            <span>{usedTonight ? 'Logged for tonight' : 'Used this tonight'}</span>
+          </button>
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <div className={cn('space-y-4', className)}>

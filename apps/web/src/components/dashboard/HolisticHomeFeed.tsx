@@ -93,30 +93,33 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* 1. Ambient Context Status Anchor & Welcoming Value Banner */}
+    <div className="space-y-6 sm:space-y-7">
+      {/* 1. H2v2 Top Hero: Panoramic Photo Banner + Frosted Dr. Alongside Spotlight */}
       <ChildHeroCard
         child={activeChild}
         parentName={resolvedParentName}
         streakDays={streakDays}
         minsLearnedThisWeek={minsLearnedThisWeek}
         onOpenOnboarding={() => setOnboardingOpen(true)}
+        variant="photo-cockpit"
+        advisorSlot={<AskAdvisorPromptBar child={activeChild} variant="hero" />}
       />
 
-      {/* 2. SECTION 1: Active Academy Track (Hero Centerpiece with Visual Roadmap & Tonight's Script) */}
+      {/* 2. Flagship Centerpiece: Full-Width 5-Node Interactive Curriculum Roadmap */}
       <ActiveChapterContinueCard
         child={activeChild}
         isChildLoading={queryLoading && resolvedChildren.length === 0}
       />
 
-      {/* 3. SECTION 2: Sunday Youth Culture Digest (Full-Width 3-Column Living Feed) */}
-      <SundayCultureDigestCard child={activeChild} />
+      {/* 3. Daily Ritual Trio (Deep-Spruce Script, Polaroid Sunday Table, Slang/Play Decoder) + Widescreen Weekly Talk */}
+      <SundayCultureDigestCard
+        child={activeChild}
+        variant="h2v2"
+        scriptSlot={<DailyAdvisoryScriptCard child={activeChild} variant="spruce" />}
+      />
 
-      {/* 4. SECTION 3: First-Phone Assessment & Readiness Radar (Full-Width 3-Column Diagnostic) */}
+      {/* 4. Stage-Adaptive Readiness Radar / Bedtime Curfew Dock / Early Screen Boundaries */}
       <BilateralPactStatusCard child={activeChild} />
-
-      {/* 5. SECTION 4: 24/7 AI Child Advisor (Empathetic Co-Pilot & Guided Dialogue) */}
-      <AskAdvisorPromptBar child={activeChild} />
 
       {/* Child Onboarding Modal */}
       <ChildOnboardingModal
