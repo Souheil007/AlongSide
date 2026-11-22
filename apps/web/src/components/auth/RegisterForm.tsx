@@ -71,7 +71,7 @@ export function RegisterForm() {
           Your parent account for <span className="font-semibold text-slate-800">{registeredEmail}</span> has been successfully created.
         </p>
         <p className="text-xs text-[#858C88] mt-1.5 leading-relaxed">
-          Please sign in to set up your first child profile and begin your 7-day risk-free trial.
+          Please sign in to set up your first child profile and explore Alongside free during early access.
         </p>
         <div className="mt-6">
           <Button
@@ -98,7 +98,7 @@ export function RegisterForm() {
         </div>
         <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] px-3 py-1 text-xs font-mono font-semibold text-[#143D2B] border border-[#143D2B]/20 mb-2">
           <ShieldCheck className="h-3.5 w-3.5 text-[#143D2B]" />
-          7-DAY TRIAL • NO UPFRONT CHARGE
+          EARLY ACCESS • FREE, NO CARD REQUIRED
         </div>
         <CardTitle className="font-serif text-3xl font-bold tracking-tight text-[#111413]">
           Begin your family journey
@@ -152,7 +152,7 @@ export function RegisterForm() {
           <div className="rounded-[5px] bg-[#F4F4F0] p-3 text-xs text-[#494F4C] space-y-1.5 border border-[#E3E3DC]">
             <div className="flex items-center gap-2 text-[#111413] font-semibold">
               <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B]" />
-              <span>What’s included in your trial:</span>
+              <span>What’s included during early access:</span>
             </div>
             <ul className="list-disc list-inside space-y-0.5 text-[#494F4C] pl-1 text-[11px]">
               <li>Continuous 0–18 Lifespan Advisory roadmap</li>
@@ -173,7 +173,7 @@ export function RegisterForm() {
                 Creating your account...
               </>
             ) : (
-              "Start 7-Day Free Trial"
+              "Create Free Account"
             )}
           </Button>
 

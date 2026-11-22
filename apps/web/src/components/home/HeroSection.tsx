@@ -191,7 +191,7 @@ export function HeroSection() {
                 href="/register"
                 className="inline-flex items-center justify-center min-h-[46px] px-5 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors duration-150 active:scale-[0.98] w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
               >
-                Start 7-day free trial
+                Get free early access
               </Link>
               <a
                 href="#studio"
@@ -211,7 +211,7 @@ export function HeroSection() {
               <span className="text-[#143D2B]/35 select-none" aria-hidden="true">
                 ·
               </span>
-              <span>Cancel anytime</span>
+              <span>Free during early access</span>
             </div>
           </div>
 

@@ -170,7 +170,7 @@ export function LoginForm() {
               href="/register"
               className="font-semibold text-[#143D2B] hover:underline underline-offset-2"
             >
-              Start 7-day free trial
+              Get free early access
             </Link>
           </p>
         </CardFooter>

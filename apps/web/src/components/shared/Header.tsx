@@ -315,7 +315,7 @@ export function Header() {
                 href="/register"
                 className="inline-flex items-center justify-center min-h-[38px] px-4 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-medium transition-colors"
               >
-                Start 7-day trial
+                Get free access
               </Link>
             </div>
           )}
@@ -470,7 +470,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors"
                 >
-                  Start 7-day free trial
+                  Get free early access
                 </Link>
               </>
             )}
