@@ -4,19 +4,19 @@ import { FaqExplorerView } from '@/components/advisor/FaqExplorerView';
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'FAQ Explorer',
+  title: 'FAQ Library',
   description:
-    'Pediatric and neurobiology-backed answers to 100+ digital dilemmas, screen battles, secret apps, and bedtime conflict.',
+    'Evidence-based answers to common developmental and digital parenting dilemmas, with word-for-word scripts.',
 };
 
 export default function FaqsPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[500px] items-center justify-center">
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <Loader2 className="h-5 w-5 animate-spin text-teal-600" />
-            <span>Loading Living Modern Parenting FAQ Explorer...</span>
+        <div className="flex min-h-[480px] items-center justify-center">
+          <div className="flex items-center gap-2.5 text-[14px] text-[#69726D]">
+            <Loader2 className="h-4 w-4 animate-spin text-[#143D2B]" />
+            <span>Loading FAQ Library...</span>
           </div>
         </div>
       }

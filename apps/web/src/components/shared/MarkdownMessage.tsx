@@ -10,7 +10,7 @@ function renderInline(text: string): React.ReactNode {
   return tokens.map((token, i) => {
     if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
       return (
-        <strong key={i} className="font-semibold text-inherit">
+        <strong key={i} className="font-semibold text-[#131715]">
           {token.slice(2, -2)}
         </strong>
       );
@@ -30,7 +30,7 @@ function renderInline(text: string): React.ReactNode {
       return (
         <code
           key={i}
-          className="rounded bg-stone-100 px-1 py-0.5 font-mono text-[11px] text-[#143D2B]"
+          className="rounded-[4px] bg-[#EFECE3] px-1.5 py-0.5 font-mono text-[12px] text-[#143D2B]"
         >
           {token.slice(1, -1)}
         </code>
@@ -44,7 +44,7 @@ function renderInline(text: string): React.ReactNode {
           href={linkMatch[2]}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#143D2B] underline hover:text-[#0E2B1E]"
+          className="text-[#143D2B] underline underline-offset-2 hover:text-[#0E2B1E]"
         >
           {linkMatch[1]}
         </a>
@@ -109,7 +109,7 @@ export function MarkdownMessage({
   const rawBlocks = content.split(/\n\n+/);
 
   return (
-    <div className={cn('text-xs leading-relaxed space-y-2 text-[#111413]', className)}>
+    <div className={cn('text-[14px] leading-[1.6] space-y-2.5 text-[#303633]', className)}>
       {rawBlocks.map((block, blockIdx) => {
         const trimmed = block.trim();
         if (!trimmed) return null;
@@ -122,7 +122,7 @@ export function MarkdownMessage({
             return (
               <h4
                 key={blockIdx}
-                className="font-serif font-bold text-[#111413] text-xs sm:text-[13px] pt-1 pb-0.5 leading-snug tracking-tight"
+                className="font-serif text-[16px] font-medium text-[#131715] pt-1 leading-[1.3] tracking-[-0.01em]"
               >
                 {renderInline(headingText)}
               </h4>
@@ -139,12 +139,14 @@ export function MarkdownMessage({
           return (
             <div
               key={blockIdx}
-              className="my-2 rounded-r-lg border-l-3 border-[#143D2B] bg-[#EAF3EE]/80 px-3 py-2 text-[#143D2B] font-serif italic text-xs leading-relaxed shadow-2xs"
+              className="my-2 rounded-r-[8px] rounded-l-[2px] border border-[rgba(19,23,21,0.08)] border-l-[3px] border-l-[#143D2B] bg-white px-3.5 py-2.5 text-[#131715]"
             >
-              <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-[#143D2B]/80 mb-0.5 not-italic">
+              <div className="text-[11.5px] font-medium text-[#143D2B] mb-1">
                 Script to Say:
               </div>
-              <div>{renderInline(quoteLines)}</div>
+              <div className="font-serif text-[15.5px] leading-[1.48] text-[#131715]">
+                {renderInline(quoteLines)}
+              </div>
             </div>
           );
         }
@@ -154,16 +156,19 @@ export function MarkdownMessage({
         const groups = parseBlockLines(lines);
 
         return (
-          <div key={blockIdx} className="space-y-1.5">
+          <div key={blockIdx} className="space-y-2">
             {groups.map((group, groupIdx) => {
               if (group.type === 'ul') {
                 return (
-                  <ul key={groupIdx} className="my-1.5 space-y-1 pl-1">
+                  <ul key={groupIdx} className="my-1 space-y-1.5 pl-0.5">
                     {group.items.map((line, lineIdx) => {
                       const itemContent = line.replace(/^\s*[-*]\s+/, '');
                       return (
-                        <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
-                          <span className="text-[#143D2B] font-bold shrink-0 leading-tight">•</span>
+                        <li key={lineIdx} className="flex items-start gap-2.5 leading-[1.58]">
+                          <span
+                            className="mt-[9px] h-[4px] w-[4px] rounded-full bg-[#143D2B] shrink-0"
+                            aria-hidden="true"
+                          />
                           <span className="flex-1">{renderInline(itemContent)}</span>
                         </li>
                       );
@@ -173,14 +178,14 @@ export function MarkdownMessage({
               }
               if (group.type === 'ol') {
                 return (
-                  <ol key={groupIdx} className="my-1.5 space-y-1 pl-1">
+                  <ol key={groupIdx} className="my-1 space-y-1.5 pl-0.5">
                     {group.items.map((line, lineIdx) => {
                       const numberMatch = line.match(/^\s*(\d+)\.\s+(.*)$/);
                       const num = numberMatch && numberMatch[1] ? numberMatch[1] : lineIdx + 1;
                       const itemContent = numberMatch && numberMatch[2] ? numberMatch[2] : line;
                       return (
-                        <li key={lineIdx} className="flex items-start gap-1.5 leading-relaxed">
-                          <span className="text-[#143D2B] font-mono font-bold text-[10px] shrink-0 w-3.5 pt-0.5">
+                        <li key={lineIdx} className="flex items-start gap-2 leading-[1.58]">
+                          <span className="text-[#143D2B] font-medium text-[12.5px] tabular-nums shrink-0 min-w-[18px] pt-[1px]">
                             {num}.
                           </span>
                           <span className="flex-1">{renderInline(itemContent)}</span>
@@ -191,7 +196,7 @@ export function MarkdownMessage({
                 );
               }
               return (
-                <p key={groupIdx} className="leading-relaxed">
+                <p key={groupIdx} className="leading-[1.6]">
                   {group.items.map((line, lineIdx) => (
                     <React.Fragment key={lineIdx}>
                       {lineIdx > 0 && <br />}
@@ -205,7 +210,10 @@ export function MarkdownMessage({
         );
       })}
       {isStreaming && (
-        <span className="inline-block h-3 w-1.5 ml-1 bg-[#143D2B] animate-pulse" />
+        <span
+          className="inline-block h-[14px] w-[2px] ml-1 bg-[#143D2B] align-middle"
+          aria-hidden="true"
+        />
       )}
     </div>
   );
