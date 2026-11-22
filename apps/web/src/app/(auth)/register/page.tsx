@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 
 export const metadata: Metadata = {
-  title: 'Start 7-Day Free Trial',
-  description: 'Create your parent account to begin your 7-day risk-free trial of Alongside.',
+  title: 'Get Free Early Access',
+  description: 'Create your parent account for free early access to Alongside — no credit card required.',
 };
 
 export default function RegisterPage() {

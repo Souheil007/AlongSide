@@ -20,7 +20,7 @@ export const FAMILY_PASS_OPTIONS: Record<'annual' | 'monthly', FamilyPassBilling
     label: 'Annual',
     price: '$79',
     period: '/ year',
-    note: '$6.58 / month · Save 34% with annual billing',
+    note: 'Free during early access · Regularly $79 / year ($6.58 / mo)',
     ctaHref: '/register?plan=annual',
   },
   monthly: {
@@ -28,7 +28,7 @@ export const FAMILY_PASS_OPTIONS: Record<'annual' | 'monthly', FamilyPassBilling
     label: 'Monthly',
     price: '$9.99',
     period: '/ month',
-    note: 'Month-to-month flexibility · Switch anytime',
+    note: 'Free during early access · Regularly $9.99 / month',
     ctaHref: '/register?plan=monthly',
   },
 };
@@ -73,9 +73,9 @@ export const HOME_FAQS: HomeFaqItem[] = [
   },
   {
     id: 'trial',
-    question: 'How does the 7-day free trial work?',
+    question: 'Is Alongside really free right now?',
     answer:
-      'You get full access to every guide, the AI Advisor, the Sunday Digest, and the Pact Builder for 7 days at $0. Cancel in one click inside settings before day 7 if it is not right for your family.',
+      'Yes. Every guide, the AI Parent Advisor, the Sunday Culture Digest, and the Pact Builder are 100% free during early access with no credit card required. We will always give plenty of notice before paid Family Pass plans begin.',
   },
 ];
 
@@ -124,13 +124,21 @@ export function PricingAndFaqSection() {
             </div>
 
             <div>
-              <div className="flex items-baseline gap-2 tabular-nums">
-                <span className="font-serif font-normal text-[46px] sm:text-[56px] leading-none tracking-[-0.03em] text-[#131715]">
-                  {plan.price}
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 tabular-nums">
+                <span className="font-serif font-normal text-[46px] sm:text-[56px] leading-none tracking-[-0.03em] text-[#143D2B]">
+                  Free
                 </span>
-                <span className="text-[15px] text-[#69726D]">{plan.period}</span>
+                <span className="inline-flex items-baseline gap-1 text-[#69726D]">
+                  <del
+                    className="font-serif text-[26px] sm:text-[30px] leading-none tracking-[-0.02em] decoration-[#69726D]/75 decoration-[1.5px]"
+                    aria-label={`Regular price ${plan.price} ${plan.period}`}
+                  >
+                    {plan.price}
+                  </del>
+                  <span className="text-[15px]">{plan.period}</span>
+                </span>
               </div>
-              <p className="text-[14px] font-medium text-[#143D2B] mt-1.5 tabular-nums">
+              <p className="text-[14px] font-medium text-[#143D2B] mt-2 tabular-nums">
                 {plan.note}
               </p>
             </div>
@@ -152,10 +160,10 @@ export function PricingAndFaqSection() {
                 href={plan.ctaHref}
                 className="inline-flex items-center justify-center w-full min-h-[48px] px-5 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[15px] font-medium transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
               >
-                Start your 7-day free trial
+                Get free early access
               </Link>
               <p className="text-[13px] text-[#69726D] text-center">
-                $0 due today · Cancel in one click anytime
+                $0 during early access · No credit card required
               </p>
             </div>
           </div>

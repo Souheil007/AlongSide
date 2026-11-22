@@ -181,7 +181,7 @@ describe('Plan 33: Platform Advisory Homepage & Child Cockpit Specification', ()
         const heroPath = path.join(webRoot, 'src/components/home/HeroSection.tsx');
         const content = fs.readFileSync(heroPath, 'utf8');
         expect(content).toContain('Calm guidance for');
-        expect(content).toContain('Start 7-day free trial');
+        expect(content).toContain('Get free early access');
       });
     });
 

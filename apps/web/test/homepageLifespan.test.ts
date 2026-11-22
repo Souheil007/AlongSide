@@ -40,7 +40,7 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
       expect(html).toContain('role="tablist"');
       expect(html).toContain('Chloe, age 5');
       expect(html).toContain('hero-sanctuary.jpg');
-      expect(html).toContain('Start 7-day free trial');
+      expect(html).toContain('Get free early access');
     });
   });
 
@@ -109,7 +109,11 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
 
       const html = renderToStaticMarkup(React.createElement(PricingAndFaqSection));
       expect(html).toContain('One Family Pass');
+      expect(html).toContain('Free');
+      expect(html).toContain('<del');
       expect(html).toContain('$79');
+      expect(html).toContain('Free during early access');
+      expect(html).toContain('No credit card required');
       expect(html).toContain('Common questions');
 
       // Enforce SOU-86 non-clinical platform mandate
