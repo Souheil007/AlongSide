@@ -215,50 +215,184 @@ export function ProductStudioSection() {
             </p>
           </div>
 
-          {/* Right Column: Interactive Product Window */}
+          {/* Right Column: Interactive Product Window — CSS Grid stack locks height across tabs & inner toggles (0px shift) */}
           <div
             data-ui
-            className="bg-white border border-[rgba(19,23,21,0.09)] rounded-[16px] overflow-hidden min-h-[410px] flex flex-col"
+            className="bg-white border border-[rgba(19,23,21,0.09)] rounded-[16px] overflow-hidden flex flex-col"
           >
             <div className="px-5 py-3.5 border-b border-[rgba(19,23,21,0.09)] bg-[#F6F5F0] flex items-center justify-between gap-3 text-[13px] text-[#69726D]">
-              <strong className="font-semibold text-[#131715]">{windowTitle}</strong>
-              <span>{windowMeta}</span>
+              <strong className="font-semibold text-[#131715] whitespace-nowrap">{windowTitle}</strong>
+              <span className="truncate text-right">{windowMeta}</span>
             </div>
 
-            <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between gap-5">
-              {activeTab === 'advisor' && (
-                <div
-                  id="studio-panel-advisor"
-                  role="tabpanel"
-                  className="flex flex-col justify-between gap-5 flex-1"
-                >
-                  <div className="flex flex-col gap-3.5">
-                    <div className="self-end bg-[#143D2B] text-white px-4 py-3 rounded-[12px] rounded-br-[2px] text-[14.5px] leading-[1.45] max-w-[85%]">
-                      {activeScenario.userPrompt}
-                    </div>
+            <div className="p-5 sm:p-7 grid flex-1">
+              {/* Tab Panel 1: Parent Advisor */}
+              <div
+                id="studio-panel-advisor"
+                role={activeTab === 'advisor' ? 'tabpanel' : undefined}
+                aria-hidden={activeTab !== 'advisor' || undefined}
+                className={cn(
+                  'col-start-1 row-start-1 flex flex-col justify-between gap-5',
+                  activeTab !== 'advisor' && 'invisible pointer-events-none select-none'
+                )}
+              >
+                <div className="grid">
+                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
+                    const isCurrent = scenario.id === activeScenario.id;
+                    return (
+                      <div
+                        key={scenario.id}
+                        aria-hidden={!isCurrent || undefined}
+                        className={cn(
+                          'col-start-1 row-start-1 flex flex-col gap-3.5',
+                          !isCurrent && 'invisible pointer-events-none select-none'
+                        )}
+                      >
+                        <div className="self-end bg-[#143D2B] text-white px-4 py-3 rounded-[12px] rounded-br-[2px] text-[14.5px] leading-[1.45] max-w-[85%]">
+                          {scenario.userPrompt}
+                        </div>
 
-                    <div className="bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] rounded-[12px] p-4 sm:p-5 flex flex-col gap-3">
-                      <div className="text-[12.5px] font-semibold text-[#143D2B]">
-                        {activeScenario.whyHeading}
+                        <div className="bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] rounded-[12px] p-4 sm:p-5 flex flex-col gap-3">
+                          <div className="text-[12.5px] font-semibold text-[#143D2B]">
+                            {scenario.whyHeading}
+                          </div>
+                          <p className="text-[14.5px] leading-[1.5] text-[#454D49]">
+                            {scenario.explanation}
+                          </p>
+                          <div className="bg-white border-l-[3px] border-[#143D2B] px-3.5 py-3 rounded-r-[8px] font-serif text-[16.5px] leading-[1.45] text-[#131715]">
+                            {scenario.scriptQuote}
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-[14.5px] leading-[1.5] text-[#454D49]">
-                        {activeScenario.explanation}
-                      </p>
-                      <div className="bg-white border-l-[3px] border-[#143D2B] px-3.5 py-3 rounded-r-[8px] font-serif text-[16.5px] leading-[1.45] text-[#131715]">
-                        {activeScenario.scriptQuote}
+                    );
+                  })}
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Try another scenario">
+                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
+                    const pressed = scenario.id === scenarioId;
+                    return (
+                      <button
+                        key={scenario.id}
+                        type="button"
+                        tabIndex={activeTab === 'advisor' ? 0 : -1}
+                        aria-pressed={pressed}
+                        onClick={() => setScenarioId(scenario.id)}
+                        className={cn(
+                          'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                          pressed
+                            ? 'border-[#143D2B] text-[#143D2B] bg-[#E8F1EC] font-medium'
+                            : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
+                        )}
+                      >
+                        {scenario.chipLabel}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Tab Panel 2: Parent Academy */}
+              <div
+                id="studio-panel-academy"
+                role={activeTab === 'academy' ? 'tabpanel' : undefined}
+                aria-hidden={activeTab !== 'academy' || undefined}
+                className={cn(
+                  'col-start-1 row-start-1 flex flex-col justify-between gap-5',
+                  activeTab !== 'academy' && 'invisible pointer-events-none select-none'
+                )}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-baseline justify-between gap-4 flex-wrap">
+                    <h3 className="font-serif text-[24px] font-normal leading-[1.2] text-[#131715]">
+                      Stopping screen transitions without tears
+                    </h3>
+                    <span className="text-[13px] text-[#69726D] tabular-nums">
+                      12 min · 3 lessons
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3.5 px-4 py-3 rounded-[10px] bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)]">
+                    <button
+                      type="button"
+                      tabIndex={activeTab === 'academy' ? 0 : -1}
+                      onClick={() => setAudioPlaying((prev) => !prev)}
+                      aria-pressed={audioPlaying}
+                      aria-label={audioPlaying ? 'Pause audio summary' : 'Play audio summary'}
+                      className="w-9 h-9 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white inline-flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
+                    >
+                      {audioPlaying ? (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <rect x="6" y="4" width="4" height="16" />
+                          <rect x="14" y="4" width="4" height="16" />
+                        </svg>
+                      ) : (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <polygon points="6,4 20,12 6,20" />
+                        </svg>
+                      )}
+                    </button>
+
+                    <div className="flex-1 flex flex-col gap-1.5 min-w-0">
+                      <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#454D49]">
+                        <span className="truncate">Audio summary · Listen while folding laundry</span>
+                        <span className="tabular-nums shrink-0">
+                          {audioPlaying ? '2:34 / 4:00' : '1:32 / 4:00'}
+                        </span>
+                      </div>
+                      <div className="h-1 bg-[rgba(19,23,21,0.14)] rounded-full overflow-hidden">
+                        <div
+                          className={cn(
+                            'h-full bg-[#143D2B] rounded-full transition-all duration-300',
+                            audioPlaying ? 'w-[64%]' : 'w-[38%]'
+                          )}
+                        />
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Try another scenario">
-                    {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
-                      const pressed = scenario.id === scenarioId;
+                  <ul className="divide-y divide-[rgba(19,23,21,0.09)]">
+                    {STUDIO_ACADEMY_LESSONS.map((lesson) => (
+                      <li
+                        key={lesson.title}
+                        className="flex items-baseline justify-between gap-4 py-3 text-[14.5px] text-[#131715]"
+                      >
+                        <span>{lesson.title}</span>
+                        <span className="text-[13px] text-[#69726D] tabular-nums shrink-0">
+                          {lesson.duration}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <p className="text-[13px] text-[#69726D]">
+                  40 focused courses across 8 age stages — Behavior, Sleep, Nutrition, Play, and
+                  Digital life.
+                </p>
+              </div>
+
+              {/* Tab Panel 3: Sunday Culture Digest */}
+              <div
+                id="studio-panel-digest"
+                role={activeTab === 'digest' ? 'tabpanel' : undefined}
+                aria-hidden={activeTab !== 'digest' || undefined}
+                className={cn(
+                  'col-start-1 row-start-1 flex flex-col justify-between gap-5',
+                  activeTab !== 'digest' && 'invisible pointer-events-none select-none'
+                )}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-wrap gap-2" role="group" aria-label="Sample slang terms">
+                    {STUDIO_SLANG_ITEMS.map((item) => {
+                      const pressed = item.id === slangId;
                       return (
                         <button
-                          key={scenario.id}
+                          key={item.id}
                           type="button"
+                          tabIndex={activeTab === 'digest' ? 0 : -1}
                           aria-pressed={pressed}
-                          onClick={() => setScenarioId(scenario.id)}
+                          onClick={() => setSlangId(item.id)}
                           className={cn(
                             'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
                             pressed
@@ -266,167 +400,88 @@ export function ProductStudioSection() {
                               : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
                           )}
                         >
-                          {scenario.chipLabel}
+                          {item.word}
                         </button>
                       );
                     })}
                   </div>
-                </div>
-              )}
 
-              {activeTab === 'academy' && (
-                <div
-                  id="studio-panel-academy"
-                  role="tabpanel"
-                  className="flex flex-col justify-between gap-5 flex-1"
-                >
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-baseline justify-between gap-4 flex-wrap">
-                      <h3 className="font-serif text-[24px] font-normal leading-[1.2] text-[#131715]">
-                        Stopping screen transitions without tears
-                      </h3>
-                      <span className="text-[13px] text-[#69726D] tabular-nums">
-                        12 min · 3 lessons
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3.5 px-4 py-3 rounded-[10px] bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)]">
-                      <button
-                        type="button"
-                        onClick={() => setAudioPlaying((prev) => !prev)}
-                        aria-pressed={audioPlaying}
-                        aria-label={audioPlaying ? 'Pause audio summary' : 'Play audio summary'}
-                        className="w-9 h-9 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white inline-flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
-                      >
-                        {audioPlaying ? (
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <rect x="6" y="4" width="4" height="16" />
-                            <rect x="14" y="4" width="4" height="16" />
-                          </svg>
-                        ) : (
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <polygon points="6,4 20,12 6,20" />
-                          </svg>
-                        )}
-                      </button>
-
-                      <div className="flex-1 flex flex-col gap-1.5 min-w-0">
-                        <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#454D49]">
-                          <span className="truncate">Audio summary · Listen while folding laundry</span>
-                          <span className="tabular-nums shrink-0">
-                            {audioPlaying ? '2:34 / 4:00' : '1:32 / 4:00'}
-                          </span>
-                        </div>
-                        <div className="h-1 bg-[rgba(19,23,21,0.14)] rounded-full overflow-hidden">
-                          <div
-                            className={cn(
-                              'h-full bg-[#143D2B] rounded-full transition-all duration-300',
-                              audioPlaying ? 'w-[64%]' : 'w-[38%]'
-                            )}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <ul className="divide-y divide-[rgba(19,23,21,0.09)]">
-                      {STUDIO_ACADEMY_LESSONS.map((lesson) => (
-                        <li
-                          key={lesson.title}
-                          className="flex items-baseline justify-between gap-4 py-3 text-[14.5px] text-[#131715]"
+                  <div className="grid">
+                    {STUDIO_SLANG_ITEMS.map((item) => {
+                      const isCurrent = item.id === activeSlang.id;
+                      return (
+                        <div
+                          key={item.id}
+                          aria-hidden={!isCurrent || undefined}
+                          className={cn(
+                            'col-start-1 row-start-1',
+                            !isCurrent && 'invisible pointer-events-none select-none'
+                          )}
                         >
-                          <span>{lesson.title}</span>
-                          <span className="text-[13px] text-[#69726D] tabular-nums shrink-0">
-                            {lesson.duration}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <p className="text-[13px] text-[#69726D]">
-                    40 focused courses across 8 age stages — Behavior, Sleep, Nutrition, Play, and
-                    Digital life.
-                  </p>
-                </div>
-              )}
-
-              {activeTab === 'digest' && (
-                <div
-                  id="studio-panel-digest"
-                  role="tabpanel"
-                  className="flex flex-col justify-between gap-5 flex-1"
-                >
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-wrap gap-2" role="group" aria-label="Sample slang terms">
-                      {STUDIO_SLANG_ITEMS.map((item) => {
-                        const pressed = item.id === slangId;
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            aria-pressed={pressed}
-                            onClick={() => setSlangId(item.id)}
-                            className={cn(
-                              'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                              pressed
-                                ? 'border-[#143D2B] text-[#143D2B] bg-[#E8F1EC] font-medium'
-                                : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
-                            )}
-                          >
-                            {item.word}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <div>
-                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                        <h3 className="font-serif text-[28px] font-normal text-[#131715]">
-                          {activeSlang.word}
-                        </h3>
-                        <div className="inline-flex items-center gap-2 text-[13px] text-[#69726D] tabular-nums">
-                          <span>Parent cringe</span>
-                          <span
-                            className="inline-flex gap-1"
-                            aria-label={`${activeSlang.cringeLevel} out of 5`}
-                          >
-                            {[1, 2, 3, 4, 5].map((dot) => (
+                          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                            <h3 className="font-serif text-[28px] font-normal text-[#131715]">
+                              {item.word}
+                            </h3>
+                            <div className="inline-flex items-center gap-2 text-[13px] text-[#69726D] tabular-nums">
+                              <span>Parent cringe</span>
                               <span
-                                key={dot}
-                                className={cn(
-                                  'w-2 h-2 rounded-full',
-                                  dot <= activeSlang.cringeLevel
-                                    ? 'bg-[#B45309]'
-                                    : 'bg-[rgba(19,23,21,0.16)]'
-                                )}
-                              />
-                            ))}
-                          </span>
+                                className="inline-flex gap-1"
+                                aria-label={`${item.cringeLevel} out of 5`}
+                              >
+                                {[1, 2, 3, 4, 5].map((dot) => (
+                                  <span
+                                    key={dot}
+                                    className={cn(
+                                      'w-2 h-2 rounded-full',
+                                      dot <= item.cringeLevel
+                                        ? 'bg-[#B45309]'
+                                        : 'bg-[rgba(19,23,21,0.16)]'
+                                    )}
+                                  />
+                                ))}
+                              </span>
+                            </div>
+                          </div>
+                          <p className="text-[14.5px] leading-[1.55] text-[#454D49] mt-2">
+                            {item.definition}
+                          </p>
                         </div>
-                      </div>
-                      <p className="text-[14.5px] leading-[1.55] text-[#454D49] mt-2">
-                        {activeSlang.definition}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="bg-[#F6F5F0] rounded-[10px] p-4 flex flex-col gap-2.5">
-                    <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#69726D]">
-                      <span>Sunday dinner question</span>
-                      <button
-                        type="button"
-                        onClick={() => setDinnerIndex((prev) => prev + 1)}
-                        className="min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
-                      >
-                        Next question
-                      </button>
-                    </div>
-                    <p className="font-serif text-[17px] leading-[1.45] text-[#131715]">
-                      {activeDinnerQuestion}
-                    </p>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
+
+                <div className="bg-[#F6F5F0] rounded-[10px] p-4 flex flex-col gap-2.5">
+                  <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#69726D]">
+                    <span>Sunday dinner question</span>
+                    <button
+                      type="button"
+                      tabIndex={activeTab === 'digest' ? 0 : -1}
+                      onClick={() => setDinnerIndex((prev) => prev + 1)}
+                      className="min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+                    >
+                      Next question
+                    </button>
+                  </div>
+                  <div className="grid">
+                    {STUDIO_DINNER_QUESTIONS.map((q, qIdx) => {
+                      const isCurrent = q === activeDinnerQuestion;
+                      return (
+                        <p
+                          key={qIdx}
+                          aria-hidden={!isCurrent || undefined}
+                          className={cn(
+                            'col-start-1 row-start-1 font-serif text-[17px] leading-[1.45] text-[#131715]',
+                            !isCurrent && 'invisible pointer-events-none select-none'
+                          )}
+                        >
+                          {q}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

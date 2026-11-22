@@ -208,61 +208,75 @@ export function PickyEatingSolutions() {
           </div>
         </div>
 
-        {/* Visual Chain Stepper Flow */}
-        <div className="rounded-2xl border border-amber-200/60 bg-amber-50/30 p-4 sm:p-5 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-            {/* Step 1: Safe Food */}
-            <div className="rounded-xl border border-emerald-300 bg-white p-3.5 space-y-1 shadow-2xs">
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700">
-                Base Safe Food
-              </div>
-              <div className="font-bold text-slate-900 text-xs sm:text-sm">
-                {currentChain.safeFood}
-              </div>
-              <div className="text-[11px] text-slate-500">100% accepted food</div>
-            </div>
+        {/* Visual Chain Stepper Flow — CSS Grid stack locks height across all 4 food chains (0px shift) */}
+        <div className="rounded-2xl border border-amber-200/60 bg-amber-50/30 p-4 sm:p-5 grid">
+          {chains.map((chain, idx) => {
+            const isActive = idx === selectedChainIndex;
+            return (
+              <div
+                key={chain.category}
+                role={isActive ? 'tabpanel' : undefined}
+                aria-hidden={!isActive || undefined}
+                className={`col-start-1 row-start-1 flex flex-col justify-between gap-4 ${
+                  isActive ? '' : 'invisible pointer-events-none select-none'
+                }`}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+                  {/* Step 1: Safe Food */}
+                  <div className="rounded-xl border border-emerald-300 bg-white p-3.5 space-y-1 shadow-2xs">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700">
+                      Base Safe Food
+                    </div>
+                    <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                      {chain.safeFood}
+                    </div>
+                    <div className="text-[11px] text-slate-500">100% accepted food</div>
+                  </div>
 
-            {/* Step 2: Bridge 1 */}
-            <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-1">
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700">
-                Micro-Bridge 1
-              </div>
-              <div className="font-bold text-slate-900 text-xs sm:text-sm">
-                {currentChain.bridgeStep1}
-              </div>
-              <div className="text-[11px] text-slate-500">Subtle texture tweak</div>
-            </div>
+                  {/* Step 2: Bridge 1 */}
+                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-1">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700">
+                      Micro-Bridge 1
+                    </div>
+                    <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                      {chain.bridgeStep1}
+                    </div>
+                    <div className="text-[11px] text-slate-500">Subtle texture tweak</div>
+                  </div>
 
-            {/* Step 3: Bridge 2 */}
-            <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-1">
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700">
-                Micro-Bridge 2
-              </div>
-              <div className="font-bold text-slate-900 text-xs sm:text-sm">
-                {currentChain.bridgeStep2}
-              </div>
-              <div className="text-[11px] text-slate-500">Color / nutrient shift</div>
-            </div>
+                  {/* Step 3: Bridge 2 */}
+                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-1">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700">
+                      Micro-Bridge 2
+                    </div>
+                    <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                      {chain.bridgeStep2}
+                    </div>
+                    <div className="text-[11px] text-slate-500">Color / nutrient shift</div>
+                  </div>
 
-            {/* Step 4: Target Food */}
-            <div className="rounded-xl border border-teal-300 bg-teal-50/70 p-3.5 space-y-1 shadow-2xs">
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-teal-800">
-                Target Exposure
-              </div>
-              <div className="font-bold text-teal-950 text-xs sm:text-sm">
-                {currentChain.targetFood}
-              </div>
-              <div className="text-[11px] text-teal-700">Full vegetable expansion</div>
-            </div>
-          </div>
+                  {/* Step 4: Target Food */}
+                  <div className="rounded-xl border border-teal-300 bg-teal-50/70 p-3.5 space-y-1 shadow-2xs">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-teal-800">
+                      Target Exposure
+                    </div>
+                    <div className="font-bold text-teal-950 text-xs sm:text-sm">
+                      {chain.targetFood}
+                    </div>
+                    <div className="text-[11px] text-teal-700">Full vegetable expansion</div>
+                  </div>
+                </div>
 
-          <div className="rounded-xl border border-amber-200 bg-white p-3 text-xs text-amber-950 flex items-start gap-2.5">
-            <Lightbulb className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <span className="font-bold">Sensory Bridge Strategy:</span>
-              <p className="text-slate-700 leading-relaxed">{currentChain.sensoryBridge}</p>
-            </div>
-          </div>
+                <div className="rounded-xl border border-amber-200 bg-white p-3 text-xs text-amber-950 flex items-start gap-2.5">
+                  <Lightbulb className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <span className="font-bold">Sensory Bridge Strategy:</span>
+                    <p className="text-slate-700 leading-relaxed">{chain.sensoryBridge}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

@@ -79,12 +79,24 @@ export function SundayTableCloserBand({
             </span>
           </div>
 
-          <p
-            data-testid="dinner-closer-question"
-            className="max-w-[38ch] font-serif text-[23px] sm:text-[30px] font-normal leading-[1.28] tracking-[-0.015em] text-[#FAF9F5]"
-          >
-            &ldquo;{activePrompt.question}&rdquo;
-          </p>
+          <div className="grid max-w-[38ch]">
+            {dinnerPrompts.map((prompt, idx) => {
+              const isCurrent = idx === dinnerPromptIndex % dinnerPrompts.length;
+              return (
+                <p
+                  key={prompt.id}
+                  data-testid={isCurrent ? 'dinner-closer-question' : undefined}
+                  aria-hidden={!isCurrent || undefined}
+                  className={cn(
+                    'col-start-1 row-start-1 font-serif text-[23px] sm:text-[30px] font-normal leading-[1.28] tracking-[-0.015em] text-[#FAF9F5]',
+                    !isCurrent && 'invisible pointer-events-none select-none'
+                  )}
+                >
+                  &ldquo;{prompt.question}&rdquo;
+                </p>
+              );
+            })}
+          </div>
 
           <div>
             <button
@@ -107,16 +119,30 @@ export function SundayTableCloserBand({
             {dinnerNotesOpen && (
               <div
                 data-testid="dinner-notes-panel"
-                className="mt-2 flex max-w-[68ch] flex-col gap-2 rounded-[9px] border border-[#FAF9F5]/15 bg-[#173327] px-4 py-3.5 text-[13.5px] leading-[1.55] text-[#FAF9F5]/90"
+                className="mt-2 grid max-w-[68ch] rounded-[9px] border border-[#FAF9F5]/15 bg-[#173327] px-4 py-3.5 text-[13.5px] leading-[1.55] text-[#FAF9F5]/90"
               >
-                <div>
-                  <span className="font-medium text-[#FAF9F5]/70">Parent note: </span>
-                  <span>{activePrompt.parentTip}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-[#FAF9F5]/70">Follow-up: </span>
-                  <span>&ldquo;{activePrompt.followUp}&rdquo;</span>
-                </div>
+                {dinnerPrompts.map((prompt, idx) => {
+                  const isCurrent = idx === dinnerPromptIndex % dinnerPrompts.length;
+                  return (
+                    <div
+                      key={prompt.id}
+                      aria-hidden={!isCurrent || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1 flex flex-col gap-2',
+                        !isCurrent && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      <div>
+                        <span className="font-medium text-[#FAF9F5]/70">Parent note: </span>
+                        <span>{prompt.parentTip}</span>
+                      </div>
+                      <div>
+                        <span className="font-medium text-[#FAF9F5]/70">Follow-up: </span>
+                        <span>&ldquo;{prompt.followUp}&rdquo;</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

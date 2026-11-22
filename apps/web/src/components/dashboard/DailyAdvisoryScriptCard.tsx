@@ -249,18 +249,41 @@ export function DailyAdvisoryScriptCard({
 
           <div
             className={cn(
-              'p-4 rounded-2xl border-l-[3px] transition-colors space-y-2',
+              'p-4 rounded-2xl border-l-[3px] transition-colors grid',
               isReactive
                 ? 'bg-[#E56A4E]/15 border-[#E56A4E]'
                 : 'bg-white/10 border-[#F0BC46]'
             )}
           >
-            <blockquote className="font-serif text-lg sm:text-[19px] leading-[1.38] text-white">
-              {isReactive ? script.whatNotToSay : script.whatToSay}
-            </blockquote>
-            <p className="text-xs text-[#FAF7F1]/75 leading-relaxed">
-              {isReactive ? script.notToSayWhy : script.toSayWhy}
-            </p>
+            <div
+              aria-hidden={isReactive || undefined}
+              className={cn(
+                'col-start-1 row-start-1 space-y-2',
+                isReactive && 'invisible pointer-events-none select-none'
+              )}
+            >
+              <blockquote className="font-serif text-lg sm:text-[19px] leading-[1.38] text-white">
+                {script.whatToSay}
+              </blockquote>
+              <p className="text-xs text-[#FAF7F1]/75 leading-relaxed">
+                {script.toSayWhy}
+              </p>
+            </div>
+
+            <div
+              aria-hidden={!isReactive || undefined}
+              className={cn(
+                'col-start-1 row-start-1 space-y-2',
+                !isReactive && 'invisible pointer-events-none select-none'
+              )}
+            >
+              <blockquote className="font-serif text-lg sm:text-[19px] leading-[1.38] text-white">
+                {script.whatNotToSay}
+              </blockquote>
+              <p className="text-xs text-[#FAF7F1]/75 leading-relaxed">
+                {script.notToSayWhy}
+              </p>
+            </div>
           </div>
         </div>
 

@@ -142,88 +142,102 @@ export function SleepRegressionCompanion() {
         </div>
       </div>
 
-      {/* Main Stage Information Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Left Column: Neurobiology & Wake Windows */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-4 space-y-2">
-            <div className="flex items-center gap-2 text-indigo-900 font-bold text-sm">
-              <Sparkles className="h-4 w-4 text-indigo-600" />
-              <span>{currentStage.title}</span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-              {currentStage.neurobiology}
-            </p>
-          </div>
+      {/* Main Stage Information Grid — CSS Grid stack locks height across all 5 age tabs (0px shift) */}
+      <div className="grid">
+        {stages.map((stage) => {
+          const isActive = stage.id === currentStage.id;
+          return (
+            <div
+              key={stage.id}
+              role={isActive ? 'tabpanel' : undefined}
+              aria-hidden={!isActive || undefined}
+              className={`col-start-1 row-start-1 grid grid-cols-1 lg:grid-cols-3 gap-5 ${
+                isActive ? '' : 'invisible pointer-events-none select-none'
+              }`}
+            >
+              {/* Left Column: Neurobiology & Wake Windows */}
+              <div className="lg:col-span-2 space-y-4">
+                <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-indigo-900 font-bold text-sm">
+                    <Sparkles className="h-4 w-4 text-indigo-600" />
+                    <span>{stage.title}</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    {stage.neurobiology}
+                  </p>
+                </div>
 
-          {/* Vitals: Wake Windows & Nap Structure */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div className="rounded-xl border border-slate-200 p-3.5 space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                <Clock className="h-4 w-4 text-teal-600" />
-                <span>Optimal Wake Window</span>
+                {/* Vitals: Wake Windows & Nap Structure */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="rounded-xl border border-slate-200 p-3.5 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-slate-900">
+                      <Clock className="h-4 w-4 text-teal-600" />
+                      <span>Optimal Wake Window</span>
+                    </div>
+                    <div className="text-base font-extrabold text-teal-900">
+                      {stage.wakeWindowHours}
+                    </div>
+                    <p className="text-slate-500 text-[11px]">
+                      Maximum awake time between naps before cortisol spikes
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-200 p-3.5 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-slate-900">
+                      <Bed className="h-4 w-4 text-indigo-600" />
+                      <span>Nap Transition Structure</span>
+                    </div>
+                    <div className="text-sm font-bold text-indigo-950">
+                      {stage.napStructure}
+                    </div>
+                    <p className="text-slate-500 text-[11px]">
+                      Target daily schedule for optimal restorative sleep
+                    </p>
+                  </div>
+                </div>
+
+                {/* Parent Action Playbook */}
+                <div className="rounded-xl border border-slate-200 p-4 space-y-2 text-xs">
+                  <div className="font-bold text-slate-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    <span>Evidence-Based Parent Playbook:</span>
+                  </div>
+                  <ul className="space-y-1.5 text-slate-700 pl-1">
+                    {stage.parentPlaybook.map((step, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="font-bold text-indigo-700">•</span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="text-base font-extrabold text-teal-900">
-                {currentStage.wakeWindowHours}
+
+              {/* Right Column: Empathic Bedtime Co-Regulation Script */}
+              <div className="rounded-xl border border-indigo-200 bg-linear-to-b from-indigo-900 to-slate-900 text-white p-5 flex flex-col justify-between space-y-4 shadow-md">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-indigo-200 text-xs font-bold uppercase tracking-wider">
+                    <SunDim className="h-4 w-4 text-amber-300" />
+                    <span>Bedtime Co-Regulation Script</span>
+                  </div>
+                  <blockquote className="text-xs sm:text-sm italic text-indigo-100 font-serif leading-relaxed border-l-2 border-indigo-400 pl-3.5">
+                    &ldquo;{stage.soothingScript}&rdquo;
+                  </blockquote>
+                </div>
+
+                <div className="rounded-lg bg-white/10 p-3 text-[11px] text-indigo-200 space-y-1 border border-white/10">
+                  <div className="font-bold text-white flex items-center gap-1">
+                    <Compass className="h-3.5 w-3.5 text-indigo-300" />
+                    <span>Neurobiology Truth:</span>
+                  </div>
+                  <p>
+                    Sleep regressions are not setbacks; they are developmental progressions of a rapidly wiring brain.
+                  </p>
+                </div>
               </div>
-              <p className="text-slate-500 text-[11px]">
-                Maximum awake time between naps before cortisol spikes
-              </p>
             </div>
-
-            <div className="rounded-xl border border-slate-200 p-3.5 space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                <Bed className="h-4 w-4 text-indigo-600" />
-                <span>Nap Transition Structure</span>
-              </div>
-              <div className="text-sm font-bold text-indigo-950">
-                {currentStage.napStructure}
-              </div>
-              <p className="text-slate-500 text-[11px]">
-                Target daily schedule for optimal restorative sleep
-              </p>
-            </div>
-          </div>
-
-          {/* Parent Action Playbook */}
-          <div className="rounded-xl border border-slate-200 p-4 space-y-2 text-xs">
-            <div className="font-bold text-slate-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              <span>Evidence-Based Parent Playbook:</span>
-            </div>
-            <ul className="space-y-1.5 text-slate-700 pl-1">
-              {currentStage.parentPlaybook.map((step, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="font-bold text-indigo-700">•</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Right Column: Empathic Bedtime Co-Regulation Script */}
-        <div className="rounded-xl border border-indigo-200 bg-linear-to-b from-indigo-900 to-slate-900 text-white p-5 flex flex-col justify-between space-y-4 shadow-md">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-indigo-200 text-xs font-bold uppercase tracking-wider">
-              <SunDim className="h-4 w-4 text-amber-300" />
-              <span>Bedtime Co-Regulation Script</span>
-            </div>
-            <blockquote className="text-xs sm:text-sm italic text-indigo-100 font-serif leading-relaxed border-l-2 border-indigo-400 pl-3.5">
-              "{currentStage.soothingScript}"
-            </blockquote>
-          </div>
-
-          <div className="rounded-lg bg-white/10 p-3 text-[11px] text-indigo-200 space-y-1 border border-white/10">
-            <div className="font-bold text-white flex items-center gap-1">
-              <Compass className="h-3.5 w-3.5 text-indigo-300" />
-              <span>Neurobiology Truth:</span>
-            </div>
-            <p>
-              Sleep regressions are not setbacks; they are developmental progressions of a rapidly wiring brain.
-            </p>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

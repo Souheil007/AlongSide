@@ -229,49 +229,66 @@ export function HeroSection() {
               />
             </div>
 
-            {/* Live Calibrated Script Card */}
+            {/* Live Calibrated Script Card — CSS Grid stack locks height across all 5 age bands (0px shift) */}
             <div
               data-ui
               aria-live="polite"
-              className="relative -mt-8 sm:-mt-10 sm:mx-5 bg-white border border-[rgba(19,23,21,0.09)] rounded-[14px] p-4 sm:p-5 shadow-[0_16px_40px_rgba(19,23,21,0.09)]"
+              className="relative -mt-8 sm:-mt-10 sm:mx-5 bg-white border border-[rgba(19,23,21,0.09)] rounded-[14px] p-4 sm:p-5 shadow-[0_16px_40px_rgba(19,23,21,0.09)] grid"
             >
-              <div className="flex items-center justify-between gap-3 pb-3 mb-3.5 border-b border-[rgba(19,23,21,0.09)]">
-                <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#131715]">
-                  <span
-                    className="w-[7px] h-[7px] rounded-full bg-[#143D2B] shrink-0"
-                    aria-hidden="true"
-                  />
-                  <span>{activeMoment.child}</span>
-                </div>
-                <span className="text-[12px] font-medium text-[#143D2B] tabular-nums">
-                  {activeMoment.tag}
-                </span>
-              </div>
+              {HERO_AGE_MOMENTS.map((moment) => {
+                const isActive = moment.id === activeMoment.id;
+                return (
+                  <div
+                    key={moment.id}
+                    aria-hidden={!isActive || undefined}
+                    className={cn(
+                      'col-start-1 row-start-1 flex flex-col justify-between',
+                      !isActive && 'invisible pointer-events-none select-none'
+                    )}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-3 pb-3 mb-3.5 border-b border-[rgba(19,23,21,0.09)]">
+                        <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#131715]">
+                          <span
+                            className="w-[7px] h-[7px] rounded-full bg-[#143D2B] shrink-0"
+                            aria-hidden="true"
+                          />
+                          <span>{moment.child}</span>
+                        </div>
+                        <span className="text-[12px] font-medium text-[#143D2B] tabular-nums">
+                          {moment.tag}
+                        </span>
+                      </div>
 
-              <div className="text-[15px] font-semibold text-[#131715] mb-1.5">
-                {activeMoment.momentTitle}
-              </div>
-              <p className="text-[13.5px] leading-[1.5] text-[#454D49] mb-3.5">
-                {activeMoment.brainNote}
-              </p>
+                      <div className="text-[15px] font-semibold text-[#131715] mb-1.5">
+                        {moment.momentTitle}
+                      </div>
+                      <p className="text-[13.5px] leading-[1.5] text-[#454D49] mb-3.5">
+                        {moment.brainNote}
+                      </p>
 
-              <div className="bg-[#E8F1EC] rounded-[8px] px-3.5 py-3 flex items-start justify-between gap-3">
-                <p className="font-serif text-[16px] leading-[1.45] text-[#131715]">
-                  {activeMoment.script}
-                </p>
-                <button
-                  type="button"
-                  onClick={handleCopyScript}
-                  className="shrink-0 min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
-                >
-                  {copied ? 'Copied' : 'Copy'}
-                </button>
-              </div>
+                      <div className="bg-[#E8F1EC] rounded-[8px] px-3.5 py-3 flex items-start justify-between gap-3">
+                        <p className="font-serif text-[16px] leading-[1.45] text-[#131715]">
+                          {moment.script}
+                        </p>
+                        <button
+                          type="button"
+                          tabIndex={isActive ? 0 : -1}
+                          onClick={isActive ? handleCopyScript : undefined}
+                          className="shrink-0 min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+                        >
+                          {isActive && copied ? 'Copied' : 'Copy'}
+                        </button>
+                      </div>
+                    </div>
 
-              <div className="mt-3 flex items-center justify-between gap-3 text-[12.5px] text-[#69726D] tabular-nums">
-                <span>{activeMoment.pairedGuide}</span>
-                <span className="shrink-0">{activeMoment.readTime}</span>
-              </div>
+                    <div className="mt-3 flex items-center justify-between gap-3 text-[12.5px] text-[#69726D] tabular-nums">
+                      <span>{moment.pairedGuide}</span>
+                      <span className="shrink-0">{moment.readTime}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
