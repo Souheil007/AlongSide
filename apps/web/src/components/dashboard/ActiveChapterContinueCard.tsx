@@ -16,11 +16,12 @@ import {
 } from '@alongside/shared';
 import { Button } from '@/components/ui/Button';
 import { getAcademyModules, getAcademyModuleBySlug } from '@/lib/api/academy';
-import { useChildAge } from '@/hooks/useChildAge';
+import { deriveChildAge, useChildAge } from '@/hooks/useChildAge';
 import { cn } from '@/lib/utils';
 
 export interface ActiveChapterContinueCardProps {
   child: ChildDTO | null;
+  isChildLoading?: boolean;
   className?: string;
 }
 
@@ -229,49 +230,83 @@ function formatLessonNodeTitle(rawTitle: string, index: number): string {
 
 export function ActiveChapterContinueCard({
   child,
+  isChildLoading = false,
   className,
 }: ActiveChapterContinueCardProps) {
   const childAge = useChildAge();
-  const effectiveTier = (child?.developmentalTier ?? childAge.developmentalTier) as DevelopmentalTier;
-  const fallbackAnchor = resolveTierAnchor(child?.developmentalTier ?? child?.age);
+  const effectiveTier = React.useMemo<DevelopmentalTier | undefined>(() => {
+    if (child) {
+      return (child.developmentalTier ?? deriveChildAge(child).developmentalTier) as DevelopmentalTier;
+    }
+    return childAge.isAutoCalibrated ? childAge.developmentalTier : undefined;
+  }, [child, childAge.isAutoCalibrated, childAge.developmentalTier]);
 
-  // Fetch modules for this tier
-  const { data: modules } = useQuery({
+  const fallbackAnchor = resolveTierAnchor(
+    effectiveTier ?? child?.developmentalTier ?? child?.age
+  );
+
+  // Fetch modules for the resolved child tier (never fire for a dummy tier while child is unresolved)
+  const { data: modules, isLoading: isModulesLoading } = useQuery({
     queryKey: ['active-chapter-modules', effectiveTier],
     queryFn: () => getAcademyModules({ tier: effectiveTier }),
+    enabled: Boolean(effectiveTier),
     staleTime: 5 * 60 * 1000,
   });
 
-  const activeModule = (modules && modules.length > 0)
-    ? (modules.find((m) => !m.isCompleted) ?? modules[0])
-    : null;
+  const activeModule =
+    modules && modules.length > 0
+      ? (modules.find((m) => !m.isCompleted) ?? modules[0])
+      : null;
 
-  const activeModuleSlug = activeModule?.slug || fallbackAnchor.moduleSlug;
+  // Prefer lessons already returned by getAcademyModules to avoid a second network waterfall
+  const moduleListLessons = activeModule?.lessons ?? [];
+  const needsModuleDetail =
+    Boolean(activeModule?.slug) && moduleListLessons.length === 0;
 
-  // Query rich module hierarchy with real chapters and lesson completion flags
-  const { data: moduleDetail } = useQuery({
-    queryKey: ['academy-module-detail', activeModuleSlug],
-    queryFn: () => getAcademyModuleBySlug(activeModuleSlug),
-    enabled: Boolean(activeModuleSlug),
+  // Only query module detail for the REAL resolved module if its lessons were omitted
+  const { data: moduleDetail, isLoading: isDetailLoading } = useQuery({
+    queryKey: ['academy-module-detail', activeModule?.slug],
+    queryFn: () => getAcademyModuleBySlug(activeModule!.slug),
+    enabled: needsModuleDetail,
     staleTime: 5 * 60 * 1000,
   });
 
-  const courseTitle = moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
-  const moduleSlug = moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
-  const summary = moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
+  // In the browser, hold a calm skeleton while real tier modules/lessons load so we never flash hardcoded fallback chapters
+  const isAwaitingLiveRoadmap =
+    typeof window !== 'undefined' &&
+    (isChildLoading ||
+      (Boolean(effectiveTier) &&
+        (isModulesLoading || (needsModuleDetail && isDetailLoading))));
 
-  const allLessons = moduleDetail?.lessons && moduleDetail.lessons.length > 0 ? moduleDetail.lessons : [];
-  const currentIncompleteLesson = allLessons.find((l) => !l.isCompleted) || allLessons[0];
+  const courseTitle =
+    moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
+  const moduleSlug =
+    moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
+  const summary =
+    moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
+
+  const allLessons =
+    moduleDetail?.lessons && moduleDetail.lessons.length > 0
+      ? moduleDetail.lessons
+      : moduleListLessons;
+  const currentIncompleteLesson =
+    allLessons.find((l) => !l.isCompleted) || allLessons[0];
 
   const lessonSlug = currentIncompleteLesson?.slug ?? fallbackAnchor.lessonSlug;
-  const lessonTitle = currentIncompleteLesson?.title ?? fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '');
-  const readingMinutes = currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
+  const lessonTitle =
+    currentIncompleteLesson?.title ??
+    fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '');
+  const readingMinutes =
+    currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
 
-  const totalLessons = allLessons.length > 0 ? allLessons.length : fallbackAnchor.totalChapters;
-  const completedLessons = allLessons.length > 0
-    ? allLessons.filter((l) => l.isCompleted).length
-    : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
-  const progressPercent = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+  const totalLessons =
+    allLessons.length > 0 ? allLessons.length : fallbackAnchor.totalChapters;
+  const completedLessons =
+    allLessons.length > 0
+      ? allLessons.filter((l) => l.isCompleted).length
+      : (activeModule?.completedLessonCount ?? fallbackAnchor.completedChapters);
+  const progressPercent =
+    totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   // Derive dynamic roadmap nodes directly from lessons
   const roadmapNodes = React.useMemo(() => {
@@ -301,6 +336,65 @@ export function ActiveChapterContinueCard({
       isCurrent: ch.isCurrent,
     }));
   }, [allLessons, fallbackAnchor]);
+
+  if (isAwaitingLiveRoadmap) {
+    return (
+      <div
+        data-testid="active-chapter-roadmap-skeleton"
+        aria-busy="true"
+        aria-label="Loading curriculum roadmap"
+        className={cn(
+          'rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] p-6 sm:p-10 space-y-7',
+          className
+        )}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 pb-5">
+          <div className="flex items-center gap-3.5 min-w-0 flex-1">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#143D2B] text-white font-bold shadow-sm">
+              <BookOpen className="h-5 w-5" />
+            </span>
+            <div className="min-w-0 flex-1 space-y-2">
+              <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
+                Parent Intelligence Academy • Active Course
+              </span>
+              <div className="h-7 w-64 max-w-full rounded-lg bg-[#ECEAE2]" />
+            </div>
+          </div>
+          <div className="h-7 w-44 rounded-full bg-[#EAF3EE]" />
+        </div>
+
+        <div className="space-y-4 pt-1">
+          <div className="flex items-center justify-between text-xs font-mono">
+            <span className="font-bold text-[#143D2B] uppercase tracking-wider text-[11px]">
+              Curriculum Roadmap
+            </span>
+            <div className="h-3.5 w-28 rounded bg-[#ECEAE2]" />
+          </div>
+          <div className="relative pt-2 pb-3 overflow-x-auto">
+            <div className="min-w-[520px] flex items-center justify-between relative px-6 sm:px-8">
+              <div className="absolute left-8 right-8 top-5 h-1 bg-stone-200/80" />
+              {[1, 2, 3, 4, 5].map((idx) => (
+                <div key={idx} className="flex flex-col items-center gap-2 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[#ECEAE2] border-2 border-white" />
+                  <div className="h-3 w-20 rounded bg-[#ECEAE2]" />
+                  <div className="h-2.5 w-14 rounded bg-[#F2F0E9]" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white/80 p-6 sm:p-7 rounded-3xl border border-white flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+          <div className="space-y-2.5 flex-1">
+            <div className="h-5 w-44 rounded-full bg-[#EAF3EE]" />
+            <div className="h-6 w-72 max-w-full rounded-lg bg-[#ECEAE2]" />
+            <div className="h-4 w-full max-w-xl rounded bg-[#F2F0E9]" />
+          </div>
+          <div className="h-11 w-36 rounded-full bg-[#ECEAE2] shrink-0" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

@@ -79,11 +79,16 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
     }
   }, [initialChildId]);
 
-  const activeChild = selectActiveChild({ children, activeChildId });
+  const resolvedChildren = children.length > 0 ? children : queryChildren;
+  const resolvedActiveChildId = initialChildId || activeChildId;
+  const activeChild = selectActiveChild({
+    children: resolvedChildren,
+    activeChildId: resolvedActiveChildId,
+  });
 
   const handleAddChildSuccess = (newChild: ChildDTO) => {
     setOnboardingOpen(false);
-    setChildren([...children, newChild]);
+    setChildren([...resolvedChildren, newChild]);
     setActiveChild(newChild.id);
   };
 
@@ -99,7 +104,10 @@ export function HolisticHomeFeed({ initialChildId, parentName }: HolisticHomeFee
       />
 
       {/* 2. SECTION 1: Active Academy Track (Hero Centerpiece with Visual Roadmap & Tonight's Script) */}
-      <ActiveChapterContinueCard child={activeChild} />
+      <ActiveChapterContinueCard
+        child={activeChild}
+        isChildLoading={queryLoading && resolvedChildren.length === 0}
+      />
 
       {/* 3. SECTION 2: Sunday Youth Culture Digest (Full-Width 3-Column Living Feed) */}
       <SundayCultureDigestCard child={activeChild} />
