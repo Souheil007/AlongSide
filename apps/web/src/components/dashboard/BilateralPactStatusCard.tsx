@@ -314,7 +314,7 @@ export function BilateralPactStatusCard({
 
   return (
     <div className={cn('space-y-4', className)}>
-      <Card className="border border-white/90 bg-white/75 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(20,61,43,0.05)] rounded-[2.5rem] overflow-hidden transition-all hover:border-[#143D2B]/30">
+      <Card className="border border-[#143D2B]/10 bg-white shadow-[0_10px_30px_rgba(19,23,21,0.045)] rounded-[2rem] overflow-hidden transition-all hover:border-[#143D2B]/25">
         {/* TODDLER & EARLY CHILDHOOD: Early Screen Boundaries & Meltdown Coping Kit (NO PHONE READINESS) */}
         {isEarlyTier ? (
           <>

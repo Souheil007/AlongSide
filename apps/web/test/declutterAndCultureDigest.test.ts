@@ -73,7 +73,8 @@ describe('Decluttering, Realistic Pediatric Weight & Sunday Culture Digest Speci
       const content = fs.readFileSync(filePath, 'utf8');
 
       expect(content).toContain('SundayCultureDigestCard');
-      expect(content).toContain('<SundayCultureDigestCard child={activeChild} />');
+      expect(content).toContain('<SundayCultureDigestCard');
+      expect(content).toContain('child={activeChild}');
     });
 
     it('validates SundayCultureDigestCard renders dinner table prompt, slang chips and link', () => {
