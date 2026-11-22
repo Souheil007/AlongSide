@@ -56,13 +56,30 @@ export function ScreenPactSection() {
                 <div className="inline-flex items-center gap-2.5 text-[14px] font-medium text-[#FAF9F5] tabular-nums">
                   <span
                     className={cn(
-                      'w-2 h-2 rounded-full transition-colors duration-200',
+                      'w-2 h-2 rounded-full shrink-0 transition-colors duration-200',
                       isNight ? 'bg-[#F59E0B]' : 'bg-[#6EE7B7]'
                     )}
                     aria-hidden="true"
                   />
-                  <span>
-                    {isNight ? '8:30 PM · Bedtime dock active' : '4:00 PM · Agreed apps open'}
+                  <span className="grid">
+                    <span
+                      aria-hidden={!isNight || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1',
+                        !isNight && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      8:30 PM · Bedtime dock active
+                    </span>
+                    <span
+                      aria-hidden={isNight || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1',
+                        isNight && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      4:00 PM · Agreed apps open
+                    </span>
                   </span>
                 </div>
 
@@ -111,10 +128,25 @@ export function ScreenPactSection() {
                   <strong className="block font-medium text-[#FAF9F5] mb-0.5">
                     Child&apos;s promise
                   </strong>
-                  <span>
-                    {isNight
-                      ? 'Apps pause automatically at 8:30 PM. Calls to parents stay open.'
-                      : 'Homework finished first, then 45 minutes of approved games and messages.'}
+                  <span className="grid">
+                    <span
+                      aria-hidden={!isNight || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1',
+                        !isNight && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      Apps pause automatically at 8:30 PM. Calls to parents stay open.
+                    </span>
+                    <span
+                      aria-hidden={isNight || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1',
+                        isNight && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      Homework finished first, then 45 minutes of approved games and messages.
+                    </span>
                   </span>
                 </div>
               </div>

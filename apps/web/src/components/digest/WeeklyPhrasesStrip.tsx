@@ -96,38 +96,52 @@ export function WeeklyPhrasesStrip({
       {activePhrase && (
         <div
           data-testid="phrase-expanded-panel"
-          className="grid grid-cols-1 items-center gap-4 rounded-[9px] border border-[#131715]/10 bg-white p-4 sm:px-5 md:grid-cols-2 md:gap-6"
+          className="grid rounded-[9px] border border-[#131715]/10 bg-white p-4 sm:px-5"
         >
-          <div className="space-y-2">
-            <p className="text-[13.5px] leading-[1.55] text-[#3E4642]">
-              {activePhrase.fullMeaning}
-            </p>
-            <div className="flex flex-wrap items-center gap-2.5 text-[12px] text-[#59625D]">
-              <span>Parent-use gauge: {activePhrase.cringeLabel}</span>
-              <span
-                data-testid="phrase-cringe-gauge"
-                className="inline-flex items-center gap-1"
-                aria-label={`Parent-use gauge ${Math.min(3, Math.max(1, activePhrase.cringeLevel))} of 3`}
+          {visiblePhrases.map((phrase, idx) => {
+            const isCurrent = idx === expandedIndex;
+            return (
+              <div
+                key={phrase.id}
+                aria-hidden={!isCurrent || undefined}
+                className={cn(
+                  'col-start-1 row-start-1 grid grid-cols-1 items-center gap-4 md:grid-cols-2 md:gap-6',
+                  !isCurrent && 'invisible pointer-events-none select-none'
+                )}
               >
-                {[1, 2, 3].map((dot) => (
-                  <span
-                    key={dot}
-                    data-testid={`phrase-gauge-dot-${dot}`}
-                    className={cn(
-                      'h-[7px] w-[7px] rounded-full',
-                      dot <= Math.min(3, Math.max(1, activePhrase.cringeLevel))
-                        ? 'bg-[#143D2B]'
-                        : 'bg-[#131715]/15'
-                    )}
-                  />
-                ))}
-              </span>
-            </div>
-          </div>
+                <div className="space-y-2">
+                  <p className="text-[13.5px] leading-[1.55] text-[#3E4642]">
+                    {phrase.fullMeaning}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2.5 text-[12px] text-[#59625D]">
+                    <span>Parent-use gauge: {phrase.cringeLabel}</span>
+                    <span
+                      data-testid={isCurrent ? 'phrase-cringe-gauge' : undefined}
+                      className="inline-flex items-center gap-1"
+                      aria-label={`Parent-use gauge ${Math.min(3, Math.max(1, phrase.cringeLevel))} of 3`}
+                    >
+                      {[1, 2, 3].map((dot) => (
+                        <span
+                          key={dot}
+                          data-testid={isCurrent ? `phrase-gauge-dot-${dot}` : undefined}
+                          className={cn(
+                            'h-[7px] w-[7px] rounded-full',
+                            dot <= Math.min(3, Math.max(1, phrase.cringeLevel))
+                              ? 'bg-[#143D2B]'
+                              : 'bg-[#131715]/15'
+                          )}
+                        />
+                      ))}
+                    </span>
+                  </div>
+                </div>
 
-          <div className="rounded-[8px] bg-[#E6F0EB] px-3.5 py-3 text-[13.5px] font-medium leading-[1.5] text-[#10251C]">
-            {activePhrase.calmScript}
-          </div>
+                <div className="rounded-[8px] bg-[#E6F0EB] px-3.5 py-3 text-[13.5px] font-medium leading-[1.5] text-[#10251C]">
+                  {phrase.calmScript}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

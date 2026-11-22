@@ -138,9 +138,23 @@ export function PricingAndFaqSection() {
                   <span className="text-[15px]">{plan.period}</span>
                 </span>
               </div>
-              <p className="text-[14px] font-medium text-[#143D2B] mt-2 tabular-nums">
-                {plan.note}
-              </p>
+              <div className="grid mt-2 text-[14px] font-medium text-[#143D2B] tabular-nums">
+                {(['annual', 'monthly'] as const).map((period) => {
+                  const isCurrent = billing === period;
+                  return (
+                    <p
+                      key={period}
+                      aria-hidden={!isCurrent || undefined}
+                      className={cn(
+                        'col-start-1 row-start-1',
+                        !isCurrent && 'invisible pointer-events-none select-none'
+                      )}
+                    >
+                      {FAMILY_PASS_OPTIONS[period].note}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
 
             <ul className="flex flex-col gap-3 pt-5 border-t border-[rgba(19,23,21,0.09)]">

@@ -310,9 +310,23 @@ export function SundayCultureDigestCard({
                 <h3 className="font-serif text-[19px] font-medium text-[#131715] leading-snug">
                   Sunday Table Spark
                 </h3>
-                <p className="text-[13px] text-[#424A46] mt-1.5 leading-relaxed">
-                  {activeDinnerPrompt}
-                </p>
+                <div className="grid mt-1.5">
+                  {dinnerPrompts.map((promptText, idx) => {
+                    const isCurrent = idx === questionIndex % dinnerPrompts.length;
+                    return (
+                      <p
+                        key={idx}
+                        aria-hidden={!isCurrent || undefined}
+                        className={cn(
+                          'col-start-1 row-start-1 text-[13px] text-[#424A46] leading-relaxed',
+                          !isCurrent && 'invisible pointer-events-none select-none'
+                        )}
+                      >
+                        {promptText}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -388,21 +402,35 @@ export function SundayCultureDigestCard({
               </div>
             </div>
 
-            <div className="flex-1 flex flex-col justify-between gap-3 p-4 rounded-2xl bg-[#F6F1E7]/90 border-l-[3px] border-[#C85A2B]">
-              <div>
-                <h4 className="font-serif text-xl font-medium text-[#131715]">
-                  &ldquo;{activeDecoder.term}&rdquo;
-                </h4>
-                <p className="text-[13px] text-[#424A46] mt-1 leading-relaxed">
-                  {activeDecoder.definition}
-                </p>
-                <p className="font-serif italic text-[13.5px] text-[#6C7570] mt-2 leading-snug">
-                  {activeDecoder.sample}
-                </p>
-              </div>
-              <p className="text-xs font-semibold text-[#143D2B] pt-2.5 border-t border-black/10 leading-snug">
-                {activeDecoder.parentMove}
-              </p>
+            <div className="flex-1 grid p-4 rounded-2xl bg-[#F6F1E7]/90 border-l-[3px] border-[#C85A2B]">
+              {decoderItems.map((item, idx) => {
+                const isCurrent = idx === selectedDecoderIdx % decoderItems.length;
+                return (
+                  <div
+                    key={item.term}
+                    aria-hidden={!isCurrent || undefined}
+                    className={cn(
+                      'col-start-1 row-start-1 flex flex-col justify-between gap-3',
+                      !isCurrent && 'invisible pointer-events-none select-none'
+                    )}
+                  >
+                    <div>
+                      <h4 className="font-serif text-xl font-medium text-[#131715]">
+                        &ldquo;{item.term}&rdquo;
+                      </h4>
+                      <p className="text-[13px] text-[#424A46] mt-1 leading-relaxed">
+                        {item.definition}
+                      </p>
+                      <p className="font-serif italic text-[13.5px] text-[#6C7570] mt-2 leading-snug">
+                        {item.sample}
+                      </p>
+                    </div>
+                    <p className="text-xs font-semibold text-[#143D2B] pt-2.5 border-t border-black/10 leading-snug">
+                      {item.parentMove}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </article>
         </div>

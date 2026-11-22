@@ -104,9 +104,17 @@ export function AdolescentFuelGuide() {
         </button>
       </div>
 
-      {/* Tab 1: Athletic Fuel */}
-      {activeTab === 'athletic' && (
-        <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-5 animate-in fade-in">
+      {/* Stacked Tab Panels — CSS Grid overlap locks height across all 4 tabs (0px shift) */}
+      <div className="grid">
+        {/* Tab 1: Athletic Fuel */}
+        <div
+          role={activeTab === 'athletic' ? 'tabpanel' : undefined}
+          aria-hidden={activeTab !== 'athletic' || undefined}
+          className={cn(
+            'col-start-1 row-start-1 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-5',
+            activeTab !== 'athletic' && 'invisible pointer-events-none select-none'
+          )}
+        >
           <div className="border-b border-slate-100 pb-3">
             <h4 className="text-base font-bold text-slate-950 flex items-center gap-2">
               <Activity className="h-4 w-4 text-indigo-600" />
@@ -149,11 +157,16 @@ export function AdolescentFuelGuide() {
             </div>
           </div>
         </div>
-      )}
 
-      {/* Tab 2: Bone Density */}
-      {activeTab === 'bone' && (
-        <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-5 animate-in fade-in">
+        {/* Tab 2: Bone Density */}
+        <div
+          role={activeTab === 'bone' ? 'tabpanel' : undefined}
+          aria-hidden={activeTab !== 'bone' || undefined}
+          className={cn(
+            'col-start-1 row-start-1 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-5',
+            activeTab !== 'bone' && 'invisible pointer-events-none select-none'
+          )}
+        >
           <div className="border-b border-slate-100 pb-3">
             <h4 className="text-base font-bold text-slate-950 flex items-center gap-2">
               <Zap className="h-4 w-4 text-indigo-600" />
@@ -180,11 +193,16 @@ export function AdolescentFuelGuide() {
             </div>
           </div>
         </div>
-      )}
 
-      {/* Tab 3: Caffeine & Energy Drinks */}
-      {activeTab === 'caffeine' && (
-        <div className="rounded-2xl border-2 border-rose-300 bg-rose-50/70 p-5 sm:p-7 shadow-xs space-y-4 animate-in fade-in">
+        {/* Tab 3: Caffeine & Energy Drinks */}
+        <div
+          role={activeTab === 'caffeine' ? 'tabpanel' : undefined}
+          aria-hidden={activeTab !== 'caffeine' || undefined}
+          className={cn(
+            'col-start-1 row-start-1 rounded-2xl border-2 border-rose-300 bg-rose-50/70 p-5 sm:p-7 shadow-xs space-y-4',
+            activeTab !== 'caffeine' && 'invisible pointer-events-none select-none'
+          )}
+        >
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-600 text-white shadow-sm">
               <ShieldAlert className="h-5 w-5" />
@@ -215,11 +233,16 @@ export function AdolescentFuelGuide() {
             </div>
           </div>
         </div>
-      )}
 
-      {/* Tab 4: Diet Culture Protection */}
-      {activeTab === 'culture' && (
-        <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-4 animate-in fade-in">
+        {/* Tab 4: Diet Culture Protection */}
+        <div
+          role={activeTab === 'culture' ? 'tabpanel' : undefined}
+          aria-hidden={activeTab !== 'culture' || undefined}
+          className={cn(
+            'col-start-1 row-start-1 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xs space-y-4',
+            activeTab !== 'culture' && 'invisible pointer-events-none select-none'
+          )}
+        >
           <div className="border-b border-slate-100 pb-3">
             <h4 className="text-base font-bold text-slate-950 flex items-center gap-2">
               <Heart className="h-4 w-4 text-purple-600" />
@@ -241,7 +264,7 @@ export function AdolescentFuelGuide() {
             </ul>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
