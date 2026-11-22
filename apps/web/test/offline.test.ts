@@ -18,13 +18,14 @@ describe('Offline PWA & Connectivity Engine Specification', () => {
       expect(configContent).toContain('alongside-scripts-cache');
     });
 
-    it('configures stale-while-revalidate strategy for digest updates', () => {
+    it('configures network-first strategy for digest updates so save/unsave refetches stay fresh', () => {
       const configPath = path.resolve(__dirname, '../next.config.mjs');
       const configContent = fs.readFileSync(configPath, 'utf-8');
 
       expect(configContent).toContain('api\\/v1\\/digest');
-      expect(configContent).toContain('"StaleWhileRevalidate"');
-      expect(configContent).toContain('alongside-digest-cache');
+      expect(configContent).toContain('"NetworkFirst"');
+      expect(configContent).toContain('alongside-digest-cache-v2');
+      expect(configContent).not.toContain('"StaleWhileRevalidate"');
     });
   });
 

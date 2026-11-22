@@ -564,6 +564,7 @@ export async function listDigestIssues(
   try {
     const res = await apiClient<DigestIssuesResponse>('/api/v1/digest/issues', {
       method: 'GET',
+      cache: 'no-store',
       params: tier ? { tier } : undefined,
     });
     return res.issues ?? [];
@@ -588,6 +589,7 @@ export async function getWeeklyDigestEdition(
       `/api/v1/digest/issues/${encodeURIComponent(String(issueNumber))}`,
       {
         method: 'GET',
+        cache: 'no-store',
         params: {
           tier: params?.tier,
           childId: params?.childId,
@@ -625,6 +627,7 @@ export async function listDigestArticles(params: {
   try {
     const res = await apiClient<DigestArticlesResponseDTO>('/api/v1/digest/articles', {
       method: 'GET',
+      cache: 'no-store',
       params: {
         issueNumber: params.issueNumber,
         scope: params.scope ?? 'issue',
@@ -680,6 +683,7 @@ export async function listDigestVideos(params: {
   try {
     const res = await apiClient<DigestVideosResponseDTO>('/api/v1/digest/videos', {
       method: 'GET',
+      cache: 'no-store',
       params: {
         issueNumber: params.issueNumber,
         scope: params.scope ?? 'issue',
@@ -732,6 +736,7 @@ export async function getSavedDigestShortlist(params?: {
   try {
     return await apiClient<SavedDigestShortlistDTO>('/api/v1/digest/saved', {
       method: 'GET',
+      cache: 'no-store',
       params: {
         tier: params?.tier,
         childId: params?.childId,

@@ -14,6 +14,7 @@ export interface WatchThisWeekBandProps {
   childName: string;
   shortAges: string;
   weekRange: string;
+  isAllWeeks?: boolean;
   onOpenVideo: (video: DigestVideoDTO) => void;
   onToggleSaveVideo: (video: DigestVideoDTO) => void;
   onViewAllVideos: () => void;
@@ -24,6 +25,7 @@ export function WatchThisWeekBand({
   childName,
   shortAges,
   weekRange,
+  isAllWeeks = false,
   onOpenVideo,
   onToggleSaveVideo,
   onViewAllVideos,
@@ -43,7 +45,7 @@ export function WatchThisWeekBand({
             id="watch-this-week-heading"
             className="font-serif text-[23px] sm:text-[27px] font-normal tracking-[-0.02em] text-[#131715]"
           >
-            Watch this week
+            {isAllWeeks ? 'Watch across all weeks' : 'Watch this week'}
           </h2>
           <p className="mt-0.5 text-[13.5px] text-[#59625D]">
             {videos.length} curated {videos.length === 1 ? 'talk' : 'talks'} for{' '}

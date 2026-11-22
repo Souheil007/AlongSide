@@ -218,7 +218,7 @@ describe('Culture & Trends Digest API Client Specification (PLAN-08 + PLAN-49/51
       });
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/v1/digest/articles?issueNumber=41&scope=issue'),
-        expect.any(Object)
+        expect.objectContaining({ cache: 'no-store' })
       );
 
       global.fetch = vi.fn().mockResolvedValue({
@@ -244,7 +244,7 @@ describe('Culture & Trends Digest API Client Specification (PLAN-08 + PLAN-49/51
         expect.stringContaining(
           '/api/v1/digest/videos?issueNumber=41&scope=issue&tier=TIER_3_PRE_TEEN_10_12&durationBucket=short'
         ),
-        expect.any(Object)
+        expect.objectContaining({ cache: 'no-store' })
       );
     });
 

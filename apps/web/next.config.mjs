@@ -38,12 +38,13 @@ const withPWA = withPWAInit({
       },
       {
         urlPattern: /^https?:\/\/.*\/api\/v1\/digest\/.*/i,
-        handler: "StaleWhileRevalidate",
+        handler: "NetworkFirst",
         options: {
-          cacheName: "alongside-digest-cache",
+          cacheName: "alongside-digest-cache-v2",
+          networkTimeoutSeconds: 4,
           expiration: {
             maxEntries: 50,
-            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days offline fallback
           },
           cacheableResponse: {
             statuses: [0, 200],
