@@ -1,20 +1,17 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   ChevronDown,
   ChevronUp,
-  Brain,
-  MessageSquareQuote,
   Copy,
   Check,
-  Sparkles,
   ArrowRight,
 } from 'lucide-react';
 import type { FaqItemDTO } from '@alongside/shared';
 import { DevelopmentalTier } from '@alongside/shared';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 
 export interface FaqCardProps {
   faq: FaqItemDTO;
@@ -30,73 +27,73 @@ export function formatTierBadge(tier?: DevelopmentalTier | string | null): {
   switch (tier) {
     case DevelopmentalTier.TIER_0A_INFANCY_0_1:
       return {
-        label: 'Ages 0–1 • Infancy (Tier 0A)',
-        badgeClass: 'bg-rose-50 text-rose-800 border-rose-200',
+        label: 'Ages 0–1 · Infancy',
+        badgeClass: 'bg-rose-50/70 text-rose-900 border-rose-200/80',
       };
     case DevelopmentalTier.TIER_0B_TODDLER_1_2:
       return {
-        label: 'Ages 1–2 • Younger Toddler (Tier 0B)',
-        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        label: 'Ages 1–2 · Younger Toddler',
+        badgeClass: 'bg-amber-50/70 text-amber-900 border-amber-200/80',
       };
     case DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3:
       return {
-        label: 'Ages 2–3 • Older Toddler (Tier 0C)',
-        badgeClass: 'bg-orange-50 text-orange-800 border-orange-200',
+        label: 'Ages 2–3 · Older Toddler',
+        badgeClass: 'bg-orange-50/70 text-orange-900 border-orange-200/80',
       };
     case DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3:
       return {
-        label: 'Ages 0–3 • Infancy & Toddler (Tier 0)',
-        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        label: 'Ages 0–3 · Infancy & Toddler',
+        badgeClass: 'bg-amber-50/70 text-amber-900 border-amber-200/80',
       };
     case DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6:
       return {
-        label: 'Ages 4–6 • Early Childhood (Tier 1)',
-        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        label: 'Ages 4–6 · Early Childhood',
+        badgeClass: 'bg-emerald-50/70 text-emerald-900 border-emerald-200/80',
       };
     case DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9:
       return {
-        label: 'Ages 7–9 • Middle Childhood (Tier 2)',
-        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+        label: 'Ages 7–9 · Middle Childhood',
+        badgeClass: 'bg-teal-50/70 text-teal-900 border-teal-200/80',
       };
     case DevelopmentalTier.TIER_3_PRE_TEEN_10_12:
       return {
-        label: 'Ages 10–12 • Pre-Teen (Tier 3)',
-        badgeClass: 'bg-sky-50 text-sky-800 border-sky-200',
+        label: 'Ages 10–12 · Pre-Teen',
+        badgeClass: 'bg-sky-50/70 text-sky-900 border-sky-200/80',
       };
     case DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15:
       return {
-        label: 'Ages 13–15 • Early Teen (Tier 4)',
-        badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
+        label: 'Ages 13–15 · Early Teen',
+        badgeClass: 'bg-violet-50/70 text-violet-900 border-violet-200/80',
       };
     case DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18:
       return {
-        label: 'Ages 16–18 • Young Adult (Tier 5)',
-        badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+        label: 'Ages 16–18 · Young Adult',
+        badgeClass: 'bg-indigo-50/70 text-indigo-900 border-indigo-200/80',
       };
     case DevelopmentalTier.TIER_1_AGES_8_9:
       return {
-        label: 'Ages 8-9 • Explorer (Tier 1)',
-        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        label: 'Ages 8-9 · Explorer',
+        badgeClass: 'bg-emerald-50/70 text-emerald-900 border-emerald-200/80',
       };
     case DevelopmentalTier.TIER_2_AGES_10_11:
       return {
-        label: 'Ages 10-11 • Pathfinder (Tier 2)',
-        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+        label: 'Ages 10-11 · Pathfinder',
+        badgeClass: 'bg-teal-50/70 text-teal-900 border-teal-200/80',
       };
     case DevelopmentalTier.TIER_3_AGES_12_13:
       return {
-        label: 'Ages 12-13 • Navigator (Tier 3)',
-        badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+        label: 'Ages 12-13 · Navigator',
+        badgeClass: 'bg-indigo-50/70 text-indigo-900 border-indigo-200/80',
       };
     case DevelopmentalTier.TIER_4_AGES_14_PLUS:
       return {
-        label: 'Ages 14+ • Pioneer (Tier 4)',
-        badgeClass: 'bg-purple-50 text-purple-800 border-purple-200',
+        label: 'Ages 14+ · Pioneer',
+        badgeClass: 'bg-purple-50/70 text-purple-900 border-purple-200/80',
       };
     default:
       return {
         label: 'All Developmental Tiers',
-        badgeClass: 'bg-slate-50 text-slate-700 border-slate-200',
+        badgeClass: 'bg-[#F6F5F0] text-[#454D49] border-[rgba(19,23,21,0.1)]',
       };
   }
 }
@@ -110,66 +107,66 @@ export function formatCategoryBadge(categoryId: string): {
     case 'health-and-sleep':
       return {
         label: 'Pediatric Health & Sleep',
-        badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+        badgeClass: 'bg-teal-50/70 text-teal-900 border-teal-200/80',
       };
     case 'nutrition-and-feeding':
     case 'nutrition-feeding':
       return {
         label: 'Nutrition & Picky Eating',
-        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        badgeClass: 'bg-emerald-50/70 text-emerald-900 border-emerald-200/80',
       };
     case 'development-and-milestones':
     case 'milestones':
       return {
         label: 'Developmental Milestones',
-        badgeClass: 'bg-sky-50 text-sky-800 border-sky-200',
+        badgeClass: 'bg-sky-50/70 text-sky-900 border-sky-200/80',
       };
     case 'behavior-and-discipline':
     case 'behavior-discipline':
       return {
         label: 'Behavior & Co-Regulation',
-        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        badgeClass: 'bg-amber-50/70 text-amber-900 border-amber-200/80',
       };
     case 'modern-world-and-devices':
     case 'tech-and-devices':
       return {
         label: 'Tech, Screens & Pacts',
-        badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
+        badgeClass: 'bg-violet-50/70 text-violet-900 border-violet-200/80',
       };
     case 'SCREEN_BATTLES':
       return {
         label: 'Screen Battles & Dopamine',
-        badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+        badgeClass: 'bg-amber-50/70 text-amber-900 border-amber-200/80',
       };
     case 'PEER_PRESSURE':
       return {
         label: 'Peer Pressure & First Phone',
-        badgeClass: 'bg-rose-50 text-rose-800 border-rose-200',
+        badgeClass: 'bg-rose-50/70 text-rose-900 border-rose-200/80',
       };
     case 'BEDTIME_SLEEP':
       return {
         label: 'Bedtime & Melatonin',
-        badgeClass: 'bg-blue-50 text-blue-800 border-blue-200',
+        badgeClass: 'bg-blue-50/70 text-blue-900 border-blue-200/80',
       };
     case 'SECRET_APPS':
       return {
         label: 'Secret Vaults & Privacy',
-        badgeClass: 'bg-violet-50 text-violet-800 border-violet-200',
+        badgeClass: 'bg-violet-50/70 text-violet-900 border-violet-200/80',
       };
     case 'ONLINE_SAFETY':
       return {
         label: 'Bullying & Group Chats',
-        badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+        badgeClass: 'bg-emerald-50/70 text-emerald-900 border-emerald-200/80',
       };
     case 'SOCIAL_MEDIA':
       return {
         label: 'Social Media & Comparison',
-        badgeClass: 'bg-pink-50 text-pink-800 border-pink-200',
+        badgeClass: 'bg-pink-50/70 text-pink-900 border-pink-200/80',
       };
     default:
       return {
         label: categoryId.replace(/[-_]/g, ' '),
-        badgeClass: 'bg-slate-50 text-slate-800 border-slate-200',
+        badgeClass: 'bg-[#F6F5F0] text-[#454D49] border-[rgba(19,23,21,0.1)]',
       };
   }
 }
@@ -177,7 +174,6 @@ export function formatCategoryBadge(categoryId: string): {
 export function FaqCard({
   faq,
   defaultExpanded = false,
-  onSelectFaq,
   className,
 }: FaqCardProps) {
   const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);
@@ -190,133 +186,117 @@ export function FaqCard({
     e.stopPropagation();
     if (!faq.deEscalationScript) return;
     try {
-      await navigator.clipboard.writeText(faq.deEscalationScript.replace(/^"|"$/g, ''));
+      await navigator.clipboard.writeText(
+        faq.deEscalationScript.replace(/^"|"$/g, '')
+      );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      // Safe fallback
     }
   };
 
   return (
-    <div
+    <article
       className={cn(
-        'group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all',
-        'hover:border-teal-300 hover:shadow-md',
-        isExpanded && 'ring-1 ring-teal-500/20 border-teal-200',
+        'rounded-[12px] border border-[rgba(19,23,21,0.1)] bg-white p-5 transition-colors duration-150',
+        isExpanded
+          ? 'border-[#143D2B]/35'
+          : 'hover:border-[rgba(19,23,21,0.22)]',
         className
       )}
     >
-      {/* Header / Clickable Toggle */}
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className="w-full text-left focus:outline-none"
+        className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] rounded-[6px]"
         aria-expanded={isExpanded}
       >
-        <div className="flex flex-wrap items-center gap-2 mb-2.5">
-          <span
-            className={cn(
-              'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold',
-              categoryInfo.badgeClass
-            )}
-          >
+        <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-[#69726D]">
+          <span className="font-medium text-[#143D2B]">
             {categoryInfo.label}
           </span>
-          <span
-            className={cn(
-              'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-medium',
-              tierInfo.badgeClass
-            )}
-          >
-            {tierInfo.label}
+          <span className="text-[#131715]/20" aria-hidden="true">
+            /
           </span>
-          {faq.isFeatured && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800">
-              <Sparkles className="h-3 w-3 text-amber-600" /> Featured
-            </span>
-          )}
+          <span>{tierInfo.label}</span>
         </div>
 
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-base font-bold text-slate-900 group-hover:text-teal-800 transition-colors leading-snug">
+          <h3 className="font-serif text-[20px] sm:text-[21px] font-normal leading-[1.28] tracking-[-0.015em] text-[#131715]">
             {faq.question}
           </h3>
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600 group-hover:bg-teal-50 group-hover:text-teal-700 transition-colors">
+          <span
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#F6F5F0] text-[#59625D]"
+            aria-hidden="true"
+          >
             {isExpanded ? (
               <ChevronUp className="h-4 w-4" />
             ) : (
               <ChevronDown className="h-4 w-4" />
             )}
-          </div>
+          </span>
         </div>
       </button>
 
-      {/* Expandable Content */}
       {isExpanded && (
-        <div className="mt-4 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-150">
-          {/* Neurobiology Developmental Explanation */}
-          <div>
-            <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
-              <Brain className="h-3.5 w-3.5 text-teal-600" />
-              <span>Developmental Neurobiology Insight</span>
-            </div>
-            <p className="text-sm text-slate-700 leading-relaxed">
+        <div className="mt-4 space-y-4 border-t border-[rgba(19,23,21,0.08)] pt-4 almanac-rise-in">
+          <div className="space-y-1.5">
+            <p className="text-[12.5px] font-medium text-[#69726D]">
+              Why this happens
+            </p>
+            <p className="text-[14.5px] leading-[1.6] text-[#303633]">
               {faq.answerMarkdown}
             </p>
           </div>
 
-          {/* Actionable De-escalation Dialogue Script */}
           {faq.deEscalationScript && (
-            <div className="rounded-xl border border-teal-200 bg-teal-50/70 p-4">
-              <div className="flex items-center justify-between gap-3 mb-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-900">
-                  <MessageSquareQuote className="h-3.5 w-3.5 text-teal-600" />
-                  <span>Calming Dialogue Script</span>
-                </div>
+            <div className="rounded-r-[10px] rounded-l-[2px] border border-[rgba(19,23,21,0.08)] border-l-[3px] border-l-[#143D2B] bg-[#FAF9F5] p-4">
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <span className="text-[12px] font-semibold text-[#143D2B]">
+                  What to say
+                </span>
                 <button
                   type="button"
                   onClick={handleCopyScript}
                   className={cn(
-                    'flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all',
+                    'inline-flex min-h-[44px] sm:min-h-[34px] items-center gap-1.5 rounded-[6px] border px-3 sm:px-2.5 text-[12px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
                     copied
-                      ? 'bg-teal-700 text-white'
-                      : 'border border-teal-300 bg-white text-teal-800 hover:bg-teal-100/80 active:scale-95'
+                      ? 'border-[#143D2B] bg-[#143D2B] text-white'
+                      : 'border-[rgba(19,23,21,0.12)] bg-white text-[#454D49] hover:border-[#143D2B]/40 hover:bg-[#E8F1EC] hover:text-[#143D2B]'
                   )}
-                  title="Copy dialogue script"
                 >
                   {copied ? (
                     <>
-                      <Check className="h-3.5 w-3.5 text-white" />
-                      <span>Copied!</span>
+                      <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Copied</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="h-3.5 w-3.5" />
-                      <span>Copy Script</span>
+                      <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
-              <p className="font-serif italic text-sm text-slate-800 leading-relaxed bg-white/80 rounded-lg p-3 border border-teal-100">
+              <p className="font-serif text-[16px] leading-[1.5] text-[#131715]">
                 {faq.deEscalationScript}
               </p>
             </div>
           )}
 
-          {/* Direct CTA to Ask AI Advisor */}
-          <div className="flex items-center justify-between pt-1">
+          <div className="pt-1">
             <Link
               href={`/advisor?prompt=${encodeURIComponent(faq.question)}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 hover:text-teal-900 transition-colors"
+              className="inline-flex min-h-[36px] items-center gap-1.5 text-[13.5px] font-medium text-[#143D2B] hover:underline underline-offset-4"
             >
-              <span>Explore dynamic response in AI Advisor</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>Ask Parent Advisor about this</span>
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
       )}
-    </div>
+    </article>
   );
 }
 

@@ -1,52 +1,49 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
   Search,
   BookOpen,
-  Filter,
-  Layers,
-  Sparkles,
   ArrowLeft,
   X,
   Loader2,
+  MessageCircle,
 } from 'lucide-react';
 import type { FaqItemDTO } from '@alongside/shared';
 import { DevelopmentalTier } from '@alongside/shared';
 import { useChildContextStore, selectActiveChild } from '@/stores/useChildContextStore';
 import { searchFaqs, CURATED_FAQS } from '@/lib/api/advisor';
 import { FaqCard } from '@/components/advisor/FaqCard';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export const FAQ_CATEGORIES = [
-  { id: 'ALL', label: 'All Categories' },
+  { id: 'ALL', label: 'All categories' },
   { id: 'pediatric-health-and-sleep', label: 'Pediatric Health & Sleep' },
   { id: 'nutrition-and-feeding', label: 'Nutrition, Solids & Picky Eating' },
-  { id: 'development-and-milestones', label: 'Developmental Milestones & Growth' },
-  { id: 'behavior-and-discipline', label: 'Behavioral Psychology & Co-Regulation' },
-  { id: 'modern-world-and-devices', label: 'Modern World, Screens & Curfews' },
-  { id: 'SCREEN_BATTLES', label: 'Screen Battles & Dopamine' },
+  { id: 'development-and-milestones', label: 'Developmental Milestones' },
+  { id: 'behavior-and-discipline', label: 'Behavior & Co-Regulation' },
+  { id: 'modern-world-and-devices', label: 'Screens & Curfews' },
+  { id: 'SCREEN_BATTLES', label: 'Screen Battles' },
   { id: 'PEER_PRESSURE', label: 'Peer Pressure & First Phone' },
   { id: 'BEDTIME_SLEEP', label: 'Bedtime & Melatonin' },
   { id: 'SECRET_APPS', label: 'Secret Vaults & Privacy' },
   { id: 'ONLINE_SAFETY', label: 'Bullying & Group Chats' },
-  { id: 'SOCIAL_MEDIA', label: 'Social Media & Feeds' },
+  { id: 'SOCIAL_MEDIA', label: 'Social Media' },
 ];
 
 export const TIER_TABS = [
-  { id: 'ALL', label: 'All Ages (0–18)' },
-  { id: DevelopmentalTier.TIER_0A_INFANCY_0_1, label: 'Ages 0–1 (Tier 0A: Infancy)' },
-  { id: DevelopmentalTier.TIER_0B_TODDLER_1_2, label: 'Ages 1–2 (Tier 0B: Younger Toddler)' },
-  { id: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3, label: 'Ages 2–3 (Tier 0C: Older Toddler)' },
-  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: 'Ages 0–3 (Tier 0: Infancy & Toddler)' },
-  { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: 'Ages 4–6 (Tier 1: Early Childhood)' },
-  { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: 'Ages 7–9 (Tier 2: Middle Childhood)' },
-  { id: DevelopmentalTier.TIER_3_PRE_TEEN_10_12, label: 'Ages 10–12 (Tier 3: Pre-Teen)' },
-  { id: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15, label: 'Ages 13–15 (Tier 4: Early Teen)' },
-  { id: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18, label: 'Ages 16–18 (Tier 5: Young Adult)' },
+  { id: 'ALL', label: 'All ages (0–18)' },
+  { id: DevelopmentalTier.TIER_0A_INFANCY_0_1, label: 'Ages 0–1' },
+  { id: DevelopmentalTier.TIER_0B_TODDLER_1_2, label: 'Ages 1–2' },
+  { id: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3, label: 'Ages 2–3' },
+  { id: DevelopmentalTier.TIER_0_INFANCY_TODDLER_0_3, label: 'Ages 0–3' },
+  { id: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6, label: 'Ages 4–6' },
+  { id: DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9, label: 'Ages 7–9' },
+  { id: DevelopmentalTier.TIER_3_PRE_TEEN_10_12, label: 'Ages 10–12' },
+  { id: DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15, label: 'Ages 13–15' },
+  { id: DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18, label: 'Ages 16–18' },
 ];
 
 function resolveLifespanTier(tier?: string | null): string | null {
@@ -75,14 +72,12 @@ export function FaqExplorerView() {
   const [faqs, setFaqs] = React.useState<FaqItemDTO[]>(CURATED_FAQS);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  // Automatically update selectedTier to activeChildLifespanTier whenever activeChild changes
   React.useEffect(() => {
     if (activeChildLifespanTier) {
       setSelectedTier(activeChildLifespanTier);
     }
   }, [activeChild?.id, activeChild?.developmentalTier, activeChildLifespanTier]);
 
-  // Debounce search input by 250ms
   React.useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(searchQuery);
@@ -90,7 +85,6 @@ export function FaqExplorerView() {
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  // Fetch or filter FAQs when query, category, or tier change
   React.useEffect(() => {
     let isMounted = true;
     setIsLoading(true);
@@ -127,140 +121,121 @@ export function FaqExplorerView() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Navigation & Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <Link
-              href="/advisor"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 hover:text-teal-900 transition-colors"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Back to AI Advisor Chat</span>
-            </Link>
-          </div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-50 border border-teal-200 px-3 py-0.5 text-xs font-semibold text-teal-800">
-              <BookOpen className="h-3.5 w-3.5 text-teal-600" />
-              Parenting Knowledge Base
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-            Living Modern Parenting FAQ Explorer
+    <div className="mx-auto w-full max-w-[920px] space-y-6 pb-10">
+      {/* Header */}
+      <header className="flex flex-wrap items-end justify-between gap-4 pt-1">
+        <div className="min-w-0 space-y-1.5">
+          <Link
+            href="/advisor"
+            className="inline-flex min-h-[32px] items-center gap-1.5 text-[13px] font-medium text-[#69726D] transition-colors hover:text-[#131715]"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Back to Parent Advisor</span>
+          </Link>
+          <h1 className="font-serif text-[32px] sm:text-[38px] font-normal leading-[1.08] tracking-[-0.025em] text-[#131715]">
+            Parenting FAQ Library
           </h1>
-          <p className="mt-1 text-sm text-slate-600 max-w-2xl leading-relaxed">
-            Search pediatric and psychologist-reviewed answers to 100+ digital dilemmas.
-            Every card includes the underlying neuroscience and a word-for-word conversation script.
+          <p className="max-w-[58ch] text-[14.5px] leading-[1.58] text-[#454D49]">
+            Evidence-based answers to common developmental and digital moments, each with exact words to say.
           </p>
         </div>
 
-        {/* Quick Advisor CTA */}
-        <div className="flex items-center gap-2.5">
-          <Link href="/advisor">
-            <Button variant="default" className="gap-2 min-h-[44px]">
-              <Sparkles className="h-4 w-4" />
-              <span>Open 24/7 AI Advisor</span>
-            </Button>
-          </Link>
-        </div>
-      </div>
+        <Link
+          href="/advisor"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-[#0E2B1E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
+        >
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          <span>Open Parent Advisor</span>
+        </Link>
+      </header>
 
-      {/* Search Bar & Filters Card */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm space-y-4">
-        {/* Search Input */}
+      {/* Search & Filters Panel */}
+      <div className="space-y-4 rounded-[16px] border border-[rgba(19,23,21,0.1)] bg-white p-5">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search
+            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#69726D]"
+            aria-hidden="true"
+          />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search questions, de-escalation scripts, or topics (e.g., 'Roblox', 'curfew', 'Snapchat', 'calculator vault')..."
-            className="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-10 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+            placeholder="Search topics, scripts, or apps (e.g. Roblox, curfew, bedtime)..."
+            aria-label="Search parenting FAQs"
+            className="min-h-[44px] w-full rounded-[10px] border border-[rgba(19,23,21,0.14)] bg-[#FAF9F5] pl-10 pr-10 text-[14px] text-[#131715] placeholder:text-[#7A827E] focus:border-[#143D2B] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#143D2B]/12"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={handleClearSearch}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
-              title="Clear search"
+              aria-label="Clear search"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-[6px] text-[#69726D] hover:bg-[#F2F0E9] hover:text-[#131715]"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
           )}
         </div>
 
-        {/* Category Filter Pills */}
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            <Filter className="h-3.5 w-3.5 text-teal-600" />
-            <span>Category Filter</span>
-          </div>
+        {/* Category Filter */}
+        <div className="space-y-2">
+          <p className="text-[12.5px] font-medium text-[#69726D]">Category</p>
           <div className="flex flex-wrap gap-1.5">
-            {FAQ_CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`rounded-xl px-3 py-1.5 text-xs font-medium transition-all min-h-[38px] ${
-                  selectedCategory === cat.id
-                    ? 'bg-teal-700 text-white shadow-sm'
-                    : 'border border-slate-200 bg-slate-50/60 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+            {FAQ_CATEGORIES.map((cat) => {
+              const active = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={cn(
+                    'min-h-[44px] sm:min-h-[36px] rounded-[8px] px-3 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                    active
+                      ? 'bg-[#143D2B] text-white'
+                      : 'border border-[rgba(19,23,21,0.1)] bg-[#FAF9F5] text-[#454D49] hover:bg-[#F2F0E9] hover:text-[#131715]'
+                  )}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Developmental Tier Tabs */}
-        <div className="space-y-1.5 pt-2 border-t border-slate-100">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-              <Layers className="h-3.5 w-3.5 text-teal-600" />
-              <span>Developmental Tier (Age Group)</span>
-            </div>
+        {/* Age Group Filter */}
+        <div className="space-y-2 border-t border-[rgba(19,23,21,0.08)] pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[12.5px] font-medium text-[#69726D]">Age group</p>
             {activeChildLifespanTier && (
               <button
                 type="button"
                 onClick={() => setSelectedTier(activeChildLifespanTier)}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
+                className={cn(
+                  'min-h-[32px] rounded-[6px] px-2.5 text-[12px] font-medium transition-colors',
                   selectedTier === activeChildLifespanTier
-                    ? 'border-teal-500 bg-teal-50 text-teal-900 font-bold'
-                    : 'border-slate-200 text-slate-600 hover:text-teal-700 hover:border-teal-300'
-                }`}
+                    ? 'bg-[#E8F1EC] text-[#143D2B]'
+                    : 'text-[#69726D] hover:bg-[#F2F0E9] hover:text-[#131715]'
+                )}
               >
-                ★ Filter by Selected Stage
+                Match {activeChild?.name || 'selected child'}
               </button>
             )}
           </div>
           <div className="flex flex-wrap gap-1.5">
             {TIER_TABS.map((tier) => {
-              const isActiveChildTier = tier.id === activeChildLifespanTier;
+              const active = selectedTier === tier.id;
               return (
                 <button
                   key={tier.id}
                   type="button"
                   onClick={() => setSelectedTier(tier.id)}
-                  className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-all min-h-[38px] cursor-pointer ${
-                    selectedTier === tier.id
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'border border-slate-200 bg-slate-50/60 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{tier.label}</span>
-                  {isActiveChildTier && (
-                    <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${
-                        selectedTier === tier.id
-                          ? 'bg-white/20 text-white'
-                          : 'bg-teal-100 text-teal-800'
-                      }`}
-                    >
-                      Selected Stage
-                    </span>
+                  className={cn(
+                    'min-h-[44px] sm:min-h-[36px] rounded-[8px] px-3 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                    active
+                      ? 'bg-[#131715] text-white'
+                      : 'border border-[rgba(19,23,21,0.1)] bg-[#FAF9F5] text-[#454D49] hover:bg-[#F2F0E9] hover:text-[#131715]'
                   )}
+                >
+                  {tier.label}
                 </button>
               );
             })}
@@ -268,19 +243,20 @@ export function FaqExplorerView() {
         </div>
       </div>
 
-      {/* Results Section */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between text-xs font-semibold text-slate-500 px-1">
+      {/* Results */}
+      <div className="space-y-3.5">
+        <div className="flex items-center justify-between px-0.5 text-[13px] text-[#69726D] tabular-nums">
           <span>
             {isLoading ? (
-              <span className="flex items-center gap-1 text-teal-700">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Filtering parenting knowledge base...
+              <span className="inline-flex items-center gap-1.5 text-[#143D2B]">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+                Filtering guides...
               </span>
             ) : (
-              `Showing ${faqs.length} parenting scenario${faqs.length === 1 ? '' : 's'}`
+              `${faqs.length} scenario${faqs.length === 1 ? '' : 's'}`
             )}
           </span>
+
           {(selectedCategory !== 'ALL' || selectedTier !== 'ALL' || debouncedQuery) && (
             <button
               type="button"
@@ -289,35 +265,34 @@ export function FaqExplorerView() {
                 setSelectedTier('ALL');
                 handleClearSearch();
               }}
-              className="text-teal-700 hover:text-teal-900 underline font-medium"
+              className="font-medium text-[#143D2B] hover:underline underline-offset-4"
             >
-              Reset All Filters
+              Reset filters
             </button>
           )}
         </div>
 
         {faqs.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-            <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-xl bg-slate-100 text-slate-400 mb-3">
-              <BookOpen className="h-6 w-6" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900">
+          <div className="rounded-[16px] border border-[rgba(19,23,21,0.1)] bg-white p-10 text-center space-y-3">
+            <BookOpen className="mx-auto h-6 w-6 text-[#69726D]" aria-hidden="true" />
+            <h3 className="font-serif text-[22px] font-normal text-[#131715]">
               No matching scenarios found
             </h3>
-            <p className="mt-1 text-sm text-slate-500 max-w-sm mx-auto">
-              We couldn&apos;t find an exact match for &quot;{debouncedQuery}&quot;. You can ask our 24/7 AI Advisor directly for custom real-time advice.
+            <p className="mx-auto max-w-[44ch] text-[14px] text-[#454D49]">
+              No exact guide matched &ldquo;{debouncedQuery}&rdquo;. Ask the Parent Advisor directly for guidance tailored to your child.
             </p>
-            <div className="mt-5">
-              <Link href={`/advisor?prompt=${encodeURIComponent(debouncedQuery || 'Parenting advice')}`}>
-                <Button variant="default" className="gap-2">
-                  <Sparkles className="h-4 w-4" />
-                  <span>Ask AI Advisor about this</span>
-                </Button>
+            <div className="pt-2">
+              <Link
+                href={`/advisor?prompt=${encodeURIComponent(debouncedQuery || 'Parenting advice')}`}
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-[#0E2B1E]"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                <span>Ask Parent Advisor</span>
               </Link>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3.5">
             {faqs.map((faq) => (
               <FaqCard key={faq.id} faq={faq} />
             ))}

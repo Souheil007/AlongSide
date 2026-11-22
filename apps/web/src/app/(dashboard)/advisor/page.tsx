@@ -4,19 +4,19 @@ import { AdvisorDashboardView } from '@/components/advisor/AdvisorDashboardView'
 import { Loader2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Advisor',
+  title: 'Parent Advisor',
   description:
-    'Real-time pediatric neurobiology advisor for tween tech conflict, boundary battles, and instant de-escalation conversation scripts.',
+    'Real-time developmental guidance for parenting friction, boundary battles, and calm word-for-word conversation scripts.',
 };
 
 export default function AdvisorPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[500px] items-center justify-center">
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <Loader2 className="h-5 w-5 animate-spin text-teal-600" />
-            <span>Loading 24/7 AI Child Advisor...</span>
+        <div className="flex min-h-[480px] items-center justify-center">
+          <div className="flex items-center gap-2.5 text-[14px] text-[#69726D]">
+            <Loader2 className="h-4 w-4 animate-spin text-[#143D2B]" />
+            <span>Loading Parent Advisor...</span>
           </div>
         </div>
       }

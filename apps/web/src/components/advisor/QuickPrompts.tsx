@@ -2,12 +2,12 @@
 
 import * as React from 'react';
 import {
-  MessageSquareQuote,
   Moon,
   Flame,
   KeyRound,
   ShieldAlert,
-  Sparkles,
+  MessageCircle,
+  ArrowUpRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -22,28 +22,28 @@ export interface QuickPromptItem {
 export const SITUATIONAL_PROMPTS: QuickPromptItem[] = [
   {
     id: 'snapchat-plea',
-    label: '10yo Wants Snapchat',
+    label: '10yo wants Snapchat',
     prompt: 'My 10yo wants Snapchat because everyone has it',
     category: 'social',
-    icon: Sparkles,
+    icon: MessageCircle,
   },
   {
     id: 'past-curfew',
-    label: 'Caught on Phone Past Curfew',
+    label: 'Caught on phone past curfew',
     prompt: 'Caught my child on phone past curfew',
     category: 'bedtime',
     icon: Moon,
   },
   {
     id: 'door-slam',
-    label: 'Slammed Door at Screen Cutoff',
+    label: 'Slammed door at screen cutoff',
     prompt: 'Child slammed door during screen shutoff',
     category: 'meltdown',
     icon: Flame,
   },
   {
     id: 'calculator-vault',
-    label: 'Hidden Calculator Vault App',
+    label: 'Hidden calculator vault app',
     prompt: 'Found hidden calculator vault app on iPad',
     category: 'privacy',
     icon: KeyRound,
@@ -69,12 +69,11 @@ export function QuickPrompts({
   className,
 }: QuickPromptsProps) {
   return (
-    <div className={cn('space-y-2', className)}>
-      <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-        <MessageSquareQuote className="h-3.5 w-3.5 text-teal-600" />
-        <span>Instant Conflict Starters (Tap to Ask)</span>
-      </div>
-      <div className="flex flex-wrap gap-2">
+    <div className={cn('space-y-3', className)}>
+      <p className="text-[12.5px] font-medium text-[#69726D]">
+        Common moments to start with
+      </p>
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         {SITUATIONAL_PROMPTS.map((item) => {
           const Icon = item.icon;
           return (
@@ -84,18 +83,29 @@ export function QuickPrompts({
               disabled={disabled}
               onClick={() => onSelectPrompt(item.prompt)}
               className={cn(
-                'group flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2 text-left text-xs font-medium text-slate-700 shadow-sm transition-all',
-                'hover:border-teal-400 hover:bg-teal-50/50 hover:text-teal-900 hover:shadow',
-                'active:scale-[0.98]',
-                'focus:outline-none focus:ring-2 focus:ring-teal-500/30',
-                'disabled:cursor-not-allowed disabled:opacity-50',
-                'min-h-[44px]' // WCAG AA touch target
+                'group flex min-h-[56px] items-center gap-3 rounded-[10px] border border-[rgba(19,23,21,0.1)] bg-white px-4 py-3 text-left transition-colors duration-150',
+                'hover:border-[#143D2B]/40 hover:bg-[#F6F5F0]',
+                'active:scale-[0.99]',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                'disabled:cursor-not-allowed disabled:opacity-50'
               )}
             >
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700 transition-colors group-hover:bg-teal-600 group-hover:text-white">
-                <Icon className="h-3.5 w-3.5" />
+              <Icon
+                className="h-4 w-4 shrink-0 text-[#69726D] transition-colors group-hover:text-[#143D2B]"
+                aria-hidden="true"
+              />
+              <div className="min-w-0 flex-1">
+                <div className="text-[13.5px] font-medium text-[#131715] leading-snug">
+                  {item.label}
+                </div>
+                <div className="mt-0.5 truncate text-[12.5px] text-[#69726D]">
+                  {item.prompt}
+                </div>
               </div>
-              <span>{item.label}</span>
+              <ArrowUpRight
+                className="h-4 w-4 shrink-0 text-[#8A918D] transition-colors group-hover:text-[#143D2B]"
+                aria-hidden="true"
+              />
             </button>
           );
         })}
