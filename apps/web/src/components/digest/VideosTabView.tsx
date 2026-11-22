@@ -5,7 +5,6 @@ import { Bookmark, ChevronDown, Play, Search } from 'lucide-react';
 import type {
   DigestQueryScope,
   DigestVideoDTO,
-  DigestVideoDurationBucket,
 } from '@alongside/shared';
 import {
   buildYouTubeEmbedUrl,
@@ -18,41 +17,28 @@ import { cn } from '@/lib/utils';
 export interface VideosTabViewProps {
   videos: DigestVideoDTO[];
   issueNumber: number | null;
-  isArchiveEdition: boolean;
   childName: string;
   shortAges: string;
   scope: DigestQueryScope;
-  durationBucket: DigestVideoDurationBucket;
   searchQuery: string;
   activeTheaterVideoId: string | null;
   isLoading?: boolean;
-  onChangeScope: (scope: DigestQueryScope) => void;
-  onChangeDuration: (bucket: DigestVideoDurationBucket) => void;
+  onBrowseAllWeeks: () => void;
   onChangeSearch: (query: string) => void;
   onSelectTheaterVideo: (videoId: string) => void;
   onToggleSaveVideo: (video: DigestVideoDTO) => void;
 }
 
-const DURATION_OPTIONS: Array<{ id: DigestVideoDurationBucket; label: string }> = [
-  { id: 'all', label: 'All videos' },
-  { id: 'short', label: 'Under 12 min' },
-  { id: 'medium', label: '12–25 min' },
-  { id: 'deep', label: 'Deep dives' },
-];
-
 export function VideosTabView({
   videos,
   issueNumber,
-  isArchiveEdition,
   childName,
   shortAges,
   scope,
-  durationBucket,
   searchQuery,
   activeTheaterVideoId,
   isLoading = false,
-  onChangeScope,
-  onChangeDuration,
+  onBrowseAllWeeks,
   onChangeSearch,
   onSelectTheaterVideo,
   onToggleSaveVideo,
@@ -92,12 +78,7 @@ export function VideosTabView({
     }
   };
 
-  const issueScopeLabel =
-    issueNumber === null
-      ? 'This week'
-      : isArchiveEdition
-        ? `Issue #${issueNumber}`
-        : `This week (#${issueNumber})`;
+  const trimmedQuery = searchQuery.trim();
 
   return (
     <section
@@ -107,68 +88,9 @@ export function VideosTabView({
       data-testid="videos-tab-view"
       className="py-7 pb-16"
     >
-      {/* Toolbar: Duration chips + Week Scope + Search */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div
-          className="flex flex-wrap items-center gap-2"
-          role="group"
-          aria-label="Filter videos by duration"
-        >
-          {DURATION_OPTIONS.map((opt) => (
-            <button
-              key={opt.id}
-              type="button"
-              data-testid={`videos-duration-${opt.id}`}
-              aria-pressed={durationBucket === opt.id}
-              onClick={() => onChangeDuration(opt.id)}
-              className={cn(
-                'inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                durationBucket === opt.id
-                  ? 'border-[#143D2B] bg-[#143D2B] text-white'
-                  : 'border-[#131715]/20 bg-transparent text-[#3E4642] hover:bg-[#F3F1EA] hover:text-[#131715]'
-              )}
-            >
-              {opt.label}
-            </button>
-          ))}
-
-          <span
-            className="mx-1 hidden h-5 w-px bg-[#131715]/18 sm:inline-block"
-            aria-hidden="true"
-          />
-
-          <button
-            type="button"
-            data-testid="videos-scope-issue"
-            aria-pressed={scope === 'issue'}
-            onClick={() => onChangeScope('issue')}
-            className={cn(
-              'inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-              scope === 'issue'
-                ? 'border-[#143D2B] bg-[#143D2B] text-white'
-                : 'border-[#131715]/20 bg-transparent text-[#3E4642] hover:bg-[#F3F1EA] hover:text-[#131715]'
-            )}
-          >
-            {issueScopeLabel}
-          </button>
-
-          <button
-            type="button"
-            data-testid="videos-scope-all"
-            aria-pressed={scope === 'all'}
-            onClick={() => onChangeScope('all')}
-            className={cn(
-              'inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-              scope === 'all'
-                ? 'border-[#143D2B] bg-[#143D2B] text-white'
-                : 'border-[#131715]/20 bg-transparent text-[#3E4642] hover:bg-[#F3F1EA] hover:text-[#131715]'
-            )}
-          >
-            All weeks
-          </button>
-        </div>
-
-        <div className="relative w-full min-w-0 sm:min-w-[210px] sm:max-w-[310px] sm:flex-1">
+      {/* Minimalist Toolbar: Search only (Week scope controlled by header selector) */}
+      <div className="mb-6 flex items-center">
+        <div className="relative w-full min-w-0 sm:max-w-[360px]">
           <Search
             className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#59625D]"
             aria-hidden="true"
@@ -200,22 +122,27 @@ export function VideosTabView({
           className="flex flex-col items-center gap-3 border-t border-[#131715]/10 px-6 py-12 text-center"
         >
           <p className="text-[14.5px] text-[#59625D]">
-            No videos matched that filter for {shortAges}.
+            {trimmedQuery
+              ? `No videos matched “${trimmedQuery}” for ${shortAges}.`
+              : scope === 'issue'
+                ? `No videos published for this week yet for ${childName} · ${shortAges}.`
+                : `No videos published for ${shortAges} yet.`}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {durationBucket !== 'all' && (
+            {trimmedQuery && (
               <button
                 type="button"
-                onClick={() => onChangeDuration('all')}
+                onClick={() => onChangeSearch('')}
                 className="inline-flex min-h-[44px] items-center rounded-[8px] border border-[#131715]/20 bg-white px-4 text-[13.5px] font-medium text-[#131715] hover:bg-[#F6F4EE]"
               >
-                Show all durations
+                Clear search
               </button>
             )}
             {scope === 'issue' && (
               <button
                 type="button"
-                onClick={() => onChangeScope('all')}
+                data-testid="videos-empty-browse-all-btn"
+                onClick={onBrowseAllWeeks}
                 className="inline-flex min-h-[44px] items-center rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white hover:bg-[#0E2B1E]"
               >
                 Browse all weeks

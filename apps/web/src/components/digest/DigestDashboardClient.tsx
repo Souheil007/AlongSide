@@ -23,14 +23,16 @@ export interface DigestDashboardClientProps {
 export function DigestDashboardClient({ className }: DigestDashboardClientProps) {
   const digest = useCultureDigest();
 
-  const weekRange = digest.edition?.issue
-    ? formatWeekDateRange(
-        digest.edition.issue.weekStart,
-        digest.edition.issue.weekEnd
-      )
-    : digest.resolvedIssueNumber !== null
-      ? `Issue #${digest.resolvedIssueNumber}`
-      : 'This week';
+  const weekRange = digest.isAllWeeks
+    ? 'all weeks'
+    : digest.edition?.issue
+      ? formatWeekDateRange(
+          digest.edition.issue.weekStart,
+          digest.edition.issue.weekEnd
+        )
+      : digest.resolvedIssueNumber !== null
+        ? `Issue #${digest.resolvedIssueNumber}`
+        : 'This week';
 
   const handleSwitchTabAndScrollTop = (tab: 'week' | 'blogs' | 'videos' | 'saved') => {
     digest.setActiveTab(tab);
@@ -51,14 +53,15 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
       <DigestFeedHeader
         issueNumber={digest.resolvedIssueNumber}
         latestIssueNumber={digest.latestIssueNumber}
+        isAllWeeks={digest.isAllWeeks}
         weekStart={digest.edition?.issue.weekStart}
         weekEnd={digest.edition?.issue.weekEnd}
         childName={digest.childName}
         childAgeLabel={digest.childAgeLabel}
         tierLabel={digest.tierMeta.tierLabel}
         shortAges={digest.tierMeta.shortAges}
-        readArticleCount={digest.edition?.readArticleCount ?? 0}
-        totalArticleCount={digest.edition?.totalArticleCount ?? 0}
+        readArticleCount={digest.headerReadArticleCount}
+        totalArticleCount={digest.headerTotalArticleCount}
         issues={digest.issues}
         isArchiveEdition={digest.isArchiveEdition}
         activeTab={digest.activeTab}
@@ -92,10 +95,11 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
             <>
               {/* Band 1: Watch This Week */}
               <WatchThisWeekBand
-                videos={digest.edition.videos}
+                videos={digest.weekDisplayVideos}
                 childName={digest.childName}
                 shortAges={digest.tierMeta.shortAges}
                 weekRange={weekRange}
+                isAllWeeks={digest.isAllWeeks}
                 onOpenVideo={(video) => digest.openVideoTheater(video, 0)}
                 onToggleSaveVideo={digest.toggleSaveVideo}
                 onViewAllVideos={() => handleSwitchTabAndScrollTop('videos')}
@@ -103,10 +107,11 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
 
               {/* Band 2: Read This Week (7/5 Magazine Spread — Blogs ONLY) */}
               <ReadThisWeekBand
-                articles={digest.edition.articles}
+                articles={digest.weekDisplayArticles}
                 childName={digest.childName}
                 shortAges={digest.tierMeta.shortAges}
                 weekRange={weekRange}
+                isAllWeeks={digest.isAllWeeks}
                 onOpenArticle={digest.openArticleReader}
                 onToggleSaveArticle={digest.toggleSaveArticle}
                 onViewAllBlogs={() => handleSwitchTabAndScrollTop('blogs')}
@@ -114,7 +119,7 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
 
               {/* Band 3: Sunday Table Closer + Optional Ages 7–18 Phrase Strip */}
               <SundayTableCloserBand
-                issueNumber={digest.resolvedIssueNumber}
+                issueNumber={digest.edition.issue.issueNumber}
                 tier={digest.resolvedTier}
                 shortAges={digest.tierMeta.shortAges}
                 childName={digest.childName}
@@ -147,20 +152,19 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
         </section>
       )}
 
-      {/* PANEL 2: WEEK-SCOPED BLOGS */}
+      {/* PANEL 2: BLOGS */}
       {digest.activeTab === 'blogs' && (
         <BlogsTabView
           articles={digest.filteredBlogs}
           unreadCount={digest.blogsUnreadCount}
           issueNumber={digest.resolvedIssueNumber}
-          isArchiveEdition={digest.isArchiveEdition}
           childName={digest.childName}
           shortAges={digest.tierMeta.shortAges}
-          scope={digest.blogsScope}
+          scope={digest.weekScope}
           readFilter={digest.blogReadFilter}
           searchQuery={digest.blogSearch}
           isLoading={digest.isLoadingArticles}
-          onChangeScope={digest.setBlogsScope}
+          onBrowseAllWeeks={digest.selectAllWeeks}
           onChangeReadFilter={digest.setBlogReadFilter}
           onChangeSearch={digest.setBlogSearch}
           onOpenArticle={digest.openArticleReader}
@@ -168,21 +172,18 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
         />
       )}
 
-      {/* PANEL 3: WEEK-SCOPED VIDEOS */}
+      {/* PANEL 3: VIDEOS */}
       {digest.activeTab === 'videos' && (
         <VideosTabView
           videos={digest.filteredVideos}
           issueNumber={digest.resolvedIssueNumber}
-          isArchiveEdition={digest.isArchiveEdition}
           childName={digest.childName}
           shortAges={digest.tierMeta.shortAges}
-          scope={digest.videosScope}
-          durationBucket={digest.videoDuration}
+          scope={digest.weekScope}
           searchQuery={digest.videoSearch}
           activeTheaterVideoId={digest.activeTheaterVideoId}
           isLoading={digest.isLoadingVideos}
-          onChangeScope={digest.setVideosScope}
-          onChangeDuration={digest.setVideoDuration}
+          onBrowseAllWeeks={digest.selectAllWeeks}
           onChangeSearch={digest.setVideoSearch}
           onSelectTheaterVideo={digest.setActiveTheaterVideoId}
           onToggleSaveVideo={digest.toggleSaveVideo}
@@ -227,7 +228,7 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
 
       {/* OVERLAY 2: CENTERED VIDEO THEATER MODAL */}
       <VideoTheaterModal
-        video={digest.modalVideo?.video ?? null}
+        video={digest.activeModalVideo}
         initialStartSeconds={digest.modalVideo?.startSeconds ?? 0}
         shortAges={digest.tierMeta.shortAges}
         onClose={digest.closeVideoTheater}

@@ -13,14 +13,13 @@ export interface BlogsTabViewProps {
   articles: DigestArticleDTO[];
   unreadCount: number;
   issueNumber: number | null;
-  isArchiveEdition: boolean;
   childName: string;
   shortAges: string;
   scope: DigestQueryScope;
   readFilter: BlogReadFilter;
   searchQuery: string;
   isLoading?: boolean;
-  onChangeScope: (scope: DigestQueryScope) => void;
+  onBrowseAllWeeks: () => void;
   onChangeReadFilter: (filter: BlogReadFilter) => void;
   onChangeSearch: (query: string) => void;
   onOpenArticle: (article: DigestArticleDTO) => void;
@@ -31,26 +30,18 @@ export function BlogsTabView({
   articles,
   unreadCount,
   issueNumber,
-  isArchiveEdition,
   childName,
   shortAges,
   scope,
   readFilter,
   searchQuery,
   isLoading = false,
-  onChangeScope,
+  onBrowseAllWeeks,
   onChangeReadFilter,
   onChangeSearch,
   onOpenArticle,
   onToggleSaveArticle,
 }: BlogsTabViewProps) {
-  const issueScopeLabel =
-    issueNumber === null
-      ? 'This week'
-      : isArchiveEdition
-        ? `Issue #${issueNumber}`
-        : `This week (#${issueNumber})`;
-
   const trimmedQuery = searchQuery.trim();
   const showFeatured = !trimmedQuery && readFilter === 'all' && articles.length > 0;
   const featured = showFeatured ? articles[0]! : null;
@@ -64,7 +55,7 @@ export function BlogsTabView({
       data-testid="blogs-tab-view"
       className="py-7 pb-16"
     >
-      {/* Minimalist Toolbar: All / Unread + Week Scope + Search (Zero Feature essays / Myth checks pills) */}
+      {/* Minimalist Toolbar: All / Unread + Search (Week scope controlled by header selector) */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div
           className="flex flex-wrap items-center gap-2"
@@ -99,41 +90,6 @@ export function BlogsTabView({
             )}
           >
             {unreadCount > 0 ? `Unread (${unreadCount})` : 'Unread'}
-          </button>
-
-          <span
-            className="mx-1 hidden h-5 w-px bg-[#131715]/18 sm:inline-block"
-            aria-hidden="true"
-          />
-
-          <button
-            type="button"
-            data-testid="blogs-scope-issue"
-            aria-pressed={scope === 'issue'}
-            onClick={() => onChangeScope('issue')}
-            className={cn(
-              'inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-              scope === 'issue'
-                ? 'border-[#143D2B] bg-[#143D2B] text-white'
-                : 'border-[#131715]/20 bg-transparent text-[#3E4642] hover:bg-[#F3F1EA] hover:text-[#131715]'
-            )}
-          >
-            {issueScopeLabel}
-          </button>
-
-          <button
-            type="button"
-            data-testid="blogs-scope-all"
-            aria-pressed={scope === 'all'}
-            onClick={() => onChangeScope('all')}
-            className={cn(
-              'inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-              scope === 'all'
-                ? 'border-[#143D2B] bg-[#143D2B] text-white'
-                : 'border-[#131715]/20 bg-transparent text-[#3E4642] hover:bg-[#F3F1EA] hover:text-[#131715]'
-            )}
-          >
-            All weeks
           </button>
         </div>
 
@@ -190,7 +146,7 @@ export function BlogsTabView({
                 {scope === 'issue' && (
                   <button
                     type="button"
-                    onClick={() => onChangeScope('all')}
+                    onClick={onBrowseAllWeeks}
                     className="inline-flex min-h-[44px] items-center rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-[#0E2B1E]"
                   >
                     Browse all weeks
@@ -214,7 +170,7 @@ export function BlogsTabView({
                 <button
                   type="button"
                   data-testid="blogs-empty-browse-all-btn"
-                  onClick={() => onChangeScope('all')}
+                  onClick={onBrowseAllWeeks}
                   className="mt-1 inline-flex min-h-[44px] items-center rounded-[8px] bg-[#143D2B] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-[#0E2B1E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
                 >
                   Browse all weeks

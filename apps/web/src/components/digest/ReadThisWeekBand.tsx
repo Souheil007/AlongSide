@@ -11,6 +11,7 @@ export interface ReadThisWeekBandProps {
   childName: string;
   shortAges: string;
   weekRange: string;
+  isAllWeeks?: boolean;
   onOpenArticle: (article: DigestArticleDTO) => void;
   onToggleSaveArticle: (article: DigestArticleDTO) => void;
   onViewAllBlogs: () => void;
@@ -21,6 +22,7 @@ export function ReadThisWeekBand({
   childName,
   shortAges,
   weekRange,
+  isAllWeeks = false,
   onOpenArticle,
   onToggleSaveArticle,
   onViewAllBlogs,
@@ -45,7 +47,7 @@ export function ReadThisWeekBand({
             id="read-this-week-heading"
             className="font-serif text-[23px] sm:text-[27px] font-normal tracking-[-0.02em] text-[#131715]"
           >
-            Read this week
+            {isAllWeeks ? 'Read across all weeks' : 'Read this week'}
           </h2>
           <p className="mt-0.5 text-[13.5px] text-[#59625D]">
             {articles.length} tailored {articles.length === 1 ? 'blog' : 'blogs'} for{' '}

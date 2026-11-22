@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 export interface DigestFeedHeaderProps {
   issueNumber: number | null;
   latestIssueNumber: number | null;
+  isAllWeeks?: boolean;
   weekStart?: string;
   weekEnd?: string;
   childName: string;
@@ -27,7 +28,7 @@ export interface DigestFeedHeaderProps {
   weekArticleCount: number;
   weekVideoCount: number;
   savedTotalCount: number;
-  onSelectIssue: (issueNumber: number) => void;
+  onSelectIssue: (selection: number | 'all') => void;
   onReturnToLatest: () => void;
   onSelectTab: (tab: CultureDigestTab) => void;
   className?: string;
@@ -36,6 +37,7 @@ export interface DigestFeedHeaderProps {
 export function DigestFeedHeader({
   issueNumber,
   latestIssueNumber,
+  isAllWeeks = false,
   weekStart,
   weekEnd,
   childName,
@@ -55,8 +57,9 @@ export function DigestFeedHeader({
   onSelectTab,
   className,
 }: DigestFeedHeaderProps) {
-  const weekRange =
-    weekStart && weekEnd
+  const weekRange = isAllWeeks
+    ? 'All weeks'
+    : weekStart && weekEnd
       ? formatWeekDateRange(weekStart, weekEnd)
       : issueNumber !== null
         ? `Issue #${issueNumber}`
@@ -64,11 +67,17 @@ export function DigestFeedHeader({
 
   const progressText =
     totalArticleCount === 0
-      ? 'Curating this week'
+      ? isAllWeeks
+        ? 'Curating archive'
+        : 'Curating this week'
       : readArticleCount === 0
-        ? `${totalArticleCount} reads this week`
+        ? isAllWeeks
+          ? `${totalArticleCount} reads across all weeks`
+          : `${totalArticleCount} reads this week`
         : readArticleCount >= totalArticleCount
-          ? 'All caught up on this issue'
+          ? isAllWeeks
+            ? 'All caught up across all weeks'
+            : 'All caught up on this issue'
           : `${readArticleCount} of ${totalArticleCount} read`;
 
   const tabs: Array<{
@@ -78,8 +87,9 @@ export function DigestFeedHeader({
   }> = [
     {
       id: 'week',
-      label:
-        isArchiveEdition && issueNumber !== null
+      label: isAllWeeks
+        ? 'All Weeks'
+        : isArchiveEdition && issueNumber !== null
           ? `Issue #${issueNumber}`
           : 'This Week',
     },
@@ -100,6 +110,12 @@ export function DigestFeedHeader({
     },
   ];
 
+  const selectValue = isAllWeeks
+    ? 'all'
+    : issueNumber !== null
+      ? String(issueNumber)
+      : '';
+
   return (
     <header
       data-testid="digest-feed-header"
@@ -116,9 +132,13 @@ export function DigestFeedHeader({
             className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13.5px] text-[#59625D] tabular-nums"
           >
             <span>
-              {issueNumber !== null
-                ? `Issue No. ${issueNumber} · ${weekRange}`
-                : 'Latest weekly edition'}
+              {isAllWeeks
+                ? issues.length > 0
+                  ? `All weeks · ${issues.length} ${issues.length === 1 ? 'edition' : 'editions'}`
+                  : 'All weeks'
+                : issueNumber !== null
+                  ? `Issue No. ${issueNumber} · ${weekRange}`
+                  : 'Latest weekly edition'}
             </span>
             <span className="text-[#131715]/20" aria-hidden="true">
               /
@@ -138,14 +158,18 @@ export function DigestFeedHeader({
           </p>
         </div>
 
-        {/* Page-Wide Weekly Issue Selector (Zero duplicate child switcher here) */}
+        {/* Page-Wide Weekly Issue Selector (Includes All weeks; zero duplicate child switcher) */}
         <div className="relative inline-flex w-full sm:w-auto items-center">
           <select
             aria-label="Choose weekly issue"
             data-testid="digest-issue-select"
-            value={issueNumber !== null ? String(issueNumber) : ''}
-            disabled={issues.length === 0 && issueNumber === null}
+            value={selectValue}
+            disabled={!isAllWeeks && issues.length === 0 && issueNumber === null}
             onChange={(e) => {
+              if (e.target.value === 'all') {
+                onSelectIssue('all');
+                return;
+              }
               const next = Number(e.target.value);
               if (Number.isInteger(next) && next > 0) {
                 onSelectIssue(next);
@@ -154,15 +178,23 @@ export function DigestFeedHeader({
             className="min-h-[44px] w-full sm:w-auto appearance-none rounded-[8px] border border-[#131715]/20 bg-white pl-3.5 pr-9 text-[13.5px] font-medium text-[#131715] tabular-nums transition-colors hover:border-[#131715]/35 hover:bg-[#F6F4EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2 cursor-pointer disabled:cursor-default disabled:opacity-70"
           >
             {issues.length > 0 ? (
-              issues.map((item) => (
-                <option key={item.id} value={String(item.issueNumber)}>
-                  {formatIssueOptionLabel(item)}
-                </option>
-              ))
-            ) : issueNumber !== null ? (
-              <option value={String(issueNumber)}>
-                Issue #{issueNumber} · {weekRange}
-              </option>
+              <>
+                <option value="all">All weeks</option>
+                {issues.map((item) => (
+                  <option key={item.id} value={String(item.issueNumber)}>
+                    {formatIssueOptionLabel(item)}
+                  </option>
+                ))}
+              </>
+            ) : issueNumber !== null || isAllWeeks ? (
+              <>
+                <option value="all">All weeks</option>
+                {issueNumber !== null && (
+                  <option value={String(issueNumber)}>
+                    Issue #{issueNumber} · {weekRange}
+                  </option>
+                )}
+              </>
             ) : (
               <option value="">Loading issues…</option>
             )}
@@ -174,27 +206,29 @@ export function DigestFeedHeader({
         </div>
       </div>
 
-      {/* Quiet Archive Edition Return Banner */}
-      {isArchiveEdition && issueNumber !== null && latestIssueNumber !== null && (
-        <div
-          data-testid="digest-archive-banner"
-          className="mb-3.5 flex flex-wrap items-center justify-between gap-3 rounded-[8px] bg-[#F3F1EA] px-4 py-2.5 text-[13px] text-[#3E4642]"
-        >
-          <span>
-            Reading archive edition: Issue #{issueNumber} ({weekRange}) tailored for{' '}
-            {childName} ({shortAges}).
-          </span>
-          <button
-            type="button"
-            data-testid="digest-return-latest-btn"
-            onClick={onReturnToLatest}
-            className="inline-flex min-h-[44px] items-center gap-1.5 text-[13.5px] font-medium text-[#143D2B] hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] rounded-[6px] px-1"
+      {/* Quiet Archive / All-Weeks Return Banner */}
+      {(isAllWeeks || (isArchiveEdition && issueNumber !== null)) &&
+        latestIssueNumber !== null && (
+          <div
+            data-testid="digest-archive-banner"
+            className="mb-3.5 flex flex-wrap items-center justify-between gap-3 rounded-[8px] bg-[#F3F1EA] px-4 py-2.5 text-[13px] text-[#3E4642]"
           >
-            <span>Return to this week (#{latestIssueNumber})</span>
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </button>
-        </div>
-      )}
+            <span>
+              {isAllWeeks
+                ? `Browsing all published weeks tailored for ${childName} (${shortAges}).`
+                : `Reading archive edition: Issue #${issueNumber} (${weekRange}) tailored for ${childName} (${shortAges}).`}
+            </span>
+            <button
+              type="button"
+              data-testid="digest-return-latest-btn"
+              onClick={onReturnToLatest}
+              className="inline-flex min-h-[44px] items-center gap-1.5 text-[13.5px] font-medium text-[#143D2B] hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] rounded-[6px] px-1"
+            >
+              <span>Return to this week (#{latestIssueNumber})</span>
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          </div>
+        )}
 
       {/* Quiet 4-Tab Editorial Underline Bar */}
       <nav

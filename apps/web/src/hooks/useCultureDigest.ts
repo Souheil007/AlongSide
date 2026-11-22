@@ -6,6 +6,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  type QueryClient,
 } from '@tanstack/react-query';
 import {
   DEFAULT_DIGEST_TIER,
@@ -13,7 +14,6 @@ import {
   DigestItemType,
   calculateLifespanTier,
   isSlangEligibleTier,
-  matchesVideoDurationBucket,
   resolveDigestTierBucket,
   type CanonicalDigestTier,
   type ChildDTO,
@@ -23,7 +23,6 @@ import {
   type DigestIssueSummaryDTO,
   type DigestQueryScope,
   type DigestVideoDTO,
-  type DigestVideoDurationBucket,
   type DigestVideosResponseDTO,
   type SavedDigestShortlistDTO,
   type WeeklyDigestEditionDTO,
@@ -46,6 +45,7 @@ import {
 
 export type CultureDigestTab = 'week' | 'blogs' | 'videos' | 'saved';
 export type BlogReadFilter = 'all' | 'unread';
+export type DigestIssueSelection = number | 'all' | null;
 
 const VALID_TABS = new Set<CultureDigestTab>(['week', 'blogs', 'videos', 'saved']);
 
@@ -113,11 +113,11 @@ export function resolveActiveDigestTier(
 }
 
 /**
- * Parses ?tab= and ?issue= safely from a URL search string.
+ * Parses ?tab= and ?issue= (positive integer or 'all') safely from a URL search string.
  */
 export function parseDigestUrlParams(search: string): {
   tab?: CultureDigestTab;
-  issueNumber?: number;
+  issueSelection?: number | 'all';
 } {
   const params = new URLSearchParams(search);
   const rawTab = params.get('tab');
@@ -128,11 +128,17 @@ export function parseDigestUrlParams(search: string): {
       ? (rawTab as CultureDigestTab)
       : undefined;
 
-  const parsedIssue = rawIssue ? Number(rawIssue) : NaN;
-  const issueNumber =
-    Number.isInteger(parsedIssue) && parsedIssue > 0 ? parsedIssue : undefined;
+  let issueSelection: number | 'all' | undefined;
+  if (rawIssue?.trim().toLowerCase() === 'all') {
+    issueSelection = 'all';
+  } else {
+    const parsedIssue = rawIssue ? Number(rawIssue) : NaN;
+    if (Number.isInteger(parsedIssue) && parsedIssue > 0) {
+      issueSelection = parsedIssue;
+    }
+  }
 
-  return { tab, issueNumber };
+  return { tab, issueSelection };
 }
 
 /**
@@ -258,41 +264,34 @@ export function filterBlogsMinimalist(
 }
 
 /**
- * Pure filter for the Videos tab (Duration bucket + Search).
+ * Pure search filter for the Videos tab.
  */
 export function filterVideosForShelf(
   videos: DigestVideoDTO[],
   options: {
-    durationBucket: DigestVideoDurationBucket;
     searchQuery: string;
   }
 ): DigestVideoDTO[] {
   const q = options.searchQuery.trim().toLowerCase();
+  if (!q) return videos;
 
-  return videos.filter((video) => {
-    if (!matchesVideoDurationBucket(video.durationMinutes, options.durationBucket)) {
-      return false;
-    }
-    if (!q) return true;
-    return (
+  return videos.filter(
+    (video) =>
       video.title.toLowerCase().includes(q) ||
       video.presenter.toLowerCase().includes(q) ||
       video.channelName.toLowerCase().includes(q) ||
       video.takeaway.toLowerCase().includes(q)
-    );
-  });
+  );
 }
 
 /**
- * Pure state machine helper for week-scoped transitions when switching issue or child.
+ * Pure state machine helper for page-wide week selection ('all' or a specific issue)
+ * and clean resets when switching week or child.
  */
 export interface DigestScopeFilterState {
-  selectedIssueNumber: number | null;
-  blogsScope: DigestQueryScope;
-  videosScope: DigestQueryScope;
+  selectedIssue: DigestIssueSelection;
   blogReadFilter: BlogReadFilter;
   blogSearch: string;
-  videoDuration: DigestVideoDurationBucket;
   videoSearch: string;
   activeTheaterVideoId: string | null;
   dinnerPromptIndex: number;
@@ -301,15 +300,12 @@ export interface DigestScopeFilterState {
 }
 
 export function createInitialDigestFilterState(
-  initialIssueNumber: number | null = null
+  initialIssue: DigestIssueSelection = null
 ): DigestScopeFilterState {
   return {
-    selectedIssueNumber: initialIssueNumber,
-    blogsScope: 'issue',
-    videosScope: 'issue',
+    selectedIssue: initialIssue,
     blogReadFilter: 'all',
     blogSearch: '',
-    videoDuration: 'all',
     videoSearch: '',
     activeTheaterVideoId: null,
     dinnerPromptIndex: 0,
@@ -320,13 +316,11 @@ export function createInitialDigestFilterState(
 
 export function applyIssueSwitchReset(
   prev: DigestScopeFilterState,
-  nextIssueNumber: number
+  nextIssue: number | 'all'
 ): DigestScopeFilterState {
   return {
     ...prev,
-    selectedIssueNumber: nextIssueNumber,
-    blogsScope: 'issue',
-    videosScope: 'issue',
+    selectedIssue: nextIssue,
     activeTheaterVideoId: null,
     dinnerPromptIndex: 0,
     dinnerNotesOpen: false,
@@ -338,7 +332,7 @@ export function applyChildSwitchReset(
   prev: DigestScopeFilterState
 ): DigestScopeFilterState {
   return {
-    ...createInitialDigestFilterState(prev.selectedIssueNumber),
+    ...createInitialDigestFilterState(prev.selectedIssue),
   };
 }
 
@@ -355,6 +349,181 @@ interface InteractionMutationInput {
   videoSnapshot?: DigestVideoDTO;
   dinnerSnapshot?: DigestDinnerPromptDTO;
   silentToast?: boolean;
+}
+
+/**
+ * Applies a read/saved interaction patch atomically across all digest React Query caches
+ * (editions, scoped/all-weeks articles, scoped/all-weeks videos, and saved shortlist).
+ */
+export function patchDigestInteractionCaches(
+  queryClient: QueryClient,
+  patch: {
+    itemType: DigestItemType;
+    itemId: string;
+    isRead?: boolean;
+    isSaved?: boolean;
+    articleSnapshot?: DigestArticleDTO;
+    videoSnapshot?: DigestVideoDTO;
+    dinnerSnapshot?: DigestDinnerPromptDTO;
+  }
+): void {
+  // Patch all cached editions
+  queryClient.setQueriesData<WeeklyDigestEditionDTO>(
+    { queryKey: ['digest-edition'] },
+    (old) => {
+      if (!old) return old;
+      if (patch.itemType === DigestItemType.ARTICLE) {
+        const articles = old.articles.map((a) =>
+          a.id === patch.itemId
+            ? {
+                ...a,
+                isRead: patch.isRead !== undefined ? patch.isRead : a.isRead,
+                isSaved: patch.isSaved !== undefined ? patch.isSaved : a.isSaved,
+              }
+            : a
+        );
+        return {
+          ...old,
+          articles,
+          readArticleCount: articles.filter((a) => a.isRead).length,
+        };
+      }
+      if (patch.itemType === DigestItemType.VIDEO) {
+        return {
+          ...old,
+          videos: old.videos.map((v) =>
+            v.id === patch.itemId && patch.isSaved !== undefined
+              ? { ...v, isSaved: patch.isSaved }
+              : v
+          ),
+        };
+      }
+      if (patch.itemType === DigestItemType.DINNER_PROMPT) {
+        return {
+          ...old,
+          dinnerPrompts: old.dinnerPrompts.map((d) =>
+            d.id === patch.itemId && patch.isSaved !== undefined
+              ? { ...d, isSaved: patch.isSaved }
+              : d
+          ),
+        };
+      }
+      return old;
+    }
+  );
+
+  // Patch cached articles lists
+  if (patch.itemType === DigestItemType.ARTICLE) {
+    queryClient.setQueriesData<DigestArticlesResponseDTO>(
+      { queryKey: ['digest-articles'] },
+      (old) => {
+        if (!old) return old;
+        const articles = old.articles.map((a) =>
+          a.id === patch.itemId
+            ? {
+                ...a,
+                isRead: patch.isRead !== undefined ? patch.isRead : a.isRead,
+                isSaved: patch.isSaved !== undefined ? patch.isSaved : a.isSaved,
+              }
+            : a
+        );
+        return {
+          ...old,
+          articles,
+          unreadCount: articles.filter((a) => !a.isRead).length,
+        };
+      }
+    );
+  }
+
+  // Patch cached videos lists
+  if (patch.itemType === DigestItemType.VIDEO && patch.isSaved !== undefined) {
+    queryClient.setQueriesData<DigestVideosResponseDTO>(
+      { queryKey: ['digest-videos'] },
+      (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          videos: old.videos.map((v) =>
+            v.id === patch.itemId ? { ...v, isSaved: patch.isSaved! } : v
+          ),
+        };
+      }
+    );
+  }
+
+  // Patch cached saved shortlist
+  if (patch.isSaved !== undefined) {
+    queryClient.setQueriesData<SavedDigestShortlistDTO>(
+      { queryKey: ['digest-saved'] },
+      (old) => {
+        const base: SavedDigestShortlistDTO = old ?? {
+          articles: [],
+          videos: [],
+          dinnerPrompts: [],
+          totalCount: 0,
+        };
+        let articles = base.articles;
+        let videos = base.videos;
+        let dinnerPrompts = base.dinnerPrompts;
+
+        if (patch.itemType === DigestItemType.ARTICLE) {
+          if (patch.isSaved) {
+            if (
+              patch.articleSnapshot &&
+              !articles.some((a) => a.id === patch.itemId)
+            ) {
+              articles = [
+                {
+                  ...patch.articleSnapshot,
+                  isRead:
+                    patch.isRead !== undefined
+                      ? patch.isRead
+                      : patch.articleSnapshot.isRead,
+                  isSaved: true,
+                },
+                ...articles,
+              ];
+            }
+          } else {
+            articles = articles.filter((a) => a.id !== patch.itemId);
+          }
+        } else if (patch.itemType === DigestItemType.VIDEO) {
+          if (patch.isSaved) {
+            if (
+              patch.videoSnapshot &&
+              !videos.some((v) => v.id === patch.itemId)
+            ) {
+              videos = [{ ...patch.videoSnapshot, isSaved: true }, ...videos];
+            }
+          } else {
+            videos = videos.filter((v) => v.id !== patch.itemId);
+          }
+        } else if (patch.itemType === DigestItemType.DINNER_PROMPT) {
+          if (patch.isSaved) {
+            if (
+              patch.dinnerSnapshot &&
+              !dinnerPrompts.some((d) => d.id === patch.itemId)
+            ) {
+              dinnerPrompts = [
+                { ...patch.dinnerSnapshot, isSaved: true },
+                ...dinnerPrompts,
+              ];
+            }
+          } else {
+            dinnerPrompts = dinnerPrompts.filter((d) => d.id !== patch.itemId);
+          }
+        }
+
+        return {
+          articles,
+          videos,
+          dinnerPrompts,
+          totalCount: articles.length + videos.length + dinnerPrompts.length,
+        };
+      }
+    );
+  }
 }
 
 export function useCultureDigest() {
@@ -388,7 +557,7 @@ export function useCultureDigest() {
     initialUrlState.tab ?? 'week'
   );
   const [filters, setFilters] = React.useState<DigestScopeFilterState>(() =>
-    createInitialDigestFilterState(initialUrlState.issueNumber ?? null)
+    createInitialDigestFilterState(initialUrlState.issueSelection ?? null)
   );
 
   // Overlays
@@ -406,6 +575,7 @@ export function useCultureDigest() {
     startSeconds: number;
   } | null>(modalVideo);
   modalVideoRef.current = modalVideo;
+  const pendingInteractionsRef = React.useRef(0);
 
   // Calm ephemeral toast
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
@@ -442,12 +612,14 @@ export function useCultureDigest() {
 
   // URL sync helper (?issue=&tab=) without full Next.js navigation reload
   const syncUrlParams = React.useCallback(
-    (nextTab: CultureDigestTab, nextIssue: number | null) => {
+    (nextTab: CultureDigestTab, nextIssue: DigestIssueSelection) => {
       if (typeof window === 'undefined') return;
       try {
         const url = new URL(window.location.href);
         url.searchParams.set('tab', nextTab);
-        if (nextIssue !== null) {
+        if (nextIssue === 'all') {
+          url.searchParams.set('issue', 'all');
+        } else if (typeof nextIssue === 'number') {
           url.searchParams.set('issue', String(nextIssue));
         } else {
           url.searchParams.delete('issue');
@@ -460,6 +632,11 @@ export function useCultureDigest() {
     []
   );
 
+  const isAllWeeks = filters.selectedIssue === 'all';
+  const weekScope: DigestQueryScope = isAllWeeks ? 'all' : 'issue';
+  const editionIssueParam: number | 'latest' =
+    typeof filters.selectedIssue === 'number' ? filters.selectedIssue : 'latest';
+
   // 1. Query: Published weekly issues list
   const issuesQuery = useQuery({
     queryKey: ['digest-issues', resolvedTier],
@@ -467,17 +644,17 @@ export function useCultureDigest() {
     staleTime: 5 * 60 * 1000,
   });
 
-  // 2. Query: Active weekly edition (Tab 1 + header counts)
+  // 2. Query: Active weekly edition (Tab 1 + header counts + Sunday dinner closer)
   const editionQuery = useQuery({
     queryKey: [
       'digest-edition',
-      filters.selectedIssueNumber ?? 'latest',
+      editionIssueParam,
       resolvedTier,
       activeChild?.id ?? null,
       isGuestOverlayActive,
     ],
     queryFn: () =>
-      getWeeklyDigestEdition(filters.selectedIssueNumber ?? 'latest', {
+      getWeeklyDigestEdition(editionIssueParam, {
         tier: resolvedTier,
         childId: activeChild?.id,
         isGuest: isGuestSession,
@@ -491,57 +668,59 @@ export function useCultureDigest() {
     issues.length > 0
       ? Math.max(...issues.map((i) => i.issueNumber))
       : (edition?.issue.issueNumber ?? null);
-  const resolvedIssueNumber: number | null =
-    edition?.issue.issueNumber ?? filters.selectedIssueNumber ?? latestIssueNumber;
+  const resolvedIssueNumber: number | null = isAllWeeks
+    ? null
+    : (edition?.issue.issueNumber ??
+        (typeof filters.selectedIssue === 'number' ? filters.selectedIssue : null) ??
+        latestIssueNumber);
   const isArchiveEdition =
+    !isAllWeeks &&
     issues.length > 0 &&
     resolvedIssueNumber !== null &&
     latestIssueNumber !== null &&
     resolvedIssueNumber !== latestIssueNumber;
 
-  // 3. Query: Week-scoped or All-weeks Blogs (Tab 2)
+  // 3. Query: Selected week or All-weeks Blogs (Tab 2, or Tab 1 when All weeks is active)
   const articlesQuery = useQuery({
     queryKey: [
       'digest-articles',
-      resolvedIssueNumber ?? 'latest',
-      filters.blogsScope,
+      isAllWeeks ? 'all' : (resolvedIssueNumber ?? 'latest'),
+      weekScope,
       resolvedTier,
       activeChild?.id ?? null,
       isGuestOverlayActive,
     ],
     queryFn: () =>
       listDigestArticles({
-        issueNumber:
-          filters.blogsScope === 'issue' ? (resolvedIssueNumber ?? undefined) : undefined,
-        scope: filters.blogsScope,
+        issueNumber: isAllWeeks ? undefined : (resolvedIssueNumber ?? undefined),
+        scope: weekScope,
         tier: resolvedTier,
         childId: activeChild?.id,
         isGuest: isGuestSession,
       }),
-    enabled: activeTab === 'blogs',
+    enabled: activeTab === 'blogs' || (activeTab === 'week' && isAllWeeks),
     staleTime: 2 * 60 * 1000,
   });
 
-  // 4. Query: Week-scoped or All-weeks Videos (Tab 3)
+  // 4. Query: Selected week or All-weeks Videos (Tab 3, or Tab 1 when All weeks is active)
   const videosQuery = useQuery({
     queryKey: [
       'digest-videos',
-      resolvedIssueNumber ?? 'latest',
-      filters.videosScope,
+      isAllWeeks ? 'all' : (resolvedIssueNumber ?? 'latest'),
+      weekScope,
       resolvedTier,
       activeChild?.id ?? null,
       isGuestOverlayActive,
     ],
     queryFn: () =>
       listDigestVideos({
-        issueNumber:
-          filters.videosScope === 'issue' ? (resolvedIssueNumber ?? undefined) : undefined,
-        scope: filters.videosScope,
+        issueNumber: isAllWeeks ? undefined : (resolvedIssueNumber ?? undefined),
+        scope: weekScope,
         tier: resolvedTier,
         childId: activeChild?.id,
         isGuest: isGuestSession,
       }),
-    enabled: activeTab === 'videos',
+    enabled: activeTab === 'videos' || (activeTab === 'week' && isAllWeeks),
     staleTime: 2 * 60 * 1000,
   });
 
@@ -570,22 +749,34 @@ export function useCultureDigest() {
     totalCount: 0,
   };
 
-  // Resolve current scoped lists cleanly (instant hydration from edition when scoped to 'issue')
+  // Resolve current scoped lists cleanly (instant hydration from edition when scoped to a single week)
   const scopedArticles: DigestArticleDTO[] = React.useMemo(() => {
-    if (filters.blogsScope === 'issue') {
-      if (articlesQuery.data?.articles) return articlesQuery.data.articles;
-      return edition?.articles ?? [];
+    if (isAllWeeks) {
+      return articlesQuery.data?.articles ?? [];
     }
     return articlesQuery.data?.articles ?? edition?.articles ?? [];
-  }, [filters.blogsScope, articlesQuery.data, edition?.articles]);
+  }, [isAllWeeks, articlesQuery.data, edition?.articles]);
 
   const scopedVideos: DigestVideoDTO[] = React.useMemo(() => {
-    if (filters.videosScope === 'issue') {
-      if (videosQuery.data?.videos) return videosQuery.data.videos;
-      return edition?.videos ?? [];
+    if (isAllWeeks) {
+      return videosQuery.data?.videos ?? [];
     }
     return videosQuery.data?.videos ?? edition?.videos ?? [];
-  }, [filters.videosScope, videosQuery.data, edition?.videos]);
+  }, [isAllWeeks, videosQuery.data, edition?.videos]);
+
+  const weekDisplayArticles: DigestArticleDTO[] = React.useMemo(() => {
+    if (isAllWeeks) {
+      return articlesQuery.data?.articles ?? edition?.articles ?? [];
+    }
+    return edition?.articles ?? [];
+  }, [isAllWeeks, articlesQuery.data, edition?.articles]);
+
+  const weekDisplayVideos: DigestVideoDTO[] = React.useMemo(() => {
+    if (isAllWeeks) {
+      return videosQuery.data?.videos ?? edition?.videos ?? [];
+    }
+    return edition?.videos ?? [];
+  }, [isAllWeeks, videosQuery.data, edition?.videos]);
 
   const filteredBlogs = React.useMemo(
     () =>
@@ -599,10 +790,9 @@ export function useCultureDigest() {
   const filteredVideos = React.useMemo(
     () =>
       filterVideosForShelf(scopedVideos, {
-        durationBucket: filters.videoDuration,
         searchQuery: filters.videoSearch,
       }),
-    [scopedVideos, filters.videoDuration, filters.videoSearch]
+    [scopedVideos, filters.videoSearch]
   );
 
   // Optimistic Read / Save Interaction Mutation
@@ -620,6 +810,8 @@ export function useCultureDigest() {
         dinnerSnapshot: input.dinnerSnapshot,
       }),
     onMutate: async (input) => {
+      pendingInteractionsRef.current += 1;
+
       // Cancel outgoing refetches so optimistic state is not overwritten
       await Promise.all([
         queryClient.cancelQueries({ queryKey: ['digest-edition'] }),
@@ -643,156 +835,7 @@ export function useCultureDigest() {
       const prevModalVideo = modalVideoRef.current;
       const prevDrawerArticle = drawerArticleRef.current;
 
-      // Patch all cached editions
-      queryClient.setQueriesData<WeeklyDigestEditionDTO>(
-        { queryKey: ['digest-edition'] },
-        (old) => {
-          if (!old) return old;
-          if (input.itemType === DigestItemType.ARTICLE) {
-            const articles = old.articles.map((a) =>
-              a.id === input.itemId
-                ? {
-                    ...a,
-                    isRead: input.isRead !== undefined ? input.isRead : a.isRead,
-                    isSaved: input.isSaved !== undefined ? input.isSaved : a.isSaved,
-                  }
-                : a
-            );
-            return {
-              ...old,
-              articles,
-              readArticleCount: articles.filter((a) => a.isRead).length,
-            };
-          }
-          if (input.itemType === DigestItemType.VIDEO) {
-            return {
-              ...old,
-              videos: old.videos.map((v) =>
-                v.id === input.itemId && input.isSaved !== undefined
-                  ? { ...v, isSaved: input.isSaved }
-                  : v
-              ),
-            };
-          }
-          if (input.itemType === DigestItemType.DINNER_PROMPT) {
-            return {
-              ...old,
-              dinnerPrompts: old.dinnerPrompts.map((d) =>
-                d.id === input.itemId && input.isSaved !== undefined
-                  ? { ...d, isSaved: input.isSaved }
-                  : d
-              ),
-            };
-          }
-          return old;
-        }
-      );
-
-      // Patch cached articles lists
-      if (input.itemType === DigestItemType.ARTICLE) {
-        queryClient.setQueriesData<DigestArticlesResponseDTO>(
-          { queryKey: ['digest-articles'] },
-          (old) => {
-            if (!old) return old;
-            const articles = old.articles.map((a) =>
-              a.id === input.itemId
-                ? {
-                    ...a,
-                    isRead: input.isRead !== undefined ? input.isRead : a.isRead,
-                    isSaved: input.isSaved !== undefined ? input.isSaved : a.isSaved,
-                  }
-                : a
-            );
-            return {
-              ...old,
-              articles,
-              unreadCount: articles.filter((a) => !a.isRead).length,
-            };
-          }
-        );
-      }
-
-      // Patch cached videos lists
-      if (input.itemType === DigestItemType.VIDEO && input.isSaved !== undefined) {
-        queryClient.setQueriesData<DigestVideosResponseDTO>(
-          { queryKey: ['digest-videos'] },
-          (old) => {
-            if (!old) return old;
-            return {
-              ...old,
-              videos: old.videos.map((v) =>
-                v.id === input.itemId ? { ...v, isSaved: input.isSaved! } : v
-              ),
-            };
-          }
-        );
-      }
-
-      // Patch cached saved shortlist
-      if (input.isSaved !== undefined) {
-        queryClient.setQueriesData<SavedDigestShortlistDTO>(
-          { queryKey: ['digest-saved'] },
-          (old) => {
-            const base: SavedDigestShortlistDTO = old ?? {
-              articles: [],
-              videos: [],
-              dinnerPrompts: [],
-              totalCount: 0,
-            };
-            let articles = base.articles;
-            let videos = base.videos;
-            let dinnerPrompts = base.dinnerPrompts;
-
-            if (input.itemType === DigestItemType.ARTICLE) {
-              if (input.isSaved) {
-                if (
-                  input.articleSnapshot &&
-                  !articles.some((a) => a.id === input.itemId)
-                ) {
-                  articles = [
-                    { ...input.articleSnapshot, isSaved: true },
-                    ...articles,
-                  ];
-                }
-              } else {
-                articles = articles.filter((a) => a.id !== input.itemId);
-              }
-            } else if (input.itemType === DigestItemType.VIDEO) {
-              if (input.isSaved) {
-                if (
-                  input.videoSnapshot &&
-                  !videos.some((v) => v.id === input.itemId)
-                ) {
-                  videos = [{ ...input.videoSnapshot, isSaved: true }, ...videos];
-                }
-              } else {
-                videos = videos.filter((v) => v.id !== input.itemId);
-              }
-            } else if (input.itemType === DigestItemType.DINNER_PROMPT) {
-              if (input.isSaved) {
-                if (
-                  input.dinnerSnapshot &&
-                  !dinnerPrompts.some((d) => d.id === input.itemId)
-                ) {
-                  dinnerPrompts = [
-                    { ...input.dinnerSnapshot, isSaved: true },
-                    ...dinnerPrompts,
-                  ];
-                }
-              } else {
-                dinnerPrompts = dinnerPrompts.filter((d) => d.id !== input.itemId);
-              }
-            }
-
-            return {
-              articles,
-              videos,
-              dinnerPrompts,
-              totalCount: articles.length + videos.length + dinnerPrompts.length,
-            };
-          }
-        );
-      }
+      patchDigestInteractionCaches(queryClient, input);
 
       // Update active modal video saved flag if open
       if (input.itemType === DigestItemType.VIDEO && input.isSaved !== undefined) {
@@ -826,46 +869,82 @@ export function useCultureDigest() {
       };
     },
     onError: (_err, _input, context) => {
-      if (!context) return;
-      context.prevEditions.forEach(([key, data]) => queryClient.setQueryData(key, data));
-      context.prevArticles.forEach(([key, data]) => queryClient.setQueryData(key, data));
-      context.prevVideos.forEach(([key, data]) => queryClient.setQueryData(key, data));
-      context.prevSaved.forEach(([key, data]) => queryClient.setQueryData(key, data));
-      if (context.prevModalVideo) {
-        const snapshot = context.prevModalVideo;
-        setModalVideo((curr) =>
-          curr && curr.video.id === snapshot.video.id ? snapshot : curr
-        );
-      }
-      if (context.prevDrawerArticle) {
-        const snapshot = context.prevDrawerArticle;
-        setDrawerArticle((curr) =>
-          curr && curr.id === snapshot.id ? snapshot : curr
-        );
+      if (context && pendingInteractionsRef.current <= 1) {
+        context.prevEditions.forEach(([key, data]) => queryClient.setQueryData(key, data));
+        context.prevArticles.forEach(([key, data]) => queryClient.setQueryData(key, data));
+        context.prevVideos.forEach(([key, data]) => queryClient.setQueryData(key, data));
+        context.prevSaved.forEach(([key, data]) => queryClient.setQueryData(key, data));
+        if (context.prevModalVideo) {
+          const snapshot = context.prevModalVideo;
+          setModalVideo((curr) =>
+            curr && curr.video.id === snapshot.video.id ? snapshot : curr
+          );
+        }
+        if (context.prevDrawerArticle) {
+          const snapshot = context.prevDrawerArticle;
+          setDrawerArticle((curr) =>
+            curr && curr.id === snapshot.id ? snapshot : curr
+          );
+        }
       }
       showToast('Could not save that change. Please try again.');
     },
-    onSuccess: (_data, input) => {
+    onSuccess: (serverResult, input) => {
+      // Reconcile caches with the authoritative server response when no newer write is in flight
+      if (pendingInteractionsRef.current <= 1) {
+        patchDigestInteractionCaches(queryClient, {
+          itemType: serverResult.itemType,
+          itemId: serverResult.itemId,
+          isRead:
+            serverResult.itemType === DigestItemType.ARTICLE
+              ? serverResult.isRead
+              : undefined,
+          isSaved: serverResult.isSaved,
+          articleSnapshot: input.articleSnapshot,
+          videoSnapshot: input.videoSnapshot,
+          dinnerSnapshot: input.dinnerSnapshot,
+        });
+
+        if (serverResult.itemType === DigestItemType.VIDEO) {
+          setModalVideo((prev) =>
+            prev && prev.video.id === serverResult.itemId
+              ? { ...prev, video: { ...prev.video, isSaved: serverResult.isSaved } }
+              : prev
+          );
+        }
+        if (serverResult.itemType === DigestItemType.ARTICLE) {
+          setDrawerArticle((prev) =>
+            prev && prev.id === serverResult.itemId
+              ? { ...prev, isRead: serverResult.isRead, isSaved: serverResult.isSaved }
+              : prev
+          );
+        }
+      }
+
       if (input.silentToast) return;
-      if (input.isSaved === true) {
+      if (serverResult.isSaved && input.isSaved === true) {
         showToast(
           input.itemType === DigestItemType.DINNER_PROMPT
             ? 'Saved for Sunday dinner'
             : 'Saved to your shortlist'
         );
-      } else if (input.isSaved === false) {
+      } else if (!serverResult.isSaved && input.isSaved === false) {
         showToast('Removed from Saved');
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['digest-edition'] });
-      queryClient.invalidateQueries({ queryKey: ['digest-articles'] });
-      queryClient.invalidateQueries({ queryKey: ['digest-videos'] });
-      queryClient.invalidateQueries({ queryKey: ['digest-saved'] });
+      pendingInteractionsRef.current = Math.max(0, pendingInteractionsRef.current - 1);
+      // Only refetch once all overlapping interactions settle so earlier refetches never clobber in-flight writes
+      if (pendingInteractionsRef.current === 0) {
+        queryClient.invalidateQueries({ queryKey: ['digest-edition'] });
+        queryClient.invalidateQueries({ queryKey: ['digest-articles'] });
+        queryClient.invalidateQueries({ queryKey: ['digest-videos'] });
+        queryClient.invalidateQueries({ queryKey: ['digest-saved'] });
+      }
     },
   });
 
-  // Lookup currently open article from latest caches so bookmark/read updates live inside drawer
+  // Lookup currently open article & modal video from latest caches so bookmark/read updates stay live
   const openArticle: DigestArticleDTO | null = React.useMemo(() => {
     if (!openArticleId) return null;
     return (
@@ -882,32 +961,43 @@ export function useCultureDigest() {
     drawerArticle,
   ]);
 
+  const activeModalVideo: DigestVideoDTO | null = React.useMemo(() => {
+    if (!modalVideo) return null;
+    const id = modalVideo.video.id;
+    return (
+      scopedVideos.find((v) => v.id === id) ??
+      edition?.videos.find((v) => v.id === id) ??
+      savedShortlist.videos.find((v) => v.id === id) ??
+      modalVideo.video
+    );
+  }, [modalVideo, scopedVideos, edition?.videos, savedShortlist.videos]);
+
   // Actions
   const setActiveTab = React.useCallback(
     (tab: CultureDigestTab) => {
       setActiveTabState(tab);
-      syncUrlParams(tab, filters.selectedIssueNumber);
+      syncUrlParams(tab, filters.selectedIssue);
     },
-    [filters.selectedIssueNumber, syncUrlParams]
+    [filters.selectedIssue, syncUrlParams]
   );
 
   const selectIssue = React.useCallback(
-    (issueNumber: number) => {
-      setFilters((prev) => applyIssueSwitchReset(prev, issueNumber));
-      syncUrlParams(activeTab, issueNumber);
+    (selection: number | 'all') => {
+      setFilters((prev) => applyIssueSwitchReset(prev, selection));
+      syncUrlParams(activeTab, selection);
     },
     [activeTab, syncUrlParams]
   );
+
+  const selectAllWeeks = React.useCallback(() => {
+    selectIssue('all');
+  }, [selectIssue]);
 
   const returnToLatestIssue = React.useCallback(() => {
     if (latestIssueNumber === null) return;
     setFilters((prev) => applyIssueSwitchReset(prev, latestIssueNumber));
     syncUrlParams(activeTab, latestIssueNumber);
   }, [activeTab, latestIssueNumber, syncUrlParams]);
-
-  const setBlogsScope = React.useCallback((scope: DigestQueryScope) => {
-    setFilters((prev) => ({ ...prev, blogsScope: scope }));
-  }, []);
 
   const setBlogReadFilter = React.useCallback((readFilter: BlogReadFilter) => {
     setFilters((prev) => ({ ...prev, blogReadFilter: readFilter }));
@@ -916,21 +1006,6 @@ export function useCultureDigest() {
   const setBlogSearch = React.useCallback((blogSearch: string) => {
     setFilters((prev) => ({ ...prev, blogSearch }));
   }, []);
-
-  const setVideosScope = React.useCallback((scope: DigestQueryScope) => {
-    setFilters((prev) => ({
-      ...prev,
-      videosScope: scope,
-      activeTheaterVideoId: null,
-    }));
-  }, []);
-
-  const setVideoDuration = React.useCallback(
-    (videoDuration: DigestVideoDurationBucket) => {
-      setFilters((prev) => ({ ...prev, videoDuration }));
-    },
-    []
-  );
 
   const setVideoSearch = React.useCallback((videoSearch: string) => {
     setFilters((prev) => ({ ...prev, videoSearch }));
@@ -1058,9 +1133,31 @@ export function useCultureDigest() {
     }
   }, []);
 
-  // Child display labels
+  // Child display labels & scope-aware tab counts
   const childName = activeChild?.name ?? tierMeta.defaultChildName;
   const childAgeLabel = activeChild ? formatChildAge(activeChild) : tierMeta.defaultAgeLabel;
+
+  const weekArticleCount = isAllWeeks
+    ? (articlesQuery.data?.totalInScope ??
+        (issues.length > 0
+          ? issues.reduce((sum, item) => sum + item.articleCount, 0)
+          : (edition?.articles.length ?? 0)))
+    : (edition?.articles.length ?? 0);
+
+  const weekVideoCount = isAllWeeks
+    ? (videosQuery.data?.totalInScope ??
+        (issues.length > 0
+          ? issues.reduce((sum, item) => sum + item.videoCount, 0)
+          : (edition?.videos.length ?? 0)))
+    : (edition?.videos.length ?? 0);
+
+  const headerTotalArticleCount = isAllWeeks
+    ? (articlesQuery.data?.articles.length ?? weekArticleCount)
+    : (edition?.totalArticleCount ?? 0);
+
+  const headerReadArticleCount = isAllWeeks
+    ? (articlesQuery.data?.articles.filter((a) => a.isRead).length ?? 0)
+    : (edition?.readArticleCount ?? 0);
 
   return {
     // Active context
@@ -1076,25 +1173,30 @@ export function useCultureDigest() {
     edition,
     latestIssueNumber,
     resolvedIssueNumber,
+    isAllWeeks,
+    weekScope,
     isArchiveEdition,
     isLoadingEdition: editionQuery.isLoading && !edition,
     isLoadingArticles: articlesQuery.isLoading && scopedArticles.length === 0,
     isLoadingVideos: videosQuery.isLoading && scopedVideos.length === 0,
+    headerReadArticleCount,
+    headerTotalArticleCount,
+    weekDisplayArticles,
+    weekDisplayVideos,
 
-    // Tabs & counts (week-scoped counts on Blogs & Videos tabs)
+    // Tabs & counts (calibrated to active week or all weeks)
     activeTab,
     setActiveTab,
-    weekArticleCount: edition?.articles.length ?? 0,
-    weekVideoCount: edition?.videos.length ?? 0,
+    weekArticleCount,
+    weekVideoCount,
     savedTotalCount: savedShortlist.totalCount,
 
     // Issue selection
     selectIssue,
+    selectAllWeeks,
     returnToLatestIssue,
 
-    // Tab 2: Blogs (week-scoped by default + minimalist All / Unread)
-    blogsScope: filters.blogsScope,
-    setBlogsScope,
+    // Tab 2: Blogs (All / Unread + search; week controlled by header selector)
     blogReadFilter: filters.blogReadFilter,
     setBlogReadFilter,
     blogSearch: filters.blogSearch,
@@ -1103,11 +1205,7 @@ export function useCultureDigest() {
     blogsUnreadCount: filteredBlogs.unreadCount,
     totalBlogsInScope: scopedArticles.length,
 
-    // Tab 3: Videos (week-scoped by default + duration filter)
-    videosScope: filters.videosScope,
-    setVideosScope,
-    videoDuration: filters.videoDuration,
-    setVideoDuration,
+    // Tab 3: Videos (search; week controlled by header selector)
     videoSearch: filters.videoSearch,
     setVideoSearch,
     filteredVideos,
@@ -1130,6 +1228,7 @@ export function useCultureDigest() {
     openArticleReader,
     closeArticleReader,
     modalVideo,
+    activeModalVideo,
     openVideoTheater,
     closeVideoTheater,
     markArticleRead,

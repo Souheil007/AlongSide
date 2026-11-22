@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { QueryClient } from '@tanstack/react-query';
 import {
   CANONICAL_DIGEST_TIERS,
   DevelopmentalTier,
@@ -12,7 +13,11 @@ import {
   isSlangEligibleTier,
   type ChildDTO,
   type DigestArticleDTO,
+  type DigestArticlesResponseDTO,
   type DigestVideoDTO,
+  type DigestVideosResponseDTO,
+  type SavedDigestShortlistDTO,
+  type WeeklyDigestEditionDTO,
 } from '@alongside/shared';
 import {
   getSavedDigestShortlist,
@@ -37,6 +42,7 @@ import {
   formatWeekDateRange,
   getSafeExternalHref,
   parseDigestUrlParams,
+  patchDigestInteractionCaches,
   resolveActiveDigestTier,
   splitJumpChipLabel,
 } from '@/hooks/useCultureDigest';
@@ -57,39 +63,39 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
   const preschoolTier = DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6;
   const elemTier = DevelopmentalTier.TIER_2_MIDDLE_CHILDHOOD_7_9;
 
-  describe('1. Week-Scoped Blogs & Videos Switching (Issue #42 vs #41 + All Weeks)', () => {
-    it('defaults Blogs and Videos to selected week scope and resets cleanly on issue switch', () => {
+  describe('1. Page-Wide Weekly Issue Selector (Issue #42 vs #41 + All Weeks)', () => {
+    it('supports selecting a specific week or All weeks and resets child-scoped filters cleanly', () => {
       const initial = createInitialDigestFilterState(42);
-      expect(initial.blogsScope).toBe('issue');
-      expect(initial.videosScope).toBe('issue');
+      expect(initial.selectedIssue).toBe(42);
 
-      // Widen both to all weeks, then switch to Issue #41 -> must snap back to week-scoped
-      const widened = {
-        ...initial,
-        blogsScope: 'all' as const,
-        videosScope: 'all' as const,
-        dinnerPromptIndex: 2,
-        expandedPhraseIndex: 1,
-      };
-      const afterSwitch = applyIssueSwitchReset(widened, 41);
-      expect(afterSwitch.selectedIssueNumber).toBe(41);
-      expect(afterSwitch.blogsScope).toBe('issue');
-      expect(afterSwitch.videosScope).toBe('issue');
-      expect(afterSwitch.dinnerPromptIndex).toBe(0);
-      expect(afterSwitch.expandedPhraseIndex).toBeNull();
+      // Switch to All weeks via header selector, then back to Issue #41
+      const allWeeksState = applyIssueSwitchReset(
+        {
+          ...initial,
+          dinnerPromptIndex: 2,
+          expandedPhraseIndex: 1,
+        },
+        'all'
+      );
+      expect(allWeeksState.selectedIssue).toBe('all');
+      expect(allWeeksState.dinnerPromptIndex).toBe(0);
+      expect(allWeeksState.expandedPhraseIndex).toBeNull();
 
-      // Switching child resets filters cleanly too
+      const afterSwitch = applyIssueSwitchReset(allWeeksState, 41);
+      expect(afterSwitch.selectedIssue).toBe(41);
+      expect(afterSwitch.activeTheaterVideoId).toBeNull();
+
+      // Switching child resets search/read filters cleanly while keeping week selection
       const afterChild = applyChildSwitchReset({
         ...afterSwitch,
         blogReadFilter: 'unread',
         blogSearch: 'sleep',
-        videoDuration: 'short',
+        videoSearch: 'focus',
       });
+      expect(afterChild.selectedIssue).toBe(41);
       expect(afterChild.blogReadFilter).toBe('all');
       expect(afterChild.blogSearch).toBe('');
-      expect(afterChild.videoDuration).toBe('all');
-      expect(afterChild.blogsScope).toBe('issue');
-      expect(afterChild.videosScope).toBe('issue');
+      expect(afterChild.videoSearch).toBe('');
     });
 
     it('returns strictly Issue #42 or Issue #41 blogs/videos when scoped to issue, and widens on All weeks', () => {
@@ -135,7 +141,7 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(videosAll.videos.length).toBeGreaterThan(videos42.videos.length);
     });
 
-    it('renders DigestFeedHeader with week-scoped counts, archive return banner, and zero duplicate child picker', () => {
+    it('renders DigestFeedHeader with All weeks selector option, archive banner, and zero duplicate child picker', () => {
       const issues = getMockDigestIssues(teenTier);
       const edition41 = getMockWeeklyEdition(41, teenTier);
 
@@ -143,6 +149,7 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
         <DigestFeedHeader
           issueNumber={41}
           latestIssueNumber={42}
+          isAllWeeks={false}
           weekStart={edition41.issue.weekStart}
           weekEnd={edition41.issue.weekEnd}
           childName="Maya"
@@ -166,6 +173,7 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(html).toContain('Culture &amp; Trends');
       expect(html).toContain('Issue No. 41');
       expect(html).toContain('1 of 3 read');
+      expect(html).toContain('<option value="all">All weeks</option>');
       expect(html).toContain('data-testid="digest-archive-banner"');
       expect(html).toContain('Return to this week (#42)');
       expect(html).toContain('data-testid="digest-tab-blogs"');
@@ -175,22 +183,55 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(html).not.toContain('App &amp; Media Watch');
       expect(html).not.toContain('Language Decoder');
       expect(html).not.toContain('Active child profile');
+
+      // When All weeks is selected in the dropdown, masthead & banner reflect All weeks cleanly
+      const allWeeksHtml = renderToStaticMarkup(
+        <DigestFeedHeader
+          issueNumber={null}
+          latestIssueNumber={42}
+          isAllWeeks={true}
+          childName="Maya"
+          childAgeLabel="14 yrs"
+          tierLabel="Early Adolescence"
+          shortAges="Ages 13–15"
+          readArticleCount={0}
+          totalArticleCount={6}
+          issues={issues}
+          isArchiveEdition={false}
+          activeTab="blogs"
+          weekArticleCount={6}
+          weekVideoCount={6}
+          savedTotalCount={2}
+          onSelectIssue={vi.fn()}
+          onReturnToLatest={vi.fn()}
+          onSelectTab={vi.fn()}
+        />
+      );
+
+      expect(allWeeksHtml).toContain('All weeks · 2 editions');
+      expect(allWeeksHtml).toContain('6 reads across all weeks');
+      expect(allWeeksHtml).toContain('Browsing all published weeks tailored for Maya');
+      expect(allWeeksHtml).toContain('<option value="all" selected="">All weeks</option>');
     });
 
-    it('parses URL search params safely for ?issue= and ?tab=', () => {
+    it('parses URL search params safely for ?issue= (number or all) and ?tab=', () => {
       expect(parseDigestUrlParams('?issue=41&tab=blogs')).toEqual({
-        issueNumber: 41,
+        issueSelection: 41,
         tab: 'blogs',
       });
+      expect(parseDigestUrlParams('?issue=all&tab=videos')).toEqual({
+        issueSelection: 'all',
+        tab: 'videos',
+      });
       expect(parseDigestUrlParams('?issue=invalid&tab=bogus')).toEqual({
-        issueNumber: undefined,
+        issueSelection: undefined,
         tab: undefined,
       });
     });
   });
 
-  describe('2. Minimalist All / Unread Blog Filtering (Zero Feature Essays / Myth Checks Pills)', () => {
-    it('decrements unread count when an article is read and hides read articles under Unread', () => {
+  describe('2. Minimalist All / Unread Blog Filtering (Zero Week Scope / Feature Essays / Myth Checks Pills)', () => {
+    it('decrements unread count when an article is read, hides read articles under Unread, and omits duplicate week scope buttons', () => {
       const edition = getMockWeeklyEdition(42, teenTier);
       const initial = filterBlogsMinimalist(edition.articles, {
         readFilter: 'all',
@@ -211,19 +252,18 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(afterRead.items).toHaveLength(2);
       expect(afterRead.items.some((a) => a.id === edition.articles[0]!.id)).toBe(false);
 
-      // Render BlogsTabView and confirm minimalist filters with zero banned chips
+      // Render BlogsTabView and confirm minimalist filters with zero duplicate week scope chips
       const html = renderToStaticMarkup(
         <BlogsTabView
           articles={afterRead.items}
           unreadCount={afterRead.unreadCount}
           issueNumber={42}
-          isArchiveEdition={false}
           childName="Maya"
           shortAges="Ages 13–15"
           scope="issue"
           readFilter="unread"
           searchQuery=""
-          onChangeScope={vi.fn()}
+          onBrowseAllWeeks={vi.fn()}
           onChangeReadFilter={vi.fn()}
           onChangeSearch={vi.fn()}
           onOpenArticle={vi.fn()}
@@ -232,8 +272,10 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       );
 
       expect(html).toContain('Unread (2)');
-      expect(html).toContain('This week (#42)');
-      expect(html).toContain('All weeks');
+      expect(html).not.toContain('data-testid="blogs-scope-issue"');
+      expect(html).not.toContain('data-testid="blogs-scope-all"');
+      expect(html).not.toContain('This week (#42)');
+      expect(html).not.toContain('All weeks');
       expect(html).not.toContain('Feature essays');
       expect(html).not.toContain('Myth checks');
     });
@@ -244,13 +286,12 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
           articles={[]}
           unreadCount={0}
           issueNumber={42}
-          isArchiveEdition={false}
           childName="Maya"
           shortAges="Ages 13–15"
           scope="issue"
           readFilter="unread"
           searchQuery=""
-          onChangeScope={vi.fn()}
+          onBrowseAllWeeks={vi.fn()}
           onChangeReadFilter={vi.fn()}
           onChangeSearch={vi.fn()}
           onOpenArticle={vi.fn()}
@@ -269,13 +310,12 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
           articles={[]}
           unreadCount={0}
           issueNumber={42}
-          isArchiveEdition={false}
           childName="Maya"
           shortAges="Ages 13–15"
           scope="issue"
           readFilter="all"
           searchQuery=""
-          onChangeScope={vi.fn()}
+          onBrowseAllWeeks={vi.fn()}
           onChangeReadFilter={vi.fn()}
           onChangeSearch={vi.fn()}
           onOpenArticle={vi.fn()}
@@ -296,13 +336,12 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
           articles={edition.articles}
           unreadCount={edition.articles.length}
           issueNumber={42}
-          isArchiveEdition={false}
           childName="Maya"
           shortAges="Ages 13–15"
           scope="issue"
           readFilter="all"
           searchQuery=""
-          onChangeScope={vi.fn()}
+          onBrowseAllWeeks={vi.fn()}
           onChangeReadFilter={vi.fn()}
           onChangeSearch={vi.fn()}
           onOpenArticle={vi.fn()}
@@ -482,43 +521,30 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       );
     });
 
-    it('filters VideosTabView by duration buckets cleanly', () => {
+    it('filters VideosTabView by search and omits duration and week-scope pill filters', () => {
       const videos = getMockDigestVideos({
         issueNumber: 42,
         scope: 'issue',
         tier: teenTier,
       }).videos;
 
-      const shortOnly = filterVideosForShelf(videos, {
-        durationBucket: 'short',
-        searchQuery: '',
+      const presenterNeedle = videos[0]!.presenter;
+      const searched = filterVideosForShelf(videos, {
+        searchQuery: presenterNeedle,
       });
-      const mediumOnly = filterVideosForShelf(videos, {
-        durationBucket: 'medium',
-        searchQuery: '',
-      });
-      const deepOnly = filterVideosForShelf(videos, {
-        durationBucket: 'deep',
-        searchQuery: '',
-      });
-
-      expect(shortOnly.every((v) => v.durationMinutes < 12)).toBe(true);
-      expect(mediumOnly.every((v) => v.durationMinutes >= 12 && v.durationMinutes <= 25)).toBe(true);
-      expect(deepOnly.every((v) => v.durationMinutes > 25)).toBe(true);
+      expect(searched.length).toBeGreaterThanOrEqual(1);
+      expect(searched.some((v) => v.id === videos[0]!.id)).toBe(true);
 
       const html = renderToStaticMarkup(
         <VideosTabView
           videos={videos}
           issueNumber={42}
-          isArchiveEdition={false}
           childName="Maya"
           shortAges="Ages 13–15"
           scope="issue"
-          durationBucket="all"
           searchQuery=""
           activeTheaterVideoId={null}
-          onChangeScope={vi.fn()}
-          onChangeDuration={vi.fn()}
+          onBrowseAllWeeks={vi.fn()}
           onChangeSearch={vi.fn()}
           onSelectTheaterVideo={vi.fn()}
           onToggleSaveVideo={vi.fn()}
@@ -527,9 +553,17 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
 
       expect(html).toContain('data-testid="videos-theater-stage"');
       expect(html).toContain('data-testid="videos-shelf-grid"');
-      expect(html).toContain('Under 12 min');
-      expect(html).toContain('12–25 min');
-      expect(html).toContain('Deep dives');
+      expect(html).toContain('data-testid="videos-search-input"');
+      // Duration filter and week-scope toggle pills removed cleanly
+      expect(html).not.toContain('All videos');
+      expect(html).not.toContain('Under 12 min');
+      expect(html).not.toContain('12–25 min');
+      expect(html).not.toContain('Deep dives');
+      expect(html).not.toContain('data-testid="videos-duration-all"');
+      expect(html).not.toContain('data-testid="videos-scope-issue"');
+      expect(html).not.toContain('data-testid="videos-scope-all"');
+      expect(html).not.toContain('This week (#42)');
+      expect(html).not.toContain('All weeks');
     });
   });
 
@@ -773,6 +807,94 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(html).not.toContain('#42');
       expect(html).not.toContain('No. 42');
       expect(html).not.toContain('null');
+    });
+
+    it('updates saved/unsaved state atomically on a single click across edition, list, and shortlist caches', () => {
+      const edition = getMockWeeklyEdition(42, teenTier);
+      const article = edition.articles[0]!;
+      const video = edition.videos[0]!;
+      const queryClient = new QueryClient();
+
+      queryClient.setQueryData<WeeklyDigestEditionDTO>(['digest-edition', 'latest'], edition);
+      queryClient.setQueryData<DigestArticlesResponseDTO>(['digest-articles', 42, 'issue'], {
+        articles: edition.articles,
+        unreadCount: edition.articles.length,
+        totalInScope: edition.articles.length,
+        issueNumber: 42,
+      });
+      queryClient.setQueryData<DigestVideosResponseDTO>(['digest-videos', 42, 'issue'], {
+        videos: edition.videos,
+        totalInScope: edition.videos.length,
+        issueNumber: 42,
+      });
+      queryClient.setQueryData<SavedDigestShortlistDTO>(['digest-saved', teenTier], {
+        articles: [],
+        videos: [],
+        dinnerPrompts: [],
+        totalCount: 0,
+      });
+
+      // Single save click for blog
+      patchDigestInteractionCaches(queryClient, {
+        itemType: DigestItemType.ARTICLE,
+        itemId: article.id,
+        isSaved: true,
+        articleSnapshot: article,
+      });
+      expect(
+        queryClient
+          .getQueryData<WeeklyDigestEditionDTO>(['digest-edition', 'latest'])
+          ?.articles.find((a) => a.id === article.id)?.isSaved
+      ).toBe(true);
+      expect(
+        queryClient
+          .getQueryData<DigestArticlesResponseDTO>(['digest-articles', 42, 'issue'])
+          ?.articles.find((a) => a.id === article.id)?.isSaved
+      ).toBe(true);
+      expect(
+        queryClient.getQueryData<SavedDigestShortlistDTO>(['digest-saved', teenTier])?.totalCount
+      ).toBe(1);
+
+      // Single save click for video
+      patchDigestInteractionCaches(queryClient, {
+        itemType: DigestItemType.VIDEO,
+        itemId: video.id,
+        isSaved: true,
+        videoSnapshot: video,
+      });
+      expect(
+        queryClient
+          .getQueryData<DigestVideosResponseDTO>(['digest-videos', 42, 'issue'])
+          ?.videos.find((v) => v.id === video.id)?.isSaved
+      ).toBe(true);
+      expect(
+        queryClient.getQueryData<SavedDigestShortlistDTO>(['digest-saved', teenTier])?.totalCount
+      ).toBe(2);
+
+      // Single unsave click for blog and video
+      patchDigestInteractionCaches(queryClient, {
+        itemType: DigestItemType.ARTICLE,
+        itemId: article.id,
+        isSaved: false,
+      });
+      patchDigestInteractionCaches(queryClient, {
+        itemType: DigestItemType.VIDEO,
+        itemId: video.id,
+        isSaved: false,
+      });
+      expect(
+        queryClient
+          .getQueryData<DigestArticlesResponseDTO>(['digest-articles', 42, 'issue'])
+          ?.articles.find((a) => a.id === article.id)?.isSaved
+      ).toBe(false);
+      expect(
+        queryClient
+          .getQueryData<DigestVideosResponseDTO>(['digest-videos', 42, 'issue'])
+          ?.videos.find((v) => v.id === video.id)?.isSaved
+      ).toBe(false);
+      expect(
+        queryClient.getQueryData<SavedDigestShortlistDTO>(['digest-saved', teenTier])?.totalCount
+      ).toBe(0);
     });
   });
 });
