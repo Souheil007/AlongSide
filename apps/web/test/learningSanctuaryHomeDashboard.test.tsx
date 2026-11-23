@@ -301,7 +301,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Sit on the floor below eye level');
       expect(html).toContain('Offer a physical bridge');
       expect(html).toContain('Explore screen-free play');
-      expect(html).toContain('/brain-games?childId=child-leo');
+      expect(html).toContain('/digest#play-this-week');
     });
 
     it('capitalizes lowercase child names cleanly (e.g., oliver -> Oliver)', () => {
@@ -338,7 +338,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Infant Calming Reset');
       expect(html).toContain('Lower ambient input');
       expect(html).toContain('Hold chest-to-chest');
-      expect(html).toContain('/brain-games?childId=child-infant');
+      expect(html).toContain('/digest#play-this-week');
     });
 
     it('calibrates regulation steps and 60-min cap for early childhood (age 4-6)', () => {
@@ -361,7 +361,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Preschool Transition Reset');
       expect(html).toContain('Validate without negotiating');
       expect(html).toContain('Offer two real choices');
-      expect(html).toContain('/brain-games?childId=child-preschool');
+      expect(html).toContain('/digest#play-this-week');
     });
   });
 

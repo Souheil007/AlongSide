@@ -1,47 +1,9 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
-import { BrainGamesDashboardView } from '@/components/brain-games/BrainGamesDashboardView';
-import { AdvisoryDomainBanner } from '@/components/shared/AdvisoryDomainBanner';
-import { Loader2 } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: 'Brain Games',
-  description:
-    'Age-indexed purposeful play grounded in Harvard Center on the Developing Child research, puppet emotional play, and cognitive leaps. Elevated into the Parent Intelligence Academy.',
-};
-
-interface BrainGamesPageProps {
-  searchParams?: Promise<{ childId?: string }>;
-}
-
-function BrainGamesLoadingFallback() {
-  return (
-    <div className="flex min-h-[500px] items-center justify-center">
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Loader2 className="h-5 w-5 animate-spin text-amber-600" />
-        <span>Loading Purposeful Play & Brain Games...</span>
-      </div>
-    </div>
-  );
-}
-
-export default async function BrainGamesPage({ searchParams }: BrainGamesPageProps) {
-  const resolvedParams = searchParams ? await searchParams : undefined;
-
-  return (
-    <div className="w-full space-y-6">
-      <AdvisoryDomainBanner
-        category="DEVELOPMENT_AND_PLAY"
-        categoryLabel="Cognitive Development & Purposeful Play"
-        title="This domain has been elevated into the Parent Intelligence Academy"
-        description="Access structured, prioritized developmental chapters, Harvard Serve-and-Return play frameworks, and cognitive leap guides."
-        actionText="Explore Development & Play Courses →"
-        href="/academy?category=DEVELOPMENT_AND_PLAY"
-      />
-      <Suspense fallback={<BrainGamesLoadingFallback />}>
-        <BrainGamesDashboardView initialChildId={resolvedParams?.childId} />
-      </Suspense>
-    </div>
-  );
+/**
+ * Legacy /brain-games route retired — screen-free play for Ages 0–8 now lives
+ * natively inside Culture & Trends (/digest#play-this-week).
+ */
+export default function BrainGamesPage() {
+  redirect('/digest#play-this-week');
 }

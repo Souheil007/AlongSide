@@ -283,7 +283,7 @@ export function ChildHeroCard({
 
     const statusBadge = isEarlyTier
       ? {
-          href: `/brain-games?childId=${child.id}`,
+          href: '/digest#play-this-week',
           metric: isInfant ? '0m' : isEarlyChildhood ? '60m' : '30m',
           icon: Baby,
           title: 'Daily Media Limit',

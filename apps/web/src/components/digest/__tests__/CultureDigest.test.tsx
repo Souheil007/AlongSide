@@ -49,6 +49,12 @@ import {
 import { DigestFeedHeader } from '../DigestFeedHeader';
 import { WatchThisWeekBand } from '../WatchThisWeekBand';
 import { ReadThisWeekBand } from '../ReadThisWeekBand';
+import {
+  PlayThisWeekBand,
+  PLAY_STAGE_BUNDLES,
+  isPlayThisWeekEligible,
+  resolvePlayStageKey,
+} from '../PlayThisWeekBand';
 import { SundayTableCloserBand } from '../SundayTableCloserBand';
 import { WeeklyPhrasesStrip } from '../WeeklyPhrasesStrip';
 import { BlogsTabView } from '../BlogsTabView';
@@ -895,6 +901,95 @@ describe('PLAN-51: Culture & Trends Calm Weekly Editorial Hub', () => {
       expect(
         queryClient.getQueryData<SavedDigestShortlistDTO>(['digest-saved', teenTier])?.totalCount
       ).toBe(0);
+    });
+  });
+
+  describe('7. Play This Week Screen-Free Band (Strictly Ages 0–8 Inside Culture & Trends)', () => {
+    it('enables Play This Week strictly for Ages 0–8 and omits it for Ages 9–18', () => {
+      expect(isPlayThisWeekEligible(1, toddlerTier)).toBe(true);
+      expect(isPlayThisWeekEligible(3, toddlerTier)).toBe(true);
+      expect(isPlayThisWeekEligible(5, preschoolTier)).toBe(true);
+      expect(isPlayThisWeekEligible(8, elemTier)).toBe(true);
+
+      expect(isPlayThisWeekEligible(9, elemTier)).toBe(false);
+      expect(isPlayThisWeekEligible(11, DevelopmentalTier.TIER_3_PRE_TEEN_10_12)).toBe(false);
+      expect(isPlayThisWeekEligible(14, teenTier)).toBe(false);
+      expect(isPlayThisWeekEligible(undefined, toddlerTier)).toBe(true);
+      expect(isPlayThisWeekEligible(undefined, preschoolTier)).toBe(true);
+      expect(isPlayThisWeekEligible(undefined, teenTier)).toBe(false);
+    });
+
+    it('resolves calibrated play stages across Infancy (0–1), Toddler (2–3), Preschool (4–6), and Early Elementary (7–8)', () => {
+      expect(resolvePlayStageKey(1, toddlerTier)).toBe('infant');
+      expect(resolvePlayStageKey(3, toddlerTier)).toBe('toddler');
+      expect(resolvePlayStageKey(5, preschoolTier)).toBe('preschool');
+      expect(resolvePlayStageKey(8, elemTier)).toBe('earlyElementary');
+
+      // Every stage provides ideas covering all 3 mood/mess filters
+      for (const bundle of Object.values(PLAY_STAGE_BUNDLES)) {
+        expect(bundle.ideas.length).toBeGreaterThanOrEqual(4);
+        expect(bundle.ideas.some((i) => i.tags.includes('calm'))).toBe(true);
+        expect(bundle.ideas.some((i) => i.tags.includes('energy'))).toBe(true);
+        expect(bundle.ideas.some((i) => i.tags.includes('nomess'))).toBe(true);
+      }
+    });
+
+    it('renders PlayThisWeekBand for toddler Oliver (Age 3) with filters, steps, materials, and swap cards', () => {
+      const html = renderToStaticMarkup(
+        <PlayThisWeekBand
+          childId="child-oliver"
+          childName="oliver"
+          childAge={3}
+          tier={toddlerTier}
+        />
+      );
+
+      expect(html).toContain('id="play-this-week"');
+      expect(html).toContain('Play this week');
+      expect(html).toContain('Oliver');
+      expect(html).toContain('Toddlerhood (Ages 2–3)');
+      expect(html).toContain('Calm before bed');
+      expect(html).toContain('Burn energy');
+      expect(html).toContain('No mess');
+      expect(html).toContain('Texture Trail: Carpet, Tile &amp; Soft Blankets');
+      expect(html).toContain('What you need (already at home)');
+      expect(html).toContain('Why it helps Oliver');
+      expect(html).toContain('Shuffle another idea');
+      expect(html).toContain('Mark played today');
+    });
+
+    it('omits PlayThisWeekBand completely from DOM for a 10-year-old or 14-year-old', () => {
+      const htmlTween = renderToStaticMarkup(
+        <PlayThisWeekBand
+          childId="child-maya"
+          childName="Maya"
+          childAge={10}
+          tier={DevelopmentalTier.TIER_3_PRE_TEEN_10_12}
+        />
+      );
+      const htmlTeen = renderToStaticMarkup(
+        <PlayThisWeekBand
+          childId="child-sam"
+          childName="Sam"
+          childAge={14}
+          tier={teenTier}
+        />
+      );
+
+      expect(htmlTween).toBe('');
+      expect(htmlTeen).toBe('');
+    });
+
+    it('mounts PlayThisWeekBand right after ReadThisWeekBand inside DigestDashboardClient', () => {
+      const clientPath = path.resolve(__dirname, '../DigestDashboardClient.tsx');
+      const content = fs.readFileSync(clientPath, 'utf-8');
+      const readIdx = content.indexOf('<ReadThisWeekBand');
+      const playIdx = content.indexOf('<PlayThisWeekBand');
+      const closerIdx = content.indexOf('<SundayTableCloserBand');
+
+      expect(readIdx).toBeGreaterThan(-1);
+      expect(playIdx).toBeGreaterThan(readIdx);
+      expect(closerIdx).toBeGreaterThan(playIdx);
     });
   });
 });

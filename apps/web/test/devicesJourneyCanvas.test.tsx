@@ -220,7 +220,7 @@ describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-
       expect(html).toContain('When Screens Turn Off');
       expect(html).toContain('2 min left');
       expect(html).toContain('Meltdown');
-      expect(html).toContain('/brain-games?childId=test-toby-2');
+      expect(html).toContain('/digest#play-this-week');
 
       // Purged apologetic corporate wording & wrong-age under-2 FaceTime note
       expect(html).not.toContain('Pact-as-Code Guided Journey');
