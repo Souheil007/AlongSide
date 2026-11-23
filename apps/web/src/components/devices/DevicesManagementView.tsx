@@ -368,11 +368,15 @@ export function DevicesManagementView({
                 {activeChild && (
                   <Link href={`/children/${activeChild.id}/readiness`}>
                     <Button
-                      variant="outline"
-                      className="text-xs font-mono h-8 px-3 border-[#E3E3DC] hover:border-[#143D2B] hover:text-[#143D2B]"
+                      variant={hasAssessment ? 'outline' : 'forest'}
+                      className={cn(
+                        'text-xs font-semibold min-h-[44px] px-4 rounded-[8px]',
+                        hasAssessment &&
+                          'border-[#E3E3DC] hover:border-[#143D2B] hover:text-[#143D2B]'
+                      )}
                     >
                       <span>{hasAssessment ? 'View Audit' : 'Start Diagnostic'}</span>
-                      <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                      <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
                     </Button>
                   </Link>
                 )}
@@ -408,8 +412,11 @@ export function DevicesManagementView({
                   <Printer className="h-3.5 w-3.5" />
                   <span>Print Treaty (PDF)</span>
                 </Button>
-                <Link href="/pacts/builder">
-                  <Button className="h-9 px-3 bg-[#111413] hover:bg-[#143D2B] text-white text-xs font-mono font-bold rounded-[6px]">
+                <Link href={activeChild ? `/pacts/builder?childId=${activeChild.id}` : '/pacts/builder'}>
+                  <Button
+                    variant="forest"
+                    className="min-h-[44px] px-4 text-xs font-semibold rounded-[8px]"
+                  >
                     <FileCheck2 className="h-3.5 w-3.5 mr-1.5" />
                     <span>Launch Pact Wizard</span>
                   </Button>

@@ -4,14 +4,11 @@ import * as React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import {
   Smartphone,
-  CheckCircle2,
   Copy,
   Check,
   Shield,
   Download,
   Settings,
-  HelpCircle,
-  ExternalLink,
   Moon,
 } from 'lucide-react';
 import { DevicePlatform } from '@alongside/shared';
@@ -23,9 +20,9 @@ import {
   DialogDescription,
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { formatCurfew12Hour } from '@/stores/usePactStore';
 import { getOtaEnrollmentUrl } from '@/lib/api/devices';
+import { cn } from '@/lib/utils';
 
 export interface EnrollmentModalProps {
   isOpen: boolean;
@@ -56,7 +53,6 @@ export function EnrollmentModal({
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback
       setCopied(false);
     }
   };
@@ -65,133 +61,129 @@ export function EnrollmentModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto p-6 sm:p-7">
+      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto p-6 sm:p-7 bg-[var(--elevated)] border-[var(--hairline)]">
         <DialogHeader className="space-y-1.5 pb-2">
-          <div className="flex items-center gap-2">
-            <Badge variant="roadActive" className="text-[10px]">
-              Road 2 Pact-as-Code
-            </Badge>
-            <span className="text-xs text-slate-500">Instant OTA Enrollment</span>
-          </div>
-          <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
-            One-Tap Device Enrollment for {childName}
+          <span className="text-[12.5px] font-semibold text-[var(--spruce)]">
+            Pact-as-Code setup · Zero spyware
+          </span>
+          <DialogTitle className="font-serif-almanac text-[24px] font-semibold text-[var(--ink)] tracking-tight">
+            Set up {childName}&apos;s {formattedCurfew} bedtime dock
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-600 leading-relaxed">
-            Scan this single cryptographic QR code using {childName}&apos;s camera to install the verified AlongSide bedtime profile.
+          <DialogDescription className="text-[13.5px] text-[var(--body)] leading-relaxed">
+            Scan this code with {childName}&apos;s camera to turn on automatic nightly downtime.
           </DialogDescription>
         </DialogHeader>
 
-        {/* Platform Selector Switch */}
-        <div className="flex items-center gap-2 p-1 bg-slate-100 rounded-xl mb-4 text-xs font-medium">
+        {/* Platform Selector */}
+        <div className="flex items-center gap-1.5 p-1 bg-[var(--canvas-subtle)] border border-[var(--hairline)] rounded-[10px] mb-4 text-[13px] font-medium">
           <button
             type="button"
             onClick={() => setActivePlatform(DevicePlatform.APPLE_IOS)}
-            className={`flex-1 py-2 px-3 rounded-lg transition-all text-center ${
+            className={cn(
+              'flex-1 min-h-[38px] py-2 px-3 rounded-[7px] transition-colors text-center cursor-pointer',
               isIos
-                ? 'bg-white text-slate-900 font-bold shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+                ? 'bg-[var(--elevated)] text-[var(--ink)] font-semibold shadow-2xs'
+                : 'text-[var(--body)] hover:text-[var(--ink)]'
+            )}
           >
-            Apple iPhone / iPad (.mobileconfig)
+            iPhone / iPad (.mobileconfig)
           </button>
           <button
             type="button"
             onClick={() => setActivePlatform(DevicePlatform.ANDROID_ENTERPRISE)}
-            className={`flex-1 py-2 px-3 rounded-lg transition-all text-center ${
+            className={cn(
+              'flex-1 min-h-[38px] py-2 px-3 rounded-[7px] transition-colors text-center cursor-pointer',
               !isIos
-                ? 'bg-white text-slate-900 font-bold shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+                ? 'bg-[var(--elevated)] text-[var(--ink)] font-semibold shadow-2xs'
+                : 'text-[var(--body)] hover:text-[var(--ink)]'
+            )}
           >
-            Android Enterprise
+            Android device
           </button>
         </div>
 
-        {/* QR Code Presentation Box */}
-        <div className="flex flex-col items-center justify-center p-6 rounded-2xl border border-violet-100 bg-gradient-to-b from-violet-50/40 via-white to-slate-50/50 mb-5 text-center">
-          <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-200/80 mb-3">
+        {/* QR Code Box */}
+        <div className="flex flex-col items-center justify-center p-6 rounded-[14px] border border-[#E6DEC9] bg-[#FAF7F2] mb-5 text-center">
+          <div className="p-4 bg-white rounded-[14px] border border-[var(--hairline)] mb-3">
             <QRCodeSVG
               value={enrollmentUrl}
-              size={180}
+              size={176}
               level="H"
               includeMargin={false}
               aria-label={`Enrollment QR Code for ${childName}`}
             />
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold text-violet-900 mb-1">
-            <Moon className="h-4 w-4 text-violet-600" />
-            <span>Automated Bedtime Lock: {formattedCurfew} Sharp</span>
+          <div className="flex items-center gap-1.5 text-[13.5px] font-semibold text-[var(--spruce)] mb-1">
+            <Moon className="h-4 w-4" aria-hidden="true" />
+            <span>Pauses apps at {formattedCurfew} nightly</span>
           </div>
-          <p className="text-[11px] text-slate-500 max-w-sm">
-            Point {childName}&apos;s device camera at this code to begin OTA configuration.
+          <p className="text-[12.5px] text-[var(--body)] max-w-sm">
+            Point {childName}&apos;s camera at this code—emergency calls and parents stay open 24/7.
           </p>
         </div>
 
-        {/* 3-Step Visual Instruction Card */}
-        <div className="rounded-xl border border-slate-200 bg-white p-4 mb-4 space-y-3">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            3-Step Visual Installation Guide ({isIos ? 'iOS' : 'Android'})
+        {/* 3-Step Installation Guide */}
+        <div className="rounded-[14px] border border-[var(--hairline)] bg-[var(--canvas)] p-4 mb-4 space-y-3">
+          <h4 className="text-[13px] font-semibold text-[var(--ink)]">
+            3 quick steps on {childName}&apos;s {isIos ? 'iPhone or iPad' : 'Android device'}
           </h4>
 
-          <div className="space-y-3">
-            {/* Step 1 */}
-            <div className="flex items-start gap-3">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white text-xs font-bold mt-0.5">
+          <ol className="space-y-3">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--spruce)] text-white text-[12px] font-semibold mt-0.5 tabular-nums">
                 1
-              </div>
+              </span>
               <div className="space-y-0.5">
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <Smartphone className="h-3.5 w-3.5 text-violet-600" />
-                  Scan with Camera App
+                <div className="text-[13px] font-semibold text-[var(--ink)] flex items-center gap-1.5">
+                  <Smartphone className="h-3.5 w-3.5 text-[var(--spruce)]" aria-hidden="true" />
+                  <span>Scan with the Camera app</span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
-                  Open the built-in Camera on {childName}&apos;s device and tap the yellow Safari / Chrome link banner that appears over the QR code.
+                <p className="text-[12.5px] text-[var(--body)] leading-relaxed">
+                  Open the camera on {childName}&apos;s device and tap the link banner that pops up.
                 </p>
               </div>
-            </div>
+            </li>
 
-            {/* Step 2 */}
-            <div className="flex items-start gap-3">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white text-xs font-bold mt-0.5">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--spruce)] text-white text-[12px] font-semibold mt-0.5 tabular-nums">
                 2
-              </div>
+              </span>
               <div className="space-y-0.5">
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <Download className="h-3.5 w-3.5 text-violet-600" />
-                  Tap &ldquo;Allow&rdquo; on Profile Prompt
+                <div className="text-[13px] font-semibold text-[var(--ink)] flex items-center gap-1.5">
+                  <Download className="h-3.5 w-3.5 text-[var(--spruce)]" aria-hidden="true" />
+                  <span>Tap &ldquo;Allow&rdquo; on the profile prompt</span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
-                  When prompted &ldquo;This website is trying to download a configuration profile,&rdquo; tap <strong>Allow</strong>, then tap <strong>Close</strong>.
+                <p className="text-[12.5px] text-[var(--body)] leading-relaxed">
+                  When prompted to download the configuration profile, tap <strong>Allow</strong>, then <strong>Close</strong>.
                 </p>
               </div>
-            </div>
+            </li>
 
-            {/* Step 3 */}
-            <div className="flex items-start gap-3">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white text-xs font-bold mt-0.5">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--spruce)] text-white text-[12px] font-semibold mt-0.5 tabular-nums">
                 3
-              </div>
+              </span>
               <div className="space-y-0.5">
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <Settings className="h-3.5 w-3.5 text-violet-600" />
-                  Open Settings &rarr; Tap &ldquo;Profile Downloaded&rdquo; &rarr; Tap &ldquo;Install&rdquo;
+                <div className="text-[13px] font-semibold text-[var(--ink)] flex items-center gap-1.5">
+                  <Settings className="h-3.5 w-3.5 text-[var(--spruce)]" aria-hidden="true" />
+                  <span>Open Settings → Profile Downloaded → Install</span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
-                  Open the Settings app on {childName}&apos;s phone. Right near the top, tap <strong>Profile Downloaded</strong>, tap <strong>Install</strong> in the top right, enter the phone passcode, and confirm.
+                <p className="text-[12.5px] text-[var(--body)] leading-relaxed">
+                  Open Settings on {childName}&apos;s phone, tap <strong>Profile Downloaded</strong> near the top, tap <strong>Install</strong>, and confirm with the passcode.
                 </p>
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
 
-        {/* Copy Direct Link Option */}
-        <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
-          <div className="text-left w-full sm:w-auto">
-            <span className="block text-xs font-bold text-slate-800">
-              Or open directly in Safari / Chrome:
+        {/* Copy Direct Link */}
+        <div className="rounded-[12px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
+          <div className="text-left w-full sm:w-auto min-w-0">
+            <span className="block text-[12.5px] font-semibold text-[var(--ink)]">
+              Or open this link on the device
             </span>
-            <span className="block text-[11px] text-slate-500 font-mono truncate max-w-xs">
+            <span className="block text-[11.5px] text-[var(--mute)] font-mono truncate max-w-xs">
               {enrollmentUrl}
             </span>
           </div>
@@ -201,33 +193,32 @@ export function EnrollmentModal({
             size="sm"
             variant="outline"
             onClick={handleCopyLink}
-            className="w-full sm:w-auto gap-1.5 text-xs h-8 shrink-0"
+            className="w-full sm:w-auto gap-1.5 text-xs min-h-[40px] shrink-0"
           >
             {copied ? (
               <>
-                <Check className="h-3.5 w-3.5 text-emerald-600" />
-                Copied Link!
+                <Check className="h-3.5 w-3.5 text-[var(--spruce)]" aria-hidden="true" />
+                <span>Copied</span>
               </>
             ) : (
               <>
-                <Copy className="h-3.5 w-3.5" />
-                Copy Enrollment Link
+                <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>Copy link</span>
               </>
             )}
           </Button>
         </div>
 
-        {/* Tamper and Safety Seal Notice */}
-        <div className="flex items-center gap-2 text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-          <Shield className="h-4 w-4 text-teal-600 shrink-0" />
+        {/* Security Notice */}
+        <div className="flex items-center gap-2 text-[12px] text-[var(--mute)] pt-2 border-t border-[var(--hairline-soft)]">
+          <Shield className="h-4 w-4 text-[var(--spruce)] shrink-0" aria-hidden="true" />
           <span>
-            Cryptographically signed with PKCS#7 certificate. Profile removal triggers an instant tamper alert to your parent dashboard.
+            Signed with a cryptographic PKCS#7 certificate. If the profile is removed, you get a calm notice in Alongside.
           </span>
         </div>
 
-        {/* Close Button */}
         <div className="flex justify-end pt-4">
-          <Button type="button" onClick={onClose} className="px-6">
+          <Button type="button" variant="forest" onClick={onClose} className="px-6 rounded-[8px]">
             Done
           </Button>
         </div>
