@@ -614,7 +614,7 @@ export function BilateralPactStatusCard({
               </p>
 
               <Link
-                href={`/brain-games?childId=${childId}`}
+                href="/digest#play-this-week"
                 className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors w-fit"
               >
                 <span>Explore screen-free play</span>

@@ -736,7 +736,7 @@ export function EarlyTierSanctuaryView({
         </div>
 
         <Link
-          href={`/brain-games?childId=${child.id}`}
+          href="/digest#play-this-week"
           className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13px] font-semibold transition-colors shrink-0 w-fit no-print"
         >
           <span>Today&apos;s play: {sensoryActivity.title}</span>

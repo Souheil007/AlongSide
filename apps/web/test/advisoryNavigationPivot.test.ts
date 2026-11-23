@@ -143,14 +143,11 @@ describe('Plan 29: Navigation & Platform Shell Advisory Pivot Specification', ()
       expect(content).toContain('Explore Behavior & Emotion Courses →');
     });
 
-    it('verifies brain-games/page.tsx renders AdvisoryDomainBanner pointing to DEVELOPMENT_AND_PLAY', () => {
+    it('verifies brain-games/page.tsx redirects cleanly to Culture & Trends Play this week', () => {
       const pagePath = path.resolve(__dirname, '../src/app/(dashboard)/brain-games/page.tsx');
       const content = fs.readFileSync(pagePath, 'utf-8');
 
-      expect(content).toContain('AdvisoryDomainBanner');
-      expect(content).toContain('category="DEVELOPMENT_AND_PLAY"');
-      expect(content).toContain('/academy?category=DEVELOPMENT_AND_PLAY');
-      expect(content).toContain('Explore Development & Play Courses →');
+      expect(content).toContain("redirect('/digest#play-this-week')");
     });
   });
 });

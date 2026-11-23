@@ -9,6 +9,10 @@ import {
 import { DigestFeedHeader } from '@/components/digest/DigestFeedHeader';
 import { WatchThisWeekBand } from '@/components/digest/WatchThisWeekBand';
 import { ReadThisWeekBand } from '@/components/digest/ReadThisWeekBand';
+import {
+  PlayThisWeekBand,
+  isPlayThisWeekEligible,
+} from '@/components/digest/PlayThisWeekBand';
 import { SundayTableCloserBand } from '@/components/digest/SundayTableCloserBand';
 import { cn } from '@/lib/utils';
 
@@ -73,6 +77,29 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
       : digest.resolvedIssueNumber !== null
         ? `Issue #${digest.resolvedIssueNumber}`
         : 'This week';
+
+  const showPlayThisWeek = isPlayThisWeekEligible(
+    digest.activeChild?.age,
+    digest.resolvedTier
+  );
+
+  // Smoothly scroll to #play-this-week when arriving from Home / Devices / /brain-games
+  React.useEffect(() => {
+    if (
+      typeof window === 'undefined' ||
+      !showPlayThisWeek ||
+      digest.activeTab !== 'week' ||
+      !digest.edition
+    ) {
+      return;
+    }
+    if (window.location.hash === '#play-this-week') {
+      const target = document.getElementById('play-this-week');
+      if (target && typeof target.scrollIntoView === 'function') {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [showPlayThisWeek, digest.activeTab, digest.edition]);
 
   const handleSwitchTabAndScrollTop = (tab: 'week' | 'blogs' | 'videos' | 'saved') => {
     digest.setActiveTab(tab);
@@ -159,7 +186,19 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
                 />
               </div>
 
-              {/* Band 3: Sunday Table Closer + Optional Ages 7–18 Phrase Strip */}
+              {/* Band 3 (Ages 0–8 ONLY): Play This Week Screen-Free Studio */}
+              {showPlayThisWeek && (
+                <div className="content-auto">
+                  <PlayThisWeekBand
+                    childId={digest.activeChild?.id}
+                    childName={digest.childName}
+                    childAge={digest.activeChild?.age}
+                    tier={digest.resolvedTier}
+                  />
+                </div>
+              )}
+
+              {/* Band 4: Sunday Table Closer + Optional Ages 7–18 Phrase Strip */}
               <div className="content-auto">
                 <SundayTableCloserBand
                   issueNumber={digest.edition.issue.issueNumber}
