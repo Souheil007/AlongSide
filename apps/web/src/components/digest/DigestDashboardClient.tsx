@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import dynamic from 'next/dynamic';
 import {
   formatWeekDateRange,
   useCultureDigest,
@@ -9,12 +10,51 @@ import { DigestFeedHeader } from '@/components/digest/DigestFeedHeader';
 import { WatchThisWeekBand } from '@/components/digest/WatchThisWeekBand';
 import { ReadThisWeekBand } from '@/components/digest/ReadThisWeekBand';
 import { SundayTableCloserBand } from '@/components/digest/SundayTableCloserBand';
-import { BlogsTabView } from '@/components/digest/BlogsTabView';
-import { VideosTabView } from '@/components/digest/VideosTabView';
-import { SavedShortlistView } from '@/components/digest/SavedShortlistView';
-import { BlogReaderDrawer } from '@/components/digest/BlogReaderDrawer';
-import { VideoTheaterModal } from '@/components/digest/VideoTheaterModal';
 import { cn } from '@/lib/utils';
+
+// Lazy-load secondary tabs and overlay modals to keep the default 'week' tab bundle ultra-lean
+const BlogsTabView = dynamic(
+  () => import('@/components/digest/BlogsTabView').then((mod) => mod.BlogsTabView),
+  {
+    loading: () => (
+      <div className="py-14 text-center text-[#59625D] text-sm animate-pulse">
+        Loading blogs...
+      </div>
+    ),
+  }
+);
+
+const VideosTabView = dynamic(
+  () => import('@/components/digest/VideosTabView').then((mod) => mod.VideosTabView),
+  {
+    loading: () => (
+      <div className="py-14 text-center text-[#59625D] text-sm animate-pulse">
+        Loading videos...
+      </div>
+    ),
+  }
+);
+
+const SavedShortlistView = dynamic(
+  () => import('@/components/digest/SavedShortlistView').then((mod) => mod.SavedShortlistView),
+  {
+    loading: () => (
+      <div className="py-14 text-center text-[#59625D] text-sm animate-pulse">
+        Loading saved list...
+      </div>
+    ),
+  }
+);
+
+const BlogReaderDrawer = dynamic(
+  () => import('@/components/digest/BlogReaderDrawer').then((mod) => mod.BlogReaderDrawer),
+  { ssr: false }
+);
+
+const VideoTheaterModal = dynamic(
+  () => import('@/components/digest/VideoTheaterModal').then((mod) => mod.VideoTheaterModal),
+  { ssr: false }
+);
 
 export interface DigestDashboardClientProps {
   className?: string;
@@ -106,43 +146,47 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
               />
 
               {/* Band 2: Read This Week (7/5 Magazine Spread - Blogs ONLY) */}
-              <ReadThisWeekBand
-                articles={digest.weekDisplayArticles}
-                childName={digest.childName}
-                shortAges={digest.tierMeta.shortAges}
-                weekRange={weekRange}
-                isAllWeeks={digest.isAllWeeks}
-                onOpenArticle={digest.openArticleReader}
-                onToggleSaveArticle={digest.toggleSaveArticle}
-                onViewAllBlogs={() => handleSwitchTabAndScrollTop('blogs')}
-              />
+              <div className="content-auto">
+                <ReadThisWeekBand
+                  articles={digest.weekDisplayArticles}
+                  childName={digest.childName}
+                  shortAges={digest.tierMeta.shortAges}
+                  weekRange={weekRange}
+                  isAllWeeks={digest.isAllWeeks}
+                  onOpenArticle={digest.openArticleReader}
+                  onToggleSaveArticle={digest.toggleSaveArticle}
+                  onViewAllBlogs={() => handleSwitchTabAndScrollTop('blogs')}
+                />
+              </div>
 
               {/* Band 3: Sunday Table Closer + Optional Ages 7–18 Phrase Strip */}
-              <SundayTableCloserBand
-                issueNumber={digest.edition.issue.issueNumber}
-                tier={digest.resolvedTier}
-                shortAges={digest.tierMeta.shortAges}
-                childName={digest.childName}
-                dinnerPrompts={digest.edition.dinnerPrompts}
-                dinnerPromptIndex={digest.dinnerPromptIndex}
-                dinnerNotesOpen={digest.dinnerNotesOpen}
-                phrases={digest.edition.phrases}
-                expandedPhraseIndex={digest.expandedPhraseIndex}
-                onNextPrompt={digest.nextDinnerPrompt}
-                onToggleNotes={digest.toggleDinnerNotes}
-                onCopyQuestion={(q) =>
-                  digest.copyTextWithToast(q, 'Dinner question copied')
-                }
-                onShareWithPartner={(q) =>
-                  digest.copyTextWithToast(
-                    `Tonight's dinner question for ${digest.childName} (from Alongside): "${q}"`,
-                    'Ready-to-text note copied for your partner'
-                  )
-                }
-                onToggleSaveDinner={digest.toggleSaveDinnerPrompt}
-                onTogglePhrase={digest.togglePhraseIndex}
-                onAskAdvisor={digest.openAdvisorWithPrompt}
-              />
+              <div className="content-auto">
+                <SundayTableCloserBand
+                  issueNumber={digest.edition.issue.issueNumber}
+                  tier={digest.resolvedTier}
+                  shortAges={digest.tierMeta.shortAges}
+                  childName={digest.childName}
+                  dinnerPrompts={digest.edition.dinnerPrompts}
+                  dinnerPromptIndex={digest.dinnerPromptIndex}
+                  dinnerNotesOpen={digest.dinnerNotesOpen}
+                  phrases={digest.edition.phrases}
+                  expandedPhraseIndex={digest.expandedPhraseIndex}
+                  onNextPrompt={digest.nextDinnerPrompt}
+                  onToggleNotes={digest.toggleDinnerNotes}
+                  onCopyQuestion={(q) =>
+                    digest.copyTextWithToast(q, 'Dinner question copied')
+                  }
+                  onShareWithPartner={(q) =>
+                    digest.copyTextWithToast(
+                      `Tonight's dinner question for ${digest.childName} (from Alongside): "${q}"`,
+                      'Ready-to-text note copied for your partner'
+                    )
+                  }
+                  onToggleSaveDinner={digest.toggleSaveDinnerPrompt}
+                  onTogglePhrase={digest.togglePhraseIndex}
+                  onAskAdvisor={digest.openAdvisorWithPrompt}
+                />
+              </div>
             </>
           ) : (
             <div className="border-t border-[#131715]/10 py-14 text-center text-[14.5px] text-[#59625D]">

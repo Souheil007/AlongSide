@@ -71,7 +71,7 @@ export function WatchThisWeekBand({
           videos.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
         )}
       >
-        {videos.map((video) => {
+        {videos.map((video, idx) => {
           const publishLabel = formatShortPublishDate(video.publishedAt);
           return (
             <article
@@ -90,7 +90,8 @@ export function WatchThisWeekBand({
                 <img
                   src={getYouTubeThumbnailUrl(video.youtubeVideoId)}
                   alt={video.title}
-                  loading="lazy"
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover opacity-90 scale-[1.18] transition-transform duration-300 group-hover:scale-[1.22] group-hover:opacity-100"
                 />
                 <div
