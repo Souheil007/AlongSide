@@ -13,6 +13,9 @@ import {
 import type { DigestService } from './digest.service.js';
 import type { DigestIngestionOrchestrator } from './ingestion/digestIngestion.orchestrator.js';
 
+export const PUBLIC_CATALOG_CACHE_CONTROL =
+  'public, max-age=60, s-maxage=300, stale-while-revalidate=600';
+
 const DigestSyncBodySchema = z.object({
   weekStart: z.string().trim().min(1).optional(),
   weekEnd: z.string().trim().min(1).optional(),
@@ -37,6 +40,7 @@ export class DigestController {
   ): Promise<void> {
     const digest = await this.service.getLatestDigest();
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -54,6 +58,7 @@ export class DigestController {
     const term = request.query.term ?? request.query.q;
     const slangTerms = await this.service.searchSlang(term);
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -71,6 +76,7 @@ export class DigestController {
     const { severity } = request.query;
     const exploitAlerts = await this.service.getExploitAlerts(severity);
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -91,6 +97,7 @@ export class DigestController {
   ): Promise<void> {
     const issues = await this.service.listPublishedIssues(request.query.tier);
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -115,6 +122,9 @@ export class DigestController {
       }
     );
 
+    if (!request.user?.id) {
+      reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    }
     return reply.status(200).send({
       success: true,
       data: {
@@ -156,6 +166,9 @@ export class DigestController {
       userId: request.user?.id,
     });
 
+    if (!request.user?.id) {
+      reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    }
     return reply.status(200).send({
       success: true,
       data: result,
@@ -195,6 +208,9 @@ export class DigestController {
       userId: request.user?.id,
     });
 
+    if (!request.user?.id) {
+      reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    }
     return reply.status(200).send({
       success: true,
       data: result,

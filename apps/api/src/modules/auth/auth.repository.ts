@@ -41,18 +41,36 @@ export interface AuthRepository {
   countChildren(userId: string): Promise<number>;
 }
 
+export const USER_SELECT_FIELDS = {
+  id: true,
+  email: true,
+  passwordHash: true,
+  fullName: true,
+  role: true,
+  createdAt: true,
+  updatedAt: true,
+  subscription: {
+    select: {
+      id: true,
+      userId: true,
+      tier: true,
+      isActive: true,
+      trialEndsAt: true,
+      currentPeriodEnd: true,
+    },
+  },
+  _count: {
+    select: { children: true },
+  },
+} as const;
+
 export class PrismaAuthRepository implements AuthRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
 
   async findByEmail(email: string): Promise<UserRecord | null> {
     const user = await this.prisma.user.findUnique({
       where: { email: email.toLowerCase().trim() },
-      include: {
-        subscription: true,
-        _count: {
-          select: { children: true },
-        },
-      },
+      select: USER_SELECT_FIELDS,
     });
 
     if (!user) {
@@ -65,12 +83,7 @@ export class PrismaAuthRepository implements AuthRepository {
   async findById(id: string): Promise<UserRecord | null> {
     const user = await this.prisma.user.findUnique({
       where: { id },
-      include: {
-        subscription: true,
-        _count: {
-          select: { children: true },
-        },
-      },
+      select: USER_SELECT_FIELDS,
     });
 
     if (!user) {
@@ -96,12 +109,7 @@ export class PrismaAuthRepository implements AuthRepository {
           },
         },
       },
-      include: {
-        subscription: true,
-        _count: {
-          select: { children: true },
-        },
-      },
+      select: USER_SELECT_FIELDS,
     });
 
     return this.mapUser(user);

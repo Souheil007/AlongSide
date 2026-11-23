@@ -126,6 +126,41 @@ export interface ChildrenRepository {
   findLatestReadinessAttempt(childId: string): Promise<ReadinessAttemptRecord | null>;
 }
 
+export const CHILD_SELECT_FIELDS = {
+  id: true,
+  userId: true,
+  name: true,
+  gender: true,
+  birthYear: true,
+  birthMonth: true,
+  roadType: true,
+  developmentalTier: true,
+  schoolGrade: true,
+  dietaryStage: true,
+  allergies: true,
+  pediatricNotes: true,
+  createdAt: true,
+  updatedAt: true,
+  deviceProfiles: {
+    select: { status: true },
+    orderBy: { updatedAt: 'desc' as const },
+    take: 1,
+  },
+  quizAttempts: {
+    select: {
+      id: true,
+      quizId: true,
+      userId: true,
+      childId: true,
+      overallScore: true,
+      dimensionScores: true,
+      completedAt: true,
+    },
+    orderBy: { completedAt: 'desc' as const },
+    take: 1,
+  },
+} as const;
+
 export class PrismaChildrenRepository implements ChildrenRepository {
   constructor(private readonly prisma: PrismaClient = defaultPrisma) {}
 
@@ -160,17 +195,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
         developmentalTier: dataToCreate.developmentalTier as any,
         schoolGrade: dataToCreate.schoolGrade ?? null,
       },
-      include: {
-        deviceProfiles: {
-          select: { status: true },
-          orderBy: { updatedAt: 'desc' },
-          take: 1,
-        },
-        quizAttempts: {
-          orderBy: { completedAt: 'desc' },
-          take: 1,
-        },
-      },
+      select: CHILD_SELECT_FIELDS,
     });
 
     return this.mapChild(child);
@@ -184,17 +209,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
 
     const child = await this.prisma.child.findFirst({
       where: whereClause,
-      include: {
-        deviceProfiles: {
-          select: { status: true },
-          orderBy: { updatedAt: 'desc' },
-          take: 1,
-        },
-        quizAttempts: {
-          orderBy: { completedAt: 'desc' },
-          take: 1,
-        },
-      },
+      select: CHILD_SELECT_FIELDS,
     });
 
     return child ? this.mapChild(child) : null;
@@ -208,17 +223,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
     const children = await this.prisma.child.findMany({
       where: { userId },
       orderBy: { createdAt: 'asc' },
-      include: {
-        deviceProfiles: {
-          select: { status: true },
-          orderBy: { updatedAt: 'desc' },
-          take: 1,
-        },
-        quizAttempts: {
-          orderBy: { completedAt: 'desc' },
-          take: 1,
-        },
-      },
+      select: CHILD_SELECT_FIELDS,
     });
 
     return children.map((c) => this.mapChild(c));
@@ -272,17 +277,7 @@ export class PrismaChildrenRepository implements ChildrenRepository {
           schoolGrade: data.schoolGrade ? data.schoolGrade.trim() : null,
         }),
       },
-      include: {
-        deviceProfiles: {
-          select: { status: true },
-          orderBy: { updatedAt: 'desc' },
-          take: 1,
-        },
-        quizAttempts: {
-          orderBy: { completedAt: 'desc' },
-          take: 1,
-        },
-      },
+      select: CHILD_SELECT_FIELDS,
     });
 
     return this.mapChild(updated);

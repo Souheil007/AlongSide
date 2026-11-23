@@ -2,6 +2,9 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import type { DevelopmentalTier, RoadType } from '@alongside/shared';
 import type { FaqsService } from './faqs.service.js';
 
+export const PUBLIC_CATALOG_CACHE_CONTROL =
+  'public, max-age=60, s-maxage=300, stale-while-revalidate=600';
+
 export class FaqsController {
   constructor(private readonly service: FaqsService) {}
 
@@ -10,6 +13,7 @@ export class FaqsController {
     reply: FastifyReply
   ): Promise<void> {
     const categories = await this.service.getCategories();
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -42,6 +46,7 @@ export class FaqsController {
       offset: offset ? Number(offset) : 0,
     });
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: result,
@@ -67,6 +72,7 @@ export class FaqsController {
       });
     }
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
