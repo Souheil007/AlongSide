@@ -185,7 +185,7 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
         headline="One Safe Food on Every Plate"
         calmScript="You don't have to eat it tonight."
         chosenMoveTitle="Add one safe anchor food to dinner"
-        savedPushbackScript="Dinner is over—we'll eat again at breakfast."
+        savedPushbackScript="Dinner is over - we'll eat again at breakfast."
         childLabel="Maya (2 yrs 6 mos)"
       />
     );

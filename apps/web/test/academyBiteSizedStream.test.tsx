@@ -35,7 +35,7 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-describe('PLAN-48: Parent Academy Course Detail — Interactive Almanac v2 Episode Arc', () => {
+describe('PLAN-48: Parent Academy Course Detail - Interactive Almanac v2 Episode Arc', () => {
   const activeChildCalibrated = {
     id: 'child-1',
     name: 'Maya',

@@ -172,17 +172,17 @@ export function resolveReliefTagline(
 ): string {
   switch (category) {
     case AcademyCategory.BEHAVIOR_AND_EMOTIONS:
-      return '💡 A normal wave of big feelings at this age—never a sign of bad parenting or manipulation';
+      return '💡 A normal wave of big feelings at this age - never a sign of bad parenting or manipulation';
     case AcademyCategory.HEALTH_AND_WELLNESS:
-      return "🧭 A natural shift in your child's sleep and body rhythms—not stubborn defiance";
+      return "🧭 A natural shift in your child's sleep and body rhythms - not stubborn defiance";
     case AcademyCategory.NUTRITION_AND_FEEDING:
-      return '🌱 A normal stage of cautious tasting—not intentional mealtime rejection';
+      return '🌱 A normal stage of cautious tasting - not intentional mealtime rejection';
     case AcademyCategory.DEVELOPMENT_AND_PLAY:
       return "🌱 How your child's curious mind builds new skills through everyday play";
     case AcademyCategory.DIGITAL_AND_DEVICES:
-      return '🧭 Modern apps are engineered to hold attention—clear family habits beat willpower';
+      return '🧭 Modern apps are engineered to hold attention - clear family habits beat willpower';
     default:
-      return '💡 A normal part of growing up—not a parenting inadequacy';
+      return '💡 A normal part of growing up - not a parenting inadequacy';
   }
 }
 
@@ -762,7 +762,7 @@ function buildAnnotatedSegmentsFromScript(
   const segments: AnnotatedScriptSegment[] = [{ text: '“' }];
   const tags = ['Drops Alarm', 'Clear Anchor', 'Next Calm Step'];
   const notes = [
-    'Signals safety and genuine understanding before setting a boundary—stopping escalation in the first few seconds.',
+    'Signals safety and genuine understanding before setting a boundary - stopping escalation in the first few seconds.',
     deliveryTip ||
       'Holds a steady, predictable boundary without lecturing, bargaining, or shaming.',
     'Gives {name} a concrete, achievable next step while keeping warmth intact.',
@@ -891,7 +891,7 @@ export function resolveAlmanacLessonPayload(
         lesson.whatNotToSay ||
         'Why do we have to fight about this every single day? Just cooperate!'
       ).replace(/^[“"]|[”"]$/g, '')}”`,
-      whyTitle: 'Why that feels so natural—and what {poss} brain hears',
+      whyTitle: 'Why that feels so natural - and what {poss} brain hears',
       whyText:
         primaryCard?.whyItBackfires ||
         'When we feel stretched thin, urgency sneaks into our voice. To a stressed child, urgency registers as threat, which pauses listening and escalates pushback.',
@@ -900,9 +900,9 @@ export function resolveAlmanacLessonPayload(
       id: 'instinct-2',
       label: `“${(
         secondaryCard?.instinctiveMistake ||
-        'Fine—never mind, I will just give in or handle it myself so we can stop arguing.'
+        'Fine - never mind, I will just give in or handle it myself so we can stop arguing.'
       ).replace(/^[“"]|[”"]$/g, '')}”`,
-      whyTitle: 'Why that feels so natural—and what {poss} brain hears',
+      whyTitle: 'Why that feels so natural - and what {poss} brain hears',
       whyText:
         secondaryCard?.whyItBackfires ||
         'Dropping the boundary brings instant quiet, which every tired parent craves. Over time, though, unpredictable limits leave {obj} pushing harder tomorrow to test where the steady wall actually is.',
@@ -925,7 +925,7 @@ export function resolveAlmanacLessonPayload(
       setup:
         'A warm 15-second repair teaches more resilience than never losing patience:',
       script:
-        '“Earlier I got overwhelmed and my voice got too loud. That was on me—let us try our calm reset together right now.”',
+        '“Earlier I got overwhelmed and my voice got too loud. That was on me - let us try our calm reset together right now.”',
     },
   ];
 
@@ -1008,16 +1008,16 @@ export function resolveAlmanacLessonPayload(
       (lesson.reliefTagline ?? '')
         .replace(/^[^\w"“]+/, '')
         .trim() ||
-      'A practical mental model and calm words you can put to work today—without lectures or guesswork.',
+      'A practical mental model and calm words you can put to work today - without lectures or guesswork.',
     sceneTime: 'EVERYDAY MOMENT AT HOME',
     sceneBody,
     pollQuestion: 'Does this moment feel familiar in your home lately?',
     pollOptions: [
       {
         id: 'often',
-        label: 'Yes—almost every week',
+        label: 'Yes - almost every week',
         response:
-          'You are in good company. Moments like this spike right on schedule around {age}—and one small environmental shift takes the edge right off.',
+          'You are in good company. Moments like this spike right on schedule around {age} - and one small environmental shift takes the edge right off.',
       },
       {
         id: 'sometimes',
@@ -1055,18 +1055,18 @@ export function resolveAlmanacLessonPayload(
     ),
     deliveryCues: [
       lesson.deliveryTip || primaryCard?.deliveryTip || 'Lower your vocal pitch and slow down',
-      'Keep it brief—under two sentences',
+      'Keep it brief - under two sentences',
       'Hold warmth and boundary together',
     ],
     pushbacks,
-    advisorPrompt: `“{Name} ({age}) is struggling with ${lesson.title.toLowerCase()} tonight—what calm words fit our exact situation right now?”`,
+    advisorPrompt: `“{Name} ({age}) is struggling with ${lesson.title.toLowerCase()} tonight - what calm words fit our exact situation right now?”`,
     beat4Kicker: 'Tonight’s small experiment',
     beat4Title: 'Pick just one move to try next',
     beat4Lead:
       'Your pick automatically updates your Pocket Card below so you walk away with one clear, low-stress plan.',
     moves,
     closingNote:
-      'Measure tonight by the steadiness you bring to the room—not instant perfection. Small, calm repetitions quietly build lasting habits with {name}.',
+      'Measure tonight by the steadiness you bring to the room - not instant perfection. Small, calm repetitions quietly build lasting habits with {name}.',
     pocketInsight: almanacTruth,
     nextEpisodeHook: null,
   };

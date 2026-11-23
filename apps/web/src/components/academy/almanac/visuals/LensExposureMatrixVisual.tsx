@@ -16,7 +16,7 @@ export function LensExposureMatrixVisual({
     (config?.adultLabel as string) || 'Adult lens';
   const adultQuote =
     (config?.adultQuote as string) ||
-    '“{Pronoun} {is} being stubborn—{pronoun} won’t even take ONE bite!”';
+    '“{Pronoun} {is} being stubborn - {pronoun} won’t even take ONE bite!”';
   const adultSub =
     (config?.adultSub as string) ||
     'When we invest care and hit resistance, it naturally feels personal or willful.';
@@ -27,7 +27,7 @@ export function LensExposureMatrixVisual({
     '“Unfamiliar bitter green = unknown plant! Stick to safe predictable foods.”';
   const childSub =
     (config?.childSub as string) ||
-    'An ancient survival safety switch turning on right on schedule—not defiance.';
+    'An ancient survival safety switch turning on right on schedule - not defiance.';
 
   const exposureHeading =
     (config?.exposureHeading as string) || 'The 20-Sighting Familiarity Map';
@@ -50,7 +50,7 @@ export function LensExposureMatrixVisual({
     'Early reps: High caution is completely normal. Sharing the room calmly with zero pressure banks real progress.';
   const midMsg =
     (config?.midMsg as string) ||
-    'Middle reps: The threat alarm softens—curiosity, poking, and tiny low-stakes experiments emerge.';
+    'Middle reps: The threat alarm softens - curiosity, poking, and tiny low-stakes experiments emerge.';
   const highMsg =
     (config?.highMsg as string) ||
     'Familiar friend! Spontaneous comfort and confidence arrive naturally right when pressure stays lowest.';

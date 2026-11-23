@@ -29,7 +29,7 @@ export const HERO_AGE_MOMENTS: AgeMomentPreview[] = [
     brainNote:
       "What's driving it: pre-verbal frustration plus an immature braking system. Lend your calm first.",
     script:
-      "“You really want to stay playing. Putting on shoes feels frustrating. I'm right here — red sneakers or blue boots?”",
+      "“You really want to stay playing. Putting on shoes feels frustrating. I'm right here - red sneakers or blue boots?”",
     pairedGuide: 'Paired guide: Toddler nervous system resets',
     readTime: '4 min read',
   },
@@ -148,7 +148,7 @@ export function HeroSection() {
 
             <p className="text-base sm:text-[18px] leading-[1.55] text-[#454D49] max-w-[42ch]">
               Exact words for hard moments, 5-minute developmental guides, and family screen pacts
-              built on trust — never spyware.
+              built on trust - never spyware.
             </p>
 
             {/* Interactive Age Selector */}
@@ -229,7 +229,7 @@ export function HeroSection() {
               />
             </div>
 
-            {/* Live Calibrated Script Card — CSS Grid stack locks height across all 5 age bands (0px shift) */}
+            {/* Live Calibrated Script Card - CSS Grid stack locks height across all 5 age bands (0px shift) */}
             <div
               data-ui
               aria-live="polite"

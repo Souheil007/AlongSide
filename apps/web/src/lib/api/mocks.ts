@@ -381,7 +381,7 @@ export const MOCK_ACADEMY_MODULES: AcademyModuleDTO[] = [
         audioUrl: "https://assets.alongside.care/academy/audio/preschool-daycare-viral-comfort.mp3",
         audioDurationSeconds: 110,
         whatNotToSay: "We need an antibiotic from the doctor right now to kill this cold!",
-        deliveryTip: "For coughs in children over 1 year, offer 1 to 2 teaspoons of real buckwheat or wildflower honey before bedtime—research proves honey safely soothes irritated airways.",
+        deliveryTip: "For coughs in children over 1 year, offer 1 to 2 teaspoons of real buckwheat or wildflower honey before bedtime - research proves honey safely soothes irritated airways.",
       },
       {
         id: "a0157502-1300-4b87-9e6a-3be9180f9cc3",
@@ -1948,7 +1948,7 @@ export const MOCK_ACADEMY_MODULES: AcademyModuleDTO[] = [
         isCompleted: false,
         audioUrl: "https://assets.alongside.care/academy/audio/purple-crying-neurobiology.mp3",
         audioDurationSeconds: 105,
-        whatNotToSay: "There must be something medically wrong with my milk or my parenting—I can't even get my baby to stop crying.",
+        whatNotToSay: "There must be something medically wrong with my milk or my parenting - I can't even get my baby to stop crying.",
         deliveryTip: "Repeat your calming grounding mantra internally before lifting baby. If you feel your own frustration reaching a boiling point, gently place baby on their back in the safe crib, step outside the room for 2 minutes to take 10 deep breaths, and return reset.",
       },
       {
@@ -2008,7 +2008,7 @@ export const MOCK_ACADEMY_MODULES: AcademyModuleDTO[] = [
         isCompleted: false,
         audioUrl: "https://assets.alongside.care/academy/audio/infant-safe-sleep-and-circadian-reset.mp3",
         audioDurationSeconds: 110,
-        whatNotToSay: "They look so uncomfortable lying flat on their back on that hard mattress—let's put a soft blanket under them.",
+        whatNotToSay: "They look so uncomfortable lying flat on their back on that hard mattress - let's put a soft blanket under them.",
         deliveryTip: "Install black-out shades so the room is dark enough that you cannot see your hand in front of your face. Use a dim amber nightlight (<5 lumens) near the floor for midnight diaper changes.",
       },
       {
@@ -2023,7 +2023,7 @@ export const MOCK_ACADEMY_MODULES: AcademyModuleDTO[] = [
         audioUrl: "https://assets.alongside.care/academy/audio/four-month-sleep-regression-explained.mp3",
         audioDurationSeconds: 105,
         whatNotToSay: "My baby was a great sleeper and now they are completely ruined. I must be doing everything wrong.",
-        deliveryTip: "Put baby down 'drowsy but awake'—when their eyes are heavy and movements slow, but they still know they are being placed in the bassinet. Place a gentle, warm hand on their chest for 60 seconds as they close their eyes.",
+        deliveryTip: "Put baby down 'drowsy but awake' - when their eyes are heavy and movements slow, but they still know they are being placed in the bassinet. Place a gentle, warm hand on their chest for 60 seconds as they close their eyes.",
       },
       {
         id: "aa55770e-7629-47ad-bc28-f9557069d1d1",
@@ -2198,7 +2198,7 @@ export const MOCK_ACADEMY_MODULES: AcademyModuleDTO[] = [
         isCompleted: false,
         audioUrl: "https://assets.alongside.care/academy/audio/foods-to-avoid-in-infancy.mp3",
         audioDurationSeconds: 110,
-        whatNotToSay: "A little dab of honey on their pacifier will soothe their teething cough—my grandmother did it with all of us!",
+        whatNotToSay: "A little dab of honey on their pacifier will soothe their teething cough - my grandmother did it with all of us!",
         deliveryTip: "Tape a simple 'No Honey Before 1' reminder on the inside of your kitchen cabinet so visiting babysitters, grandparents, and caregivers adhere strictly to the rule.",
       },
     ],
@@ -3157,17 +3157,17 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
     illustration: EditorialIllustrationKey.compass_teen,
     illustrationCaption: '4:15 PM · Navigating the status radar',
     headline: 'When One Small Reminder Triggers an Instant Eye-Roll',
-    deck: 'Why pre-teen adrenarche turns tiny household requests into status alarms—and the calm neutral phrase that defuses tension in ten seconds.',
+    deck: 'Why pre-teen adrenarche turns tiny household requests into status alarms - and the calm neutral phrase that defuses tension in ten seconds.',
     sceneTime: '4:15 PM · KITCHEN COUNTER',
     sceneBody:
-      'You ask {name} one simple question about putting {poss} backpack away. Instantly {poss} shoulders tense, {poss} eyes roll, and {pronoun} snaps back, “Why are you always on my case?!” *A wave of heat rises in your chest—did I just lose my sweet kid overnight?*',
+      'You ask {name} one simple question about putting {poss} backpack away. Instantly {poss} shoulders tense, {poss} eyes roll, and {pronoun} snaps back, “Why are you always on my case?!” *A wave of heat rises in your chest - did I just lose my sweet kid overnight?*',
     pollQuestion: 'Have sudden eye-rolls or sharp comebacks popped up lately?',
     pollOptions: [
       {
         id: 'daily',
         label: 'Almost every afternoon',
         response:
-          'You haven’t lost your relationship—around ages 9 to 12, adrenal hormone surges supercharge the brain’s social-status radar before braking circuits catch up.',
+          'You haven’t lost your relationship - around ages 9 to 12, adrenal hormone surges supercharge the brain’s social-status radar before braking circuits catch up.',
       },
       {
         id: 'sometimes',
@@ -3184,32 +3184,32 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
     visualStageTitle: 'Calm connection vs. adrenarche status alarm',
     visualStageHint: 'Toggle steady vs. flooded state',
     almanacTruth:
-      'Pre-teen snark is usually an overloaded status alarm, not deliberate disrespect—your quiet, unbothered tone is what brings their logical brain back online.',
+      'Pre-teen snark is usually an overloaded status alarm, not deliberate disrespect - your quiet, unbothered tone is what brings their logical brain back online.',
     scienceDeepDive:
       'Adrenarche begins around ages 8–10 as adrenal DHEA and DHEA-S rise, sensitizing amygdala and ventral striatum networks to social evaluation and autonomy threats years before visible puberty.',
     beat3Kicker: 'Practice before 4:15 PM',
     beat3Title: 'What changes the temperature in ten seconds',
     rehearsalTriggerSpeaker: '{Name} snapping from the doorway',
-    rehearsalTriggerQuote: '“Ugh, stop micromanaging me—I was JUST about to do it!”',
+    rehearsalTriggerQuote: '“Ugh, stop micromanaging me - I was JUST about to do it!”',
     rehearsalPrompt: 'Which split-second reaction jumps up first?',
     instincts: [
       {
         id: 'snapback',
-        label: '“Do NOT use that tone with me—get back here right now!”',
-        whyTitle: 'Why that’s so tempting—and what happens next',
+        label: '“Do NOT use that tone with me - get back here right now!”',
+        whyTitle: 'Why that’s so tempting - and what happens next',
         whyText:
           'Anyone would bristle at sharp sarcasm! Yet matching volume confirms {possessive} status alarm and turns a 10-second backpack cue into a 40-minute standoff.',
       },
       {
         id: 'lecture',
         label: 'Give a 5-minute speech about gratitude and household teamwork.',
-        whyTitle: 'Why that’s so tempting—and what happens next',
+        whyTitle: 'Why that’s so tempting - and what happens next',
         whyText:
-          'While {poss} braking cortex is offline, long speeches blur into static—leaving both of you drained.',
+          'While {poss} braking cortex is offline, long speeches blur into static - leaving both of you drained.',
       },
     ],
     calmScriptPlain:
-      '“That sounded sharp, and I know today was a lot. Grab a snack first—we’ll tackle backpacks at 4:45.”',
+      '“That sounded sharp, and I know today was a lot. Grab a snack first - we’ll tackle backpacks at 4:45.”',
     calmScriptSegments: [
       { text: '“' },
       {
@@ -3221,7 +3221,7 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
       { text: ' ' },
       {
         id: 'buffer',
-        text: 'Grab a snack first—we’ll tackle backpacks at 4:45.',
+        text: 'Grab a snack first - we’ll tackle backpacks at 4:45.',
         tag: 'Clear Neutral Anchor',
         note: 'Holds the boundary effortlessly while giving {poss} nervous system a short decompression buffer.',
       },
@@ -3238,11 +3238,11 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
         label: '“{Pronoun} slams the bedroom door”',
         setup: 'Give 15 minutes of cooling air, then knock gently and keep it brief:',
         script:
-          '“I’m not mad at you—we don’t slam doors in our house, and whenever you’re ready I’m happy to hear how school went.”',
+          '“I’m not mad at you - we don’t slam doors in our house, and whenever you’re ready I’m happy to hear how school went.”',
       },
     ],
     advisorPrompt:
-      '“{Name} ({age}) has been snapping with eye-rolls right after school—how can I stay steady without letting disrespect slide?”',
+      '“{Name} ({age}) has been snapping with eye-rolls right after school - how can I stay steady without letting disrespect slide?”',
     beat4Kicker: 'Tonight’s one tiny experiment',
     beat4Title: 'Pick one small move to try this week',
     beat4Lead: 'One calm pause shifts the whole evening rhythm.',
@@ -3266,7 +3266,7 @@ export const MOCK_LESSON_DETAIL_ADRENARCHE: AcademyLessonDTO = {
     closingNote:
       'Behind every spiky pre-teen eye-roll is a growing mind testing whether your steady love holds firm even on rough afternoons. Your calm voice is their safest harbor.',
     pocketInsight:
-      'Meet pre-teen snark with calm brevity and a short decompression buffer—address respect warmly once nervous systems cool.',
+      'Meet pre-teen snark with calm brevity and a short decompression buffer - address respect warmly once nervous systems cool.',
     nextEpisodeHook: {
       kicker: 'Up Next · Episode 2 · 4 min',
       mystery:

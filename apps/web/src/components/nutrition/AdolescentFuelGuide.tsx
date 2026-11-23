@@ -104,7 +104,7 @@ export function AdolescentFuelGuide() {
         </button>
       </div>
 
-      {/* Stacked Tab Panels — CSS Grid overlap locks height across all 4 tabs (0px shift) */}
+      {/* Stacked Tab Panels - CSS Grid overlap locks height across all 4 tabs (0px shift) */}
       <div className="grid">
         {/* Tab 1: Athletic Fuel */}
         <div

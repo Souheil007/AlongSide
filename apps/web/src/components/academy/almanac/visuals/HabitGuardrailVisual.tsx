@@ -26,7 +26,7 @@ export function HabitGuardrailVisual({ config, t }: HabitGuardrailVisualProps) {
     (config?.guardrailTitle as string) || 'Letting the environment hold the limit';
   const guardrailDesc =
     (config?.guardrailDesc as string) ||
-    'Clear house spaces and predictable visual rhythms do the heavy lifting quietly—so your voice stays warm.';
+    'Clear house spaces and predictable visual rhythms do the heavy lifting quietly - so your voice stays warm.';
   const guardrailOutcome =
     (config?.guardrailOutcome as string) || 'Calmer cooperation with zero lecturing.';
 

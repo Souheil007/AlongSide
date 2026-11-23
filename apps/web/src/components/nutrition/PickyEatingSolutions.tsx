@@ -208,7 +208,7 @@ export function PickyEatingSolutions() {
           </div>
         </div>
 
-        {/* Visual Chain Stepper Flow — CSS Grid stack locks height across all 4 food chains (0px shift) */}
+        {/* Visual Chain Stepper Flow - CSS Grid stack locks height across all 4 food chains (0px shift) */}
         <div className="rounded-2xl border border-amber-200/60 bg-amber-50/30 p-4 sm:p-5 grid">
           {chains.map((chain, idx) => {
             const isActive = idx === selectedChainIndex;

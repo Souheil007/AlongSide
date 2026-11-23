@@ -16,7 +16,7 @@ export const SCIENCE_PRINCIPLES = [
   },
   {
     title: 'Educational clarity',
-    body: 'Practical everyday guidance designed alongside — never replacing — your pediatrician.',
+    body: 'Practical everyday guidance designed alongside - never replacing - your pediatrician.',
   },
 ];
 
@@ -30,7 +30,7 @@ export function ScienceFoundationSection() {
               Developmental science, not&nbsp;social&nbsp;feeds
             </h2>
             <p className="text-base leading-[1.55] text-[#454D49] max-w-[44ch]">
-              Built for parents who want evidence-based warmth and firm boundaries — without
+              Built for parents who want evidence-based warmth and firm boundaries - without
               fear-mongering reels or surveillance tech.
             </p>
 

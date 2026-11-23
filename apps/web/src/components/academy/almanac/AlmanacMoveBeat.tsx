@@ -107,12 +107,12 @@ export function AlmanacMoveBeat({
             <>
               <ArrowDown className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span>
-                Added to your Pocket Card below — ready to seal when you finish.
+                Added to your Pocket Card below - ready to seal when you finish.
               </span>
             </>
           ) : (
             <span className="text-[var(--mute)] font-normal">
-              Pick whichever feels lightest tonight — it drops straight onto your Pocket Card below.
+              Pick whichever feels lightest tonight - it drops straight onto your Pocket Card below.
             </span>
           )}
         </div>

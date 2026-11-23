@@ -172,7 +172,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'Why does my child explode or slam doors when told screen time is over?',
     answerMarkdown:
-      'Video games and short-form video trigger intense surges of dopamine in the tween nucleus accumbens. When screens shut off abruptly, dopamine levels plummet below baseline within seconds. The prefrontal cortex—which regulates emotional inhibition—is still undergoing synaptic pruning and cannot counterbalance this acute drop. It is not character defiance; it is a neurochemical withdrawal shockwave.',
+      'Video games and short-form video trigger intense surges of dopamine in the tween nucleus accumbens. When screens shut off abruptly, dopamine levels plummet below baseline within seconds. The prefrontal cortex - which regulates emotional inhibition - is still undergoing synaptic pruning and cannot counterbalance this acute drop. It is not character defiance; it is a neurochemical withdrawal shockwave.',
     deEscalationScript:
       '"I can see your brain was in hyper-focus mode, and pulling away right now feels jarring. Take three slow breaths with me. We\'ll set a 5-minute cooldown timer so you can save your progress safely before dinner."',
     isFeatured: true,
@@ -210,7 +210,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'Caught my child on their phone in bed at 11:00 PM. How do I address this without a screaming match?',
     answerMarkdown:
-      'Blue light (460-480nm) suppresses pineal melatonin secretion by up to 88% in adolescents, delaying sleep onset by 90 minutes. Tweens also experience "vampire mode" FOMO—fear that late-night inside jokes happen without them. Confronting them in the dark while sleep-deprived escalates cortisol. Remove the device neutrally and hold the conversation after breakfast.',
+      'Blue light (460-480nm) suppresses pineal melatonin secretion by up to 88% in adolescents, delaying sleep onset by 90 minutes. Tweens also experience "vampire mode" FOMO - fear that late-night inside jokes happen without them. Confronting them in the dark while sleep-deprived escalates cortisol. Remove the device neutrally and hold the conversation after breakfast.',
     deEscalationScript:
       '"The phone needs to sleep in the kitchen charging dock right now. Your sleep is non-negotiable because your brain is growing while you rest. We will review our evening docking routine tomorrow morning after breakfast without any shouting."',
     isFeatured: true,
@@ -234,7 +234,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'My 13yo is being excluded or roasted in a school Discord server. What should we do?',
     answerMarkdown:
-      'Digital social exclusion lights up the dorsal anterior cingulate cortex—the exact neural pathway that registers physical pain. Tweens often conceal bullying because they fear parents will take away their device, severing their remaining friendships. Reassure them immediately that their phone is safe, take screenshots for evidence, and teach them the difference between reacting and muting.',
+      'Digital social exclusion lights up the dorsal anterior cingulate cortex - the exact neural pathway that registers physical pain. Tweens often conceal bullying because they fear parents will take away their device, severing their remaining friendships. Reassure them immediately that their phone is safe, take screenshots for evidence, and teach them the difference between reacting and muting.',
     deEscalationScript:
       '"Thank you for having the courage to tell me. First promise: I am not going to confiscate your phone or ban you from talking to your friends. You do not have to carry this alone. Let\'s screenshot the thread together, mute notifications for that channel tonight, and brainstorm your options."',
     isFeatured: true,
@@ -248,7 +248,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'How do I enforce a zero-phone rule while my 16-year-old is driving?',
     answerMarkdown:
-      'Texting or checking notifications while driving increases fatal accident risk by over 2300%. Invasive spyware apps trigger resentment and spoofing. Bilateral "Zero-Phone Cockpit" pacts—pairing Apple Driving Focus or Android Driving Mode with parental trust treaties—establish adult executive autonomy.',
+      'Texting or checking notifications while driving increases fatal accident risk by over 2300%. Invasive spyware apps trigger resentment and spoofing. Bilateral "Zero-Phone Cockpit" pacts - pairing Apple Driving Focus or Android Driving Mode with parental trust treaties - establish adult executive autonomy.',
     deEscalationScript:
       '"Driving is the greatest privilege and greatest responsibility you have. Our agreement is unconditional: driving focus goes on before the car leaves the driveway. If you ever feel in danger or need guidance, call me immediately with zero penalties."',
     isFeatured: true,
@@ -423,7 +423,7 @@ function findSimulatedResponse(message: string): {
     return {
       matchedFaqs: ['faq-first-phone-plea'],
       tokens: [
-        'Take a deep breath—your child’s plea is fueled by **adrenarche**, an evolutionary developmental shift where peer approval suddenly triggers the brain’s social survival circuit.\n\n',
+        'Take a deep breath - your child’s plea is fueled by **adrenarche**, an evolutionary developmental shift where peer approval suddenly triggers the brain’s social survival circuit.\n\n',
         'When they scream *"Everyone else has it!"*, their limbic system genuinely feels the terror of being ostracized. However, algorithmic social feeds are empirically proven to trigger social comparison loops in brains that have not yet developed prefrontal executive filters.\n\n',
         '### Recommended De-Escalation Script:\n\n',
         '> "I hear how much staying connected with your friends matters to you, and I promise I am not trying to isolate you. Our family policy is that algorithmic social media waits until 8th grade because science shows young brains deserve time to grow without online popularity metrics. Let\'s host Maya and Sarah over this Saturday for a movie and pizza night instead."',
@@ -471,7 +471,7 @@ function findSimulatedResponse(message: string): {
       matchedFaqs: ['faq-screen-transitions'],
       tokens: [
         'During an emotional meltdown, your child is experiencing an **acute amygdala hijack**.\n\n',
-        'Their prefrontal cortex—the part of the brain that governs logic, speech, and consequence analysis—is temporarily offline. Rationalizing, lecturing, or shouting while they are in fight-or-flight only heightens danger signals in their nervous system.\n\n',
+        'Their prefrontal cortex - the part of the brain that governs logic, speech, and consequence analysis - is temporarily offline. Rationalizing, lecturing, or shouting while they are in fight-or-flight only heightens danger signals in their nervous system.\n\n',
         '### The 3-Step Somatic Co-Regulation Protocol:\n\n',
         '1. **Lower your physical posture and tone**: Drop down to eye level, soften your shoulders, and speak in a slow, low voice. Your calm nervous system becomes the anchor that recalibrates theirs.\n',
         '2. **Name the sensation without judgment**: *"Your body is feeling very big and angry right now. I am right here with you."*\n',
@@ -527,7 +527,7 @@ function findSimulatedResponse(message: string): {
     return {
       matchedFaqs: ['faq-screen-transitions'],
       tokens: [
-        'What you just witnessed was **not a character failure or disrespect**—it was an acute **dopamine crash**.\n\n',
+        'What you just witnessed was **not a character failure or disrespect** - it was an acute **dopamine crash**.\n\n',
         'Interactive screens flood the tween brain with dopamine. Abrupt cutoffs plunge dopamine below baseline in under 30 seconds. Their developing prefrontal cortex cannot regulate that emotional freefall.\n\n',
         'Wait 5–10 minutes for their cortisol and adrenaline to settle before knocking on their door.\n\n',
         '### Word-for-Word Script:\n\n',
@@ -554,7 +554,7 @@ function findSimulatedResponse(message: string): {
     return {
       matchedFaqs: ['faq-discord-bullying'],
       tokens: [
-        'Digital exclusion triggers the same neurological pain receptors in the brain as physical injury. Tweens often hide bullying because they dread parents will confiscate their phone—cutting off their entire social lifeline.\n\n',
+        'Digital exclusion triggers the same neurological pain receptors in the brain as physical injury. Tweens often hide bullying because they dread parents will confiscate their phone - cutting off their entire social lifeline.\n\n',
         'Give them the "Zero-Confiscation Safe Harbor" immediately so they feel safe communicating.\n\n',
         '### Script for Tonight:\n\n',
         '> "Thank you for trusting me with this. First promise: I am NOT going to take your phone away or cut you off from your friends. You do not have to carry this hurtful chatter alone. Let\'s screenshot the messages together, mute the channel tonight, and plan our next move over hot chocolate."',

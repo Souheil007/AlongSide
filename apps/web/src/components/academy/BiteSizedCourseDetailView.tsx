@@ -358,7 +358,7 @@ export function resolveLessonTakeaway(
       lesson.reliefTagline ||
       `Actionable developmental neurobiology and parent dialogue for ${lesson.title.toLowerCase()}.`,
     script:
-      "I see how hard this moment is. We don't have to figure it all out at once—let's take one calm breath and work through it together.",
+      "I see how hard this moment is. We don't have to figure it all out at once - let's take one calm breath and work through it together.",
   };
 }
 

@@ -117,9 +117,9 @@ export function AskAdvisorPromptBar({
     const heroPrompts = resolveHeroQuickPrompts(child);
     const placeholder = child
       ? (child.age ?? 10) <= 6
-        ? `Ask Dr. Alongside anything about ${child.name} — e.g. 'Bedtime stalls' or 'TV shutoff tears'...`
-        : `Ask Dr. Alongside anything about ${child.name} — e.g. 'She won’t get off Roblox'...`
-      : "Ask Dr. Alongside anything — e.g. 'How to handle bedtime stalls'...";
+        ? `Ask Dr. Alongside anything about ${child.name} - e.g. 'Bedtime stalls' or 'TV shutoff tears'...`
+        : `Ask Dr. Alongside anything about ${child.name} - e.g. 'She won’t get off Roblox'...`
+      : "Ask Dr. Alongside anything - e.g. 'How to handle bedtime stalls'...";
 
     return (
       <div className={cn('space-y-3', className)}>

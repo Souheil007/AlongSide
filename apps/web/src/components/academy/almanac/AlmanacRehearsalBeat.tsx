@@ -132,7 +132,7 @@ export function AlmanacRehearsalBeat({
                 data-testid="skip-instinct-btn"
                 className="mt-2.5 inline-flex min-h-[44px] items-center gap-1.5 bg-transparent border-0 px-0.5 py-2 text-[13px] font-medium text-[var(--mute)] transition-colors hover:text-[var(--spruce)] cursor-pointer"
               >
-                <span>Neither sounds like me — jump straight to the calm reframe</span>
+                <span>Neither sounds like me - jump straight to the calm reframe</span>
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </button>
             )}
@@ -153,7 +153,7 @@ export function AlmanacRehearsalBeat({
                   </div>
                 )}
 
-                {/* Annotated Calm Script Card (Zero 6s tone preview button — audio lives in Read | Listen) */}
+                {/* Annotated Calm Script Card (Zero 6s tone preview button - audio lives in Read | Listen) */}
                 <div className="rounded-[14px] border border-[var(--spruce-border)] bg-[var(--spruce-soft)] px-5 py-5 sm:px-6">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <span className="text-[12px] font-semibold text-[var(--spruce)]">
@@ -320,7 +320,7 @@ export function AlmanacRehearsalBeat({
           </div>
         </div>
 
-        {/* Quiet Contextual AI Advisor Bridge (Zero urgency drawer at top — right where questions arise) */}
+        {/* Quiet Contextual AI Advisor Bridge (Zero urgency drawer at top - right where questions arise) */}
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[12px] bg-[var(--canvas-subtle)] px-4 py-3.5">
           <span className="text-[13.5px] text-[var(--body)]">
             Need help adapting this for tonight’s exact situation?

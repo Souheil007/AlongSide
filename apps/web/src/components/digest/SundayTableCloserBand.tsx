@@ -206,7 +206,7 @@ export function SundayTableCloserBand({
         </div>
       )}
 
-      {/* Strictly Ages 7–18 ONLY — omitted from DOM for ages 0–6 */}
+      {/* Strictly Ages 7–18 ONLY - omitted from DOM for ages 0–6 */}
       {showPhrases && (
         <WeeklyPhrasesStrip
           tier={tier}

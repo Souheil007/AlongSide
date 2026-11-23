@@ -204,7 +204,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'https://developingchild.harvard.edu/science/key-concepts/serve-and-return/',
         '2026-11-11T16:30:00.000Z', 'Play & Learning', 3,
         'Five simple serve-and-return moments during everyday chores',
-        'Harvard researchers outline five repeatable steps—notice the serve, return warmly, name the object, take turns, and practice endings—that wire early language and emotional safety.',
+        'Harvard researchers outline five repeatable steps - notice the serve, return warmly, name the object, take turns, and practice endings - that wire early language and emotional safety.',
         'Narrate what your toddler points to instead of quizzing them with flashcards.'
       ),
       // T1 (4-6)
@@ -215,7 +215,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         '2026-11-13T15:00:00.000Z', 'Media & Tech', 4,
         'Choosing calmer preschool shows when autoplay pulls them in',
         'Common Sense Media reviews how streaming autoplay loops prolong preschool screen requests. Turning off autoplay and pairing one episode with a visible timer ends most post-show tears.',
-        'Let an external kitchen timer end screen time so the clock—not your voice—holds the boundary.',
+        'Let an external kitchen timer end screen time so the clock - not your voice - holds the boundary.',
         'Preschoolers grieve transitions because their braking cortex is still under construction.'
       ),
       makeArticle(
@@ -253,7 +253,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'https://childmind.org/article/when-should-you-get-your-kid-a-phone/',
         '2026-11-14T13:30:00.000Z', 'Media & Tech', 5,
         'How to read readiness cues before the first smartphone conversation',
-        'Child Mind Institute outlines maturity signals—sleep protection, impulse recovery, and honesty around mistakes—that matter more than whether classmates already carry phones.',
+        'Child Mind Institute outlines maturity signals - sleep protection, impulse recovery, and honesty around mistakes - that matter more than whether classmates already carry phones.',
         'Treat device autonomy as a graduated driving permit rather than an all-or-nothing birthday switch.'
       ),
       makeArticle(
@@ -265,7 +265,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'Common Sense Media explores why fifth- and sixth-grade group chats escalate quickly after bedtime and gives tweens practical scripts to mute threads calmly.',
         'Offer yourself as a blame shield: "Tell your chat my parents dock my device at 8:30."'
       ),
-      // T4 (13-15) — 3 articles (lead + 2 companions)
+      // T4 (13-15) - 3 articles (lead + 2 companions)
       makeArticle(
         42, 'art-42-t4-1', [T4], true, 1,
         'HealthyChildren.org (AAP)', 'healthychildren.org',
@@ -335,7 +335,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'Media and Children',
         'Dr. Dimitri Christakis, MD, MPH, FAAP', 'TEDx Talks',
         '2026-11-10T15:00:00.000Z', 16, 'Media Science',
-        'Why protecting the 0–2 screen-free window—and avoiding rapid-cut cartoons—protects lifelong focus.',
+        'Why protecting the 0–2 screen-free window - and avoiding rapid-cut cartoons - protects lifelong focus.',
         [
           { seconds: 120, label: '2:00 · Fast cuts & toddler focus' },
           { seconds: 450, label: '7:30 · Real-world pacing' },
@@ -362,7 +362,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
       ),
       makeVideo(
         42, 'vid-42-t1-2', [T1], 2, 'DH9L7vJ03DE',
-        'How Screens Stole Childhood — and How to Get It Back',
+        'How Screens Stole Childhood - and How to Get It Back',
         'Jonathan Haidt, PhD', 'TED',
         '2026-11-12T16:00:00.000Z', 18, 'Screen Norms',
         'Clear, calm play-based family norms you can start right in the preschool years.',
@@ -410,7 +410,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'The Mysterious Workings of the Adolescent Brain',
         'Dr. Sarah-Jayne Blakemore, PhD', 'TED',
         '2026-11-13T14:00:00.000Z', 14, 'Brain Science',
-        'Why sudden tween eye-rolling and peer sensitivity signal social-brain remodeling—not disrespect.',
+        'Why sudden tween eye-rolling and peer sensitivity signal social-brain remodeling - not disrespect.',
         [
           { seconds: 110, label: '1:50 · The remodeling social brain' },
           { seconds: 390, label: '6:30 · Peer evaluation spikes at 10+' },
@@ -420,13 +420,13 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
           'Staying neutral during eye-rolls preserves your steady leadership.',
         ]
       ),
-      // T4 — 3 videos across short (<12), medium (12-25), deep (>25)
+      // T4 - 3 videos across short (<12), medium (12-25), deep (>25)
       makeVideo(
         42, 'vid-42-t4-1', [T4], 1, 'A71Kms6Mvhc',
         'Using Brain Science to Explain Adolescent Risk-Taking',
         'Dr. Laurence Steinberg, PhD', 'Laurence Steinberg',
         '2026-11-14T15:00:00.000Z', 11, '11-Min Essential',
-        'How peer presence shifts teen reward processing—and why warmth paired with clear structure protects adolescents best.',
+        'How peer presence shifts teen reward processing - and why warmth paired with clear structure protects adolescents best.',
         [
           { seconds: 90, label: '1:30 · Reward accelerator vs. frontal brakes' },
           { seconds: 290, label: '4:50 · The peer-multiplier study' },
@@ -443,7 +443,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'Sleep Is Your Superpower',
         'Dr. Matthew Walker, PhD', 'TED',
         '2026-11-11T19:00:00.000Z', 19, 'Sleep Science',
-        'Why REM sleep acts like overnight emotional first aid—and why charging phones outside bedrooms transforms teen mood.',
+        'Why REM sleep acts like overnight emotional first aid - and why charging phones outside bedrooms transforms teen mood.',
         [
           { seconds: 120, label: '2:00 · How sleep locks in memory' },
           { seconds: 540, label: '9:00 · Hidden cost of sleep debt' },
@@ -458,7 +458,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'The Teenage Brain (3 Key Highlights)',
         'Dr. Frances E. Jensen, MD, FACP', 'Politics and Prose',
         '2026-11-09T13:00:00.000Z', 67, 'Deep Dive Talk',
-        'Why the teen brain wires back-to-front—and how acting as their calm frontal-lobe coach keeps communication open.',
+        'Why the teen brain wires back-to-front - and how acting as their calm frontal-lobe coach keeps communication open.',
         [
           { seconds: 300, label: '5:00 · Why the teen brain is 80% wired' },
           { seconds: 1380, label: '23:00 · Sleep, stress & reactivity' },
@@ -470,7 +470,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
       ),
       makeVideo(
         42, 'vid-42-t5-1', [T5], 1, 'CyElHdaqkjo',
-        'How to Raise Successful Kids — Without Over-Parenting',
+        'How to Raise Successful Kids - Without Over-Parenting',
         'Julie Lythcott-Haims, JD', 'TED',
         '2026-11-12T11:00:00.000Z', 14, 'Autonomy Talk',
         'Stepping smoothly from daily household manager into a trusted adult consultant.',
@@ -480,7 +480,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         ],
         [
           'Real household responsibility predicts young-adult thriving.',
-          'Greet your teen with love first—not a quiz about deadlines.',
+          'Greet your teen with love first - not a quiz about deadlines.',
         ]
       ),
     ],
@@ -506,13 +506,13 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
       makeDinner(
         42, 'dp-42-t3-1', [T3], 1,
         'What is one unwritten rule in your grade right now that adults totally misunderstand?',
-        'Positions your tween as the cultural guide—listen with warmth and zero eye-rolling.',
+        'Positions your tween as the cultural guide - listen with warmth and zero eye-rolling.',
         'Which part of that rule feels fair, and which part feels exhausting?'
       ),
       makeDinner(
         42, 'dp-42-t4-1', [T4], 1,
         'What is one expectation adults put on teens today that feels completely out of date?',
-        'Stay genuinely curious and resist defending your generation—listen for what feels heavy.',
+        'Stay genuinely curious and resist defending your generation - listen for what feels heavy.',
         'What would a more realistic version of that expectation look like in our house?'
       ),
       makeDinner(
@@ -540,32 +540,32 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'Unwritten schoolyard rule that once you agree to a card or toy swap, it cannot be undone.',
         1, 'Classic playground phrase', '"Even with \'no backsies,\' good friends check in when someone felt rushed."'),
       makePhrase(42, 'ph-42-t3-1', [T3], 1, 'Crashout', 'Over-the-top meltdown',
-        'Losing all cool over a tiny annoyance or game defeat—usually said playfully about dramatic reactions.',
-        3, 'Understand, skip saying aloud', '"Sounds like that match got intensely frustrating—want ten minutes to reset?"'),
+        'Losing all cool over a tiny annoyance or game defeat - usually said playfully about dramatic reactions.',
+        3, 'Understand, skip saying aloud', '"Sounds like that match got intensely frustrating - want ten minutes to reset?"'),
       makePhrase(42, 'ph-42-t3-2', [T3], 2, 'Cooked', 'Exhausted or doomed',
         'Dramatic shorthand for feeling completely behind or worn out before a quiz or deadline.',
-        2, 'Okay with a light smile', '"You sound stretched thin on that project—want to break step one into ten minutes?"'),
+        2, 'Okay with a light smile', '"You sound stretched thin on that project - want to break step one into ten minutes?"'),
       makePhrase(42, 'ph-42-t3-3', [T3], 3, 'Aura', 'Unspoken social cool factor',
-        'Playful imaginary scoreboard of dignity—doing something smooth gains aura, tripping loses aura.',
+        'Playful imaginary scoreboard of dignity - doing something smooth gains aura, tripping loses aura.',
         3, 'Understand, skip saying aloud', '"Funny how fast everyone forgets awkward moments even when they feel huge."'),
       makePhrase(42, 'ph-42-t4-1', [T4], 1, 'Glazing', 'Over-the-top flattery',
         'Teasing someone for praising a celebrity, athlete, or friend way too enthusiastically.',
-        3, 'Best left to teens', '"Sounds like they are really enthusiastic about that—what did you think of it?"'),
+        3, 'Best left to teens', '"Sounds like they are really enthusiastic about that - what did you think of it?"'),
       makePhrase(42, 'ph-42-t4-2', [T4], 2, 'Locked In', 'Deeply focused and determined',
         'Entering a zone of serious concentration for a big game, exam review, or creative build.',
-        1, 'Natural for parents too', '"I can tell you are really locked in on that assignment—I will leave a snack by the door."'),
+        1, 'Natural for parents too', '"I can tell you are really locked in on that assignment - I will leave a snack by the door."'),
       makePhrase(42, 'ph-42-t4-3', [T4], 3, 'Left on Read', 'Seen message, no reply',
-        'When a read receipt shows a peer opened a message without answering—often stirring teen anxiety.',
+        'When a read receipt shows a peer opened a message without answering - often stirring teen anxiety.',
         1, 'Everyday digital phrase', '"Silent read receipts feel stingy, even when people are just busy."'),
       makePhrase(42, 'ph-42-t5-1', [T5], 1, 'Soft Launch', 'Subtle reveal on social media',
         'Hinting at a new relationship, job, or college plan with a low-key post instead of a big announcement.',
         2, 'Fine in casual conversation', '"It makes sense wanting to keep new things low-pressure while you figure them out."'),
       makePhrase(42, 'ph-42-t5-2', [T5], 2, 'Delulu', 'Playfully unrealistic optimism',
         'Self-deprecating joke about clinging to a wildly optimistic hope, from concert tickets to dream offers.',
-        3, 'Understand, skip saying aloud', '"Having big hopes is healthy—let us also map a solid backup plan you like."'),
+        3, 'Understand, skip saying aloud', '"Having big hopes is healthy - let us also map a solid backup plan you like."'),
       makePhrase(42, 'ph-42-t5-3', [T5], 3, 'Bed Rotting', 'Extended low-energy lounging',
         'Spending hours scrolling or resting under the covers to decompress after a draining week.',
-        2, 'Helpful vocabulary to know', '"Long weeks drain everyone—want a quiet walk or coffee later?"'),
+        2, 'Helpful vocabulary to know', '"Long weeks drain everyone - want a quiet walk or coffee later?"'),
     ],
   },
   {
@@ -613,9 +613,9 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         '2026-11-04T14:20:00.000Z', 'Social & Peers', 4,
         'Navigating shifting elementary and middle-school friendships calmly',
         'Child Mind Institute notes that friendship reshuffling is developmentally normal, even when it feels intense in the moment.',
-        'Avoid bad-mouthing former friends—stay steady while helping your child diversify activities.'
+        'Avoid bad-mouthing former friends - stay steady while helping your child diversify activities.'
       ),
-      // T4 & T5 — 3 articles so week-switching tests verify distinct 3-item counts across #42 and #41
+      // T4 & T5 - 3 articles so week-switching tests verify distinct 3-item counts across #42 and #41
       makeArticle(
         41, 'art-41-t4-1', [T4, T5], true, 1,
         'Greater Good Magazine', 'greatergood.berkeley.edu',
@@ -716,7 +716,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
           { seconds: 900, label: '15:00 · Becoming an emotional shock absorber' },
         ],
         [
-          'Mental health means riding normal big waves with coping tools—not constant cheerfulness.',
+          'Mental health means riding normal big waves with coping tools - not constant cheerfulness.',
           'Side-by-side walks invite honest disclosure effortlessly.',
         ]
       ),
@@ -724,7 +724,7 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
     dinnerPrompts: [
       makeDinner(
         41, 'dp-41-t0-1', [T0, T1], 1,
-        'What felt super cozy or funny in your body today—stretching tall like a giraffe or stomping like a bear?',
+        'What felt super cozy or funny in your body today - stretching tall like a giraffe or stomping like a bear?',
         'Invites playful somatic awareness for toddlers and preschoolers.',
         'Can we both do our slowest sleepy bear stretch together?'
       ),
@@ -755,8 +755,8 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         'Playful nudge to step away from intense online arguments and reconnect with the real world.',
         2, 'Lighthearted reminder', '"Honestly, both of us probably need ten minutes outside after a long screen day."'),
       makePhrase(41, 'ph-41-t4-2', [T4, T5], 2, 'Main Character', 'Acting like the center of a movie',
-        'Playfully framing everyday moments as cinematic—or teasing someone for dramatic flair.',
-        2, 'Fun in casual conversation', '"Love that you had a good moment today—tell me the highlight."'),
+        'Playfully framing everyday moments as cinematic - or teasing someone for dramatic flair.',
+        2, 'Fun in casual conversation', '"Love that you had a good moment today - tell me the highlight."'),
       makePhrase(41, 'ph-41-t4-3', [T4, T5], 3, 'Doomscrolling', 'Compulsive late-night scrolling',
         'Continuing to swipe through heavy posts long after it stops feeling restful.',
         1, 'Common across ages', '"Leaving phones across the room at night helps both of us avoid doomscrolling."'),

@@ -196,7 +196,7 @@ export function BoredomBusterGenerator() {
               </CardTitle>
             </div>
             <CardDescription className="text-xs text-slate-600">
-              Why boredom is neurological gold—and how giving into screen rescue aborts the creative ignition sequence.
+              Why boredom is neurological gold - and how giving into screen rescue aborts the creative ignition sequence.
             </CardDescription>
           </div>
 

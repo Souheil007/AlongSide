@@ -15,7 +15,7 @@ const DEFAULT_CALM: BrainReadout[] = [
     name: 'Upstairs Braking Cortex',
     value: 'Online',
     tone: 'spruce',
-    desc: 'Connected smoothly to the emotional center—able to hear choices, practice words, and feel safe.',
+    desc: 'Connected smoothly to the emotional center - able to hear choices, practice words, and feel safe.',
   },
   {
     name: 'Downstairs Emotional Core',
@@ -36,7 +36,7 @@ const DEFAULT_STORM: BrainReadout[] = [
     name: 'Downstairs Emotional Core',
     value: 'Full Alarm',
     tone: 'amber',
-    desc: 'Flooded with stress signals—needs your calm posture and warm low voice first.',
+    desc: 'Flooded with stress signals - needs your calm posture and warm low voice first.',
   },
 ];
 
