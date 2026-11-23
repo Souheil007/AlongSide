@@ -60,4 +60,21 @@ describe('MarkdownMessage Component', () => {
     expect(html).toContain('<li');
     expect(html).toContain('Sleep battles</strong>');
   });
+
+  it('renders safe https links and neutralizes javascript: and data: xss payloads', () => {
+    const safeMarkdown = 'Read the [Academy Overview](https://alongside.care/academy) or [jump](#intro).';
+    const safeHtml = renderToStaticMarkup(<MarkdownMessage content={safeMarkdown} />);
+
+    expect(safeHtml).toContain('<a');
+    expect(safeHtml).toContain('href="https://alongside.care/academy"');
+    expect(safeHtml).toContain('Academy Overview</a>');
+
+    const maliciousMarkdown = 'Click [here](javascript:alert(1)) or [download](data:text/html,<script>alert(1)</script>) or [relative](//evil.com).';
+    const maliciousHtml = renderToStaticMarkup(<MarkdownMessage content={maliciousMarkdown} />);
+
+    expect(maliciousHtml).not.toContain('href="javascript:');
+    expect(maliciousHtml).not.toContain('href="data:');
+    expect(maliciousHtml).not.toContain('href="//evil.com');
+    expect(maliciousHtml).toContain('Click here or download or relative.');
+  });
 });

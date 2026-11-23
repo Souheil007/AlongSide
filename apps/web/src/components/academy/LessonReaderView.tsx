@@ -25,7 +25,7 @@ import {
   AlmanacRehearsalBeat,
   PartnerShareModal,
 } from './almanac';
-import { cn } from '@/lib/utils';
+import { cn, isSafeUrl } from '@/lib/utils';
 
 export interface LessonReaderViewProps {
   lesson: AcademyLessonDTO;
@@ -47,7 +47,7 @@ export function renderInlineMarkdown(text: string): React.ReactNode {
   if (!text) return null;
 
   const tokens = text.split(
-    /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\([^)]+\))/g
+    /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\((?:[^()]+|\([^()]*\))*\))/g
   );
   return tokens.map((token, i) => {
     if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
@@ -78,15 +78,20 @@ export function renderInlineMarkdown(text: string): React.ReactNode {
         </code>
       );
     }
-    const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (linkMatch) {
+    const linkMatch = token.match(/^\[([^\]]+)\]\(((?:[^()]+|\([^()]*\))*)\)$/);
+    if (linkMatch && linkMatch[1] && linkMatch[2]) {
+      const linkText = linkMatch[1];
+      const linkHref = linkMatch[2];
+      if (!isSafeUrl(linkHref)) {
+        return linkText;
+      }
       return (
         <Link
           key={i}
-          href={linkMatch[2]!}
+          href={linkHref}
           className="text-[var(--spruce)] underline hover:text-[var(--spruce-hover)]"
         >
-          {linkMatch[1]}
+          {linkText}
         </Link>
       );
     }

@@ -212,8 +212,13 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
 
   // Cross-Origin Resource Sharing
   // When credentials: true is enabled, the browser strictly forbids Access-Control-Allow-Origin: *
-  // We dynamically reflect the calling origin if it matches the configured CORS_ORIGIN,
-  // ends with .vercel.app (for Vercel production & preview deployments), or is localhost.
+  // To prevent CORS reflection and credential theft vulnerabilities, origin validation requires:
+  // 1. Explicit inclusion in configured CORS_ORIGIN,
+  // 2. Exact match against authorized Alongside Vercel domains (preventing third-party *.vercel.app),
+  // 3. Strict regex anchored to local loopback hosts (preventing attacker-localhost.com).
+  const LOCALHOST_ORIGIN_REGEX = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i;
+  const ALONGSIDE_VERCEL_REGEX = /^https:\/\/alongside(-[a-z0-9-]+)?\.vercel\.app$/i;
+
   await app.register(cors, {
     origin: (origin, cb) => {
       // Allow requests with no origin (e.g. server-to-server, curl, mobile apps)
@@ -221,15 +226,16 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
         return cb(null, true);
       }
 
-      const allowedOrigins = corsOrigin.split(',').map((o) => o.trim());
+      const allowedOrigins = corsOrigin
+        .split(',')
+        .map((o) => o.trim())
+        .filter(Boolean);
 
-      if (
-        corsOrigin === '*' ||
-        allowedOrigins.includes(origin) ||
-        origin.endsWith('.vercel.app') ||
-        origin.includes('localhost') ||
-        origin.includes('127.0.0.1')
-      ) {
+      const isExplicitlyAllowed = allowedOrigins.includes(origin);
+      const isLocalhost = LOCALHOST_ORIGIN_REGEX.test(origin);
+      const isAlongsideVercel = ALONGSIDE_VERCEL_REGEX.test(origin);
+
+      if (isExplicitlyAllowed || isLocalhost || isAlongsideVercel) {
         // Return origin to reflect calling origin with credentials
         return cb(null, origin);
       }
