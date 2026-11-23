@@ -59,6 +59,9 @@ const withPWA = withPWAInit({
 const nextConfig = {
   transpilePackages: ["@alongside/shared"],
   reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

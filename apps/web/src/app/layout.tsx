@@ -1,11 +1,31 @@
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Inter, JetBrains_Mono, Newsreader } from 'next/font/google';
 import './globals.css';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { Header } from '@/components/shared/Header';
 import { Footer } from '@/components/shared/Footer';
 import { OfflineBanner } from '@/components/shared/OfflineBanner';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-newsreader',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -35,20 +55,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full scroll-smooth">
+    <html
+      lang="en"
+      className={`h-full scroll-smooth ${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="flex min-h-screen flex-col bg-[#FBFBF9] text-[#111413] font-sans antialiased selection:bg-[#EAF3EE] selection:text-[#143D2B]">
         <QueryProvider>

@@ -124,8 +124,9 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        serif: ['Newsreader', 'Georgia', 'serif'],
+        serif: ['var(--font-newsreader)', 'Newsreader', 'Georgia', 'serif'],
         sans: [
+          'var(--font-inter)',
           'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
@@ -133,7 +134,7 @@ const config: Config = {
           'Roboto',
           'sans-serif',
         ],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        mono: ['var(--font-mono)', '"JetBrains Mono"', 'monospace'],
       },
     },
   },
