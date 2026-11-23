@@ -19,11 +19,21 @@ export interface CompiledProfileResult {
   rawContent: string;
 }
 
+export interface EncryptedDnsProfileInput {
+  childName: string;
+  dohUrl: string;
+  serverAddresses: string[];
+  profileIdentifierSuffix: string;
+}
+
 export interface DeviceProfileCompiler {
   compileAndSign(
     agreement: AgreementRecord,
     platform: DevicePlatform,
     options?: { bedtimeCurfewTime?: string; childName?: string }
+  ): Promise<CompiledProfileResult>;
+  compileEncryptedDnsProfile(
+    input: EncryptedDnsProfileInput
   ): Promise<CompiledProfileResult>;
 }
 
@@ -179,6 +189,63 @@ export class StandardDeviceProfileCompiler implements DeviceProfileCompiler {
       sha256Checksum,
       isSigned: false,
       rawContent: rawJson,
+    };
+  }
+
+  /**
+   * Compiles an official Apple Encrypted DNS-over-HTTPS (.mobileconfig) payload
+   * using com.apple.dnsSettings.managed. Works globally on Wi-Fi and 5G cellular
+   * on normal unsupervised consumer iPhones and iPads (iOS 14+).
+   */
+  async compileEncryptedDnsProfile(
+    input: EncryptedDnsProfileInput
+  ): Promise<CompiledProfileResult> {
+    const profileUuid = randomUUID();
+    const dnsPayloadUuid = randomUUID();
+    const safeChildName = input.childName.trim() || 'Child';
+    const cleanSuffix = input.profileIdentifierSuffix.replace(/[^a-zA-Z0-9-]/g, '');
+
+    const mobileConfigDict = {
+      PayloadType: 'Configuration',
+      PayloadVersion: 1,
+      PayloadIdentifier: `care.alongside.shield.${cleanSuffix || profileUuid}`,
+      PayloadUUID: profileUuid,
+      PayloadDisplayName: `Alongside Shield (${safeChildName})`,
+      PayloadDescription: `Enforces encrypted family-safe DNS filtering and scheduled protection on Wi-Fi and cellular networks for ${safeChildName}.`,
+      PayloadOrganization: 'Alongside Family Systems',
+      PayloadRemovalDisallowed: false,
+      PayloadContent: [
+        {
+          PayloadType: 'com.apple.dnsSettings.managed',
+          PayloadVersion: 1,
+          PayloadIdentifier: `care.alongside.shield.dns.${dnsPayloadUuid}`,
+          PayloadUUID: dnsPayloadUuid,
+          PayloadDisplayName: `Alongside Encrypted DNS (${safeChildName})`,
+          PayloadDescription: 'Routes DNS queries over HTTPS through Alongside family protection.',
+          DNSSettings: {
+            DNSProtocol: 'HTTPS',
+            ServerURL: input.dohUrl,
+            ServerAddresses: input.serverAddresses,
+          },
+          // Must remain false on unsupervised consumer iOS devices so installation succeeds
+          ProhibitDisablement: false,
+        },
+      ],
+    };
+
+    const rawXml = buildPlist(mobileConfigDict);
+    const signResult = await this.signer.sign(rawXml);
+    const sha256Checksum = createHash('sha256')
+      .update(signResult.signedBuffer)
+      .digest('hex');
+
+    return {
+      payloadBuffer: signResult.signedBuffer,
+      mimeType: 'application/x-apple-aspen-config; charset=utf-8',
+      profileUuid,
+      sha256Checksum,
+      isSigned: signResult.isSigned,
+      rawContent: rawXml,
     };
   }
 }

@@ -228,6 +228,7 @@ model Child {
 
   agreements        Agreement[]
   deviceProfiles    DeviceProfile[]
+  deviceShield      DeviceShieldConfig?
   quizAttempts      QuizAttempt[]
   milestones        ChildMilestone[]
 
@@ -255,6 +256,32 @@ model DeviceProfile {
   @@index([childId])
   @@index([enrollmentToken])
   @@map("device_profiles")
+}
+
+model DeviceShieldConfig {
+  id                    String         @id @default(uuid())
+  childId               String         @unique
+  child                 Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
+  platform              DevicePlatform @default(APPLE_IOS)
+  providerType          String         @default("NEXTDNS")
+  providerProfileId     String?
+  enrollmentToken       String         @unique @default(uuid())
+  blockAdultContent     Boolean        @default(true)
+  safeSearch            Boolean        @default(true)
+  youtubeRestrictedMode Boolean        @default(true)
+  blockBypass           Boolean        @default(true)
+  blockedServices       String[]       @default([])
+  bedtimeServices       String[]       @default([])
+  bedtimeEnabled        Boolean        @default(true)
+  bedtimeStart          String         @default("20:30")
+  bedtimeEnd            String         @default("06:30")
+  timezone              String         @default("UTC")
+  lastSyncedAt          DateTime?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@index([enrollmentToken])
+  @@map("device_shield_configs")
 }
 
 // ----------------------------------------------------

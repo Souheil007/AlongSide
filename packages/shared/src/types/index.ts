@@ -8,6 +8,7 @@ import type {
   DevelopmentalTier,
   DevicePlatform,
   DeviceProfileStatus,
+  DnsProviderType,
   DietaryStage,
   DigestContentStatus,
   DigestIssueStatus,
@@ -24,6 +25,8 @@ import type {
   QuizType,
   RoadType,
   Role,
+  ShieldBlockableService,
+  ShieldPlatform,
   SubscriptionTier,
   NutritionStage,
   LessonArchetype,
@@ -809,4 +812,41 @@ export interface ChokingHazardDTO {
   mechanism: string;
   safeModification: string;
   avoidUntilAgeYears: number;
+}
+
+// ----------------------------------------------------
+// LIVE DNS PARENTAL CONTROL SHIELD DTOS (PLAN-52)
+// ----------------------------------------------------
+
+export interface DeviceShieldHealthDTO {
+  isActive: boolean;
+  totalQueries24h: number;
+  blockedQueries24h: number;
+  checkedAt: string | null;
+}
+
+export interface DeviceShieldDTO {
+  id: string | null;
+  childId: string;
+  platform: ShieldPlatform;
+  providerType: DnsProviderType;
+  isProvisioned: boolean;
+  dohUrl: string | null;
+  dotHostname: string | null;
+  ipv4Servers: string[];
+  enrollmentToken: string | null;
+  appleProfileDownloadUrl: string | null;
+  enrollmentQrUrl: string | null;
+  blockAdultContent: boolean;
+  safeSearch: boolean;
+  youtubeRestrictedMode: boolean;
+  blockBypass: boolean;
+  blockedServices: ShieldBlockableService[];
+  bedtimeServices: ShieldBlockableService[];
+  bedtimeEnabled: boolean;
+  bedtimeStart: string;
+  bedtimeEnd: string;
+  timezone: string;
+  lastSyncedAt: string | null;
+  health: DeviceShieldHealthDTO;
 }
