@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/Input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
 import { useAuth } from "@/hooks/useAuth";
 import { ApiClientError } from "@/lib/api/client";
-import { AlertCircle, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { AlongsideLogo } from "@/components/shared/AlongsideLogo";
 
 export function RegisterForm() {
@@ -19,6 +19,7 @@ export function RegisterForm() {
   const { register: registerAuth, isRegistering, isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [serverError, setServerError] = React.useState<string | null>(null);
   const [registeredEmail, setRegisteredEmail] = React.useState<string | null>(null);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   // If already authenticated, redirect to dashboard
   React.useEffect(() => {
@@ -51,7 +52,7 @@ export function RegisterForm() {
       } else if (err instanceof Error) {
         setServerError(err.message);
       } else {
-        setServerError("Failed to create account. Please try again.");
+        setServerError("Couldn't create your account. Please try again.");
       }
     }
   };
@@ -61,27 +62,25 @@ export function RegisterForm() {
   if (registeredEmail) {
     return (
       <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white text-center p-6 sm:p-8">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF3EE] text-[#143D2B] mb-4 shadow-xs">
-          <CheckCircle2 className="h-7 w-7 text-[#143D2B]" />
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#EAF3EE] text-[#143D2B] mb-4">
+          <CheckCircle2 className="h-6 w-6 text-[#143D2B]" />
         </div>
         <CardTitle className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#111413]">
-          Account Created!
+          Account created
         </CardTitle>
-        <p className="text-xs sm:text-sm text-[#494F4C] mt-2.5 leading-relaxed">
-          Your parent account for <span className="font-semibold text-slate-800">{registeredEmail}</span> has been successfully created.
-        </p>
-        <p className="text-xs text-[#858C88] mt-1.5 leading-relaxed">
-          Please sign in to set up your first child profile and explore Alongside free during early access.
+        <p className="text-sm text-[#494F4C] mt-2 leading-relaxed">
+          Your account for <span className="font-semibold text-[#111413]">{registeredEmail}</span> is ready. Sign in to add your first child profile.
         </p>
         <div className="mt-6">
           <Button
             type="button"
+            variant="forest"
             onClick={() =>
               router.push(`/login?registered=true&email=${encodeURIComponent(registeredEmail)}`)
             }
-            className="w-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white min-h-[44px] font-semibold text-xs rounded-full shadow-sm cursor-pointer"
+            className="w-full min-h-[44px] font-semibold"
           >
-            Proceed to Sign In
+            Sign in
           </Button>
         </div>
       </Card>
@@ -90,21 +89,17 @@ export function RegisterForm() {
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-sm border-[#E3E3DC] rounded-[10px] bg-white">
-      <CardHeader className="space-y-1 text-center">
-        <div className="flex justify-center pb-2">
-          <Link href="/" aria-label="AlongSide Home">
+      <CardHeader className="space-y-1.5 text-center">
+        <div className="flex justify-center pb-1">
+          <Link href="/" aria-label="Alongside Home">
             <AlongsideLogo size="lg" showWordmark={false} />
           </Link>
         </div>
-        <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-[#EAF3EE] px-3 py-1 text-xs font-mono font-semibold text-[#143D2B] border border-[#143D2B]/20 mb-2">
-          <ShieldCheck className="h-3.5 w-3.5 text-[#143D2B]" />
-          EARLY ACCESS • FREE, NO CARD REQUIRED
-        </div>
         <CardTitle className="font-serif text-3xl font-bold tracking-tight text-[#111413]">
-          Begin your family journey
+          Create your free account
         </CardTitle>
         <CardDescription className="text-sm text-[#494F4C]">
-          Create calm, clear digital boundaries tailored to your child’s development
+          Calm parenting for ages 0–18. Free, no card needed.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -122,7 +117,7 @@ export function RegisterForm() {
           <Input
             id="fullName"
             type="text"
-            label="Full name"
+            label="Your name"
             autoComplete="name"
             placeholder="Sarah Jenkins"
             error={errors.fullName?.message}
@@ -132,33 +127,40 @@ export function RegisterForm() {
           <Input
             id="email"
             type="email"
-            label="Email address"
+            label="Email"
             autoComplete="email"
             placeholder="sarah@example.com"
             error={errors.email?.message}
             {...register("email")}
           />
 
-          <Input
-            id="password"
-            type="password"
-            label="Password (min. 8 characters)"
-            autoComplete="new-password"
-            placeholder="••••••••"
-            error={errors.password?.message}
-            {...register("password")}
-          />
-
-          <div className="rounded-[5px] bg-[#F4F4F0] p-3 text-xs text-[#494F4C] space-y-1.5 border border-[#E3E3DC]">
-            <div className="flex items-center gap-2 text-[#111413] font-semibold">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#143D2B]" />
-              <span>What’s included during early access:</span>
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="block text-xs font-semibold text-[#111413]">
+                Password
+              </label>
+              <span className="text-xs text-[#858C88]">8+ characters</span>
             </div>
-            <ul className="list-disc list-inside space-y-0.5 text-[#494F4C] pl-1 text-[11px]">
-              <li>Continuous 0–18 Lifespan Advisory roadmap</li>
-              <li>Bilateral Family Pact builder &amp; vector agreement</li>
-              <li>Neutral 8:30 PM bedtime curfew hardware lock</li>
-            </ul>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                placeholder="Create a password"
+                className="pr-16"
+                error={errors.password?.message}
+                {...register("password")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+                className="absolute right-1 top-0 inline-flex h-11 min-w-[44px] items-center justify-center rounded-[4px] px-2.5 text-xs font-semibold text-[#858C88] transition-colors hover:text-[#111413] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
@@ -170,10 +172,10 @@ export function RegisterForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating your account...
+                Creating account...
               </>
             ) : (
-              "Create Free Account"
+              "Create free account"
             )}
           </Button>
 

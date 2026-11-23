@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 
 export const metadata: Metadata = {
-  title: 'Get Free Early Access',
-  description: 'Create your parent account for free early access to Alongside - no credit card required.',
+  title: 'Create Free Account',
+  description: 'Calm parenting for ages 0–18. Free early access, no credit card needed.',
 };
 
 export default function RegisterPage() {
