@@ -11,12 +11,8 @@ import {
   FileCheck2,
   Compass,
   Printer,
-  Layers,
-  ChevronDown,
-  ChevronUp,
   Check,
   Phone,
-  Flame,
   Plus,
 } from 'lucide-react';
 import {
@@ -112,7 +108,6 @@ export function DevicesManagementView({
   // Modals state
   const [enrollmentModalOpen, setEnrollmentModalOpen] = React.useState(false);
   const [printModalOpen, setPrintModalOpen] = React.useState(false);
-  const [ladderOpen, setLadderOpen] = React.useState(false);
   const [callAlert, setCallAlert] = React.useState<string | null>(null);
 
   const handleSimulateCall = (contact: 'Mom' | 'Dad') => {
@@ -621,96 +616,6 @@ export function DevicesManagementView({
               </div>
             </div>
           </section>
-
-          {/* PROGRESSIVE DISCLOSURE: BRIDGE DEVICE AUTONOMY LADDER */}
-          <div className="border border-[#E3E3DC] rounded-[10px] bg-white overflow-hidden shadow-2xs">
-            <button
-              type="button"
-              onClick={() => setLadderOpen((prev) => !prev)}
-              className="w-full p-4 flex items-center justify-between text-left hover:bg-[#F4F4F0]/50 transition-colors"
-            >
-              <div className="flex items-center gap-2.5">
-                <Layers className="h-4 w-4 text-[#143D2B]" />
-                <span className="font-serif text-sm font-semibold text-[#111413]">
-                  The Bridge Device Autonomy Ladder (4 Stages)
-                </span>
-                <span className="text-[11px] font-mono text-[#858C88] hidden sm:inline">
-                  Gradual digital scaffolding before full smartphone
-                </span>
-              </div>
-              {ladderOpen ? (
-                <ChevronUp className="h-4 w-4 text-[#858C88]" />
-              ) : (
-                <ChevronDown className="h-4 w-4 text-[#858C88]" />
-              )}
-            </button>
-
-            {ladderOpen && (
-              <div className="p-5 border-t border-[#E3E3DC] bg-[#FAF7F2]/50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
-                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
-                    Stage 1: Ages 7–9
-                  </span>
-                  <h4 className="font-serif font-bold text-[#111413]">
-                    Smartwatch GPS (Gizmo / Apple Watch)
-                  </h4>
-                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
-                    Voice calls to whitelisted family only, GPS tracking, zero internet browser or social media.
-                  </p>
-                </div>
-                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
-                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
-                    Stage 2: Ages 10–11
-                  </span>
-                  <h4 className="font-serif font-bold text-[#111413]">
-                    Curated Phone (Pinwheel / Gabb)
-                  </h4>
-                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
-                    Texting, maps, family photos, but zero addictive app store, games, or open algorithmic web.
-                  </p>
-                </div>
-                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
-                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
-                    Stage 3: Ages 11–13
-                  </span>
-                  <h4 className="font-serif font-bold text-[#111413]">
-                    Smartphone with Bedtime Pact
-                  </h4>
-                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
-                    Personal smartphone with AlongSide signed bilateral treaty and automated {curfewDisplay} sleep lockout.
-                  </p>
-                </div>
-                <div className="bg-white p-3.5 rounded-[8px] border border-[#E3E3DC] space-y-1.5">
-                  <span className="font-mono text-[10px] text-[#143D2B] font-bold block">
-                    Stage 4: Ages 14+
-                  </span>
-                  <h4 className="font-serif font-bold text-[#111413]">
-                    Autonomous Circadian Transition
-                  </h4>
-                  <p className="text-[#494F4C] text-[11px] leading-relaxed">
-                    Independent charging station outside the bedroom, internal executive function self-regulation.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* DISCOVERABILITY LINK TO YOUTH CULTURE DIGEST */}
-          <div className="p-4 rounded-[10px] bg-[#F4F4F0] border border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2.5">
-              <Flame className="h-4 w-4 text-[#B45309] shrink-0" />
-              <span className="text-[#494F4C]">
-                Need help deciphering youth slang or gaming exploit risks?
-              </span>
-            </div>
-            <Link
-              href="/digest"
-              className="font-mono font-medium text-[#143D2B] hover:underline flex items-center gap-1 self-start sm:self-auto shrink-0"
-            >
-              <span>Explore Sunday Youth Culture Digest</span>
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
         </div>
       )}
 
