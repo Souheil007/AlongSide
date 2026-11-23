@@ -6,6 +6,10 @@ import {
   DevicesManagementView,
   getRecommendedCurfew,
 } from '@/components/devices/DevicesManagementView';
+import {
+  computeEveningWindDown,
+  formatMinutes12Hour,
+} from '@/components/devices/EarlyTierSanctuaryView';
 import { RoadType, DevelopmentalTier, type ChildDTO } from '@alongside/shared';
 
 const queryClient = new QueryClient({
@@ -192,33 +196,114 @@ describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-
     });
   });
 
-  describe('Toddler Tier 0 Adaptation View (Toby Age 2)', () => {
+  describe('Early Tier Home Screen Rhythm Views (Ages 0–6)', () => {
     const toddlerProps = {
       child: toddlerToby,
       children: [preteenLeo, toddlerToby],
     };
 
-    it('renders the Developmental Clarification for Toddlers instead of contracts', () => {
+    it('renders the calm Home Screen Rhythm for toddler Toby (Age 2) with interactive wind-down and scripts', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, toddlerProps)
       );
 
-      expect(html).toContain("Toby&#x27;s Screen-Free Sanctuary (Age 2)");
-      expect(html).toContain('Tier 0: Toddler Habit');
-      expect(html).toContain("Why Toddlers Don&#x27;t Sign Digital Pacts");
-      expect(html).toContain(
-        'prefrontal executive function and bilateral negotiation do not yet exist'
+      expect(html).toContain('Early Screen Rhythm · Toddlerhood (Ages 2–3)');
+      expect(html).toContain("Toby&#x27;s Home Screen Rhythm");
+      expect(html).toContain('30m');
+      expect(html).toContain('Co-viewed, slow-paced media');
+      expect(html).toContain('6:45 PM');
+      expect(html).toContain('7:30 PM');
+
+      // Interactive Adult Home Habits & Screen-Off Script Switcher
+      expect(html).toContain('Zero background TV');
+      expect(html).toContain('Co-view slow shows with autoplay off');
+      expect(html).toContain('When Screens Turn Off');
+      expect(html).toContain('2 min left');
+      expect(html).toContain('Meltdown');
+      expect(html).toContain('/brain-games?childId=test-toby-2');
+
+      // Purged apologetic corporate wording & wrong-age under-2 FaceTime note
+      expect(html).not.toContain('Pact-as-Code Guided Journey');
+      expect(html).not.toContain('Giving a toddler a screen pact causes parental confusion');
+      expect(html).not.toContain('Grandparent FaceTime is the only recommended screen interaction');
+    });
+
+    it('capitalizes lowercase toddler names cleanly (oliver Age 3 -> Oliver)', () => {
+      const toddlerOliver: ChildDTO = {
+        ...toddlerToby,
+        id: 'test-oliver-3',
+        name: 'oliver',
+        age: 3,
+      };
+
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, {
+          child: toddlerOliver,
+          children: [toddlerOliver],
+        })
       );
 
-      // 3 Adult Environmental Routines
-      expect(html).toContain('Step 1: Environmental Calm');
-      expect(html).toContain('Zero Background TV');
+      expect(html).toContain("Oliver&#x27;s Home Screen Rhythm");
+      expect(html).toContain('Age 3');
+      expect(html).toContain('30m');
+    });
 
-      expect(html).toContain('Step 2: Co-Viewing Only');
-      expect(html).toContain('Interactive Video Chat');
+    it('calibrates Screen-Free Infancy view (Age 1) with 0m cap and family video calls', () => {
+      const infantNoah: ChildDTO = {
+        ...toddlerToby,
+        id: 'test-noah-1',
+        name: 'Noah',
+        age: 1,
+        developmentalTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
+      };
 
-      expect(html).toContain('Step 3: Bedtime Sanctuary');
-      expect(html).toContain('7:30 PM Sleep Routine');
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, {
+          child: infantNoah,
+          children: [infantNoah],
+        })
+      );
+
+      expect(html).toContain('Early Screen Rhythm · Infancy (Ages 0–1)');
+      expect(html).toContain("Noah&#x27;s Home Screen Rhythm");
+      expect(html).toContain('0m');
+      expect(html).toContain('Family video calls only');
+      expect(html).toContain('Live family video calls only');
+      expect(html).toContain('7:00 PM');
+    });
+
+    it('routes Early Childhood (Age 5) to the calm Early Screen Rhythm instead of smartphone enrollment', () => {
+      const preschoolerEmma: ChildDTO = {
+        ...toddlerToby,
+        id: 'test-emma-5',
+        name: 'Emma',
+        age: 5,
+        developmentalTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
+      };
+
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, {
+          child: preschoolerEmma,
+          children: [preschoolerEmma],
+        })
+      );
+
+      expect(html).toContain('Early Screen Rhythm · Early Childhood (Ages 4–6)');
+      expect(html).toContain("Emma&#x27;s Home Screen Rhythm");
+      expect(html).toContain('60m');
+      expect(html).toContain('Shared living-room screens only');
+      expect(html).toContain('8:00 PM');
+      expect(html).not.toContain('Scan Device Enrollment QR');
+      expect(html).not.toContain('Zero secret disguise apps');
+    });
+
+    it('computes evening wind-down schedule accurately from target bedtime', () => {
+      expect(formatMinutes12Hour(19 * 60 + 30)).toBe('7:30 PM');
+      expect(computeEveningWindDown(19 * 60 + 30)).toEqual({
+        cutoffTime: '6:45 PM',
+        bridgeTime: '7:05 PM',
+        bedtime: '7:30 PM',
+      });
     });
   });
 
