@@ -17,13 +17,30 @@ import {
   selectActiveChild,
   formatChildAge,
 } from '@/stores/useChildContextStore';
+import dynamic from 'next/dynamic';
 import {
   resolveContextualPrompts,
   type ContextualPrompt,
 } from '@/lib/advisor-context';
-import { ChatFeed } from '@/components/advisor/ChatFeed';
-import { AdvisorComposer } from '@/components/advisor/AdvisorComposer';
 import { cn } from '@/lib/utils';
+
+const ChatFeed = dynamic(
+  () => import('@/components/advisor/ChatFeed').then((mod) => mod.ChatFeed),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex-1 p-6 space-y-4 animate-pulse">
+        <div className="h-16 bg-slate-200/60 rounded-xl" />
+        <div className="h-20 bg-slate-200/40 rounded-xl w-3/4 ml-auto" />
+      </div>
+    ),
+  }
+);
+
+const AdvisorComposer = dynamic(
+  () => import('@/components/advisor/AdvisorComposer').then((mod) => mod.AdvisorComposer),
+  { ssr: false }
+);
 
 export function FloatingAdvisorBubble() {
   const pathname = usePathname();
