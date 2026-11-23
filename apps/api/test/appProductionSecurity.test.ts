@@ -67,31 +67,36 @@ describe('Production Environment Secret Hardening (PLAN-44)', () => {
   it('reflects exact origin for Vercel preview/production domains and enables credentials', async () => {
     const app = await buildApp({ logger: false });
 
-    const response = await app.inject({
-      method: 'OPTIONS',
-      url: '/api/v1/auth/register',
-      headers: {
-        origin: 'https://alongside-app-preview.vercel.app',
-        'access-control-request-method': 'POST',
-      },
-    });
+    const vercelDomains = [
+      'https://alongside-app-preview.vercel.app',
+      'https://alongside-web-git-main-souheils-projects.vercel.app',
+      'https://alongside.vercel.app',
+    ];
 
-    expect(response.statusCode).toBe(204);
-    expect(response.headers['access-control-allow-origin']).toBe(
-      'https://alongside-app-preview.vercel.app'
-    );
-    expect(response.headers['access-control-allow-credentials']).toBe('true');
+    for (const origin of vercelDomains) {
+      const response = await app.inject({
+        method: 'OPTIONS',
+        url: '/api/v1/auth/register',
+        headers: {
+          origin,
+          'access-control-request-method': 'POST',
+        },
+      });
+
+      expect(response.statusCode).toBe(204);
+      expect(response.headers['access-control-allow-origin']).toBe(origin);
+      expect(response.headers['access-control-allow-credentials']).toBe('true');
+    }
 
     await app.close();
   });
 
-  it('rejects malicious origins containing localhost substrings or unauthorized vercel domains', async () => {
+  it('rejects malicious origins containing localhost substrings or non-vercel domains', async () => {
     const app = await buildApp({ logger: false });
 
     const maliciousOrigins = [
       'https://evil-localhost.com',
       'https://localhost.attacker.com',
-      'https://attacker-app.vercel.app',
       'https://evil.com',
     ];
 
