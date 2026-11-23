@@ -1,12 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, isSafeUrl } from '@/lib/utils';
 
 function renderInline(text: string): React.ReactNode {
   if (!text) return null;
-  // Match **bold**, *italic*, _italic_, `code`, and [link](url)
-  const tokens = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\([^)]+\))/g);
+  // Match **bold**, *italic*, _italic_, `code`, and [link](url) with nested parens support
+  const tokens = text.split(
+    /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\((?:[^()]+|\([^()]*\))*\))/g
+  );
   return tokens.map((token, i) => {
     if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
       return (
@@ -36,17 +38,22 @@ function renderInline(text: string): React.ReactNode {
         </code>
       );
     }
-    const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (linkMatch) {
+    const linkMatch = token.match(/^\[([^\]]+)\]\(((?:[^()]+|\([^()]*\))*)\)$/);
+    if (linkMatch && linkMatch[1] && linkMatch[2]) {
+      const linkText = linkMatch[1];
+      const linkHref = linkMatch[2];
+      if (!isSafeUrl(linkHref)) {
+        return linkText;
+      }
       return (
         <a
           key={i}
-          href={linkMatch[2]}
+          href={linkHref}
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#143D2B] underline underline-offset-2 hover:text-[#0E2B1E]"
         >
-          {linkMatch[1]}
+          {linkText}
         </a>
       );
     }

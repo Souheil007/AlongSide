@@ -84,4 +84,31 @@ describe('Production Environment Secret Hardening (PLAN-44)', () => {
 
     await app.close();
   });
+
+  it('rejects malicious origins containing localhost substrings or unauthorized vercel domains', async () => {
+    const app = await buildApp({ logger: false });
+
+    const maliciousOrigins = [
+      'https://evil-localhost.com',
+      'https://localhost.attacker.com',
+      'https://attacker-app.vercel.app',
+      'https://evil.com',
+    ];
+
+    for (const origin of maliciousOrigins) {
+      const response = await app.inject({
+        method: 'OPTIONS',
+        url: '/api/v1/auth/register',
+        headers: {
+          origin,
+          'access-control-request-method': 'POST',
+        },
+      });
+
+      // When CORS origin check fails, fastify-cors returns 500 or does not emit access-control-allow-origin
+      expect(response.headers['access-control-allow-origin']).toBeUndefined();
+    }
+
+    await app.close();
+  });
 });
