@@ -179,14 +179,16 @@ describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-
       expect(html).toContain('/pacts/builder');
     });
 
-    it('renders the Bridge Device Autonomy Ladder and Youth Culture Digest link', () => {
+    it('focuses cleanly on device enrollment and curfew without redundant ladder or cross-sell clutter', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
-      expect(html).toContain('The Bridge Device Autonomy Ladder (4 Stages)');
-      expect(html).toContain('Explore Sunday Youth Culture Digest');
-      expect(html).toContain('/digest');
+      expect(html).toContain('Scan Device Enrollment QR');
+      expect(html).toContain('Bedtime Peace Active');
+      expect(html).not.toContain('The Bridge Device Autonomy Ladder (4 Stages)');
+      expect(html).not.toContain('Need help deciphering youth slang or gaming exploit risks?');
+      expect(html).not.toContain('Explore Sunday Youth Culture Digest');
     });
   });
 
