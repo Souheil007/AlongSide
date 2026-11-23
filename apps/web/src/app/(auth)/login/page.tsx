@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 
 export const metadata: Metadata = {
-  title: 'Log In',
-  description: 'Log in to your Alongside parent account to manage device profiles and family agreements.',
+  title: 'Sign In',
+  description: 'Sign in to your Alongside family space.',
 };
 
 export default function LoginPage() {
