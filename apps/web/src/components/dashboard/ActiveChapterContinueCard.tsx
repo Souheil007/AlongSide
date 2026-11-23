@@ -12,6 +12,8 @@ import {
   DevelopmentalTier,
   ChapterPriority,
   AcademyCategory,
+  interpolateChildCopy,
+  formatCourseTitle,
   type ChildDTO,
 } from '@alongside/shared';
 import { Button } from '@/components/ui/Button';
@@ -241,6 +243,11 @@ export function ActiveChapterContinueCard({
     return childAge.isAutoCalibrated ? childAge.developmentalTier : undefined;
   }, [child, childAge.isAutoCalibrated, childAge.developmentalTier]);
 
+  const t = React.useCallback(
+    (template: string) => interpolateChildCopy(template, child, effectiveTier),
+    [child, effectiveTier]
+  );
+
   const fallbackAnchor = resolveTierAnchor(
     effectiveTier ?? child?.developmentalTier ?? child?.age
   );
@@ -278,12 +285,14 @@ export function ActiveChapterContinueCard({
       (Boolean(effectiveTier) &&
         (isModulesLoading || (needsModuleDetail && isDetailLoading))));
 
-  const courseTitle =
+  const rawCourseTitle =
     moduleDetail?.title ?? activeModule?.title ?? fallbackAnchor.courseTitle;
+  const courseTitle = formatCourseTitle(t(rawCourseTitle));
   const moduleSlug =
     moduleDetail?.slug ?? activeModule?.slug ?? fallbackAnchor.moduleSlug;
-  const summary =
-    moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary;
+  const summary = t(
+    moduleDetail?.summary ?? activeModule?.summary ?? fallbackAnchor.summary
+  );
 
   const allLessons =
     moduleDetail?.lessons && moduleDetail.lessons.length > 0
@@ -293,9 +302,10 @@ export function ActiveChapterContinueCard({
     allLessons.find((l) => !l.isCompleted) || allLessons[0];
 
   const lessonSlug = currentIncompleteLesson?.slug ?? fallbackAnchor.lessonSlug;
-  const lessonTitle =
+  const lessonTitle = t(
     currentIncompleteLesson?.title ??
-    fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '');
+    fallbackAnchor.chapterTitle.replace(/^Chapter \d+:\s*/, '')
+  );
   const readingMinutes =
     currentIncompleteLesson?.readingMinutes ?? fallbackAnchor.readingMinutes;
 
@@ -318,10 +328,11 @@ export function ActiveChapterContinueCard({
           isCurrent = true;
           foundActive = true;
         }
+        const fullTitle = t(les.title);
         return {
           id: idx + 1,
-          title: formatLessonNodeTitle(les.title, idx),
-          fullTitle: les.title,
+          title: formatLessonNodeTitle(fullTitle, idx),
+          fullTitle,
           slug: les.slug,
           readingMinutes: les.readingMinutes ?? fallbackAnchor.readingMinutes,
           completed: les.isCompleted,
@@ -330,16 +341,20 @@ export function ActiveChapterContinueCard({
       });
     }
 
-    return fallbackAnchor.chapters.map((ch) => ({
-      id: ch.id,
-      title: ch.shortTitle.replace(/^Ch \d+:\s*/, ''),
-      fullTitle: ch.fullTitle,
-      slug: fallbackAnchor.lessonSlug,
-      readingMinutes: fallbackAnchor.readingMinutes,
-      completed: ch.completed,
-      isCurrent: ch.isCurrent,
-    }));
-  }, [allLessons, fallbackAnchor]);
+    return fallbackAnchor.chapters.map((ch) => {
+      const fullTitle = t(ch.fullTitle);
+      const shortTitle = t(ch.shortTitle.replace(/^Ch \d+:\s*/, ''));
+      return {
+        id: ch.id,
+        title: shortTitle,
+        fullTitle,
+        slug: fallbackAnchor.lessonSlug,
+        readingMinutes: fallbackAnchor.readingMinutes,
+        completed: ch.completed,
+        isCurrent: ch.isCurrent,
+      };
+    });
+  }, [allLessons, fallbackAnchor, t]);
 
   const defaultActiveNodeId = React.useMemo(() => {
     const active = roadmapNodes.find((n) => n.isCurrent);

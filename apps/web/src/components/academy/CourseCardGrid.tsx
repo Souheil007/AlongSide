@@ -4,7 +4,7 @@ import * as React from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
-import type { AcademyModuleDTO } from '@alongside/shared';
+import type { AcademyModuleDTO, ChildDTO } from '@alongside/shared';
 import { ModuleCard } from '@/components/academy/ModuleCard';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -15,6 +15,7 @@ if (typeof window !== 'undefined') {
 
 export interface CourseCardGridProps {
   modules: AcademyModuleDTO[];
+  child?: ChildDTO | null;
   isLoading?: boolean;
   isError?: boolean;
   error?: unknown;
@@ -26,6 +27,7 @@ export interface CourseCardGridProps {
 
 export function CourseCardGrid({
   modules,
+  child,
   isLoading = false,
   isError = false,
   error,
@@ -140,7 +142,7 @@ export function CourseCardGrid({
     >
       {modules.map((mod) => (
         <div key={mod.id} className="gsap-academy-card flex flex-col h-full">
-          <ModuleCard module={mod} showFormatPills={showFormatPills} />
+          <ModuleCard module={mod} child={child} showFormatPills={showFormatPills} />
         </div>
       ))}
     </div>

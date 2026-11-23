@@ -232,9 +232,9 @@ export function LessonReaderView({
   const { t } = state;
 
   const formattedCourseTitle = moduleTitle
-    ? formatCourseTitle(moduleTitle)
+    ? formatCourseTitle(t(moduleTitle))
     : lesson.module?.title
-      ? formatCourseTitle(lesson.module.title)
+      ? formatCourseTitle(t(lesson.module.title))
       : 'Course Arc';
 
   const childBadge = formatChildBadgeText(activeChild, t);

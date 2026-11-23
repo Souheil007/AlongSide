@@ -472,7 +472,7 @@ export function BiteSizedCourseDetailView({
             {totalLessons}-Episode Course Arc
           </span>
           <h1 className="font-serif-almanac text-[30px] sm:text-[38px] font-semibold leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
-            {formatCourseTitle(module.title)}
+            {formatCourseTitle(t(module.title))}
           </h1>
           <p className="text-[16px] leading-[1.6] text-[var(--body)] max-w-[60ch]">
             {t(module.summary)}

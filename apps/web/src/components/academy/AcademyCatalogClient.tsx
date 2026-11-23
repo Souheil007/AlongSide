@@ -169,6 +169,7 @@ export function AcademyCatalogClient() {
       {/* Responsive Course Card Grid */}
       <CourseCardGrid
         modules={modules}
+        child={activeChild}
         isLoading={isModulesLoading}
         isError={isError}
         error={error}

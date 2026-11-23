@@ -1,7 +1,19 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { BookOpen, Clock, CheckCircle2, ArrowRight, Layers, ChevronDown, Sparkles, Video } from 'lucide-react';
-import { DevelopmentalTier, AcademyCategory, formatCourseTitle, type AcademyModuleDTO, type AcademyLessonSummaryDTO } from '@alongside/shared';
+import {
+  DevelopmentalTier,
+  AcademyCategory,
+  formatCourseTitle,
+  interpolateChildCopy,
+  type AcademyModuleDTO,
+  type AcademyLessonSummaryDTO,
+  type ChildDTO,
+} from '@alongside/shared';
+import {
+  useChildContextStore,
+  selectActiveChild,
+} from '@/stores/useChildContextStore';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Progress } from '@/components/ui/Progress';
@@ -13,6 +25,7 @@ export interface ModuleCardProps {
     lessons?: AcademyLessonSummaryDTO[];
     hasMasterLecture?: boolean;
   };
+  child?: ChildDTO | null;
   showFormatPills?: boolean;
   className?: string;
 }
@@ -147,10 +160,27 @@ export function getCategoryBadgeInfo(category?: AcademyCategory | string) {
   }
 }
 
-export function ModuleCard({ module, showFormatPills = false, className }: ModuleCardProps) {
+export function ModuleCard({ module, child, showFormatPills = false, className }: ModuleCardProps) {
   const [isSyllabusOpen, setIsSyllabusOpen] = React.useState(false);
 
-  const displayTitle = formatCourseTitle(module.title);
+  const { children: storeChildren, activeChildId } = useChildContextStore();
+  const resolvedChild =
+    child !== undefined
+      ? child
+      : selectActiveChild({ children: storeChildren, activeChildId });
+
+  const t = React.useCallback(
+    (template: string) =>
+      interpolateChildCopy(template, resolvedChild, module.developmentalTier),
+    [resolvedChild, module.developmentalTier]
+  );
+
+  const displayTitle = formatCourseTitle(t(module.title));
+  const displaySummary = t(module.summary);
+  const displayReliefSubtitle = module.reliefSubtitle
+    ? t(module.reliefSubtitle)
+    : undefined;
+
   const actualLessons = module.lessons && module.lessons.length > 0 ? module.lessons : [];
   const syllabusLessonCount = actualLessons.length > 0 ? actualLessons.length : module.lessonCount;
 
@@ -229,14 +259,14 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
             {displayTitle}
           </CardTitle>
 
-          {module.reliefSubtitle && (
+          {displayReliefSubtitle && (
             <p className="font-serif italic text-xs sm:text-sm text-teal-800 leading-snug line-clamp-1">
-              {module.reliefSubtitle}
+              {displayReliefSubtitle}
             </p>
           )}
 
           <CardDescription className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3 min-h-[3.25rem]">
-            {module.summary}
+            {displaySummary}
           </CardDescription>
 
           {/* Format pills strip */}
@@ -348,7 +378,7 @@ export function ModuleCard({ module, showFormatPills = false, className }: Modul
                             {lesson.isCompleted ? '✓' : `§ ${lesson.sortOrder}`}
                           </span>
                           <span className="truncate font-medium group-hover:text-teal-900">
-                            {lesson.title}
+                            {t(lesson.title)}
                           </span>
                           {hasLessonVideo && (
                             <span

@@ -15,10 +15,15 @@ import {
 } from 'lucide-react';
 import {
   ChapterPriority,
+  interpolateChildCopy,
   type AcademyChapterDTO,
   type AcademyLessonSummaryDTO,
   type AcademyModuleDetailDTO,
 } from '@alongside/shared';
+import {
+  useChildContextStore,
+  selectActiveChild,
+} from '@/stores/useChildContextStore';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -90,6 +95,15 @@ export function getPriorityTheme(priority: number): PriorityTheme {
  * Displays chapters strictly ordered by priority (Priority 1 -> Priority 2 -> Priority 3).
  */
 export function ChapterRoadmapView({ module, className }: ChapterRoadmapViewProps) {
+  const { children: storeChildren, activeChildId } = useChildContextStore();
+  const activeChild = selectActiveChild({ children: storeChildren, activeChildId });
+
+  const t = React.useCallback(
+    (template: string) =>
+      interpolateChildCopy(template, activeChild, module.developmentalTier),
+    [activeChild, module.developmentalTier]
+  );
+
   // Sort chapters strictly by priority ascending (1 before 2, 2 before 3) then by sortOrder
   const sortedChapters = React.useMemo(() => {
     if (module.chapters && module.chapters.length > 0) {
@@ -315,7 +329,7 @@ export function ChapterRoadmapView({ module, className }: ChapterRoadmapViewProp
 
                         <div>
                           <p className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-teal-900 transition-colors line-clamp-1">
-                            {lesson.title}
+                            {t(lesson.title)}
                           </p>
                           <p className="text-[11px] text-slate-500 flex items-center gap-1.5">
                             <Clock className="h-3 w-3 text-slate-400" />
