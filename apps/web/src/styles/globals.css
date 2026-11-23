@@ -360,6 +360,11 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+.content-auto-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 340px;
+}
+
 /* Print Optimization for Bilateral Agreements & PDF exports */
 @media print {
   @page {

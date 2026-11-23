@@ -44,16 +44,15 @@ export function CourseCardGrid({
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         if (gridRef.current) {
-          gsap.fromTo(
-            '.gsap-academy-card',
-            { opacity: 0, y: 16, scale: 0.98 },
+          // Subtle micro-animation on first fold only; avoid opacity: 0 to protect LCP
+          gsap.from(
+            '.gsap-academy-card:nth-child(-n+6)',
             {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.38,
-              stagger: 0.045,
+              y: 8,
+              duration: 0.24,
+              stagger: 0.03,
               ease: 'power2.out',
+              clearProps: 'transform',
             }
           );
         }
@@ -141,7 +140,7 @@ export function CourseCardGrid({
       className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6', className)}
     >
       {modules.map((mod) => (
-        <div key={mod.id} className="gsap-academy-card flex flex-col h-full">
+        <div key={mod.id} className="gsap-academy-card content-auto-card flex flex-col h-full">
           <ModuleCard module={mod} child={child} showFormatPills={showFormatPills} />
         </div>
       ))}
