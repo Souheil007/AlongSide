@@ -27,6 +27,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { formatCurfew12Hour } from '@/stores/usePactStore';
 import { EnrollmentModal } from './EnrollmentModal';
+import { EarlyTierSanctuaryView } from './EarlyTierSanctuaryView';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import {
   Dialog,
@@ -96,7 +97,11 @@ export function DevicesManagementView({
 
   const activeChild = propChild || selectActiveChild({ children, activeChildId }) || (children.length > 0 ? children[0] : null);
   const activeAge = activeChild?.age ?? 10;
-  const isToddler = activeAge <= 3;
+  const tierStr = String(activeChild?.developmentalTier || '');
+  const isEarlyTier =
+    activeAge <= 6 ||
+    tierStr.includes('TIER_0') ||
+    tierStr.includes('TIER_1_EARLY');
 
   // Curfew configuration based on child profile
   const recommendedCurfew = React.useMemo(
@@ -117,15 +122,8 @@ export function DevicesManagementView({
     }, 4000);
   };
 
-  // Mutual Pledges tailored by child stage
+  // Mutual Pledges tailored by child stage (Ages 7+)
   const childPledges = React.useMemo(() => {
-    if (activeAge <= 6) {
-      return [
-        `Dock family tablet at the central living station by ${curfewDisplay}; zero bedroom screens.`,
-        'Stop screen co-viewing calmly when family transition timer rings after 30-45 minutes.',
-        'Share screen play with parents, practicing turn-taking and emotional regulation.',
-      ];
-    }
     if (activeAge <= 12) {
       return [
         `Dock phone at hallway station by ${curfewDisplay} nightly; zero bedroom screens during sleep hours.`,
@@ -140,20 +138,14 @@ export function DevicesManagementView({
     ];
   }, [activeAge, curfewDisplay]);
 
-  const parentPledges = React.useMemo(() => {
-    if (activeAge <= 6) {
-      return [
-        'Active co-viewing: watch and explore high-quality interactive media alongside child.',
-        'Put away personal work devices during shared meals, outdoor play, and bedtime routines.',
-        'Maintain calm, empathetic boundaries when child protests screen transitions.',
-      ];
-    }
-    return [
+  const parentPledges = React.useMemo(
+    () => [
       'Zero stealth spyware: Parents will never read private text messages or secretly spy on conversations.',
       'Device-free dinner table: Adults dock work laptops and phones away during shared family meals.',
       'Safe Harbor Guarantee: No punitive device confiscation when seeking help about uncomfortable online encounters.',
-    ];
-  }, [activeAge]);
+    ],
+    []
+  );
 
   const hasAssessment =
     activeChild?.latestAssessmentScore !== null &&
@@ -198,37 +190,28 @@ export function DevicesManagementView({
     );
   }
 
+  if (isEarlyTier) {
+    return <EarlyTierSanctuaryView child={activeChild} />;
+  }
+
   return (
     <div className="space-y-8 max-w-6xl mx-auto px-2 sm:px-4 text-[#111413]">
       {/* Top Header & Child Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E3E3DC] pb-6">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <span
-              className={cn(
-                'font-mono text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full font-bold border',
-                isToddler
-                  ? 'bg-[#FEF3C7] text-[#B45309] border-[#B45309]/20'
-                  : 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/15'
-              )}
-            >
-              {isToddler
-                ? 'Tier 0: Toddler Habit'
-                : `Tier ${activeAge >= 13 ? '4' : activeAge >= 10 ? '3' : '2'} Milestone Progression`}
+            <span className="font-mono text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full font-bold border bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/15">
+              {`Tier ${activeAge >= 13 ? '4' : activeAge >= 10 ? '3' : '2'} Milestone Progression`}
             </span>
             <span className="text-xs font-mono text-[#858C88] hidden sm:inline">
               Pact-as-Code Guided Journey
             </span>
           </div>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#111413] tracking-tight">
-            {isToddler
-              ? `${activeChild?.name || 'Child'}'s Screen-Free Sanctuary (Age ${activeAge})`
-              : `${activeChild?.name || 'Child'}'s Digital Independence Roadmap`}
+            {`${activeChild?.name || 'Child'}'s Digital Independence Roadmap`}
           </h1>
           <p className="text-xs sm:text-sm text-[#494F4C] max-w-2xl leading-relaxed">
-            {isToddler
-              ? 'Pacts are not developmentally applicable for toddlers. AlongSide guides your household with pediatric environmental routines.'
-              : 'Step-by-step guidance tailored to child neurodevelopment. Move seamlessly from diagnostic readiness to signed bilateral commitments and neutral automated bedtime locking.'}
+            Step-by-step guidance tailored to child neurodevelopment. Move seamlessly from diagnostic readiness to signed bilateral commitments and neutral automated bedtime locking.
           </p>
         </div>
 
@@ -243,70 +226,9 @@ export function DevicesManagementView({
       </div>
 
       {/* ========================================================================= */}
-      {/* TODDLER VIEW: SENSORY HABIT & ADULT ROUTINES (TIER 0: AGES 0–3)          */}
+      {/* SEQUENTIAL JOURNEY LADDER & PHONE CANVAS (AGES 7–18)                      */}
       {/* ========================================================================= */}
-      {isToddler ? (
-        <div className="space-y-6">
-          <div className="bg-[#FEF3C7]/40 border border-[#B45309]/30 rounded-[12px] p-6 sm:p-7 space-y-3 shadow-2xs">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#B45309] font-bold">
-                Developmental Clarification
-              </span>
-              <span className="font-mono text-[10px] bg-[#B45309]/20 text-[#111413] px-2 py-0.5 rounded font-semibold">
-                Tier 0: Age 0–3
-              </span>
-            </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#111413]">
-              Why Toddlers Don&apos;t Sign Digital Pacts
-            </h2>
-            <p className="text-xs sm:text-sm text-[#494F4C] leading-relaxed max-w-2xl">
-              At age {activeAge}, prefrontal executive function and bilateral negotiation do not yet exist in child psychology. Giving a toddler a screen pact causes parental confusion. AlongSide instead guides you with <strong>Adult Environmental Routines</strong>:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
-              <span className="font-mono text-xs text-[#143D2B] font-bold block">
-                Step 1: Environmental Calm
-              </span>
-              <h3 className="font-serif text-base font-bold text-[#111413]">
-                Zero Background TV
-              </h3>
-              <p className="text-xs text-[#494F4C] leading-relaxed">
-                Reduces sensory fragmentation and increases parental conversational word count by 40% during crucial speech development windows.
-              </p>
-            </div>
-
-            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
-              <span className="font-mono text-xs text-[#143D2B] font-bold block">
-                Step 2: Co-Viewing Only
-              </span>
-              <h3 className="font-serif text-base font-bold text-[#111413]">
-                Interactive Video Chat
-              </h3>
-              <p className="text-xs text-[#494F4C] leading-relaxed">
-                Grandparent FaceTime is the only recommended screen interaction under AAP pediatric guidelines for infants and toddlers under 2.
-              </p>
-            </div>
-
-            <div className="bg-white border border-[#E3E3DC] rounded-[10px] p-5 space-y-2.5 shadow-2xs">
-              <span className="font-mono text-xs text-[#143D2B] font-bold block">
-                Step 3: Bedtime Sanctuary
-              </span>
-              <h3 className="font-serif text-base font-bold text-[#111413]">
-                7:30 PM Sleep Routine
-              </h3>
-              <p className="text-xs text-[#494F4C] leading-relaxed">
-                Zero blue light after dinner. Replaced with physical board books, soothing audio lullabies, and dim amber ambient nursery lighting.
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* ========================================================================= */
-        /* SEQUENTIAL JOURNEY LADDER & PHONE CANVAS (TIERS 1–5: AGES 4–18)           */
-        /* ========================================================================= */
-        <div className="space-y-6">
+      <div className="space-y-6">
           {/* STEP 1: READINESS DIAGNOSTIC ACCORDION CARD */}
           <section className="bg-white border border-[#E3E3DC] rounded-[12px] p-5 shadow-2xs transition-all">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -623,8 +545,7 @@ export function DevicesManagementView({
               </div>
             </div>
           </section>
-        </div>
-      )}
+      </div>
 
       {/* ENROLLMENT MODAL */}
       <EnrollmentModal
