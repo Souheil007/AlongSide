@@ -195,10 +195,10 @@ export function getChildDevelopmentalHorizon(
   if (age <= 15) {
     return {
       horizon: 'Adolescent Independence & Curfew Horizon',
-      subtitle: 'Bilateral Pact-as-Code agreements, automated 8:30 PM curfews & peer culture mentorship.',
+      subtitle: 'Built-in OS parental controls, automated bedtime downtime & peer culture mentorship.',
       stage: 'Early Adolescence (13–15 yrs)',
       tierLabel: 'Tier 4: Early Teen',
-      badgeColor: 'bg-violet-100 text-violet-800 border-violet-200',
+      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
     };
   }
 

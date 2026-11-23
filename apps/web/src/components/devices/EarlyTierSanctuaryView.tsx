@@ -170,7 +170,7 @@ export function resolveEarlyStageProfile(
       subtitle: (name) =>
         `Predictable windows, shared family screens, and calm handoffs—long before ${name} needs a personal phone.`,
       noPactNote: (a) =>
-        `At age ${a}, kids thrive on simple spoken house rhythms rather than formal device contracts.`,
+        `At age ${a}, kids thrive on simple house routines and parent-managed settings rather than personal phones.`,
       defaultBedtimeMinutes: 20 * 60, // 8:00 PM
       bedtimeOptions: [19 * 60 + 30, 20 * 60, 20 * 60 + 30, 21 * 60],
       cutoffLeadMinutes: 45,
@@ -230,9 +230,9 @@ export function resolveEarlyStageProfile(
     capUnit: 'max / day',
     standardTitle: 'Co-viewed, slow-paced media',
     subtitle: (name, a) =>
-      `At age ${a}, steady home routines—not signed phone pacts—protect ${name}'s speech, play, and sleep.`,
+      `At age ${a}, steady home routines (not personal devices) protect ${name}'s speech, play, and sleep.`,
     noPactNote: (a) =>
-      `At age ${a}, habits grow from your calm home setup—not a digital contract they sign.`,
+      `At age ${a}, healthy habits come from your calm home setup and simple TV or tablet limits.`,
     defaultBedtimeMinutes: 19 * 60 + 30, // 7:30 PM
     bedtimeOptions: [19 * 60, 19 * 60 + 30, 20 * 60, 20 * 60 + 30],
     cutoffLeadMinutes: 45,
@@ -472,7 +472,7 @@ export function EarlyTierSanctuaryView({
               </div>
               <div className="py-3 grid grid-cols-[120px_1fr] gap-3 items-baseline">
                 <dt className="font-mono text-[11px] uppercase tracking-[0.06em] text-[#7A827D]">
-                  Why no pact
+                  Why routines first
                 </dt>
                 <dd className="text-[#494F4C] leading-snug">
                   {profile.noPactNote(childAge)}
@@ -731,7 +731,7 @@ export function EarlyTierSanctuaryView({
             Looking ahead
           </span>
           <p className="text-[13.5px] text-[#494F4C] leading-snug">
-            Around age 7, this page unlocks the First-Phone Readiness Check and Bilateral Family Pact automatically.
+            Around age 7, this page unlocks the Phone Readiness Check and OS Parental Controls Setup automatically.
           </p>
         </div>
 

@@ -7,7 +7,6 @@ import {
   ProductStudioSection,
   STUDIO_ADVISOR_SCENARIOS,
   STUDIO_SLANG_ITEMS,
-  STUDIO_DINNER_QUESTIONS,
   ScreenPactSection,
   PricingAndFaqSection,
 } from '../src/components/home';
@@ -42,7 +41,7 @@ describe('Interactive Layout Stability (Zero-Shift CSS Grid Stacks)', () => {
     expect(html).toContain('invisible pointer-events-none select-none');
   });
 
-  it('pre-stacks all 3 ProductStudioSection tabs plus advisor scenarios, slang items, and dinner questions', () => {
+  it('pre-stacks all 3 ProductStudioSection tabs plus advisor scenarios and slang items', () => {
     const html = renderToStaticMarkup(<ProductStudioSection />);
     expect(html).toContain('id="studio-panel-advisor"');
     expect(html).toContain('id="studio-panel-academy"');
@@ -53,17 +52,14 @@ describe('Interactive Layout Stability (Zero-Shift CSS Grid Stacks)', () => {
     for (const slang of STUDIO_SLANG_ITEMS) {
       expect(html).toContain(slang.definition.replace(/'/g, '&#x27;'));
     }
-    for (const q of STUDIO_DINNER_QUESTIONS) {
-      expect(html).toContain(q);
-    }
   });
 
-  it('pre-stacks both 4:00 PM and 8:30 PM states in ScreenPactSection so curfew toggles cause 0px shift', () => {
+  it('pre-stacks iPhone/Android and Apps/Home Wi-Fi previews in ScreenPactSection so tab toggles cause 0px shift', () => {
     const html = renderToStaticMarkup(<ScreenPactSection />);
-    expect(html).toContain('8:30 PM · Bedtime dock active');
-    expect(html).toContain('4:00 PM · Agreed apps open');
-    expect(html).toContain('Apps pause automatically at 8:30 PM');
-    expect(html).toContain('Homework finished first');
+    expect(html).toContain('Apple Screen Time &amp; Google Family Link');
+    expect(html).toContain('Games, Video &amp; Home Network');
+    expect(html).toContain('Approve every app download &amp; lock contacts');
+    expect(html).toContain('Filter unsafe sites on consoles &amp; TVs (Safe DNS)');
     expect(html).toContain('col-start-1 row-start-1');
   });
 

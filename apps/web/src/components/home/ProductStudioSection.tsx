@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
+import { BookOpen, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type StudioTabId = 'advisor' | 'academy' | 'digest';
+export type StudioTabId = 'academy' | 'digest' | 'advisor';
 
 export interface AdvisorScenario {
   id: string;
@@ -25,45 +26,61 @@ export interface SlangItem {
 export const STUDIO_ADVISOR_SCENARIOS: AdvisorScenario[] = [
   {
     id: 'tv',
-    chipLabel: 'TV meltdown (age 3)',
-    childMeta: 'Calibrated to Leo, age 3',
+    chipLabel: 'Screen cutoff (age 3)',
+    childMeta: 'Leo · Age 3',
     userPrompt:
-      "Leo threw his plate when I turned off the TV before dinner. I'm about to lose my cool.",
-    whyHeading: 'Why this happens · Dopamine transition drop',
+      'Leo throws things every night when we turn off the TV before dinner. How do we stop this?',
+    whyHeading: 'Why it happens · Sudden stimulation drop',
     explanation:
-      'At 3, stopping a fast screen causes an abrupt drop in stimulation while his braking system is still immature. Lower your voice first.',
+      'Fast shows drop dopamine sharply when cut off abruptly. Pair a clear warning with a calm limit.',
     scriptQuote:
-      "“You're mad the show stopped. I won't let you throw plates. Let's pick it up together, then you can choose the red cup or the blue cup.”",
+      "“You're mad the show stopped. I won't let you throw plates. Let's pick it up, then you pick the red or blue cup.”",
   },
   {
     id: 'eating',
-    chipLabel: 'Picky dinner (age 5)',
-    childMeta: 'Calibrated to Chloe, age 5',
+    chipLabel: 'Picky eating (age 5)',
+    childMeta: 'Chloe · Age 5',
     userPrompt:
-      'Chloe says dinner is disgusting and refuses to sit at the table unless I make nuggets.',
-    whyHeading: 'Why this happens · Autonomy & sensory caution',
+      'Chloe refuses dinner and begs for nuggets every night. Should I make a backup meal?',
+    whyHeading: 'Why it happens · Sensory caution & control',
     explanation:
-      'Making a separate meal turns dinner into a power struggle. Keep one familiar food on the table and drop the pressure to taste.',
+      'Separate meals lock in power struggles. Serve one safe food alongside dinner and drop the pressure.',
     scriptQuote:
-      "“You don't have to eat the chicken. There is bread and apple slices on the table tonight, and kitchen closes after dinner.”",
+      "“You don't have to eat the chicken. Bread and apples are on the table, and the kitchen closes after dinner.”",
   },
   {
     id: 'gaming',
     chipLabel: 'Roblox cutoff (age 9)',
-    childMeta: 'Calibrated to Sam, age 9',
-    userPrompt: 'Sam yelled at me when I said Roblox was over for the evening.',
-    whyHeading: 'Why this happens · Unfinished social loop',
+    childMeta: 'Sam · Age 9',
+    userPrompt:
+      'Sam explodes whenever Roblox ends for the evening. How do we make stopping calmer?',
+    whyHeading: 'Why it happens · Unfinished multiplayer loop',
     explanation:
-      'Multiplayer games lack natural chapter endings, so abrupt cutoffs feel like losing status with friends mid-round.',
+      'Online games lack natural stopping points. Pair an OS daily timer with a 5-minute landing cue.',
     scriptQuote:
-      "“I hear you're right in the middle of a match. Tell your friends this is your last round, and bring me the controller in five minutes.”",
+      "“Tell your friends this is your last round, and dock the controller in five minutes.”",
   },
 ];
 
 export const STUDIO_ACADEMY_LESSONS = [
-  { title: 'Why abrupt cutoffs trigger limbic overflow', duration: '4 min' },
-  { title: 'Visual timers and the 2-minute bridge ritual', duration: '4 min' },
-  { title: 'Exact words when the screen goes dark', duration: '4 min' },
+  { title: 'Why repeating yourself louder makes kids tune you out', duration: '4 min' },
+  { title: 'The 10-word reset that stops pushback before it escalates', duration: '4 min' },
+  { title: 'Holding a firm boundary without losing connection', duration: '4 min' },
+];
+
+export const STUDIO_WEEKLY_DROPS = [
+  {
+    type: 'video' as const,
+    kind: 'Video · 8 min',
+    source: 'Child Mind Institute',
+    title: 'Why kids say “I’m bored” after 5 minutes (and what helps)',
+  },
+  {
+    type: 'article' as const,
+    kind: 'Article · 4 min',
+    source: 'HealthyChildren.org',
+    title: 'What pediatric sleep studies say about school-night bedtimes',
+  },
 ];
 
 export const STUDIO_SLANG_ITEMS: SlangItem[] = [
@@ -71,29 +88,25 @@ export const STUDIO_SLANG_ITEMS: SlangItem[] = [
     id: 'crashout',
     word: 'Crashout',
     cringeLevel: 4,
-    definition:
-      'An explosive overreaction to minor friction, a game loss, or being told no. Usually means someone lost emotional control.',
+    definition: 'Losing emotional control over a small frustration or game loss.',
   },
   {
     id: 'cooked',
     word: 'Cooked',
     cringeLevel: 2,
-    definition:
-      'Doomed, exhausted, or in deep trouble - often signals real academic or social stress masked as humor.',
+    definition: 'Doomed or overwhelmed. Often masks real school or social stress.',
   },
   {
     id: 'rizz',
     word: 'Rizz',
     cringeLevel: 3,
-    definition:
-      'Short for charisma. Effortless charm or social confidence among peers; harmless tween currency.',
+    definition: 'Short for charisma; harmless tween currency for social confidence.',
   },
   {
     id: 'fanum',
     word: 'Fanum tax',
     cringeLevel: 4,
-    definition:
-      "Playfully claiming a bite of a friend's or sibling's snack, named after streamer Fanum.",
+    definition: "Playfully claiming a bite of a friend's or sibling's snack.",
   },
 ];
 
@@ -105,57 +118,51 @@ export const STUDIO_DINNER_QUESTIONS: string[] = [
 
 const STUDIO_TABS: Array<{ id: StudioTabId; title: string; description: string }> = [
   {
-    id: 'advisor',
-    title: '10-second Parent Advisor',
-    description:
-      "Describe what just happened and get exact, calm words tailored to your child's age and temperament.",
-  },
-  {
     id: 'academy',
-    title: '5-minute Parent Academy',
-    description:
-      'Audio and text guides across sleep, feeding, play, behavior, and devices - ordered by what hurts today.',
+    title: 'Parent Academy',
+    description: 'Short text & audio courses for sleep, behavior, feeding, play, and screens.',
   },
   {
     id: 'digest',
-    title: 'Sunday Culture Digest',
-    description:
-      'Decode trending slang, spot disguised apps early, and bring one easy question to Sunday dinner.',
+    title: 'Culture & Trends',
+    description: 'Weekly videos, articles, and kid trends tailored to their age.',
+  },
+  {
+    id: 'advisor',
+    title: 'Parent Advisor',
+    description: 'Ask any parenting question anytime and get calm, age-tuned answers.',
   },
 ];
 
 export function ProductStudioSection() {
-  const [activeTab, setActiveTab] = React.useState<StudioTabId>('advisor');
+  const [activeTab, setActiveTab] = React.useState<StudioTabId>('academy');
   const [scenarioId, setScenarioId] = React.useState<string>('tv');
   const [audioPlaying, setAudioPlaying] = React.useState(false);
   const [slangId, setSlangId] = React.useState<string>('crashout');
-  const [dinnerIndex, setDinnerIndex] = React.useState(0);
 
   const activeScenario =
     STUDIO_ADVISOR_SCENARIOS.find((s) => s.id === scenarioId) ?? STUDIO_ADVISOR_SCENARIOS[0]!;
   const activeSlang =
     STUDIO_SLANG_ITEMS.find((s) => s.id === slangId) ?? STUDIO_SLANG_ITEMS[0]!;
-  const activeDinnerQuestion =
-    STUDIO_DINNER_QUESTIONS[dinnerIndex % STUDIO_DINNER_QUESTIONS.length]!;
 
   const windowTitle =
-    activeTab === 'advisor'
-      ? 'Parent Advisor'
-      : activeTab === 'academy'
-        ? 'Parent Academy'
-        : 'Sunday Culture Digest';
+    activeTab === 'academy'
+      ? 'Parent Academy'
+      : activeTab === 'digest'
+        ? 'Culture & Trends'
+        : 'Parent Advisor';
 
   const windowMeta =
-    activeTab === 'advisor'
-      ? activeScenario.childMeta
-      : activeTab === 'academy'
-        ? 'Early Childhood · Digital life'
-        : 'Issue · This Sunday';
+    activeTab === 'academy'
+      ? 'Most popular · Behavior & Emotions'
+      : activeTab === 'digest'
+        ? 'New every Sunday · Curated by age'
+        : activeScenario.childMeta;
 
   return (
     <section
       id="studio"
-      className="relative bg-[#F2F0E9] py-16 sm:py-24 lg:py-32 scroll-mt-16"
+      className="relative bg-[#F2F0E9] py-16 sm:py-24 lg:py-28 scroll-mt-16"
     >
       {/* Legacy anchor compatibility */}
       <span id="pillars" className="scroll-mt-20 absolute -top-16" aria-hidden="true" />
@@ -163,56 +170,49 @@ export function ProductStudioSection() {
       <span id="digest" className="scroll-mt-20 absolute -top-16" aria-hidden="true" />
 
       <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] gap-6 lg:gap-8 items-end mb-10 lg:mb-14">
-          <h2 className="font-serif font-normal text-[32px] sm:text-[42px] lg:text-[48px] leading-[1.08] tracking-[-0.024em] text-[#131715] max-w-[17ch] [text-wrap:balance]">
-            Built for the moments you cannot wait out
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] gap-5 lg:gap-8 items-end mb-9 lg:mb-12">
+          <h2 className="font-serif font-normal text-[32px] sm:text-[42px] lg:text-[48px] leading-[1.08] tracking-[-0.024em] text-[#131715] max-w-[16ch] [text-wrap:balance]">
+            What&apos;s inside Alongside
           </h2>
           <p className="text-base leading-[1.55] text-[#454D49]">
-            Skip the 45-minute video lectures and 2 AM forum spirals. Open one calm place
-            calibrated to your child&apos;s stage.
+            Courses, weekly videos &amp; articles, and an advisor, personalized for ages 0–18.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-7 lg:gap-14 items-start">
-          {/* Left Column: 3 Capability Mode Switchers */}
-          <div>
-            <div role="tablist" aria-label="Alongside capabilities" className="flex flex-col gap-2">
-              {STUDIO_TABS.map((tab) => {
-                const isSelected = tab.id === activeTab;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    aria-controls={`studio-panel-${tab.id}`}
-                    onClick={() => setActiveTab(tab.id)}
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] gap-8 lg:gap-14 items-start">
+          {/* Left Column: 3 Generously Spaced Capability Switchers */}
+          <div role="tablist" aria-label="Alongside capabilities" className="flex flex-col gap-3.5">
+            {STUDIO_TABS.map((tab) => {
+              const isSelected = tab.id === activeTab;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  aria-controls={`studio-panel-${tab.id}`}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={cn(
+                    'text-left px-5 py-5 rounded-[14px] border transition-colors duration-150 flex flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                    isSelected
+                      ? 'bg-white border-[rgba(20,61,43,0.16)] shadow-[0_4px_14px_rgba(19,23,21,0.06)]'
+                      : 'bg-transparent border-transparent hover:bg-white/60 hover:border-[rgba(19,23,21,0.08)]'
+                  )}
+                >
+                  <span
                     className={cn(
-                      'text-left px-5 py-5 rounded-[12px] transition-colors duration-150 flex flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                      isSelected
-                        ? 'bg-white shadow-[0_2px_10px_rgba(19,23,21,0.05)]'
-                        : 'bg-transparent hover:bg-white/55'
+                      'text-[17px] font-semibold',
+                      isSelected ? 'text-[#143D2B]' : 'text-[#131715]'
                     )}
                   >
-                    <span
-                      className={cn(
-                        'text-[17px] font-semibold',
-                        isSelected ? 'text-[#143D2B]' : 'text-[#131715]'
-                      )}
-                    >
-                      {tab.title}
-                    </span>
-                    <span className="text-[14.5px] leading-[1.5] text-[#454D49]">
-                      {tab.description}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <p className="text-[13px] text-[#69726D] pt-4 px-5">
-              Everything adapts automatically to each child&apos;s age profile.
-            </p>
+                    {tab.title}
+                  </span>
+                  <span className="text-[14.5px] leading-[1.5] text-[#454D49]">
+                    {tab.description}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Right Column: Interactive Product Window - CSS Grid stack locks height across tabs & inner toggles (0px shift) */}
@@ -226,73 +226,7 @@ export function ProductStudioSection() {
             </div>
 
             <div className="p-5 sm:p-7 grid flex-1">
-              {/* Tab Panel 1: Parent Advisor */}
-              <div
-                id="studio-panel-advisor"
-                role={activeTab === 'advisor' ? 'tabpanel' : undefined}
-                aria-hidden={activeTab !== 'advisor' || undefined}
-                className={cn(
-                  'col-start-1 row-start-1 flex flex-col justify-between gap-5',
-                  activeTab !== 'advisor' && 'invisible pointer-events-none select-none'
-                )}
-              >
-                <div className="grid">
-                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
-                    const isCurrent = scenario.id === activeScenario.id;
-                    return (
-                      <div
-                        key={scenario.id}
-                        aria-hidden={!isCurrent || undefined}
-                        className={cn(
-                          'col-start-1 row-start-1 flex flex-col gap-3.5',
-                          !isCurrent && 'invisible pointer-events-none select-none'
-                        )}
-                      >
-                        <div className="self-end bg-[#143D2B] text-white px-4 py-3 rounded-[12px] rounded-br-[2px] text-[14.5px] leading-[1.45] max-w-[85%]">
-                          {scenario.userPrompt}
-                        </div>
-
-                        <div className="bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] rounded-[12px] p-4 sm:p-5 flex flex-col gap-3">
-                          <div className="text-[12.5px] font-semibold text-[#143D2B]">
-                            {scenario.whyHeading}
-                          </div>
-                          <p className="text-[14.5px] leading-[1.5] text-[#454D49]">
-                            {scenario.explanation}
-                          </p>
-                          <div className="bg-white border-l-[3px] border-[#143D2B] px-3.5 py-3 rounded-r-[8px] font-serif text-[16.5px] leading-[1.45] text-[#131715]">
-                            {scenario.scriptQuote}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Try another scenario">
-                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
-                    const pressed = scenario.id === scenarioId;
-                    return (
-                      <button
-                        key={scenario.id}
-                        type="button"
-                        tabIndex={activeTab === 'advisor' ? 0 : -1}
-                        aria-pressed={pressed}
-                        onClick={() => setScenarioId(scenario.id)}
-                        className={cn(
-                          'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                          pressed
-                            ? 'border-[#143D2B] text-[#143D2B] bg-[#E8F1EC] font-medium'
-                            : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
-                        )}
-                      >
-                        {scenario.chipLabel}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Tab Panel 2: Parent Academy */}
+              {/* Tab Panel 1: Parent Academy (Default — Universal High-Hook Course) */}
               <div
                 id="studio-panel-academy"
                 role={activeTab === 'academy' ? 'tabpanel' : undefined}
@@ -304,8 +238,8 @@ export function ProductStudioSection() {
               >
                 <div className="flex flex-col gap-4">
                   <div className="flex items-baseline justify-between gap-4 flex-wrap">
-                    <h3 className="font-serif text-[24px] font-normal leading-[1.2] text-[#131715]">
-                      Stopping screen transitions without tears
+                    <h3 className="font-serif text-[23px] sm:text-[25px] font-normal leading-[1.2] text-[#131715]">
+                      Getting them to listen without yelling
                     </h3>
                     <span className="text-[13px] text-[#69726D] tabular-nums">
                       12 min · 3 lessons
@@ -335,7 +269,7 @@ export function ProductStudioSection() {
 
                     <div className="flex-1 flex flex-col gap-1.5 min-w-0">
                       <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#454D49]">
-                        <span className="truncate">Audio summary · Listen while folding laundry</span>
+                        <span className="truncate">Audio summary · Listen hands-free</span>
                         <span className="tabular-nums shrink-0">
                           {audioPlaying ? '2:34 / 4:00' : '1:32 / 4:00'}
                         </span>
@@ -366,13 +300,21 @@ export function ProductStudioSection() {
                   </ul>
                 </div>
 
-                <p className="text-[13px] text-[#69726D]">
-                  40 focused courses across 8 age stages - Behavior, Sleep, Nutrition, Play, and
-                  Digital life.
-                </p>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[12.5px] text-[#69726D]">
+                  <span className="font-medium text-[#131715]">Topics inside:</span>
+                  <span>Behavior</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Sleep</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Picky Eating</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Play</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Digital Life</span>
+                </div>
               </div>
 
-              {/* Tab Panel 3: Sunday Culture Digest */}
+              {/* Tab Panel 2: Culture & Trends (Editorial Weekly Issue — Video, Article & Trend Watch) */}
               <div
                 id="studio-panel-digest"
                 role={activeTab === 'digest' ? 'tabpanel' : undefined}
@@ -382,28 +324,71 @@ export function ProductStudioSection() {
                   activeTab !== 'digest' && 'invisible pointer-events-none select-none'
                 )}
               >
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-wrap gap-2" role="group" aria-label="Sample slang terms">
-                    {STUDIO_SLANG_ITEMS.map((item) => {
-                      const pressed = item.id === slangId;
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          tabIndex={activeTab === 'digest' ? 0 : -1}
-                          aria-pressed={pressed}
-                          onClick={() => setSlangId(item.id)}
+                {/* Top 2 Visual Cards: Featured Video + Featured Article */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {STUDIO_WEEKLY_DROPS.map((drop) => (
+                    <div
+                      key={drop.title}
+                      className="rounded-[12px] border border-[rgba(19,23,21,0.09)] bg-[#FAF9F5] p-4 flex flex-col justify-between gap-3"
+                    >
+                      <div className="flex items-center gap-2 text-[12px] font-semibold">
+                        <span
                           className={cn(
-                            'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                            pressed
-                              ? 'border-[#143D2B] text-[#143D2B] bg-[#E8F1EC] font-medium'
-                              : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
+                            'inline-flex h-6 w-6 items-center justify-center rounded-full shrink-0',
+                            drop.type === 'video'
+                              ? 'bg-[#143D2B] text-white'
+                              : 'bg-[#FEF3C7] text-[#B45309]'
                           )}
+                          aria-hidden="true"
                         >
-                          {item.word}
-                        </button>
-                      );
-                    })}
+                          {drop.type === 'video' ? (
+                            <Play className="h-3 w-3 fill-current ml-0.5" />
+                          ) : (
+                            <BookOpen className="h-3 w-3" />
+                          )}
+                        </span>
+                        <span className={drop.type === 'video' ? 'text-[#143D2B]' : 'text-[#B45309]'}>
+                          {drop.kind}
+                        </span>
+                      </div>
+
+                      <p className="font-serif text-[18px] leading-[1.3] text-[#131715]">
+                        {drop.title}
+                      </p>
+
+                      <span className="text-[12px] text-[#69726D]">{drop.source}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Card: Interactive Kid-Culture & Slang Watch */}
+                <div className="rounded-[12px] bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] p-4 sm:p-5 flex flex-col gap-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[12px] font-semibold text-[#143D2B]">
+                      What kids are saying this week
+                    </span>
+                    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Sample slang terms">
+                      {STUDIO_SLANG_ITEMS.map((item) => {
+                        const pressed = item.id === slangId;
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            tabIndex={activeTab === 'digest' ? 0 : -1}
+                            aria-pressed={pressed}
+                            onClick={() => setSlangId(item.id)}
+                            className={cn(
+                              'min-h-[30px] px-2.5 rounded-[7px] border text-[12.5px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                              pressed
+                                ? 'border-[#143D2B] text-[#143D2B] bg-white font-semibold'
+                                : 'border-transparent bg-transparent text-[#454D49] hover:bg-white/75'
+                            )}
+                          >
+                            {item.word}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <div className="grid">
@@ -414,72 +399,86 @@ export function ProductStudioSection() {
                           key={item.id}
                           aria-hidden={!isCurrent || undefined}
                           className={cn(
-                            'col-start-1 row-start-1',
+                            'col-start-1 row-start-1 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2.5',
                             !isCurrent && 'invisible pointer-events-none select-none'
                           )}
                         >
-                          <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                            <h3 className="font-serif text-[28px] font-normal text-[#131715]">
-                              {item.word}
-                            </h3>
-                            <div className="inline-flex items-center gap-2 text-[13px] text-[#69726D] tabular-nums">
-                              <span>Parent cringe</span>
-                              <span
-                                className="inline-flex gap-1"
-                                aria-label={`${item.cringeLevel} out of 5`}
-                              >
-                                {[1, 2, 3, 4, 5].map((dot) => (
-                                  <span
-                                    key={dot}
-                                    className={cn(
-                                      'w-2 h-2 rounded-full',
-                                      dot <= item.cringeLevel
-                                        ? 'bg-[#B45309]'
-                                        : 'bg-[rgba(19,23,21,0.16)]'
-                                    )}
-                                  />
-                                ))}
-                              </span>
-                            </div>
-                          </div>
-                          <p className="text-[14.5px] leading-[1.55] text-[#454D49] mt-2">
+                          <span className="font-serif text-[21px] text-[#131715] shrink-0">
+                            {item.word}
+                          </span>
+                          <span className="text-[14px] leading-[1.45] text-[#454D49]">
                             {item.definition}
-                          </p>
+                          </span>
                         </div>
                       );
                     })}
                   </div>
                 </div>
+              </div>
 
-                <div className="bg-[#F6F5F0] rounded-[10px] p-4 flex flex-col gap-2.5">
-                  <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#69726D]">
-                    <span>Sunday dinner question</span>
-                    <button
-                      type="button"
-                      tabIndex={activeTab === 'digest' ? 0 : -1}
-                      onClick={() => setDinnerIndex((prev) => prev + 1)}
-                      className="min-h-[32px] px-2.5 rounded-[6px] bg-white border border-[rgba(19,23,21,0.09)] text-[12px] font-medium text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
-                    >
-                      Next question
-                    </button>
-                  </div>
-                  <div className="grid">
-                    {STUDIO_DINNER_QUESTIONS.map((q, qIdx) => {
-                      const isCurrent = q === activeDinnerQuestion;
-                      return (
-                        <p
-                          key={qIdx}
-                          aria-hidden={!isCurrent || undefined}
-                          className={cn(
-                            'col-start-1 row-start-1 font-serif text-[17px] leading-[1.45] text-[#131715]',
-                            !isCurrent && 'invisible pointer-events-none select-none'
-                          )}
-                        >
-                          {q}
-                        </p>
-                      );
-                    })}
-                  </div>
+              {/* Tab Panel 3: Parent Advisor */}
+              <div
+                id="studio-panel-advisor"
+                role={activeTab === 'advisor' ? 'tabpanel' : undefined}
+                aria-hidden={activeTab !== 'advisor' || undefined}
+                className={cn(
+                  'col-start-1 row-start-1 flex flex-col justify-between gap-5',
+                  activeTab !== 'advisor' && 'invisible pointer-events-none select-none'
+                )}
+              >
+                <div className="grid">
+                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
+                    const isCurrent = scenario.id === activeScenario.id;
+                    return (
+                      <div
+                        key={scenario.id}
+                        aria-hidden={!isCurrent || undefined}
+                        className={cn(
+                          'col-start-1 row-start-1 flex flex-col gap-3.5',
+                          !isCurrent && 'invisible pointer-events-none select-none'
+                        )}
+                      >
+                        <div className="self-end bg-[#143D2B] text-white px-4 py-3 rounded-[12px] rounded-br-[2px] text-[14.5px] leading-[1.45] max-w-[85%]">
+                          {scenario.userPrompt}
+                        </div>
+
+                        <div className="bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] rounded-[12px] p-4 sm:p-5 flex flex-col gap-2.5">
+                          <div className="text-[12.5px] font-semibold text-[#143D2B]">
+                            {scenario.whyHeading}
+                          </div>
+                          <p className="text-[14px] leading-[1.5] text-[#454D49]">
+                            {scenario.explanation}
+                          </p>
+                          <div className="bg-white border-l-[3px] border-[#143D2B] px-3.5 py-2.5 rounded-r-[8px] font-serif text-[16px] leading-[1.45] text-[#131715]">
+                            {scenario.scriptQuote}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Try another question">
+                  {STUDIO_ADVISOR_SCENARIOS.map((scenario) => {
+                    const pressed = scenario.id === scenarioId;
+                    return (
+                      <button
+                        key={scenario.id}
+                        type="button"
+                        tabIndex={activeTab === 'advisor' ? 0 : -1}
+                        aria-pressed={pressed}
+                        onClick={() => setScenarioId(scenario.id)}
+                        className={cn(
+                          'min-h-[36px] px-3 rounded-[8px] border text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                          pressed
+                            ? 'border-[#143D2B] text-[#143D2B] bg-[#E8F1EC] font-medium'
+                            : 'border-[rgba(19,23,21,0.09)] bg-white text-[#454D49] hover:border-[#143D2B] hover:text-[#143D2B]'
+                        )}
+                      >
+                        {scenario.chipLabel}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>

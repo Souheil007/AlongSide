@@ -211,16 +211,17 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   });
 
   describe('4. Stage-Adaptive Telemetry Widget (BilateralPactStatusCard)', () => {
-    it('renders quiet architectural radar and low-text readiness CTA when tween Maya is unassessed', () => {
+    it('renders quiet architectural radar and readiness + OS controls CTAs when tween Maya is unassessed', () => {
       const html = renderToStaticMarkup(
         <BilateralPactStatusCard child={mockTweenMaya} />
       );
 
       expect(html).toContain('Road 1 · Pre-Device');
       expect(html).toContain('Maya&#x27;s First-Phone Readiness');
-      expect(html).toContain('Start 3-min check');
+      expect(html).toContain('Start 2-min check');
       expect(html).toContain('/children/child-maya/readiness');
-      expect(html).toContain('Zero surveillance');
+      expect(html).toContain('Parental controls');
+      expect(html).toContain('/devices?tab=controls&amp;childId=child-maya');
       expect(html).toContain('Bedtime');
       expect(html).toContain('Transitions');
       expect(html).toContain('Safety');
@@ -228,17 +229,17 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       expect(html).toContain('Reset');
       expect(html).toContain('Trust');
 
-      // Purged cluttered duplicate copy, emojis, spinning sonar, and fake telemetry
+      // Purged cluttered duplicate copy, emojis, spinning sonar, and pact framing
       expect(html).not.toContain('Radar Ready');
       expect(html).not.toContain('Awaiting Baseline');
       expect(html).not.toContain('Not Yet Assessed');
       expect(html).not.toContain('animate-pulse');
       expect(html).not.toContain('🌙');
-      expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
+      expect(html).not.toContain('Zero surveillance');
       expect(html).not.toContain('clinical');
     });
 
-    it('renders filled architectural radar polygon and concise pact CTA when tween Maya is assessed', () => {
+    it('renders filled architectural radar polygon and OS parental controls CTA when tween Maya is assessed', () => {
       const assessedMaya: ChildDTO = {
         ...mockTweenMaya,
         latestAssessmentScore: 78,
@@ -248,19 +249,18 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         <BilateralPactStatusCard child={assessedMaya} />
       );
 
-      expect(html).toContain('First-Phone Readiness · Bridge Pact');
+      expect(html).toContain('First-Phone Readiness · Bridge Device Stage');
       expect(html).toContain('>78<');
-      expect(html).toContain('/ 100 · Ready with calm guardrails');
-      expect(html).toContain('Build Maya&#x27;s Pact');
-      expect(html).toContain('/pacts/builder?childId=child-maya');
-      expect(html).toContain('Full diagnostic');
+      expect(html).toContain('/ 100 · Use strict OS limits');
+      expect(html).toContain('Set up Maya&#x27;s controls');
+      expect(html).toContain('/devices?tab=controls&amp;childId=child-maya');
+      expect(html).toContain('Retake check');
       expect(html).toContain('/children/child-maya/readiness');
-
-      expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
+      expect(html).not.toContain('/pacts/builder');
       expect(html).not.toContain('clinical');
     });
 
-    it('renders calm bedtime dock dial for Road 2 active-device children', () => {
+    it('renders OS parental control guardrails card for Road 2 active-device children', () => {
       const activeDeviceTeen: ChildDTO = {
         ...mockTweenMaya,
         id: 'child-alex',
@@ -274,10 +274,12 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
       );
 
       expect(html).toContain('Road 2 · Active Device');
-      expect(html).toContain('Alex&#x27;s Bedtime Dock');
+      expect(html).toContain('Alex&#x27;s Device Guardrails');
       expect(html).toContain('8:30 PM');
-      expect(html).toContain('Review Pact &amp; Schedule');
-      expect(html).toContain('/devices?childId=child-alex');
+      expect(html).toContain('Configure parental controls');
+      expect(html).toContain('/devices?tab=controls&amp;childId=child-alex');
+      expect(html).not.toContain('Family Pact');
+      expect(html).not.toContain('Zero spyware');
     });
 
     it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders clean Early Screen Boundaries', () => {

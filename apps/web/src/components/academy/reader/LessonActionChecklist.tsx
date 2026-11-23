@@ -119,9 +119,9 @@ export function LessonActionChecklist({
         },
         {
           id: 'step-3',
-          label: 'Collaborative Pact Check-In',
+          label: 'Weekly Guardrail Check-In',
           detail:
-            'Review digital boundaries together as cooperative teammates rather than adversaries.',
+            'Review OS parental controls and screen boundaries together as calm teammates each week.',
         },
       ];
     }

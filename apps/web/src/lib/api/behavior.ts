@@ -181,7 +181,7 @@ export const CANONICAL_BEHAVIOR_GUIDES: BehaviorGuideUI[] = [
     coRegulationScript:
       'I know your friends are active right now, and I understand that feeling disconnected feels lonely. I am not trying to punish you or isolate you from your friends.',
     authoritativeLimit:
-      'Our Bilateral Pact rule is clear: sleep and developing brains are protected in this house. Devices sleep in the charging basket at 8:30 PM so you wake up restored. Text your group chat: ‘Heading off to sleep, talk tomorrow morning.’ Hand the phone to the basket now.',
+      'Our house screen rule is clear: sleep and developing brains are protected here. Devices lock and dock in the charging basket at 8:30 PM so you wake up restored. Text your group chat: ‘Heading off to sleep, talk tomorrow morning.’ Hand the phone to the basket now.',
   },
 
   // TIER 5: LATE ADOLESCENCE (16-18)

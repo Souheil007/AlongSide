@@ -55,25 +55,33 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
     it('renders the 3 capability tabs and preserves legacy anchor compatibility', () => {
       const html = renderToStaticMarkup(React.createElement(ProductStudioSection));
 
-      expect(html).toContain('Built for the moments you cannot wait out');
-      expect(html).toContain('10-second Parent Advisor');
-      expect(html).toContain('5-minute Parent Academy');
-      expect(html).toContain('Sunday Culture Digest');
+      expect(html).toContain('What&#x27;s inside Alongside');
+      expect(html).toContain('Parent Academy');
+      expect(html).toContain('Culture &amp; Trends');
+      expect(html).toContain('Parent Advisor');
+      expect(html).toContain('Getting them to listen without yelling');
+      expect(html).toContain('Video · 8 min');
+      expect(html).toContain('Article · 4 min');
+      expect(html).not.toContain('40 ');
       expect(html).toContain('id="pillars"');
       expect(html).toContain('id="stages"');
       expect(html).toContain('id="digest"');
     });
   });
 
-  describe('3. Evening Screen Pact Section (8:30 PM Neutral Dock)', () => {
-    it('presents the 3 bilateral pact steps and renders evening dock preview', () => {
+  describe('3. Device Safety & Built-In OS Parental Controls Section', () => {
+    it('presents the 3 device safety pillars and renders interactive OS controls preview', () => {
       expect(SCREEN_PACT_POINTS).toHaveLength(3);
       const html = renderToStaticMarkup(React.createElement(ScreenPactSection));
 
-      expect(html).toContain('Boundaries without spyware');
+      expect(html).toContain('Lock down their phone in 5');
+      expect(html).toContain('Apple Screen Time');
+      expect(html).toContain('Google Family Link');
       expect(html).toContain('8:30 PM');
       expect(html).toContain('evening-dock.jpg');
       expect(html).toContain('id="devices-hub"');
+      expect(html).not.toContain('Boundaries without spyware');
+      expect(html).not.toContain('bilateral family pact');
     });
   });
 
@@ -82,9 +90,11 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
       expect(SCIENCE_PRINCIPLES).toHaveLength(4);
       const html = renderToStaticMarkup(React.createElement(ScienceFoundationSection));
 
-      expect(html).toContain('Developmental science');
-      expect(html).toContain('AAP &amp; CDC milestones');
-      expect(html).toContain('Zero-spyware pledge');
+      expect(html).toContain('Built on decades of research');
+      expect(html).toContain('Backed by real research');
+      expect(html).toContain('One companion, 0 to 18');
+      expect(html).toContain('Warmth + firm boundaries');
+      expect(html).toContain('Less scrolling for answers. More presence at the table.');
       expect(html).toContain('sunday-table.jpg');
 
       // Ensure fabricated placeholder testimonials are permanently purged

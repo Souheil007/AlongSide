@@ -248,7 +248,7 @@ export const CURATED_FAQS: FaqItemDTO[] = [
     targetRoad: RoadType.ACTIVE_DEVICE,
     question: 'How do I enforce a zero-phone rule while my 16-year-old is driving?',
     answerMarkdown:
-      'Texting or checking notifications while driving increases fatal accident risk by over 2300%. Invasive spyware apps trigger resentment and spoofing. Bilateral "Zero-Phone Cockpit" pacts - pairing Apple Driving Focus or Android Driving Mode with parental trust treaties - establish adult executive autonomy.',
+      'Texting or checking notifications while driving increases fatal accident risk by over 2300%. Pairing built-in Apple Driving Focus or Android Driving Mode with clear, non-negotiable household rules keeps teen drivers focused on the road.',
     deEscalationScript:
       '"Driving is the greatest privilege and greatest responsibility you have. Our agreement is unconditional: driving focus goes on before the car leaves the driveway. If you ever feel in danger or need guidance, call me immediately with zero penalties."',
     isFeatured: true,

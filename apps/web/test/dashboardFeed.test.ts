@@ -43,7 +43,7 @@ describe('Holistic Family Dashboard & Unified Navigation UI Specification (PLAN-
       }
     });
 
-    it('features designated badges for key advisory anchors (Sleep & Calm, HALT, AI Advisor, Pact-as-Code)', () => {
+    it('features designated badges for key advisory anchors (Sleep & Calm, HALT, AI Advisor, OS Controls)', () => {
       const healthHub = DOMAIN_HUBS.find((h) => h.href === '/health');
       expect(healthHub?.badge).toBe('Sleep & Calm');
 
@@ -54,7 +54,7 @@ describe('Holistic Family Dashboard & Unified Navigation UI Specification (PLAN-
       expect(advisorHub?.badge).toBe('AI Advisor');
 
       const devicesHub = DOMAIN_HUBS.find((h) => h.href === '/devices');
-      expect(devicesHub?.badge).toBe('Pact-as-Code');
+      expect(devicesHub?.badge).toBe('OS Controls');
     });
   });
 

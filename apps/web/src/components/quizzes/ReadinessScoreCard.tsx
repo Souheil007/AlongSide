@@ -6,7 +6,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import {
   ArrowRight,
-  FileCheck2,
+  SlidersHorizontal,
   RotateCcw,
 } from 'lucide-react';
 import {
@@ -37,47 +37,47 @@ const SHORT_DIMENSION_LABELS: Record<string, string> = Object.fromEntries(
   CANONICAL_READINESS_QUESTIONS.map((q) => [q.dimensionKey, q.shortLabel])
 );
 
-function getPresetSummary(preset: ReadinessPreset | string, childName: string) {
+function getReadinessVerdict(preset: ReadinessPreset | string, childName: string) {
   switch (preset) {
     case ReadinessPreset.ROAD_2_AUTONOMY_CHARTER:
       return {
-        statusLabel: 'Ready for a bilateral pact',
-        headline: `${childName} is ready for shared ownership`,
-        nextTitle: 'Recommended path: Autonomy & Trust Pact',
+        statusLabel: 'Ready for a first phone',
+        headline: `${childName} is ready: start with OS guardrails on`,
+        nextTitle: 'Recommended next step: Set up built-in OS parental controls',
         nextBody:
-          'Strong everyday habits and honest communication are already in place. Sit down together to agree on bedtime docking and mutual privacy promises.',
-        ctaLabel: `Build ${childName}'s Family Pact`,
+          'Everyday habits and online safety instincts look strong. Before handing over a phone, spend 5 minutes locking down adult filters, Ask to Buy, and bedtime downtime in Apple Screen Time or Family Link.',
+        ctaLabel: `Set up ${childName}'s parental controls`,
         tone: 'spruce' as const,
       };
     case ReadinessPreset.ROAD_2_SCAFFOLDED_PACT:
       return {
-        statusLabel: 'Ready with calm guardrails',
-        headline: `${childName} has a solid foundation`,
-        nextTitle: 'Recommended path: Guided Family Pact',
+        statusLabel: 'Almost ready (use strict OS controls)',
+        headline: `${childName} has a solid start, with a few guardrails needed`,
+        nextTitle: 'Recommended next step: Turn on daily caps & content filters first',
         nextBody:
-          'Most habits are clicking, with a couple of spots that still need backup. A co-signed pact with an automated bedtime dock takes the friction off your shoulders.',
-        ctaLabel: `Build ${childName}'s Family Pact`,
+          'Most habits are clicking, while a couple of areas still need technical backup. Keep strict adult filtering, stranger DM blocks, daily app limits, and bedtime downtime locked on.',
+        ctaLabel: `Configure ${childName}'s device controls`,
         tone: 'spruce' as const,
       };
     case ReadinessPreset.ROAD_1_BRIDGE_CHARTER:
       return {
-        statusLabel: 'Best started with a bridge step',
-        headline: `${childName} is building the muscles`,
-        nextTitle: 'Recommended path: Bridge Device & Shared Pact',
+        statusLabel: 'Not ready for a smartphone yet',
+        headline: `Try a starter device before a full smartphone`,
+        nextTitle: 'Recommended next step: Use a smartwatch or locked-down shared device',
         nextBody:
-          'A smartwatch, shared family tablet, or basic call-and-text device lets them practice boundaries before a full smartphone enters the picture.',
-        ctaLabel: `Start a Bridge Pact for ${childName}`,
+          'A calling smartwatch, basic phone without social media/browsers, or a locked-down shared tablet lets them build habits safely before owning a smartphone.',
+        ctaLabel: `Lock down ${childName}'s current devices`,
         tone: 'amber' as const,
       };
     case ReadinessPreset.ROAD_1_PRE_DEVICE_FOUNDATION:
     default:
       return {
-        statusLabel: 'Habits first, personal phone later',
-        headline: `Practice on shared screens first`,
-        nextTitle: 'Recommended path: Pre-Device Family Pact',
+        statusLabel: 'Hold off on a personal phone for now',
+        headline: `Keep screens shared and supervised for now`,
+        nextTitle: 'Recommended next step: Lock down shared tablets, YouTube & Roblox',
         nextBody:
-          'Transitions and sleep habits still take real work right now. A simple shared-screen pact lets you practice stopping calmly without the pressure of a personal phone.',
-        ctaLabel: `Create a Starter Pact for ${childName}`,
+          'Stopping screens, sleep routines, and online caution still take real backup right now. Wait on a personal phone and put solid OS controls on shared family devices first.',
+        ctaLabel: `Set up parental controls`,
         tone: 'amber' as const,
       };
   }
@@ -101,7 +101,7 @@ export function ReadinessScoreCard({
     growthAreas,
   } = result;
 
-  const presetSummary = getPresetSummary(recommendedRoadmapPreset, childName);
+  const verdict = getReadinessVerdict(recommendedRoadmapPreset, childName);
   const isStrong = overallScore >= 75;
   const strokeColor = isStrong ? '#143D2B' : '#B45309';
 
@@ -147,15 +147,14 @@ export function ReadinessScoreCard({
     { scope: containerRef, dependencies: [overallScore, strokeDashoffset] }
   );
 
-  const pactHref = childId
-    ? `/pacts/builder?childId=${childId}&preset=${recommendedRoadmapPreset}`
-    : `/pacts/builder?preset=${recommendedRoadmapPreset}`;
+  const controlsHref = childId
+    ? `/devices?tab=controls&childId=${childId}`
+    : '/devices?tab=controls';
 
   return (
     <div ref={containerRef} className={cn('space-y-8', className)}>
       {/* Primary Editorial Readiness Briefing */}
       <section className="overflow-hidden rounded-[18px] border border-[var(--hairline)] bg-[var(--elevated)]">
-        {/* Warm Sand Hero Band */}
         <div className="border-b border-[var(--hairline-soft)] bg-[var(--trigger-bg)] p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="space-y-2.5 flex-1">
@@ -165,11 +164,11 @@ export function ReadinessScoreCard({
                   isStrong ? 'text-[var(--spruce)]' : 'text-[var(--amber)]'
                 )}
               >
-                {presetSummary.statusLabel}
+                {verdict.statusLabel}
               </span>
 
               <h1 className="font-serif-almanac text-[28px] sm:text-[34px] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--ink)]">
-                {presetSummary.headline}
+                {verdict.headline}
               </h1>
 
               <p className="text-[15px] leading-[1.6] text-[var(--body)] max-w-[52ch]">
@@ -177,7 +176,6 @@ export function ReadinessScoreCard({
               </p>
             </div>
 
-            {/* Clean Circular Readiness Dial */}
             <div className="relative flex flex-col items-center justify-center shrink-0 self-start sm:self-center">
               <svg
                 className="h-32 w-32 -rotate-90 transform"
@@ -223,27 +221,27 @@ export function ReadinessScoreCard({
           </div>
         </div>
 
-        {/* Recommended Next Step Band */}
+        {/* Next Step Action Band -> OS Parental Controls Setup */}
         <div
           className={cn(
             'border-b border-[var(--hairline-soft)] px-6 py-5 sm:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4',
-            presetSummary.tone === 'spruce'
+            verdict.tone === 'spruce'
               ? 'bg-[var(--spruce-soft)]'
               : 'bg-[var(--amber-soft)]'
           )}
         >
           <div className="space-y-1 max-w-[54ch]">
             <h2 className="text-[15px] font-semibold text-[var(--ink)]">
-              {presetSummary.nextTitle}
+              {verdict.nextTitle}
             </h2>
             <p className="text-[13.5px] leading-[1.55] text-[var(--body)]">
-              {presetSummary.nextBody}
+              {verdict.nextBody}
             </p>
           </div>
-          <Link href={pactHref} className="shrink-0">
+          <Link href={controlsHref} className="shrink-0">
             <Button variant="forest" className="w-full sm:w-auto gap-2 rounded-[8px]">
-              <FileCheck2 className="h-4 w-4" aria-hidden="true" />
-              <span>{presetSummary.ctaLabel}</span>
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+              <span>{verdict.ctaLabel}</span>
             </Button>
           </Link>
         </div>
@@ -268,14 +266,14 @@ export function ReadinessScoreCard({
               </ul>
             ) : (
               <p className="text-[13.5px] text-[var(--body)] leading-relaxed">
-                These habits are still warming up—and that is completely normal before a first device.
+                These habits are still warming up, and that is completely normal before a first device.
               </p>
             )}
           </div>
 
           <div className="p-6 sm:p-7 space-y-3">
             <h3 className="text-[14px] font-semibold text-[var(--ink)]">
-              Worth practicing next ({growthAreas.length})
+              Needs stronger guardrails ({growthAreas.length})
             </h3>
             {growthAreas.length > 0 ? (
               <ul className="flex flex-wrap gap-2">
@@ -298,14 +296,14 @@ export function ReadinessScoreCard({
         </div>
       </section>
 
-      {/* Calm 3-Chapter Breakdown (Grouped so it never feels like a wall of 10 cards) */}
+      {/* Grouped 3-Chapter Breakdown */}
       <section className="space-y-4">
         <div className="space-y-1">
           <h2 className="font-serif-almanac text-[22px] font-semibold text-[var(--ink)]">
             Where {childName} stands, chapter by chapter
           </h2>
           <p className="text-[13.5px] text-[var(--body)]">
-            Use the lower bars to decide which promises matter most in your family pact.
+            Lower scores show exactly which OS protections matter most right now.
           </p>
         </div>
 
@@ -341,7 +339,7 @@ export function ReadinessScoreCard({
                         ? 'Ready'
                         : rating === 'MODERATE'
                           ? 'Steady'
-                          : 'Practice';
+                          : 'Needs guardrails';
                     const barColor =
                       rating === 'HIGH'
                         ? 'bg-[var(--spruce)]'
@@ -401,14 +399,14 @@ export function ReadinessScoreCard({
         </div>
       </section>
 
-      {/* Quiet Footer Action Bar */}
+      {/* Footer Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-[16px] border border-[var(--hairline)] bg-[var(--elevated)] p-5 sm:p-6">
         <div className="space-y-0.5">
           <h3 className="text-[15px] font-semibold text-[var(--ink)]">
-            Turn this snapshot into a real agreement
+            Ready to lock down {childName}&apos;s devices?
           </h3>
           <p className="text-[13px] text-[var(--body)]">
-            Pick a bedtime dock time and trade promises side by side with {childName}.
+            Pick their OS and choose the exact filters, time limits, and bedtime locks you want.
           </p>
         </div>
 
@@ -430,9 +428,9 @@ export function ReadinessScoreCard({
               Back to Devices
             </Button>
           </Link>
-          <Link href={pactHref}>
+          <Link href={controlsHref}>
             <Button variant="forest" size="sm" className="gap-1.5 min-h-[44px] rounded-[8px]">
-              <span>Create Family Pact</span>
+              <span>Set up parental controls</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
           </Link>
