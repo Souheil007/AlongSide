@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { Header } from '@/components/shared/Header';
@@ -57,6 +58,7 @@ export default function RootLayout({
           <Footer />
         </QueryProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
