@@ -2,37 +2,35 @@ import { describe, expect, it } from 'vitest';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { DevelopmentalTier, RoadType, type ChildDTO } from '@alongside/shared';
 import {
   DevicesManagementView,
   getRecommendedCurfew,
 } from '@/components/devices/DevicesManagementView';
 import {
-  CONTROL_GOALS,
-  DEVICE_PLATFORMS,
   getCalibratedControlSteps,
+  getExtraAddonPacks,
 } from '@/lib/parentalControlsCatalog';
-import { RoadType, DevelopmentalTier, type ChildDTO } from '@alongside/shared';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: false },
-  },
-});
-
-function renderWithProviders(ui: React.ReactElement) {
+function renderWithProviders(element: React.ReactElement): string {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
   return renderToStaticMarkup(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+    React.createElement(QueryClientProvider, { client: queryClient }, element)
   );
 }
 
-describe('DevicesManagementView — Separate Phone Readiness & OS Parental Controls Hub', () => {
+describe('DevicesManagementView (Direction G: 3-Step Vertical Journey Timeline)', () => {
   const preteenLeo: ChildDTO = {
     id: 'test-leo-10',
     userId: 'parent-1',
     name: 'Leo',
     gender: 'MALE',
     birthYear: new Date().getFullYear() - 10,
-    birthMonth: 5,
+    birthMonth: 6,
     age: 10,
     roadType: RoadType.PRE_DEVICE,
     developmentalTier: DevelopmentalTier.TIER_2_AGES_10_11,
@@ -63,60 +61,24 @@ describe('DevicesManagementView — Separate Phone Readiness & OS Parental Contr
     children: [preteenLeo, toddlerToby],
   };
 
-  describe('Parental Controls Setup Builder (Default Tab)', () => {
-    it('renders the Device Safety Hub with two independent tool tabs and zero pact wording', () => {
+  describe('Step 1: Phone Readiness Check', () => {
+    it('renders score, verdict, and Retake assessment button when child is assessed', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
-      expect(html).toContain("Leo&#x27;s Device Safety Hub");
-      expect(html).toContain('Parental Controls Setup');
-      expect(html).toContain('Phone Readiness Check');
-      expect(html).toContain('1. Pick the device or app to lock down');
-      expect(html).toContain('2. Choose what you want to control');
+      expect(html).toContain("Leo&#x27;s Device Roadmap");
+      expect(html).toContain('Step 1 · Phone Readiness Check');
+      expect(html).toContain('>84<');
+      expect(html).toContain('Almost ready (use strict limits)');
+      expect(html).toContain('Retake assessment');
+      expect(html).toContain('/children/test-leo-10/readiness');
 
       // Zero pact / treaty / fake QR enrollment chrome
       expect(html).not.toContain('Bilateral Family Treaty');
       expect(html).not.toContain('Launch Pact Wizard');
       expect(html).not.toContain('/pacts/builder');
       expect(html).not.toContain('Scan Device Enrollment QR');
-    });
-
-    it('renders all 5 OS & app platforms and all 6 priority-ordered protection goals', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, defaultProps)
-      );
-
-      for (const platform of DEVICE_PLATFORMS) {
-        expect(html).toContain(platform.name.replace(/&/g, '&amp;'));
-      }
-      for (const goal of CONTROL_GOALS) {
-        expect(html).toContain(goal.label.replace(/&/g, '&amp;'));
-      }
-      expect(html).toContain('Apple Screen Time');
-      expect(html).toContain('Lock Screen Time passcode');
-      expect(html).toContain('Parent on Android?');
-      expect(html).toContain('Limit Adult Websites');
-      expect(html).toContain('Communication Safety');
-      expect(html).toContain('Ask to Buy');
-      expect(html).toContain('8:30 PM');
-    });
-  });
-
-  describe('Standalone Phone Readiness Check Tab', () => {
-    it('renders Leo readiness verdict and link to /children/test-leo-10/readiness when readiness tab is open', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, {
-          ...defaultProps,
-          initialTab: 'readiness',
-        })
-      );
-
-      expect(html).toContain('Is Leo ready for a phone yet?');
-      expect(html).toContain('>84<');
-      expect(html).toContain('Almost ready (use strict limits)');
-      expect(html).toContain('/children/test-leo-10/readiness');
-      expect(html).toContain('Retake readiness check');
     });
 
     it('renders Start readiness check prompt when child has not been assessed yet', () => {
@@ -129,14 +91,37 @@ describe('DevicesManagementView — Separate Phone Readiness & OS Parental Contr
         React.createElement(DevicesManagementView, {
           child: unassessedLeo,
           children: [unassessedLeo],
-          initialTab: 'readiness',
         })
       );
 
+      expect(html).toContain('Is Leo ready for a phone yet?');
       expect(html).toContain('Start readiness check');
       expect(html).toContain('/children/test-unassessed/readiness');
-      expect(html).toContain('Everyday rhythms');
-      expect(html).toContain('Online instincts');
+    });
+  });
+
+  describe('Step 2 & Step 3: OS Switcher (iPhone / Android) + Optional Apps & Home Wi-Fi', () => {
+    it('renders 2-way OS switcher, 1-open accordion checklist, and 4 optional add-on chips', () => {
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, defaultProps)
+      );
+
+      // Step 2: 2-way OS switcher & Apple Screen Time accordion
+      expect(html).toContain('Step 2 · Parental Controls');
+      expect(html).toContain('Apple Screen Time');
+      expect(html).toContain('iPhone / iPad');
+      expect(html).toContain('Android');
+      expect(html).toContain('Lock Screen Time passcode');
+      expect(html).toContain('8:30 PM');
+      expect(html).toContain('Parent on Android?');
+
+      // Step 3: Optional Go Further apps & Wi-Fi chips
+      expect(html).toContain('Optional · Go Further');
+      expect(html).toContain('Apps, games &amp; home Wi-Fi');
+      expect(html).toContain('YouTube');
+      expect(html).toContain('Roblox');
+      expect(html).toContain('Social Apps');
+      expect(html).toContain('Home Wi-Fi &amp; Consoles');
     });
   });
 
@@ -152,11 +137,11 @@ describe('DevicesManagementView — Separate Phone Readiness & OS Parental Contr
       expect(html).toContain("Toby&#x27;s Screen-Free Sanctuary");
       expect(html).toContain('Zero background TV');
       expect(html).toContain('7:30 PM screen-free wind-down');
-      expect(html).not.toContain('Parental Controls Setup');
+      expect(html).not.toContain('Step 2 · Parental Controls');
     });
   });
 
-  describe('Age-Calibrated OS Blueprint Engine', () => {
+  describe('Age-Calibrated OS Blueprint & Add-on Engine', () => {
     it('calibrates Apple Screen Time adult filtering strictly for younger kids vs older kids', () => {
       const age7Steps = getCalibratedControlSteps('apple_ios', ['adult_content'], 7);
       const age12Steps = getCalibratedControlSteps('apple_ios', ['adult_content'], 12);
@@ -165,26 +150,14 @@ describe('DevicesManagementView — Separate Phone Readiness & OS Parental Contr
       expect(age12Steps[0]?.recommendedSetting).toContain('Limit Adult Websites');
     });
 
-    it('filters steps cleanly by selected control goals across Android, Roblox, YouTube, and Home DNS', () => {
-      const androidAll = getCalibratedControlSteps(
-        'android_family_link',
-        ['tamper_lock', 'adult_content', 'strangers_dms', 'bedtime_downtime'],
-        11
-      );
-      expect(androidAll).toHaveLength(4);
-      expect(androidAll[0]?.title).toContain('APK sideloading');
-      expect(androidAll[2]?.title).toContain('Parent-Managed Contacts');
-      expect(androidAll[2]?.title).toContain('Sensitive Content Warnings');
-      expect(androidAll[3]?.title).toContain('School Time');
+    it('builds all 4 optional add-on packs with age-calibrated YouTube Shorts and Social Media guidance', () => {
+      const packsAge10 = getExtraAddonPacks(10);
+      const packsAge14 = getExtraAddonPacks(14);
 
-      expect(getCalibratedControlSteps('roblox', ['tamper_lock', 'strangers_dms'], 10)).toHaveLength(2);
-      const ytSteps = getCalibratedControlSteps('youtube', ['adult_content', 'time_limits'], 10);
-      expect(ytSteps).toHaveLength(2);
-      expect(ytSteps[1]?.recommendedSetting).toContain('0 minutes');
-
-      expect(getCalibratedControlSteps('home_dns', ['adult_content'], 10)[0]?.menuPath.join(' ')).toContain(
-        '1.1.1.3'
-      );
+      expect(packsAge10.map((p) => p.id)).toEqual(['youtube', 'roblox', 'social', 'home_dns']);
+      expect(packsAge10.find((p) => p.id === 'youtube')?.steps.some((s) => s.recommendedSetting.includes('0 minutes'))).toBe(true);
+      expect(packsAge10.find((p) => p.id === 'social')?.shortTag).toBe('Hold until 13+');
+      expect(packsAge14.find((p) => p.id === 'social')?.shortTag).toBe('Private · DMs off');
     });
 
     it('recommends age-appropriate bedtime downtime schedules', () => {

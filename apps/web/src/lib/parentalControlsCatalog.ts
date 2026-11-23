@@ -556,6 +556,102 @@ export function getCalibratedControlSteps(
   return allForPlatform.filter((step) => goalSet.has(step.goalId));
 }
 
+export interface ExtraAddonPack {
+  id: 'youtube' | 'roblox' | 'social' | 'home_dns';
+  label: string;
+  shortTag: string;
+  steps: Array<{
+    id: string;
+    title: string;
+    menuPath: string[];
+    recommendedSetting: string;
+  }>;
+}
+
+export function getExtraAddonPacks(age: number): ExtraAddonPack[] {
+  const curfew = getRecommendedCurfew(age);
+  const allGoals: ControlGoalId[] = [
+    'tamper_lock',
+    'adult_content',
+    'strangers_dms',
+    'app_approvals',
+    'time_limits',
+    'bedtime_downtime',
+  ];
+
+  const youtubeSteps = getCalibratedControlSteps('youtube', allGoals, age).map((s) => ({
+    id: s.id,
+    title: s.title,
+    menuPath: s.menuPath,
+    recommendedSetting: s.recommendedSetting,
+  }));
+
+  const robloxSteps = getCalibratedControlSteps('roblox', allGoals, age).map((s) => ({
+    id: s.id,
+    title: s.title,
+    menuPath: s.menuPath,
+    recommendedSetting: s.recommendedSetting,
+  }));
+
+  const dnsSteps = getCalibratedControlSteps('home_dns', allGoals, age).map((s) => ({
+    id: s.id,
+    title: s.title,
+    menuPath: s.menuPath,
+    recommendedSetting: s.recommendedSetting,
+  }));
+
+  const socialSteps = [
+    {
+      id: 'social-gate',
+      title:
+        age < 13
+          ? 'Keep social media unapproved at the App Store gate'
+          : 'Enable Family Pairing / Teen Account supervision',
+      menuPath:
+        age < 13
+          ? ['Apple Ask to Buy / Google Play Approvals']
+          : ['TikTok Family Pairing / Instagram Teen Accounts'],
+      recommendedSetting:
+        age < 13
+          ? 'Under age 13, leave TikTok, Instagram, Snapchat, and Discord unapproved via OS download approvals.'
+          : 'Link your parent account via TikTok Family Pairing or Instagram Teen Accounts so accounts stay Private and stranger DMs stay off.',
+    },
+    {
+      id: 'social-limits',
+      title: `Cap social feeds and pause at ${curfew.time12}`,
+      menuPath: ['OS App Limits / Family Pairing Screen Time'],
+      recommendedSetting: `Set a strict daily timer on social apps and lock them automatically at ${curfew.time12} overnight.`,
+    },
+  ];
+
+  return [
+    {
+      id: 'youtube',
+      label: 'YouTube',
+      shortTag: age <= 12 ? 'Supervised · Shorts 0m' : 'Supervised · Caps',
+      steps: youtubeSteps,
+    },
+    {
+      id: 'roblox',
+      label: 'Roblox',
+      shortTag: 'No DMs · $0 Robux',
+      steps: robloxSteps,
+    },
+    {
+      id: 'social',
+      label: 'Social Apps',
+      shortTag: age < 13 ? 'Hold until 13+' : 'Private · DMs off',
+      steps: socialSteps,
+    },
+    {
+      id: 'home_dns',
+      label: 'Home Wi-Fi & Consoles',
+      shortTag: 'DNS 1.1.1.3 · Bedtime',
+      steps: dnsSteps,
+    },
+  ];
+}
+
 export interface AgeUpgradeStage {
   ageRange: string;
   label: string;
