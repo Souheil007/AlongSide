@@ -1,0 +1,282 @@
+[
+  {
+    "coverage_id": "HTTP%2Fbrowser::Client-Side%20DOM%20Rendering%20Boundary::apps%2Fweb%2Fsrc%2Fcomponents%2Fshared::CLIENT-SIDE.md%23DOM%20XSS%20in%20Markdown%20rendering",
+    "canonical_refs": {
+      "surface": "HTTP/browser",
+      "boundary": "Client-Side DOM Rendering Boundary",
+      "subsystem": "apps/web/src/components/shared",
+      "attack_class": "CLIENT-SIDE.md#DOM XSS in Markdown rendering"
+    },
+    "surface": "HTTP/browser",
+    "boundary": "Client-Side DOM Rendering Boundary",
+    "subsystem": "apps/web/src/components/shared",
+    "attack_class": "CLIENT-SIDE.md#DOM XSS in Markdown rendering",
+    "starting_paths": [
+      "apps/web/src/components/shared/MarkdownMessage.tsx"
+    ],
+    "ordinary_attack_class_block": "CLIENT-SIDE.md#DOM XSS in Markdown rendering",
+    "selected_companion_blocks": [
+      "CLIENT-SIDE.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "covered",
+    "agent_id": "hunter-client-xss",
+    "reviewed_paths": [
+      "apps/web/src/components/shared/MarkdownMessage.tsx",
+      "apps/web/src/components/academy/LessonReaderView.tsx",
+      "apps/web/src/lib/utils.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-client-xss",
+        "reviewed_paths": [
+          "apps/web/src/components/shared/MarkdownMessage.tsx",
+          "apps/web/src/components/academy/LessonReaderView.tsx",
+          "apps/web/src/lib/utils.ts"
+        ],
+        "invariant": "Markdown link parsing must sanitize all URL schemes before rendering href attributes",
+        "method": "source",
+        "result": "Verified protected: isSafeUrl neutralizes javascript:, data:, vbscript:, and protocol-relative schemes",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [],
+    "unresolved": []
+  },
+  {
+    "coverage_id": "HTTP%2Fbrowser::Device%20Management%20Cryptographic%20Boundary::apps%2Fapi%2Fsrc%2Fmodules%2Fdevice-profiles::WEB-PROTOCOL-AND-AUTH.md%23Certificate%20lifecycle%20fallback",
+    "canonical_refs": {
+      "surface": "HTTP/browser",
+      "boundary": "Device Management Cryptographic Boundary",
+      "subsystem": "apps/api/src/modules/device-profiles",
+      "attack_class": "WEB-PROTOCOL-AND-AUTH.md#Certificate lifecycle fallback"
+    },
+    "surface": "HTTP/browser",
+    "boundary": "Device Management Cryptographic Boundary",
+    "subsystem": "apps/api/src/modules/device-profiles",
+    "attack_class": "WEB-PROTOCOL-AND-AUTH.md#Certificate lifecycle fallback",
+    "starting_paths": [
+      "apps/api/src/modules/device-profiles/profile.signer.ts"
+    ],
+    "ordinary_attack_class_block": "WEB-PROTOCOL-AND-AUTH.md#Certificate lifecycle fallback",
+    "selected_companion_blocks": [
+      "WEB-PROTOCOL-AND-AUTH.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "candidate",
+    "agent_id": "hunter-cert-lifecycle",
+    "reviewed_paths": [
+      "apps/api/src/modules/device-profiles/profile.compiler.ts",
+      "apps/api/src/modules/device-profiles/profile.signer.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-cert-lifecycle",
+        "reviewed_paths": [
+          "apps/api/src/modules/device-profiles/profile.compiler.ts",
+          "apps/api/src/modules/device-profiles/profile.signer.ts"
+        ],
+        "invariant": "Missing cryptographic keys in production must fail-closed rather than silently returning unsigned profiles",
+        "method": "source",
+        "result": "Confirmed fail-open: AppleMobileConfigSigner catch block and null-check return unsigned XML buffer with isSigned: false",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [
+      "alongside:sec:device-profile-silent-unsigned-fallback:001"
+    ],
+    "unresolved": []
+  },
+  {
+    "coverage_id": "HTTP%2Fbrowser::Network%20Boundary%20%28Browser%20%3C-%3E%20Fastify%20API%29::apps%2Fapi%2Fsrc%2Fapp.ts::WEB-PROTOCOL-AND-AUTH.md%23Ordinary%20CSRF",
+    "canonical_refs": {
+      "surface": "HTTP/browser",
+      "boundary": "Network Boundary (Browser <-> Fastify API)",
+      "subsystem": "apps/api/src/app.ts",
+      "attack_class": "WEB-PROTOCOL-AND-AUTH.md#Ordinary CSRF"
+    },
+    "surface": "HTTP/browser",
+    "boundary": "Network Boundary (Browser <-> Fastify API)",
+    "subsystem": "apps/api/src/app.ts",
+    "attack_class": "WEB-PROTOCOL-AND-AUTH.md#Ordinary CSRF",
+    "starting_paths": [
+      "apps/api/src/app.ts"
+    ],
+    "ordinary_attack_class_block": "WEB-PROTOCOL-AND-AUTH.md#Ordinary CSRF",
+    "selected_companion_blocks": [
+      "WEB-PROTOCOL-AND-AUTH.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "covered",
+    "agent_id": "hunter-csrf",
+    "reviewed_paths": [
+      "apps/api/src/app.ts",
+      "apps/api/src/plugins/auth.plugin.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-csrf",
+        "reviewed_paths": [
+          "apps/api/src/app.ts",
+          "apps/api/src/plugins/auth.plugin.ts"
+        ],
+        "invariant": "State-changing mutations must reject cross-site forged origins and enforce strict content-type parsing",
+        "method": "source",
+        "result": "Verified protected: Fastify CORS strictly validates origins via LOCALHOST_ORIGIN_REGEX and ALONGSIDE_VERCEL_REGEX and enforces application/json",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [],
+    "unresolved": []
+  },
+  {
+    "coverage_id": "HTTP%2Fbrowser::Network%20Boundary%20%28Browser%20%3C-%3E%20Fastify%20API%29::apps%2Fapi%2Fsrc%2Fmodules%2Fauth::RESOURCE-EXHAUSTION-AND-AVAILABILITY.md%23Resource%20exhaustion%20through%20expensive%20hashing%20%2F%20unthrottled%20authentication",
+    "canonical_refs": {
+      "surface": "HTTP/browser",
+      "boundary": "Network Boundary (Browser <-> Fastify API)",
+      "subsystem": "apps/api/src/modules/auth",
+      "attack_class": "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Resource exhaustion through expensive hashing / unthrottled authentication"
+    },
+    "surface": "HTTP/browser",
+    "boundary": "Network Boundary (Browser <-> Fastify API)",
+    "subsystem": "apps/api/src/modules/auth",
+    "attack_class": "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Resource exhaustion through expensive hashing / unthrottled authentication",
+    "starting_paths": [
+      "apps/api/src/modules/auth/auth.routes.ts"
+    ],
+    "ordinary_attack_class_block": "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Resource exhaustion through expensive hashing / unthrottled authentication",
+    "selected_companion_blocks": [
+      "WEB-PROTOCOL-AND-AUTH.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "candidate",
+    "agent_id": "hunter-auth-rate-limit",
+    "reviewed_paths": [
+      "apps/api/src/modules/auth/auth.routes.ts",
+      "apps/api/src/modules/auth/auth.controller.ts",
+      "apps/api/src/modules/auth/auth.service.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-auth-rate-limit",
+        "reviewed_paths": [
+          "apps/api/src/modules/auth/auth.routes.ts",
+          "apps/api/src/modules/auth/auth.controller.ts",
+          "apps/api/src/modules/auth/auth.service.ts"
+        ],
+        "invariant": "Authentication endpoints executing Argon2 password verification must enforce IP and account rate quotas",
+        "method": "source",
+        "result": "Confirmed absent: /login and /register route schemas have no rate-limit hooks or throttling registered",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [
+      "alongside:sec:auth-unthrottled-rate-limit:001"
+    ],
+    "unresolved": []
+  },
+  {
+    "coverage_id": "HTTP%2Fbrowser::Network%20Boundary%20%28Browser%20%3C-%3E%20Fastify%20API%29::apps%2Fapi::ATTACK-CLASSES.md%23Missing%20defensive%20security%20headers",
+    "canonical_refs": {
+      "surface": "HTTP/browser",
+      "boundary": "Network Boundary (Browser <-> Fastify API)",
+      "subsystem": "apps/api",
+      "attack_class": "ATTACK-CLASSES.md#Missing defensive security headers"
+    },
+    "surface": "HTTP/browser",
+    "boundary": "Network Boundary (Browser <-> Fastify API)",
+    "subsystem": "apps/api",
+    "attack_class": "ATTACK-CLASSES.md#Missing defensive security headers",
+    "starting_paths": [
+      "apps/api/src/app.ts"
+    ],
+    "ordinary_attack_class_block": "ATTACK-CLASSES.md#Missing defensive security headers",
+    "selected_companion_blocks": [
+      "WEB-PROTOCOL-AND-AUTH.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "candidate",
+    "agent_id": "hunter-sec-headers",
+    "reviewed_paths": [
+      "apps/api/src/app.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-sec-headers",
+        "reviewed_paths": [
+          "apps/api/src/app.ts"
+        ],
+        "invariant": "API responses must emit standard defensive headers including nosniff and frame options",
+        "method": "source",
+        "result": "Confirmed absent: Fastify instance created and registered without @fastify/helmet plugin",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [
+      "alongside:sec:missing-security-headers:001"
+    ],
+    "unresolved": []
+  },
+  {
+    "coverage_id": "model%20context%2Ftool%20arguments::AI%20Prompt%20%26%20Child%20Safety%20Boundary::apps%2Fapi%2Fsrc%2Fmodules%2Fai-advisor::AI-AND-LLM.md%23Indirect%20prompt%20injection%20via%20user%20profile%20data",
+    "canonical_refs": {
+      "surface": "model context/tool arguments",
+      "boundary": "AI Prompt & Child Safety Boundary",
+      "subsystem": "apps/api/src/modules/ai-advisor",
+      "attack_class": "AI-AND-LLM.md#Indirect prompt injection via user profile data"
+    },
+    "surface": "model context/tool arguments",
+    "boundary": "AI Prompt & Child Safety Boundary",
+    "subsystem": "apps/api/src/modules/ai-advisor",
+    "attack_class": "AI-AND-LLM.md#Indirect prompt injection via user profile data",
+    "starting_paths": [
+      "apps/api/src/modules/ai-advisor/prompt.builder.ts"
+    ],
+    "ordinary_attack_class_block": "AI-AND-LLM.md#Indirect prompt injection via user profile data",
+    "selected_companion_blocks": [
+      "AI-AND-LLM.md#Core discipline"
+    ],
+    "excluded_blocks": [],
+    "prior_status": "none",
+    "attempts": [],
+    "wave": 1,
+    "status": "candidate",
+    "agent_id": "hunter-llm-injection",
+    "reviewed_paths": [
+      "apps/api/src/modules/ai-advisor/prompt.builder.ts",
+      "apps/api/src/modules/ai-advisor/safe-harbor.filter.ts"
+    ],
+    "local_checks": [
+      {
+        "agent_id": "hunter-llm-injection",
+        "reviewed_paths": [
+          "apps/api/src/modules/ai-advisor/prompt.builder.ts",
+          "apps/api/src/modules/ai-advisor/safe-harbor.filter.ts"
+        ],
+        "invariant": "User-controlled entity attributes must not be interpolated raw into LLM system prompts without sanitization",
+        "method": "source",
+        "result": "Confirmed unsanitized: child.name and health logs interpolated into system prompt string",
+        "artifact": null
+      }
+    ],
+    "result_fingerprints": [
+      "alongside:sec:ai-advisor-indirect-prompt-injection:001"
+    ],
+    "unresolved": []
+  }
+]

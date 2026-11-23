@@ -1,0 +1,33 @@
+{
+  "run_id": "alongside-sec-audit-2026-11-23",
+  "repo": "AlongSide",
+  "target": "C:/GithubProjects/AlongSide",
+  "source_ref": "b9632cd862256a2a984ca770e3ab925f99178d1d",
+  "profile": "standard",
+  "scope_paths": [
+    "apps/api",
+    "apps/web",
+    "packages/database",
+    "packages/shared"
+  ],
+  "budget": null,
+  "execution_policy": "sandboxed-source-and-local-only",
+  "selected_companion_files": [
+    "WEB-PROTOCOL-AND-AUTH.md",
+    "CLIENT-SIDE.md",
+    "AI-AND-LLM.md",
+    "DATA-ISOLATION-AND-LIFECYCLE.md",
+    "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md"
+  ],
+  "prior_run_paths": [],
+  "shared_file_owners": {
+    "run_metadata": "parent",
+    "architecture": "parent",
+    "coverage_ledger": "parent",
+    "findings": "parent",
+    "report": "parent",
+    "findings_detail": "parent",
+    "needs_validation": "parent"
+  },
+  "run_status": "completed"
+}
