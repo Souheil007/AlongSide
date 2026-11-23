@@ -3,32 +3,27 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  Shield,
   Printer,
   QrCode,
   ArrowLeft,
-  CheckCircle2,
+  Check,
   Clock,
-  HeartHandshake,
-  User,
-  AlertCircle,
-  FileCheck2,
   Award,
 } from 'lucide-react';
 import {
   CommitmentParty,
-  ClauseCategory,
   DevicePlatform,
   type AgreementDTO,
-  type AgreementClauseDTO,
 } from '@alongside/shared';
-import { usePactStore, formatCurfew12Hour, CANONICAL_PRESET_CLAUSES } from '@/stores/usePactStore';
+import {
+  usePactStore,
+  formatCurfew12Hour,
+  CANONICAL_PRESET_CLAUSES,
+} from '@/stores/usePactStore';
 import { agreementsApi } from '@/lib/api/agreements';
 import { EnrollmentModal } from '@/components/devices/EnrollmentModal';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
-import { cn } from '@/lib/utils';
 
 export interface PactDetailViewProps {
   agreementId: string;
@@ -52,69 +47,46 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
           setAgreement(res.data.agreement);
         }
       } catch {
-        // Fallback to store data if available, or generate display agreement
         if (isMounted) {
-          if (store.agreementId === agreementId || agreementId.startsWith('agr-') || agreementId === 'current') {
-            setAgreement({
-              id: agreementId,
-              userId: 'current-user',
-              childId: store.childId || 'child-default',
-              title: store.agreementTitle || 'Family Tech Agreement',
-              status: 'SIGNED' as any,
-              developmentalTier: store.developmentalTier,
-              roadType: store.roadType,
-              parentSignature: store.parentSignature,
-              childSignature: store.childSignature,
-              signedAt: new Date().toISOString(),
-              clauses: store.clauses.map((c, idx) => ({
-                id: `cl-${idx}`,
-                agreementId,
-                category: c.category,
-                party: c.party,
-                title: c.title,
-                description: c.description,
-                isStandard: c.isStandard ?? true,
-                isCustom: c.isCustom ?? false,
-                sortOrder: c.sortOrder ?? idx,
-              })),
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            });
-          } else {
-            // Provide canonical display agreement
-            setAgreement({
-              id: agreementId,
-              userId: 'user-default',
-              childId: 'child-default',
-              title: store.agreementTitle || 'Family Tech Agreement',
-              status: 'SIGNED' as any,
-              developmentalTier: store.developmentalTier,
-              roadType: store.roadType,
-              parentSignature: store.parentSignature,
-              childSignature: store.childSignature,
-              signedAt: new Date().toISOString(),
-              clauses: CANONICAL_PRESET_CLAUSES.map((c, idx) => ({
-                id: `cl-${idx}`,
-                agreementId,
-                category: c.category,
-                party: c.party,
-                title: c.title,
-                description: c.description,
-                isStandard: true,
-                isCustom: false,
-                sortOrder: idx,
-              })),
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            });
-          }
+          const sourceClauses =
+            store.agreementId === agreementId ||
+            agreementId.startsWith('agr-') ||
+            agreementId === 'current'
+              ? store.clauses
+              : CANONICAL_PRESET_CLAUSES;
+
+          setAgreement({
+            id: agreementId,
+            userId: 'current-user',
+            childId: store.childId || 'child-default',
+            title: store.agreementTitle || 'Family Tech Agreement',
+            status: 'SIGNED' as any,
+            developmentalTier: store.developmentalTier,
+            roadType: store.roadType,
+            parentSignature: store.parentSignature,
+            childSignature: store.childSignature,
+            signedAt: new Date().toISOString(),
+            clauses: sourceClauses.map((c, idx) => ({
+              id: `cl-${idx}`,
+              agreementId,
+              category: c.category,
+              party: c.party,
+              title: c.title,
+              description: c.description,
+              isStandard: c.isStandard ?? true,
+              isCustom: c.isCustom ?? false,
+              sortOrder: c.sortOrder ?? idx,
+            })),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
         }
       } finally {
         if (isMounted) setIsLoading(false);
       }
     }
 
-    loadAgreement();
+    void loadAgreement();
     return () => {
       isMounted = false;
     };
@@ -134,7 +106,6 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
         setEnrollmentToken(res.data.profile.enrollmentToken);
       }
     } catch {
-      // Use fallback token
       setEnrollmentToken(`tok_${Math.random().toString(36).substring(2, 10)}`);
     }
     setEnrollmentModalOpen(true);
@@ -143,10 +114,8 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-3">
-        <div className="h-9 w-9 animate-spin rounded-full border-4 border-teal-600 border-t-transparent" />
-        <p className="text-xs font-medium text-slate-600">
-          Loading family agreement document...
-        </p>
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--spruce)] border-t-transparent" />
+        <p className="text-sm text-[var(--body)]">Preparing your family pact...</p>
       </div>
     );
   }
@@ -176,25 +145,23 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
       });
 
   return (
-    <div className="space-y-6">
-      {/* Non-Print Interactive Toolbar */}
-      <div className="no-print flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+    <div className="mx-auto max-w-4xl space-y-6">
+      {/* Interactive Toolbar (Hidden on Print) */}
+      <div className="no-print flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-[14px] border border-[var(--hairline)] bg-[var(--elevated)] p-4">
         <div className="flex items-center gap-3">
-          <Link href="/dashboard">
-            <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
-              <ArrowLeft className="h-4 w-4" />
-              Dashboard
-            </Button>
+          <Link
+            href="/devices"
+            className="inline-flex min-h-[40px] items-center gap-1.5 text-sm font-medium text-[var(--body)] hover:text-[var(--ink)]"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            <span>Back to Devices</span>
           </Link>
-          <span className="text-slate-300">|</span>
-          <div className="flex items-center gap-2">
-            <Badge variant="success" className="text-[10px]">
-              Sealed & Active
-            </Badge>
-            <span className="text-xs font-semibold text-slate-800">
-              {agreement?.title}
-            </span>
-          </div>
+          <span className="text-[var(--hairline)]" aria-hidden="true">
+            |
+          </span>
+          <span className="text-[13px] font-semibold text-[var(--spruce)]">
+            Sealed · {signedDateFormatted}
+          </span>
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -202,114 +169,100 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
             size="sm"
             variant="outline"
             onClick={handleOpenEnrollment}
-            className="flex-1 sm:flex-none gap-1.5 text-xs border-violet-300 text-violet-900 hover:bg-violet-50"
+            className="flex-1 sm:flex-none gap-1.5 min-h-[42px] rounded-[8px]"
           >
-            <QrCode className="h-4 w-4 text-violet-700" />
-            Deploy QR Code
+            <QrCode className="h-4 w-4 text-[var(--spruce)]" aria-hidden="true" />
+            <span>Device QR setup</span>
           </Button>
 
           <Button
             size="sm"
+            variant="forest"
             onClick={handlePrint}
-            className="flex-1 sm:flex-none gap-1.5 text-xs bg-teal-600 hover:bg-teal-700 shadow-sm"
+            className="flex-1 sm:flex-none gap-1.5 min-h-[42px] rounded-[8px]"
           >
-            <Printer className="h-4 w-4" />
-            Print Refrigerator Copy
+            <Printer className="h-4 w-4" aria-hidden="true" />
+            <span>Print fridge copy</span>
           </Button>
         </div>
       </div>
 
-      {/* REFRIGERATOR TREATY PHYSICAL DOCUMENT CONTAINER */}
+      {/* Archival 1-Page Refrigerator Treaty */}
       <article
         id="refrigerator-treaty"
-        className="refrigerator-document mx-auto max-w-4xl bg-white rounded-2xl border-2 border-slate-800/90 p-8 sm:p-12 shadow-md transition-all text-slate-900"
+        className="refrigerator-document rounded-[18px] border border-[#D8CEB8] bg-[#FAF7F2] p-7 sm:p-11 text-[var(--ink)]"
       >
-        {/* Document Header with Alongside Seal */}
-        <header className="border-b-2 border-slate-800 pb-6 mb-6">
-          <div className="flex items-center justify-between gap-4">
+        <header className="border-b-2 border-[var(--spruce)] pb-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <AlongsideLogo size="lg" showWordmark={false} priority />
               <div>
-                <span className="text-[11px] font-bold tracking-widest uppercase text-slate-600 block">
-                  Official Alongside Family Operating Charter
+                <span className="block text-[12px] font-semibold text-[var(--amber)]">
+                  Alongside Family Charter
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 uppercase font-serif">
-                  Family Tech Treaty
+                <h1 className="font-serif-almanac text-[28px] sm:text-[34px] font-semibold leading-tight text-[var(--ink)]">
+                  {agreement?.title || 'Family Tech Treaty'}
                 </h1>
               </div>
             </div>
 
-            {/* Cryptographic Seal & Date Stamp */}
-            <div className="text-right border-l border-slate-200 pl-4 hidden sm:block">
-              <div className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                <Award className="h-3 w-3" />
-                Digitally Sealed
+            <div className="sm:text-right sm:border-l sm:border-[#E6DEC9] sm:pl-4">
+              <div className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[var(--spruce)]">
+                <Award className="h-4 w-4" aria-hidden="true" />
+                <span>Co-signed &amp; sealed</span>
               </div>
-              <div className="text-xs font-semibold text-slate-800 mt-1">
+              <div className="text-[13px] font-medium text-[var(--ink)] mt-0.5">
                 {signedDateFormatted}
               </div>
-              <div className="text-[10px] text-slate-400 font-mono">
-                ID: {agreement?.id.substring(0, 16)}...
-              </div>
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-600 gap-1">
-            <p>
-              Bilateral co-regulation treaty entered freely between{' '}
-              <strong className="text-slate-900">{childName}</strong> and{' '}
-              <strong className="text-slate-900">Parents / Guardians</strong>.
-            </p>
-            <p className="font-semibold text-slate-700">
-              Household Status: Active & Binding
-            </p>
-          </div>
+          <p className="mt-4 pt-3 border-t border-[#E6DEC9] text-[13.5px] text-[var(--body)]">
+            A mutual agreement created together by{' '}
+            <strong className="text-[var(--ink)]">{childName}</strong> and{' '}
+            <strong className="text-[var(--ink)]">Parents / Guardians</strong>.
+          </p>
         </header>
 
-        {/* Highlight Curfew Banner Box */}
-        <div className="rounded-xl border-2 border-slate-900 bg-slate-50 p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        {/* Highlighted Bedtime Dock Strip */}
+        <div className="rounded-[12px] border border-[var(--spruce-border)] bg-[var(--spruce-soft)] p-4 mb-7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-white">
-              <Clock className="h-5 w-5" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--spruce)] text-white">
+              <Clock className="h-5 w-5" aria-hidden="true" />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Pillar 5 Canonical Agreement
+              <span className="block text-[12px] font-semibold text-[var(--spruce)]">
+                Nightly bedtime dock
               </span>
-              <span className="text-base font-extrabold text-slate-950">
-                {formattedCurfew} Nightly Bedtime Docking
+              <span className="font-serif-almanac text-[20px] font-semibold text-[var(--ink)] tabular-nums">
+                {formattedCurfew} in the kitchen
               </span>
             </div>
           </div>
-          <div className="text-xs text-slate-700 max-w-md text-left sm:text-right">
-            All devices dock in the kitchen charging basket every night at{' '}
-            <strong className="text-slate-900">{formattedCurfew} sharp</strong> to
-            safeguard adolescent sleep neurobiology and circadian health.
-          </div>
+          <p className="text-[13px] text-[var(--body)] max-w-sm sm:text-right leading-relaxed">
+            Devices plug in outside the bedroom at <strong className="text-[var(--ink)]">{formattedCurfew}</strong> so everyone wakes up rested.
+          </p>
         </div>
 
-        {/* Bilateral Clauses Section */}
+        {/* Two-Party Promises Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Child Commitments Column */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-slate-800 pb-2">
-              <User className="h-4.5 w-4.5 text-slate-800" />
-              <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-950">
-                {childName}&apos;s Commitments
-              </h2>
-            </div>
+          <div className="space-y-3">
+            <h2 className="flex items-center gap-2 border-b border-[var(--spruce)] pb-2 text-[14px] font-semibold text-[var(--ink)]">
+              <span className="h-2.5 w-2.5 rounded-full bg-[var(--spruce)]" aria-hidden="true" />
+              <span>{childName}&apos;s promises</span>
+            </h2>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {childClauses.map((clause, idx) => (
                 <div
                   key={clause.id || idx}
-                  className="p-3 rounded-lg border border-slate-200 bg-white space-y-1"
+                  className="rounded-[10px] border border-[#E6DEC9] bg-white p-3.5 space-y-1"
                 >
-                  <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-slate-700 shrink-0" />
+                  <div className="flex items-start gap-2 text-[13.5px] font-semibold text-[var(--ink)]">
+                    <Check className="h-4 w-4 text-[var(--spruce)] shrink-0 mt-0.5" aria-hidden="true" />
                     <span>{clause.title}</span>
                   </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed pl-5">
+                  <p className="text-[12.5px] text-[var(--body)] leading-relaxed pl-6">
                     {clause.description}
                   </p>
                 </div>
@@ -317,26 +270,23 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
             </div>
           </div>
 
-          {/* Parent Commitments Column */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-slate-800 pb-2">
-              <HeartHandshake className="h-4.5 w-4.5 text-slate-800" />
-              <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-950">
-                Parents&apos; Commitments
-              </h2>
-            </div>
+          <div className="space-y-3">
+            <h2 className="flex items-center gap-2 border-b border-[var(--amber)] pb-2 text-[14px] font-semibold text-[var(--ink)]">
+              <span className="h-2.5 w-2.5 rounded-full bg-[var(--amber)]" aria-hidden="true" />
+              <span>Parents&apos; promises</span>
+            </h2>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {parentClauses.map((clause, idx) => (
                 <div
                   key={clause.id || idx}
-                  className="p-3 rounded-lg border border-slate-200 bg-white space-y-1"
+                  className="rounded-[10px] border border-[#E6DEC9] bg-white p-3.5 space-y-1"
                 >
-                  <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-slate-700 shrink-0" />
+                  <div className="flex items-start gap-2 text-[13.5px] font-semibold text-[var(--ink)]">
+                    <Check className="h-4 w-4 text-[var(--amber)] shrink-0 mt-0.5" aria-hidden="true" />
                     <span>{clause.title}</span>
                   </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed pl-5">
+                  <p className="text-[12.5px] text-[var(--body)] leading-relaxed pl-6">
                     {clause.description}
                   </p>
                 </div>
@@ -345,19 +295,18 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
           </div>
         </div>
 
-        {/* Digital Co-Signatures Station */}
-        <div className="border-t-2 border-slate-800 pt-6 mt-8">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4 text-center">
-            Signatures & Mutual Ratification
+        {/* Signatures Block */}
+        <div className="border-t-2 border-[#E6DEC9] pt-6">
+          <h3 className="text-[13px] font-semibold text-[var(--mute)] mb-4 text-center">
+            Signed together on {signedDateFormatted}
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Parent Signature Box */}
-            <div className="rounded-xl border border-slate-300 p-4 bg-slate-50/50 space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Parent / Guardian Co-Signer
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="rounded-[12px] border border-[#E6DEC9] bg-white p-4 space-y-2">
+              <span className="text-[12px] font-semibold text-[var(--amber)] block">
+                Parent / Guardian
               </span>
-              <div className="h-20 flex items-center justify-center border-b border-slate-300 bg-white rounded-md p-1">
+              <div className="h-20 flex items-center justify-center border-b border-[#E6DEC9] p-1">
                 {agreement?.parentSignature ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -366,25 +315,21 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
                     className="max-h-full max-w-full object-contain"
                   />
                 ) : (
-                  <span className="text-xs text-slate-400 italic">
-                    Signed on AlongSide Parent OS
+                  <span className="font-serif-almanac italic text-sm text-[var(--mute)]">
+                    Signed on Alongside
                   </span>
                 )}
               </div>
-              <div className="flex justify-between items-center text-[10px] text-slate-500 pt-1">
-                <span className="font-semibold text-slate-800">
-                  Parent / Guardian
-                </span>
-                <span>Ratified: {signedDateFormatted}</span>
+              <div className="text-[12px] text-[var(--mute)]">
+                Parent / Guardian · {signedDateFormatted}
               </div>
             </div>
 
-            {/* Child Signature Box */}
-            <div className="rounded-xl border border-slate-300 p-4 bg-slate-50/50 space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
-                Child Partner ({childName})
+            <div className="rounded-[12px] border border-[#E6DEC9] bg-white p-4 space-y-2">
+              <span className="text-[12px] font-semibold text-[var(--spruce)] block">
+                {childName}
               </span>
-              <div className="h-20 flex items-center justify-center border-b border-slate-300 bg-white rounded-md p-1">
+              <div className="h-20 flex items-center justify-center border-b border-[#E6DEC9] p-1">
                 {agreement?.childSignature ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -393,30 +338,24 @@ export function PactDetailView({ agreementId }: PactDetailViewProps) {
                     className="max-h-full max-w-full object-contain"
                   />
                 ) : (
-                  <span className="text-xs text-slate-400 italic">
-                    Signed on AlongSide Parent OS
+                  <span className="font-serif-almanac italic text-sm text-[var(--mute)]">
+                    Signed on Alongside
                   </span>
                 )}
               </div>
-              <div className="flex justify-between items-center text-[10px] text-slate-500 pt-1">
-                <span className="font-semibold text-slate-800">
-                  {childName}
-                </span>
-                <span>Ratified: {signedDateFormatted}</span>
+              <div className="text-[12px] text-[var(--mute)]">
+                {childName} · {signedDateFormatted}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Refrigerator Footer Instruction */}
-        <footer className="mt-8 pt-4 border-t border-slate-200 text-center text-[10px] text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-1">
-          <span>AlongSide Parent OS • Refrigerator Treaty Edition</span>
-          <span>Post this physical document in a shared family space (e.g. Refrigerator).</span>
-          <span>Verified Bilateral Co-Regulation Standard</span>
+        <footer className="mt-8 pt-4 border-t border-[#E6DEC9] text-[11.5px] text-[var(--mute)] flex flex-col sm:flex-row items-center justify-between gap-1">
+          <span>Alongside · Refrigerator Edition</span>
+          <span>Hang somewhere shared, like the fridge or hallway charging spot.</span>
         </footer>
       </article>
 
-      {/* QR Enrollment Modal Trigger */}
       <EnrollmentModal
         isOpen={enrollmentModalOpen}
         onClose={() => setEnrollmentModalOpen(false)}

@@ -2,29 +2,21 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
-  Shield,
-  HeartHandshake,
-  Clock,
-  Sparkles,
-  CheckCircle2,
-  ArrowRight,
   ArrowLeft,
-  Printer,
-  Smartphone,
+  ArrowRight,
   AlertCircle,
-  FileText,
-  User,
+  Check,
+  Clock,
   PenTool,
+  Printer,
   QrCode,
+  Sparkles,
 } from 'lucide-react';
 import {
   CommitmentParty,
-  DevelopmentalTier,
-  RoadType,
   DevicePlatform,
-  type AgreementClauseInput,
+  RoadType,
 } from '@alongside/shared';
 import { usePactStore, formatCurfew12Hour } from '@/stores/usePactStore';
 import { useChildContextStore } from '@/stores/useChildContextStore';
@@ -35,17 +27,23 @@ import { ClauseSelector } from './ClauseSelector';
 import { CurfewSlider } from './CurfewSlider';
 import { SignaturePad } from './SignaturePad';
 import { EnrollmentModal } from '@/components/devices/EnrollmentModal';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
 import { cn } from '@/lib/utils';
 
 export interface PactWizardProps {
   initialChildId?: string;
+  initialPreset?: string;
 }
 
-export function PactWizard({ initialChildId }: PactWizardProps) {
-  const router = useRouter();
+const PRESET_LABELS: Record<string, string> = {
+  ROAD_2_AUTONOMY_CHARTER: 'Autonomy & Trust Pact',
+  ROAD_2_SCAFFOLDED_PACT: 'Guided Family Pact',
+  ROAD_1_BRIDGE_CHARTER: 'Bridge Device Pact',
+  ROAD_1_PRE_DEVICE_FOUNDATION: 'Starter Screen Pact',
+};
+
+export function PactWizard({ initialChildId, initialPreset }: PactWizardProps) {
   const { user } = useAuth();
   const { children, isLoading: childrenLoading } = useChildren();
 
@@ -55,6 +53,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
     developmentalTier,
     roadType,
     agreementTitle,
+    recommendedPreset,
     clauses,
     curfewTime,
     parentSignature,
@@ -82,42 +81,67 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
   const [enrollmentModalOpen, setEnrollmentModalOpen] = React.useState(false);
   const { activeChildId } = useChildContextStore();
 
-  // Initialize wizard with selected child or first available child
   React.useEffect(() => {
     if (childrenLoading || children.length === 0) return;
 
     const targetChild = initialChildId
       ? children.find((c) => c.id === initialChildId)
       : activeChildId
-      ? children.find((c) => c.id === activeChildId)
-      : childId
-      ? children.find((c) => c.id === childId)
-      : children[0];
+        ? children.find((c) => c.id === activeChildId)
+        : childId
+          ? children.find((c) => c.id === childId)
+          : children[0];
 
-    if (targetChild && (!childId || childId !== targetChild.id)) {
+    if (!targetChild) return;
+
+    const needsInit =
+      !childId ||
+      childId !== targetChild.id ||
+      (initialPreset !== undefined && initialPreset !== recommendedPreset);
+
+    if (needsInit) {
       initializeWizard(
         targetChild.id,
         targetChild.name,
         targetChild.developmentalTier,
-        targetChild.roadType
+        targetChild.roadType,
+        initialPreset ?? null
       );
     }
-  }, [initialChildId, activeChildId, children, childrenLoading, childId, initializeWizard]);
+  }, [
+    initialChildId,
+    initialPreset,
+    recommendedPreset,
+    activeChildId,
+    children,
+    childrenLoading,
+    childId,
+    initializeWizard,
+  ]);
 
   const activeChild = children.find((c) => c.id === childId) || null;
+  const displayChildName = childName || activeChild?.name || 'Your child';
   const formattedCurfew = formatCurfew12Hour(curfewTime);
 
   const childClauses = clauses.filter((c) => c.party === CommitmentParty.CHILD);
   const parentClauses = clauses.filter((c) => c.party === CommitmentParty.PARENT);
 
-  // Handle final save and digital seal
+  const titleSuggestions = React.useMemo(
+    () => [
+      `${displayChildName}'s Family Tech Agreement`,
+      `${displayChildName} & Parents' Screen Deal`,
+      `The ${displayChildName} Kitchen-Dock Pact`,
+    ],
+    [displayChildName]
+  );
+
   const handleSaveAgreement = async () => {
     if (!childId) {
-      setError('Please select a child profile first.');
+      setError('Select a child profile before sealing the pact.');
       return;
     }
     if (!parentSignature || !childSignature) {
-      setError('Both parent and child must digitally co-sign before sealing the pact.');
+      setError('Both parent and child need to sign before sealing the pact.');
       return;
     }
 
@@ -136,25 +160,16 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
       });
 
       const savedAgreement = response.data?.agreement;
-      if (savedAgreement?.id) {
-        setAgreementId(savedAgreement.id);
-      } else {
-        // Fallback ID if mock or local
-        setAgreementId(`agr-${Date.now()}`);
-      }
-
+      setAgreementId(savedAgreement?.id || `agr-${Date.now()}`);
       setStep(4);
-    } catch (err: unknown) {
-      // In case offline or endpoint issue, store state locally and continue to Step 4
-      const fallbackId = `agr-${Date.now()}`;
-      setAgreementId(fallbackId);
+    } catch {
+      setAgreementId(`agr-${Date.now()}`);
       setStep(4);
     } finally {
       setIsSaving(false);
     }
   };
 
-  // Compile profile for instant QR code deployment
   const handleDeployToDevice = async () => {
     if (!agreementId) return;
     setIsCompiling(true);
@@ -168,7 +183,6 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
         setCompiledProfile(res.data.profile);
       }
     } catch {
-      // Provide clean fallback profile token
       setCompiledProfile({
         id: `prof-${Date.now()}`,
         childId: childId || 'child-default',
@@ -188,453 +202,479 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
   };
 
   const stepsMeta = [
-    { number: 1, title: 'Foundations', subtitle: 'Pact & Context' },
-    { number: 2, title: 'Clauses & Curfew', subtitle: 'Curfew & Boundaries' },
-    { number: 3, title: 'Co-Signing', subtitle: 'Bilateral Signatures' },
-    { number: 4, title: 'Treaty Sealed', subtitle: 'Print & Deploy' },
+    { number: 1, title: 'Name & Bedtime' },
+    { number: 2, title: 'Our Promises' },
+    { number: 3, title: 'Review & Sign' },
+    { number: 4, title: 'Treaty Sealed' },
   ];
 
-  return (
-    <div className="space-y-8">
-      {/* Wizard Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-teal-600 text-white shadow-xs">
-              <Shield className="h-3.5 w-3.5" />
-            </span>
-            <Badge variant="default" className="text-[10px]">
-              Bilateral Family Pact Wizard (Pillar 5)
-            </Badge>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-            {agreementTitle || 'Family Tech Agreement'}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Co-negotiate boundaries, establish a neutral 8:30 PM bedtime curfew, and seal with bilateral digital signatures.
-          </p>
-        </div>
+  const activePresetLabel = recommendedPreset
+    ? PRESET_LABELS[recommendedPreset] || null
+    : null;
 
-        {agreementId && activeStep === 4 && (
-          <div className="flex items-center gap-2 self-start md:self-auto">
-            <Link href={`/pacts/${agreementId}`}>
-              <Button size="sm" variant="outline" className="gap-1.5 text-xs">
-                <Printer className="h-3.5 w-3.5" />
-                View Refrigerator Treaty
-              </Button>
-            </Link>
-          </div>
+  return (
+    <div className="mx-auto max-w-4xl space-y-6">
+      {/* Top Navigation & Context Strip */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link
+          href="/devices"
+          className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-medium text-[var(--body)] transition-colors hover:text-[var(--ink)]"
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          <span>Back to Devices</span>
+        </Link>
+
+        {activeChild && (
+          <span className="text-[13px] text-[var(--mute)] tabular-nums">
+            {activeChild.name} · Age {activeChild.age} ·{' '}
+            {activeChild.roadType === RoadType.PRE_DEVICE
+              ? 'Shared & starter screens'
+              : 'Personal device pact'}
+          </span>
         )}
       </div>
 
-      {/* 4-Step Progress Indicator */}
-      <nav aria-label="Pact Wizard Steps" className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {/* Editorial Wizard Header */}
+      <header className="space-y-2 border-b border-[var(--hairline)] pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-1.5">
+            <h1 className="font-serif-almanac text-[28px] sm:text-[36px] font-semibold leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
+              {agreementTitle || 'Family Tech Agreement'}
+            </h1>
+            <p className="text-[15px] leading-relaxed text-[var(--body)] max-w-[56ch]">
+              Sit together, agree on a calm bedtime dock time, trade real promises, and
+              sign it side by side.
+            </p>
+          </div>
+
+          {agreementId && activeStep === 4 && (
+            <Link href={`/pacts/${agreementId}`} className="shrink-0">
+              <Button variant="outline" size="sm" className="gap-1.5 min-h-[42px]">
+                <Printer className="h-4 w-4" aria-hidden="true" />
+                <span>Print fridge copy</span>
+              </Button>
+            </Link>
+          )}
+        </div>
+
+        {activePresetLabel && activeStep < 4 && (
+          <div className="inline-flex items-center gap-2 rounded-[10px] bg-[var(--spruce-soft)] border border-[var(--spruce-border)] px-3.5 py-2 text-[13px] text-[var(--spruce)] mt-2">
+            <Sparkles className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span>
+              Pre-filled for <strong>{activePresetLabel}</strong> from {displayChildName}&apos;s readiness check-in.
+            </span>
+          </div>
+        )}
+      </header>
+
+      {/* Quiet 4-Step Progress Rail */}
+      <nav aria-label="Pact wizard steps" className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {stepsMeta.map((s) => {
           const isCurrent = activeStep === s.number;
           const isComplete = activeStep > s.number;
+          const canJumpBack = s.number < activeStep;
 
           return (
             <button
               key={s.number}
               type="button"
               onClick={() => {
-                // Allow navigating back or to completed steps
-                if (s.number < activeStep) setStep(s.number);
+                if (canJumpBack) setStep(s.number);
               }}
-              disabled={s.number > activeStep}
+              disabled={!canJumpBack && !isCurrent}
+              aria-current={isCurrent ? 'step' : undefined}
               className={cn(
-                'flex items-center gap-3 p-3 rounded-xl border text-left transition-all',
+                'flex flex-col gap-2 rounded-[12px] px-3 py-2.5 text-left transition-colors min-h-[56px]',
                 isCurrent
-                  ? 'border-teal-600 bg-teal-50/70 shadow-xs ring-1 ring-teal-500'
+                  ? 'bg-[var(--elevated)] border border-[var(--spruce)]'
                   : isComplete
-                  ? 'border-emerald-200 bg-white hover:bg-slate-50 cursor-pointer'
-                  : 'border-slate-200 bg-slate-50/60 opacity-60 cursor-not-allowed'
+                    ? 'bg-[var(--elevated)] border border-[var(--hairline)] hover:border-[var(--spruce-border)] cursor-pointer'
+                    : 'bg-transparent border border-transparent opacity-60 cursor-not-allowed'
               )}
             >
-              <div
-                className={cn(
-                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-bold text-xs transition-colors',
-                  isCurrent
-                    ? 'bg-teal-600 text-white'
-                    : isComplete
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-slate-200 text-slate-600'
-                )}
-              >
-                {isComplete ? <CheckCircle2 className="h-4 w-4" /> : s.number}
-              </div>
-              <div className="overflow-hidden">
+              <div className="flex items-center justify-between gap-2 w-full">
                 <span
                   className={cn(
-                    'block text-xs font-bold truncate',
-                    isCurrent ? 'text-teal-950' : 'text-slate-800'
+                    'flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-semibold tabular-nums',
+                    isCurrent || isComplete
+                      ? 'bg-[var(--spruce)] text-white'
+                      : 'bg-[var(--hairline)] text-[var(--body)]'
                   )}
                 >
-                  {s.title}
+                  {isComplete ? (
+                    <Check className="h-3 w-3" strokeWidth={2.5} aria-hidden="true" />
+                  ) : (
+                    s.number
+                  )}
                 </span>
-                <span className="block text-[10px] text-slate-500 truncate">
-                  {s.subtitle}
-                </span>
+                <span
+                  className={cn(
+                    'h-1 flex-1 rounded-full',
+                    isCurrent || isComplete ? 'bg-[var(--spruce)]' : 'bg-[var(--hairline)]'
+                  )}
+                />
               </div>
+              <span
+                className={cn(
+                  'text-[13px] font-semibold truncate',
+                  isCurrent ? 'text-[var(--ink)]' : 'text-[var(--body)]'
+                )}
+              >
+                {s.title}
+              </span>
             </button>
           );
         })}
       </nav>
 
-      {/* Global Error Banner if any */}
+      {/* Global Error Alert */}
       {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4 flex items-start gap-3 text-red-800 text-xs">
-          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+        <div
+          role="alert"
+          className="flex items-start gap-2.5 rounded-[12px] border border-red-200 bg-red-50 px-4 py-3.5 text-[13px] text-red-800"
+        >
+          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-red-600" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* STEP 1: Agreement Foundations */}
+      {/* ================================================================= */}
+      {/* STEP 1: NAME YOUR PACT & PICK THE BEDTIME DOCK                     */}
+      {/* ================================================================= */}
       {activeStep === 1 && (
         <div className="space-y-6">
-          <Card className="border-slate-200/90 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg">Step 1: Agreement Foundations</CardTitle>
-              <CardDescription>
-                Agreement presets automatically adapt to the child selected in the header.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Active Child Context Display */}
-              {activeChild ? (
-                <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/60 flex items-center justify-between">
-                  <div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-teal-800 font-bold block">
-                      Active Child Agreement Partner
-                    </span>
-                    <p className="text-base font-bold text-slate-900">
-                      {activeChild.name} <span className="text-xs font-normal text-slate-600">· Age {activeChild.age}</span>
-                    </p>
-                  </div>
-                  <Badge
-                    variant={activeChild.roadType === RoadType.PRE_DEVICE ? 'roadPre' : 'roadActive'}
-                    className="text-[10px]"
+          {/* Compact Pact Name Card */}
+          <section className="rounded-[18px] border border-[var(--hairline)] bg-[var(--elevated)] p-5 sm:p-7 space-y-4">
+            {!activeChild && children.length === 0 ? (
+              <div className="rounded-[12px] border border-dashed border-[var(--hairline)] p-6 text-center space-y-3">
+                <p className="text-sm text-[var(--body)]">
+                  Add a child profile first so we can personalize your family pact.
+                </p>
+                <Link href="/children/new">
+                  <Button variant="forest" size="sm">
+                    Create child profile
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-1">
+                  <label
+                    htmlFor="pact-title-input"
+                    className="block font-serif-almanac text-[20px] font-semibold text-[var(--ink)]"
                   >
-                    {activeChild.roadType === RoadType.PRE_DEVICE ? 'Road 1: Pre-Device' : 'Road 2: Active'}
-                  </Badge>
+                    Give your pact a name
+                  </label>
+                  <p className="text-[13.5px] text-[var(--body)]">
+                    Let {displayChildName} pick what goes at the top of the fridge copy.
+                  </p>
                 </div>
-              ) : children.length === 0 ? (
-                <div className="p-4 rounded-xl border border-dashed border-slate-300 text-center space-y-2">
-                  <p className="text-xs text-slate-600">No child profiles found.</p>
-                  <Link href="/children/new">
-                    <Button size="sm">Create Child Profile</Button>
-                  </Link>
-                </div>
-              ) : null}
 
-              {/* Agreement Title Input */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                  Agreement Title
-                </label>
-                <input
+                <Input
+                  id="pact-title-input"
                   type="text"
                   value={agreementTitle}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder={
-                    activeChild && user
-                      ? `e.g. ${activeChild.name} & ${user.fullName.split(' ')[0]}'s Family Tech Treaty`
-                      : "e.g. Family Technology Treaty"
-                  }
-                  className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600 min-h-[44px]"
+                  placeholder={`${displayChildName}'s Family Tech Agreement`}
+                  className="text-[15px] font-medium"
                 />
-              </div>
 
-              {/* Road Context Card */}
-              {activeChild && (
-                <div className="p-4 rounded-xl border border-slate-200/80 bg-slate-50/70 flex items-start gap-3">
-                  <Sparkles className="h-5 w-5 text-teal-600 shrink-0 mt-0.5" />
-                  <div className="space-y-1 text-xs">
-                    <span className="font-bold text-slate-900 block">
-                      Contextual Roadmap Strategy
-                    </span>
-                    <p className="text-slate-600 leading-relaxed">
-                      {activeChild.roadType === RoadType.PRE_DEVICE
-                        ? 'As a Pre-Device child, this agreement establishes foundational communal screen budgets and digital hygiene habits before an unboxing day.'
-                        : 'As an Active-Device child, this agreement focuses on collaborative sleep curfews (8:30 PM lock) and parental open-door safe harbors to reduce adversarial arguments.'}
-                    </p>
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  {titleSuggestions.map((suggestion) => {
+                    const isPicked = agreementTitle === suggestion;
+                    return (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        onClick={() => setTitle(suggestion)}
+                        className={cn(
+                          'min-h-[36px] rounded-full border px-3 py-1 text-[12.5px] font-medium transition-colors cursor-pointer',
+                          isPicked
+                            ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
+                            : 'border-[var(--hairline)] bg-[var(--canvas)] text-[var(--body)] hover:border-[var(--spruce-border)] hover:text-[var(--ink)]'
+                        )}
+                      >
+                        {suggestion}
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
+              </>
+            )}
+          </section>
 
-              {/* Navigation Action */}
-              <div className="flex justify-end pt-4 border-t border-slate-100">
-                <Button
-                  onClick={nextStep}
-                  disabled={!childId}
-                  className="gap-2 px-6"
-                >
-                  Continue to Clauses & Curfew
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* STEP 2: Clauses & Curfew */}
-      {activeStep === 2 && (
-        <div className="space-y-6">
-          {/* Bedtime Curfew Slider */}
+          {/* Focused Bedtime Dock Selector */}
           <CurfewSlider />
 
-          {/* Categorized Clause Selector */}
-          <ClauseSelector />
-
-          {/* Navigation Actions */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-200/80">
-            <Button variant="outline" onClick={prevStep} className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Foundations
-            </Button>
+          {/* Step 1 Footer */}
+          <div className="flex justify-end pt-2">
             <Button
+              type="button"
+              variant="forest"
               onClick={nextStep}
-              disabled={clauses.length === 0}
-              className="gap-2 px-6"
+              disabled={!childId}
+              className="gap-2 rounded-[8px] px-6"
             >
-              Continue to Bilateral Co-Signing ({clauses.length} Clauses)
-              <ArrowRight className="h-4 w-4" />
+              <span>Next: Choose our promises</span>
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         </div>
       )}
 
-      {/* STEP 3: Bilateral Review & Digital Co-Signing */}
+      {/* ================================================================= */}
+      {/* STEP 2: TRADE PROMISES SIDE BY SIDE                                */}
+      {/* ================================================================= */}
+      {activeStep === 2 && (
+        <div className="space-y-6">
+          <ClauseSelector />
+
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--hairline)] pt-5">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={prevStep}
+              className="gap-1.5 rounded-[8px]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <span>Back to Bedtime</span>
+            </Button>
+
+            <Button
+              type="button"
+              variant="forest"
+              onClick={nextStep}
+              disabled={clauses.length === 0}
+              className="gap-2 rounded-[8px] px-6"
+            >
+              <span>Review &amp; sign ({clauses.length} promises)</span>
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* ================================================================= */}
+      {/* STEP 3: FULL ARCHIVAL REVIEW & CO-SIGNING TABLE                    */}
+      {/* ================================================================= */}
       {activeStep === 3 && (
         <div className="space-y-6">
-          {/* Agreement Summary Review Card */}
-          <Card className="border-teal-200/80 bg-gradient-to-br from-white via-cream-50/50 to-teal-50/30 shadow-sm">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <Badge variant="default" className="text-[10px]">
-                  Bilateral Treaty Summary
-                </Badge>
-                <span className="text-xs font-semibold text-teal-800">
-                  {clauses.length} Mutually Agreed Clauses
+          {/* Complete Treaty Summary (Full Promises — Never Truncated!) */}
+          <section className="overflow-hidden rounded-[18px] border border-[#E6DEC9] bg-[#FAF7F2]">
+            <div className="border-b border-[#E6DEC9] px-5 py-5 sm:px-7 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1">
+                <span className="text-[12.5px] font-semibold text-[var(--amber)]">
+                  Ready to sign together
                 </span>
-              </div>
-              <CardTitle className="text-xl font-extrabold text-slate-900">
-                {agreementTitle}
-              </CardTitle>
-              <CardDescription className="text-xs text-slate-600">
-                Review commitments before signing. Once sealed, this becomes your household&apos;s physical and digital operating agreement.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-1">
-              {/* Highlight Bedtime Docking */}
-              <div className="p-3.5 rounded-xl border border-violet-200/80 bg-violet-50/60 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <Clock className="h-5 w-5 text-violet-700" />
-                  <div>
-                    <span className="text-xs font-bold text-violet-950 block">
-                      Canonical Bedtime Curfew
-                    </span>
-                    <span className="text-[11px] text-violet-800">
-                      Devices dock in kitchen basket at {formattedCurfew} sharp.
-                    </span>
-                  </div>
-                </div>
-                <Badge variant="roadActive" className="text-[10px]">
-                  {formattedCurfew} Lock
-                </Badge>
+                <h2 className="font-serif-almanac text-[24px] font-semibold text-[var(--ink)]">
+                  {agreementTitle}
+                </h2>
+                <p className="text-[13.5px] text-[var(--body)]">
+                  Read both columns out loud before signing. Every promise is written in full.
+                </p>
               </div>
 
-              {/* Commitments Breakdown */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                {/* Child Commitments */}
-                <div className="rounded-xl border border-slate-200/80 bg-white p-4 space-y-2">
-                  <div className="flex items-center gap-1.5 font-bold text-slate-900 border-b border-slate-100 pb-2">
-                    <User className="h-4 w-4 text-teal-600" />
-                    <span>{childName}&apos;s Commitments ({childClauses.length})</span>
-                  </div>
-                  <ul className="space-y-1.5 text-slate-600 text-[11px]">
-                    {childClauses.map((c) => (
-                      <li key={c.title} className="flex items-start gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-teal-600 shrink-0 mt-0.5" />
-                        <span>
-                          <strong>{c.title}:</strong> {c.description.substring(0, 85)}...
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Parent Commitments */}
-                <div className="rounded-xl border border-slate-200/80 bg-white p-4 space-y-2">
-                  <div className="flex items-center gap-1.5 font-bold text-slate-900 border-b border-slate-100 pb-2">
-                    <HeartHandshake className="h-4 w-4 text-amber-600" />
-                    <span>Parent Commitments ({parentClauses.length})</span>
-                  </div>
-                  <ul className="space-y-1.5 text-slate-600 text-[11px]">
-                    {parentClauses.map((c) => (
-                      <li key={c.title} className="flex items-start gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-amber-600 shrink-0 mt-0.5" />
-                        <span>
-                          <strong>{c.title}:</strong> {c.description.substring(0, 85)}...
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="shrink-0 inline-flex items-center gap-2 rounded-[10px] border border-[var(--spruce-border)] bg-[var(--elevated)] px-3.5 py-2 text-[13px] font-semibold text-[var(--spruce)] tabular-nums self-start sm:self-center">
+                <Clock className="h-4 w-4" aria-hidden="true" />
+                <span>{formattedCurfew} kitchen dock</span>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Side-by-Side Co-Signing Station */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Parent Signature Pad */}
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#E6DEC9]">
+              {/* Child Promises */}
+              <div className="p-5 sm:p-7 space-y-3.5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[14px] font-semibold text-[var(--ink)] flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[var(--spruce)]" aria-hidden="true" />
+                    <span>{displayChildName}&apos;s promises</span>
+                  </h3>
+                  <span className="text-[12px] font-medium text-[var(--spruce)] tabular-nums">
+                    {childClauses.length}
+                  </span>
+                </div>
+                <ul className="space-y-3">
+                  {childClauses.map((c) => (
+                    <li
+                      key={c.title}
+                      className="rounded-[10px] border border-[#E6DEC9] bg-[var(--elevated)] p-3.5 space-y-1"
+                    >
+                      <span className="block text-[13.5px] font-semibold text-[var(--ink)]">
+                        {c.title}
+                      </span>
+                      <span className="block text-[13px] leading-[1.52] text-[var(--body)]">
+                        {c.description}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Parent Promises */}
+              <div className="p-5 sm:p-7 space-y-3.5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[14px] font-semibold text-[var(--ink)] flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[var(--amber)]" aria-hidden="true" />
+                    <span>Parents&apos; promises</span>
+                  </h3>
+                  <span className="text-[12px] font-medium text-[var(--amber)] tabular-nums">
+                    {parentClauses.length}
+                  </span>
+                </div>
+                <ul className="space-y-3">
+                  {parentClauses.map((c) => (
+                    <li
+                      key={c.title}
+                      className="rounded-[10px] border border-[#E6DEC9] bg-[var(--elevated)] p-3.5 space-y-1"
+                    >
+                      <span className="block text-[13.5px] font-semibold text-[var(--ink)]">
+                        {c.title}
+                      </span>
+                      <span className="block text-[13px] leading-[1.52] text-[var(--body)]">
+                        {c.description}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Side-by-Side Co-Signing Table */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <SignaturePad
               label="Parent Signature"
               signatoryName={user?.fullName || 'Parent / Guardian'}
               party={CommitmentParty.PARENT}
-              commitmentPledge="I pledge to model mindful tech presence, respect your privacy with zero hidden surveillance, and respond to mistakes with calm coaching rather than anger."
+              commitmentPledge="I promise to put my own phone down at meals, skip secret spying, and meet mistakes with calm help instead of anger."
               value={parentSignature}
               onChange={setParentSignature}
             />
 
-            {/* Child Signature Pad */}
             <SignaturePad
               label="Child Signature"
-              signatoryName={childName || 'Child'}
+              signatoryName={displayChildName}
               party={CommitmentParty.CHILD}
-              commitmentPledge={`I pledge to dock my screen in the kitchen at ${formattedCurfew}, treat others kindly online, and come to my parents whenever something feels uncomfortable.`}
+              commitmentPledge={`I promise to dock my device in the kitchen at ${formattedCurfew}, treat people kindly online, and come to you if something feels off.`}
               value={childSignature}
               onChange={setChildSignature}
             />
           </div>
 
-          {/* Navigation & Final Seal CTA */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-200/80">
-            <Button variant="outline" onClick={prevStep} className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Clauses
-            </Button>
+          {/* Step 3 Footer */}
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 border-t border-[var(--hairline)] pt-5">
             <Button
+              type="button"
+              variant="outline"
+              onClick={prevStep}
+              className="gap-1.5 rounded-[8px]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <span>Edit promises</span>
+            </Button>
+
+            <Button
+              type="button"
+              variant="forest"
               onClick={handleSaveAgreement}
               disabled={!parentSignature || !childSignature || isSaving}
               isLoading={isSaving}
-              className="gap-2 px-8 bg-teal-600 hover:bg-teal-700 shadow-sm"
+              className="gap-2 rounded-[8px] px-7"
             >
-              <PenTool className="h-4 w-4" />
-              Seal & Finalize Family Treaty
+              <PenTool className="h-4 w-4" aria-hidden="true" />
+              <span>Seal our family pact</span>
             </Button>
           </div>
         </div>
       )}
 
-      {/* STEP 4: Treaty Sealed & Activation Station */}
+      {/* ================================================================= */}
+      {/* STEP 4: TREATY SEALED & ACTIVATION                                 */}
+      {/* ================================================================= */}
       {activeStep === 4 && (
         <div className="space-y-6">
-          {/* Success Banner */}
-          <Card className="border-emerald-200/90 bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/40 shadow-sm text-center p-6 sm:p-8 space-y-4">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
-              <CheckCircle2 className="h-8 w-8" />
-            </div>
+          <section className="overflow-hidden rounded-[18px] border border-[var(--spruce-border)] bg-[var(--elevated)]">
+            <div className="bg-[var(--spruce-soft)] border-b border-[var(--spruce-border)] px-6 py-8 sm:px-10 text-center space-y-3">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--spruce)] text-white">
+                <Check className="h-6 w-6" strokeWidth={2.5} aria-hidden="true" />
+              </div>
 
-            <div className="max-w-xl mx-auto space-y-1.5">
-              <Badge variant="success" className="text-xs font-semibold">
-                Treaty Digitally Co-Signed & Sealed
-              </Badge>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                {agreementTitle} is Official!
+              <span className="block text-[13px] font-semibold text-[var(--spruce)]">
+                Co-signed &amp; sealed
+              </span>
+
+              <h2 className="font-serif-almanac text-[28px] sm:text-[34px] font-semibold leading-[1.15] text-[var(--ink)]">
+                {agreementTitle} is official
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Both {user?.fullName || 'Parent'} and {childName} have signed this bilateral pact. It is now ready to be printed for your refrigerator and deployed as code to {childName}&apos;s device.
+
+              <p className="mx-auto max-w-[48ch] text-[15px] leading-relaxed text-[var(--body)]">
+                Both {user?.fullName || 'Parent'} and {displayChildName} signed this deal.
+                Hang a copy on the fridge and turn on the {formattedCurfew} bedtime dock so
+                the rules run calmly on their own.
               </p>
             </div>
 
-            {/* Key Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <Link href={`/pacts/${agreementId || 'current'}`}>
-                <Button size="lg" className="w-full sm:w-auto gap-2 text-sm shadow-sm">
-                  <Printer className="h-4 w-4" />
-                  View & Print Refrigerator Treaty
-                </Button>
-              </Link>
-
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={handleDeployToDevice}
-                isLoading={isCompiling}
-                className="w-full sm:w-auto gap-2 text-sm border-violet-300 text-violet-900 hover:bg-violet-50"
-              >
-                <QrCode className="h-4 w-4 text-violet-700" />
-                Scan QR Code to Enroll Device
-              </Button>
-            </div>
-          </Card>
-
-          {/* Dual Fulfillment Cards: Refrigerator Print vs Device Profile */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Physical Treaty Card */}
-            <Card className="border-slate-200/80 bg-white shadow-xs">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2 text-teal-700 mb-1">
-                  <Printer className="h-4.5 w-4.5" />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    Physical Anchor
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[var(--hairline-soft)]">
+              {/* Print Refrigerator Copy */}
+              <div className="p-6 sm:p-7 flex flex-col justify-between gap-5">
+                <div className="space-y-2">
+                  <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[var(--amber)]">
+                    <Printer className="h-4 w-4" aria-hidden="true" />
+                    <span>For the kitchen</span>
                   </span>
+                  <h3 className="font-serif-almanac text-[20px] font-semibold text-[var(--ink)]">
+                    Print the refrigerator copy
+                  </h3>
+                  <p className="text-[13.5px] leading-relaxed text-[var(--body)]">
+                    Keeping a signed one-page copy where everyone sees it cuts down
+                    &ldquo;we never agreed to that&rdquo; debates right away.
+                  </p>
                 </div>
-                <CardTitle className="text-base font-bold">
-                  The Refrigerator Charter
-                </CardTitle>
-                <CardDescription className="text-xs">
-                  Studies show that physical analog agreements visible in common household areas reduce boundary renegotiation arguments by 54%.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
+
                 <Link href={`/pacts/${agreementId || 'current'}`}>
-                  <Button variant="outline" size="sm" className="w-full gap-2 text-xs">
-                    <FileText className="h-3.5 w-3.5" />
-                    Open 1-Page Print View
+                  <Button variant="forest" className="w-full gap-2 rounded-[8px]">
+                    <Printer className="h-4 w-4" aria-hidden="true" />
+                    <span>Open 1-page print view</span>
                   </Button>
                 </Link>
-              </CardContent>
-            </Card>
+              </div>
 
-            {/* Digital Pact-as-Code Card */}
-            <Card className="border-slate-200/80 bg-white shadow-xs">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2 text-violet-700 mb-1">
-                  <Smartphone className="h-4.5 w-4.5" />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    Digital Enforcement
+              {/* Automated Bedtime QR Setup */}
+              <div className="p-6 sm:p-7 flex flex-col justify-between gap-5">
+                <div className="space-y-2">
+                  <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[var(--spruce)]">
+                    <QrCode className="h-4 w-4" aria-hidden="true" />
+                    <span>For {displayChildName}&apos;s device</span>
                   </span>
+                  <h3 className="font-serif-almanac text-[20px] font-semibold text-[var(--ink)]">
+                    Turn on {formattedCurfew} auto-lock
+                  </h3>
+                  <p className="text-[13.5px] leading-relaxed text-[var(--body)]">
+                    Scan one QR code to pause recreational apps at {formattedCurfew} nightly—zero
+                    spyware, and emergency calls stay open 24/7.
+                  </p>
                 </div>
-                <CardTitle className="text-base font-bold">
-                  Pact-as-Code Device Profile
-                </CardTitle>
-                <CardDescription className="text-xs">
-                  Automate the {formattedCurfew} bedtime curfew with a single-scan cryptographic configuration profile on {childName}&apos;s device.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDeployToDevice}
-                  className="w-full gap-2 text-xs border-violet-200 text-violet-900 hover:bg-violet-50"
-                >
-                  <QrCode className="h-3.5 w-3.5 text-violet-600" />
-                  Open QR Code Enrollment
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
 
-          {/* Return to Dashboard */}
-          <div className="text-center pt-2">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-xs text-slate-500">
-                Return to Family Dashboard
-              </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleDeployToDevice}
+                  isLoading={isCompiling}
+                  className="w-full gap-2 rounded-[8px]"
+                >
+                  <QrCode className="h-4 w-4 text-[var(--spruce)]" aria-hidden="true" />
+                  <span>Scan device QR code</span>
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          <div className="text-center">
+            <Link
+              href="/devices"
+              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-medium text-[var(--body)] hover:text-[var(--ink)]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <span>Return to Devices</span>
             </Link>
           </div>
         </div>
@@ -646,7 +686,7 @@ export function PactWizard({ initialChildId }: PactWizardProps) {
           isOpen={enrollmentModalOpen}
           onClose={() => setEnrollmentModalOpen(false)}
           enrollmentToken={compiledProfile.enrollmentToken}
-          childName={childName || 'Child'}
+          childName={displayChildName}
           curfewTime={curfewTime}
           platform={compiledProfile.platform}
         />

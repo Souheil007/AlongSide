@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { ReadinessWizardClient } from '@/components/quizzes/ReadinessWizardClient';
 
 export const metadata: Metadata = {
-  title: 'Readiness Assessment',
+  title: 'Device Readiness Check-In',
   description:
-    '10-dimension holistic evaluation of adolescent impulse control, bedtime sleep, and digital hazard awareness.',
+    'A calm, two-minute check-in on everyday screen transitions, sleep habits, online instincts, and family teamwork.',
 };
 
 interface PageProps {
@@ -15,8 +15,8 @@ export default async function ReadinessAssessmentPage({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] py-8 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-[calc(100vh-8rem)] py-4 sm:py-8">
+      <div className="mx-auto max-w-3xl">
         <ReadinessWizardClient childId={id} />
       </div>
     </div>

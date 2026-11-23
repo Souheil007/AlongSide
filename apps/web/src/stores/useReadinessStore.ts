@@ -5,9 +5,36 @@ import {
   calculateReadinessScore,
 } from '@alongside/shared';
 
+export type ReadinessChapterId = 'everyday_rhythms' | 'online_instincts' | 'trust_teamwork';
+
+export interface ReadinessChapterMeta {
+  id: ReadinessChapterId;
+  title: string;
+  subtitle: string;
+}
+
+export const READINESS_CHAPTERS: ReadinessChapterMeta[] = [
+  {
+    id: 'everyday_rhythms',
+    title: 'Everyday Rhythms',
+    subtitle: 'Transitions, bedtime, and offline sparks',
+  },
+  {
+    id: 'online_instincts',
+    title: 'Online Instincts',
+    subtitle: 'Strangers, privacy, hype, and group chats',
+  },
+  {
+    id: 'trust_teamwork',
+    title: 'Trust & Teamwork',
+    subtitle: 'Frustration, honesty, and building rules together',
+  },
+];
+
 export interface ReadinessQuestionOption {
   id: string;
   label: string;
+  headline: string;
   text: string;
   score: number; // 10, 7, 4, 1
 }
@@ -16,6 +43,9 @@ export interface ReadinessQuestion {
   id: string;
   dimensionKey: ReadinessDimension;
   dimensionName: string;
+  shortLabel: string;
+  chapter: ReadinessChapterId;
+  sceneTag: string;
   questionText: string;
   scenario: string;
   expertInsight: string;
@@ -30,73 +60,54 @@ export interface ReadinessAnswerState {
   selectedOptionId: string;
 }
 
+/**
+ * Replaces `{name}` placeholders cleanly with the active child's name.
+ */
+export function personalizeReadinessCopy(template: string, childName?: string): string {
+  const safeName = childName?.trim() || 'your child';
+  return template.replace(/\{name\}/g, safeName);
+}
+
 export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
   {
     id: 'q-executive-function',
     dimensionKey: 'executive_function',
     dimensionName: 'Executive Function & Impulse Control',
-    questionText: 'When it is time to shut off a screen or transition to dinner or homework:',
-    scenario: 'Stopping high-stimulation digital play and shifting focus to non-digital routines.',
+    shortLabel: 'Stopping screens',
+    chapter: 'everyday_rhythms',
+    sceneTag: 'Dinner is on the table',
+    questionText:
+      'You call {name} for dinner right in the middle of a game or video. What usually happens?',
+    scenario: 'Shifting gears from a high-energy screen back to everyday family life.',
     expertInsight:
-      'The self-control centers of a child&apos;s brain are still actively developing. Stopping fun digital play causes a sudden shift that calls for calm, steady guidance.',
+      "Stopping a fun screen takes real brain brakes. A child's self-control center is still under construction, so how they handle this pause shows how much backup they still need.",
     options: [
       {
         id: 'ef-10',
         label: 'A',
-        text: 'Transitions willingly within 1-2 minutes or tracks their own countdown timer without conflict.',
+        headline: 'Wraps up on their own',
+        text: 'Pauses within a minute or two, or finishes the level and hands it over without a fight.',
         score: 10,
       },
       {
         id: 'ef-7',
         label: 'B',
-        text: 'Transitions after 1-2 calm reminders, occasionally asking to finish a round but complies.',
+        headline: 'Needs one calm nudge',
+        text: 'Asks for "two more minutes," then puts it away once you give one steady reminder.',
         score: 7,
       },
       {
         id: 'ef-4',
         label: 'C',
-        text: 'Frequently negotiates, delays repeatedly, or needs physical parental device retrieval.',
+        headline: 'Turns into a negotiation',
+        text: 'Stalls, bargains, or waits until you walk over and take the device yourself.',
         score: 4,
       },
       {
         id: 'ef-1',
         label: 'D',
-        text: 'Consistently triggers explosive arguments, hidings of devices, or intense emotional distress.',
-        score: 1,
-      },
-    ],
-  },
-  {
-    id: 'q-online-safety',
-    dimensionKey: 'online_safety',
-    dimensionName: 'Online Safety & Hazard Detection',
-    questionText: 'If an unknown gamer or direct message offers free game currency or requests personal chat:',
-    scenario: 'Encountering unsolicited strangers, phishing links, or social manipulation online.',
-    expertInsight:
-      'Growing tweens naturally crave connection and often mistake online friendliness for genuine friendship before learning to spot red flags.',
-    options: [
-      {
-        id: 'os-10',
-        label: 'A',
-        text: 'Instantly rejects or blocks the user, refuses suspicious links, and informs a parent.',
-        score: 10,
-      },
-      {
-        id: 'os-7',
-        label: 'B',
-        text: 'Ignores the stranger and deletes the message, but does not always remember to tell a parent.',
-        score: 7,
-      },
-      {
-        id: 'os-4',
-        label: 'C',
-        text: 'Engages out of polite curiosity or FOMO before realizing potential risk.',
-        score: 4,
-      },
-      {
-        id: 'os-1',
-        label: 'D',
-        text: 'Prone to clicking unknown links, trusting giveaway promises, or joining private chats.',
+        headline: 'Big pushback almost every time',
+        text: 'Shutting it off regularly sparks tears, yelling, or sneaking the screen back later.',
         score: 1,
       },
     ],
@@ -105,138 +116,40 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     id: 'q-bedtime-habits',
     dimensionKey: 'bedtime_habits',
     dimensionName: 'Bedtime Habits & Circadian Sleep Rhythm',
-    questionText: 'Regarding device presence in the bedroom during sleeping hours:',
-    scenario: 'Protecting uncompromised neurobiological sleep from nighttime screen stimulation.',
+    shortLabel: 'Nighttime sleep',
+    chapter: 'everyday_rhythms',
+    sceneTag: 'Lights out on a school night',
+    questionText: 'When bedtime rolls around, where do screens usually end up?',
+    scenario: 'Keeping bedrooms calm and protecting deep, restorative sleep.',
     expertInsight:
-      'A teen&apos;s natural sleep rhythm shifts later by about two hours. Screen light and notifications right before bed interfere with restorative deep sleep.',
+      "A growing kid's natural sleep signal shifts later with age. Even a silent phone on the nightstand keeps the brain half-awake waiting for the next ping.",
     options: [
       {
         id: 'bh-10',
         label: 'A',
-        text: 'Naturally docks screens in a communal family charging station 60+ minutes prior to lights-out.',
+        headline: 'Parks it outside the bedroom',
+        text: 'Happily plugs screens into a shared family spot well before bed and winds down offline.',
         score: 10,
       },
       {
         id: 'bh-7',
         label: 'B',
-        text: 'Docks screens at the agreed bedtime with a standard reminder, sleeping screen-free.',
+        headline: 'Docks it after a reminder',
+        text: 'Brings it out at bedtime when asked and sleeps screen-free through the night.',
         score: 7,
       },
       {
         id: 'bh-4',
         label: 'C',
-        text: 'Asks to keep the device in the bedroom "just for music or alarm clock" and checks it late.',
+        headline: 'Bargains to keep it nearby',
+        text: 'Asks to keep it in the bedroom "just for music or an alarm" and ends up checking it late.',
         score: 4,
       },
       {
         id: 'bh-1',
         label: 'D',
-        text: 'Has secretly used devices past midnight, resulting in severe morning fatigue and sleep disruption.',
-        score: 1,
-      },
-    ],
-  },
-  {
-    id: 'q-peer-pressure-resilience',
-    dimensionKey: 'peer_pressure_resilience',
-    dimensionName: 'Peer Pressure & Group Chat Resilience',
-    questionText: 'When a group chat erupts with mean roasting, spamming, or dare challenges:',
-    scenario: 'Holding personal boundaries against digital herd mentality and group exclusion fear.',
-    expertInsight:
-      'Tweens naturally feel peer approval deeply. Being left out of group chats triggers real emotional hurt, which makes digital boundaries crucial.',
-    options: [
-      {
-        id: 'pr-10',
-        label: 'A',
-        text: 'Confidently steps away, mutes noisy threads, or advocates kindly for excluded peers.',
-        score: 10,
-      },
-      {
-        id: 'pr-7',
-        label: 'B',
-        text: 'Silently mutes the chat or mentions it to parents, although feeling subtle FOMO.',
-        score: 7,
-      },
-      {
-        id: 'pr-4',
-        label: 'C',
-        text: 'Checks notifications anxiously every few minutes, afraid of being left out or mocked.',
-        score: 4,
-      },
-      {
-        id: 'pr-1',
-        label: 'D',
-        text: 'Joins in mocking others or follows risky group dares to protect their social standing.',
-        score: 1,
-      },
-    ],
-  },
-  {
-    id: 'q-emotional-regulation',
-    dimensionKey: 'emotional_regulation',
-    dimensionName: 'Emotional Regulation & Gaming Frustration',
-    questionText: 'When experiencing a high-stakes loss in a video game or sudden device lockout:',
-    scenario: 'Navigating frustration, digital loss, and sudden stimulation removal.',
-    expertInsight:
-      'Emotional reactivity develops faster than calm self-regulation. Fast-paced games create excitement surges that take time to cool down.',
-    options: [
-      {
-        id: 'er-10',
-        label: 'A',
-        text: 'Maintains composure, takes calming breaths, or laughs off gaming setbacks with good sportsmanship.',
-        score: 10,
-      },
-      {
-        id: 'er-7',
-        label: 'B',
-        text: 'Shows brief annoyance or venting, but recalibrates calmly within 5 minutes.',
-        score: 7,
-      },
-      {
-        id: 'er-4',
-        label: 'C',
-        text: 'Slams controllers, yells at screens, or remains irritable and withdrawn for an hour.',
-        score: 4,
-      },
-      {
-        id: 'er-1',
-        label: 'D',
-        text: 'Exhibits extreme fury, physical tantrums, or prolonged hostility toward siblings or parents.',
-        score: 1,
-      },
-    ],
-  },
-  {
-    id: 'q-family-communication',
-    dimensionKey: 'family_communication',
-    dimensionName: 'Family Communication & Restorative Trust',
-    questionText: 'If your child accidentally sees disturbing adult content or makes a digital mistake:',
-    scenario: 'Approaching parents for help without fear of immediate punishment or device confiscation.',
-    expertInsight:
-      'Taking devices away in anger drives mistakes underground. Calm, curious listening keeps your child coming to you whenever something goes wrong.',
-    options: [
-      {
-        id: 'fc-10',
-        label: 'A',
-        text: 'Immediately confides in parents, knowing they will be met with empathy and guidance.',
-        score: 10,
-      },
-      {
-        id: 'fc-7',
-        label: 'B',
-        text: 'Shares uncomfortable encounters after brief hesitation, seeking reassurance.',
-        score: 7,
-      },
-      {
-        id: 'fc-4',
-        label: 'C',
-        text: 'Only discloses problems if directly asked or if parents discover the incident first.',
-        score: 4,
-      },
-      {
-        id: 'fc-1',
-        label: 'D',
-        text: 'Actively covers up mistakes and deletes histories out of terror of losing digital privileges.',
+        headline: 'Late-night sneaking happens',
+        text: 'Has stayed up past midnight under the covers, leaving mornings groggy and rough.',
         score: 1,
       },
     ],
@@ -245,68 +158,84 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     id: 'q-screen-time-balance',
     dimensionKey: 'screen_time_balance',
     dimensionName: 'Screen Time Balance & Offline Passions',
-    questionText: 'How naturally does your child engage in non-digital activities and physical hobbies?',
-    scenario: 'Balancing screens with reading, sports, outdoor play, arts, and real-world connection.',
+    shortLabel: 'Offline sparks',
+    chapter: 'everyday_rhythms',
+    sceneTag: 'A wide-open Saturday afternoon',
+    questionText:
+      'With no plans on the calendar and screens off the table, what does {name} reach for?',
+    scenario: 'Holding onto offline curiosity, hobbies, and real-world play.',
     expertInsight:
-      'Fast-paced apps make everyday offline activities feel slower by comparison. Protecting regular offline time keeps their real-world passions alive.',
+      'Fast-paced apps make ordinary offline moments feel slower by comparison. Having a couple of real-world passions acts as a natural anchor against endless scrolling.',
     options: [
       {
         id: 'st-10',
         label: 'A',
-        text: 'Thriving offline hobbies (sports, music, books, crafts) pursued enthusiastically each day.',
+        headline: 'Jumps into real-world interests',
+        text: 'Gets absorbed in sports, drawing, reading, building, or hanging out with friends.',
         score: 10,
       },
       {
         id: 'st-7',
         label: 'B',
-        text: 'Happily participates in offline passions when invited or scheduled, though prefers screens.',
+        headline: 'Enjoys offline fun once started',
+        text: 'Prefers screens first, but happily gets into a game, sport, or hobby once invited.',
         score: 7,
       },
       {
         id: 'st-4',
         label: 'C',
-        text: 'Lacks enthusiasm for non-digital hobbies, complaining of constant boredom without tech.',
+        headline: 'Quickly hits "I am bored"',
+        text: 'Paces around or asks for a screen every ten minutes when nothing is planned.',
         score: 4,
       },
       {
         id: 'st-1',
         label: 'D',
-        text: 'Refuses almost all offline recreation; mood collapses whenever screens are unavailable.',
+        headline: 'Everything else feels flat',
+        text: 'Refuses offline ideas and their whole mood drops whenever screens are not an option.',
         score: 1,
       },
     ],
   },
   {
-    id: 'q-critical-thinking',
-    dimensionKey: 'critical_thinking',
-    dimensionName: 'Critical Thinking & Algorithmic Skepticism',
-    questionText: 'When viewing viral influencer videos, sponsored giveaways, or clickbait challenges:',
-    scenario: 'Evaluating digital authenticity, commercial motives, and AI-generated content.',
+    id: 'q-online-safety',
+    dimensionKey: 'online_safety',
+    dimensionName: 'Online Safety & Hazard Detection',
+    shortLabel: 'Stranger red flags',
+    chapter: 'online_instincts',
+    sceneTag: 'A friendly stranger in a game',
+    questionText:
+      "Someone {name} doesn't know offers free in-game coins or asks to move to a private chat. What's their instinct?",
+    scenario: 'Spotting friendly manipulation, giveaways, and sketchy links.',
     expertInsight:
-      'Young minds tend to take what they see online at face value. Spotting sponsored tricks and filters is a skill parents can teach through friendly curiosity.',
+      'Friendly strangers rarely look scary to kids. Spotting too-good-to-be-true offers is a skill they build through calm practice, not one-time warnings.',
     options: [
       {
-        id: 'ct-10',
+        id: 'os-10',
         label: 'A',
-        text: 'Understands algorithmic incentives, questions sponsored content, and spots AI filters.',
+        headline: 'Blocks it and tells you',
+        text: 'Spots the trap right away, refuses the link or chat, and gives you a heads-up.',
         score: 10,
       },
       {
-        id: 'ct-7',
+        id: 'os-7',
         label: 'B',
-        text: 'Recognizes obvious marketing gimmicks and asks parents when claims appear suspicious.',
+        headline: 'Ignores it on their own',
+        text: 'Deletes the message or leaves the game, though they might forget to mention it to you.',
         score: 7,
       },
       {
-        id: 'ct-4',
+        id: 'os-4',
         label: 'C',
-        text: 'Prone to believing viral pranks, sensational claims, or misleading online challenges.',
+        headline: 'Replies out of politeness',
+        text: 'Chats back out of curiosity or not wanting to seem rude before noticing anything odd.',
         score: 4,
       },
       {
-        id: 'ct-1',
+        id: 'os-1',
         label: 'D',
-        text: 'Accepts viral internet culture unquestioningly and attempts dangerous online stunts.',
+        headline: 'Likely to trust and click',
+        text: 'Gets excited by giveaways, clicks unfamiliar links, or accepts private chats easily.',
         score: 1,
       },
     ],
@@ -315,33 +244,213 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     id: 'q-privacy-awareness',
     dimensionKey: 'privacy_awareness',
     dimensionName: 'Privacy Awareness & Digital Footprint',
-    questionText: 'Regarding safeguarding sensitive credentials, real locations, and family details:',
-    scenario: 'Understanding data permanence, passwords, location sharing, and digital boundaries.',
+    shortLabel: 'Keeping info private',
+    chapter: 'online_instincts',
+    sceneTag: 'Setting up a profile or posting',
+    questionText:
+      'How careful is {name} with passwords, their real location, and personal details?',
+    scenario: 'Protecting everyday privacy before a single screenshot travels far.',
     expertInsight:
-      'Understanding that online posts last forever is an abstract idea for tweens. Simple, clear family guidelines protect their privacy while they learn.',
+      'Understanding that online posts last forever is abstract for young minds. Simple, automatic privacy habits protect them while their judgment catches up.',
     options: [
       {
         id: 'pa-10',
         label: 'A',
-        text: 'Rigid guardian of passwords, disables public geo-tracking, and protects private identifiers.',
+        headline: 'Protects details automatically',
+        text: 'Keeps passwords private, turns off location sharing, and never shares school or home clues.',
         score: 10,
       },
       {
         id: 'pa-7',
         label: 'B',
-        text: 'Understands privacy rules with occasional reminders to avoid broadcasting real-time location.',
+        headline: 'Knows the basics with reminders',
+        text: 'Follows privacy rules mostly, with an occasional check-in about location tags or bios.',
         score: 7,
       },
       {
         id: 'pa-4',
         label: 'C',
-        text: 'Shares passwords with friends as proof of trust or leaves location turned on unknowingly.',
+        headline: 'Shares without thinking twice',
+        text: 'Trades passwords with close friends as a trust gesture or leaves location settings open.',
         score: 4,
       },
       {
         id: 'pa-1',
         label: 'D',
-        text: 'Has posted school uniforms, home addresses, or credentials publicly on social networks.',
+        headline: 'Posts personal clues openly',
+        text: 'Has shared a school name, neighborhood detail, or account login where others could see.',
+        score: 1,
+      },
+    ],
+  },
+  {
+    id: 'q-critical-thinking',
+    dimensionKey: 'critical_thinking',
+    dimensionName: 'Critical Thinking & Algorithmic Skepticism',
+    shortLabel: 'Spotting hype & fakes',
+    chapter: 'online_instincts',
+    sceneTag: 'A viral trend hits their feed',
+    questionText:
+      'An influencer hypes a miracle product, prank, or wild challenge. How does {name} react?',
+    scenario: 'Telling real advice apart from sponsored hype, filters, and AI.',
+    expertInsight:
+      'Feeds are designed to feel like advice from a cool older friend. Asking "who gets paid here?" or "could this be staged?" is modern street smarts.',
+    options: [
+      {
+        id: 'ct-10',
+        label: 'A',
+        headline: 'Questions the angle',
+        text: 'Spots ads, filters, and staged clips easily, and talks about why creators chase clicks.',
+        score: 10,
+      },
+      {
+        id: 'ct-7',
+        label: 'B',
+        headline: 'Checks in when unsure',
+        text: 'Catches obvious clickbait and asks you when a claim or trend seems a little too wild.',
+        score: 7,
+      },
+      {
+        id: 'ct-4',
+        label: 'C',
+        headline: 'Often buys into the hype',
+        text: 'Takes viral pranks, giveaways, or creator advice at face value unless you point it out.',
+        score: 4,
+      },
+      {
+        id: 'ct-1',
+        label: 'D',
+        headline: 'Wants to copy what goes viral',
+        text: 'Believes most things online and feels drawn to copy risky stunts or trends right away.',
+        score: 1,
+      },
+    ],
+  },
+  {
+    id: 'q-peer-pressure-resilience',
+    dimensionKey: 'peer_pressure_resilience',
+    dimensionName: 'Peer Pressure & Group Chat Resilience',
+    shortLabel: 'Group chat pressure',
+    chapter: 'online_instincts',
+    sceneTag: 'A group chat turns mean',
+    questionText:
+      'Friends start piling on someone in a group chat, or daring each other to do something sketchy. What does {name} do?',
+    scenario: 'Holding steady when digital herd pressure and FOMO kick in.',
+    expertInsight:
+      'For tweens and teens, social exclusion registers in the brain like real pain. Knowing how strongly group chats pull on them shows how much quiet coaching helps.',
+    options: [
+      {
+        id: 'pr-10',
+        label: 'A',
+        headline: 'Steps back or speaks up',
+        text: 'Mutes the drama, refuses to pile on, or quietly checks on the kid being left out.',
+        score: 10,
+      },
+      {
+        id: 'pr-7',
+        label: 'B',
+        headline: 'Stays out of it quietly',
+        text: 'Mutes the thread or tells you about it, even if they still feel a tug of FOMO.',
+        score: 7,
+      },
+      {
+        id: 'pr-4',
+        label: 'C',
+        headline: 'Gets pulled into the stress',
+        text: 'Checks every buzz anxiously, worried that stepping away will make them the next target.',
+        score: 4,
+      },
+      {
+        id: 'pr-1',
+        label: 'D',
+        headline: 'Goes along to fit in',
+        text: 'Joins the teasing or takes risky dares just to stay on the group’s good side.',
+        score: 1,
+      },
+    ],
+  },
+  {
+    id: 'q-emotional-regulation',
+    dimensionKey: 'emotional_regulation',
+    dimensionName: 'Emotional Regulation & Gaming Frustration',
+    shortLabel: 'Handling frustration',
+    chapter: 'trust_teamwork',
+    sceneTag: 'A tough loss or sudden timer lock',
+    questionText:
+      'They lose right before winning a match, or a screen timer locks them out mid-turn. How do they bounce back?',
+    scenario: 'Coming back down after fast-paced games flood the nervous system.',
+    expertInsight:
+      'Fast games surge adrenaline faster than young brains can cool it off. Some kids simply need a few minutes—and a calm adult nearby—for their body to settle.',
+    options: [
+      {
+        id: 'er-10',
+        label: 'A',
+        headline: 'Shrugs it off fast',
+        text: 'Takes a breath, laughs off the loss, and moves on to the next thing without lingering heat.',
+        score: 10,
+      },
+      {
+        id: 'er-7',
+        label: 'B',
+        headline: 'Vents briefly, then resets',
+        text: 'Groans or gets annoyed for a couple minutes, then cools down on their own.',
+        score: 7,
+      },
+      {
+        id: 'er-4',
+        label: 'C',
+        headline: 'Stays heated for a while',
+        text: 'Slams the controller, yells at the screen, or stays snappy for the next hour.',
+        score: 4,
+      },
+      {
+        id: 'er-1',
+        label: 'D',
+        headline: 'Full meltdown or blowout',
+        text: 'Triggers an intense blowup aimed at siblings or you, making recovery hard for everyone.',
+        score: 1,
+      },
+    ],
+  },
+  {
+    id: 'q-family-communication',
+    dimensionKey: 'family_communication',
+    dimensionName: 'Family Communication & Restorative Trust',
+    shortLabel: 'Coming to you first',
+    chapter: 'trust_teamwork',
+    sceneTag: 'An "uh-oh" moment online',
+    questionText:
+      'If {name} accidentally clicks something scary or messes up online, what happens next?',
+    scenario: 'Reaching out for help without expecting instant punishment.',
+    expertInsight:
+      'Kids hide mistakes when they expect instant confiscation. A calm, curious first response is the single strongest safety feature any device can have.',
+    options: [
+      {
+        id: 'fc-10',
+        label: 'A',
+        headline: 'Brings it straight to you',
+        text: "Shows you right away, trusting you'll stay calm and help figure out what to do.",
+        score: 10,
+      },
+      {
+        id: 'fc-7',
+        label: 'B',
+        headline: 'Tells you after a pause',
+        text: 'Hesitates for a minute, then opens up once they see you are not going to blow up.',
+        score: 7,
+      },
+      {
+        id: 'fc-4',
+        label: 'C',
+        headline: 'Only shares if you ask',
+        text: 'Keeps quiet unless you notice something is off or bring it up yourself.',
+        score: 4,
+      },
+      {
+        id: 'fc-1',
+        label: 'D',
+        headline: 'Hides it and clears history',
+        text: 'Deletes tabs or covers their tracks out of fear of losing their device.',
         score: 1,
       },
     ],
@@ -350,33 +459,41 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
     id: 'q-co-regulation-readiness',
     dimensionKey: 'co_regulation_readiness',
     dimensionName: 'Co-Regulation & Bilateral Collaboration',
-    questionText: 'How does your child participate in creating household boundaries and family agreements?',
-    scenario: 'Co-creating rules, respecting mutual commitments, and honoring digital boundaries.',
+    shortLabel: 'Building rules together',
+    chapter: 'trust_teamwork',
+    sceneTag: 'Talking through house rules',
+    questionText:
+      'When you sit down to set household rules together, how does {name} show up?',
+    scenario: 'Turning screen rules from a policing battle into a real partnership.',
     expertInsight:
-      'Wanting independence is a healthy part of growing up. Making agreements together gives them a real voice while keeping loving guardrails in place.',
+      'Kids stick to rules they helped shape. Even small buy-in right now turns a family pact from a lecture into something they actually feel proud to keep.',
     options: [
       {
         id: 'cr-10',
         label: 'A',
-        text: 'Willingly collaborates on guidelines, offers realistic ideas, and honors shared pacts.',
+        headline: 'Meets you halfway',
+        text: 'Brings fair ideas to the table and generally honors agreements you make together.',
         score: 10,
       },
       {
         id: 'cr-7',
         label: 'B',
-        text: 'Cooperates constructively with household rules with occasional negotiation or reminders.',
+        headline: 'Cooperates with gentle check-ins',
+        text: 'Agrees to reasonable limits and follows them with an occasional reminder.',
         score: 7,
       },
       {
         id: 'cr-4',
         label: 'C',
-        text: 'Views rules as arbitrary control, constantly searching for technical loopholes.',
+        headline: 'Looks for loopholes',
+        text: 'Treats house rules like a challenge to bend or work around whenever possible.',
         score: 4,
       },
       {
         id: 'cr-1',
         label: 'D',
-        text: 'Vehemently rejects agreements, claiming full digital autonomy and defying all limits.',
+        headline: 'Pushes back on all limits',
+        text: 'Resists agreements flat-out and insists they should not have boundaries at all.',
         score: 1,
       },
     ],
@@ -425,7 +542,19 @@ export const useReadinessStore = create<ReadinessState>((set, get) => ({
   ...initialState,
 
   setChild: (childId, childName) => {
-    set({ childId, childName });
+    set((state) => {
+      if (state.childId && state.childId !== childId) {
+        return {
+          childId,
+          childName,
+          currentQuestionIndex: 0,
+          answers: {},
+          result: null,
+          isSubmitting: false,
+        };
+      }
+      return { childId, childName };
+    });
   },
 
   setAnswer: (dimensionKey, answer) => {
@@ -482,4 +611,3 @@ export const useReadinessStore = create<ReadinessState>((set, get) => ({
     });
   },
 }));
-
