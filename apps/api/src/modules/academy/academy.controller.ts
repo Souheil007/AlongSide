@@ -7,6 +7,9 @@ import {
 } from '@alongside/shared';
 import type { AcademyService } from './academy.service.js';
 
+export const PUBLIC_CATALOG_CACHE_CONTROL =
+  'public, max-age=60, s-maxage=300, stale-while-revalidate=600';
+
 export class AcademyController {
   constructor(private readonly service: AcademyService) {}
 
@@ -19,6 +22,7 @@ export class AcademyController {
     const { tier } = request.query;
     const categories = await this.service.getCategoriesWithStats(tier);
 
+    reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
     return reply.status(200).send({
       success: true,
       data: {
@@ -38,6 +42,9 @@ export class AcademyController {
 
     const modules = await this.service.getModules({ category, tier }, userId);
 
+    if (!userId) {
+      reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    }
     return reply.status(200).send({
       success: true,
       data: {
@@ -57,6 +64,9 @@ export class AcademyController {
 
     const moduleDetail = await this.service.getModuleBySlug(slug, userId);
 
+    if (!userId) {
+      reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    }
     return reply.status(200).send({
       success: true,
       data: {
