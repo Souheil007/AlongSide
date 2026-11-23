@@ -2,26 +2,11 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import {
-  FileCheck2,
-  Moon,
-  ShieldCheck,
-  Compass,
-  ArrowRight,
-  CheckCircle2,
-  Lock,
-  Baby,
-  Palette,
-  Sparkles,
-  ClipboardCheck,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import {
   type ChildDTO,
   RoadType,
 } from '@alongside/shared';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export interface BilateralPactStatusCardProps {
@@ -29,34 +14,31 @@ export interface BilateralPactStatusCardProps {
   className?: string;
 }
 
+function formatDisplayName(rawName?: string | null): string {
+  const trimmed = rawName?.trim();
+  if (!trimmed) return 'Your child';
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+}
+
 function getReadinessTier(score: number) {
   if (score >= 80) {
     return {
-      title: 'Smartphone Ready',
-      description: 'Demonstrates strong prefrontal habits, bedtime consistency, and digital boundary awareness.',
-      badgeColor: 'bg-[#EAF3EE] text-[#143D2B] border-[#143D2B]/20',
-      strokeColor: '#143D2B',
-      recommendedPreset: 'Road 2 Autonomy Charter',
-      nextGoal: 'Finalize bilateral Family Pact and hardware bedtime dock.',
+      title: 'Ready for a bilateral pact',
+      presetLabel: 'Autonomy Pact',
+      nextGoal: 'Strong everyday habits are in place. Co-sign a Family Pact and bedtime dock together.',
     };
   }
   if (score >= 60) {
     return {
-      title: 'Approaching Smartphone Readiness',
-      description: 'Demonstrates emerging prefrontal habits; working through impulse control and morning autonomy.',
-      badgeColor: 'bg-[#FEF3C7] text-[#B45309] border-[#B45309]/20',
-      strokeColor: '#143D2B',
-      recommendedPreset: 'Road 1 Bridge Charter',
-      nextGoal: 'Strengthen independent morning waking & screen-free transitions.',
+      title: 'Ready with calm guardrails',
+      presetLabel: 'Bridge Pact',
+      nextGoal: 'Solid foundation—pair clear transitions with a guided Family Pact.',
     };
   }
   return {
-    title: 'Building Pre-Device Foundations',
-    description: 'Nervous system and bedtime habits developing; benefit from scaffolded offline routines.',
-    badgeColor: 'bg-[#FEE2E2] text-[#991B1B] border-[#991B1B]/20',
-    strokeColor: '#B45309',
-    recommendedPreset: 'Pre-Device Foundation',
-    nextGoal: 'Focus on 14 days consistent screen-free bedtime routine.',
+    title: 'Practice habits first',
+    presetLabel: 'Starter Pact',
+    nextGoal: 'Build steady sleep and screen-off routines on shared devices before a personal phone.',
   };
 }
 
@@ -73,62 +55,62 @@ export interface ResetGuide {
 
 export const RESET_GUIDES: Record<'infant' | 'toddler' | 'earlyChildhood', ResetGuide> = {
   infant: {
-    title: 'Infant Overstimulation Calming Steps:',
+    title: 'Infant Calming Reset',
     steps: [
       {
         num: 1,
         title: 'Lower ambient input',
-        description: 'Dim bright overhead lights, quiet devices, and soften your tone.',
+        description: 'Dim overhead lights, quiet devices, and soften your voice.',
       },
       {
         num: 2,
-        title: 'Chest-to-chest somatic anchor',
-        description: 'Hold baby firmly upright against your chest so they feel your steady heartbeat.',
+        title: 'Hold chest-to-chest',
+        description: 'Let baby rest upright against your chest to match your heartbeat.',
       },
       {
         num: 3,
-        title: 'Rhythmic shushing & slow sway',
-        description: 'Auditory white-noise shushing paired with gentle swaying resets the vagal nerve.',
+        title: 'Slow sway and gentle shush',
+        description: 'Rhythmic motion and steady sound settle an overwhelmed nervous system.',
       },
     ],
   },
   toddler: {
-    title: 'Toddler Meltdown Reset Steps:',
+    title: 'Toddler Meltdown Reset',
     steps: [
       {
         num: 1,
-        title: 'Get low to eye level (sit on floor)',
-        description: 'Sit on the floor so your body is below theirs, instantly reducing perceived threat.',
+        title: 'Sit on the floor below eye level',
+        description: 'Lower your posture so your presence feels calm and safe.',
       },
       {
         num: 2,
-        title: 'Acknowledge feelings: “You wanted to keep watching”',
-        description: 'Name the reality: “You wanted to keep watching. It is hard to stop.”',
+        title: 'Name the feeling',
+        description: '“You wanted to keep watching. Stopping is hard.”',
       },
       {
         num: 3,
-        title: 'Offer physical bridge: “Come blow out the candle with me”',
-        description: 'Introduce a physical breath bridge: “Come blow out the imaginary candle with me.”',
+        title: 'Offer a physical bridge',
+        description: '“Come blow out the imaginary candle with me.”',
       },
     ],
   },
   earlyChildhood: {
-    title: 'Preschool Regulation & Agency Steps:',
+    title: 'Preschool Transition Reset',
     steps: [
       {
         num: 1,
         title: 'Validate without negotiating',
-        description: 'Acknowledge disappointment: “I hear you. It feels frustrating when fun pauses.”',
+        description: '“I hear you—pausing fun feels frustrating.”',
       },
       {
         num: 2,
-        title: 'Firm, loving boundary container',
-        description: 'Reassure certainty: “Our media window is closed for today. Tomorrow is a new day.”',
+        title: 'Hold one clear boundary',
+        description: '“Our screen window is closed for today. Tomorrow is fresh.”',
       },
       {
         num: 3,
-        title: 'Provide 2 agency choices',
-        description: 'Offer real power: “Do you want to press the power button, or choose our bedtime book?”',
+        title: 'Offer two real choices',
+        description: '“Press the power button, or pick our bedtime book?”',
       },
     ],
   },
@@ -260,12 +242,268 @@ export function getEarlyTierResetGuide(isInfant: boolean, isToddler: boolean): R
   return RESET_GUIDES.earlyChildhood;
 }
 
-export function getDailySensoryActivity(isInfant: boolean, isToddler: boolean, customDate?: Date): SensoryActivity {
+export function getDailySensoryActivity(
+  isInfant: boolean,
+  isToddler: boolean,
+  customDate?: Date
+): SensoryActivity {
   const date = customDate ?? new Date();
   const startOfYear = new Date(date.getFullYear(), 0, 1);
-  const dayOfYear = Math.floor((date.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24));
-  const pool = isInfant ? INFANT_SENSORY_ACTIVITIES : isToddler ? TODDLER_SENSORY_ACTIVITIES : EARLY_CHILDHOOD_SENSORY_ACTIVITIES;
+  const dayOfYear = Math.floor(
+    (date.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  const pool = isInfant
+    ? INFANT_SENSORY_ACTIVITIES
+    : isToddler
+      ? TODDLER_SENSORY_ACTIVITIES
+      : EARLY_CHILDHOOD_SENSORY_ACTIVITIES;
   return pool[dayOfYear % pool.length]!;
+}
+
+interface RadarAxis {
+  label: string;
+  angle: number;
+  multiplier: number;
+  ghostFrac: number;
+  tx: number;
+  ty: number;
+  anchor: 'start' | 'middle' | 'end';
+}
+
+const RADAR_AXES: RadarAxis[] = [
+  { label: 'Bedtime', angle: -90, multiplier: 1.08, ghostFrac: 0.68, tx: 205, ty: 24, anchor: 'middle' },
+  { label: 'Transitions', angle: -30, multiplier: 1.02, ghostFrac: 0.56, tx: 286, ty: 80, anchor: 'start' },
+  { label: 'Safety', angle: 30, multiplier: 0.94, ghostFrac: 0.62, tx: 286, ty: 174, anchor: 'start' },
+  { label: 'Peer Pressure', angle: 90, multiplier: 0.86, ghostFrac: 0.52, tx: 205, ty: 228, anchor: 'middle' },
+  { label: 'Reset', angle: 150, multiplier: 0.92, ghostFrac: 0.64, tx: 124, ty: 174, anchor: 'end' },
+  { label: 'Trust', angle: 210, multiplier: 1.04, ghostFrac: 0.58, tx: 124, ty: 80, anchor: 'end' },
+];
+
+const RADAR_CX = 205;
+const RADAR_CY = 124;
+const RADAR_R = 80;
+
+function polarPoint(angleDeg: number, frac: number): [number, number] {
+  const rad = (angleDeg * Math.PI) / 180;
+  return [
+    Number((RADAR_CX + RADAR_R * frac * Math.cos(rad)).toFixed(1)),
+    Number((RADAR_CY + RADAR_R * frac * Math.sin(rad)).toFixed(1)),
+  ];
+}
+
+function QuietReadinessRadar({
+  score,
+  childName,
+}: {
+  score: number | null;
+  childName: string;
+}) {
+  const isAssessed = score !== null;
+
+  const points = RADAR_AXES.map((axis) => {
+    const val = isAssessed
+      ? Math.min(100, Math.max(0, Math.round(score * axis.multiplier)))
+      : Math.round(axis.ghostFrac * 100);
+    const visualFrac = isAssessed ? Math.max(0.28, val / 100) : axis.ghostFrac;
+    const [x, y] = polarPoint(axis.angle, visualFrac);
+    return { ...axis, val, x, y };
+  });
+
+  const polygonPoints = points.map((p) => `${p.x},${p.y}`).join(' ');
+
+  return (
+    <svg
+      viewBox="0 0 410 246"
+      role="img"
+      aria-label={
+        isAssessed
+          ? `${childName}'s readiness radar showing an overall score of ${score} out of 100`
+          : `${childName}'s readiness radar awaiting baseline assessment`
+      }
+      className="w-full max-w-[395px] h-auto select-none"
+    >
+      <circle cx={RADAR_CX} cy={RADAR_CY} r="90" fill="#FAF8F3" />
+
+      {/* Concentric hairline rings */}
+      {[0.33, 0.66, 1].map((ring) => (
+        <polygon
+          key={ring}
+          points={RADAR_AXES.map((a) => polarPoint(a.angle, ring).join(',')).join(' ')}
+          fill="none"
+          stroke="#E4E1D8"
+          strokeWidth="1"
+        />
+      ))}
+
+      {/* Axis spokes */}
+      {RADAR_AXES.map((axis) => {
+        const [x, y] = polarPoint(axis.angle, 1);
+        return (
+          <line
+            key={axis.label}
+            x1={RADAR_CX}
+            y1={RADAR_CY}
+            x2={x}
+            y2={y}
+            stroke="#EAE7DF"
+            strokeWidth="1"
+          />
+        );
+      })}
+
+      {/* Ghost outline (unassessed) or filled spruce polygon (assessed) */}
+      <polygon
+        points={polygonPoints}
+        fill={isAssessed ? 'rgba(20, 61, 43, 0.16)' : 'rgba(20, 61, 43, 0.06)'}
+        stroke="#143D2B"
+        strokeOpacity={isAssessed ? 1 : 0.45}
+        strokeWidth={isAssessed ? 2 : 1.5}
+        strokeDasharray={isAssessed ? undefined : '4 4'}
+        className="transition-[fill,stroke-opacity] duration-300"
+      />
+
+      {/* Vertex nodes */}
+      {points.map((p) => {
+        const isGrowth = isAssessed && p.val < 70;
+        return (
+          <circle
+            key={p.label}
+            cx={p.x}
+            cy={p.y}
+            r={isAssessed ? 3.8 : 3.2}
+            fill={isAssessed ? (isGrowth ? '#B45309' : '#143D2B') : '#FFFFFF'}
+            stroke={isAssessed ? '#FFFFFF' : '#143D2B'}
+            strokeOpacity={isAssessed ? 1 : 0.55}
+            strokeWidth="1.5"
+          />
+        );
+      })}
+
+      {/* Center score medallion */}
+      <circle
+        cx={RADAR_CX}
+        cy={RADAR_CY}
+        r={isAssessed ? 22 : 24}
+        fill={isAssessed ? '#FFFFFF' : '#FAF8F3'}
+        stroke="#E4E1D8"
+        strokeWidth="1"
+      />
+      {isAssessed ? (
+        <text
+          x={RADAR_CX}
+          y={RADAR_CY + 6}
+          textAnchor="middle"
+          fill="#143D2B"
+          fontSize="18"
+          fontWeight="600"
+          className="font-serif tabular-nums"
+        >
+          {score}
+        </text>
+      ) : (
+        <>
+          <text
+            x={RADAR_CX}
+            y={RADAR_CY + 2}
+            textAnchor="middle"
+            fill="#143D2B"
+            fontSize="17"
+            fontWeight="600"
+            className="font-serif"
+          >
+            —
+          </text>
+          <text
+            x={RADAR_CX}
+            y={RADAR_CY + 14}
+            textAnchor="middle"
+            fill="#858C88"
+            fontSize="8.5"
+            className="font-mono"
+          >
+            / 100
+          </text>
+        </>
+      )}
+
+      {/* Perimeter axis labels */}
+      {points.map((p) => {
+        const isGrowth = isAssessed && p.val < 70;
+        return (
+          <text
+            key={p.label}
+            x={p.tx}
+            y={p.ty}
+            textAnchor={p.anchor}
+            fill={isGrowth ? '#B45309' : '#494F4C'}
+            fontSize="11.5"
+            fontWeight={isGrowth ? '600' : '500'}
+            className="tabular-nums"
+          >
+            {isAssessed ? `${p.label} · ${p.val}` : p.label}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
+
+function QuietBedtimeDial() {
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      role="img"
+      aria-label="Bedtime dock active from 8:30 PM to 7:00 AM"
+      className="w-full max-w-[340px] h-auto select-none"
+    >
+      <circle cx="180" cy="110" r="88" fill="#FAF8F3" />
+      <circle cx="180" cy="110" r="72" fill="none" stroke="#E4E1D8" strokeWidth="6" />
+      {/* Evening-to-morning sleep arc (approx 44% of 24h cycle) */}
+      <circle
+        cx="180"
+        cy="110"
+        r="72"
+        fill="none"
+        stroke="#143D2B"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeDasharray="198 255"
+        transform="rotate(-115 180 110)"
+      />
+      <text
+        x="180"
+        y="105"
+        textAnchor="middle"
+        fill="#131715"
+        fontSize="26"
+        fontWeight="500"
+        className="font-serif tabular-nums"
+      >
+        8:30 PM
+      </text>
+      <text
+        x="180"
+        y="125"
+        textAnchor="middle"
+        fill="#6C7570"
+        fontSize="11"
+        fontWeight="500"
+      >
+        Locks until 7:00 AM
+      </text>
+      <text
+        x="180"
+        y="144"
+        textAnchor="middle"
+        fill="#143D2B"
+        fontSize="10"
+        fontWeight="600"
+        className="font-mono"
+      >
+        HARDWARE ENFORCED
+      </text>
+    </svg>
+  );
 }
 
 export function BilateralPactStatusCard({
@@ -274,480 +512,251 @@ export function BilateralPactStatusCard({
 }: BilateralPactStatusCardProps) {
   const childAge = child?.age ?? 10;
   const isInfant = childAge <= 1;
-  const isToddler = (childAge >= 2 && childAge <= 3) || String(child?.developmentalTier || '').includes('TIER_0');
-  const isEarlyChildhood = (childAge >= 4 && childAge <= 6) || String(child?.developmentalTier || '').includes('TIER_1');
+  const isToddler =
+    (childAge >= 2 && childAge <= 3) ||
+    String(child?.developmentalTier || '').includes('TIER_0');
+  const isEarlyChildhood =
+    (childAge >= 4 && childAge <= 6) ||
+    String(child?.developmentalTier || '').includes('TIER_1_EARLY');
   const isEarlyTier = isInfant || isToddler || isEarlyChildhood;
   const isPreDevice = child?.roadType === RoadType.PRE_DEVICE;
-  const childName = child?.name ?? 'Child';
+  const childName = formatDisplayName(child?.name);
   const childId = child?.id ?? 'default';
 
-  // Age-calibrated pediatric media guidance (AAP standards)
-  let mediaLimitBadge = 'Max 30 min/day';
-  let mediaLimitLabel = 'Pediatric Guideline: Max 30 min/day';
-  let mediaInsight = 'Handheld screens emit short-wavelength blue light that suppresses melatonin. Screens off 45 mins before bedtime protects deep REM restorative sleep.';
-
-  if (isInfant) {
-    mediaLimitBadge = 'Screen-Free Zone';
-    mediaLimitLabel = 'AAP Guideline: Screen-Free (0 min/day)';
-    mediaInsight = 'Infant visual cortex and circadian clocks develop best through direct eye contact, responsive vocal play, and natural lighting. Video calls with family are the only recommended screen exposure.';
-  } else if (isEarlyChildhood) {
-    mediaLimitBadge = 'Max 60 min/day';
-    mediaLimitLabel = 'Pediatric Guideline: Max 60 min/day';
-    mediaInsight = 'Predictable media routines prevent transition struggles and protect evening cortisol drop before sleep. Always co-view high-quality interactive content and turn screens off 45 mins before bedtime.';
-  }
+  // Concise AAP-aligned daily screen guidance for early tiers (Ages 0–6)
+  const earlyCap = isInfant
+    ? {
+        figure: '0m',
+        unit: 'per day',
+        standard: 'Screen-Free Zone',
+        sleepNote: 'Video calls with family only · Eye contact & natural light',
+      }
+    : isEarlyChildhood
+      ? {
+          figure: '60m',
+          unit: 'max / day',
+          standard: 'Co-Viewed Media',
+          sleepNote: 'Screens off 45 min before sleep',
+        }
+      : {
+          figure: '30m',
+          unit: 'max / day',
+          standard: 'Co-Viewed Media',
+          sleepNote: 'Screens off 45 min before sleep',
+        };
 
   const resetGuide = getEarlyTierResetGuide(isInfant, isToddler);
   const sensoryActivity = getDailySensoryActivity(isInfant, isToddler);
 
-  const hasAssessment = typeof child?.latestAssessmentScore === 'number' && !Number.isNaN(child.latestAssessmentScore);
-  const score = hasAssessment ? Math.min(100, Math.max(0, Math.round(child!.latestAssessmentScore!))) : null;
-
-  // Calibrated stroke offset for circular SVG (circumference = 2 * pi * 40 ~= 251.2)
-  const strokeOffset = score !== null ? 251.2 * (1 - score / 100) : 251.2;
+  const hasAssessment =
+    typeof child?.latestAssessmentScore === 'number' &&
+    !Number.isNaN(child.latestAssessmentScore);
+  const score = hasAssessment
+    ? Math.min(100, Math.max(0, Math.round(child!.latestAssessmentScore!)))
+    : null;
   const tier = score !== null ? getReadinessTier(score) : null;
 
-  // Calibrated quadrant scores proportional to child's assessment score
-  const sleepScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 1.08))) : null;
-  const taskScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 1.02))) : null;
-  const impulseScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 0.88))) : null;
-  const emotionalScore = score !== null ? Math.min(100, Math.max(0, Math.round(score * 0.92))) : null;
-
   return (
-    <div className={cn('space-y-4', className)}>
-      <Card className="border border-[#143D2B]/10 bg-white shadow-[0_10px_30px_rgba(19,23,21,0.045)] rounded-[2rem] overflow-hidden transition-all hover:border-[#143D2B]/25">
-        {/* TODDLER & EARLY CHILDHOOD: Early Screen Boundaries & Meltdown Coping Kit (NO PHONE READINESS) */}
-        {isEarlyTier ? (
-          <>
-            <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-[5px] bg-[#FEF3C7] text-[#B45309] font-bold">
-                    <Baby className="h-4 w-4" />
-                  </span>
-                  <div>
-                    <span className="text-xs font-mono font-medium text-[#B45309] uppercase tracking-wider block">
-                      Early Screen Boundaries
-                    </span>
-                    <CardTitle className="font-serif text-base sm:text-lg font-bold text-[#111413]">
-                      {childName}&apos;s Daily Media Boundary
-                    </CardTitle>
-                  </div>
-                </div>
+    <section
+      aria-label={
+        isEarlyTier
+          ? `${childName}'s Daily Media Boundary`
+          : isPreDevice
+            ? `${childName}'s First-Phone Readiness`
+            : `${childName}'s Bedtime Dock`
+      }
+      className={cn(
+        'rounded-[2rem] border border-[#143D2B]/10 bg-white shadow-[0_14px_40px_-10px_rgba(20,61,43,0.08)] p-6 sm:p-9 lg:px-11 transition-colors hover:border-[#143D2B]/20',
+        className
+      )}
+    >
+      {isEarlyTier ? (
+        /* AGES 0–6: Quiet Early Screen Boundaries & 3-Step Calm Reset */
+        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-12 items-center">
+          {/* Left: Sculptural Daily Cap + Screen-Free Play Link */}
+          <div className="flex flex-col gap-5">
+            <div className="space-y-2">
+              <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#143D2B]">
+                Early Screen Boundaries
+              </span>
+              <h2 className="font-serif text-[28px] sm:text-[34px] font-medium leading-[1.12] tracking-[-0.02em] text-[#131715]">
+                {childName}&apos;s Daily Media Boundary
+              </h2>
+            </div>
 
-                <Badge
-                  variant="outline"
-                  className="text-[10px] font-mono border-[#E3E3DC] bg-[#EAF3EE] text-[#143D2B] rounded-full"
-                >
-                  {mediaLimitBadge}
-                </Badge>
+            {/* Single Calm Daily Cap Readout */}
+            <div className="flex items-center gap-5 py-4 border-y border-[#ECE8DF]">
+              <div className="shrink-0">
+                <span className="font-serif text-[40px] sm:text-[44px] font-medium leading-none tracking-[-0.02em] text-[#143D2B] tabular-nums block">
+                  {earlyCap.figure}
+                </span>
+                <span className="font-mono text-[10.5px] text-[#7A827D] block mt-1">
+                  {earlyCap.unit}
+                </span>
               </div>
-              <CardDescription className="text-xs text-[#494F4C] leading-relaxed">
-                Developmentally calibrated screen caps and nervous system co-regulation for young children.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-5 sm:p-6 space-y-4">
-              {/* Clean Pediatric Standard (No Fake Usage Telemetry) */}
-              <div className="p-4 bg-[#FBFBF9] rounded-xl border border-[#E3E3DC] space-y-2">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#111413]">{mediaLimitLabel}</span>
-                  <span className="font-mono text-[11px] text-[#143D2B] font-bold">Co-Viewing Standard</span>
-                </div>
-                <p className="text-[11px] text-[#494F4C] leading-relaxed">
-                  {mediaInsight}
+              <div className="h-10 w-px bg-[#E6E2D8] shrink-0" aria-hidden="true" />
+              <div className="space-y-0.5 min-w-0">
+                <p className="text-[14px] font-semibold text-[#131715]">
+                  {earlyCap.standard}
+                </p>
+                <p className="text-[13px] text-[#5B645F] leading-snug">
+                  {earlyCap.sleepNote}
                 </p>
               </div>
+            </div>
 
-              {/* Stage-Calibrated Reset Guide */}
-              <div className="space-y-2">
-                <span className="font-mono text-xs font-bold text-[#143D2B] uppercase tracking-wider block">
-                  {resetGuide.title}
-                </span>
-                <div className="space-y-1.5">
-                  {resetGuide.steps.map((s) => (
-                    <div
-                      key={s.num}
-                      className="p-2.5 rounded-lg bg-[#F4F4F0] border border-[#E3E3DC] text-xs flex items-center gap-2.5"
-                    >
-                      <span className="w-5 h-5 rounded-full bg-[#143D2B] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">
-                        {s.num}
-                      </span>
-                      <span className="text-[#111413]">{s.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Today's Screen-Free Play CTA */}
+            <div className="space-y-3">
+              <p className="text-[13.5px] text-[#494F4C] leading-snug">
+                <span className="font-medium text-[#131715]">Today&apos;s play:</span>{' '}
+                {sensoryActivity.title}{' '}
+                <span className="text-[#7A827D] tabular-nums">({sensoryActivity.duration})</span>
+              </p>
 
-              {/* Screen-Free Play Dock linked to Brain Games */}
-              <Link href={`/brain-games?childId=${childId}`} className="block group">
-                <div className="p-3 bg-[#EAF3EE]/50 hover:bg-[#EAF3EE] transition rounded-xl border border-[#143D2B]/20 flex items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-2.5">
-                    <Palette className="w-4 h-4 text-[#143D2B] shrink-0" />
-                    <div>
-                      <span className="font-semibold text-[#111413] group-hover:text-[#143D2B] transition block">
-                        Today&apos;s Sensory Activity ({sensoryActivity.duration})
-                      </span>
-                      <span className="text-[11px] text-[#494F4C]">
-                        {sensoryActivity.title} • {sensoryActivity.description}
-                      </span>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="font-mono text-[10px] text-[#143D2B] bg-white border-[#143D2B]/20 shrink-0">
-                    Explore →
-                  </Badge>
-                </div>
+              <Link
+                href={`/brain-games?childId=${childId}`}
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors w-fit"
+              >
+                <span>Explore screen-free play</span>
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-            </CardContent>
-          </>
-        ) : (
-          /* TWEENS & ADOLESCENTS: First-Phone Readiness Radar OR Bedtime Curfew Dock */
-          <>
-            <CardHeader className="p-5 sm:p-6 pb-3 space-y-2 border-b border-[#E3E3DC]/70">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#EAF3EE] text-[#143D2B] font-bold shadow-2xs">
-                    {isPreDevice ? <Compass className="h-4 w-4" /> : <FileCheck2 className="h-4 w-4" />}
+            </div>
+          </div>
+
+          {/* Right: Warm Parchment 3-Step Meltdown Reset */}
+          <div className="rounded-[1.5rem] bg-[#FAF8F3] p-6 sm:p-7 space-y-4">
+            <span className="block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#B45309]">
+              {resetGuide.title}
+            </span>
+
+            <ol className="divide-y divide-[#E8E4DA]">
+              {resetGuide.steps.map((step) => (
+                <li
+                  key={step.num}
+                  className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-3.5"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#143D2B] text-white font-mono text-[11px] font-semibold tabular-nums">
+                    {step.num}
                   </span>
-                  <div>
-                    <span className="text-[10px] font-mono font-bold text-[#143D2B] uppercase tracking-wider block">
-                      {isPreDevice ? 'First-Phone Readiness Radar' : 'Bilateral Family Pact & Curfew'}
-                    </span>
-                    <CardTitle className="font-serif text-xl sm:text-2xl font-bold text-[#111413] mt-0.5">
-                      {isPreDevice
-                        ? (score !== null
-                            ? `${childName}'s First-Phone Assessment`
-                            : `Evaluate ${childName}'s First-Phone Readiness`)
-                        : `${childName}'s Bedtime Curfew & Pact-as-Code`}
-                    </CardTitle>
+                  <div className="space-y-0.5 min-w-0">
+                    <p className="text-[14px] font-semibold text-[#131715] leading-snug">
+                      {step.title}
+                    </p>
+                    <p className="text-[13px] text-[#5B645F] leading-snug">
+                      {step.description}
+                    </p>
                   </div>
-                </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      ) : isPreDevice ? (
+        /* AGES 7+ ROAD 1: Option 3 — Quiet Geometric Readiness Radar */
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
+          {score === null ? (
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#143D2B]">
+                Road 1 · Pre-Device
+              </span>
 
-                <div className="flex items-center gap-2 font-mono">
-                  {isPreDevice ? (
-                    score !== null ? (
-                      <Badge
-                        variant="outline"
-                        className="text-xs font-mono font-bold text-[#143D2B] bg-[#EAF3EE] border-[#143D2B]/20 px-3 py-1 rounded-full"
-                      >
-                        Current Score: {score}% ({score} / 100)
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="outline"
-                        className="text-xs font-mono font-medium text-[#858C88] bg-[#F4F4F0] border-[#E3E3DC] px-3 py-1 rounded-full"
-                      >
-                        Not Yet Assessed
-                      </Badge>
-                    )
-                  ) : null}
-                  <Badge
-                    variant={isPreDevice ? 'roadPre' : 'roadActive'}
-                    className="text-[10px] font-mono uppercase tracking-wider rounded-full"
-                  >
-                    {isPreDevice ? 'Road 1: Pre-Device' : 'Road 2: Active-Device'}
-                  </Badge>
-                </div>
+              <h2 className="font-serif text-[28px] sm:text-[34px] font-medium leading-[1.12] tracking-[-0.02em] text-[#131715]">
+                {childName}&apos;s First-Phone Readiness
+              </h2>
+
+              <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[38ch]">
+                10 quick scenarios to see where {childName} is ready—and what to practice first.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  href={`/children/${childId}/readiness`}
+                  className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
+                >
+                  <span>Start 3-min check</span>
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <span className="text-[12.5px] text-[#7A827D]">
+                  Zero surveillance
+                </span>
               </div>
-              <CardDescription className="text-xs text-[#494F4C] leading-relaxed">
-                {isPreDevice
-                  ? (score !== null
-                      ? 'Objective developmental readiness before buying or handing over a smartphone.'
-                      : '10-dimension developmental evaluation of bedtime sleep, impulse control, and digital boundaries.')
-                  : 'Zero spyware, bilateral trust, and automated hardware curfew enforcement.'}
-              </CardDescription>
-            </CardHeader>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#143D2B]">
+                First-Phone Readiness · {tier!.presetLabel}
+              </span>
 
-            <CardContent className="p-5 sm:p-6 space-y-5">
-              {isPreDevice ? (
-                score !== null ? (
-                  /* Pre-Device ASSESSED: Dynamic 3-Column Readiness Grid */
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-                      {/* Left: Circular SVG Readiness Gauge (4 cols) */}
-                      <div className="md:col-span-4 flex flex-col items-center justify-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC] text-center space-y-3">
-                        <div className="relative w-28 h-28 flex items-center justify-center">
-                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="8" fill="transparent" />
-                            <circle
-                              cx="50"
-                              cy="50"
-                              r="40"
-                              stroke={tier!.strokeColor}
-                              strokeWidth="8"
-                              strokeDasharray="251.2"
-                              strokeDashoffset={strokeOffset}
-                              strokeLinecap="round"
-                              fill="transparent"
-                              className="transition-all duration-700"
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="font-serif text-3xl font-bold text-[#111413]">
-                              {score}%
-                            </span>
-                            <span className="font-mono text-[10px] text-[#858C88]">out of 100</span>
-                          </div>
-                        </div>
-                        <div>
-                          <span className="font-serif text-sm font-bold text-[#143D2B] block">
-                            {tier!.title}
-                          </span>
-                          <p className="text-[11px] text-[#494F4C] mt-0.5 leading-snug">
-                            {tier!.description}
-                          </p>
-                        </div>
-                      </div>
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span className="font-serif text-[42px] sm:text-[48px] font-medium leading-none tracking-[-0.02em] text-[#143D2B] tabular-nums">
+                  {score}
+                </span>
+                <span className="text-[14.5px] text-[#6C7570] tabular-nums">
+                  / 100 · {tier!.title}
+                </span>
+              </div>
 
-                      {/* Middle: 4 Quadrant Progression Bars (4 cols) */}
-                      <div className="md:col-span-4 space-y-3">
-                        <span className="font-mono text-[10px] uppercase font-bold text-[#858C88] tracking-wider block">
-                          4 Core Developmental Quadrants
-                        </span>
+              <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[40ch]">
+                {tier!.nextGoal}
+              </p>
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-xs font-medium">
-                            <span className="text-[#111413]">Sleep Independence</span>
-                            <span className="font-mono font-bold text-[#143D2B]">{sleepScore}%</span>
-                          </div>
-                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                            <div
-                              className="bg-[#143D2B] h-1.5 rounded-full transition-all duration-500"
-                              style={{ width: `${sleepScore}%` }}
-                            />
-                          </div>
-                        </div>
+              <div className="flex flex-wrap items-center gap-5 pt-2">
+                <Link
+                  href={`/pacts/builder?childId=${childId}`}
+                  className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
+                >
+                  <span>Build {childName}&apos;s Pact</span>
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href={`/children/${childId}/readiness`}
+                  className="text-[13px] font-semibold text-[#143D2B] hover:underline min-h-[44px] inline-flex items-center"
+                >
+                  Full diagnostic →
+                </Link>
+              </div>
+            </div>
+          )}
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-xs font-medium">
-                            <span className="text-[#111413]">Task Responsibility</span>
-                            <span className="font-mono font-bold text-[#143D2B]">{taskScore}%</span>
-                          </div>
-                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                            <div
-                              className="bg-[#143D2B] h-1.5 rounded-full transition-all duration-500"
-                              style={{ width: `${taskScore}%` }}
-                            />
-                          </div>
-                        </div>
+          <div className="flex items-center justify-center">
+            <QuietReadinessRadar score={score} childName={childName} />
+          </div>
+        </div>
+      ) : (
+        /* AGES 7+ ROAD 2: Quiet Bedtime Curfew Dock */
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#143D2B]">
+              Road 2 · Active Device
+            </span>
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-xs font-medium">
-                            <span className="text-[#111413]">Peer Impulse Control</span>
-                            <span className={cn('font-mono font-bold', impulseScore! >= 70 ? 'text-[#143D2B]' : 'text-[#B45309]')}>
-                              {impulseScore}%
-                            </span>
-                          </div>
-                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                            <div
-                              className={cn('h-1.5 rounded-full transition-all duration-500', impulseScore! >= 70 ? 'bg-[#143D2B]' : 'bg-[#B45309]')}
-                              style={{ width: `${impulseScore}%` }}
-                            />
-                          </div>
-                        </div>
+            <h2 className="font-serif text-[28px] sm:text-[34px] font-medium leading-[1.12] tracking-[-0.02em] text-[#131715]">
+              {childName}&apos;s Bedtime Dock
+            </h2>
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-xs font-medium">
-                            <span className="text-[#111413]">Emotional Reset</span>
-                            <span className={cn('font-mono font-bold', emotionalScore! >= 70 ? 'text-[#143D2B]' : 'text-[#B45309]')}>
-                              {emotionalScore}%
-                            </span>
-                          </div>
-                          <div className="w-full bg-[#E3E3DC] rounded-full h-1.5 overflow-hidden">
-                            <div
-                              className={cn('h-1.5 rounded-full transition-all duration-500', emotionalScore! >= 70 ? 'bg-[#143D2B]' : 'bg-[#B45309]')}
-                              style={{ width: `${emotionalScore}%` }}
-                            />
-                          </div>
-                        </div>
-                      </div>
+            <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[40ch]">
+              Apps pause automatically at 8:30 PM under your co-signed Family Pact.
+            </p>
 
-                      {/* Right: Recommended Developmental Leap & Protocol (4 cols) */}
-                      <div className="md:col-span-4 p-5 rounded-xl bg-[#EAF3EE]/70 border border-[#143D2B]/20 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#143D2B] font-bold">
-                            Recommended Protocol
-                          </span>
-                          <span className="font-mono text-[10px] text-[#143D2B] font-bold bg-white px-2 py-0.5 rounded-full border border-[#143D2B]/20">
-                            {tier!.recommendedPreset}
-                          </span>
-                        </div>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                href={`/devices?childId=${childId}`}
+                className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
+              >
+                <span>Review Pact &amp; Schedule</span>
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <span className="text-[12.5px] text-[#7A827D]">
+                Dual signed · Zero spyware
+              </span>
+            </div>
+          </div>
 
-                        <h4 className="font-serif text-sm font-bold text-[#111413]">
-                          Active Developmental Focus
-                        </h4>
-                        <p className="text-[11px] text-[#494F4C] leading-snug">
-                          {tier!.nextGoal}
-                        </p>
-
-                        <div className="pt-1.5 border-t border-[#143D2B]/10 space-y-2">
-                          <div className="flex items-center gap-1.5 text-[11px] text-[#143D2B]">
-                            <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                            <span className="font-medium">Advisory Insight:</span>
-                          </div>
-                          <p className="text-[10px] text-[#494F4C] leading-relaxed italic">
-                            A smartphone is an open connection to peer feeds. Scaffolding impulse control and bedtime habits before hardware access protects prefrontal development.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row items-center justify-between gap-3">
-                      <span className="text-xs text-[#494F4C]">
-                        Next Goal: {tier!.nextGoal}
-                      </span>
-                      <Link href={`/children/${childId}/readiness`}>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-1.5 text-xs font-semibold border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-lg min-h-[38px]"
-                        >
-                          <span>View Full Readiness Diagnostic</span>
-                          <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  /* Pre-Device UNASSESSED: Dynamic Live Radar Awaiting Calibration */
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center p-5 rounded-xl bg-[#FBFBF9] border border-[#E3E3DC]">
-                      {/* Left: Animated Radial Radar Gauge (Awaiting Baseline) */}
-                      <div className="md:col-span-4 flex flex-col items-center justify-center p-4 rounded-xl bg-white border border-[#E3E3DC] text-center space-y-3 shadow-2xs">
-                        <div className="relative w-28 h-28 flex items-center justify-center">
-                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="40" stroke="#E3E3DC" strokeWidth="6" fill="transparent" />
-                            <circle
-                              cx="50"
-                              cy="50"
-                              r="40"
-                              stroke="#10B981"
-                              strokeWidth="6"
-                              strokeDasharray="14 10"
-                              fill="transparent"
-                              className="animate-[spin_16s_linear_infinite]"
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <Compass className="w-6 h-6 text-[#143D2B] animate-pulse" />
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#858C88] font-bold mt-1">
-                              Radar Ready
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EE] text-[#143D2B] text-[10px] font-mono font-bold border border-[#143D2B]/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            Awaiting Baseline
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Right: Low-Text, High-Action Diagnostic Panel */}
-                      <div className="md:col-span-8 flex flex-col justify-between space-y-3.5">
-                        <div className="space-y-1">
-                          <span className="font-mono text-[10px] uppercase font-bold text-[#143D2B] tracking-wider block">
-                            Developmental Baseline
-                          </span>
-                          <h4 className="font-serif text-base sm:text-lg font-bold text-[#111413]">
-                            Evaluate {childName}&apos;s First-Phone Readiness
-                          </h4>
-                          <p className="text-xs text-[#494F4C] leading-relaxed">
-                            10 real-world scenarios evaluating bedtime sleep, impulse control, and digital boundaries before getting a personal phone.
-                          </p>
-                        </div>
-
-                        {/* 4 Quadrants as Clean Visual Chips */}
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
-                            <span>🌙</span>
-                            <span>Sleep Independence</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
-                            <span>📚</span>
-                            <span>Task Responsibility</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
-                            <span>👥</span>
-                            <span>Peer Impulse Control</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-[#E3E3DC] text-xs font-medium text-[#111413] shadow-2xs">
-                            <span>🧘</span>
-                            <span>Emotional Reset</span>
-                          </span>
-                        </div>
-
-                        {/* Primary Action Button */}
-                        <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                          <Link href={`/children/${childId}/readiness`} className="shrink-0">
-                            <Button
-                              className="gap-2 text-xs font-semibold bg-[#143D2B] hover:bg-[#0E2B1E] text-white rounded-xl min-h-[44px] px-6 shadow-2xs cursor-pointer"
-                            >
-                              <span>Start Readiness Assessment</span>
-                              <ArrowRight className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                          <span className="font-mono text-[11px] text-[#858C88]">
-                            Takes ~3 mins • 10 questions
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Footer Guarantee */}
-                    <div className="pt-2 border-t border-[#E3E3DC] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#858C88] font-mono">
-                      <span>Takes ~3 minutes • 10 developmental questions • Generates customized Bilateral Pact</span>
-                      <span className="text-[#143D2B] font-medium">Zero surveillance • Bilateral collaboration</span>
-                    </div>
-                  </div>
-                )
-              ) : (
-                /* Active-Device: Bedtime Curfew Dock */
-                <div className="space-y-3">
-                  <div className="rounded-xl border border-[#E3E3DC] bg-[#FBFBF9] p-4 space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Moon className="h-4 w-4 text-[#143D2B]" />
-                        <span className="font-serif font-bold text-sm text-[#111413]">
-                          Bedtime Dock: 8:30 PM Lock
-                        </span>
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className="text-[10px] font-mono border-[#E3E3DC] bg-white text-[#143D2B] rounded-full"
-                      >
-                        <Lock className="h-3 w-3 mr-1 text-[#143D2B]" />
-                        Hardware Enforced
-                      </Badge>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 text-xs text-[#858C88] font-mono">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#143D2B] shrink-0" />
-                      <span>Zero Spyware • No Secret Keylogging • Bilateral Agreement</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-[11px] font-mono text-[#858C88] border-t border-[#E3E3DC] pt-2">
-                      <span>Dual Signed: Parent + Child</span>
-                      <span className="text-[#143D2B] font-medium flex items-center gap-1">
-                        <CheckCircle2 className="h-3 w-3" /> Active Profile
-                      </span>
-                    </div>
-                  </div>
-
-                  <Link href={`/devices?childId=${childId}`} className="block w-full">
-                    <Button
-                      variant="outline"
-                      className="w-full min-h-[44px] gap-2 text-xs font-semibold border-[#E3E3DC] text-[#111413] hover:bg-[#F4F4F0] rounded-lg"
-                    >
-                      <span>Review Family Pact &amp; Schedule</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-[#143D2B]" />
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </CardContent>
-          </>
-        )}
-      </Card>
-    </div>
+          <div className="flex items-center justify-center">
+            <QuietBedtimeDial />
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

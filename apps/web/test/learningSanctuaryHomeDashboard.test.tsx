@@ -211,32 +211,34 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
   });
 
   describe('4. Stage-Adaptive Telemetry Widget (BilateralPactStatusCard)', () => {
-    it('renders dynamic live radar and clean readiness assessment CTA when tween Maya is unassessed', () => {
+    it('renders quiet architectural radar and low-text readiness CTA when tween Maya is unassessed', () => {
       const html = renderToStaticMarkup(
         <BilateralPactStatusCard child={mockTweenMaya} />
       );
 
-      expect(html).toContain('First-Phone Readiness Radar');
-      expect(html).toContain('Not Yet Assessed');
-      expect(html).toContain('Evaluate Maya&#x27;s First-Phone Readiness');
-      expect(html).toContain('Radar Ready');
-      expect(html).toContain('Awaiting Baseline');
-      expect(html).toContain('Start Readiness Assessment');
+      expect(html).toContain('Road 1 · Pre-Device');
+      expect(html).toContain('Maya&#x27;s First-Phone Readiness');
+      expect(html).toContain('Start 3-min check');
       expect(html).toContain('/children/child-maya/readiness');
-      expect(html).toContain('Sleep Independence');
-      expect(html).toContain('Task Responsibility');
-      expect(html).toContain('Peer Impulse Control');
-      expect(html).toContain('Emotional Reset');
-      expect(html).toContain('10 developmental questions');
+      expect(html).toContain('Zero surveillance');
+      expect(html).toContain('Bedtime');
+      expect(html).toContain('Transitions');
+      expect(html).toContain('Safety');
+      expect(html).toContain('Peer Pressure');
+      expect(html).toContain('Reset');
+      expect(html).toContain('Trust');
 
-      // Purged fake alarm widgets and redundant/clinical wording
+      // Purged cluttered duplicate copy, emojis, spinning sonar, and fake telemetry
+      expect(html).not.toContain('Radar Ready');
+      expect(html).not.toContain('Awaiting Baseline');
+      expect(html).not.toContain('Not Yet Assessed');
+      expect(html).not.toContain('animate-pulse');
+      expect(html).not.toContain('🌙');
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
-      expect(html).not.toContain('Day 9 of 14 Completed');
-      expect(html).not.toContain('Begin 3-min evaluation');
       expect(html).not.toContain('clinical');
     });
 
-    it('renders genuine score gauge and 4 quadrants when tween Maya is assessed', () => {
+    it('renders filled architectural radar polygon and concise pact CTA when tween Maya is assessed', () => {
       const assessedMaya: ChildDTO = {
         ...mockTweenMaya,
         latestAssessmentScore: 78,
@@ -246,49 +248,74 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
         <BilateralPactStatusCard child={assessedMaya} />
       );
 
-      expect(html).toContain('First-Phone Readiness Radar');
-      expect(html).toContain('Current Score: 78% (78 / 100)');
-      expect(html).toContain('78%');
-      expect(html).toContain('out of 100');
-      expect(html).toContain('Approaching Smartphone Readiness');
-      expect(html).toContain('Sleep Independence');
-      expect(html).toContain('Task Responsibility');
-      expect(html).toContain('Peer Impulse Control');
-      expect(html).toContain('Emotional Reset');
-      expect(html).toContain('Recommended Protocol');
-      expect(html).toContain('Road 1 Bridge Charter');
-      expect(html).toContain('View Full Readiness Diagnostic');
+      expect(html).toContain('First-Phone Readiness · Bridge Pact');
+      expect(html).toContain('>78<');
+      expect(html).toContain('/ 100 · Ready with calm guardrails');
+      expect(html).toContain('Build Maya&#x27;s Pact');
+      expect(html).toContain('/pacts/builder?childId=child-maya');
+      expect(html).toContain('Full diagnostic');
       expect(html).toContain('/children/child-maya/readiness');
 
-      // Purged fake alarm widgets and redundant/clinical wording
       expect(html).not.toContain('14 Days Independent Morning Alarm Waking');
-      expect(html).not.toContain('Day 9 of 14 Completed');
-      expect(html).not.toContain('Begin 3-min evaluation');
       expect(html).not.toContain('clinical');
     });
 
-    it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders Early Screen Boundaries', () => {
+    it('renders calm bedtime dock dial for Road 2 active-device children', () => {
+      const activeDeviceTeen: ChildDTO = {
+        ...mockTweenMaya,
+        id: 'child-alex',
+        name: 'Alex',
+        age: 13,
+        roadType: RoadType.ACTIVE_DEVICE,
+      };
+
+      const html = renderToStaticMarkup(
+        <BilateralPactStatusCard child={activeDeviceTeen} />
+      );
+
+      expect(html).toContain('Road 2 · Active Device');
+      expect(html).toContain('Alex&#x27;s Bedtime Dock');
+      expect(html).toContain('8:30 PM');
+      expect(html).toContain('Review Pact &amp; Schedule');
+      expect(html).toContain('/devices?childId=child-alex');
+    });
+
+    it('STRICTLY EXCLUDES First-Phone Readiness for toddler Leo and renders clean Early Screen Boundaries', () => {
       const html = renderToStaticMarkup(
         <BilateralPactStatusCard child={mockToddlerLeo} />
       );
 
       // Verify Phone Readiness is NOT shown for toddler
       expect(html).not.toContain('First-Phone Readiness');
-      expect(html).not.toContain('Readiness Radar');
-      expect(html).not.toContain('Sleep Independence');
+      expect(html).not.toContain('Peer Pressure');
 
-      // Verify Early Screen Boundaries & Meltdown Reset are shown (Option A: pediatric guideline, no fake telemetry)
+      // Verify streamlined Early Screen Boundaries & 3-Step Meltdown Reset
       expect(html).toContain('Early Screen Boundaries');
       expect(html).toContain('Leo&#x27;s Daily Media Boundary');
-      expect(html).toContain('Max 30 min/day');
-      expect(html).toContain('Pediatric Guideline: Max 30 min/day');
-      expect(html).toContain('Co-Viewing Standard');
+      expect(html).toContain('30m');
+      expect(html).toContain('Co-Viewed Media');
+      expect(html).toContain('Screens off 45 min before sleep');
       expect(html).not.toContain('20 / 30m');
-      expect(html).toContain('Toddler Meltdown Reset Steps:');
-      expect(html).toContain('Get low to eye level (sit on floor)');
-      expect(html).toContain('Offer physical bridge');
-      expect(html).toContain('Today&#x27;s Sensory Activity');
+      expect(html).not.toContain('short-wavelength blue light');
+      expect(html).toContain('Toddler Meltdown Reset');
+      expect(html).toContain('Sit on the floor below eye level');
+      expect(html).toContain('Offer a physical bridge');
+      expect(html).toContain('Explore screen-free play');
       expect(html).toContain('/brain-games?childId=child-leo');
+    });
+
+    it('capitalizes lowercase child names cleanly (e.g., oliver -> Oliver)', () => {
+      const mockOliver: ChildDTO = {
+        ...mockToddlerLeo,
+        id: 'child-oliver',
+        name: 'oliver',
+      };
+
+      const html = renderToStaticMarkup(
+        <BilateralPactStatusCard child={mockOliver} />
+      );
+
+      expect(html).toContain('Oliver&#x27;s Daily Media Boundary');
     });
 
     it('calibrates calming steps and screen-free standard for an infant (age 0-1)', () => {
@@ -306,12 +333,11 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
 
       expect(html).toContain('Early Screen Boundaries');
       expect(html).toContain('Noah&#x27;s Daily Media Boundary');
+      expect(html).toContain('0m');
       expect(html).toContain('Screen-Free Zone');
-      expect(html).toContain('AAP Guideline: Screen-Free (0 min/day)');
-      expect(html).toContain('Infant Overstimulation Calming Steps:');
+      expect(html).toContain('Infant Calming Reset');
       expect(html).toContain('Lower ambient input');
-      expect(html).toContain('Chest-to-chest somatic anchor');
-      expect(html).toContain('Today&#x27;s Sensory Activity');
+      expect(html).toContain('Hold chest-to-chest');
       expect(html).toContain('/brain-games?childId=child-infant');
     });
 
@@ -330,12 +356,11 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
 
       expect(html).toContain('Early Screen Boundaries');
       expect(html).toContain('Emma&#x27;s Daily Media Boundary');
-      expect(html).toContain('Max 60 min/day');
-      expect(html).toContain('Pediatric Guideline: Max 60 min/day');
-      expect(html).toContain('Preschool Regulation &amp; Agency Steps:');
+      expect(html).toContain('60m');
+      expect(html).toContain('Co-Viewed Media');
+      expect(html).toContain('Preschool Transition Reset');
       expect(html).toContain('Validate without negotiating');
-      expect(html).toContain('Provide 2 agency choices');
-      expect(html).toContain('Today&#x27;s Sensory Activity');
+      expect(html).toContain('Offer two real choices');
       expect(html).toContain('/brain-games?childId=child-preschool');
     });
   });
