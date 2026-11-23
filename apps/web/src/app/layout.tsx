@@ -68,6 +68,18 @@ export default function RootLayout({
           href="https://assets.alongside.care"
           crossOrigin="anonymous"
         />
+        <link rel="dns-prefetch" href="https://img.youtube.com" />
+        <link
+          rel="preconnect"
+          href="https://img.youtube.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
+        <link
+          rel="preconnect"
+          href="https://i.ytimg.com"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="flex min-h-screen flex-col bg-[#FBFBF9] text-[#111413] font-sans antialiased selection:bg-[#EAF3EE] selection:text-[#143D2B]">
         <QueryProvider>

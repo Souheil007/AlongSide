@@ -659,7 +659,7 @@ export function useCultureDigest() {
         childId: activeChild?.id,
         isGuest: isGuestSession,
       }),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   const issues = issuesQuery.data ?? [];
@@ -699,7 +699,7 @@ export function useCultureDigest() {
         isGuest: isGuestSession,
       }),
     enabled: activeTab === 'blogs' || (activeTab === 'week' && isAllWeeks),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   // 4. Query: Selected week or All-weeks Videos (Tab 3, or Tab 1 when All weeks is active)
@@ -721,7 +721,7 @@ export function useCultureDigest() {
         isGuest: isGuestSession,
       }),
     enabled: activeTab === 'videos' || (activeTab === 'week' && isAllWeeks),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   // 5. Query: Saved shortlist (Tab 4 + tab badge count)
