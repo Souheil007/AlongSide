@@ -79,7 +79,7 @@ export const STUDIO_SLANG_ITEMS: SlangItem[] = [
     word: 'Cooked',
     cringeLevel: 2,
     definition:
-      'Doomed, exhausted, or in deep trouble — often signals real academic or social stress masked as humor.',
+      'Doomed, exhausted, or in deep trouble - often signals real academic or social stress masked as humor.',
   },
   {
     id: 'rizz',
@@ -99,7 +99,7 @@ export const STUDIO_SLANG_ITEMS: SlangItem[] = [
 
 export const STUDIO_DINNER_QUESTIONS: string[] = [
   '“What was the funniest phrase at school this week, and why did everyone lose it?”',
-  '“Which game are your friends obsessed with right now — is it actually fun or just hard to put down?”',
+  '“Which game are your friends obsessed with right now - is it actually fun or just hard to put down?”',
   '“What is one house rule you think is outdated, and what would you trade it for?”',
 ];
 
@@ -114,7 +114,7 @@ const STUDIO_TABS: Array<{ id: StudioTabId; title: string; description: string }
     id: 'academy',
     title: '5-minute Parent Academy',
     description:
-      'Audio and text guides across sleep, feeding, play, behavior, and devices — ordered by what hurts today.',
+      'Audio and text guides across sleep, feeding, play, behavior, and devices - ordered by what hurts today.',
   },
   {
     id: 'digest',
@@ -215,7 +215,7 @@ export function ProductStudioSection() {
             </p>
           </div>
 
-          {/* Right Column: Interactive Product Window — CSS Grid stack locks height across tabs & inner toggles (0px shift) */}
+          {/* Right Column: Interactive Product Window - CSS Grid stack locks height across tabs & inner toggles (0px shift) */}
           <div
             data-ui
             className="bg-white border border-[rgba(19,23,21,0.09)] rounded-[16px] overflow-hidden flex flex-col"
@@ -367,7 +367,7 @@ export function ProductStudioSection() {
                 </div>
 
                 <p className="text-[13px] text-[#69726D]">
-                  40 focused courses across 8 age stages — Behavior, Sleep, Nutrition, Play, and
+                  40 focused courses across 8 age stages - Behavior, Sleep, Nutrition, Play, and
                   Digital life.
                 </p>
               </div>

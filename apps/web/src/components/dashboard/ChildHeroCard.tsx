@@ -151,7 +151,7 @@ export const TODDLER_COMPASS_REFLECTIONS: ParentCompassReflection[] = [
     author: 'Dr. Chen, AlongSide Advisory Team',
   },
   {
-    quote: "When a toddler melts down, their upstairs brain is offline. Don't try to reason with a storm — be the calm, physical harbor.",
+    quote: "When a toddler melts down, their upstairs brain is offline. Don't try to reason with a storm - be the calm, physical harbor.",
     author: 'AlongSide Neurobiology Practice',
   },
   {
@@ -419,7 +419,7 @@ export function ChildHeroCard({
             &ldquo;{compassReflection.quote}&rdquo;
           </p>
           <span className="font-mono text-xs text-[#858C88] block">
-            — {compassReflection.author}
+            - {compassReflection.author}
           </span>
         </div>
 

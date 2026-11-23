@@ -73,7 +73,7 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
         onSelectTab={digest.setActiveTab}
       />
 
-      {/* PANEL 1: THIS WEEK — Calm 3-Band Single-Focus Vertical Rhythm */}
+      {/* PANEL 1: THIS WEEK - Calm 3-Band Single-Focus Vertical Rhythm */}
       {digest.activeTab === 'week' && (
         <section
           id="digest-panel-week"
@@ -105,7 +105,7 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
                 onViewAllVideos={() => handleSwitchTabAndScrollTop('videos')}
               />
 
-              {/* Band 2: Read This Week (7/5 Magazine Spread — Blogs ONLY) */}
+              {/* Band 2: Read This Week (7/5 Magazine Spread - Blogs ONLY) */}
               <ReadThisWeekBand
                 articles={digest.weekDisplayArticles}
                 childName={digest.childName}
@@ -219,7 +219,7 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
         onToggleSave={digest.toggleSaveArticle}
         onShareArticle={(article) =>
           digest.copyTextWithToast(
-            `${article.title} — Key shift: ${article.keyShift} (${article.sourceUrl})`,
+            `${article.title} - Key shift: ${article.keyShift} (${article.sourceUrl})`,
             'Summary copied to text your partner'
           )
         }

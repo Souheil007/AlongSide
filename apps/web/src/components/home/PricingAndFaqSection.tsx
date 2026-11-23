@@ -63,7 +63,7 @@ export const HOME_FAQS: HomeFaqItem[] = [
     id: 'multiple-children',
     question: 'Does one subscription cover multiple children?',
     answer:
-      'Yes. One Family Pass covers every child in your household. Switch between a toddler, a second-grader, and a teen in one tap — every lesson and script adapts automatically.',
+      'Yes. One Family Pass covers every child in your household. Switch between a toddler, a second-grader, and a teen in one tap - every lesson and script adapts automatically.',
   },
   {
     id: 'non-clinical',

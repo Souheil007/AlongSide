@@ -142,7 +142,7 @@ export function SleepRegressionCompanion() {
         </div>
       </div>
 
-      {/* Main Stage Information Grid — CSS Grid stack locks height across all 5 age tabs (0px shift) */}
+      {/* Main Stage Information Grid - CSS Grid stack locks height across all 5 age tabs (0px shift) */}
       <div className="grid">
         {stages.map((stage) => {
           const isActive = stage.id === currentStage.id;

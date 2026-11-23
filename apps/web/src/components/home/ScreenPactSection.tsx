@@ -12,7 +12,7 @@ export const SCREEN_PACT_POINTS = [
   },
   {
     term: 'Mutual family pact',
-    detail: 'Co-signed on screen and printable for the fridge — both sides commit.',
+    detail: 'Co-signed on screen and printable for the fridge - both sides commit.',
   },
   {
     term: 'Neutral 8:30 PM lock',

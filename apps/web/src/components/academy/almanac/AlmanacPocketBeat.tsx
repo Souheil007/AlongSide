@@ -136,7 +136,7 @@ export function AlmanacPocketBeat({
                 </p>
               ) : (
                 <p className="text-[14px] italic text-[var(--mute)] m-0">
-                  Tap one of the three gentle moves above — or seal now to default to our lightest first step.
+                  Tap one of the three gentle moves above - or seal now to default to our lightest first step.
                 </p>
               )}
             </div>

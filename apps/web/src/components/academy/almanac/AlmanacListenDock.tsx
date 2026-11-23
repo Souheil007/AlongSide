@@ -44,7 +44,7 @@ export function AlmanacListenDock({
   const beatStatus =
     isPlaying && speakingBeat !== null
       ? `Now reading: 0${speakingBeat + 1} ${BEAT_CHAPTER_LABELS[speakingBeat] ?? ''}`
-      : 'Ready — follows each chapter as you relax';
+      : 'Ready - follows each chapter as you relax';
 
   return (
     <div

@@ -94,7 +94,7 @@ export function PartnerShareModal({
         </div>
 
         <p className="text-[13.5px] leading-relaxed text-[var(--body)] m-0">
-          Get on the same calm page in twenty seconds—ready to paste into text or WhatsApp without forwarding a whole lesson.
+          Get on the same calm page in twenty seconds - ready to paste into text or WhatsApp without forwarding a whole lesson.
         </p>
 
         {/* Shareable Card Preview */}

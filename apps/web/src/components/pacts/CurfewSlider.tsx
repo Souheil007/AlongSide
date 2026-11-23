@@ -135,10 +135,10 @@ export function CurfewSlider() {
           <span>Neurobiology Insight: The 2-Hour Adolescent Melatonin Delay</span>
         </div>
         <p className="text-slate-600 leading-relaxed text-[11px]">
-          Tween and teen brains experience a natural biological phase delay—melatonin onset happens up to 2 hours later than adults. When screens are active in bedrooms, blue light and high-dopamine social anticipation severely degrade deep slow-wave and REM sleep.
+          Tween and teen brains experience a natural biological phase delay - melatonin onset happens up to 2 hours later than adults. When screens are active in bedrooms, blue light and high-dopamine social anticipation severely degrade deep slow-wave and REM sleep.
         </p>
         <p className="text-slate-600 leading-relaxed text-[11px]">
-          By agreeing on a neutral <strong className="text-violet-900">{formattedDisplay}</strong> kitchen docking routine, the device profile automatically locks recreational apps at curfew—preventing parents from ever having to play the role of the bedtime &ldquo;screen police.&rdquo;
+          By agreeing on a neutral <strong className="text-violet-900">{formattedDisplay}</strong> kitchen docking routine, the device profile automatically locks recreational apps at curfew - preventing parents from ever having to play the role of the bedtime &ldquo;screen police.&rdquo;
         </p>
       </div>
 

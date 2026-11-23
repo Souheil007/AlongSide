@@ -141,7 +141,7 @@ export function AlmanacVideoShelf({
 
             <div className="absolute inset-x-5 bottom-4 z-10 flex items-end justify-between gap-3 text-[#FBFBF9]">
               <span className="text-[13px] font-medium opacity-90">
-                Watch when you have a quiet cup of tea — or tap a moment below
+                Watch when you have a quiet cup of tea - or tap a moment below
               </span>
               <span className="shrink-0 rounded-[6px] bg-[#111413]/80 px-2.5 py-1 font-mono text-[11px] tabular-nums text-[#FBFBF9]">
                 {video.durationMinutes} min

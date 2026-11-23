@@ -20,7 +20,7 @@ const DEFAULT_STEPS: SensoryLadderStep[] = [
   {
     label: 'Plate',
     title: '2. Rests calmly beside a safe anchor',
-    desc: 'One tiny piece sits next to a trusted favorite food—the threat alarm stays turned off.',
+    desc: 'One tiny piece sits next to a trusted favorite food - the threat alarm stays turned off.',
     tag: 'Step 2 · Safe neighbor',
   },
   {
@@ -32,13 +32,13 @@ const DEFAULT_STEPS: SensoryLadderStep[] = [
   {
     label: 'Smell',
     title: '4. Sniffs or brings it near lips',
-    desc: 'Smell carries 80% of flavor memory—breathing in the aroma gently lowers caution.',
+    desc: 'Smell carries 80% of flavor memory - breathing in the aroma gently lowers caution.',
     tag: 'Step 4 · Flavor preview',
   },
   {
     label: 'Taste',
     title: '5. Curious lick or small bite on their terms',
-    desc: 'Once steps 1–4 feel safe, tasting happens naturally—often weeks later when nobody is pushing.',
+    desc: 'Once steps 1–4 feel safe, tasting happens naturally - often weeks later when nobody is pushing.',
     tag: 'Step 5 · Self-chosen bite',
   },
 ];

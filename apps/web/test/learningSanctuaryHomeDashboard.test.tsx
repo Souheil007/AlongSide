@@ -357,7 +357,7 @@ describe('Paperclip SOU-79: Direction B.1 The Learning Sanctuary Dashboard Speci
     });
   });
 
-  describe('6. 24/7 AI Child Advisor — Ultra-Compact Launcher (AskAdvisorPromptBar)', () => {
+  describe('6. 24/7 AI Child Advisor - Ultra-Compact Launcher (AskAdvisorPromptBar)', () => {
     it('renders ultra-compact AI Advisor omnibar with 1-tap frequent situations (Direction 3)', () => {
       const html = renderToStaticMarkup(
         <AskAdvisorPromptBar child={mockTweenMaya} />

@@ -26,7 +26,7 @@ const HEALTH_TEMPLATES: PromptTemplate[] = [
   {
     id: 'health-fever',
     labelTemplate: '101.5°F Fever Guidance',
-    promptTemplate: '[Child] has a 101.5°F fever — when should I call the doctor?',
+    promptTemplate: '[Child] has a 101.5°F fever - when should I call the doctor?',
     category: 'health',
   },
   {

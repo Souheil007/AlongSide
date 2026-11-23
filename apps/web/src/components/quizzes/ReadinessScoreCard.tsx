@@ -204,7 +204,7 @@ export function ReadinessScoreCard({
                   )}
                   {isReadyForPersonalPhone
                     ? 'Ready for Bilateral Smartphone Onboarding'
-                    : 'Developing Readiness — Pre-Device Protocol Recommended'}
+                    : 'Developing Readiness - Pre-Device Protocol Recommended'}
                 </Badge>
                 <span className="text-xs text-slate-500 font-medium">
                   First-Phone Readiness Assessment

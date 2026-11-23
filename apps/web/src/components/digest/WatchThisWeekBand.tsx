@@ -49,7 +49,7 @@ export function WatchThisWeekBand({
           </h2>
           <p className="mt-0.5 text-[13.5px] text-[#59625D]">
             {videos.length} curated {videos.length === 1 ? 'talk' : 'talks'} for{' '}
-            {childName} · {shortAges} ({weekRange}) — tap any talk to watch.
+            {childName} · {shortAges} ({weekRange}) - tap any talk to watch.
           </p>
         </div>
 

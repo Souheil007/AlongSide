@@ -212,8 +212,8 @@ export function AdvisorDashboardView() {
               isStreaming={isStreaming}
               placeholder={
                 activeChild
-                  ? `Ask about ${activeChild.name} — tantrums, bedtime stalls, or screen boundaries...`
-                  : "Describe what just happened — e.g. 'My 11yo yelled when screen time ended'"
+                  ? `Ask about ${activeChild.name} - tantrums, bedtime stalls, or screen boundaries...`
+                  : "Describe what just happened - e.g. 'My 11yo yelled when screen time ended'"
               }
             />
           </div>

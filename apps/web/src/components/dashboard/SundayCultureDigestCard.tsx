@@ -57,7 +57,7 @@ const H2V2_FALLBACK_SLANG: H2v2DecoderItem[] = [
     badge: 'Cringe 3/5',
     definition: 'Over-praising someone or trying way too hard to impress them.',
     sample: '“Stop glazing the teacher, we still have homework tonight.”',
-    parentMove: 'Parent move: smile lightly and reply “Fair—I just genuinely liked it.”',
+    parentMove: 'Parent move: smile lightly and reply “Fair - I just genuinely liked it.”',
   },
   {
     term: 'Cooked',
@@ -81,7 +81,7 @@ const H2V2_FALLBACK_VIDEO_TWEEN = {
   channelName: 'TED',
   durationMinutes: 10,
   takeaway:
-    'Why praising effort and strategy—instead of fixed talent—builds resilient confidence before the middle-school social shift.',
+    'Why praising effort and strategy - instead of fixed talent - builds resilient confidence before the middle-school social shift.',
 };
 
 const H2V2_FALLBACK_VIDEO_EARLY = {

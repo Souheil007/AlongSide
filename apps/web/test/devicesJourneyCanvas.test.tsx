@@ -20,7 +20,7 @@ function renderWithProviders(ui: React.ReactElement) {
   );
 }
 
-describe('DevicesManagementView — Sequential Journey Ladder & Phone Canvas (SOU-83)', () => {
+describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-83)', () => {
   const preteenLeo: ChildDTO = {
     id: 'test-leo-10',
     userId: 'parent-1',

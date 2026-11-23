@@ -81,7 +81,7 @@ export const DAILY_ADVISORY_SCRIPTS: Record<string, AdvisoryScript> = {
     toSayWhy: 'Deeply validates peer status ache while maintaining an authoritative developmental boundary.',
     scenarioId: 'tween-peer-phone-pressure',
     neurobiologyPillar: 'Adrenarche & Social Reward Circuitry',
-    tonightChallenge: 'Before asking about homework, give your tween 10 minutes of complete, distraction-free listening. Do not offer solutions—just say: “That sounds really hard. I’m right here with you.”',
+    tonightChallenge: 'Before asking about homework, give your tween 10 minutes of complete, distraction-free listening. Do not offer solutions - just say: “That sounds really hard. I’m right here with you.”',
   },
   [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15]: {
     scenarioTitle: 'Bedtime Device Dock Resistance (8:30 PM Curfew)',

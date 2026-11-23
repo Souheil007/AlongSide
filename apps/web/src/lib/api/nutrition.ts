@@ -225,7 +225,7 @@ export const CANONICAL_ALLERGEN_SCHEDULE: AllergenScheduleItemDTO[] = [
     allergen: 'Peanut',
     priority: 1,
     recommendedStartMonth: 4,
-    evidenceTrial: 'LEAP Trial (NEJM 2015) — 81% reduction in peanut allergy with early introduction',
+    evidenceTrial: 'LEAP Trial (NEJM 2015) - 81% reduction in peanut allergy with early introduction',
     recommendedFormat: 'Smooth peanut butter thinned with warm water, breastmilk, or applesauce (2 tsp)',
     preparationInstructions:
       'Never offer whole peanuts or thick sticky spoonfuls (fatal choking hazards). Whisk 2 teaspoons of smooth creamy peanut butter with 2–3 teaspoons of warm water until smooth and liquid. Offer a tiny dab on baby’s lip first, wait 10 minutes, then feed remainder by spoon.',
@@ -238,7 +238,7 @@ export const CANONICAL_ALLERGEN_SCHEDULE: AllergenScheduleItemDTO[] = [
     allergen: 'Egg',
     priority: 2,
     recommendedStartMonth: 6,
-    evidenceTrial: 'EAT Study (NEJM 2016) & PETIT Trial — early cooked egg prevents sensitization',
+    evidenceTrial: 'EAT Study (NEJM 2016) & PETIT Trial - early cooked egg prevents sensitization',
     recommendedFormat: 'Hard-boiled egg yolk mashed with avocado, or well-cooked baked egg muffin',
     preparationInstructions:
       'Ensure egg is fully cooked (firm yolk and whites). Puree or finely mash hard-boiled egg with breastmilk or formula, or bake an egg thoroughly into an infant pancake or muffin.',
@@ -316,7 +316,7 @@ export const CANONICAL_ALLERGEN_SCHEDULE: AllergenScheduleItemDTO[] = [
     allergen: 'Sesame',
     priority: 8,
     recommendedStartMonth: 6,
-    evidenceTrial: 'FASTER Act / EAT Study — Sesame recognized as major allergen',
+    evidenceTrial: 'FASTER Act / EAT Study - Sesame recognized as major allergen',
     recommendedFormat: 'Smooth sesame tahini whisked into warm vegetable puree or spread thinly on toast',
     preparationInstructions:
       'Whisk 1 teaspoon of 100% pure roasted sesame tahini into warm squash or sweet potato puree.',

@@ -51,7 +51,7 @@ describe('Omnipresent Floating AI Advisor Bubble & Contextual Triage Drawer UI S
       const feverPrompt = prompts.find((p) => p.id.includes('health-fever'));
       expect(feverPrompt).toBeDefined();
       expect(feverPrompt?.prompt).toBe(
-        'Mateo has a 101.5°F fever — when should I call the doctor?'
+        'Mateo has a 101.5°F fever - when should I call the doctor?'
       );
 
       const coughPrompt = prompts.find((p) => p.id.includes('health-cough-sleep'));
@@ -127,7 +127,7 @@ describe('Omnipresent Floating AI Advisor Bubble & Contextual Triage Drawer UI S
 
       const feverPrompt = prompts.find((p) => p.id.includes('health-fever'));
       expect(feverPrompt?.prompt).toBe(
-        'My child has a 101.5°F fever — when should I call the doctor?'
+        'My child has a 101.5°F fever - when should I call the doctor?'
       );
 
       const defaultPrompts = resolveContextualPrompts('/dashboard', null);
