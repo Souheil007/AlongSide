@@ -51,6 +51,35 @@ const withPWA = withPWAInit({
           },
         },
       },
+      {
+        urlPattern: /^https?:\/\/.*\/api\/v1\/faqs\/.*/i,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "alongside-faqs-cache",
+          networkTimeoutSeconds: 4,
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days offline fallback
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
+        urlPattern: /^https:\/\/assets\.alongside\.care\/.*/i,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "alongside-assets-media-cache",
+          expiration: {
+            maxEntries: 200,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
     ],
   },
 });

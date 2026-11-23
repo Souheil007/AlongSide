@@ -62,6 +62,12 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="dns-prefetch" href="https://assets.alongside.care" />
+        <link
+          rel="preconnect"
+          href="https://assets.alongside.care"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="flex min-h-screen flex-col bg-[#FBFBF9] text-[#111413] font-sans antialiased selection:bg-[#EAF3EE] selection:text-[#143D2B]">
         <QueryProvider>
