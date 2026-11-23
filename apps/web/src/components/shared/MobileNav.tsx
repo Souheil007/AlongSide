@@ -37,7 +37,7 @@ export const PRIMARY_MOBILE_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'Home', icon: Compass },
   { href: '/academy', label: 'Academy', icon: BookOpen, badge: 'Courses' },
   { href: '/digest', label: 'Culture & Trends', icon: Sparkles, badge: 'Weekly' },
-  { href: '/devices', label: 'Devices', icon: Shield, badge: 'Pacts' },
+  { href: '/devices', label: 'Devices', icon: Shield, badge: 'Controls' },
 ];
 
 export const MORE_MOBILE_ITEMS: NavItem[] = [

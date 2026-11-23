@@ -23,22 +23,22 @@ function formatDisplayName(rawName?: string | null): string {
 function getReadinessTier(score: number) {
   if (score >= 80) {
     return {
-      title: 'Ready for a bilateral pact',
-      presetLabel: 'Autonomy Pact',
-      nextGoal: 'Strong everyday habits are in place. Co-sign a Family Pact and bedtime dock together.',
+      title: 'Ready with OS guardrails',
+      presetLabel: 'Ready for Starter Phone',
+      nextGoal: 'Strong everyday habits are in place. Lock down Apple Screen Time or Family Link before handing over a device.',
     };
   }
   if (score >= 60) {
     return {
-      title: 'Ready with calm guardrails',
-      presetLabel: 'Bridge Pact',
-      nextGoal: 'Solid foundation—pair clear transitions with a guided Family Pact.',
+      title: 'Use strict OS limits',
+      presetLabel: 'Bridge Device Stage',
+      nextGoal: 'Solid foundation. Try a starter watch or locked-down device with adult filters and daily caps turned on.',
     };
   }
   return {
-    title: 'Practice habits first',
-    presetLabel: 'Starter Pact',
-    nextGoal: 'Build steady sleep and screen-off routines on shared devices before a personal phone.',
+    title: 'Hold off on a phone',
+    presetLabel: 'Shared Screens Only',
+    nextGoal: 'Build steady sleep and screen-off routines on locked-down family devices before a personal phone.',
   };
 }
 
@@ -673,12 +673,15 @@ export function BilateralPactStatusCard({
                   href={`/children/${childId}/readiness`}
                   className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
                 >
-                  <span>Start 3-min check</span>
+                  <span>Start 2-min check</span>
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <span className="text-[12.5px] text-[#7A827D]">
-                  Zero surveillance
-                </span>
+                <Link
+                  href={`/devices?tab=controls&childId=${childId}`}
+                  className="text-[13px] font-semibold text-[#143D2B] hover:underline min-h-[44px] inline-flex items-center"
+                >
+                  Parental controls →
+                </Link>
               </div>
             </div>
           ) : (
@@ -702,17 +705,17 @@ export function BilateralPactStatusCard({
 
               <div className="flex flex-wrap items-center gap-5 pt-2">
                 <Link
-                  href={`/pacts/builder?childId=${childId}`}
+                  href={`/devices?tab=controls&childId=${childId}`}
                   className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
                 >
-                  <span>Build {childName}&apos;s Pact</span>
+                  <span>Set up {childName}&apos;s controls</span>
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href={`/children/${childId}/readiness`}
                   className="text-[13px] font-semibold text-[#143D2B] hover:underline min-h-[44px] inline-flex items-center"
                 >
-                  Full diagnostic →
+                  Retake check →
                 </Link>
               </div>
             </div>
@@ -723,7 +726,7 @@ export function BilateralPactStatusCard({
           </div>
         </div>
       ) : (
-        /* AGES 7+ ROAD 2: Quiet Bedtime Curfew Dock */
+        /* AGES 7+ ROAD 2: OS Parental Controls & Bedtime Downtime */
         <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
           <div className="flex flex-col gap-4">
             <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#143D2B]">
@@ -731,23 +734,24 @@ export function BilateralPactStatusCard({
             </span>
 
             <h2 className="font-serif text-[28px] sm:text-[34px] font-medium leading-[1.12] tracking-[-0.02em] text-[#131715]">
-              {childName}&apos;s Bedtime Dock
+              {childName}&apos;s Device Guardrails
             </h2>
 
-            <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[40ch]">
-              Apps pause automatically at 8:30 PM under your co-signed Family Pact.
+            <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[42ch]">
+              Lock down adult content, stranger DMs, daily app caps, and 8:30 PM downtime with
+              built-in Apple Screen Time &amp; Google Family Link.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
-                href={`/devices?childId=${childId}`}
+                href={`/devices?tab=controls&childId=${childId}`}
                 className="inline-flex items-center justify-center gap-2 min-h-[46px] px-6 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors"
               >
-                <span>Review Pact &amp; Schedule</span>
+                <span>Configure parental controls</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <span className="text-[12.5px] text-[#7A827D]">
-                Dual signed · Zero spyware
+                iOS · Android · Roblox · YouTube
               </span>
             </div>
           </div>

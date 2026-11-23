@@ -466,7 +466,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
       'When you sit down to set household rules together, how does {name} show up?',
     scenario: 'Turning screen rules from a policing battle into a real partnership.',
     expertInsight:
-      'Kids stick to rules they helped shape. Even small buy-in right now turns a family pact from a lecture into something they actually feel proud to keep.',
+      'Kids follow house rules more reliably when expectations are clear and consistent, paired with built-in OS time limits that hold the line automatically.',
     options: [
       {
         id: 'cr-10',

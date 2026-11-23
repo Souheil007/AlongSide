@@ -69,7 +69,7 @@ export const HERO_AGE_MOMENTS: AgeMomentPreview[] = [
       "What's driving it: peer belonging feels urgent at 11. Validate the feeling before setting the boundary.",
     script:
       "“It stinks feeling left out of the group chat. Let's look at the readiness checklist together so you know the exact steps to your first phone.”",
-    pairedGuide: 'Paired guide: First-phone bilateral pact',
+    pairedGuide: 'Paired guide: First-phone readiness & OS setup',
     readTime: '4 min read',
   },
   {
@@ -146,9 +146,9 @@ export function HeroSection() {
               Calm guidance for every&nbsp;age,&nbsp;0–18
             </h1>
 
-            <p className="text-base sm:text-[18px] leading-[1.55] text-[#454D49] max-w-[42ch]">
-              Exact words for hard moments, 5-minute developmental guides, and family screen pacts
-              built on trust - never spyware.
+            <p className="text-base sm:text-[18px] leading-[1.55] text-[#454D49] max-w-[44ch]">
+              Bite-sized parenting courses, weekly videos &amp; articles, an on-demand advisor, and
+              step-by-step parental control setups for every age.
             </p>
 
             {/* Interactive Age Selector */}
@@ -203,11 +203,11 @@ export function HeroSection() {
 
             {/* Single Quiet Metadata Line */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[#69726D]">
-              <span>All children</span>
+              <span>All children, ages 0–18</span>
               <span className="text-[#143D2B]/35 select-none" aria-hidden="true">
                 ·
               </span>
-              <span>Zero spyware</span>
+              <span>Apple &amp; Google OS controls</span>
               <span className="text-[#143D2B]/35 select-none" aria-hidden="true">
                 ·
               </span>

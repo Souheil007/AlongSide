@@ -46,7 +46,7 @@ export const AUTHENTICATED_SECONDARY_LINKS: NavLinkItem[] = [];
 
 export const PUBLIC_NAV_LINKS: NavLinkItem[] = [
   { href: '/#studio', label: 'How it works' },
-  { href: '/#pact', label: 'Screen pact' },
+  { href: '/#device-safety', label: 'Device safety' },
   { href: '/#pricing', label: 'Pricing' },
 ];
 

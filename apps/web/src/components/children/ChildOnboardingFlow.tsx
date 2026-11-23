@@ -386,8 +386,8 @@ export function ChildOnboardingFlow({
                   </h4>
                   <p className="text-xs sm:text-sm text-emerald-800 mt-1 leading-relaxed">
                     Evaluate {createdChild.name}&apos;s behavioral and emotional maturity across 10
-                    dimensions (impulse control, bedtime docking, stranger safety) to generate their
-                    personalized readiness score and unboxing charter.
+                    dimensions (impulse control, bedtime docking, stranger safety) to get a clear
+                    readiness score and next-step recommendation.
                   </p>
                 </div>
               </div>
@@ -410,36 +410,36 @@ export function ChildOnboardingFlow({
               </div>
             </div>
           ) : (
-            <div className="rounded-xl border border-violet-200/80 bg-violet-50/50 p-5 space-y-4">
+            <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-5 space-y-4">
               <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-violet-100 text-violet-800 shrink-0">
+                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-800 shrink-0">
                   <Moon className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-violet-950">
-                    Recommended Next Step: Active Digital Treaty &amp; Bedtime Curfew
+                  <h4 className="text-sm font-semibold text-emerald-950">
+                    Recommended Next Step: OS Parental Controls &amp; Bedtime Lock
                   </h4>
-                  <p className="text-xs sm:text-sm text-violet-800 mt-1 leading-relaxed">
-                    Set up your 8:30 PM Bedtime Curfew and co-review the Restorative Reset Treaty to
-                    protect sleep and eliminate nightly device battles.
+                  <p className="text-xs sm:text-sm text-emerald-800 mt-1 leading-relaxed">
+                    Configure built-in Apple Screen Time or Google Family Link content filters, app
+                    approvals, and nightly bedtime downtime to protect sleep and online safety.
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Button
-                  className="flex-1 bg-violet-700 hover:bg-violet-800 text-white gap-2 font-medium"
-                  onClick={() => router.push(`/dashboard?childId=${createdChild.id}`)}
+                  className="flex-1 bg-[#143D2B] hover:bg-[#0E2B1E] text-white gap-2 font-medium"
+                  onClick={() => router.push(`/devices?tab=controls&childId=${createdChild.id}`)}
                 >
-                  Open Active Parent Dashboard
+                  Set Up Parental Controls
                   <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="outline"
                   className="sm:w-auto text-slate-700"
-                  onClick={() => router.push(`/agreements/new?childId=${createdChild.id}`)}
+                  onClick={() => router.push(`/dashboard?childId=${createdChild.id}`)}
                 >
-                  Co-Create Family Pact
+                  Open Parent Dashboard
                 </Button>
               </div>
             </div>

@@ -3,20 +3,20 @@ import Image from 'next/image';
 
 export const SCIENCE_PRINCIPLES = [
   {
-    title: 'AAP & CDC milestones',
-    body: 'Calibrated across 8 continuous stages from newborn sleep to high school launch.',
+    title: 'Backed by real research',
+    body: 'Only strategies proven across long-term child-development studies, never viral hot takes.',
   },
   {
-    title: 'Neurobiology first',
-    body: 'Explains the developing brain behind defiance, dopamine crashes, and teen sleep shifts.',
+    title: 'One companion, 0 to 18',
+    body: 'From first foods to first phones, every course and weekly brief adapts to their stage.',
   },
   {
-    title: 'Zero-spyware pledge',
-    body: 'No keystroke logging, no private chat scraping, and COPPA Safe Harbor aligned.',
+    title: 'See beneath the behavior',
+    body: "Understand what's actually driving pushback, sleep fights, and screen habits.",
   },
   {
-    title: 'Educational clarity',
-    body: 'Practical everyday guidance designed alongside - never replacing - your pediatrician.',
+    title: 'Warmth + firm boundaries',
+    body: 'Never permissive, never harsh. Clear limits that protect your relationship.',
   },
 ];
 
@@ -26,12 +26,12 @@ export function ScienceFoundationSection() {
       <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] gap-10 lg:gap-20 items-center">
           <div className="flex flex-col gap-6">
-            <h2 className="font-serif font-normal text-[32px] sm:text-[42px] lg:text-[48px] leading-[1.08] tracking-[-0.024em] text-[#131715] max-w-[17ch] [text-wrap:balance]">
-              Developmental science, not&nbsp;social&nbsp;feeds
+            <h2 className="font-serif font-normal text-[32px] sm:text-[42px] lg:text-[48px] leading-[1.08] tracking-[-0.024em] text-[#131715] max-w-[18ch] [text-wrap:balance]">
+              Built on decades of research, not this week&apos;s&nbsp;algorithm
             </h2>
             <p className="text-base leading-[1.55] text-[#454D49] max-w-[44ch]">
-              Built for parents who want evidence-based warmth and firm boundaries - without
-              fear-mongering reels or surveillance tech.
+              We filter out the fear-mongering and share what developmental experts actually agree
+              on.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7 pt-3">
@@ -59,7 +59,7 @@ export function ScienceFoundationSection() {
               />
             </div>
             <p className="mt-3 text-[13px] text-[#69726D]">
-              Designed to protect real-world connection at the dinner table and bedtime.
+              Less scrolling for answers. More presence at the table.
             </p>
           </div>
         </div>

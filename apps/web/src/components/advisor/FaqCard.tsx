@@ -130,8 +130,8 @@ export function formatCategoryBadge(categoryId: string): {
     case 'modern-world-and-devices':
     case 'tech-and-devices':
       return {
-        label: 'Tech, Screens & Pacts',
-        badgeClass: 'bg-violet-50/70 text-violet-900 border-violet-200/80',
+        label: 'Tech, Screens & Controls',
+        badgeClass: 'bg-emerald-50/70 text-emerald-900 border-emerald-200/80',
       };
     case 'SCREEN_BATTLES':
       return {

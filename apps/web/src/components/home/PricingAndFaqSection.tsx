@@ -36,8 +36,8 @@ export const FAMILY_PASS_OPTIONS: Record<'annual' | 'monthly', FamilyPassBilling
 export const FAMILY_PASS_INCLUSIONS: string[] = [
   'Unlimited child profiles from ages 0 to 18',
   '24/7 AI Parent Advisor & word-for-word scripts',
-  'All 40 micro-courses & Sunday Culture Digest',
-  'Bilateral Family Pacts & 8:30 PM device locks',
+  'Full Parent Academy library & weekly Culture & Trends',
+  'Phone readiness check & OS parental control blueprints',
 ];
 
 export interface HomeFaqItem {
@@ -51,19 +51,19 @@ export const HOME_FAQS: HomeFaqItem[] = [
     id: 'phone-only',
     question: 'Is Alongside only for kids who already have a phone?',
     answer:
-      'No. Parents start as early as infancy for sleep rhythms, first foods, speech milestones, and toddler co-regulation. When screens enter the picture years later, the readiness check and bilateral pact are already waiting.',
+      'No. Parents start as early as infancy for sleep rhythms, first foods, speech milestones, and toddler co-regulation. When devices enter the picture years later, the phone readiness check and OS parental control blueprints are already waiting.',
   },
   {
-    id: 'zero-spyware',
-    question: "Does Alongside read my child's text messages?",
+    id: 'parental-controls',
+    question: 'Does Alongside support real parental controls on kids’ phones?',
     answer:
-      'Never. We do not install spyware, log keystrokes, or scrape private chats. Our signed Apple and Android profiles only enforce agreed downtime schedules like the 8:30 PM bedtime lock.',
+      'Yes, strongly. Kids’ devices need hard technical guardrails against adult content, strangers, and endless scrolling. Instead of selling a fragile third-party blocker, Alongside walks you step by step through built-in Apple Screen Time, Google Family Link, Roblox, YouTube, and Safe DNS, calibrated to your child’s exact age.',
   },
   {
     id: 'multiple-children',
     question: 'Does one subscription cover multiple children?',
     answer:
-      'Yes. One Family Pass covers every child in your household. Switch between a toddler, a second-grader, and a teen in one tap - every lesson and script adapts automatically.',
+      'Yes. One Family Pass covers every child in your household. Switch between a toddler, a second-grader, and a teen in one tap - every lesson, script, and device blueprint adapts automatically.',
   },
   {
     id: 'non-clinical',
@@ -75,7 +75,7 @@ export const HOME_FAQS: HomeFaqItem[] = [
     id: 'trial',
     question: 'Is Alongside really free right now?',
     answer:
-      'Yes. Every guide, the AI Parent Advisor, the Sunday Culture Digest, and the Pact Builder are 100% free during early access with no credit card required. We will always give plenty of notice before paid Family Pass plans begin.',
+      'Yes. Every Parent Academy course, Culture & Trends weekly videos and articles, the Parent Advisor, and all Device Safety & Parental Control blueprints are 100% free during early access with no credit card required. We will always give plenty of notice before paid Family Pass plans begin.',
   },
 ];
 

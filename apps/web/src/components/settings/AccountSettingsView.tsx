@@ -841,7 +841,7 @@ export function AccountSettingsView() {
             </DialogTitle>
             <DialogDescription className="text-center text-xs text-slate-600 mt-1">
               This action is <strong className="text-red-700">irreversible</strong>. All child records,
-              developmental milestones, bilateral pacts, and MDM certificates will be permanently deleted.
+              developmental milestones, device safety checklists, and preferences will be permanently deleted.
             </DialogDescription>
           </DialogHeader>
 

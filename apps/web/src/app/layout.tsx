@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: '%s | Alongside',
   },
   description:
-    'The empathetic digital-parenting platform replacing screen conflict with calm developmental science, bilateral family agreements, and neutral automated enforcement.',
+    'Age-calibrated parenting guidance from 0 to 18: developmental guides, exact words for hard moments, phone readiness checks, and built-in Apple & Google parental control blueprints.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

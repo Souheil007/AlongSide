@@ -11,7 +11,7 @@ export function Footer() {
               <AlongsideLogo size="sm" />
             </Link>
             <p className="mt-3 max-w-[34ch] text-[14.5px] leading-[1.55] text-[#454D49]">
-              Developmental science, calm scripts, and zero-spyware family pacts for ages 0 to 18.
+              Developmental science, calm scripts, and built-in OS parental control guides for ages 0 to 18.
             </p>
           </div>
 
@@ -22,8 +22,8 @@ export function Footer() {
             <Link href="/#studio" className="hover:text-[#143D2B] transition-colors">
               How it works
             </Link>
-            <Link href="/#pact" className="hover:text-[#143D2B] transition-colors">
-              Screen pact
+            <Link href="/#device-safety" className="hover:text-[#143D2B] transition-colors">
+              Device safety
             </Link>
             <Link href="/#science" className="hover:text-[#143D2B] transition-colors">
               Philosophy
@@ -49,7 +49,7 @@ export function Footer() {
           <div className="flex flex-wrap gap-5">
             <span>Privacy</span>
             <span>Terms</span>
-            <span>Zero-Spyware Pledge</span>
+            <span>Built-In OS Controls</span>
           </div>
         </div>
       </div>

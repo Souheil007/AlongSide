@@ -1,22 +1,13 @@
-import type { Metadata } from 'next';
-import { PactWizard } from '@/components/pacts/PactWizard';
-
-export const metadata: Metadata = {
-  title: 'Family Pact Wizard',
-  description:
-    'Sit together, trade real promises, set a calm bedtime dock time, and sign a bilateral family tech agreement.',
-};
+import { redirect } from 'next/navigation';
 
 interface PageProps {
-  searchParams: Promise<{ childId?: string; preset?: string }>;
+  searchParams: Promise<{ childId?: string }>;
 }
 
-export default async function PactBuilderPage({ searchParams }: PageProps) {
-  const { childId, preset } = await searchParams;
-
-  return (
-    <div className="py-4 sm:py-8">
-      <PactWizard initialChildId={childId} initialPreset={preset} />
-    </div>
-  );
+export default async function PactBuilderRedirectPage({ searchParams }: PageProps) {
+  const { childId } = await searchParams;
+  const target = childId
+    ? `/devices?tab=controls&childId=${encodeURIComponent(childId)}`
+    : '/devices?tab=controls';
+  redirect(target);
 }

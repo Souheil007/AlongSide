@@ -52,7 +52,7 @@ export const DIGEST_TIER_METADATA: Record<CanonicalDigestTier, DigestTierMeta> =
     shortAges: 'Ages 10–12',
     defaultChildName: 'your tween',
     defaultAgeLabel: 'Ages 10–12',
-    relatedCourseTitle: 'Tween Adrenarche, First Phones & Bilateral Family Pacts',
+    relatedCourseTitle: 'Tween Adrenarche, First Phones & OS Parental Controls',
   },
   [T4]: {
     tier: T4,
@@ -60,7 +60,7 @@ export const DIGEST_TIER_METADATA: Record<CanonicalDigestTier, DigestTierMeta> =
     shortAges: 'Ages 13–15',
     defaultChildName: 'your teen',
     defaultAgeLabel: 'Ages 13–15',
-    relatedCourseTitle: 'Adolescent Autonomy, Sleep Architecture & Digital Pacts',
+    relatedCourseTitle: 'Adolescent Autonomy, Sleep Architecture & Digital Guardrails',
   },
   [T5]: {
     tier: T5,

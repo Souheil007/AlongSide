@@ -273,8 +273,8 @@ export const MOCK_DIGEST_EDITIONS: MockIssueRecord[] = [
         '2026-11-14T16:00:00.000Z', 'Media & Tech', 5,
         'What pediatric research actually says about teen social feeds and sleep',
         'HealthyChildren.org synthesizes current adolescent media research, emphasizing that late-night scroll displacement of REM sleep drives mood dips far more than daytime messaging.',
-        'Focus household pacts on device-free bedrooms overnight before micromanaging every daytime minute.',
-        'Co-signed boundaries with clear reasoning earn significantly higher teen buy-in than surprise blocks.'
+        'Focus household rules and OS downtime on device-free bedrooms overnight before micromanaging every daytime minute.',
+        'Clear, age-matched OS guardrails explained calmly earn higher teen follow-through than surprise restrictions.'
       ),
       makeArticle(
         42, 'art-42-t4-2', [T4], false, 2,

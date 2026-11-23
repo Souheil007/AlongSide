@@ -127,7 +127,7 @@ export const TIER_PRIORITY_ANCHORS: Record<string, TierPriorityAnchor> = {
       { id: 1, shortTitle: 'Ch 1: The Shift', fullTitle: 'Adrenarche & the Changing Amygdala', completed: true, isCurrent: false },
       { id: 2, shortTitle: 'Ch 2: Peer Validation', fullTitle: 'Why Your Opinion Suddenly Vanished', completed: true, isCurrent: false },
       { id: 3, shortTitle: 'Ch 3: Exclusion (Today)', fullTitle: 'Peer Group Validation & Exclusion Anxiety', completed: false, isCurrent: true },
-      { id: 4, shortTitle: 'Ch 4: Screen Pacts', fullTitle: 'Collaborative Tech Agreements', completed: false, isCurrent: false },
+      { id: 4, shortTitle: 'Ch 4: OS Controls', fullTitle: 'Setting Up Parental Controls by Age', completed: false, isCurrent: false },
       { id: 5, shortTitle: 'Ch 5: Bedtime Trust', fullTitle: 'Protecting Sleep without Hostility', completed: false, isCurrent: false },
     ],
     audioDuration: '3:45',

@@ -79,7 +79,7 @@ describe('Logged-in Home Dashboard H2v2 (Photo Cockpit + Flagship Curriculum Cen
     expect(html).toContain('Slammed Bedroom Door');
   });
 
-  it('renders Bedtime Dock badge for Road 2 Active-Device child and AAP Media Limit for toddler Leo', () => {
+  it('renders Device Safety OS Controls badge for Road 2 Active-Device child and AAP Media Limit for toddler Leo', () => {
     const r2Html = renderToStaticMarkup(
       <ChildHeroCard
         child={mayaActiveDevice}
@@ -88,9 +88,9 @@ describe('Logged-in Home Dashboard H2v2 (Photo Cockpit + Flagship Curriculum Cen
         advisorSlot={<AskAdvisorPromptBar child={mayaActiveDevice} variant="hero" />}
       />
     );
-    expect(r2Html).toContain('8:30');
-    expect(r2Html).toContain('Bedtime Dock');
-    expect(r2Html).toContain('/devices?childId=child-maya-r2');
+    expect(r2Html).toContain('Device Safety');
+    expect(r2Html).toContain('OS Parental Controls');
+    expect(r2Html).toContain('/devices?tab=controls&amp;childId=child-maya-r2');
 
     const leoHtml = renderToStaticMarkup(
       <ChildHeroCard

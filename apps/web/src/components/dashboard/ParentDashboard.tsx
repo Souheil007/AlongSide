@@ -230,10 +230,10 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
               </Button>
             </Link>
           ) : (
-            <Link href={`/agreements/new?childId=${activeChild.id}`}>
-              <Button size="sm" className="gap-1.5 bg-violet-600 hover:bg-violet-700 text-white text-xs">
+            <Link href={`/devices?tab=controls&childId=${activeChild.id}`}>
+              <Button size="sm" className="gap-1.5 bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-xs">
                 <FileCheck2 className="h-3.5 w-3.5" />
-                Review Family Treaty
+                Set Up OS Controls
               </Button>
             </Link>
           )}
@@ -281,8 +281,8 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
                           className="text-[10px]"
                         >
                           {activeChild.latestAssessmentScore! >= 75
-                            ? 'Ready for Bilateral Phone'
-                            : 'Scaffolding Advised'}
+                            ? 'Ready with OS Guardrails'
+                            : 'Wait or Use Bridge Device'}
                         </Badge>
                       </div>
                       <p className="text-xs text-slate-500">
@@ -317,7 +317,7 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
                       </h4>
                       <p className="text-xs text-emerald-800 mt-1 max-w-xl leading-relaxed">
                         Takes only 3 minutes. Evaluates executive function, screen transitions, and
-                        digital trust to generate a personalized pre-unboxing agreement.
+                        online judgment to show whether your child is ready for a personal phone.
                       </p>
                     </div>
                   </div>
@@ -387,7 +387,7 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
                     </p>
                   </div>
 
-                  {/* Step 4: Bilateral Smartphone */}
+                  {/* Step 4: Managed Smartphone */}
                   <div className="rounded-xl border border-emerald-300 bg-emerald-50/40 p-4 space-y-2 ring-1 ring-emerald-500/20">
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] font-bold uppercase text-emerald-800 tracking-wider">
@@ -395,34 +395,34 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
                       </span>
                       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                     </div>
-                    <h4 className="text-sm font-bold text-slate-900">Bilateral Smartphone</h4>
+                    <h4 className="text-sm font-bold text-slate-900">Managed Smartphone</h4>
                     <p className="text-xs text-slate-700 leading-relaxed">
-                      Full device unlocked under an agreed Day-1 Family Pact and bedtime curfews.
+                      Personal phone unlocked with built-in OS filters, app approvals, and bedtime downtime.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Pre-Unboxing Charter Callout */}
+              {/* Day-1 OS Parental Control Blueprint Callout */}
               <div className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <FileCheck2 className="h-4 w-4 text-teal-600" />
                     <h4 className="text-sm font-bold text-slate-900">
-                      Day-1 Pre-Unboxing Family Charter
+                      Day-1 OS Parental Control Blueprint
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 max-w-xl">
-                    Co-sign bilateral commitments before the smartphone box is ever opened. When rules
-                    are co-created before unboxing, compliance is 300% higher.
+                    Configure Apple Screen Time, Google Family Link, and nightly downtime before the
+                    phone is ever handed over so guardrails stay active from day one.
                   </p>
                 </div>
                 <Link
-                  href={`/agreements/new?childId=${activeChild.id}&type=PRE_UNBOXING`}
+                  href={`/devices?tab=controls&childId=${activeChild.id}`}
                   className="w-full sm:w-auto shrink-0"
                 >
                   <Button variant="outline" size="sm" className="w-full sm:w-auto gap-1 text-xs font-semibold">
-                    Draft Pre-Unboxing Charter
+                    Open Controls Setup
                   </Button>
                 </Link>
               </div>
@@ -500,41 +500,41 @@ export function ParentDashboard({ initialChildId }: ParentDashboardProps) {
               </CardContent>
             </Card>
 
-            {/* Right Col: Restorative Reset Family Treaty Status */}
+            {/* Right Col: Built-In OS Parental Controls */}
             <Card className="border-slate-200 bg-white shadow-sm flex flex-col justify-between">
               <CardHeader className="pb-3">
                 <Badge variant="secondary" className="w-fit text-xs font-semibold mb-1">
-                  Bilateral Treaty
+                  OS Parental Controls
                 </Badge>
                 <CardTitle className="text-lg font-bold text-slate-900">
-                  Restorative Reset Treaty
+                  Built-In Device Guardrails
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 leading-relaxed">
-                  A fresh, guilt-free reset agreement replacing past screen friction with mutual trust.
+                  Step-by-step setup for Apple Screen Time, Google Family Link, Roblox, YouTube, and safe DNS.
                 </CardDescription>
               </CardHeader>
 
               <CardContent className="space-y-4 pt-0">
                 <div className="rounded-lg bg-slate-50 p-3.5 space-y-2 border border-slate-100">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Treaty Status:</span>
-                    <span className="font-semibold text-slate-800">Ready to Negotiate</span>
+                    <span className="text-slate-500">Protection Layers:</span>
+                    <span className="font-semibold text-slate-800">Filters, DMs, Limits, Downtime</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Co-Signers:</span>
+                    <span className="text-slate-500">Calibrated For:</span>
                     <span className="font-semibold text-slate-800">
-                      Parent & {activeChild.name}
+                      {activeChild.name}
                     </span>
                   </div>
                 </div>
 
                 <Link
-                  href={`/agreements/new?childId=${activeChild.id}&preset=ROAD_2_SCAFFOLDED_PACT`}
+                  href={`/devices?tab=controls&childId=${activeChild.id}`}
                   className="w-full block"
                 >
-                  <Button className="w-full bg-violet-700 hover:bg-violet-800 text-white font-semibold gap-1.5 text-xs min-h-[44px]">
+                  <Button className="w-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white font-semibold gap-1.5 text-xs min-h-[44px]">
                     <FileCheck2 className="h-4 w-4" />
-                    Open Agreement Studio
+                    Configure OS Controls
                   </Button>
                 </Link>
               </CardContent>

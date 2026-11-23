@@ -190,8 +190,8 @@ export const TWEEN_TEEN_COMPASS_REFLECTIONS: ParentCompassReflection[] = [
     author: 'AlongSide Family Institute',
   },
   {
-    quote: 'A smartphone is an open door to peer comparison. Bilateral trust protects their self-worth far more than secret surveillance.',
-    author: 'Jonathan Haidt, The Anxious Generation',
+    quote: 'Clear device limits and warm connection work together: real guardrails protect sleep and attention while your child builds self-regulation.',
+    author: 'AlongSide Family Institute',
   },
   {
     quote: 'Curiosity de-escalates conflict. Ask “Help me understand how you saw that” instead of “Why did you do that?”',
@@ -291,11 +291,11 @@ export function ChildHeroCard({
         }
       : !isPreDevice
         ? {
-            href: `/devices?childId=${child.id}`,
+            href: `/devices?tab=controls&childId=${child.id}`,
             metric: '8:30',
             icon: Moon,
-            title: 'Bedtime Dock',
-            subtitle: 'Road 2 · Family Pact →',
+            title: 'Device Safety',
+            subtitle: 'OS Parental Controls →',
           }
         : readinessScore !== null
           ? {

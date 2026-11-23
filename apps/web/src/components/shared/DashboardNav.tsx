@@ -81,8 +81,8 @@ export const DOMAIN_HUBS: DomainHubItem[] = [
     label: 'Modern World & Devices',
     shortLabel: 'Devices',
     icon: Smartphone,
-    badge: 'Pact-as-Code',
-    description: 'Bilateral family pacts, curfews & Sunday culture digest',
+    badge: 'OS Controls',
+    description: 'Phone readiness check, OS parental controls & bedtime limits',
   },
 ];
 

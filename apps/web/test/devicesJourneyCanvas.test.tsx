@@ -7,9 +7,10 @@ import {
   getRecommendedCurfew,
 } from '@/components/devices/DevicesManagementView';
 import {
-  computeEveningWindDown,
-  formatMinutes12Hour,
-} from '@/components/devices/EarlyTierSanctuaryView';
+  CONTROL_GOALS,
+  DEVICE_PLATFORMS,
+  getCalibratedControlSteps,
+} from '@/lib/parentalControlsCatalog';
 import { RoadType, DevelopmentalTier, type ChildDTO } from '@alongside/shared';
 
 const queryClient = new QueryClient({
@@ -24,7 +25,7 @@ function renderWithProviders(ui: React.ReactElement) {
   );
 }
 
-describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-83)', () => {
+describe('DevicesManagementView — Separate Phone Readiness & OS Parental Controls Hub', () => {
   const preteenLeo: ChildDTO = {
     id: 'test-leo-10',
     userId: 'parent-1',
@@ -62,271 +63,134 @@ describe('DevicesManagementView - Sequential Journey Ladder & Phone Canvas (SOU-
     children: [preteenLeo, toddlerToby],
   };
 
-  describe('Pre-Teen Sequential Stepper & Phone Canvas View', () => {
-    it('renders the Roadmap header with developmental milestone progression badge', () => {
+  describe('Parental Controls Setup Builder (Default Tab)', () => {
+    it('renders the Device Safety Hub with two independent tool tabs and zero pact wording', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
-      expect(html).toContain("Leo&#x27;s Digital Independence Roadmap");
-      expect(html).toContain('Tier 3 Milestone Progression');
-      expect(html).toContain('Pact-as-Code Guided Journey');
+      expect(html).toContain("Leo&#x27;s Device Safety Hub");
+      expect(html).toContain('Parental Controls Setup');
+      expect(html).toContain('Phone Readiness Check');
+      expect(html).toContain('1. Pick the device or app to lock down');
+      expect(html).toContain('2. Choose what you want to control');
+
+      // Zero pact / treaty / fake QR enrollment chrome
+      expect(html).not.toContain('Bilateral Family Treaty');
+      expect(html).not.toContain('Launch Pact Wizard');
+      expect(html).not.toContain('/pacts/builder');
+      expect(html).not.toContain('Scan Device Enrollment QR');
     });
 
-    it('renders Step 1: First-Phone Neuro-Readiness Diagnostic with completed score', () => {
+    it('renders all 5 OS & app platforms and all 6 priority-ordered protection goals', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
-      expect(html).toContain('First-Phone Neuro-Readiness Diagnostic');
-      expect(html).toContain('Step 1 of 3');
-      expect(html).toContain('Score: 84/100');
-      expect(html).toContain('Passed for Bridge Device');
-      expect(html).toContain('View Audit');
+      for (const platform of DEVICE_PLATFORMS) {
+        expect(html).toContain(platform.name.replace(/&/g, '&amp;'));
+      }
+      for (const goal of CONTROL_GOALS) {
+        expect(html).toContain(goal.label.replace(/&/g, '&amp;'));
+      }
+      expect(html).toContain('Apple Screen Time');
+      expect(html).toContain('Lock Screen Time passcode');
+      expect(html).toContain('Parent on Android?');
+      expect(html).toContain('Limit Adult Websites');
+      expect(html).toContain('Communication Safety');
+      expect(html).toContain('Ask to Buy');
+      expect(html).toContain('8:30 PM');
+    });
+  });
+
+  describe('Standalone Phone Readiness Check Tab', () => {
+    it('renders Leo readiness verdict and link to /children/test-leo-10/readiness when readiness tab is open', () => {
+      const html = renderWithProviders(
+        React.createElement(DevicesManagementView, {
+          ...defaultProps,
+          initialTab: 'readiness',
+        })
+      );
+
+      expect(html).toContain('Is Leo ready for a phone yet?');
+      expect(html).toContain('>84<');
+      expect(html).toContain('Almost ready (use strict limits)');
       expect(html).toContain('/children/test-leo-10/readiness');
+      expect(html).toContain('Retake readiness check');
     });
 
-    it('renders "Not Yet Assessed" and "Start Diagnostic" when child has no assessment score', () => {
-      const unassessedChild: ChildDTO = {
+    it('renders Start readiness check prompt when child has not been assessed yet', () => {
+      const unassessedLeo: ChildDTO = {
         ...preteenLeo,
         id: 'test-unassessed',
         latestAssessmentScore: null,
       };
-
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, {
-          child: unassessedChild,
-          children: [unassessedChild],
+          child: unassessedLeo,
+          children: [unassessedLeo],
+          initialTab: 'readiness',
         })
       );
 
-      expect(html).toContain('Not Yet Assessed');
-      expect(html).toContain('Pending Diagnostic');
-      expect(html).toContain('Start Diagnostic');
-      expect(html).not.toContain('Score: 84/100');
-    });
-
-    it('renders Step 2 & 3: Bilateral Family Treaty with verified seal and mutual pledges', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, defaultProps)
-      );
-
-      expect(html).toContain('Bilateral Treaty &amp; Nightly Phone Enforcement');
-      expect(html).toContain('The Bilateral Family Treaty');
-      expect(html).toContain('Certified Bilateral Agreement');
-      expect(html).toContain('Co-authored by Leo and Parents');
-
-      // Child's Mutual Pledges
-      expect(html).toContain("Leo&#x27;s Mutual Pledges (Child)");
-      expect(html).toContain('Dock phone at hallway station by 8:30 PM nightly');
-      expect(html).toContain('Homework &amp; household tasks completed');
-      expect(html).toContain('Zero secret disguise apps');
-
-      // Parents' Mutual Pledges
-      expect(html).toContain("Parents&#x27; Mutual Pledges (Adults)");
-      expect(html).toContain('Zero stealth spyware');
-      expect(html).toContain('Device-free dinner table');
-      expect(html).toContain('Safe Harbor Guarantee');
-
-      // Verified Digital Signatures
-      expect(html).toContain('✍ Leo Davies');
-      expect(html).toContain('✍ Sarah &amp; Michael');
-      expect(html).toContain('Verified Digital Seal');
-    });
-
-    it('renders dynamic connected parent signature when user is authenticated (Souheil)', () => {
-      const customClient = new QueryClient();
-      customClient.setQueryData(['auth', 'me'], {
-        id: 'user-souheil',
-        fullName: 'Souheil Bichiou',
-        email: 'souheil@example.com',
-      });
-      const html = renderToStaticMarkup(
-        <QueryClientProvider client={customClient}>
-          <DevicesManagementView {...defaultProps} />
-        </QueryClientProvider>
-      );
-      expect(html).toContain('✍ Souheil Bichiou');
-      expect(html).toContain('✍ Leo');
-      expect(html).not.toContain('✍ Sarah &amp; Michael');
-    });
-
-    it('renders the Phone Simulator with Bedtime Peace Active notification and emergency dials', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, defaultProps)
-      );
-
-      expect(html).toContain('Lock Screen Preview');
-      expect(html).toContain('Live Simulation');
-      expect(html).toContain('8:30 PM');
-      expect(html).toContain('Bedtime Peace Active');
-      expect(html).toContain(
-        'Recreational apps are paused until 7:00 AM under your AlongSide Family Pact.'
-      );
-
-      // Emergency dials
-      expect(html).toContain('Call Mom');
-      expect(html).toContain('Call Dad');
-      expect(html).toContain('Emergency 911 &amp; Contacts Always Open');
-
-      // Device Enrollment QR Trigger
-      expect(html).toContain('Scan Device Enrollment QR');
-    });
-
-    it('renders Print Treaty (PDF) and Launch Pact Wizard action buttons', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, defaultProps)
-      );
-
-      expect(html).toContain('Print Treaty (PDF)');
-      expect(html).toContain('Launch Pact Wizard');
-      expect(html).toContain('/pacts/builder');
-    });
-
-    it('focuses cleanly on device enrollment and curfew without redundant ladder or cross-sell clutter', () => {
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, defaultProps)
-      );
-
-      expect(html).toContain('Scan Device Enrollment QR');
-      expect(html).toContain('Bedtime Peace Active');
-      expect(html).not.toContain('The Bridge Device Autonomy Ladder (4 Stages)');
-      expect(html).not.toContain('Need help deciphering youth slang or gaming exploit risks?');
-      expect(html).not.toContain('Explore Sunday Youth Culture Digest');
+      expect(html).toContain('Start readiness check');
+      expect(html).toContain('/children/test-unassessed/readiness');
+      expect(html).toContain('Everyday rhythms');
+      expect(html).toContain('Online instincts');
     });
   });
 
-  describe('Early Tier Home Screen Rhythm Views (Ages 0–6)', () => {
-    const toddlerProps = {
-      child: toddlerToby,
-      children: [preteenLeo, toddlerToby],
-    };
-
-    it('renders the calm Home Screen Rhythm for toddler Toby (Age 2) with interactive wind-down and scripts', () => {
+  describe('Toddler Tier 0 Screen-Free Sanctuary (Ages 0–3)', () => {
+    it('renders adult environment guidance instead of phone controls for toddlers', () => {
       const html = renderWithProviders(
-        React.createElement(DevicesManagementView, toddlerProps)
+        React.createElement(DevicesManagementView, {
+          child: toddlerToby,
+          children: [preteenLeo, toddlerToby],
+        })
       );
 
-      expect(html).toContain('Early Screen Rhythm · Toddlerhood (Ages 2–3)');
-      expect(html).toContain("Toby&#x27;s Home Screen Rhythm");
-      expect(html).toContain('30m');
-      expect(html).toContain('Co-viewed, slow-paced media');
-      expect(html).toContain('6:45 PM');
-      expect(html).toContain('7:30 PM');
-
-      // Interactive Adult Home Habits & Screen-Off Script Switcher
+      expect(html).toContain("Toby&#x27;s Screen-Free Sanctuary");
       expect(html).toContain('Zero background TV');
-      expect(html).toContain('Co-view slow shows with autoplay off');
-      expect(html).toContain('When Screens Turn Off');
-      expect(html).toContain('2 min left');
-      expect(html).toContain('Meltdown');
-      expect(html).toContain('/digest#play-this-week');
-
-      // Purged apologetic corporate wording & wrong-age under-2 FaceTime note
-      expect(html).not.toContain('Pact-as-Code Guided Journey');
-      expect(html).not.toContain('Giving a toddler a screen pact causes parental confusion');
-      expect(html).not.toContain('Grandparent FaceTime is the only recommended screen interaction');
-    });
-
-    it('capitalizes lowercase toddler names cleanly (oliver Age 3 -> Oliver)', () => {
-      const toddlerOliver: ChildDTO = {
-        ...toddlerToby,
-        id: 'test-oliver-3',
-        name: 'oliver',
-        age: 3,
-      };
-
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, {
-          child: toddlerOliver,
-          children: [toddlerOliver],
-        })
-      );
-
-      expect(html).toContain("Oliver&#x27;s Home Screen Rhythm");
-      expect(html).toContain('Age 3');
-      expect(html).toContain('30m');
-    });
-
-    it('calibrates Screen-Free Infancy view (Age 1) with 0m cap and family video calls', () => {
-      const infantNoah: ChildDTO = {
-        ...toddlerToby,
-        id: 'test-noah-1',
-        name: 'Noah',
-        age: 1,
-        developmentalTier: DevelopmentalTier.TIER_0A_INFANCY_0_1,
-      };
-
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, {
-          child: infantNoah,
-          children: [infantNoah],
-        })
-      );
-
-      expect(html).toContain('Early Screen Rhythm · Infancy (Ages 0–1)');
-      expect(html).toContain("Noah&#x27;s Home Screen Rhythm");
-      expect(html).toContain('0m');
-      expect(html).toContain('Family video calls only');
-      expect(html).toContain('Live family video calls only');
-      expect(html).toContain('7:00 PM');
-    });
-
-    it('routes Early Childhood (Age 5) to the calm Early Screen Rhythm instead of smartphone enrollment', () => {
-      const preschoolerEmma: ChildDTO = {
-        ...toddlerToby,
-        id: 'test-emma-5',
-        name: 'Emma',
-        age: 5,
-        developmentalTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
-      };
-
-      const html = renderWithProviders(
-        React.createElement(DevicesManagementView, {
-          child: preschoolerEmma,
-          children: [preschoolerEmma],
-        })
-      );
-
-      expect(html).toContain('Early Screen Rhythm · Early Childhood (Ages 4–6)');
-      expect(html).toContain("Emma&#x27;s Home Screen Rhythm");
-      expect(html).toContain('60m');
-      expect(html).toContain('Shared living-room screens only');
-      expect(html).toContain('8:00 PM');
-      expect(html).not.toContain('Scan Device Enrollment QR');
-      expect(html).not.toContain('Zero secret disguise apps');
-    });
-
-    it('computes evening wind-down schedule accurately from target bedtime', () => {
-      expect(formatMinutes12Hour(19 * 60 + 30)).toBe('7:30 PM');
-      expect(computeEveningWindDown(19 * 60 + 30)).toEqual({
-        cutoffTime: '6:45 PM',
-        bridgeTime: '7:05 PM',
-        bedtime: '7:30 PM',
-      });
+      expect(html).toContain('7:30 PM screen-free wind-down');
+      expect(html).not.toContain('Parental Controls Setup');
     });
   });
 
-  describe('getRecommendedCurfew pure helper', () => {
-    it('recommends 8:00 PM for kids under 9', () => {
-      const res = getRecommendedCurfew(7);
-      expect(res.time24).toBe('20:00');
-      expect(res.time12).toBe('8:00 PM');
-      expect(res.rationale).toContain('Elementary sleep protection');
+  describe('Age-Calibrated OS Blueprint Engine', () => {
+    it('calibrates Apple Screen Time adult filtering strictly for younger kids vs older kids', () => {
+      const age7Steps = getCalibratedControlSteps('apple_ios', ['adult_content'], 7);
+      const age12Steps = getCalibratedControlSteps('apple_ios', ['adult_content'], 12);
+
+      expect(age7Steps[0]?.recommendedSetting).toContain('Allowed Websites Only');
+      expect(age12Steps[0]?.recommendedSetting).toContain('Limit Adult Websites');
     });
 
-    it('recommends 8:30 PM for kids 9–12', () => {
-      const res = getRecommendedCurfew(10);
-      expect(res.time24).toBe('20:30');
-      expect(res.time12).toBe('8:30 PM');
-      expect(res.rationale).toContain('Pre-teen melatonin release');
+    it('filters steps cleanly by selected control goals across Android, Roblox, YouTube, and Home DNS', () => {
+      const androidAll = getCalibratedControlSteps(
+        'android_family_link',
+        ['tamper_lock', 'adult_content', 'strangers_dms', 'bedtime_downtime'],
+        11
+      );
+      expect(androidAll).toHaveLength(4);
+      expect(androidAll[0]?.title).toContain('APK sideloading');
+      expect(androidAll[2]?.title).toContain('Parent-Managed Contacts');
+      expect(androidAll[2]?.title).toContain('Sensitive Content Warnings');
+      expect(androidAll[3]?.title).toContain('School Time');
+
+      expect(getCalibratedControlSteps('roblox', ['tamper_lock', 'strangers_dms'], 10)).toHaveLength(2);
+      const ytSteps = getCalibratedControlSteps('youtube', ['adult_content', 'time_limits'], 10);
+      expect(ytSteps).toHaveLength(2);
+      expect(ytSteps[1]?.recommendedSetting).toContain('0 minutes');
+
+      expect(getCalibratedControlSteps('home_dns', ['adult_content'], 10)[0]?.menuPath.join(' ')).toContain(
+        '1.1.1.3'
+      );
     });
 
-    it('recommends 9:30 PM for teens 13+', () => {
-      const res = getRecommendedCurfew(14);
-      expect(res.time24).toBe('21:30');
-      expect(res.time12).toBe('9:30 PM');
-      expect(res.rationale).toContain('Adolescent circadian rhythm');
+    it('recommends age-appropriate bedtime downtime schedules', () => {
+      expect(getRecommendedCurfew(7).time12).toBe('8:00 PM');
+      expect(getRecommendedCurfew(10).time12).toBe('8:30 PM');
+      expect(getRecommendedCurfew(14).time12).toBe('9:30 PM');
     });
   });
 });

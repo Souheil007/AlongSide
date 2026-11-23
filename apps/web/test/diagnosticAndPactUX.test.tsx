@@ -16,7 +16,6 @@ import { SignaturePad } from '@/components/pacts/SignaturePad';
 import {
   CommitmentParty,
   DevelopmentalTier,
-  ReadinessPreset,
   RoadType,
   calculateReadinessScore,
   type ChildDTO,
@@ -92,7 +91,7 @@ describe('Diagnostic & Pact Wizard Redesign UX', () => {
       expect(html).not.toContain('violet-');
     });
 
-    it('routes ReadinessScoreCard directly to /pacts/builder instead of broken /agreements/new', () => {
+    it('routes ReadinessScoreCard directly to /devices?tab=controls with zero pact wording', () => {
       const result = calculateReadinessScore(
         CANONICAL_READINESS_QUESTIONS.map((q) => ({
           questionId: q.id,
@@ -111,10 +110,10 @@ describe('Diagnostic & Pact Wizard Redesign UX', () => {
         />
       );
 
-      expect(html).toContain(
-        `/pacts/builder?childId=child-leo-10&amp;preset=${ReadinessPreset.ROAD_1_BRIDGE_CHARTER}`
-      );
+      expect(html).toContain('/devices?tab=controls&amp;childId=child-leo-10');
       expect(html).not.toContain('/agreements/new');
+      expect(html).not.toContain('/pacts/builder');
+      expect(html).not.toContain('Family Pact');
       expect(html).toContain('Everyday Rhythms');
       expect(html).toContain('Stopping screens');
       expect(html).not.toContain('violet-');
