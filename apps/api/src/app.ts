@@ -6,6 +6,8 @@ import fastify, {
 import cors from '@fastify/cors';
 import cookie from '@fastify/cookie';
 import sensible from '@fastify/sensible';
+import compress from '@fastify/compress';
+import etag from '@fastify/etag';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import { authPlugin } from './plugins/auth.plugin.js';
@@ -268,6 +270,16 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
 
   // Fastify Sensible for standard HTTP errors and utility helpers
   await app.register(sensible);
+
+  // Automatic ETags for conditional HTTP requests (304 Not Modified)
+  await app.register(etag);
+
+  // Response Compression (Brotli, Gzip, Deflate) for payloads >= 1KB
+  await app.register(compress, {
+    global: true,
+    encodings: ['br', 'gzip', 'deflate'],
+    threshold: 1024,
+  });
 
   // Register OpenAPI 3.0 / Swagger schema builder
   await app.register(swagger, {
