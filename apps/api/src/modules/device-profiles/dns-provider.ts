@@ -103,16 +103,20 @@ export function mapPolicyToNextDnsParentalControl(
   // NextDNS recreation times specify the ALLOWED single-day daytime window (bedtimeEnd -> bedtimeStart)
   const times: Record<string, { start: string; end: string }> = {};
   if (policy.bedtimeEnabled && bedtimeOnlySet.size > 0) {
-    const dayStart = `${policy.bedtimeEnd}:00`;
-    const dayEnd =
-      policy.bedtimeEnd < policy.bedtimeStart
-        ? `${policy.bedtimeStart}:00`
-        : '23:59:59';
-    for (const day of DAYS_OF_WEEK) {
-      times[day] = {
-        start: dayStart,
-        end: dayEnd,
-      };
+    // When bedtimeStart === bedtimeEnd (e.g. 00:00 and 00:00), 24/7 block is active:
+    // leaving times empty ({}) ensures NextDNS provides zero allowed recreation hours (blocked 24/7).
+    if (policy.bedtimeStart !== policy.bedtimeEnd) {
+      const dayStart = `${policy.bedtimeEnd}:00`;
+      const dayEnd =
+        policy.bedtimeEnd < policy.bedtimeStart
+          ? `${policy.bedtimeStart}:00`
+          : '23:59:59';
+      for (const day of DAYS_OF_WEEK) {
+        times[day] = {
+          start: dayStart,
+          end: dayEnd,
+        };
+      }
     }
   }
 

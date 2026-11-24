@@ -37,13 +37,32 @@ export interface LiveDnsShieldCardProps {
   className?: string;
 }
 
-const BEDTIME_PRESETS = [
+const BEDTIME_START_PRESETS = [
   { label: '8:00 PM', value: '20:00' },
   { label: '8:30 PM', value: '20:30' },
   { label: '9:00 PM', value: '21:00' },
   { label: '9:30 PM', value: '21:30' },
   { label: '10:00 PM', value: '22:00' },
 ];
+
+const BEDTIME_RESUME_PRESETS = [
+  { label: '6:00 AM', value: '06:00' },
+  { label: '6:30 AM', value: '06:30' },
+  { label: '7:00 AM', value: '07:00' },
+  { label: '7:30 AM', value: '07:30' },
+  { label: '8:00 AM', value: '08:00' },
+];
+
+function formatDisplayTime(hhmm: string): string {
+  if (!hhmm) return '';
+  const [hStr, mStr] = hhmm.split(':');
+  const h = parseInt(hStr || '', 10);
+  const m = mStr || '00';
+  if (isNaN(h)) return hhmm;
+  const period = h >= 12 ? 'PM' : 'AM';
+  const displayH = h % 12 === 0 ? 12 : h % 12;
+  return `${displayH}:${m} ${period}`;
+}
 
 export function LiveDnsShieldCard({
   childId,
@@ -344,38 +363,186 @@ export function LiveDnsShieldCard({
           </button>
         </div>
 
-        {/* Quick Bedtime Presets */}
-        {(shield?.bedtimeEnabled ?? true) && (
-          <div className="pt-1 flex flex-wrap items-center gap-2">
-            <span className="text-[12px] font-medium text-[var(--mute)]">
-              Pause starts at:
-            </span>
-            {BEDTIME_PRESETS.map((preset) => {
-              const isSelected =
-                (shield?.bedtimeStart ?? '20:30') === preset.value;
-              return (
-                <button
-                  key={preset.value}
-                  type="button"
-                  onClick={() =>
-                    setBedtimeSchedule(true, preset.value, shield?.bedtimeEnd || '06:30')
-                  }
-                  className={cn(
-                    'min-h-[36px] px-3 rounded-[8px] border text-[12.5px] font-semibold transition-colors cursor-pointer',
-                    isSelected
-                      ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
-                      : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
-                  )}
+        {/* Bedtime Enforcement Mode & Hours */}
+        {(shield?.bedtimeEnabled ?? true) && (() => {
+          const is247Bedtime =
+            shield?.bedtimeStart === shield?.bedtimeEnd &&
+            shield?.bedtimeStart === '00:00';
+          const currentStart = shield?.bedtimeStart ?? '20:30';
+          const currentEnd = shield?.bedtimeEnd ?? '06:30';
+
+          return (
+            <div className="pt-2 border-t border-[var(--hairline-soft)] space-y-3">
+              {/* Mode Selector */}
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[12px] font-medium text-[var(--mute)]">
+                  Enforcement Mode:
+                </span>
+                <div
+                  role="radiogroup"
+                  aria-label="Bedtime pause schedule mode"
+                  className="inline-flex rounded-[8px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-0.5 gap-1"
                 >
-                  {preset.label}
-                </button>
-              );
-            })}
-            <span className="text-[12px] text-[var(--mute)]">
-              (Resumes at {shield?.bedtimeEnd || '06:30'} AM)
-            </span>
-          </div>
-        )}
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={!is247Bedtime}
+                    onClick={() => {
+                      const fallbackStart = currentStart === '00:00' ? '20:30' : currentStart;
+                      const fallbackEnd = currentEnd === '00:00' ? '06:30' : currentEnd;
+                      setBedtimeSchedule(true, fallbackStart, fallbackEnd);
+                    }}
+                    className={cn(
+                      'px-2.5 py-1 text-[11.5px] font-semibold rounded-[6px] transition-all cursor-pointer flex items-center gap-1.5',
+                      !is247Bedtime
+                        ? 'bg-[var(--elevated)] text-[var(--spruce)] shadow-xs'
+                        : 'text-[var(--mute)] hover:text-[var(--ink)]'
+                    )}
+                  >
+                    <Moon className="h-3 w-3" />
+                    <span>Scheduled Window</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={is247Bedtime}
+                    onClick={() => {
+                      setBedtimeSchedule(true, '00:00', '00:00');
+                    }}
+                    className={cn(
+                      'px-2.5 py-1 text-[11.5px] font-semibold rounded-[6px] transition-all cursor-pointer flex items-center gap-1.5',
+                      is247Bedtime
+                        ? 'bg-[var(--elevated)] text-[var(--spruce)] shadow-xs'
+                        : 'text-[var(--mute)] hover:text-[var(--ink)]'
+                    )}
+                  >
+                    <ShieldAlert className="h-3 w-3" />
+                    <span>Block Completely (24/7)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* If 24/7 block is active */}
+              {is247Bedtime ? (
+                <div className="rounded-[10px] bg-[var(--spruce-soft)]/60 border border-[var(--spruce)]/20 p-3 text-[12px] text-[var(--spruce)] flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 shrink-0 text-[var(--spruce)]" />
+                  <span>
+                    <strong>24/7 Block Enforced:</strong> Entertainment and social apps are blocked around the clock with zero daytime recreation window.
+                  </span>
+                </div>
+              ) : (
+                /* Scheduled Window Controls */
+                <div className="space-y-3 pt-1">
+                  {/* Start Time Presets */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span className="font-medium text-[var(--mute)]">Pause starts at (Evening):</span>
+                      <span className="font-semibold text-[var(--spruce)]">{formatDisplayTime(currentStart)}</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {BEDTIME_START_PRESETS.map((preset) => {
+                        const isSelected = currentStart === preset.value;
+                        return (
+                          <button
+                            key={preset.value}
+                            type="button"
+                            onClick={() =>
+                              setBedtimeSchedule(
+                                true,
+                                preset.value,
+                                currentEnd === '00:00' ? '06:30' : currentEnd
+                              )
+                            }
+                            className={cn(
+                              'min-h-[32px] px-2.5 rounded-[7px] border text-[11.5px] font-semibold transition-colors cursor-pointer',
+                              isSelected
+                                ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
+                                : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
+                            )}
+                          >
+                            {preset.label}
+                          </button>
+                        );
+                      })}
+                      <input
+                        type="time"
+                        aria-label="Custom pause start time"
+                        value={currentStart}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            setBedtimeSchedule(
+                              true,
+                              e.target.value,
+                              currentEnd === '00:00' ? '06:30' : currentEnd
+                            );
+                          }
+                        }}
+                        className="min-h-[32px] px-2 rounded-[7px] border border-[var(--hairline)] bg-[var(--elevated)] text-[11.5px] text-[var(--body)] focus:border-[var(--spruce)] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Resume Time Presets */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span className="font-medium text-[var(--mute)]">Internet resumes at (Morning):</span>
+                      <span className="font-semibold text-[var(--spruce)]">{formatDisplayTime(currentEnd)}</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {BEDTIME_RESUME_PRESETS.map((preset) => {
+                        const isSelected = currentEnd === preset.value;
+                        return (
+                          <button
+                            key={preset.value}
+                            type="button"
+                            onClick={() =>
+                              setBedtimeSchedule(
+                                true,
+                                currentStart === '00:00' ? '20:30' : currentStart,
+                                preset.value
+                              )
+                            }
+                            className={cn(
+                              'min-h-[32px] px-2.5 rounded-[7px] border text-[11.5px] font-semibold transition-colors cursor-pointer',
+                              isSelected
+                                ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
+                                : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
+                            )}
+                          >
+                            {preset.label}
+                          </button>
+                        );
+                      })}
+                      <input
+                        type="time"
+                        aria-label="Custom resume time"
+                        value={currentEnd}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            setBedtimeSchedule(
+                              true,
+                              currentStart === '00:00' ? '20:30' : currentStart,
+                              e.target.value
+                            );
+                          }
+                        }}
+                        className="min-h-[32px] px-2 rounded-[7px] border border-[var(--hairline)] bg-[var(--elevated)] text-[11.5px] text-[var(--body)] focus:border-[var(--spruce)] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Summary badge */}
+                  <div className="text-[11.5px] text-[var(--mute)] bg-[var(--canvas-subtle)] px-2.5 py-1.5 rounded-[7px] border border-[var(--hairline-soft)] inline-flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-[var(--spruce)]" />
+                    <span>
+                      Overnight quiet hours: {formatDisplayTime(currentStart)} to {formatDisplayTime(currentEnd)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </div>
     </div>
 

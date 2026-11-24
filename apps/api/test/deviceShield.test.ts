@@ -324,6 +324,15 @@ describe('Live DNS Parental Control Shield & Apple DoH Mobileconfig API (PLAN-52
         start: '07:00:00',
         end: '23:59:59',
       });
+
+      const block247Payload = mapPolicyToNextDnsParentalControl({
+        ...buildRecommendedShieldPolicy(14),
+        bedtimeEnabled: true,
+        bedtimeServices: ['tiktok'],
+        bedtimeStart: '00:00',
+        bedtimeEnd: '00:00',
+      }) as any;
+      expect(block247Payload.recreation.times).toEqual({});
     });
 
     it('sends X-Api-Key header, calls aggregate analytics only, and wraps upstream errors', async () => {
