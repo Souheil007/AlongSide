@@ -1,0 +1,2830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alongside — 5 Visual Directions for Child Onboarding &amp; Add Child</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --canvas: #FAF9F5;
+      --linen: #FBFBF9;
+      --sand: #F3EFE6;
+      --sand-deep: #E8E2D4;
+      --elevated: #FFFFFF;
+      --ink: #111413;
+      --body: #494F4C;
+      --mute: #767E79;
+      --hairline: #E3E1D8;
+      --hairline-soft: #ECEAE1;
+      --spruce: #143D2B;
+      --spruce-mid: #1B4F38;
+      --spruce-hover: #0E2B1E;
+      --spruce-soft: #EAF3EE;
+      --spruce-border: #C4DBCE;
+      --amber: #B45309;
+      --amber-warm: #D97706;
+      --amber-soft: #FDF3DC;
+      --amber-border: #EDD49B;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: #141816;
+      -webkit-font-smoothing: antialiased;
+    }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    button, input, select { font-family: inherit; color: inherit; }
+    button { cursor: pointer; background: none; border: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Clean screenshot mode hides the studio switcher chrome */
+    body.clean-mode {
+      background: var(--canvas);
+    }
+    body.clean-mode .studio-bar,
+    body.clean-mode .studio-subbar { display: none !important; }
+    body.clean-mode .stage-shell { padding: 0 !important; }
+    body.clean-mode .stage-frame {
+      max-width: 100% !important;
+      min-height: 100vh !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    body.clean-mode .dash-backdrop-wrap,
+    body.clean-mode .v3-first {
+      min-height: 100vh !important;
+      height: 100vh !important;
+    }
+
+    /* ============================================================
+       STUDIO TOP BAR
+       ============================================================ */
+    .studio-bar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #111513;
+      color: #F6F3EC;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+    }
+    .studio-bar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .studio-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .studio-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: #FAF9F5;
+      padding: 2px;
+      object-fit: contain;
+    }
+    .studio-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .seg {
+      display: inline-flex;
+      background: rgba(255,255,255,0.08);
+      padding: 3px;
+      border-radius: 9px;
+      gap: 2px;
+    }
+    .seg-btn {
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(246,243,236,0.72);
+      transition: background 150ms var(--ease), color 150ms var(--ease);
+      white-space: nowrap;
+    }
+    .seg-btn:hover { color: #FFFFFF; }
+    .seg-btn.active { background: #FAF9F5; color: #111413; }
+    .seg-btn.active-before { background: #374151; color: #FFFFFF; }
+    .seg-btn.active-ctx { background: #72BC94; color: #0B1F16; }
+
+    .studio-subbar {
+      background: #181E1B;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: #F6F3EC;
+    }
+    .studio-subbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12.5px;
+    }
+    .sub-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .sub-code {
+      font-weight: 700;
+      color: #E5A657;
+      font-size: 12px;
+    }
+    .sub-title { font-weight: 600; color: #FFFFFF; }
+    .sub-desc { color: rgba(246,243,236,0.7); }
+    .preset-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: rgba(246,243,236,0.65);
+    }
+    .preset-btn {
+      padding: 4px 9px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: rgba(246,243,236,0.82);
+      transition: all 140ms ease;
+    }
+    .preset-btn:hover { background: rgba(255,255,255,0.1); color: #FFF; }
+    .preset-btn.active {
+      background: rgba(114,188,148,0.2);
+      border-color: rgba(114,188,148,0.55);
+      color: #A7F3D0;
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       STAGE SHELL
+       ============================================================ */
+    .stage-shell {
+      flex: 1;
+      padding: 22px 20px 44px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .stage-frame {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 760px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.11);
+      box-shadow: 0 30px 72px rgba(0,0,0,0.48);
+      background: var(--canvas);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: max-width 240ms var(--ease);
+    }
+    .stage-frame.mobile-mode {
+      max-width: 402px;
+      min-height: 820px;
+      border-radius: 34px;
+      border: 6px solid #2A312D;
+    }
+
+    /* ============================================================
+       SHARED APP SHELLS (FIRST-TIME ONBOARDING HEADER vs LIVE DASHBOARD BACKDROP)
+       ============================================================ */
+    .onboard-top {
+      height: 64px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--hairline-soft);
+      background: rgba(250, 249, 245, 0.92);
+      flex-shrink: 0;
+    }
+    .onboard-top.transparent {
+      background: transparent;
+      border-bottom-color: transparent;
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-lockup img {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+    .brand-lockup span {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .journey-crumbs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--mute);
+    }
+    .journey-done {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--spruce);
+      font-weight: 500;
+    }
+    .journey-active {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* Simulated live Alongside Dashboard behind "Add Another Child" modals/drawers */
+    .dash-backdrop-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #F5F1E8;
+      min-height: 760px;
+    }
+    .dash-nav {
+      height: 62px;
+      padding: 0 28px;
+      background: rgba(251, 251, 249, 0.96);
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .dash-nav-left { display: flex; align-items: center; gap: 16px; }
+    .dash-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: #FFF;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .dash-switcher .dot-av {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--spruce);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .dash-switcher .age-tag {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--spruce-soft);
+      color: var(--spruce);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .dash-links {
+      display: flex;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--body);
+    }
+    .dash-links span { padding: 6px 12px; border-radius: 999px; }
+    .dash-links span.active { background: var(--spruce-soft); color: var(--spruce); font-weight: 600; }
+    .dash-bg-content {
+      padding: 24px 32px;
+      max-width: 1160px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+    .dash-hero-mock {
+      border-radius: 24px;
+      overflow: hidden;
+      background: #133B2A;
+      color: #FFF;
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      min-height: 250px;
+    }
+    .dash-hero-left {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .dash-hero-left h2 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.12;
+      margin-top: 8px;
+    }
+    .dash-hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .dash-hero-right img { width: 100%; height: 100%; object-fit: cover; }
+    .dash-cards-mock {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .dash-card-mock {
+      background: #FFF;
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      padding: 20px;
+      min-height: 170px;
+    }
+    .dash-card-mock h4 {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .dash-card-mock p { font-size: 13px; color: var(--body); line-height: 1.5; }
+
+    .modal-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(17, 20, 19, 0.44);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 30;
+    }
+    .modal-scrim.drawer-align {
+      justify-content: flex-end;
+      padding: 0;
+      background: rgba(17, 20, 19, 0.34);
+      backdrop-filter: blur(3px);
+    }
+
+    /* ============================================================
+       SHARED FORM CONTROLS & BUTTONS (REFINED ALONGSIDE CRAFT)
+       ============================================================ */
+    .field-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 7px;
+    }
+    .field-hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--mute);
+    }
+    .al-input {
+      width: 100%;
+      height: 46px;
+      border-radius: 10px;
+      border: 1px solid #D9D6CB;
+      background: #FFFFFF;
+      padding: 0 14px;
+      font-size: 15px;
+      color: var(--ink);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      outline: none;
+    }
+    .al-input:focus {
+      border-color: var(--spruce);
+      box-shadow: 0 0 0 3px rgba(20, 61, 43, 0.11);
+    }
+    .al-input::placeholder { color: #9BA29D; }
+
+    .al-select {
+      width: 100%;
+      height: 46px;
+      border-radius: 10px;
+      border: 1px solid #D9D6CB;
+      background: #FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B726E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+      appearance: none;
+      padding: 0 36px 0 14px;
+      font-size: 14.5px;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+    .al-select:focus {
+      border-color: var(--spruce);
+      box-shadow: 0 0 0 3px rgba(20, 61, 43, 0.11);
+    }
+
+    .gender-seg {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 4px;
+      background: var(--sand);
+      border-radius: 11px;
+      border: 1px solid var(--hairline);
+    }
+    .gender-opt {
+      height: 38px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 150ms var(--ease);
+    }
+    .gender-opt:hover { color: var(--ink); }
+    .gender-opt.active {
+      background: #FFFFFF;
+      color: var(--spruce);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(17,20,19,0.08);
+    }
+
+    .btn-spruce {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 22px;
+      border-radius: 10px;
+      background: var(--spruce);
+      color: #FFFFFF;
+      font-size: 14.5px;
+      font-weight: 600;
+      transition: background 150ms ease, transform 120ms ease;
+    }
+    .btn-spruce:hover { background: var(--spruce-hover); }
+    .btn-spruce:active { transform: scale(0.99); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--body);
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .btn-ghost:hover { background: var(--sand); color: var(--ink); }
+
+    .close-x {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mute);
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .close-x:hover { background: var(--sand); color: var(--ink); }
+
+    /* Age-smart Phone Cards (Clean, Neutral, No Violet!) */
+    .road-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .road-card {
+      padding: 13px 14px;
+      border-radius: 11px;
+      border: 1.5px solid var(--hairline);
+      background: #FFFFFF;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      transition: all 150ms var(--ease);
+    }
+    .road-card:hover { border-color: #C4C2B8; }
+    .road-card.active {
+      border-color: var(--spruce);
+      background: var(--spruce-soft);
+    }
+    .road-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1.5px solid #B8B8AE;
+      margin-top: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF;
+    }
+    .road-card.active .road-radio {
+      border-color: var(--spruce);
+      background: var(--spruce);
+    }
+    .road-card.active .road-radio::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #FFF;
+    }
+    .road-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .road-sub {
+      font-size: 12px;
+      color: var(--body);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+    .early-auto-note {
+      padding: 12px 14px;
+      border-radius: 11px;
+      background: var(--spruce-soft);
+      border: 1px solid var(--spruce-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--spruce);
+    }
+    .early-auto-note strong { font-weight: 600; }
+    .early-auto-note button {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--spruce);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+
+    .optional-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mute);
+      padding: 4px 0;
+      transition: color 150ms ease;
+    }
+    .optional-trigger:hover { color: var(--spruce); }
+
+    /* ============================================================
+       DIRECTION 0: CURRENT (BEFORE) — FAITHFUL REPRODUCTION OF SLOP
+       ============================================================ */
+    .before-stage {
+      flex: 1;
+      background: #F7F3EA;
+      padding: 28px 20px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .before-card {
+      width: 100%;
+      max-width: 650px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+    }
+    .before-header { padding: 22px 24px 14px; }
+    .before-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #F0FDFA;
+      border: 1px solid #99F6E4;
+      color: #115E59;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .before-body { padding: 0 24px 22px; display: flex; flex-direction: column; gap: 16px; }
+    .before-gender { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .before-gbtn {
+      height: 44px;
+      border-radius: 12px;
+      border: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #334155;
+      background: #FFF;
+    }
+    .before-gbtn.active {
+      border-color: #0F766E;
+      background: #F0FDFA;
+      color: #134E4A;
+      font-weight: 600;
+    }
+    .before-tier-box {
+      border-radius: 12px;
+      border: 1px solid #E2E8F0;
+      background: #F8FAFC;
+      padding: 13px 15px;
+    }
+    .before-roads { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .before-road {
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .before-road.r1 { border-color: #059669; background: #ECFDF5; }
+    .before-road.r2 { border-color: #7C3AED; background: #F5F3FF; }
+
+    /* ============================================================
+       VISUAL 1: THE LIVE KEEPSAKE (EDITORIAL SPLIT + LIVE ALMANAC COVER)
+       ============================================================ */
+    .v1-first {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      background: var(--canvas);
+    }
+    .v1-left {
+      padding: 40px 56px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 640px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .v1-title {
+      font-family: var(--font-serif);
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+    .v1-sub {
+      font-size: 15px;
+      color: var(--body);
+      margin-top: 10px;
+      line-height: 1.5;
+      max-width: 44ch;
+    }
+    .v1-form {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .v1-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .v1-right {
+      background: var(--sand);
+      border-left: 1px solid var(--hairline);
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .almanac-book {
+      width: 100%;
+      max-width: 410px;
+      border-radius: 18px;
+      background: var(--spruce);
+      color: #FAF9F5;
+      padding: 30px 28px 26px;
+      box-shadow: 0 22px 48px rgba(14, 43, 30, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .almanac-book::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      background: rgba(0,0,0,0.22);
+    }
+    .book-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(250,249,245,0.14);
+    }
+    .book-monogram {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(250,249,245,0.14);
+      border: 1px solid rgba(250,249,245,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: #FAF9F5;
+    }
+    .book-edition {
+      text-align: right;
+      font-size: 12px;
+      color: rgba(250,249,245,0.7);
+      line-height: 1.35;
+    }
+    .book-edition strong {
+      display: block;
+      color: #F4C77B;
+      font-weight: 600;
+      font-size: 12.5px;
+    }
+    .book-name {
+      font-family: var(--font-serif);
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-top: 22px;
+      line-height: 1.12;
+    }
+    .book-stage {
+      font-size: 13.5px;
+      color: rgba(250,249,245,0.78);
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+    .book-script {
+      margin-top: 22px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      background: rgba(250,249,245,0.09);
+      border: 1px solid rgba(250,249,245,0.13);
+    }
+    .book-script-lbl {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #F4C77B;
+      margin-bottom: 6px;
+    }
+    .book-script p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15.5px;
+      line-height: 1.45;
+      color: #FAF9F5;
+    }
+    .book-unlocks {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .book-unlock-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: rgba(250,249,245,0.88);
+    }
+    .book-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #72BC94;
+      flex-shrink: 0;
+    }
+
+    /* Visual 1 Add Child Wide Modal */
+    .v1-modal {
+      width: 100%;
+      max-width: 920px;
+      background: var(--canvas);
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      box-shadow: 0 32px 72px rgba(14, 24, 19, 0.32);
+      border: 1px solid var(--hairline);
+    }
+    .v1-modal-form {
+      padding: 28px 32px;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .v1-modal-shelf {
+      padding: 28px 26px;
+      background: var(--sand);
+      border-left: 1px solid var(--hairline);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .shelf-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .shelf-child {
+      padding: 14px 15px;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .shelf-child.new-live {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FAF9F5;
+      box-shadow: 0 12px 26px rgba(20, 61, 43, 0.22);
+    }
+    .shelf-av {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--sand-deep);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .shelf-child.new-live .shelf-av {
+      background: rgba(255,255,255,0.16);
+      color: #FFF;
+    }
+
+    /* ============================================================
+       VISUAL 2: ONE QUIET QUESTION (3-STEP PROGRESSIVE STORY CARDS)
+       ============================================================ */
+    .v2-wrap {
+      flex: 1;
+      background: var(--canvas);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 24px 52px;
+    }
+    .v2-card {
+      width: 100%;
+      max-width: 610px;
+      background: #FFFFFF;
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      padding: 34px 40px 32px;
+      box-shadow: 0 12px 36px rgba(17,20,19,0.05);
+    }
+    .v2-modal {
+      width: 100%;
+      max-width: 560px;
+      background: #FFFFFF;
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      padding: 28px 32px 26px;
+      box-shadow: 0 32px 72px rgba(14,24,19,0.34);
+    }
+    .v2-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+    .v2-step-btn {
+      text-align: left;
+      padding-top: 10px;
+      border-top: 2.5px solid var(--hairline);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--mute);
+      transition: all 150ms ease;
+    }
+    .v2-step-btn.done {
+      border-top-color: var(--spruce-border);
+      color: var(--spruce);
+    }
+    .v2-step-btn.active {
+      border-top-color: var(--spruce);
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .v2-q {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .v2-q-sub {
+      font-size: 14.5px;
+      color: var(--body);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .v2-big-name {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid var(--hairline);
+      font-family: var(--font-serif);
+      font-size: 34px;
+      padding: 12px 2px 10px;
+      color: var(--ink);
+      background: transparent;
+      outline: none;
+      margin-top: 18px;
+      transition: border-color 160ms ease;
+    }
+    .v2-big-name:focus { border-bottom-color: var(--spruce); }
+
+    .age-stepper-box {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 14px;
+      background: var(--canvas);
+      border: 1px solid var(--hairline);
+    }
+    .age-big-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .age-display {
+      font-family: var(--font-serif);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--spruce);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .age-display span {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--mute);
+      margin-left: 6px;
+    }
+    .stepper-btns { display: flex; gap: 8px; }
+    .step-round {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: #FFF;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 140ms ease;
+    }
+    .step-round:hover { border-color: var(--spruce); color: var(--spruce); }
+    .month-grid-compact {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .m-chip {
+      height: 34px;
+      border-radius: 7px;
+      border: 1px solid var(--hairline);
+      background: #FFF;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--body);
+      transition: all 140ms ease;
+    }
+    .m-chip:hover { border-color: #BDBAB0; color: var(--ink); }
+    .m-chip.active {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FFF;
+      font-weight: 600;
+    }
+    .v2-insight {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--spruce-soft);
+      border: 1px solid var(--spruce-border);
+      font-size: 13.5px;
+      color: #163728;
+      line-height: 1.48;
+    }
+    .v2-footer {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--hairline-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ============================================================
+       VISUAL 3: THE SUNLIT FOLIO (PHOTO SANCTUARY + SLIDE-OVER DRAWER)
+       ============================================================ */
+    .v3-first {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      min-height: 760px;
+      background: var(--canvas);
+    }
+    .v3-photo-pane {
+      position: relative;
+      overflow: hidden;
+      background: #1B3428;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 34px;
+      color: #FAF9F5;
+    }
+    .v3-photo-pane img.bg-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 62% 34%;
+    }
+    .v3-photo-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(17, 25, 21, 0.24) 0%,
+        rgba(17, 25, 21, 0.04) 48%,
+        rgba(14, 34, 25, 0.86) 100%
+      );
+    }
+    .v3-photo-top, .v3-photo-bottom { position: relative; z-index: 2; }
+    .v3-photo-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 13px 7px 8px;
+      border-radius: 999px;
+      background: rgba(250, 249, 245, 0.92);
+      color: var(--ink);
+    }
+    .v3-photo-brand img { width: 24px; height: 24px; border-radius: 5px; }
+    .v3-photo-brand span { font-family: var(--font-serif); font-size: 17px; font-weight: 600; }
+    .v3-quote {
+      font-family: var(--font-serif);
+      font-size: 27px;
+      font-weight: 400;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      max-width: 24ch;
+    }
+    .v3-quote-sub {
+      font-size: 13.5px;
+      color: rgba(250, 249, 245, 0.82);
+      margin-top: 10px;
+      max-width: 36ch;
+      line-height: 1.5;
+    }
+    .v3-form-pane {
+      padding: 40px 58px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--canvas);
+    }
+    .v3-form-inner { max-width: 490px; width: 100%; margin: 0 auto; }
+
+    /* Visual 3 Add Another Child: Optically Balanced Zero-Scroll Editorial Slide-Over Drawer */
+    .v3-drawer {
+      width: 484px;
+      max-width: 100%;
+      height: 100%;
+      background: var(--canvas);
+      box-shadow: -20px 0 60px rgba(14, 24, 19, 0.28);
+      border-left: 1px solid var(--hairline);
+      display: flex;
+      flex-direction: column;
+    }
+    .v3-drawer-banner {
+      position: relative;
+      height: clamp(132px, 24vh, 206px);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .v3-drawer-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
+    .v3-drawer-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14,28,22,0.16) 0%, rgba(14,28,22,0.42) 55%, rgba(14,28,22,0.88) 100%);
+    }
+    .v3-drawer-banner-content {
+      position: absolute;
+      inset: 0;
+      padding: 18px 28px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #FFF;
+    }
+    .v3-drawer-body {
+      flex: 1;
+      padding: clamp(18px, 3vh, 32px) 30px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .v3-drawer-form {
+      margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 2.3vh, 22px);
+    }
+    .v3-drawer-foot {
+      padding: 16px 30px;
+      border-top: 1px solid var(--hairline);
+      background: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .v3-stage-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 13px;
+      border-radius: 9px;
+      background: var(--sand);
+      border: 1px solid var(--hairline);
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .v3-stage-pill strong { font-weight: 600; color: var(--spruce); }
+    .v3-stage-pill span { font-size: 12.5px; color: var(--mute); font-variant-numeric: tabular-nums; }
+    .v3-phone-inline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 13px;
+      border-radius: 9px;
+      background: var(--spruce-soft);
+      border: 1px solid var(--spruce-border);
+      font-size: 13px;
+      color: var(--spruce);
+    }
+    .v3-phone-inline button {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--spruce);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       VISUAL 4: THE FAMILY LETTER (CONVERSATIONAL FILL-IN-THE-BLANK)
+       ============================================================ */
+    .v4-desk {
+      flex: 1;
+      background: #EFECE3;
+      padding: 36px 24px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .v4-sheet {
+      width: 100%;
+      max-width: 760px;
+      background: #FBFBF9;
+      border: 1px solid #DFDCD0;
+      border-radius: 16px;
+      padding: 40px 48px 36px;
+      box-shadow: 0 20px 54px rgba(17, 20, 19, 0.08);
+    }
+    .v4-modal-sheet {
+      width: 100%;
+      max-width: 700px;
+      background: #FBFBF9;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 32px 72px rgba(14,24,19,0.34);
+      border: 1px solid var(--hairline);
+    }
+    .v4-tabs {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      background: var(--sand);
+      padding: 12px 24px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .v4-tab-list { display: flex; gap: 6px; }
+    .v4-tab {
+      padding: 9px 16px;
+      border-radius: 10px 10px 0 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mute);
+    }
+    .v4-tab.active {
+      background: #FBFBF9;
+      color: var(--ink);
+      font-weight: 600;
+      border: 1px solid var(--hairline);
+      border-bottom-color: #FBFBF9;
+      margin-bottom: -1px;
+    }
+    .v4-prose {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.72;
+      color: #2A302D;
+      margin-top: 22px;
+      letter-spacing: -0.012em;
+    }
+    .v4-blank-input {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--spruce);
+      background: var(--spruce-soft);
+      border: none;
+      border-bottom: 2px solid var(--spruce);
+      border-radius: 6px 6px 0 0;
+      padding: 0 9px 1px;
+      min-width: 84px;
+      outline: none;
+      transition: background 140ms ease;
+    }
+    .v4-blank-input:focus { background: #DCECE3; }
+    .v4-blank-select {
+      font-family: var(--font-serif);
+      font-size: 27px;
+      font-weight: 500;
+      color: var(--spruce);
+      background: var(--spruce-soft);
+      border: none;
+      border-bottom: 2px solid var(--spruce);
+      border-radius: 6px 6px 0 0;
+      padding: 1px 28px 2px 10px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%23143D2B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      cursor: pointer;
+      outline: none;
+    }
+    .v4-blank-select.amber-blank {
+      color: var(--amber);
+      background-color: var(--amber-soft);
+      border-bottom-color: var(--amber);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%23B45309' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    }
+    .v4-slip {
+      margin-top: 28px;
+      padding: 20px 22px;
+      border-radius: 13px;
+      background: var(--sand);
+      border: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+    .v4-slip-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--spruce);
+    }
+    .v4-slip-text {
+      font-size: 13.5px;
+      color: var(--body);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       VISUAL 5: THE LIFESPAN COMPASS (VISUAL 0-18 RIBBON + SCOPED CHIPS)
+       ============================================================ */
+    .v5-wrap {
+      flex: 1;
+      background: var(--canvas);
+      padding: 34px 32px 46px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .v5-panel {
+      width: 100%;
+      max-width: 940px;
+      background: #FFFFFF;
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 46px rgba(17,20,19,0.06);
+    }
+    .v5-modal {
+      width: 100%;
+      max-width: 840px;
+      background: #FFFFFF;
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 32px 72px rgba(14,24,19,0.34);
+    }
+    .v5-top {
+      padding: 26px 32px 22px;
+      background: var(--sand);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .v5-ribbon {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .stage-tile {
+      padding: 13px 12px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.72);
+      border: 1.5px solid var(--hairline);
+      text-align: left;
+      position: relative;
+      transition: all 150ms var(--ease);
+    }
+    .stage-tile:hover { border-color: #BDBAB0; background: #FFF; }
+    .stage-tile.active {
+      background: var(--spruce);
+      border-color: var(--spruce);
+      color: #FAF9F5;
+      box-shadow: 0 10px 22px rgba(20, 61, 43, 0.2);
+    }
+    .stage-ages {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+    .stage-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+    .sibling-pin {
+      position: absolute;
+      top: -9px;
+      right: 8px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--amber);
+      color: #FFF;
+      font-size: 10.5px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(180, 83, 9, 0.3);
+    }
+    .v5-body {
+      padding: 26px 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .year-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 6px;
+    }
+    .y-chip {
+      padding: 8px 14px;
+      border-radius: 9px;
+      border: 1.5px solid var(--hairline);
+      background: #FFF;
+      font-size: 13.5px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      transition: all 140ms ease;
+    }
+    .y-chip:hover { border-color: #B9B7AD; }
+    .y-chip.active {
+      background: var(--spruce-soft);
+      border-color: var(--spruce);
+      color: var(--spruce);
+      font-weight: 600;
+    }
+    .v5-foot {
+      padding: 16px 32px;
+      background: var(--canvas);
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .v5-summary-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--body);
+    }
+    .v5-summary-pill strong { color: var(--ink); }
+
+    /* ============================================================
+       MOBILE PREVIEW RESPONSIVE ADAPTATIONS
+       ============================================================ */
+    .stage-frame.mobile-mode .onboard-top { padding: 0 18px; }
+    .stage-frame.mobile-mode .journey-crumbs { display: none; }
+    .stage-frame.mobile-mode .v1-first,
+    .stage-frame.mobile-mode .v1-modal,
+    .stage-frame.mobile-mode .v3-first,
+    .stage-frame.mobile-mode .v5-body,
+    .stage-frame.mobile-mode .road-grid,
+    .stage-frame.mobile-mode .v1-row-2,
+    .stage-frame.mobile-mode .v4-slip {
+      grid-template-columns: 1fr !important;
+    }
+    .stage-frame.mobile-mode .v1-left,
+    .stage-frame.mobile-mode .v3-form-pane,
+    .stage-frame.mobile-mode .v4-sheet {
+      padding: 24px 20px !important;
+    }
+    .stage-frame.mobile-mode .v1-right {
+      border-left: none;
+      border-top: 1px solid var(--hairline);
+      padding: 24px 20px;
+    }
+    .stage-frame.mobile-mode .v3-photo-pane { min-height: 220px; padding: 20px; }
+    .stage-frame.mobile-mode .v4-prose,
+    .stage-frame.mobile-mode .v4-blank-input,
+    .stage-frame.mobile-mode .v4-blank-select { font-size: 21px; }
+    .stage-frame.mobile-mode .v5-ribbon { grid-template-columns: repeat(2, 1fr); }
+    .stage-frame.mobile-mode .dash-links,
+    .stage-frame.mobile-mode .dash-cards-mock { display: none; }
+    .stage-frame.mobile-mode .dash-hero-mock { grid-template-columns: 1fr; }
+    .stage-frame.mobile-mode .v1-modal-shelf { display: none; }
+    .stage-frame.mobile-mode .v2-card { padding: 24px 20px; }
+    .stage-frame.mobile-mode .v5-top,
+    .stage-frame.mobile-mode .v5-body,
+    .stage-frame.mobile-mode .v5-foot { padding: 20px; }
+    .stage-frame.mobile-mode .v5-foot { flex-direction: column; align-items: stretch; }
+  </style>
+</head>
+<body>
+  <!-- STUDIO PICKER BAR -->
+  <header class="studio-bar">
+    <div class="studio-bar-inner">
+      <div class="studio-brand">
+        <img src="../brand/alongside-logo-full-256.png" alt="Alongside" />
+        <span>Child Creation Visuals — 5 Redesign Directions</span>
+      </div>
+      <div class="studio-controls">
+        <div class="seg" role="tablist" aria-label="Design Direction">
+          <button class="seg-btn" data-dir="0">0 · Current</button>
+          <button class="seg-btn active" data-dir="1">1 · Live Keepsake</button>
+          <button class="seg-btn" data-dir="2">2 · Quiet Steps</button>
+          <button class="seg-btn" data-dir="3">3 · Sunlit Folio</button>
+          <button class="seg-btn" data-dir="4">4 · Family Letter</button>
+          <button class="seg-btn" data-dir="5">5 · Lifespan Compass</button>
+        </div>
+
+        <div class="seg" role="group" aria-label="Flow Context">
+          <button class="seg-btn active-ctx" data-ctx="first">First-Time Account</button>
+          <button class="seg-btn" data-ctx="add">Add Another Child</button>
+        </div>
+
+        <div class="seg" role="group" aria-label="Viewport">
+          <button class="seg-btn active" data-view="desktop">Desktop</button>
+          <button class="seg-btn" data-view="mobile">Mobile</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="studio-subbar">
+    <div class="studio-subbar-inner">
+      <div class="sub-meta">
+        <span class="sub-code" id="meta-code">VISUAL 1</span>
+        <span class="sub-title" id="meta-title">The Live Keepsake</span>
+        <span class="sub-desc" id="meta-desc">Editorial split-sheet with a live-updating Almanac cover preview (or Family Shelf in Add Child modal).</span>
+      </div>
+      <div class="preset-row">
+        <span>Try child age:</span>
+        <button class="preset-btn" data-preset="toddler">Leo · 2 yrs</button>
+        <button class="preset-btn active" data-preset="preteen">Maya · 11 yrs</button>
+        <button class="preset-btn" data-preset="teen">Noah · 14 yrs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN INTERACTIVE STAGE -->
+  <main class="stage-shell">
+    <div class="stage-frame" id="stage-frame"></div>
+  </main>
+
+  <script>
+    const CURRENT_YEAR = 2026;
+    const MONTHS = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const STAGES = [
+      {
+        id: '0-3',
+        ages: '0–3',
+        label: 'Baby & Toddler',
+        years: [2026, 2025, 2024, 2023],
+        defaultYear: 2024,
+        headline: 'Co-regulation, sleep rhythms & first words',
+        insight: 'Their upstairs braking system is still forming. Alongside starts with gentle co-regulation scripts, sleep anchors, and screen-free play ideas.',
+        script: '“You really wanted to keep playing. Putting shoes on feels big right now. Red sneakers or blue boots?”',
+        unlocks: ['Toddler nervous system resets', 'Sleep & mealtime calm', 'Screen-free daily play cards'],
+        nextStep: 'Tonight’s co-regulation guide'
+      },
+      {
+        id: '4-6',
+        ages: '4–6',
+        label: 'Early Years',
+        years: [2022, 2021, 2020],
+        defaultYear: 2021,
+        headline: 'Big feelings, curiosity & preschool friendships',
+        insight: 'Imagination and independence are blossoming fast. Expect daily scripts for bedtime stalls, picky plates, and smooth screen transitions.',
+        script: '“You don’t have to eat the broccoli tonight. It can just sit next to your pasta while you decide.”',
+        unlocks: ['Zero-battle dinner & bedtime scripts', 'Early emotional vocabulary', 'Shared-screen landing rituals'],
+        nextStep: 'Your 5-minute Early Years roadmap'
+      },
+      {
+        id: '7-9',
+        ages: '7–9',
+        label: 'Middle Childhood',
+        years: [2019, 2018, 2017],
+        defaultYear: 2018,
+        headline: 'Focus, fairness & first gaming boundaries',
+        insight: 'Logical thinking is surging, while variable-reward games still hijack smooth endings. We calibrate homework calm and shared-tablet habits.',
+        script: '“I see you’re mid-build. Show me your base for 60 seconds, then we’ll park the tablet together.”',
+        unlocks: ['Smooth gaming & tablet landings', 'Homework frustration scripts', 'Sunday dinner prompts'],
+        nextStep: 'Shared-device rhythm setup'
+      },
+      {
+        id: '10-12',
+        ages: '10–12',
+        label: 'Pre-Teen',
+        years: [2016, 2015, 2014],
+        defaultYear: 2015,
+        headline: 'Peer belonging & the first-phone bridge',
+        insight: 'Social belonging suddenly feels urgent at this age. Alongside pairs calm empathy scripts with a 10-point First-Phone Readiness check.',
+        script: '“It stinks feeling left out of the group chat. Let’s look at the readiness steps together so you know what’s next.”',
+        unlocks: ['First-phone readiness check (0–100)', '5th-grade peer & group chat scripts', 'Weekly youth culture & slang brief'],
+        nextStep: '3-min First-Phone Readiness check'
+      },
+      {
+        id: '13-18',
+        ages: '13–18',
+        label: 'Teen Years',
+        years: [2013, 2012, 2011, 2010, 2009, 2008],
+        defaultYear: 2012,
+        headline: 'Autonomy, sleep protection & mutual trust',
+        insight: 'Puberty shifts melatonin 2 hours later while feeds stay endless. We focus on collaborative agreements, Apple/Google curfews, and zero-lecture talks.',
+        script: '“I know your brain isn’t sleepy at 9 anymore. Let’s agree on a charging dock time that protects tomorrow morning.”',
+        unlocks: ['Collaborative Family Phone Pact', 'Apple & Google bedtime lock guide', 'Non-defensive teen conversation scripts'],
+        nextStep: 'Built-in bedtime curfew blueprint'
+      }
+    ];
+
+    const META = {
+      0: {
+        code: 'CURRENT (BEFORE)',
+        title: 'Existing ChildOnboardingFlow.tsx',
+        desc: 'Generic teal/slate form, sparkle eyebrow badge, emojis, clinical enum jargon, and inner modal scrolling.'
+      },
+      1: {
+        code: 'VISUAL 1',
+        title: 'The Live Keepsake',
+        desc: 'Editorial split-sheet where a live Almanac Cover (First-Time) or Family Shelf (Add Child) personalizes as you type.'
+      },
+      2: {
+        code: 'VISUAL 2',
+        title: 'One Quiet Question',
+        desc: '3-step progressive story cards — zero form fatigue, tactile age stepper + month chips, calm breath on every screen.'
+      },
+      3: {
+        code: 'VISUAL 3',
+        title: 'The Sunlit Folio',
+        desc: 'Full-bleed editorial photography sanctuary for First-Time setup, paired with a crisp right-hand Slide-Over Drawer for adding siblings.'
+      },
+      4: {
+        code: 'VISUAL 4',
+        title: 'The Family Letter',
+        desc: 'Conversational fill-in-the-blank archival sheet (and tabbed Family Book modal) — zero sterile form chrome, deeply human.'
+      },
+      5: {
+        code: 'VISUAL 5',
+        title: 'The Lifespan Compass',
+        desc: 'Visual 0–18 developmental ribbon that scopes birth-year tap chips (no 19-year dropdown!) and plots siblings on one family timeline.'
+      }
+    };
+
+    const state = {
+      dir: 1,
+      ctx: 'first', // 'first' | 'add'
+      view: 'desktop', // 'desktop' | 'mobile'
+      v2Step: 2, // default Step 2 so progressive flow + tactile birthday picker shine immediately
+      showOptional: false,
+      overrideEarlyPhone: false,
+      child: {
+        name: 'Maya',
+        gender: 'FEMALE',
+        birthMonth: 6,
+        birthYear: 2015,
+        roadType: 'PRE_DEVICE',
+        schoolGrade: '5th Grade'
+      }
+    };
+
+    // Parse query params for direct deep-linking or clean screenshot capture
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('dir')) state.dir = Number(params.get('dir'));
+    if (params.has('ctx')) state.ctx = params.get('ctx');
+    if (params.has('view')) state.view = params.get('view');
+    if (params.has('step')) state.v2Step = Number(params.get('step'));
+    if (params.get('clean') === '1') document.body.classList.add('clean-mode');
+    if (params.get('preset') === 'toddler') applyPreset('toddler', false);
+    if (params.get('preset') === 'teen') applyPreset('teen', false);
+
+    function applyPreset(key, shouldRender = true) {
+      if (key === 'toddler') {
+        state.child = { name: 'Leo', gender: 'MALE', birthMonth: 5, birthYear: 2024, roadType: 'PRE_DEVICE', schoolGrade: 'Daycare' };
+      } else if (key === 'preteen') {
+        state.child = { name: 'Maya', gender: 'FEMALE', birthMonth: 6, birthYear: 2015, roadType: 'PRE_DEVICE', schoolGrade: '5th Grade' };
+      } else if (key === 'teen') {
+        state.child = { name: 'Noah', gender: 'MALE', birthMonth: 9, birthYear: 2012, roadType: 'ACTIVE_DEVICE', schoolGrade: '9th Grade' };
+      }
+      state.overrideEarlyPhone = false;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.preset === key));
+      if (shouldRender) render();
+    }
+
+    function getAge() {
+      const nowMonth = 11;
+      let age = CURRENT_YEAR - state.child.birthYear;
+      if (nowMonth < state.child.birthMonth) age -= 1;
+      return Math.max(0, age);
+    }
+
+    function getAgeLabel() {
+      const age = getAge();
+      if (age < 2) {
+        const months = Math.max(1, (CURRENT_YEAR - state.child.birthYear) * 12 + (11 - state.child.birthMonth));
+        return `${months} mo`;
+      }
+      return `${age} yrs`;
+    }
+
+    function getStage() {
+      const age = getAge();
+      if (age <= 3) return STAGES[0];
+      if (age <= 6) return STAGES[1];
+      if (age <= 9) return STAGES[2];
+      if (age <= 12) return STAGES[3];
+      return STAGES[4];
+    }
+
+    function childDisplayName() {
+      const n = state.child.name.trim();
+      return n || 'Your child';
+    }
+
+    function possessive(name) {
+      if (name === 'Your child') return 'your child’s';
+      return `${name}’s`;
+    }
+
+    function pronounSubj() {
+      return state.child.gender === 'MALE' ? 'he' : 'she';
+    }
+
+    function renderOnboardingTop(transparent = false) {
+      return `
+        <div class="onboard-top ${transparent ? 'transparent' : ''}">
+          <div class="brand-lockup">
+            <img src="../brand/alongside-logo-full-256.png" alt="Alongside" />
+            <span>Alongside</span>
+          </div>
+          <div class="journey-crumbs">
+            <span class="journey-done">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+              Account created
+            </span>
+            <span style="opacity:.4">/</span>
+            <span class="journey-active">Add your first child</span>
+            <span style="opacity:.4">/</span>
+            <span>Your daily space</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDashboardBackdrop(innerHtml, isDrawer = false) {
+      return `
+        <div class="dash-backdrop-wrap">
+          <div class="dash-nav">
+            <div class="dash-nav-left">
+              <div class="brand-lockup">
+                <img src="../brand/alongside-logo-full-256.png" alt="Alongside" />
+                <span>Alongside</span>
+              </div>
+              <div class="dash-switcher">
+                <span class="dot-av">L</span>
+                <span>Leo</span>
+                <span class="age-tag">5 yrs</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#767E79" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+            <div class="dash-links">
+              <span class="active">Home</span>
+              <span>Academy</span>
+              <span>Culture &amp; Trends</span>
+              <span>Devices</span>
+            </div>
+            <div class="dash-switcher" style="padding:4px 10px 4px 5px">
+              <span class="dot-av" style="background:#2A342F">SJ</span>
+              <span>Sarah</span>
+            </div>
+          </div>
+
+          <div class="dash-bg-content">
+            <div class="dash-hero-mock">
+              <div class="dash-hero-left">
+                <div>
+                  <div style="font-size:11.5px;color:#F0BC46;font-weight:600;letter-spacing:.03em">Tuesday Evening · Calibrated to Leo, 5</div>
+                  <h2>Welcome home, Sarah.<br/>What’s happening with Leo tonight?</h2>
+                </div>
+                <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:12px 16px;font-size:13.5px;color:rgba(255,255,255,0.8)">
+                  Ask Dr. Alongside about bedtime stalls, picky meals, or big feelings…
+                </div>
+              </div>
+              <div class="dash-hero-right">
+                <img src="../images/home/hero-sanctuary.jpg" alt="Parent and child" />
+              </div>
+            </div>
+
+            <div class="dash-cards-mock">
+              <div class="dash-card-mock">
+                <h4>Tonight’s script</h4>
+                <p>“You don’t have to eat the broccoli tonight. It can just sit next to your pasta while you decide.”</p>
+              </div>
+              <div class="dash-card-mock">
+                <h4>Active chapter</h4>
+                <p>Early Childhood · Bedtime calm and emotional vocabulary (3 of 5 short lessons complete).</p>
+              </div>
+              <div class="dash-card-mock">
+                <h4>Sunday table prompt</h4>
+                <p>“What was the funniest or weirdest thing someone said at school this week?”</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-scrim ${isDrawer ? 'drawer-align' : ''}">
+            ${innerHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPhoneSection(compact = false) {
+      const age = getAge();
+      const isEarly = age <= 6 && !state.overrideEarlyPhone;
+      if (isEarly) {
+        return `
+          <div class="early-auto-note">
+            <div>
+              <strong>Screen-free &amp; shared-device stage</strong>
+              <div style="font-size:12px;opacity:.85;margin-top:2px">We’ll focus on play, sleep, and calm transitions — no personal phone setup needed yet.</div>
+            </div>
+            <button type="button" data-action="override-phone">Has a device?</button>
+          </div>
+        `;
+      }
+      return `
+        <div>
+          <div class="field-label">
+            <span>Personal phone right now?</span>
+            <span class="field-hint">Shapes readiness vs. curfew tools</span>
+          </div>
+          <div class="road-grid">
+            <button type="button" class="road-card ${state.child.roadType === 'PRE_DEVICE' ? 'active' : ''}" data-road="PRE_DEVICE">
+              <span class="road-radio"></span>
+              <div>
+                <div class="road-title">Not yet</div>
+                <div class="road-sub">${compact ? 'Readiness & prep' : 'No personal phone — preparing ahead'}</div>
+              </div>
+            </button>
+            <button type="button" class="road-card ${state.child.roadType === 'ACTIVE_DEVICE' ? 'active' : ''}" data-road="ACTIVE_DEVICE">
+              <span class="road-radio"></span>
+              <div>
+                <div class="road-title">Yes, has a phone</div>
+                <div class="road-sub">${compact ? 'Curfews & pacts' : 'Bedtime lock & family agreement'}</div>
+              </div>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderYearOptions() {
+      let opts = '';
+      for (let y = CURRENT_YEAR; y >= CURRENT_YEAR - 18; y--) {
+        const approx = CURRENT_YEAR - y;
+        const lbl = approx === 0 ? `${y} (Under 1)` : `${y} (Age ${approx})`;
+        opts += `<option value="${y}" ${state.child.birthYear === y ? 'selected' : ''}>${lbl}</option>`;
+      }
+      return opts;
+    }
+
+    function renderMonthOptions() {
+      return MONTHS.map((m, i) => `<option value="${i + 1}" ${state.child.birthMonth === i + 1 ? 'selected' : ''}>${m}</option>`).join('');
+    }
+
+    /* ============================================================
+       DIRECTION 0: CURRENT (BEFORE)
+       ============================================================ */
+    function renderDir0() {
+      const stage = getStage();
+      const age = getAge();
+      const card = `
+        <div class="before-card" style="${state.ctx === 'add' ? 'max-width:620px;max-height:84vh;display:flex;flex-direction:column;' : ''}">
+          <div class="before-header" style="${state.ctx === 'add' ? 'border-bottom:1px solid #F1F5F9;display:flex;justify-content:space-between;align-items:flex-start;' : ''}">
+            <div>
+              <span class="before-pill">✨ Parent Calm Onboarding</span>
+              <h2 style="font-size:21px;font-weight:700;color:#0F172A;margin-top:8px">${state.ctx === 'add' ? 'Add Child Profile' : 'Create Your First Child Profile'}</h2>
+              <p style="font-size:13px;color:#64748B;margin-top:3px">Welcome to AlongSide! Let’s set up your child’s profile to personalize your family dashboard.</p>
+            </div>
+            ${state.ctx === 'add' ? `<span style="color:#94A3B8;font-size:20px;padding:4px 8px">×</span>` : ''}
+          </div>
+
+          <div class="before-body" style="${state.ctx === 'add' ? 'padding-top:16px;overflow-y:auto;' : ''}">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Child’s First Name <span style="color:#DC2626">*</span></div>
+              <input class="al-input" style="border-radius:8px;height:42px;border-color:#CBD5E1" data-bind="name" value="${state.child.name}" />
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">
+                <span>Child’s Gender <span style="color:#DC2626">*</span></span>
+                <span style="font-size:11.5px;font-weight:400;color:#64748B">Tailors courses &amp; developmental guidance</span>
+              </div>
+              <div class="before-gender">
+                <button type="button" class="before-gbtn ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">👦 Boy (Male)</button>
+                <button type="button" class="before-gbtn ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">👧 Girl (Female)</button>
+              </div>
+            </div>
+
+            <div class="v1-row-2">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Birth Month *</div>
+                <select class="al-select" style="border-radius:8px;height:42px;border-color:#CBD5E1" data-bind="birthMonth">${renderMonthOptions()}</select>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Birth Year *</div>
+                <select class="al-select" style="border-radius:8px;height:42px;border-color:#CBD5E1" data-bind="birthYear">${renderYearOptions()}</select>
+              </div>
+            </div>
+
+            <div class="before-tier-box">
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em">
+                <span>Neurodevelopmental Lifespan Profile</span>
+                <span style="text-transform:none">Calculated Age: <strong style="color:#0F172A">${getAgeLabel()}</strong></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+                <span style="font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:99px;background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">${stage.label} (${stage.ages})</span>
+                ${age <= 3 ? `<span style="font-size:10px;font-family:monospace;padding:2px 7px;border-radius:99px;border:1px solid #CBD5E1;background:#FFF">Sub-Tranche: TODDLER_LANGUAGE_BURST</span>` : ''}
+                <span style="font-size:12px;color:#475569">${stage.headline}</span>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">School Grade / Daycare <span style="font-weight:400;color:#64748B">(Optional)</span></div>
+              <input class="al-input" style="border-radius:8px;height:42px;border-color:#CBD5E1" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. Daycare, Kindergarten, 5th Grade" />
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">
+                <span>Device Stage</span>
+                <span style="font-size:11.5px;font-weight:400;color:#64748B">${state.child.roadType === 'PRE_DEVICE' ? 'Road 1 · Pre-Device' : 'Road 2 · Active-Device'}</span>
+              </div>
+              <div class="before-roads">
+                <button type="button" class="before-road ${state.child.roadType === 'PRE_DEVICE' ? 'r1' : ''}" data-road="PRE_DEVICE">
+                  <span style="width:28px;height:28px;border-radius:7px;background:${state.child.roadType === 'PRE_DEVICE' ? '#059669' : '#F1F5F9'};color:${state.child.roadType === 'PRE_DEVICE' ? '#FFF' : '#475569'};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">1</span>
+                  <div>
+                    <div style="font-size:12px;font-weight:700;color:#0F172A">Pre-Device Preparation</div>
+                    <div style="font-size:11px;color:#64748B">No personal phone yet</div>
+                  </div>
+                </button>
+                <button type="button" class="before-road ${state.child.roadType === 'ACTIVE_DEVICE' ? 'r2' : ''}" data-road="ACTIVE_DEVICE">
+                  <span style="width:28px;height:28px;border-radius:7px;background:${state.child.roadType === 'ACTIVE_DEVICE' ? '#7C3AED' : '#F1F5F9'};color:${state.child.roadType === 'ACTIVE_DEVICE' ? '#FFF' : '#475569'};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">2</span>
+                  <div>
+                    <div style="font-size:12px;font-weight:700;color:#0F172A">Active Smartphone</div>
+                    <div style="font-size:11px;color:#64748B">Already has a personal phone</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid #F1F5F9">
+              <span style="font-size:13px;color:#64748B">${state.ctx === 'add' ? 'Cancel' : ''}</span>
+              <button type="button" style="height:44px;padding:0 20px;border-radius:8px;background:#0D9488;color:#FFF;font-size:13.5px;font-weight:600">Create Child Profile →</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (state.ctx === 'add') return renderDashboardBackdrop(card);
+      return `${renderOnboardingTop()}<div class="before-stage">${card}</div>`;
+    }
+
+    /* ============================================================
+       VISUAL 1: THE LIVE KEEPSAKE
+       ============================================================ */
+    function renderDir1() {
+      const stage = getStage();
+      const name = childDisplayName();
+      const initial = name.charAt(0).toUpperCase();
+      const ageLbl = getAgeLabel();
+
+      if (state.ctx === 'add') {
+        const modal = `
+          <div class="v1-modal">
+            <div class="v1-modal-form">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div>
+                  <h2 style="font-family:var(--font-serif);font-size:28px;font-weight:400;letter-spacing:-0.02em">Add another child</h2>
+                  <p style="font-size:13.5px;color:var(--body);margin-top:3px">Each sibling gets their own age-calibrated scripts, chapters, and controls.</p>
+                </div>
+                <button type="button" class="close-x" aria-label="Close">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+
+              <div class="v1-row-2">
+                <div>
+                  <div class="field-label"><span>First name</span></div>
+                  <input class="al-input" data-bind="name" value="${state.child.name}" placeholder="e.g. Maya" />
+                </div>
+                <div>
+                  <div class="field-label"><span>Boy or girl</span></div>
+                  <div class="gender-seg">
+                    <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+                    <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="v1-row-2">
+                <div>
+                  <div class="field-label"><span>Birth month</span></div>
+                  <select class="al-select" data-bind="birthMonth">${renderMonthOptions()}</select>
+                </div>
+                <div>
+                  <div class="field-label"><span>Birth year</span></div>
+                  <select class="al-select" data-bind="birthYear">${renderYearOptions()}</select>
+                </div>
+              </div>
+
+              ${renderPhoneSection(true)}
+
+              <div>
+                ${state.showOptional ? `
+                  <div class="field-label"><span>School or daycare</span><span class="field-hint">Optional</span></div>
+                  <input class="al-input" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. 5th Grade, Montessori" />
+                ` : `
+                  <button type="button" class="optional-trigger" data-action="toggle-opt">+ Add school or daycare (optional)</button>
+                `}
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--hairline-soft);margin-top:auto">
+                <button type="button" class="btn-ghost">Cancel</button>
+                <button type="button" class="btn-spruce">
+                  <span>Add ${name} to family</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="v1-modal-shelf">
+              <div>
+                <div style="font-size:12px;font-weight:600;color:var(--mute)">Your family shelf</div>
+                <div style="font-family:var(--font-serif);font-size:21px;font-weight:400;margin-top:2px">2 children · Instant switching</div>
+                <div class="shelf-list">
+                  <div class="shelf-child">
+                    <div class="shelf-av">L</div>
+                    <div>
+                      <div style="font-size:14px;font-weight:600;color:var(--ink)">Leo <span style="font-weight:400;color:var(--mute)">· 5 yrs</span></div>
+                      <div style="font-size:12px;color:var(--body)">Early Years · Shared screens</div>
+                    </div>
+                  </div>
+                  <div class="shelf-child new-live">
+                    <div class="shelf-av">${initial}</div>
+                    <div>
+                      <div style="font-size:14px;font-weight:600">${name} <span style="opacity:.75;font-weight:400">· ${ageLbl}</span></div>
+                      <div style="font-size:12px;color:rgba(250,249,245,0.8)">${stage.label} · ${getAge() <= 6 ? 'Screen-free focus' : (state.child.roadType === 'PRE_DEVICE' ? 'Pre-phone prep' : 'Active phone')}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding:16px;border-radius:13px;background:#FFF;border:1px solid var(--hairline)">
+                <div style="font-size:12px;font-weight:600;color:var(--spruce)">Waiting inside ${possessive(name)} space</div>
+                <p style="font-family:var(--font-serif);font-style:italic;font-size:14.5px;color:var(--ink);margin-top:6px;line-height:1.45">${stage.script}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        return renderDashboardBackdrop(modal);
+      }
+
+      return `
+        ${renderOnboardingTop()}
+        <div class="v1-first">
+          <div class="v1-left">
+            <h1 class="v1-title">Who are we guiding alongside you?</h1>
+            <p class="v1-sub">Tell us a few basics about your child. Everything inside Alongside calibrates to their exact stage right away.</p>
+
+            <div class="v1-form">
+              <div class="v1-row-2">
+                <div>
+                  <div class="field-label"><span>First name</span></div>
+                  <input class="al-input" data-bind="name" value="${state.child.name}" placeholder="e.g. Maya" />
+                </div>
+                <div>
+                  <div class="field-label"><span>Boy or girl</span></div>
+                  <div class="gender-seg">
+                    <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+                    <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="v1-row-2">
+                <div>
+                  <div class="field-label"><span>Birth month</span></div>
+                  <select class="al-select" data-bind="birthMonth">${renderMonthOptions()}</select>
+                </div>
+                <div>
+                  <div class="field-label"><span>Birth year</span></div>
+                  <select class="al-select" data-bind="birthYear">${renderYearOptions()}</select>
+                </div>
+              </div>
+
+              ${renderPhoneSection()}
+
+              <div>
+                ${state.showOptional ? `
+                  <div class="field-label"><span>School grade or daycare</span><span class="field-hint">Optional</span></div>
+                  <input class="al-input" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. Daycare, Kindergarten, 5th Grade" />
+                ` : `
+                  <button type="button" class="optional-trigger" data-action="toggle-opt">+ Add school or daycare (optional)</button>
+                `}
+              </div>
+
+              <div style="padding-top:6px">
+                <button type="button" class="btn-spruce" style="width:100%">
+                  <span>Open ${possessive(name)} space</span>
+                </button>
+                <p style="font-size:12.5px;color:var(--mute);text-align:center;margin-top:10px">You can add more children anytime from the top bar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="v1-right">
+            <div class="almanac-book">
+              <div class="book-top">
+                <div class="book-monogram">${initial}</div>
+                <div class="book-edition">
+                  <strong>${stage.label}</strong>
+                  <span>${ageLbl} · ${MONTHS_SHORT[state.child.birthMonth - 1]} ${state.child.birthYear}</span>
+                </div>
+              </div>
+
+              <div class="book-name">${possessive(name).replace(/^./, c => c.toUpperCase())} Almanac</div>
+              <div class="book-stage">${stage.headline}</div>
+
+              <div class="book-script">
+                <div class="book-script-lbl">Preview · Tonight’s calm script</div>
+                <p>${stage.script}</p>
+              </div>
+
+              <div class="book-unlocks">
+                ${stage.unlocks.map(u => `<div class="book-unlock-item"><span class="book-dot"></span><span>${u}</span></div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       VISUAL 2: ONE QUIET QUESTION (3-STEP PROGRESSIVE STORY)
+       ============================================================ */
+    function renderDir2() {
+      const stage = getStage();
+      const name = childDisplayName();
+      const age = getAge();
+      const step = state.v2Step;
+
+      let stepBody = '';
+      if (step === 1) {
+        stepBody = `
+          <h2 class="v2-q">${state.ctx === 'add' ? 'Who’s joining Leo in your family?' : 'Let’s start with their name.'}</h2>
+          <p class="v2-q-sub">We’ll weave their name into everyday conversation scripts and weekly guides.</p>
+          <input class="v2-big-name" data-bind="name" value="${state.child.name}" placeholder="Child’s first name" />
+          <div style="margin-top:24px">
+            <div class="field-label"><span>Boy or girl</span><span class="field-hint">Helps match puberty &amp; social topics</span></div>
+            <div class="gender-seg">
+              <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+              <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+            </div>
+          </div>
+        `;
+      } else if (step === 2) {
+        stepBody = `
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 11px;border-radius:999px;background:var(--sand);font-size:12.5px;font-weight:500;color:var(--body);margin-bottom:14px">
+            <strong style="color:var(--ink)">${name}</strong> · ${state.child.gender === 'MALE' ? 'Boy' : 'Girl'}
+            <button type="button" data-v2step="1" style="color:var(--spruce);font-weight:600;margin-left:4px">Edit</button>
+          </div>
+          <h2 class="v2-q">How old is ${name}?</h2>
+          <p class="v2-q-sub">Pick their age and birth month so milestones stay accurate as they grow.</p>
+
+          <div class="age-stepper-box">
+            <div class="age-big-row">
+              <div class="age-display">${age}<span>${age === 1 ? 'year old' : 'years old'} · Born ${state.child.birthYear}</span></div>
+              <div class="stepper-btns">
+                <button type="button" class="step-round" data-age-delta="-1" aria-label="Decrease age">−</button>
+                <button type="button" class="step-round" data-age-delta="1" aria-label="Increase age">+</button>
+              </div>
+            </div>
+            <div style="font-size:12px;font-weight:500;color:var(--mute);margin-bottom:6px">Birth month</div>
+            <div class="month-grid-compact">
+              ${MONTHS_SHORT.map((m, idx) => `<button type="button" class="m-chip ${state.child.birthMonth === idx + 1 ? 'active' : ''}" data-month="${idx + 1}">${m}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="v2-insight">
+            <strong style="color:var(--spruce)">${stage.label} (${stage.ages})</strong> — ${stage.insight}
+          </div>
+        `;
+      } else {
+        stepBody = `
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 11px;border-radius:999px;background:var(--sand);font-size:12.5px;font-weight:500;color:var(--body);margin-bottom:14px">
+            <strong style="color:var(--ink)">${name}</strong> · ${getAgeLabel()} · ${stage.label}
+          </div>
+          <h2 class="v2-q">${age <= 6 ? `Almost ready for ${name}.` : `Does ${name} have a phone yet?`}</h2>
+          <p class="v2-q-sub">${age <= 6 ? 'One optional detail below, then we’ll open your personalized space.' : 'This decides whether we prioritize First-Phone Readiness or calm evening curfews.'}</p>
+
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:16px">
+            ${renderPhoneSection()}
+            <div>
+              <div class="field-label"><span>School grade or daycare</span><span class="field-hint">Optional</span></div>
+              <input class="al-input" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. 5th Grade, Kindergarten" />
+            </div>
+          </div>
+        `;
+      }
+
+      const cardInner = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span style="font-size:12.5px;font-weight:600;color:var(--spruce)">Step ${step} of 3</span>
+          ${state.ctx === 'add' ? `<button type="button" class="close-x" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>` : `<span style="font-size:12.5px;color:var(--mute)">Takes about 20 seconds</span>`}
+        </div>
+
+        <div class="v2-steps">
+          <button type="button" class="v2-step-btn ${step === 1 ? 'active' : 'done'}" data-v2step="1">Name</button>
+          <button type="button" class="v2-step-btn ${step === 2 ? 'active' : (step > 2 ? 'done' : '')}" data-v2step="2">Birthday</button>
+          <button type="button" class="v2-step-btn ${step === 3 ? 'active' : ''}" data-v2step="3">Phone &amp; finish</button>
+        </div>
+
+        ${stepBody}
+
+        <div class="v2-footer">
+          ${step > 1
+            ? `<button type="button" class="btn-ghost" data-v2step="${step - 1}">Back</button>`
+            : (state.ctx === 'add' ? `<button type="button" class="btn-ghost">Cancel</button>` : `<span></span>`)}
+          ${step < 3
+            ? `<button type="button" class="btn-spruce" data-v2step="${step + 1}">Continue</button>`
+            : `<button type="button" class="btn-spruce">Open ${possessive(name)} space</button>`}
+        </div>
+      `;
+
+      if (state.ctx === 'add') {
+        return renderDashboardBackdrop(`<div class="v2-modal">${cardInner}</div>`);
+      }
+
+      return `
+        ${renderOnboardingTop()}
+        <div class="v2-wrap">
+          <div class="v2-card">${cardInner}</div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       VISUAL 3: THE SUNLIT FOLIO (PHOTO SANCTUARY + ZERO-SCROLL DRAWER)
+       ============================================================ */
+    function renderCompactPhoneToggle() {
+      const age = getAge();
+      const isEarly = age <= 6 && !state.overrideEarlyPhone;
+      if (isEarly) {
+        return `
+          <div class="v3-phone-inline">
+            <span><strong>Ages 0–6</strong> · Screen-free &amp; shared device</span>
+            <button type="button" data-action="override-phone">Has a phone?</button>
+          </div>
+        `;
+      }
+      return `
+        <div>
+          <div class="field-label"><span>Personal phone?</span></div>
+          <div class="gender-seg">
+            <button type="button" class="gender-opt ${state.child.roadType === 'PRE_DEVICE' ? 'active' : ''}" data-road="PRE_DEVICE">Not yet</button>
+            <button type="button" class="gender-opt ${state.child.roadType === 'ACTIVE_DEVICE' ? 'active' : ''}" data-road="ACTIVE_DEVICE">Yes, has one</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDir3() {
+      const stage = getStage();
+      const name = childDisplayName();
+
+      if (state.ctx === 'add') {
+        const drawer = `
+          <aside class="v3-drawer">
+            <div class="v3-drawer-banner">
+              <img src="../images/home/generated-siblings-play.jpg" alt="Siblings playing together" />
+              <div class="v3-drawer-scrim"></div>
+              <div class="v3-drawer-banner-content">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;gap:6px;align-items:center">
+                    <span style="padding:3px 9px;border-radius:999px;background:rgba(255,255,255,0.22);backdrop-filter:blur(6px);font-size:11.5px;font-weight:600">Leo, 5</span>
+                    <span style="padding:3px 9px;border-radius:999px;background:#FAF9F5;color:var(--spruce);font-size:11.5px;font-weight:600">+ ${name}</span>
+                  </div>
+                  <button type="button" class="close-x" style="width:32px;height:32px;background:rgba(17,20,19,0.45);color:#FFF" aria-label="Close">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <h2 style="font-family:var(--font-serif);font-size:26px;font-weight:400;line-height:1.1">Add a sibling</h2>
+              </div>
+            </div>
+
+            <div class="v3-drawer-body">
+              <div class="v3-drawer-form">
+                <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:12px">
+                  <div>
+                    <div class="field-label"><span>First name</span></div>
+                    <input class="al-input" data-bind="name" value="${state.child.name}" placeholder="e.g. Maya" />
+                  </div>
+                  <div>
+                    <div class="field-label"><span>Boy or girl</span></div>
+                    <div class="gender-seg">
+                      <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+                      <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="v1-row-2">
+                  <div>
+                    <div class="field-label"><span>Birth month</span></div>
+                    <select class="al-select" data-bind="birthMonth">${renderMonthOptions()}</select>
+                  </div>
+                  <div>
+                    <div class="field-label"><span>Birth year</span></div>
+                    <select class="al-select" data-bind="birthYear">${renderYearOptions()}</select>
+                  </div>
+                </div>
+
+                <div class="v3-stage-pill">
+                  <strong>${stage.label}</strong>
+                  <span>${getAgeLabel()}</span>
+                </div>
+
+                ${renderCompactPhoneToggle()}
+
+                <div>
+                  ${state.showOptional ? `
+                    <div class="field-label"><span>School or daycare</span><span class="field-hint">Optional</span></div>
+                    <input class="al-input" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. 5th Grade" />
+                  ` : `
+                    <button type="button" class="optional-trigger" data-action="toggle-opt">+ School or daycare</button>
+                  `}
+                </div>
+              </div>
+            </div>
+
+            <div class="v3-drawer-foot">
+              <button type="button" class="btn-ghost">Cancel</button>
+              <button type="button" class="btn-spruce" style="flex:1">Add ${name} &amp; switch</button>
+            </div>
+          </aside>
+        `;
+        return renderDashboardBackdrop(drawer, true);
+      }
+
+      return `
+        <div class="v3-first">
+          <div class="v3-photo-pane">
+            <img class="bg-photo" src="../images/home/left_facing_father_daughter_reading.jpg" alt="Father and daughter reading together in warm afternoon light" />
+            <div class="v3-photo-scrim"></div>
+            <div class="v3-photo-top">
+              <div class="v3-photo-brand">
+                <img src="../brand/alongside-logo-full-256.png" alt="Alongside" />
+                <span>Alongside</span>
+              </div>
+            </div>
+            <div class="v3-photo-bottom">
+              <p class="v3-quote">Every age has its own wiring. Set up once, and the whole guide adapts to them.</p>
+              <p class="v3-quote-sub">Daily scripts, 5-minute chapters, and built-in parental controls for ages 0–18.</p>
+            </div>
+          </div>
+
+          <div class="v3-form-pane">
+            <div class="v3-form-inner">
+              <h1 style="font-family:var(--font-serif);font-size:38px;font-weight:400;line-height:1.08;letter-spacing:-0.025em">Add your first child</h1>
+              <p style="font-size:15px;color:var(--body);margin-top:8px;line-height:1.5">You can add siblings anytime after this.</p>
+
+              <div style="margin-top:26px;display:flex;flex-direction:column;gap:16px">
+                <div class="v1-row-2">
+                  <div>
+                    <div class="field-label"><span>First name</span></div>
+                    <input class="al-input" data-bind="name" value="${state.child.name}" placeholder="e.g. Maya" />
+                  </div>
+                  <div>
+                    <div class="field-label"><span>Boy or girl</span></div>
+                    <div class="gender-seg">
+                      <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+                      <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="v1-row-2">
+                  <div>
+                    <div class="field-label"><span>Birth month</span></div>
+                    <select class="al-select" data-bind="birthMonth">${renderMonthOptions()}</select>
+                  </div>
+                  <div>
+                    <div class="field-label"><span>Birth year</span></div>
+                    <select class="al-select" data-bind="birthYear">${renderYearOptions()}</select>
+                  </div>
+                </div>
+
+                <div class="v3-stage-pill">
+                  <strong>${stage.label}</strong>
+                  <span>${getAgeLabel()}</span>
+                </div>
+
+                ${renderCompactPhoneToggle()}
+
+                <div>
+                  ${state.showOptional ? `
+                    <div class="field-label"><span>School or daycare</span><span class="field-hint">Optional</span></div>
+                    <input class="al-input" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. 5th Grade" />
+                  ` : `
+                    <button type="button" class="optional-trigger" data-action="toggle-opt">+ School or daycare</button>
+                  `}
+                </div>
+
+                <button type="button" class="btn-spruce" style="width:100%;margin-top:4px">
+                  <span>Enter ${possessive(name)} space</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       VISUAL 4: THE FAMILY LETTER (CONVERSATIONAL FILL-IN-THE-BLANK)
+       ============================================================ */
+    function renderDir4() {
+      const stage = getStage();
+      const name = childDisplayName();
+      const age = getAge();
+
+      const nameWidthCh = Math.max(4.5, (state.child.name.trim().length || 4) + 1.4);
+      const monthNameLen = MONTHS[state.child.birthMonth - 1].length;
+      const monthWidthCh = Math.max(4.8, monthNameLen + 2.3);
+
+      const proseHtml = `
+        <div class="v4-prose">
+          ${state.ctx === 'add' ? 'We’re also raising' : 'I’m raising'}
+          <input class="v4-blank-input" style="width:${nameWidthCh}ch" data-bind="name" value="${state.child.name}" placeholder="name" aria-label="Child first name" />,
+          a
+          <select class="v4-blank-select" data-bind="gender" aria-label="Boy or girl">
+            <option value="FEMALE" ${state.child.gender === 'FEMALE' ? 'selected' : ''}>girl</option>
+            <option value="MALE" ${state.child.gender === 'MALE' ? 'selected' : ''}>boy</option>
+          </select>
+          born in
+          <select class="v4-blank-select" style="width:${monthWidthCh}ch" data-bind="birthMonth" aria-label="Birth month">${renderMonthOptions()}</select>
+          <select class="v4-blank-select" data-bind="birthYear" aria-label="Birth year" style="font-variant-numeric:tabular-nums">
+            ${Array.from({ length: 19 }, (_, i) => CURRENT_YEAR - i).map(y => `<option value="${y}" ${state.child.birthYear === y ? 'selected' : ''}>${y}</option>`).join('')}
+          </select>.
+          ${age <= 6
+            ? `Right now, ${pronounSubj()}’s in the <span style="color:var(--spruce);border-bottom:1.5px dashed var(--spruce-border)">early screen-free years</span>.`
+            : `Right now, ${pronounSubj()} <select class="v4-blank-select amber-blank" data-bind="roadType" aria-label="Phone status">
+                <option value="PRE_DEVICE" ${state.child.roadType === 'PRE_DEVICE' ? 'selected' : ''}>doesn’t have a phone yet</option>
+                <option value="ACTIVE_DEVICE" ${state.child.roadType === 'ACTIVE_DEVICE' ? 'selected' : ''}>already has a smartphone</option>
+              </select>.`
+          }
+        </div>
+      `;
+
+      const slipHtml = `
+        <div class="v4-slip">
+          <div>
+            <div class="v4-slip-title">${name} · ${getAgeLabel()} · ${stage.label}</div>
+            <div class="v4-slip-text">${stage.insight}</div>
+          </div>
+          <button type="button" class="btn-spruce" style="white-space:nowrap">
+            <span>${state.ctx === 'add' ? `Add ${name} to family` : `Begin ${possessive(name)} edition`}</span>
+          </button>
+        </div>
+      `;
+
+      if (state.ctx === 'add') {
+        const modal = `
+          <div class="v4-modal-sheet">
+            <div class="v4-tabs">
+              <div class="v4-tab-list">
+                <div class="v4-tab">Leo · 5 yrs</div>
+                <div class="v4-tab active">+ New sibling page</div>
+              </div>
+              <button type="button" class="close-x" style="margin-bottom:6px" aria-label="Close">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div style="padding:28px 34px 32px">
+              <div style="font-size:13px;color:var(--mute)">Tap any highlighted word to fill in ${possessive(name)} details.</div>
+              ${proseHtml}
+              <div style="margin-top:16px">
+                <input class="al-input" style="height:40px;max-width:300px;background:transparent;border-style:dashed" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="+ School or daycare (optional)" />
+              </div>
+              ${slipHtml}
+            </div>
+          </div>
+        `;
+        return renderDashboardBackdrop(modal);
+      }
+
+      return `
+        ${renderOnboardingTop()}
+        <div class="v4-desk">
+          <div class="v4-sheet">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--hairline)">
+              <div style="display:flex;align-items:center;gap:10px">
+                <img src="../brand/alongside-logo-full-256.png" alt="Alongside" style="width:28px;height:28px;border-radius:6px" />
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;color:var(--ink)">Start your family’s edition</div>
+                  <div style="font-size:12px;color:var(--mute)">Tap any highlighted word below — takes 15 seconds.</div>
+                </div>
+              </div>
+              <span style="font-size:12.5px;color:var(--mute)">Ages 0–18</span>
+            </div>
+
+            ${proseHtml}
+
+            <div style="margin-top:20px;display:flex;align-items:center;gap:12px">
+              <span style="font-size:13px;color:var(--mute)">Optional note:</span>
+              <input class="al-input" style="height:38px;max-width:290px;font-size:13.5px;background:#FFF" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="School grade or daycare" />
+            </div>
+
+            ${slipHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       VISUAL 5: THE LIFESPAN COMPASS (VISUAL 0-18 RIBBON + SCOPED CHIPS)
+       ============================================================ */
+    function renderDir5() {
+      const activeStage = getStage();
+      const name = childDisplayName();
+
+      const inner = `
+        <div class="v5-top">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+            <div>
+              <h2 style="font-family:var(--font-serif);font-size:${state.ctx === 'add' ? '28px' : '34px'};font-weight:400;line-height:1.1;letter-spacing:-0.02em">
+                ${state.ctx === 'add' ? 'Place your next child on the timeline' : 'Where is your child on the 0–18 journey?'}
+              </h2>
+              <p style="font-size:14px;color:var(--body);margin-top:5px">
+                ${state.ctx === 'add' ? 'Leo (5) is already calibrated on Early Years. Tap a stage to add a sibling.' : 'Tap their stage first — we’ll narrow down the exact birth year for you.'}
+              </p>
+            </div>
+            ${state.ctx === 'add' ? `<button type="button" class="close-x" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>` : ''}
+          </div>
+
+          <div class="v5-ribbon">
+            ${STAGES.map(st => {
+              const isAct = st.id === activeStage.id;
+              const hasLeo = state.ctx === 'add' && st.id === '4-6';
+              return `
+                <button type="button" class="stage-tile ${isAct ? 'active' : ''}" data-stage-pick="${st.id}">
+                  ${hasLeo ? `<span class="sibling-pin">Leo · 5</span>` : ''}
+                  <div class="stage-ages">${st.ages}</div>
+                  <div class="stage-name">${st.label}</div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <div class="v5-body">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div class="field-label"><span>First name</span></div>
+              <input class="al-input" data-bind="name" value="${state.child.name}" placeholder="e.g. Maya" />
+            </div>
+
+            <div>
+              <div class="field-label"><span>Boy or girl</span></div>
+              <div class="gender-seg">
+                <button type="button" class="gender-opt ${state.child.gender === 'MALE' ? 'active' : ''}" data-gender="MALE">Boy</button>
+                <button type="button" class="gender-opt ${state.child.gender === 'FEMALE' ? 'active' : ''}" data-gender="FEMALE">Girl</button>
+              </div>
+            </div>
+
+            ${renderPhoneSection(true)}
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div class="field-label">
+                <span>Birth year</span>
+                <span class="field-hint">Scoped to ${activeStage.label}</span>
+              </div>
+              <div class="year-chips">
+                ${activeStage.years.map(y => `
+                  <button type="button" class="y-chip ${state.child.birthYear === y ? 'active' : ''}" data-year-chip="${y}">
+                    ${y} <span style="opacity:.6;font-size:12px;margin-left:2px">(${CURRENT_YEAR - y}y)</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="field-label"><span>Birth month</span></div>
+              <div class="month-grid-compact">
+                ${MONTHS_SHORT.map((m, idx) => `<button type="button" class="m-chip ${state.child.birthMonth === idx + 1 ? 'active' : ''}" data-month="${idx + 1}">${m}</button>`).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="field-label"><span>School or daycare</span><span class="field-hint">Optional</span></div>
+              <input class="al-input" style="height:42px" data-bind="schoolGrade" value="${state.child.schoolGrade}" placeholder="e.g. 5th Grade" />
+            </div>
+          </div>
+        </div>
+
+        <div class="v5-foot">
+          <div class="v5-summary-pill">
+            <span style="width:10px;height:10px;border-radius:999px;background:var(--spruce)"></span>
+            <span><strong>${name}</strong> · ${getAgeLabel()} · ${activeStage.label} — starts with <strong>${activeStage.nextStep}</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            ${state.ctx === 'add' ? `<button type="button" class="btn-ghost">Cancel</button>` : ''}
+            <button type="button" class="btn-spruce">
+              <span>${state.ctx === 'add' ? `Add ${name}` : `Create ${possessive(name)} profile`}</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      if (state.ctx === 'add') {
+        return renderDashboardBackdrop(`<div class="v5-modal">${inner}</div>`);
+      }
+
+      return `
+        ${renderOnboardingTop()}
+        <div class="v5-wrap">
+          <div class="v5-panel">${inner}</div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       MAIN RENDER & EVENT BINDINGS
+       ============================================================ */
+    function render() {
+      const frame = document.getElementById('stage-frame');
+      frame.classList.toggle('mobile-mode', state.view === 'mobile');
+
+      // Update studio topbar controls
+      document.querySelectorAll('[data-dir]').forEach(btn => {
+        const d = Number(btn.dataset.dir);
+        btn.classList.remove('active', 'active-before');
+        if (d === state.dir) btn.classList.add(d === 0 ? 'active-before' : 'active');
+      });
+      document.querySelectorAll('[data-ctx]').forEach(btn => {
+        btn.classList.toggle('active-ctx', btn.dataset.ctx === state.ctx);
+      });
+      document.querySelectorAll('[data-view]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === state.view);
+      });
+
+      const m = META[state.dir];
+      document.getElementById('meta-code').textContent = m.code;
+      document.getElementById('meta-title').textContent = m.title;
+      document.getElementById('meta-desc').textContent = m.desc;
+
+      let html = '';
+      if (state.dir === 0) html = renderDir0();
+      else if (state.dir === 1) html = renderDir1();
+      else if (state.dir === 2) html = renderDir2();
+      else if (state.dir === 3) html = renderDir3();
+      else if (state.dir === 4) html = renderDir4();
+      else if (state.dir === 5) html = renderDir5();
+
+      frame.innerHTML = html;
+      bindStageEvents();
+    }
+
+    function bindStageEvents() {
+      const frame = document.getElementById('stage-frame');
+
+      frame.querySelectorAll('[data-bind="name"]').forEach(el => {
+        el.addEventListener('input', e => {
+          const pos = e.target.selectionStart;
+          state.child.name = e.target.value;
+          render();
+          const next = frame.querySelector('[data-bind="name"]');
+          if (next) { next.focus(); next.setSelectionRange(pos, pos); }
+        });
+      });
+
+      frame.querySelectorAll('[data-bind="schoolGrade"]').forEach(el => {
+        el.addEventListener('input', e => {
+          state.child.schoolGrade = e.target.value;
+        });
+      });
+
+      frame.querySelectorAll('[data-bind="birthMonth"]').forEach(el => {
+        el.addEventListener('change', e => { state.child.birthMonth = Number(e.target.value); render(); });
+      });
+      frame.querySelectorAll('[data-bind="birthYear"]').forEach(el => {
+        el.addEventListener('change', e => { state.child.birthYear = Number(e.target.value); state.overrideEarlyPhone = false; render(); });
+      });
+      frame.querySelectorAll('[data-bind="gender"]').forEach(el => {
+        el.addEventListener('change', e => { state.child.gender = e.target.value; render(); });
+      });
+      frame.querySelectorAll('[data-bind="roadType"]').forEach(el => {
+        el.addEventListener('change', e => { state.child.roadType = e.target.value; render(); });
+      });
+
+      frame.querySelectorAll('[data-gender]').forEach(btn => {
+        btn.addEventListener('click', () => { state.child.gender = btn.dataset.gender; render(); });
+      });
+      frame.querySelectorAll('[data-road]').forEach(btn => {
+        btn.addEventListener('click', () => { state.child.roadType = btn.dataset.road; render(); });
+      });
+      frame.querySelectorAll('[data-month]').forEach(btn => {
+        btn.addEventListener('click', () => { state.child.birthMonth = Number(btn.dataset.month); render(); });
+      });
+      frame.querySelectorAll('[data-year-chip]').forEach(btn => {
+        btn.addEventListener('click', () => { state.child.birthYear = Number(btn.dataset.yearChip); state.overrideEarlyPhone = false; render(); });
+      });
+      frame.querySelectorAll('[data-stage-pick]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const st = STAGES.find(s => s.id === btn.dataset.stagePick);
+          if (st) {
+            state.child.birthYear = st.defaultYear;
+            state.overrideEarlyPhone = false;
+            if (st.id === '13-18') state.child.roadType = 'ACTIVE_DEVICE';
+            else if (st.id === '0-3' || st.id === '4-6') state.child.roadType = 'PRE_DEVICE';
+            render();
+          }
+        });
+      });
+      frame.querySelectorAll('[data-v2step]').forEach(btn => {
+        btn.addEventListener('click', () => { state.v2Step = Number(btn.dataset.v2step); render(); });
+      });
+      frame.querySelectorAll('[data-age-delta]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const delta = Number(btn.dataset.ageDelta);
+          const nextAge = Math.min(18, Math.max(0, getAge() + delta));
+          state.child.birthYear = CURRENT_YEAR - nextAge;
+          state.overrideEarlyPhone = false;
+          render();
+        });
+      });
+      frame.querySelectorAll('[data-action="toggle-opt"]').forEach(btn => {
+        btn.addEventListener('click', () => { state.showOptional = !state.showOptional; render(); });
+      });
+      frame.querySelectorAll('[data-action="override-phone"]').forEach(btn => {
+        btn.addEventListener('click', () => { state.overrideEarlyPhone = true; render(); });
+      });
+    }
+
+    // Studio chrome controls
+    document.querySelectorAll('[data-dir]').forEach(btn => {
+      btn.addEventListener('click', () => { state.dir = Number(btn.dataset.dir); render(); });
+    });
+    document.querySelectorAll('[data-ctx]').forEach(btn => {
+      btn.addEventListener('click', () => { state.ctx = btn.dataset.ctx; render(); });
+    });
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => { state.view = btn.dataset.view; render(); });
+    });
+    document.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+    });
+
+    // Keyboard shortcuts 0-5 for fast browsing
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (['0','1','2','3','4','5'].includes(e.key)) {
+        state.dir = Number(e.key);
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
