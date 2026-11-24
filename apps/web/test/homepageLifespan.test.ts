@@ -74,7 +74,8 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
       expect(SCREEN_PACT_POINTS).toHaveLength(3);
       const html = renderToStaticMarkup(React.createElement(ScreenPactSection));
 
-      expect(html).toContain('Lock down their phone in 5');
+      expect(html).toContain('Safer devices, zero guesswork');
+      expect(html).toContain('Control apps &amp; content');
       expect(html).toContain('Apple Screen Time');
       expect(html).toContain('Google Family Link');
       expect(html).toContain('8:30 PM');

@@ -111,7 +111,8 @@ describe('DevicesManagementView (Direction G: 3-Step Vertical Journey Timeline)'
       expect(html).toContain('Enforced Network Protection');
       expect(html).toContain('Adult &amp; Explicit Content Filter');
       expect(html).toContain('Strict SafeSearch &amp; YouTube Restricted Mode');
-      expect(html).toContain('Bedtime Internet Pause');
+      expect(html).toContain('Enforcement Mode:');
+      expect(html).toContain('Scheduled Window');
 
       // Step 3: Built-In OS Controls & Go Further
       expect(html).toContain('Step 3 · Device Passcode &amp; Built-In Controls');
