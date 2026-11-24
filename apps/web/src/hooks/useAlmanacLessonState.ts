@@ -16,6 +16,7 @@ import {
 import {
   buildHookingNarrationScript,
   playNaturalNarrator,
+  resolveVoices,
   type VoicePersona,
 } from '@/lib/audio/narratorEngine';
 
@@ -293,53 +294,35 @@ export function useAlmanacLessonState({
     [narration.fullText, audioSeconds, totalAudioSeconds, voicePersona]
   );
 
+  // Pre-warm browser speech synthesis voices so initial audio start is instantaneous
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      resolveVoices();
+    }
+  }, []);
+
   const togglePlayAudio = React.useCallback(() => {
     if (isPlaying) {
       stopAudio();
       return;
     }
 
-    if (lesson.audioUrl && !audioFileFailed && audioRef.current) {
-      audioRef.current.playbackRate = playbackSpeed;
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          setSpeakingBeat(0);
-        })
-        .catch(() => {
-          setAudioFileFailed(true);
-          startSpeechFallback(playbackSpeed);
-        });
-      return;
-    }
-
     startSpeechFallback(playbackSpeed);
-  }, [
-    isPlaying,
-    stopAudio,
-    lesson.audioUrl,
-    audioFileFailed,
-    playbackSpeed,
-    startSpeechFallback,
-  ]);
+  }, [isPlaying, stopAudio, playbackSpeed, startSpeechFallback]);
 
   const cyclePlaybackSpeed = React.useCallback(() => {
     const next: 1 | 1.25 | 1.5 =
       playbackSpeed === 1 ? 1.25 : playbackSpeed === 1.25 ? 1.5 : 1;
     setPlaybackSpeed(next);
-    if (audioRef.current) {
-      audioRef.current.playbackRate = next;
-    }
-    if (isPlaying && (!lesson.audioUrl || audioFileFailed)) {
+    if (isPlaying) {
       startSpeechFallback(next);
     }
-  }, [playbackSpeed, isPlaying, lesson.audioUrl, audioFileFailed, startSpeechFallback]);
+  }, [playbackSpeed, isPlaying, startSpeechFallback]);
 
   const cycleVoicePersona = React.useCallback(() => {
     const nextPersona: VoicePersona = voicePersona === 'warm' ? 'clear' : 'warm';
     setVoicePersona(nextPersona);
-    if (isPlaying && (!lesson.audioUrl || audioFileFailed)) {
+    if (isPlaying) {
       if (speechCancelRef.current) {
         speechCancelRef.current();
         speechCancelRef.current = null;
@@ -364,7 +347,7 @@ export function useAlmanacLessonState({
       });
       speechCancelRef.current = cancel;
     }
-  }, [voicePersona, isPlaying, lesson.audioUrl, audioFileFailed, narration.fullText, playbackSpeed]);
+  }, [voicePersona, isPlaying, narration.fullText, playbackSpeed]);
 
   const setReadingMode = React.useCallback(
     (mode: 'read' | 'listen') => {
@@ -373,9 +356,12 @@ export function useAlmanacLessonState({
         setListenMode(false);
       } else {
         setListenMode(true);
+        if (!isPlaying) {
+          startSpeechFallback(playbackSpeed);
+        }
       }
     },
-    [stopAudio]
+    [stopAudio, isPlaying, startSpeechFallback, playbackSpeed]
   );
 
   const toggleNightstandMode = React.useCallback(() => {
