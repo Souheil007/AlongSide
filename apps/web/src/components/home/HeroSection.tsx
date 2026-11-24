@@ -220,7 +220,7 @@ export function HeroSection() {
             <div className="rounded-[14px] overflow-hidden bg-[#F2F0E9] aspect-[4/3] relative">
               <Image
                 src="/images/home/hero-sanctuary.jpg"
-                alt="Parent and child sitting side by side at a sunlit oak table sketching together"
+                alt="Father and child sitting side by side at a sunlit oak table sketching together"
                 width={1200}
                 height={896}
                 priority
