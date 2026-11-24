@@ -6,6 +6,7 @@ import type { DigestVideoDTO } from '@alongside/shared';
 import {
   formatShortPublishDate,
   getYouTubeThumbnailUrl,
+  splitJumpChipLabel,
 } from '@/hooks/useCultureDigest';
 import { cn } from '@/lib/utils';
 
@@ -15,7 +16,7 @@ export interface WatchThisWeekBandProps {
   shortAges: string;
   weekRange: string;
   isAllWeeks?: boolean;
-  onOpenVideo: (video: DigestVideoDTO) => void;
+  onOpenVideo: (video: DigestVideoDTO, startSeconds?: number) => void;
   onToggleSaveVideo: (video: DigestVideoDTO) => void;
   onViewAllVideos: () => void;
 }
@@ -43,13 +44,13 @@ export function WatchThisWeekBand({
         <div className="min-w-0">
           <h2
             id="watch-this-week-heading"
-            className="font-serif text-[23px] sm:text-[27px] font-normal tracking-[-0.02em] text-[#131715]"
+            className="font-serif text-[24px] sm:text-[28px] font-normal tracking-[-0.024em] text-[#0E1311]"
           >
             {isAllWeeks ? 'Watch across all weeks' : 'Watch this week'}
           </h2>
           <p className="mt-0.5 text-[13.5px] text-[#59625D]">
             {videos.length} curated {videos.length === 1 ? 'talk' : 'talks'} for{' '}
-            {childName} · {shortAges} ({weekRange}) - tap any talk to watch.
+            {childName} · {shortAges} ({weekRange}) — tap any talk to watch.
           </p>
         </div>
 
@@ -67,24 +68,28 @@ export function WatchThisWeekBand({
       <div
         data-testid="week-videos-grid"
         className={cn(
-          'grid grid-cols-1 gap-[22px] sm:grid-cols-2',
+          'grid grid-cols-1 gap-[24px] sm:grid-cols-2',
           videos.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
         )}
       >
         {videos.map((video, idx) => {
           const publishLabel = formatShortPublishDate(video.publishedAt);
+          const firstChip =
+            video.jumpChips && video.jumpChips.length > 0 ? video.jumpChips[0] : null;
+          const chipParsed = firstChip ? splitJumpChipLabel(firstChip.label) : null;
+
           return (
             <article
               key={video.id}
               data-testid={`week-video-card-${video.id}`}
-              className="flex min-w-0 flex-col gap-3"
+              className="group flex min-w-0 flex-col gap-3.5"
             >
               <button
                 type="button"
                 onClick={() => onOpenVideo(video)}
                 aria-label={`Play video: ${video.title}`}
                 data-testid={`week-video-play-${video.id}`}
-                className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[10px] bg-[#141816] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
+                className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[16px] bg-[#141816] shadow-[0_12px_32px_rgba(19,23,21,0.10)] transition-all duration-300 group-hover:shadow-[0_22px_46px_rgba(19,23,21,0.18)] group-hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -95,20 +100,20 @@ export function WatchThisWeekBand({
                   className="absolute inset-0 h-full w-full object-cover opacity-90 scale-[1.18] transition-transform duration-300 group-hover:scale-[1.22] group-hover:opacity-100"
                 />
                 <div
-                  className="absolute inset-0 bg-gradient-to-b from-[#101713]/10 to-[#101713]/70"
+                  className="absolute inset-0 bg-gradient-to-b from-[#101713]/10 via-[#101713]/25 to-[#101713]/75"
                   aria-hidden="true"
                 />
                 <span
                   aria-hidden="true"
-                  className="relative z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#FAF9F5] text-[#143D2B] shadow-md transition-transform duration-200 group-hover:scale-105"
+                  className="relative z-10 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-md text-[#111413] shadow-lg transition-transform duration-200 group-hover:scale-108 group-hover:bg-white"
                 >
-                  <Play className="h-4 w-4 fill-current ml-0.5" />
+                  <Play className="h-4 w-4 fill-current ml-0.5 text-[#111413]" />
                 </span>
-                <div className="absolute inset-x-2.5 bottom-2.5 z-10 flex items-center justify-between gap-2 text-[11.5px] text-[#FAF9F5] tabular-nums">
-                  <span className="rounded-[6px] bg-[#101713]/80 px-2.5 py-1 font-medium whitespace-nowrap">
+                <div className="absolute inset-x-3 bottom-3 z-10 flex items-center justify-between gap-2 text-[11px] text-[#FAF9F5] tabular-nums">
+                  <span className="rounded-full bg-[#111413]/65 backdrop-blur-md px-3 py-1 font-medium whitespace-nowrap shadow-xs">
                     {video.formatLabel}
                   </span>
-                  <span className="rounded-[6px] bg-[#101713]/80 px-2.5 py-1 font-medium whitespace-nowrap">
+                  <span className="rounded-full bg-[#111413]/65 backdrop-blur-md px-3 py-1 font-medium whitespace-nowrap shadow-xs">
                     {video.durationMinutes} min
                   </span>
                 </div>
@@ -119,7 +124,7 @@ export function WatchThisWeekBand({
                   <button
                     type="button"
                     onClick={() => onOpenVideo(video)}
-                    className="min-h-[44px] py-0.5 text-left font-serif text-[19px] font-normal leading-[1.24] tracking-[-0.015em] text-[#131715] transition-colors hover:text-[#143D2B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] rounded-[6px]"
+                    className="min-h-[44px] py-0.5 text-left font-serif text-[19px] sm:text-[20px] font-normal leading-[1.24] tracking-[-0.018em] text-[#0E1311] transition-colors hover:text-[#143D2B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] rounded-[6px]"
                   >
                     {video.title}
                   </button>
@@ -157,6 +162,22 @@ export function WatchThisWeekBand({
                 <p className="line-clamp-2 text-[13.5px] leading-[1.5] text-[#3E4642]">
                   {video.takeaway}
                 </p>
+
+                {firstChip && chipParsed && (
+                  <div className="pt-1">
+                    <button
+                      type="button"
+                      onClick={() => onOpenVideo(video, firstChip.seconds)}
+                      className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-[#F3F0E6] hover:bg-[#EAF3EE] hover:text-[#143D2B] px-3 py-1 text-[11.5px] font-medium text-[#424945] transition-colors cursor-pointer"
+                      title={`Jump to ${chipParsed.timestamp}: ${chipParsed.text}`}
+                    >
+                      <span className="font-semibold text-[#143D2B] shrink-0">
+                        ▶ {chipParsed.timestamp}
+                      </span>
+                      <span className="truncate">{chipParsed.text}</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </article>
           );
