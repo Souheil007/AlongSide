@@ -13,6 +13,7 @@ import {
   updateChildDeviceShield,
   generateClientMobileConfigXml,
   triggerMobileConfigDownload,
+  setCustomNextDnsProfileId,
 } from '@/lib/api/deviceShield';
 
 export interface UseDeviceShieldOptions {
@@ -255,6 +256,15 @@ export function useDeviceShield({
     }
   }, [effectiveShield?.dotHostname, childId]);
 
+  const setCustomProfileId = React.useCallback(
+    (profileId: string) => {
+      if (!childId) return;
+      const updated = setCustomNextDnsProfileId(childId, profileId);
+      queryClient.setQueryData(queryKey, updated);
+    },
+    [childId, queryClient, queryKey]
+  );
+
   return {
     shield: effectiveShield,
     isLoading,
@@ -271,5 +281,6 @@ export function useDeviceShield({
     setBedtimeSchedule,
     downloadProfile,
     copyAndroidHostname,
+    setCustomProfileId,
   };
 }

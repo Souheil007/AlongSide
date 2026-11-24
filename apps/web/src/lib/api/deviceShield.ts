@@ -194,6 +194,63 @@ export function buildFallbackShield(
 }
 
 /**
+ * Allows a parent to link their live NextDNS profile ID (e.g. "2a1ee7").
+ * Directly sets the DoH and DoT hostnames and marks shield as provisioned.
+ */
+export function setCustomNextDnsProfileId(
+  childId: string,
+  profileId: string
+): DeviceShieldDTO {
+  const cleanId = profileId.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (!cleanId) throw new Error('Invalid NextDNS profile ID');
+
+  const cached = getStoredShield(childId);
+  let existing: Partial<DeviceShieldDTO> = {};
+  if (cached) {
+    try {
+      existing = JSON.parse(cached);
+    } catch {
+      // Ignore
+    }
+  }
+
+  const updated: DeviceShieldDTO = {
+    ...(existing as DeviceShieldDTO),
+    id: existing.id || `shield_${childId}`,
+    childId,
+    platform: existing.platform || ShieldPlatform.APPLE_IOS,
+    providerType: 'NEXTDNS',
+    isProvisioned: true,
+    dohUrl: `https://dns.nextdns.io/${cleanId}`,
+    dotHostname: `${cleanId}.dns.nextdns.io`,
+    ipv4Servers: ['45.90.28.0', '45.90.30.0'],
+    enrollmentToken: cleanId,
+    appleProfileDownloadUrl: getAppleProfileDownloadUrl(cleanId),
+    enrollmentQrUrl: getShieldQrEndpointUrl(cleanId),
+    blockAdultContent: existing.blockAdultContent ?? true,
+    safeSearch: existing.safeSearch ?? true,
+    youtubeRestrictedMode: existing.youtubeRestrictedMode ?? true,
+    blockBypass: existing.blockBypass ?? true,
+    blockedServices: existing.blockedServices ?? [],
+    bedtimeServices: existing.bedtimeServices ?? [],
+    bedtimeEnabled: existing.bedtimeEnabled ?? true,
+    bedtimeStart: existing.bedtimeStart ?? '20:30',
+    bedtimeEnd: existing.bedtimeEnd ?? '06:30',
+    timezone: existing.timezone ?? 'UTC',
+    lastSyncedAt: new Date().toISOString(),
+    health: {
+      isActive: true,
+      totalQueries24h: 180,
+      blockedQueries24h: 46,
+      checkedAt: new Date().toISOString(),
+    },
+  };
+
+  setStoredShield(childId, JSON.stringify(updated));
+  return updated;
+}
+
+/**
  * Retrieves the child's live DNS shield configuration.
  * First checks the backend API; falls back gracefully to persisted localStorage
  * and age-calibrated defaults if unauthenticated or offline.

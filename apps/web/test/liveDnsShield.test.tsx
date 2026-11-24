@@ -144,4 +144,17 @@ describe('LiveDnsShieldCard (PLAN-53 Live Network Shield UI)', () => {
     expect(retrieved.bedtimeStart).toBe('21:00');
     expect(retrieved.isProvisioned).toBe(true);
   });
+
+  it('allows linking a genuine live NextDNS profile ID (e.g. 2a1ee7)', async () => {
+    const childId = 'child-live-nextdns-link';
+    const { setCustomNextDnsProfileId } = await import('@/lib/api/deviceShield');
+    const updated = setCustomNextDnsProfileId(childId, '2a1ee7');
+
+    expect(updated.dotHostname).toBe('2a1ee7.dns.nextdns.io');
+    expect(updated.dohUrl).toBe('https://dns.nextdns.io/2a1ee7');
+    expect(updated.isProvisioned).toBe(true);
+
+    const retrieved = await getChildDeviceShield(childId, 10);
+    expect(retrieved.dotHostname).toBe('2a1ee7.dns.nextdns.io');
+  });
 });
