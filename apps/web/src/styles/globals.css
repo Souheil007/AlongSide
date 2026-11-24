@@ -399,12 +399,23 @@
   animation: almanacRiseIn 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Devices V4.1 Botanical Frosted Canopy & Live Mirror Styles */
+@keyframes ribbonSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-ribbon-slide {
+  animation: ribbonSlide 8s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-aurora,
   .animate-aurora-reverse,
   .almanac-rise-in,
   .almanac-breath-halo,
-  .almanac-live-dot {
+  .almanac-live-dot,
+  .animate-ribbon-slide {
     animation: none !important;
   }
 }
