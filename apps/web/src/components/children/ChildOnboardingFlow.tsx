@@ -26,6 +26,7 @@ import {
   X,
   Plus,
   Loader2,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -198,6 +199,7 @@ export function ChildOnboardingFlow({
 
   const tierInfo = getTierDisplay(calculatedTier);
   const cleanStageName = tierInfo.name.split(' (')[0];
+  const previewName = watchedName?.trim() ? watchedName.trim() : 'a sibling';
 
   // Auto-switch roadType to PRE_DEVICE for young children unless parent explicitly overrides
   const isEarlyChildhood = calculatedAge <= 6;
@@ -395,13 +397,13 @@ export function ChildOnboardingFlow({
   }
 
   // =========================================================================
-  // DYNAMIC FORM ROWS (NAME/GENDER, MONTH/YEAR, STAGE, PHONE, SCHOOL)
+  // COHESIVE FORM ROWS (NAME/GENDER, MONTH/YEAR, STAGE, PHONE, SCHOOL, BLUEPRINT)
   // =========================================================================
   const renderRowNameAndGender = () => (
     <div>
       <div className="grid grid-cols-[1.15fr_0.85fr] gap-3 items-end">
         <div>
-          <label htmlFor="child-first-name" className="block text-xs sm:text-sm font-semibold text-[#111413] mb-1.5">
+          <label htmlFor="child-first-name" className="block text-xs font-semibold text-[#111413] mb-1.5">
             First name <span className="text-[#B45309]">*</span>
           </label>
           <input
@@ -410,20 +412,20 @@ export function ChildOnboardingFlow({
             placeholder="e.g. Maya"
             {...register('name')}
             aria-invalid={Boolean(errors.name)}
-            className="w-full h-[clamp(44px,5vh,52px)] rounded-xl border border-[#E3E3DC] bg-white px-3.5 sm:px-4 text-sm text-[#111413] placeholder-[#858C88] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all shadow-2xs"
+            className="w-full h-11 rounded-xl border border-[#E3E3DC] bg-white px-3.5 text-sm text-[#111413] placeholder-[#858C88] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all shadow-2xs"
           />
         </div>
 
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-[#111413] mb-1.5">
+          <div className="text-xs font-semibold text-[#111413] mb-1.5">
             Boy or girl <span className="text-[#B45309]">*</span>
           </div>
-          <div className="grid grid-cols-2 gap-1 p-1 bg-[#F4F4F0] rounded-xl border border-[#E3E3DC] h-[clamp(44px,5vh,52px)]">
+          <div className="grid grid-cols-2 gap-1 p-0.5 bg-[#F4F4F0] rounded-xl border border-[#E3E3DC] h-11">
             <button
               type="button"
               onClick={() => setValue('gender', Gender.MALE, { shouldValidate: true })}
               className={cn(
-                'text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
+                'text-xs font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
                 watchedGender === Gender.MALE
                   ? 'bg-white text-[#143D2B] shadow-2xs font-semibold'
                   : 'text-[#494F4C] hover:text-[#111413]'
@@ -435,7 +437,7 @@ export function ChildOnboardingFlow({
               type="button"
               onClick={() => setValue('gender', Gender.FEMALE, { shouldValidate: true })}
               className={cn(
-                'text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
+                'text-xs font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
                 watchedGender === Gender.FEMALE
                   ? 'bg-white text-[#143D2B] shadow-2xs font-semibold'
                   : 'text-[#494F4C] hover:text-[#111413]'
@@ -457,7 +459,7 @@ export function ChildOnboardingFlow({
   const renderRowBirthDate = () => (
     <div className="grid grid-cols-2 gap-3">
       <div>
-        <label htmlFor="birth-month-select" className="block text-xs sm:text-sm font-semibold text-[#111413] mb-1.5">
+        <label htmlFor="birth-month-select" className="block text-xs font-semibold text-[#111413] mb-1.5">
           Birth month <span className="text-[#B45309]">*</span>
         </label>
         <Controller
@@ -468,7 +470,7 @@ export function ChildOnboardingFlow({
               id="birth-month-select"
               value={field.value}
               onChange={(e) => field.onChange(Number(e.target.value))}
-              className="w-full h-[clamp(44px,5vh,52px)] rounded-xl border border-[#E3E3DC] bg-white px-3.5 sm:px-4 text-sm text-[#111413] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all cursor-pointer shadow-2xs"
+              className="w-full h-11 rounded-xl border border-[#E3E3DC] bg-white px-3.5 text-sm text-[#111413] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all cursor-pointer shadow-2xs"
             >
               {MONTHS.map((m) => (
                 <option key={m.value} value={m.value}>
@@ -481,7 +483,7 @@ export function ChildOnboardingFlow({
       </div>
 
       <div>
-        <label htmlFor="birth-year-select" className="block text-xs sm:text-sm font-semibold text-[#111413] mb-1.5">
+        <label htmlFor="birth-year-select" className="block text-xs font-semibold text-[#111413] mb-1.5">
           Birth year <span className="text-[#B45309]">*</span>
         </label>
         <Controller
@@ -495,7 +497,7 @@ export function ChildOnboardingFlow({
                 field.onChange(Number(e.target.value));
                 setOverrideEarlyPhone(false);
               }}
-              className="w-full h-[clamp(44px,5vh,52px)] rounded-xl border border-[#E3E3DC] bg-white px-3.5 sm:px-4 text-sm text-[#111413] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all cursor-pointer font-mono shadow-2xs"
+              className="w-full h-11 rounded-xl border border-[#E3E3DC] bg-white px-3.5 text-sm text-[#111413] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all cursor-pointer font-mono shadow-2xs"
             >
               {ONBOARDING_YEARS.map((y) => (
                 <option key={y} value={y}>
@@ -510,9 +512,9 @@ export function ChildOnboardingFlow({
   );
 
   const renderRowStage = () => (
-    <div className="flex items-center justify-between px-4 py-[clamp(10px,1.6vh,16px)] rounded-xl sm:rounded-2xl bg-[#F4F4F0] border border-[#E3E3DC]">
-      <span className="font-semibold text-[#143D2B] text-sm sm:text-base">{cleanStageName}</span>
-      <span className="text-xs sm:text-sm font-mono font-medium text-[#494F4C] bg-white px-2.5 py-1 rounded-full border border-[#E3E3DC] shadow-2xs">
+    <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#F4F4F0] border border-[#E3E3DC]">
+      <span className="font-semibold text-[#143D2B] text-sm">{cleanStageName}</span>
+      <span className="text-xs font-mono font-medium text-[#494F4C] bg-white px-2.5 py-1 rounded-full border border-[#E3E3DC] shadow-2xs">
         {calculatedAgeDisplay}
       </span>
     </div>
@@ -521,29 +523,29 @@ export function ChildOnboardingFlow({
   const renderRowPhone = () => (
     <div>
       {showEarlyScreenFreeNote ? (
-        <div className="flex items-center justify-between px-4 py-[clamp(10px,1.6vh,16px)] rounded-xl sm:rounded-2xl bg-[#F4F4F0] border border-[#E3E3DC] text-xs sm:text-sm">
+        <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#F4F4F0] border border-[#E3E3DC] text-xs">
           <span className="text-[#494F4C]">
             <strong className="text-[#143D2B] font-semibold">Ages 0–6</strong> · Screen-free &amp; shared device
           </span>
           <button
             type="button"
             onClick={() => setOverrideEarlyPhone(true)}
-            className="text-xs sm:text-sm font-semibold text-[#143D2B] hover:underline transition-all cursor-pointer"
+            className="text-xs font-semibold text-[#143D2B] hover:underline transition-all cursor-pointer"
           >
             Has a phone?
           </button>
         </div>
       ) : (
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-[#111413] mb-1.5">
+          <div className="text-xs font-semibold text-[#111413] mb-1.5">
             Personal phone right now?
           </div>
-          <div className="grid grid-cols-2 gap-1 p-1 bg-[#F4F4F0] rounded-xl border border-[#E3E3DC] h-[clamp(44px,5vh,52px)]">
+          <div className="grid grid-cols-2 gap-1 p-0.5 bg-[#F4F4F0] rounded-xl border border-[#E3E3DC] h-11">
             <button
               type="button"
               onClick={() => setValue('roadType', RoadType.PRE_DEVICE)}
               className={cn(
-                'text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
+                'text-xs font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
                 watchedRoadType === RoadType.PRE_DEVICE
                   ? 'bg-white text-[#143D2B] shadow-2xs font-semibold'
                   : 'text-[#494F4C] hover:text-[#111413]'
@@ -555,7 +557,7 @@ export function ChildOnboardingFlow({
               type="button"
               onClick={() => setValue('roadType', RoadType.ACTIVE_DEVICE)}
               className={cn(
-                'text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
+                'text-xs font-semibold rounded-lg transition-all flex items-center justify-center cursor-pointer',
                 watchedRoadType === RoadType.ACTIVE_DEVICE
                   ? 'bg-white text-[#143D2B] shadow-2xs font-semibold'
                   : 'text-[#494F4C] hover:text-[#111413]'
@@ -575,30 +577,47 @@ export function ChildOnboardingFlow({
         <button
           type="button"
           onClick={() => setShowOptionalSchool(true)}
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#494F4C] hover:text-[#143D2B] transition-colors py-1 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-[#494F4C] hover:text-[#143D2B] transition-colors py-1 cursor-pointer"
         >
-          <span className="w-5 h-5 rounded-md bg-[#EAF3EE] text-[#143D2B] flex items-center justify-center font-bold text-xs">
-            +
-          </span>
+          <Plus className="w-3.5 h-3.5 text-[#143D2B]" />
           <span>School or daycare <span className="text-[#858C88] font-normal">(optional)</span></span>
         </button>
       ) : (
         <div className="animate-in fade-in-0 duration-200">
           <div className="flex items-center justify-between mb-1.5">
-            <label htmlFor="school-grade-input" className="text-xs sm:text-sm font-semibold text-[#111413]">
+            <label htmlFor="school-grade-input" className="text-xs font-semibold text-[#111413]">
               School or daycare
             </label>
-            <span className="text-xs text-[#858C88]">Optional</span>
+            <span className="text-[11px] text-[#858C88]">Optional</span>
           </div>
           <input
             id="school-grade-input"
             type="text"
             placeholder="e.g. Daycare, Kindergarten, 5th Grade"
             {...register('schoolGrade')}
-            className="w-full h-[clamp(44px,5vh,52px)] rounded-xl border border-[#E3E3DC] bg-white px-3.5 sm:px-4 text-sm text-[#111413] placeholder-[#858C88] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all shadow-2xs"
+            className="w-full h-11 rounded-xl border border-[#E3E3DC] bg-white px-3.5 text-sm text-[#111413] placeholder-[#858C88] focus:border-[#143D2B] focus:outline-none focus:ring-2 focus:ring-[#143D2B]/15 transition-all shadow-2xs"
           />
         </div>
       )}
+    </div>
+  );
+
+  const renderRowBlueprintPreview = () => (
+    <div className="p-3.5 rounded-xl bg-[#F4F4F0] border border-[#E3E3DC] space-y-1">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-semibold text-[#143D2B] inline-flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-[#143D2B]" />
+          Calibrated Blueprint
+        </span>
+        <span className="text-[11px] font-semibold text-[#143D2B] bg-[#EAF3EE] px-2 py-0.5 rounded-full">
+          {watchedRoadType === RoadType.PRE_DEVICE ? 'Road 1 · Pre-Device' : 'Road 2 · Active Phone'}
+        </span>
+      </div>
+      <p className="text-[11.5px] text-[#494F4C] leading-relaxed">
+        {watchedRoadType === RoadType.PRE_DEVICE
+          ? `Tailored developmental milestones, first-phone readiness scoring, and age-calibrated daily scripts for ${previewName}.`
+          : `Bedtime curfew lock at 8:30 PM, mutual family agreement, and daily conversation starters for ${previewName}.`}
+      </p>
     </div>
   );
 
@@ -606,8 +625,6 @@ export function ChildOnboardingFlow({
   // PRESENTATION 1: MODAL / SLIDE-OVER DRAWER (ADD ANOTHER CHILD)
   // =========================================================================
   if (isModal) {
-    const previewName = watchedName?.trim() ? watchedName.trim() : 'a sibling';
-
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -616,7 +633,7 @@ export function ChildOnboardingFlow({
         {/* Banner with Sibling Photo & Existing Child Badges */}
         <div
           className="relative shrink-0 overflow-hidden"
-          style={{ height: 'clamp(118px, 17vh, 175px)' }}
+          style={{ height: 'clamp(160px, 23vh, 215px)' }}
         >
           {/* Sibling Photo */}
           <img
@@ -628,7 +645,7 @@ export function ChildOnboardingFlow({
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E2016]/90 via-[#0E2016]/40 to-[#0E2016]/20" />
 
           {/* Banner Floating Content */}
-          <div className="absolute inset-0 p-3.5 sm:p-5 flex flex-col justify-between text-white z-10">
+          <div className="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between text-white z-10">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 flex-wrap">
                 {existingChildren &&
@@ -663,20 +680,21 @@ export function ChildOnboardingFlow({
           </div>
         </div>
 
-        {/* Drawer Body: Dynamically distributed vertically without scrollbars */}
-        <div className="flex-1 px-6 sm:px-8 py-[clamp(14px,2.6vh,26px)] flex flex-col overflow-y-auto">
+        {/* Drawer Body: Closely grouped form fields + grounded Blueprint Card */}
+        <div className="flex-1 px-6 sm:px-8 py-4 sm:py-5 flex flex-col justify-center overflow-y-auto">
           {apiError && (
             <div className="mb-3 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 font-medium">
               {apiError}
             </div>
           )}
 
-          <div className="flex-1 flex flex-col justify-between gap-[clamp(10px,2vh,20px)] min-h-0">
+          <div className="space-y-3.5 sm:space-y-4 my-auto">
             {renderRowNameAndGender()}
             {renderRowBirthDate()}
             {renderRowStage()}
             {renderRowPhone()}
             {renderRowSchool()}
+            {renderRowBlueprintPreview()}
           </div>
         </div>
 
@@ -686,7 +704,7 @@ export function ChildOnboardingFlow({
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2.5 rounded-xl border border-[#E3E3DC] text-xs sm:text-sm font-semibold text-[#494F4C] hover:bg-[#F4F4F0] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-[#E3E3DC] text-xs font-semibold text-[#494F4C] hover:bg-[#F4F4F0] transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -697,7 +715,7 @@ export function ChildOnboardingFlow({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-5 py-2.5 sm:py-3 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] disabled:opacity-60 text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors shadow-xs cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-[#143D2B] hover:bg-[#0E2B1E] disabled:opacity-60 text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors shadow-xs cursor-pointer"
           >
             {isSubmitting ? (
               <>
@@ -766,7 +784,7 @@ export function ChildOnboardingFlow({
               : 'You can add siblings anytime after this.'}
           </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 sm:mt-8 space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 sm:mt-8 space-y-4">
             {apiError && (
               <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 font-medium">
                 {apiError}
@@ -778,6 +796,7 @@ export function ChildOnboardingFlow({
             {renderRowStage()}
             {renderRowPhone()}
             {renderRowSchool()}
+            {renderRowBlueprintPreview()}
 
             <div className="pt-2">
               <button
