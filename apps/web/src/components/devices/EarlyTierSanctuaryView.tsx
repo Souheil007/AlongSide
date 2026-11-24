@@ -108,7 +108,7 @@ export function resolveEarlyStageProfile(
       subtitle: (name) =>
         `Before screens enter ${name}'s world, quiet rooms and face-to-face warmth wire speech and sleep.`,
       noPactNote: () =>
-        'Infants learn from your voice and eyes—your calm room setup does all the work.',
+        'Infants learn from your voice and eyes. Your calm room setup does all the work.',
       defaultBedtimeMinutes: 19 * 60, // 7:00 PM
       bedtimeOptions: [18 * 60 + 30, 19 * 60, 19 * 60 + 30, 20 * 60],
       cutoffLeadMinutes: 45,
@@ -146,7 +146,7 @@ export function resolveEarlyStageProfile(
         {
           id: 'parent-phone',
           tabLabel: 'Parent pause',
-          quote: '“Let me set my phone on the counter first—I’m all yours for the next ten minutes.”',
+          quote: '“Let me set my phone on the counter first. I’m all yours for the next ten minutes.”',
           why: 'Parking your phone out of sight removes constant micro-interruptions during floor play.',
         },
         {
@@ -168,7 +168,7 @@ export function resolveEarlyStageProfile(
       capUnit: 'max / day',
       standardTitle: 'Shared living-room screens, co-viewed',
       subtitle: (name) =>
-        `Predictable windows, shared family screens, and calm handoffs—long before ${name} needs a personal phone.`,
+        `Predictable windows, shared family screens, and calm handoffs, long before ${name} needs a personal phone.`,
       noPactNote: (a) =>
         `At age ${a}, kids thrive on simple house routines and parent-managed settings rather than personal phones.`,
       defaultBedtimeMinutes: 20 * 60, // 8:00 PM
@@ -208,7 +208,7 @@ export function resolveEarlyStageProfile(
         {
           id: 'bargaining',
           tabLabel: 'Bargaining',
-          quote: `“I hear how much you want one more round, ${name}. Our screen window is closed for today—tomorrow is fresh.”`,
+          quote: `“I hear how much you want one more round, ${name}. Our screen window is closed for today. Tomorrow is fresh.”`,
           why: 'Warm validation with zero negotiation teaches that calm boundaries stay steady.',
         },
         {
@@ -270,13 +270,13 @@ export function resolveEarlyStageProfile(
       {
         id: 'times-up',
         tabLabel: 'Time’s up',
-        quote: `“Timer is done, ${name}. Let’s wave bye-bye to the show—it’ll be waiting tomorrow. Come help me pick a snack.”`,
+        quote: `“Timer is done, ${name}. Let’s wave bye-bye to the show. It’ll be waiting tomorrow. Come help me pick a snack.”`,
         why: 'A playful goodbye ritual paired with immediate movement bridges out of screen focus.',
       },
       {
         id: 'meltdown',
         tabLabel: 'Meltdown',
-        quote: '“You wanted to keep watching. Stopping is really hard. I’m right here on the floor—come blow out the candle with me.”',
+        quote: '“You wanted to keep watching. Stopping is really hard. I’m right here on the floor, come blow out the candle with me.”',
         why: 'Sitting below eye level and offering a breath bridge calms a flooded toddler nervous system.',
       },
     ],

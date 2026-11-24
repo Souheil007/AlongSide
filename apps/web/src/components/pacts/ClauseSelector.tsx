@@ -101,7 +101,7 @@ const QUICK_CUSTOM_IDEAS: Array<{
     category: ClauseCategory.PARENT_COMMITMENT,
     title: 'Ask before posting family photos',
     description:
-      'Parents will ask before sharing photos or stories of you on social media—your privacy matters too.',
+      'Parents will ask before sharing photos or stories of you on social media, because your privacy matters too.',
   },
   {
     party: CommitmentParty.CHILD,

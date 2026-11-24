@@ -100,7 +100,7 @@ export const RESET_GUIDES: Record<'infant' | 'toddler' | 'earlyChildhood', Reset
       {
         num: 1,
         title: 'Validate without negotiating',
-        description: '“I hear you—pausing fun feels frustrating.”',
+        description: '“I hear you. Pausing fun feels frustrating.”',
       },
       {
         num: 2,
@@ -411,7 +411,7 @@ function QuietReadinessRadar({
             fontWeight="600"
             className="font-serif"
           >
-            —
+            --
           </text>
           <text
             x={RADAR_CX}
@@ -652,7 +652,7 @@ export function BilateralPactStatusCard({
           </div>
         </div>
       ) : isPreDevice ? (
-        /* AGES 7+ ROAD 1: Option 3 — Quiet Geometric Readiness Radar */
+        /* AGES 7+ ROAD 1: Option 3: Quiet Geometric Readiness Radar */
         <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
           {score === null ? (
             <div className="flex flex-col gap-4">
@@ -665,7 +665,7 @@ export function BilateralPactStatusCard({
               </h2>
 
               <p className="text-[14.5px] leading-relaxed text-[#494F4C] max-w-[38ch]">
-                10 quick scenarios to see where {childName} is ready—and what to practice first.
+                10 quick scenarios to see where {childName} is ready, and what to practice first.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">

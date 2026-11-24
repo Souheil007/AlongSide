@@ -93,7 +93,7 @@ export const CURATED_BLOG_FEEDS: readonly CuratedBlogFeed[] = [
   },
   {
     id: 'screenagers-tech-talk',
-    sourceName: 'Screenagers — Tech Talk Tuesdays',
+    sourceName: 'Screenagers: Tech Talk Tuesdays',
     sourceDomain: 'screenagersmovie.com',
     feedUrl: 'https://www.screenagersmovie.com/blog/rss.xml',
     defaultTiers: [T3, T4, T5],

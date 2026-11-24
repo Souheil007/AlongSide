@@ -380,7 +380,7 @@ export const CANONICAL_READINESS_QUESTIONS: ReadinessQuestion[] = [
       'They lose right before winning a match, or a screen timer locks them out mid-turn. How do they bounce back?',
     scenario: 'Coming back down after fast-paced games flood the nervous system.',
     expertInsight:
-      'Fast games surge adrenaline faster than young brains can cool it off. Some kids simply need a few minutes—and a calm adult nearby—for their body to settle.',
+      'Fast games surge adrenaline faster than young brains can cool it off. Some kids simply need a few minutes, and a calm adult nearby, for their body to settle.',
     options: [
       {
         id: 'er-10',

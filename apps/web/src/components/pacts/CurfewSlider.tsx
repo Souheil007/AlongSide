@@ -181,7 +181,7 @@ export function CurfewSlider() {
           <ShieldCheck className="h-4.5 w-4.5 shrink-0 text-[var(--spruce)] mt-0.5" aria-hidden="true" />
           <p className="text-[13px] leading-[1.55] text-[var(--ink)]">
             <strong className="font-semibold">Safety never locks.</strong> At {formattedDisplay},
-            games, social feeds, and browsers pause on {childName || 'your child'}&apos;s device—while
+            games, social feeds, and browsers pause on {childName || 'your child'}&apos;s device, while
             calls to parents and 911 stay open all night.
           </p>
         </div>
@@ -207,7 +207,7 @@ export function CurfewSlider() {
             <p className="mt-2 rounded-[12px] bg-[var(--canvas-subtle)] px-4 py-3.5 text-[13px] leading-[1.6] text-[var(--body)] almanac-rise-in">
               As kids approach puberty, melatonin naturally releases up to two hours later. Keeping
               screens charging in a shared family spot removes blue light and late-night group-chat
-              buzzes—and lets the clock enforce bedtime instead of you.
+              buzzes, and lets the clock enforce bedtime instead of you.
             </p>
           )}
         </div>

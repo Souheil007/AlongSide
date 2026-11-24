@@ -298,7 +298,7 @@ const DINNER_PROMPTS_BY_TIER: Record<
     {
       question: 'Was there a moment today when your body felt frustrated or needed a big hug?',
       parentTip: 'Normalize big feelings calmly during peaceful mealtimes so naming emotions feels safe.',
-      followUp: 'What helps our bodies feel cozy again—deep breaths or a squeeze?',
+      followUp: 'What helps our bodies feel cozy again, deep breaths or a squeeze?',
     },
   ],
   [DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6]: [
@@ -313,7 +313,7 @@ const DINNER_PROMPTS_BY_TIER: Record<
       followUp: 'What helped your brain stick with it?',
     },
     {
-      question: 'Who was kind to someone else today—or who did you notice helping a friend?',
+      question: 'Who was kind to someone else today, or who did you notice helping a friend?',
       parentTip: 'Spotting kindness strengthens emerging theory of mind without lecturing.',
       followUp: 'How do you think their face looked when that happened?',
     },
@@ -326,7 +326,7 @@ const DINNER_PROMPTS_BY_TIER: Record<
     },
     {
       question: 'What’s something in a game, show, or book this week that you had to figure out on your own?',
-      parentTip: 'Let them be the expert—teaching you reinforces competence and pride.',
+      parentTip: 'Let them be the expert. Teaching you reinforces competence and pride.',
       followUp: 'Can you show me how that part works for five minutes after dinner?',
     },
     {
@@ -338,7 +338,7 @@ const DINNER_PROMPTS_BY_TIER: Record<
   [DevelopmentalTier.TIER_3_PRE_TEEN_10_12]: [
     {
       question: 'What’s a trend, video, or joke everyone at school is repeating right now that adults totally miss?',
-      parentTip: 'Stay curious and amused—avoid cringing or rushing to evaluate the trend.',
+      parentTip: 'Stay curious and amused. Avoid cringing or rushing to evaluate the trend.',
       followUp: 'Is it mostly lighthearted banter, or does it ever get awkward in group chats?',
     },
     {
@@ -348,8 +348,8 @@ const DINNER_PROMPTS_BY_TIER: Record<
     },
     {
       question: 'What’s one thing you wish adults understood better about being your age right now?',
-      parentTip: 'Listen all the way through without defending or correcting—just reflect what you heard.',
-      followUp: 'Thanks for telling me—what’s one way I can keep that in mind this week?',
+      parentTip: 'Listen all the way through without defending or correcting, just reflect what you heard.',
+      followUp: 'Thanks for telling me. What’s one way I can keep that in mind this week?',
     },
   ],
   [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15]: [
@@ -366,13 +366,13 @@ const DINNER_PROMPTS_BY_TIER: Record<
     {
       question: 'When something stressful happens with friends or classes, do you usually want ideas, a distraction, or just someone to listen?',
       parentTip: 'Asking how they want support prevents accidental advice-giving that shuts teens down.',
-      followUp: 'Good to know—feel free to call me out gently if I jump into fix-it mode.',
+      followUp: 'Good to know. Feel free to call me out gently if I jump into fix-it mode.',
     },
   ],
   [DevelopmentalTier.TIER_5_LATE_ADOLESCENCE_16_18]: [
     {
       question: 'Where are tools like AI actually helping you learn faster right now, and where do they feel like a trap?',
-      parentTip: 'Approach emerging tech as fellow learners—older teens open up when treated as collaborators.',
+      parentTip: 'Approach emerging tech as fellow learners. Older teens open up when treated as collaborators.',
       followUp: 'How are your teachers or friends drawing the line on what feels fair?',
     },
     {
@@ -405,12 +405,12 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Used to emphasize that something is true or genuinely impressive, not an exaggeration.',
       cringeLevel: 1,
       cringeLabel: 'Smile & nod',
-      calmScript: 'No need to say it back—just appreciate they’re telling you something they really mean.',
+      calmScript: 'No need to say it back. Just appreciate they’re telling you something they really mean.',
     },
     {
       word: 'GG',
       shortMeaning: 'Good game / nice try',
-      fullMeaning: 'Shorthand from multiplayer games used to wrap up a round politely—or playfully after any small challenge.',
+      fullMeaning: 'Shorthand from multiplayer games used to wrap up a round politely, or playfully after any small challenge.',
       cringeLevel: 1,
       cringeLabel: 'Harmless',
       calmScript: 'Notice whether it’s used with good sportsmanship after wins and losses alike.',
@@ -418,7 +418,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
     {
       word: 'Bruhhh',
       shortMeaning: 'Wait, seriously? / playful disbelief',
-      fullMeaning: 'An elongated reaction to something silly, surprising, or mildly annoying—usually lighthearted.',
+      fullMeaning: 'An elongated reaction to something silly, surprising, or mildly annoying, usually lighthearted.',
       cringeLevel: 1,
       cringeLabel: 'Everyday banter',
       calmScript: 'Treat it as punctuation rather than disrespect unless tone turns hostile.',
@@ -439,7 +439,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Casual critique meaning something wasn’t terrible, just overhyped or unimpressive.',
       cringeLevel: 2,
       cringeLabel: 'Do not try using',
-      calmScript: 'Stay amused—when aimed at movies or snacks it’s harmless; check in only if aimed at classmates.',
+      calmScript: 'Stay amused. When aimed at movies or snacks it’s harmless; check in only if aimed at classmates.',
     },
     {
       word: 'Lowkey',
@@ -447,7 +447,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Softens an opinion or admission so it feels less vulnerable to share with peers.',
       cringeLevel: 2,
       cringeLabel: 'Understand, don’t mimic',
-      calmScript: 'Listen past the hedge—often “I’m lowkey nervous” is a real invitation to connect.',
+      calmScript: 'Listen past the hedge. Often “I’m lowkey nervous” is a real invitation to connect.',
     },
   ],
   [DevelopmentalTier.TIER_4_EARLY_ADOLESCENCE_13_15]: [
@@ -465,7 +465,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Playful imaginary points gained or lost after confident or clumsy moments at school.',
       cringeLevel: 2,
       cringeLabel: 'Best left to teens',
-      calmScript: 'Keep it light—if social embarrassment lingers, remind them everyone forgets awkward moments fast.',
+      calmScript: 'Keep it light. If social embarrassment lingers, remind them everyone forgets awkward moments fast.',
     },
     {
       word: 'Glazing',
@@ -483,7 +483,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Self-deprecating joke about hoping for an unlikely outcome, often used to ease pressure.',
       cringeLevel: 2,
       cringeLabel: 'Decode silently',
-      calmScript: 'Usually healthy humor—listen underneath for whether they’re protecting themselves from disappointment.',
+      calmScript: 'Usually healthy humor. Listen underneath for whether they’re protecting themselves from disappointment.',
     },
     {
       word: 'Side quest',
@@ -499,7 +499,7 @@ const WEEKLY_PHRASES_BY_TIER: Partial<
       fullMeaning: 'Used jokingly (or sincerely) when online debates or screen loops get detached from reality.',
       cringeLevel: 2,
       cringeLabel: 'Save for self-deprecating jokes',
-      calmScript: 'Notice teens often recognize screen fatigue themselves—invite outdoor resets collaboratively.',
+      calmScript: 'Notice teens often recognize screen fatigue themselves. Invite outdoor resets collaboratively.',
     },
   ],
 };
@@ -880,7 +880,7 @@ export class LlmDigestCuratorAdapter implements DigestContentCurator {
             skimBullets: decision.skimBullets
               ? decision.skimBullets.slice(0, 3)
               : fallback.skimBullets,
-            // Preserve ONLY real parsed chapters — never allow LLM to overwrite jumpChips
+            // Preserve ONLY real parsed chapters: never allow LLM to overwrite jumpChips
             jumpChips: candidate.jumpChips,
           });
         }
