@@ -10,15 +10,33 @@ import {
   PrismaAgreementsRepository,
 } from '../agreements/agreements.repository.js';
 import {
+  type ChildrenRepository,
+  PrismaChildrenRepository,
+} from '../children/children.repository.js';
+import {
   type DeviceProfileCompiler,
   StandardDeviceProfileCompiler,
 } from './profile.compiler.js';
+import {
+  type DeviceShieldRepository,
+  PrismaDeviceShieldRepository,
+} from './device-shield.repository.js';
+import { DeviceShieldService } from './device-shield.service.js';
+import { DeviceShieldController } from './device-shield.controller.js';
+import {
+  type DnsPolicyProvider,
+  resolveDefaultDnsPolicyProvider,
+} from './dns-provider.js';
 
 export interface DeviceProfilesRoutesOptions {
   deviceProfilesRepository?: DeviceProfilesRepository;
   agreementsRepository?: AgreementsRepository;
   deviceProfilesService?: DeviceProfilesService;
   profileCompiler?: DeviceProfileCompiler;
+  childrenRepository?: ChildrenRepository;
+  deviceShieldRepository?: DeviceShieldRepository;
+  deviceShieldService?: DeviceShieldService;
+  dnsPolicyProvider?: DnsPolicyProvider;
 }
 
 export const deviceProfilesRoutes: FastifyPluginAsync<DeviceProfilesRoutesOptions> = async (
@@ -29,13 +47,178 @@ export const deviceProfilesRoutes: FastifyPluginAsync<DeviceProfilesRoutesOption
     opts.deviceProfilesRepository ?? new PrismaDeviceProfilesRepository();
   const agreementsRepo =
     opts.agreementsRepository ?? new PrismaAgreementsRepository();
+  const childrenRepo =
+    opts.childrenRepository ?? new PrismaChildrenRepository();
   const compiler = opts.profileCompiler ?? new StandardDeviceProfileCompiler();
   const service =
     opts.deviceProfilesService ??
     new DeviceProfilesService(repository, agreementsRepo, compiler);
   const controller = new DeviceProfilesController(service);
 
-  // OTA Apple Profile Delivery
+  const shieldRepo =
+    opts.deviceShieldRepository ?? new PrismaDeviceShieldRepository();
+  const dnsProvider =
+    opts.dnsPolicyProvider ?? resolveDefaultDnsPolicyProvider();
+  const shieldService =
+    opts.deviceShieldService ??
+    new DeviceShieldService(shieldRepo, childrenRepo, dnsProvider, compiler);
+  const shieldController = new DeviceShieldController(shieldService);
+
+  // =========================================================================
+  // LIVE DNS PARENTAL CONTROL SHIELD ROUTES (PLAN-52)
+  // =========================================================================
+
+  // GET /api/v1/devices/shield/:childId
+  fastify.get<{ Params: { childId: string } }>(
+    '/shield/:childId',
+    {
+      preHandler: [fastify.authenticate],
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            childId: { type: 'string', minLength: 1 },
+          },
+          required: ['childId'],
+        },
+      },
+    },
+    shieldController.getShield.bind(shieldController)
+  );
+
+  // PUT /api/v1/devices/shield/:childId
+  fastify.put<{ Params: { childId: string }; Body: unknown }>(
+    '/shield/:childId',
+    {
+      preHandler: [fastify.authenticate],
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            childId: { type: 'string', minLength: 1 },
+          },
+          required: ['childId'],
+        },
+        body: {
+          type: 'object',
+          additionalProperties: true,
+        },
+      },
+    },
+    shieldController.upsertShield.bind(shieldController)
+  );
+
+  // GET /api/v1/devices/shield/:childId/status
+  fastify.get<{ Params: { childId: string } }>(
+    '/shield/:childId/status',
+    {
+      preHandler: [fastify.authenticate],
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            childId: { type: 'string', minLength: 1 },
+          },
+          required: ['childId'],
+        },
+      },
+    },
+    shieldController.getStatus.bind(shieldController)
+  );
+
+  // GET /api/v1/devices/shield/profile/:enrollmentToken (Token-scoped OTA .mobileconfig)
+  fastify.get<{ Params: { enrollmentToken: string } }>(
+    '/shield/profile/:enrollmentToken',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            enrollmentToken: { type: 'string', minLength: 8 },
+          },
+          required: ['enrollmentToken'],
+        },
+      },
+    },
+    shieldController.downloadAppleProfile.bind(shieldController)
+  );
+
+  // GET /api/v1/devices/shield/qr/:enrollmentToken (Token-scoped QR enrollment info)
+  fastify.get<{ Params: { enrollmentToken: string } }>(
+    '/shield/qr/:enrollmentToken',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            enrollmentToken: { type: 'string', minLength: 8 },
+          },
+          required: ['enrollmentToken'],
+        },
+      },
+    },
+    shieldController.getQrInfo.bind(shieldController)
+  );
+
+  // POST /api/v1/devices/shield/guest-provision (Instant dynamic provisioning without authentication)
+  fastify.post<{ Body: { childName?: string; age?: number } }>(
+    '/shield/guest-provision',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          properties: {
+            childName: { type: 'string' },
+            age: { type: 'number' },
+          },
+        },
+      },
+    },
+    shieldController.provisionGuestShield.bind(shieldController)
+  );
+
+  // PUT /api/v1/devices/shield/guest-sync/:enrollmentToken (Real-time NextDNS policy sync for guest shields)
+  fastify.put<{ Params: { enrollmentToken: string }; Body: unknown }>(
+    '/shield/guest-sync/:enrollmentToken',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            enrollmentToken: { type: 'string', minLength: 4 },
+          },
+          required: ['enrollmentToken'],
+        },
+        body: {
+          type: 'object',
+          additionalProperties: true,
+        },
+      },
+    },
+    shieldController.syncGuestShield.bind(shieldController)
+  );
+
+  // GET /api/v1/devices/shield/guest-status/:enrollmentToken (Real-time dynamic NextDNS query counters)
+  fastify.get<{ Params: { enrollmentToken: string } }>(
+    '/shield/guest-status/:enrollmentToken',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            enrollmentToken: { type: 'string', minLength: 4 },
+          },
+          required: ['enrollmentToken'],
+        },
+      },
+    },
+    shieldController.getGuestStatus.bind(shieldController)
+  );
+
+  // =========================================================================
+  // LEGACY OTA PROFILE & HEARTBEAT ROUTES (BACKWARDS COMPATIBLE)
+  // =========================================================================
+
   // GET /api/v1/devices/enroll/:token
   fastify.get(
     '/enroll/:token',

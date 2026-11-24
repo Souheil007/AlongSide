@@ -252,3 +252,31 @@ export const NutritionStage = {
   PUBERTAL_GROWTH: 'PUBERTAL_GROWTH',
 } as const;
 export type NutritionStage = (typeof NutritionStage)[keyof typeof NutritionStage];
+
+export const DnsProviderType = {
+  NEXTDNS: 'NEXTDNS',
+  CONTROLD: 'CONTROLD',
+  SELF_HOSTED: 'SELF_HOSTED',
+  FAKE: 'FAKE',
+} as const;
+export type DnsProviderType = (typeof DnsProviderType)[keyof typeof DnsProviderType];
+
+export const ShieldPlatform = {
+  APPLE_IOS: 'APPLE_IOS',
+  ANDROID: 'ANDROID',
+} as const;
+export type ShieldPlatform = (typeof ShieldPlatform)[keyof typeof ShieldPlatform];
+
+export const ShieldBlockableService = {
+  TIKTOK: 'tiktok',
+  INSTAGRAM: 'instagram',
+  SNAPCHAT: 'snapchat',
+  DISCORD: 'discord',
+  ROBLOX: 'roblox',
+  YOUTUBE: 'youtube',
+  TWITCH: 'twitch',
+  FORTNITE: 'fortnite',
+  REDDIT: 'reddit',
+} as const;
+export type ShieldBlockableService =
+  (typeof ShieldBlockableService)[keyof typeof ShieldBlockableService];

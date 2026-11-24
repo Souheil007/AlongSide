@@ -10,3 +10,4 @@ export * from './milestones.js';
 export * from './nutrition.js';
 export * from './brainGames.js';
 export * from './behavior.js';
+export * from './deviceShield.js';

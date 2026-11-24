@@ -43,6 +43,15 @@ import {
   type DeviceProfileCompiler,
   StandardDeviceProfileCompiler,
 } from './modules/device-profiles/profile.compiler.js';
+import {
+  type DeviceShieldRepository,
+  PrismaDeviceShieldRepository,
+} from './modules/device-profiles/device-shield.repository.js';
+import { DeviceShieldService } from './modules/device-profiles/device-shield.service.js';
+import {
+  type DnsPolicyProvider,
+  resolveDefaultDnsPolicyProvider,
+} from './modules/device-profiles/dns-provider.js';
 import { academyRoutes } from './modules/academy/academy.routes.js';
 import {
   type AcademyRepository,
@@ -118,6 +127,9 @@ export interface AppOptions extends FastifyServerOptions {
   deviceProfilesRepository?: DeviceProfilesRepository;
   deviceProfilesService?: DeviceProfilesService;
   profileCompiler?: DeviceProfileCompiler;
+  deviceShieldRepository?: DeviceShieldRepository;
+  deviceShieldService?: DeviceShieldService;
+  dnsPolicyProvider?: DnsPolicyProvider;
   academyRepository?: AcademyRepository;
   academyService?: AcademyService;
   digestRepository?: DigestRepository;
@@ -158,6 +170,9 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     deviceProfilesRepository,
     deviceProfilesService,
     profileCompiler,
+    deviceShieldRepository,
+    deviceShieldService,
+    dnsPolicyProvider,
     academyRepository,
     academyService,
     digestRepository,
@@ -420,6 +435,19 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
       resolvedProfileCompiler
     );
 
+  const resolvedDeviceShieldRepository =
+    deviceShieldRepository ?? new PrismaDeviceShieldRepository();
+  const resolvedDnsPolicyProvider =
+    dnsPolicyProvider ?? resolveDefaultDnsPolicyProvider();
+  const resolvedDeviceShieldService =
+    deviceShieldService ??
+    new DeviceShieldService(
+      resolvedDeviceShieldRepository,
+      resolvedChildrenRepository,
+      resolvedDnsPolicyProvider,
+      resolvedProfileCompiler
+    );
+
   const resolvedAcademyRepository =
     academyRepository ?? new PrismaAcademyRepository();
   const resolvedAcademyService =
@@ -524,6 +552,10 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
     agreementsRepository: resolvedAgreementsRepository,
     deviceProfilesService: resolvedDeviceProfilesService,
     profileCompiler: resolvedProfileCompiler,
+    childrenRepository: resolvedChildrenRepository,
+    deviceShieldRepository: resolvedDeviceShieldRepository,
+    deviceShieldService: resolvedDeviceShieldService,
+    dnsPolicyProvider: resolvedDnsPolicyProvider,
   });
   await app.register(academyRoutes, {
     prefix: '/api/v1/academy',

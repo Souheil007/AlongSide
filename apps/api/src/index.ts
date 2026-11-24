@@ -1,3 +1,11 @@
+import dotenv from 'dotenv';
+import path from 'node:path';
+
+// Ensure .env is loaded from workspace and repository root
+dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config({ path: path.resolve(process.cwd(), '../../.env') });
+
 import closeWithGrace from 'close-with-grace';
 import { buildApp } from './app.js';
 

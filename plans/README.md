@@ -220,6 +220,8 @@ graph TD
 | [**`49-culture-digest-weekly-schema-and-api.md`**](49-culture-digest-weekly-schema-and-api.md) | Culture & Trends Weekly Schema, Shared Contracts & Archive API | **Backend Agent** | PLAN-08, PLAN-36, PLAN-43 | Queued |
 | [**`50-culture-digest-live-sourcing-and-curation-pipeline.md`**](50-culture-digest-live-sourcing-and-curation-pipeline.md) | Culture & Trends Live Weekly Blog (RSS) & Fresh YouTube Sourcing Pipeline | **Backend Agent** | PLAN-49 | Queued |
 | [**`51-culture-digest-weekly-editorial-redesign-ui.md`**](51-culture-digest-weekly-editorial-redesign-ui.md) | Culture & Trends Calm Weekly Hub, Week-Scoped Blogs/Videos & Saved UI | **Frontend Agent** | PLAN-49 | Queued |
+| [**`52-live-dns-shield-and-mobileconfig-api.md`**](52-live-dns-shield-and-mobileconfig-api.md) | Live DNS Shield Policy Engine (NextDNS Seam) & Apple DoH Mobileconfig API | **Backend Agent** | PLAN-04, PLAN-06, PLAN-44 | Ready for Assignment |
+| [**`53-live-dns-shield-and-enrollment-ui.md`**](53-live-dns-shield-and-enrollment-ui.md) | Live DNS Shield Controls, One-Tap Apple Profile & Android Private DNS UI | **Frontend Agent** | PLAN-52 | Queued |
 
 ---
 

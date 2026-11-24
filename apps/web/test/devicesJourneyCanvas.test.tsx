@@ -100,14 +100,21 @@ describe('DevicesManagementView (Direction G: 3-Step Vertical Journey Timeline)'
     });
   });
 
-  describe('Step 2 & Step 3: OS Switcher (iPhone / Android) + Optional Apps & Home Wi-Fi', () => {
-    it('renders 2-way OS switcher, 1-open accordion checklist, and 4 optional add-on chips', () => {
+  describe('Step 2 & Step 3: Live Network Shield + Built-in OS Controls & Optional Apps', () => {
+    it('renders Step 2 Live Shield, Step 3 OS checklist with 2-way switcher, and 4 optional add-on chips', () => {
       const html = renderWithProviders(
         React.createElement(DevicesManagementView, defaultProps)
       );
 
-      // Step 2: 2-way OS switcher & Apple Screen Time accordion
-      expect(html).toContain('Step 2 · Parental Controls');
+      // Step 2: Live Network Shield
+      expect(html).toContain('Step 2 · Live Network Shield');
+      expect(html).toContain('Enforced Network Protection');
+      expect(html).toContain('Adult &amp; Explicit Content Filter');
+      expect(html).toContain('Strict SafeSearch &amp; YouTube Restricted Mode');
+      expect(html).toContain('Bedtime Internet Pause');
+
+      // Step 3: Built-In OS Controls & Go Further
+      expect(html).toContain('Step 3 · Device Passcode &amp; Built-In Controls');
       expect(html).toContain('Apple Screen Time');
       expect(html).toContain('iPhone / iPad');
       expect(html).toContain('Android');
@@ -137,7 +144,7 @@ describe('DevicesManagementView (Direction G: 3-Step Vertical Journey Timeline)'
       expect(html).toContain("Toby&#x27;s Screen-Free Sanctuary");
       expect(html).toContain('Zero background TV');
       expect(html).toContain('7:30 PM screen-free wind-down');
-      expect(html).not.toContain('Step 2 · Parental Controls');
+      expect(html).not.toContain('Step 2 · Live Network Shield');
     });
   });
 
