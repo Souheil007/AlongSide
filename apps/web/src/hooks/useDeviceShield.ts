@@ -222,13 +222,13 @@ export function useDeviceShield({
   const setEnforcementMode = React.useCallback(
     (mode: 'scheduled' | '247') => {
       const base = toInput(effectiveShield);
+      const allSelected = Array.from(
+        new Set([...base.blockedServices, ...base.bedtimeServices])
+      );
       if (mode === '247') {
-        const allBlocked = Array.from(
-          new Set([...base.blockedServices, ...base.bedtimeServices])
-        );
         mutation.mutate({
           ...base,
-          blockedServices: allBlocked,
+          blockedServices: allSelected,
           bedtimeServices: [],
           bedtimeEnabled: true,
           bedtimeStart: '00:00',
@@ -241,10 +241,55 @@ export function useDeviceShield({
           base.bedtimeEnd === '00:00' ? '06:30' : base.bedtimeEnd || '06:30';
         mutation.mutate({
           ...base,
+          blockedServices: [],
+          bedtimeServices: allSelected,
           bedtimeEnabled: true,
           bedtimeStart: fallbackStart,
           bedtimeEnd: fallbackEnd,
         });
+      }
+    },
+    [effectiveShield, toInput, mutation]
+  );
+
+  const toggleAppService = React.useCallback(
+    (service: ShieldBlockableService) => {
+      const base = toInput(effectiveShield);
+      const is247 = Boolean(
+        base.bedtimeEnabled &&
+          base.bedtimeStart === base.bedtimeEnd &&
+          base.bedtimeStart === '00:00'
+      );
+      const isSelected =
+        base.blockedServices.includes(service) ||
+        base.bedtimeServices.includes(service);
+
+      if (isSelected) {
+        mutation.mutate({
+          ...base,
+          blockedServices: base.blockedServices.filter((s) => s !== service),
+          bedtimeServices: base.bedtimeServices.filter((s) => s !== service),
+        });
+      } else {
+        if (is247) {
+          mutation.mutate({
+            ...base,
+            blockedServices: [
+              ...base.blockedServices.filter((s) => s !== service),
+              service,
+            ],
+            bedtimeServices: base.bedtimeServices.filter((s) => s !== service),
+          });
+        } else {
+          mutation.mutate({
+            ...base,
+            blockedServices: base.blockedServices.filter((s) => s !== service),
+            bedtimeServices: [
+              ...base.bedtimeServices.filter((s) => s !== service),
+              service,
+            ],
+          });
+        }
       }
     },
     [effectiveShield, toInput, mutation]
@@ -311,6 +356,7 @@ export function useDeviceShield({
     toggleCoreSetting,
     toggleBlockedService,
     toggleBedtimeService,
+    toggleAppService,
     setBedtimeSchedule,
     setEnforcementMode,
     downloadProfile,

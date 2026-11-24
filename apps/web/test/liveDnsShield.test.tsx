@@ -49,11 +49,17 @@ describe('LiveDnsShieldCard (PLAN-53 Live Network Shield UI)', () => {
     expect(html).toContain('iPhone / iPad');
     expect(html).toContain('Android');
 
+    // Enforcement Mode & Schedule Window
+    expect(html).toContain('Enforcement Mode:');
+    expect(html).toContain('Scheduled Window');
+    expect(html).toContain('Block Completely (24/7)');
+    expect(html).toContain('Pause starts at (Evening):');
+    expect(html).toContain('Internet resumes at (Morning):');
+
     // Core Switches
     expect(html).toContain('Adult &amp; Explicit Content Filter');
     expect(html).toContain('Strict SafeSearch &amp; YouTube Restricted Mode');
     expect(html).toContain('Block VPN &amp; Proxy Bypasses');
-    expect(html).toContain('Bedtime Internet Pause');
 
     // Quick App Blocks
     expect(html).toContain('Specific Apps &amp; Games Filtering');
