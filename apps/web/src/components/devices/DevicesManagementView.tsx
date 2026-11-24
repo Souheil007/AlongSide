@@ -13,12 +13,14 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import type { ChildDTO } from '@alongside/shared';
+import { ShieldPlatform } from '@alongside/shared';
 import {
   useChildContextStore,
   selectActiveChild,
 } from '@/stores/useChildContextStore';
 import { ChildOnboardingModal } from '@/components/children/ChildOnboardingModal';
 import { Button } from '@/components/ui/Button';
+import { LiveDnsShieldCard } from './LiveDnsShieldCard';
 import {
   DEVICE_PLATFORMS,
   getCalibratedControlSteps,
@@ -321,7 +323,7 @@ export function DevicesManagementView({
         </div>
       ) : (
         /* ================================================================= */
-        /* AGES 4–18: DIRECTION G — VERTICAL 3-STEP JOURNEY TIMELINE         */
+        /* AGES 4-18: DIRECTION G: VERTICAL 3-STEP JOURNEY TIMELINE          */
         /* ================================================================= */
         <ol className="flex flex-col" aria-label="Device safety steps">
           {/* =============================================================== */}
@@ -420,9 +422,35 @@ export function DevicesManagementView({
           </li>
 
           {/* =============================================================== */}
-          {/* STEP 2: BUILT-IN OS PARENTAL CONTROLS (iPHONE OR ANDROID)       */}
+          {/* STEP 2: LIVE NETWORK SHIELD (ENFORCED DYNAMIC DNS)              */}
           {/* =============================================================== */}
           <li className="grid grid-cols-[36px_1fr] sm:grid-cols-[44px_1fr] gap-3.5 sm:gap-5 pb-6">
+            <div className="flex flex-col items-center">
+              <span
+                aria-hidden="true"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--spruce)] text-[13px] font-bold text-white tabular-nums"
+              >
+                2
+              </span>
+              <span className="mt-2 w-[2px] flex-1 bg-[var(--hairline)]" aria-hidden="true" />
+            </div>
+
+            <LiveDnsShieldCard
+              childId={activeChild.id}
+              childName={activeChild.name}
+              childAge={activeAge}
+              initialPlatform={
+                selectedOs === 'apple_ios'
+                  ? ShieldPlatform.APPLE_IOS
+                  : ShieldPlatform.ANDROID
+              }
+            />
+          </li>
+
+          {/* =============================================================== */}
+          {/* STEP 3: BUILT-IN DEVICE CONTROLS & APP LOCKS                     */}
+          {/* =============================================================== */}
+          <li className="grid grid-cols-[36px_1fr] sm:grid-cols-[44px_1fr] gap-3.5 sm:gap-5">
             <div className="flex flex-col items-center">
               <span
                 aria-hidden="true"
@@ -431,366 +459,356 @@ export function DevicesManagementView({
                 {completedOsCount === osSteps.length && osSteps.length > 0 ? (
                   <Check className="h-4 w-4" strokeWidth={2.75} />
                 ) : (
-                  '2'
+                  '3'
                 )}
               </span>
-              <span className="mt-2 w-[2px] flex-1 bg-[var(--hairline)]" aria-hidden="true" />
             </div>
 
-            <section
-              aria-label="Step 2: Built-In OS Parental Controls"
-              className="rounded-[18px] border border-[var(--hairline)] bg-[var(--elevated)] overflow-hidden"
-            >
-              {/* Card Header + Clean 2-Way OS Switcher */}
-              <div className="p-5 sm:px-6 sm:py-5 border-b border-[var(--hairline-soft)] space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="space-y-0.5">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
-                        Step 2 · Parental Controls
-                      </span>
-                      <span className="text-[12px] text-[var(--mute)] tabular-nums">
-                        · {completedOsCount}/{osSteps.length} active
-                      </span>
-                    </div>
-                    <h2 className="font-serif-almanac text-[22px] sm:text-[24px] font-semibold text-[var(--ink)]">
-                      {selectedOs === 'apple_ios' ? 'Apple Screen Time' : 'Google Family Link'}
-                    </h2>
-                  </div>
-
-                  {/* 2-Way OS Choice: iPhone/iPad OR Android */}
-                  <div
-                    role="group"
-                    aria-label="Choose child's device OS"
-                    className="inline-flex items-center rounded-[11px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 self-start sm:self-center"
-                  >
-                    {(
-                      [
-                        { id: 'apple_ios', label: 'iPhone / iPad' },
-                        { id: 'android_family_link', label: 'Android' },
-                      ] as const
-                    ).map((opt) => {
-                      const active = selectedOs === opt.id;
-                      return (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          aria-pressed={active}
-                          onClick={() => handleSelectOs(opt.id)}
-                          className={cn(
-                            'inline-flex min-h-[38px] items-center gap-1.5 rounded-[8px] px-3.5 text-[13px] transition-colors cursor-pointer',
-                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
-                            active
-                              ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
-                              : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
-                          )}
-                        >
-                          <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
-                          <span>{opt.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Compact Age Calibration + Mixed-OS Hint */}
-                <div className="flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-[var(--mute)]">
-                  <span className="tabular-nums">
-                    Calibrated for age {activeAge}: Bedtime {recommendedCurfew.time12} · Cap{' '}
-                    {recommendedDailyCap}
-                  </span>
-                  {osMeta.mixedOsTip && (
-                    <span className="text-[12px] text-[var(--mute)]">{osMeta.mixedOsTip}</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Clean 1-At-A-Time Accordion Rows (No Wall of Text) */}
-              <div className="divide-y divide-[var(--hairline-soft)]">
-                {osSteps.map((step, idx) => {
-                  const isDone = Boolean(completedStepIds[step.id]);
-                  const isOpen = effectiveOpenStepId === step.id;
-                  const shortTag = GOAL_SHORT_TAGS[step.goalId];
-
-                  return (
-                    <div
-                      key={step.id}
-                      className={cn(
-                        'transition-colors',
-                        isDone && 'bg-[var(--spruce-soft)]/35'
-                      )}
-                    >
-                      <div className="flex items-center justify-between gap-2 px-4 sm:px-6 py-2.5">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                          {/* Accessible 44x44 Checkbox */}
-                          <button
-                            type="button"
-                            role="checkbox"
-                            aria-checked={isDone}
-                            aria-label={`Mark "${step.title}" as configured`}
-                            onClick={() => toggleStepDone(step.id)}
-                            className="flex h-11 w-11 -ml-2 shrink-0 items-center justify-center rounded-[10px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
-                          >
-                            <span
-                              className={cn(
-                                'flex h-5 w-5 items-center justify-center rounded-[6px] border transition-colors',
-                                isDone
-                                  ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white'
-                                  : 'border-[#c5c3b8] bg-white hover:border-[var(--spruce)]'
-                              )}
-                            >
-                              {isDone && (
-                                <Check className="h-3.5 w-3.5" strokeWidth={2.75} aria-hidden="true" />
-                              )}
-                            </span>
-                          </button>
-
-                          {/* Expand/Collapse Row Button */}
-                          <button
-                            type="button"
-                            aria-expanded={isOpen}
-                            onClick={() =>
-                              setOpenStepId(isOpen ? '__none__' : step.id)
-                            }
-                            className="flex-1 min-w-0 min-h-[44px] flex items-center justify-between gap-3 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)] rounded-[8px] px-1"
-                          >
-                            <span
-                              className={cn(
-                                'text-[14.5px] font-semibold leading-snug',
-                                isDone
-                                  ? 'line-through text-[var(--mute)]'
-                                  : 'text-[var(--ink)]'
-                              )}
-                            >
-                              <span className="text-[var(--mute)] font-medium mr-1.5 tabular-nums">
-                                {idx + 1}.
-                              </span>
-                              {step.title}
-                            </span>
-
-                            <span className="inline-flex items-center gap-2 shrink-0">
-                              <span className="hidden sm:inline text-[12px] text-[var(--mute)]">
-                                {shortTag}
-                              </span>
-                              {isOpen ? (
-                                <ChevronUp
-                                  className="h-4 w-4 text-[var(--mute)]"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <ChevronDown
-                                  className="h-4 w-4 text-[var(--mute)]"
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </span>
-                          </button>
-                        </div>
+            <div className="space-y-6">
+              <section
+                aria-label="Step 3: Built-In OS Parental Controls"
+                className="rounded-[18px] border border-[var(--hairline)] bg-[var(--elevated)] overflow-hidden"
+              >
+                {/* Card Header + Clean 2-Way OS Switcher */}
+                <div className="p-5 sm:px-6 sm:py-5 border-b border-[var(--hairline-soft)] space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-0.5">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
+                          Step 3 · Device Passcode &amp; Built-In Controls
+                        </span>
+                        <span className="text-[12px] text-[var(--mute)] tabular-nums">
+                          · {completedOsCount}/{osSteps.length} active
+                        </span>
                       </div>
-
-                      {/* Expanded Single-Step Instructions */}
-                      {isOpen && (
-                        <div className="px-5 sm:pl-[62px] sm:pr-6 pb-5 pt-1 space-y-3">
-                          <div
-                            aria-label="Device settings path"
-                            className="flex flex-wrap items-center gap-1.5 text-[12px]"
-                          >
-                            {step.menuPath.map((crumb, cIdx) => (
-                              <React.Fragment key={`${step.id}-${cIdx}`}>
-                                <span className="rounded-[6px] border border-[var(--hairline)] bg-[var(--canvas)] px-2.5 py-1 font-medium text-[var(--ink)]">
-                                  {crumb}
-                                </span>
-                                {cIdx < step.menuPath.length - 1 && (
-                                  <span className="text-[var(--mute)]" aria-hidden="true">
-                                    →
-                                  </span>
-                                )}
-                              </React.Fragment>
-                            ))}
-                          </div>
-
-                          <div className="rounded-[10px] border border-[var(--spruce-border)] bg-[var(--spruce-soft)] px-4 py-3 text-[13.5px] leading-[1.5] text-[var(--ink)]">
-                            <strong className="font-semibold text-[var(--spruce)]">
-                              For age {activeAge}:{' '}
-                            </strong>
-                            {step.recommendedSetting}
-                          </div>
-
-                          <p className="text-[12.5px] leading-relaxed text-[var(--body)]">
-                            {step.whyItMatters}
-                          </p>
-                        </div>
-                      )}
+                      <h2 className="font-serif-almanac text-[22px] sm:text-[24px] font-semibold text-[var(--ink)]">
+                        {selectedOs === 'apple_ios' ? 'Apple Screen Time' : 'Google Family Link'}
+                      </h2>
                     </div>
-                  );
-                })}
-              </div>
-            </section>
-          </li>
 
-          {/* =============================================================== */}
-          {/* STEP 3: GO FURTHER (OPTIONAL APPS, GAMES & HOME WI-FI)          */}
-          {/* =============================================================== */}
-          <li className="grid grid-cols-[36px_1fr] sm:grid-cols-[44px_1fr] gap-3.5 sm:gap-5">
-            <div className="flex flex-col items-center">
-              <span
-                aria-hidden="true"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8E3D7] text-[13px] font-bold text-[var(--ink)] tabular-nums"
-              >
-                3
-              </span>
-            </div>
-
-            <section
-              aria-label="Step 3: Optional apps, games, and home Wi-Fi"
-              className="rounded-[18px] border border-[var(--hairline)] bg-[#F3EFE6] p-5 sm:p-6 space-y-4"
-            >
-              <div className="space-y-1">
-                <span className="block text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
-                  Optional · Go Further
-                </span>
-                <h2 className="font-serif-almanac text-[21px] sm:text-[22px] font-semibold text-[var(--ink)]">
-                  Apps, games &amp; home Wi-Fi
-                </h2>
-                <p className="text-[13.5px] text-[var(--body)]">
-                  OS controls don&apos;t reach inside apps or consoles. Tap any that {activeChild.name}{' '}
-                  uses:
-                </p>
-              </div>
-
-              {/* Clean Add-on Chips */}
-              <div
-                role="group"
-                aria-label="Select optional apps or home Wi-Fi"
-                className="flex flex-wrap gap-2"
-              >
-                {addonPacks.map((pack) => {
-                  const isSelected = Boolean(activeAddons[pack.id]);
-                  return (
-                    <button
-                      key={pack.id}
-                      type="button"
-                      aria-pressed={isSelected}
-                      onClick={() => toggleAddon(pack.id)}
-                      className={cn(
-                        'inline-flex min-h-[42px] items-center gap-2 rounded-[10px] border px-3.5 py-2 text-[13px] transition-colors cursor-pointer',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
-                        isSelected
-                          ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white font-semibold'
-                          : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--ink)] font-medium hover:border-[var(--spruce)]'
-                      )}
+                    {/* 2-Way OS Choice: iPhone/iPad OR Android */}
+                    <div
+                      role="group"
+                      aria-label="Choose child's device OS"
+                      className="inline-flex items-center rounded-[11px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 self-start sm:self-center"
                     >
-                      <span>{pack.label}</span>
-                      <span
+                      {(
+                        [
+                          { id: 'apple_ios', label: 'iPhone / iPad' },
+                          { id: 'android_family_link', label: 'Android' },
+                        ] as const
+                      ).map((opt) => {
+                        const active = selectedOs === opt.id;
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            aria-pressed={active}
+                            onClick={() => handleSelectOs(opt.id)}
+                            className={cn(
+                              'inline-flex min-h-[38px] items-center gap-1.5 rounded-[8px] px-3.5 text-[13px] transition-colors cursor-pointer',
+                              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
+                              active
+                                ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
+                                : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
+                            )}
+                          >
+                            <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>{opt.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Compact Age Calibration + Mixed-OS Hint */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-[var(--mute)]">
+                    <span className="tabular-nums">
+                      Calibrated for age {activeAge}: Bedtime {recommendedCurfew.time12} · Cap{' '}
+                      {recommendedDailyCap}
+                    </span>
+                    {osMeta.mixedOsTip && (
+                      <span className="text-[12px] text-[var(--mute)]">{osMeta.mixedOsTip}</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Clean 1-At-A-Time Accordion Rows (No Wall of Text) */}
+                <div className="divide-y divide-[var(--hairline-soft)]">
+                  {osSteps.map((step, idx) => {
+                    const isDone = Boolean(completedStepIds[step.id]);
+                    const isOpen = effectiveOpenStepId === step.id;
+                    const shortTag = GOAL_SHORT_TAGS[step.goalId];
+
+                    return (
+                      <div
+                        key={step.id}
                         className={cn(
-                          'text-[11.5px]',
-                          isSelected ? 'text-white/80' : 'text-[var(--mute)]'
+                          'transition-colors',
+                          isDone && 'bg-[var(--spruce-soft)]/35'
                         )}
                       >
-                        · {pack.shortTag}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Revealed Add-on Setup Cards (Only When Selected) */}
-              {addonPacks.some((pack) => activeAddons[pack.id]) && (
-                <div className="space-y-3 pt-1">
-                  {addonPacks
-                    .filter((pack) => activeAddons[pack.id])
-                    .map((pack) => (
-                      <div
-                        key={pack.id}
-                        className="rounded-[14px] border border-[var(--hairline)] bg-[var(--elevated)] overflow-hidden"
-                      >
-                        <div className="px-4 py-3 border-b border-[var(--hairline-soft)] flex items-center justify-between gap-2">
-                          <span className="text-[13.5px] font-semibold text-[var(--spruce)]">
-                            {pack.label} setup
-                          </span>
-                          <span className="text-[12px] text-[var(--mute)] tabular-nums">
-                            {pack.steps.filter((s) => completedStepIds[s.id]).length}/
-                            {pack.steps.length} active
-                          </span>
-                        </div>
-
-                        <div className="divide-y divide-[var(--hairline-soft)]">
-                          {pack.steps.map((st) => {
-                            const isDone = Boolean(completedStepIds[st.id]);
-                            return (
-                              <div
-                                key={st.id}
+                        <div className="flex items-center justify-between gap-2 px-4 sm:px-6 py-2.5">
+                          <div className="flex items-center gap-2 min-w-0 flex-1">
+                            {/* Accessible 44x44 Checkbox */}
+                            <button
+                              type="button"
+                              role="checkbox"
+                              aria-checked={isDone}
+                              aria-label={`Mark "${step.title}" as configured`}
+                              onClick={() => toggleStepDone(step.id)}
+                              className="flex h-11 w-11 -ml-2 shrink-0 items-center justify-center rounded-[10px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
+                            >
+                              <span
                                 className={cn(
-                                  'px-4 py-3.5 flex items-start gap-2.5',
-                                  isDone && 'bg-[var(--spruce-soft)]/35'
+                                 'flex h-5 w-5 items-center justify-center rounded-[6px] border transition-colors',
+                                  isDone
+                                    ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white'
+                                    : 'border-[#c5c3b8] bg-white hover:border-[var(--spruce)]'
                                 )}
                               >
-                                <button
-                                  type="button"
-                                  role="checkbox"
-                                  aria-checked={isDone}
-                                  aria-label={`Mark "${st.title}" as configured`}
-                                  onClick={() => toggleStepDone(st.id)}
-                                  className="flex h-11 w-11 -ml-2 -mt-2 shrink-0 items-center justify-center rounded-[10px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
-                                >
-                                  <span
-                                    className={cn(
-                                      'flex h-5 w-5 items-center justify-center rounded-[6px] border transition-colors',
-                                      isDone
-                                        ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white'
-                                        : 'border-[#c5c3b8] bg-white hover:border-[var(--spruce)]'
-                                    )}
-                                  >
-                                    {isDone && (
-                                      <Check
-                                        className="h-3.5 w-3.5"
-                                        strokeWidth={2.75}
-                                        aria-hidden="true"
-                                      />
-                                    )}
-                                  </span>
-                                </button>
+                                {isDone && (
+                                  <Check className="h-3.5 w-3.5" strokeWidth={2.75} aria-hidden="true" />
+                                )}
+                              </span>
+                            </button>
 
-                                <div className="space-y-2 min-w-0 flex-1">
-                                  <h3
-                                    className={cn(
-                                      'text-[14px] font-semibold leading-snug',
-                                      isDone
-                                        ? 'line-through text-[var(--mute)]'
-                                        : 'text-[var(--ink)]'
-                                    )}
-                                  >
-                                    {st.title}
-                                  </h3>
+                            {/* Expand/Collapse Row Button */}
+                            <button
+                              type="button"
+                              aria-expanded={isOpen}
+                              onClick={() =>
+                                setOpenStepId(isOpen ? '__none__' : step.id)
+                              }
+                              className="flex-1 min-w-0 min-h-[44px] flex items-center justify-between gap-3 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)] rounded-[8px] px-1"
+                            >
+                              <span
+                                className={cn(
+                                  'text-[14.5px] font-semibold leading-snug',
+                                  isDone
+                                    ? 'line-through text-[var(--mute)]'
+                                    : 'text-[var(--ink)]'
+                                )}
+                              >
+                                <span className="text-[var(--mute)] font-medium mr-1.5 tabular-nums">
+                                  {idx + 1}.
+                                </span>
+                                {step.title}
+                              </span>
 
-                                  <div className="flex flex-wrap items-center gap-1.5 text-[11.5px]">
-                                    {st.menuPath.map((crumb, cIdx) => (
-                                      <React.Fragment key={`${st.id}-${cIdx}`}>
-                                        <span className="rounded-[6px] border border-[var(--hairline)] bg-[var(--canvas)] px-2 py-0.5 font-medium text-[var(--ink)]">
-                                          {crumb}
-                                        </span>
-                                        {cIdx < st.menuPath.length - 1 && (
-                                          <span className="text-[var(--mute)]" aria-hidden="true">
-                                            →
-                                          </span>
-                                        )}
-                                      </React.Fragment>
-                                    ))}
-                                  </div>
-
-                                  <p className="text-[13px] leading-relaxed text-[var(--body)]">
-                                    {st.recommendedSetting}
-                                  </p>
-                                </div>
-                              </div>
-                            );
-                          })}
+                              <span className="inline-flex items-center gap-2 shrink-0">
+                                <span className="hidden sm:inline text-[12px] text-[var(--mute)]">
+                                  {shortTag}
+                                </span>
+                                {isOpen ? (
+                                  <ChevronUp
+                                    className="h-4 w-4 text-[var(--mute)]"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <ChevronDown
+                                    className="h-4 w-4 text-[var(--mute)]"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </button>
+                          </div>
                         </div>
+
+                        {/* Expanded Single-Step Instructions */}
+                        {isOpen && (
+                          <div className="px-5 sm:pl-[62px] sm:pr-6 pb-5 pt-1 space-y-3">
+                            <div
+                              aria-label="Device settings path"
+                              className="flex flex-wrap items-center gap-1.5 text-[12px]"
+                            >
+                              {step.menuPath.map((crumb, cIdx) => (
+                                <React.Fragment key={`${step.id}-${cIdx}`}>
+                                  <span className="rounded-[6px] border border-[var(--hairline)] bg-[var(--canvas)] px-2.5 py-1 font-medium text-[var(--ink)]">
+                                    {crumb}
+                                  </span>
+                                  {cIdx < step.menuPath.length - 1 && (
+                                    <span className="text-[var(--mute)]" aria-hidden="true">
+                                      →
+                                    </span>
+                                  )}
+                                </React.Fragment>
+                              ))}
+                            </div>
+
+                            <div className="rounded-[10px] border border-[var(--spruce-border)] bg-[var(--spruce-soft)] px-4 py-3 text-[13.5px] leading-[1.5] text-[var(--ink)]">
+                              <strong className="font-semibold text-[var(--spruce)]">
+                                For age {activeAge}:{' '}
+                              </strong>
+                              {step.recommendedSetting}
+                            </div>
+
+                            <p className="text-[12.5px] leading-relaxed text-[var(--body)]">
+                              {step.whyItMatters}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                    ))}
+                    );
+                  })}
                 </div>
-              )}
-            </section>
+              </section>
+
+              {/* =============================================================== */}
+              {/* OPTIONAL APPS, GAMES & HOME WI-FI SECTION                       */}
+              {/* =============================================================== */}
+              <section
+                aria-label="Optional apps, games, and home Wi-Fi"
+                className="rounded-[18px] border border-[var(--hairline)] bg-[#F3EFE6] p-5 sm:p-6 space-y-4"
+              >
+                <div className="space-y-1">
+                  <span className="block text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
+                    Optional · Go Further
+                  </span>
+                  <h2 className="font-serif-almanac text-[21px] sm:text-[22px] font-semibold text-[var(--ink)]">
+                    Apps, games &amp; home Wi-Fi
+                  </h2>
+                  <p className="text-[13.5px] text-[var(--body)]">
+                    OS controls don&apos;t reach inside apps or consoles. Tap any that {activeChild.name}{' '}
+                    uses:
+                  </p>
+                </div>
+
+                {/* Clean Add-on Chips */}
+                <div
+                  role="group"
+                  aria-label="Select optional apps or home Wi-Fi"
+                  className="flex flex-wrap gap-2"
+                >
+                  {addonPacks.map((pack) => {
+                    const isSelected = Boolean(activeAddons[pack.id]);
+                    return (
+                      <button
+                        key={pack.id}
+                        type="button"
+                        aria-pressed={isSelected}
+                        onClick={() => toggleAddon(pack.id)}
+                        className={cn(
+                          'inline-flex min-h-[42px] items-center gap-2 rounded-[10px] border px-3.5 py-2 text-[13px] transition-colors cursor-pointer',
+                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
+                          isSelected
+                            ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white font-semibold'
+                            : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--ink)] font-medium hover:border-[var(--spruce)]'
+                        )}
+                      >
+                        <span>{pack.label}</span>
+                        <span
+                          className={cn(
+                            'text-[11.5px]',
+                            isSelected ? 'text-white/80' : 'text-[var(--mute)]'
+                          )}
+                        >
+                          · {pack.shortTag}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Revealed Add-on Setup Cards (Only When Selected) */}
+                {addonPacks.some((pack) => activeAddons[pack.id]) && (
+                  <div className="space-y-3 pt-1">
+                    {addonPacks
+                      .filter((pack) => activeAddons[pack.id])
+                      .map((pack) => (
+                        <div
+                          key={pack.id}
+                          className="rounded-[14px] border border-[var(--hairline)] bg-[var(--elevated)] overflow-hidden"
+                        >
+                          <div className="px-4 py-3 border-b border-[var(--hairline-soft)] flex items-center justify-between gap-2">
+                            <span className="text-[13.5px] font-semibold text-[var(--spruce)]">
+                              {pack.label} setup
+                            </span>
+                            <span className="text-[12px] text-[var(--mute)] tabular-nums">
+                              {pack.steps.filter((s) => completedStepIds[s.id]).length}/
+                              {pack.steps.length} active
+                            </span>
+                          </div>
+
+                          <div className="divide-y divide-[var(--hairline-soft)]">
+                            {pack.steps.map((st) => {
+                              const isDone = Boolean(completedStepIds[st.id]);
+                              return (
+                                <div
+                                  key={st.id}
+                                  className={cn(
+                                    'px-4 py-3.5 flex items-start gap-2.5',
+                                    isDone && 'bg-[var(--spruce-soft)]/35'
+                                  )}
+                                >
+                                  <button
+                                    type="button"
+                                    role="checkbox"
+                                    aria-checked={isDone}
+                                    aria-label={`Mark "${st.title}" as configured`}
+                                    onClick={() => toggleStepDone(st.id)}
+                                    className="flex h-11 w-11 -ml-2 -mt-2 shrink-0 items-center justify-center rounded-[10px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
+                                  >
+                                    <span
+                                      className={cn(
+                                        'flex h-5 w-5 items-center justify-center rounded-[6px] border transition-colors',
+                                        isDone
+                                          ? 'border-[var(--spruce)] bg-[var(--spruce)] text-white'
+                                          : 'border-[#c5c3b8] bg-white hover:border-[var(--spruce)]'
+                                      )}
+                                    >
+                                      {isDone && (
+                                        <Check
+                                          className="h-3.5 w-3.5"
+                                          strokeWidth={2.75}
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                    </span>
+                                  </button>
+
+                                  <div className="space-y-2 min-w-0 flex-1">
+                                    <h3
+                                      className={cn(
+                                        'text-[14px] font-semibold leading-snug',
+                                        isDone
+                                          ? 'line-through text-[var(--mute)]'
+                                          : 'text-[var(--ink)]'
+                                      )}
+                                    >
+                                      {st.title}
+                                    </h3>
+
+                                    <div className="flex flex-wrap items-center gap-1.5 text-[11.5px]">
+                                      {st.menuPath.map((crumb, cIdx) => (
+                                        <React.Fragment key={`${st.id}-${cIdx}`}>
+                                          <span className="rounded-[6px] border border-[var(--hairline)] bg-[var(--canvas)] px-2 py-0.5 font-medium text-[var(--ink)]">
+                                            {crumb}
+                                          </span>
+                                          {cIdx < st.menuPath.length - 1 && (
+                                            <span className="text-[var(--mute)]" aria-hidden="true">
+                                              →
+                                            </span>
+                                          )}
+                                        </React.Fragment>
+                                      ))}
+                                    </div>
+
+                                    <p className="text-[13px] leading-relaxed text-[var(--body)]">
+                                      {st.recommendedSetting}
+                                    </p>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </section>
+            </div>
           </li>
         </ol>
       )}

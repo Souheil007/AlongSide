@@ -71,12 +71,12 @@ Upgrade the Direction G 3-step vertical journey timeline on `/devices` so parent
 ---
 
 ## 5. Specific Deliverables (Files to Create / Modify)
-- [ ] `apps/web/src/lib/api/deviceShield.ts` (new)
-- [ ] `apps/web/src/hooks/useDeviceShield.ts` (new)
-- [ ] `apps/web/src/components/devices/LiveDnsShieldCard.tsx` (new)
-- [ ] `apps/web/src/components/devices/DevicesManagementView.tsx` (integrate Step 2 Live Shield + lean Step 3 OS Locks)
-- [ ] `apps/web/test/liveDnsShield.test.tsx` (new)
-- [ ] `apps/web/test/devicesJourneyCanvas.test.tsx` (update assertions for integrated Live Shield)
+- [x] `apps/web/src/lib/api/deviceShield.ts` (new)
+- [x] `apps/web/src/hooks/useDeviceShield.ts` (new)
+- [x] `apps/web/src/components/devices/LiveDnsShieldCard.tsx` (new)
+- [x] `apps/web/src/components/devices/DevicesManagementView.tsx` (integrate Step 2 Live Shield + lean Step 3 OS Locks)
+- [x] `apps/web/test/liveDnsShield.test.tsx` (new)
+- [x] `apps/web/test/devicesJourneyCanvas.test.tsx` (update assertions for integrated Live Shield)
 
 ---
 
