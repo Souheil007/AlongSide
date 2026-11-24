@@ -255,6 +255,14 @@ export class DeviceShieldService {
     };
   }
 
+  async syncGuestPolicy(
+    token: string,
+    policy: UpdateDeviceShieldInput
+  ): Promise<void> {
+    const cleanId = token.trim().replace(/[^a-zA-Z0-9_-]/g, '');
+    await this.dnsProvider.syncPolicy(cleanId, policy);
+  }
+
   async provisionInstantGuestProfile(
     childName = 'Child',
     age = 10

@@ -193,6 +193,15 @@ export function buildFallbackShield(
   };
 }
 
+export function extractNextDnsProfileId(input: string): string {
+  let cleaned = input.trim().toLowerCase();
+  cleaned = cleaned.replace(/^https?:\/\/dns\.nextdns\.io\//, '');
+  cleaned = cleaned.replace(/\.dns\.nextdns\.io.*$/, '');
+  cleaned = cleaned.replace(/dnsnextdnsio.*$/, '');
+  cleaned = cleaned.replace(/[^a-z0-9]/g, '');
+  return cleaned;
+}
+
 /**
  * Allows a parent to link their live NextDNS profile ID (e.g. "2a1ee7").
  * Directly sets the DoH and DoT hostnames and marks shield as provisioned.
@@ -201,7 +210,7 @@ export function setCustomNextDnsProfileId(
   childId: string,
   profileId: string
 ): DeviceShieldDTO {
-  const cleanId = profileId.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cleanId = extractNextDnsProfileId(profileId);
   if (!cleanId) throw new Error('Invalid NextDNS profile ID');
 
   const cached = getStoredShield(childId);
@@ -278,8 +287,26 @@ export async function getChildDeviceShield(
     try {
       const parsed = JSON.parse(cached) as DeviceShieldDTO;
       if (parsed && typeof parsed === 'object') {
+        // Auto-heal corrupted strings containing 'dnsnextdnsio' from previous input
+        if (
+          parsed.dotHostname?.includes('dnsnextdnsio') ||
+          parsed.enrollmentToken?.includes('dnsnextdnsio')
+        ) {
+          const cleanToken = extractNextDnsProfileId(parsed.enrollmentToken || parsed.dotHostname || '');
+          if (cleanToken && cleanToken !== 'dnsnextdnsio') {
+            parsed.enrollmentToken = cleanToken;
+            parsed.dotHostname = `${cleanToken}.dns.nextdns.io`;
+            parsed.dohUrl = `https://dns.nextdns.io/${cleanToken}`;
+            parsed.appleProfileDownloadUrl = getAppleProfileDownloadUrl(cleanToken);
+            parsed.enrollmentQrUrl = getShieldQrEndpointUrl(cleanToken);
+            setStoredShield(childId, JSON.stringify(parsed));
+          } else {
+            parsed.dotHostname = '';
+          }
+        }
+
         // If already has a real live profile, return immediately
-        if (parsed.dotHostname && !parsed.dotHostname.includes('local_')) {
+        if (parsed.dotHostname && !parsed.dotHostname.includes('local_') && !parsed.dotHostname.includes('dnsnextdnsio')) {
           return parsed;
         }
 
@@ -406,6 +433,22 @@ export async function updateChildDeviceShield(
     }
     return res.shield;
   } catch (err) {
+    // If unauthenticated or guest mode, sync directly to live NextDNS profile via enrollmentToken
+    if (token && !token.startsWith('local_') && !token.includes('dnsnextdnsio')) {
+      try {
+        await apiClient<{ success: boolean }>(
+          `/api/v1/devices/shield/guest-sync/${token}`,
+          {
+            method: 'PUT',
+            body: JSON.stringify(input),
+          }
+        );
+        localUpdated.lastSyncedAt = new Date().toISOString();
+        setStoredShield(childId, JSON.stringify(localUpdated));
+      } catch {
+        // Fall back to local state if server is completely offline
+      }
+    }
     // Return the local updated DTO so UI never throws or rolls back on unauthenticated / offline states
     return localUpdated;
   }

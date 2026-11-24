@@ -138,4 +138,30 @@ export class DeviceShieldController {
       data: { shield },
     });
   }
+
+  async syncGuestShield(
+    request: FastifyRequest<{ Params: { enrollmentToken: string }; Body: unknown }>,
+    reply: FastifyReply
+  ) {
+    const parsed = UpdateDeviceShieldSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return reply.status(400).send({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Invalid shield policy payload.',
+        },
+      });
+    }
+
+    await this.service.syncGuestPolicy(
+      request.params.enrollmentToken,
+      parsed.data
+    );
+
+    return reply.status(200).send({
+      success: true,
+      data: { synced: true },
+    });
+  }
 }
