@@ -248,9 +248,9 @@ export function setCustomNextDnsProfileId(
     timezone: existing.timezone ?? 'UTC',
     lastSyncedAt: new Date().toISOString(),
     health: {
-      isActive: true,
-      totalQueries24h: 180,
-      blockedQueries24h: 46,
+      isActive: false,
+      totalQueries24h: 0,
+      blockedQueries24h: 0,
       checkedAt: new Date().toISOString(),
     },
   };
@@ -423,10 +423,10 @@ export async function updateChildDeviceShield(
     timezone: input.timezone,
     lastSyncedAt: new Date().toISOString(),
     health: existing.health || {
-      isActive: true,
-      totalQueries24h: 148,
-      blockedQueries24h: 42,
-      checkedAt: new Date().toISOString(),
+      isActive: false,
+      totalQueries24h: 0,
+      blockedQueries24h: 0,
+      checkedAt: null,
     },
   };
 
@@ -475,29 +475,38 @@ export async function updateChildDeviceShield(
 export async function getChildDeviceShieldStatus(
   childId: string
 ): Promise<DeviceShieldHealthDTO> {
+  // 1. Try authenticated backend route first
   try {
     const res = await apiClient<{ health: DeviceShieldHealthDTO }>(
       `/api/v1/devices/shield/${childId}/status`
     );
-    return res.health;
+    if (res.health) return res.health;
   } catch {
-    // Read stored shield to see if provisioned
-    let isProvisioned = false;
-    const cached = getStoredShield(childId);
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached) as DeviceShieldDTO;
-        isProvisioned = Boolean(parsed.isProvisioned);
-      } catch {
-        // ignore
-      }
-    }
-
-    return {
-      isActive: isProvisioned,
-      totalQueries24h: isProvisioned ? 148 : 0,
-      blockedQueries24h: isProvisioned ? 42 : 0,
-      checkedAt: isProvisioned ? new Date().toISOString() : null,
-    };
+    // Fall through to guest status
   }
+
+  // 2. Try guest status endpoint using the child's live enrollmentToken
+  const cached = getStoredShield(childId);
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached) as DeviceShieldDTO;
+      const token = parsed.enrollmentToken;
+      if (token && !token.startsWith('local_') && !token.includes('dnsnextdnsio')) {
+        const guestRes = await apiClient<{ health: DeviceShieldHealthDTO }>(
+          `/api/v1/devices/shield/guest-status/${token}`
+        );
+        if (guestRes.health) return guestRes.health;
+      }
+    } catch {
+      // Fall through
+    }
+  }
+
+  // 3. Fallback to clean zero values (zero hardcoded mock counters)
+  return {
+    isActive: false,
+    totalQueries24h: 0,
+    blockedQueries24h: 0,
+    checkedAt: null,
+  };
 }

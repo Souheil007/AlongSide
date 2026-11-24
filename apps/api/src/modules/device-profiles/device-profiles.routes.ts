@@ -198,6 +198,23 @@ export const deviceProfilesRoutes: FastifyPluginAsync<DeviceProfilesRoutesOption
     shieldController.syncGuestShield.bind(shieldController)
   );
 
+  // GET /api/v1/devices/shield/guest-status/:enrollmentToken (Real-time dynamic NextDNS query counters)
+  fastify.get<{ Params: { enrollmentToken: string } }>(
+    '/shield/guest-status/:enrollmentToken',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            enrollmentToken: { type: 'string', minLength: 4 },
+          },
+          required: ['enrollmentToken'],
+        },
+      },
+    },
+    shieldController.getGuestStatus.bind(shieldController)
+  );
+
   // =========================================================================
   // LEGACY OTA PROFILE & HEARTBEAT ROUTES (BACKWARDS COMPATIBLE)
   // =========================================================================

@@ -263,6 +263,22 @@ export class DeviceShieldService {
     await this.dnsProvider.syncPolicy(cleanId, policy);
   }
 
+  async getGuestHealthStatus(
+    enrollmentToken: string
+  ): Promise<DeviceShieldHealthDTO> {
+    const cleanId = enrollmentToken.trim().replace(/[^a-zA-Z0-9_-]/g, '');
+    try {
+      return await this.dnsProvider.getHealthSummary(cleanId);
+    } catch {
+      return {
+        isActive: false,
+        totalQueries24h: 0,
+        blockedQueries24h: 0,
+        checkedAt: new Date().toISOString(),
+      };
+    }
+  }
+
   async provisionInstantGuestProfile(
     childName = 'Child',
     age = 10

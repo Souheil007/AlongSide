@@ -127,7 +127,9 @@ export function LiveDnsShieldCard({
               {isLiveActive ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--spruce-soft)] px-2.5 py-0.5 text-[11.5px] font-semibold text-[var(--spruce)] tabular-nums">
                   <span className="h-2 w-2 rounded-full bg-[var(--spruce)] animate-pulse" />
-                  Protected · Active ({blockedQueries} blocked today)
+                  {blockedQueries > 0
+                    ? `Protected · Active (${blockedQueries} blocked today)`
+                    : 'Protected · Connected'}
                 </span>
               ) : shield?.isProvisioned ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--canvas-subtle)] border border-[var(--hairline)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--body)]">

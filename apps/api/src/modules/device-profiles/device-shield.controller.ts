@@ -164,4 +164,18 @@ export class DeviceShieldController {
       data: { synced: true },
     });
   }
+
+  async getGuestStatus(
+    request: FastifyRequest<{ Params: { enrollmentToken: string } }>,
+    reply: FastifyReply
+  ) {
+    const health = await this.service.getGuestHealthStatus(
+      request.params.enrollmentToken
+    );
+    reply.header('Cache-Control', 'no-store');
+    return reply.status(200).send({
+      success: true,
+      data: { health },
+    });
+  }
 }
