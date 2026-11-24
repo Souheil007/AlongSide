@@ -37,20 +37,27 @@ export interface LiveDnsShieldCardProps {
   className?: string;
 }
 
-const BEDTIME_START_PRESETS = [
+const SCHEDULE_START_OPTIONS = [
+  { label: '7:00 PM', value: '19:00' },
+  { label: '7:30 PM', value: '19:30' },
   { label: '8:00 PM', value: '20:00' },
-  { label: '8:30 PM', value: '20:30' },
+  { label: '8:30 PM (Recommended)', value: '20:30' },
   { label: '9:00 PM', value: '21:00' },
   { label: '9:30 PM', value: '21:30' },
   { label: '10:00 PM', value: '22:00' },
+  { label: '10:30 PM', value: '22:30' },
+  { label: '11:00 PM', value: '23:00' },
 ];
 
-const BEDTIME_RESUME_PRESETS = [
+const SCHEDULE_RESUME_OPTIONS = [
+  { label: '5:30 AM', value: '05:30' },
   { label: '6:00 AM', value: '06:00' },
-  { label: '6:30 AM', value: '06:30' },
+  { label: '6:30 AM (Recommended)', value: '06:30' },
   { label: '7:00 AM', value: '07:00' },
   { label: '7:30 AM', value: '07:30' },
   { label: '8:00 AM', value: '08:00' },
+  { label: '8:30 AM', value: '08:30' },
+  { label: '9:00 AM', value: '09:00' },
 ];
 
 function formatDisplayTime(hhmm: string): string {
@@ -114,6 +121,26 @@ export function LiveDnsShieldCard({
   const currentStart = shield?.bedtimeStart ?? '20:30';
   const currentEnd = shield?.bedtimeEnd ?? '06:30';
 
+  const scheduleStartOptions = React.useMemo(() => {
+    if (SCHEDULE_START_OPTIONS.some((o) => o.value === currentStart)) {
+      return SCHEDULE_START_OPTIONS;
+    }
+    return [
+      ...SCHEDULE_START_OPTIONS,
+      { label: formatDisplayTime(currentStart), value: currentStart },
+    ].sort((a, b) => a.value.localeCompare(b.value));
+  }, [currentStart]);
+
+  const scheduleResumeOptions = React.useMemo(() => {
+    if (SCHEDULE_RESUME_OPTIONS.some((o) => o.value === currentEnd)) {
+      return SCHEDULE_RESUME_OPTIONS;
+    }
+    return [
+      ...SCHEDULE_RESUME_OPTIONS,
+      { label: formatDisplayTime(currentEnd), value: currentEnd },
+    ].sort((a, b) => a.value.localeCompare(b.value));
+  }, [currentEnd]);
+
   const restrictedCount =
     (shield?.blockedServices?.length ?? 0) + (shield?.bedtimeServices?.length ?? 0);
 
@@ -126,240 +153,175 @@ export function LiveDnsShieldCard({
       )}
     >
       {/* =================================================================== */}
-      {/* 1. CARD HEADER & PLATFORM SWITCHER                                  */}
+      {/* 1. CARD HEADER & ENFORCEMENT MODE                                   */}
       {/* =================================================================== */}
       <div className="p-5 sm:px-6 sm:py-5 border-b border-[var(--hairline-soft)] space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
-                Step 2 · Live Network Shield
-              </span>
+        {/* Top Meta: Step Indicator & Live Status */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)]">
+            Step 2 · Live Network Shield
+          </span>
 
-              {/* Status Pill */}
-              {isLiveActive ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--spruce-soft)] px-2.5 py-0.5 text-[11.5px] font-semibold text-[var(--spruce)] tabular-nums">
-                  <span className="h-2 w-2 rounded-full bg-[var(--spruce)] animate-pulse" />
-                  {blockedQueries > 0
-                    ? `Protected · Active (${blockedQueries} blocked today)`
-                    : 'Protected · Connected'}
-                </span>
-              ) : shield?.isProvisioned ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--canvas-subtle)] border border-[var(--hairline)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--body)]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--amber)]" />
-                  Profile ready to install
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber-soft)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--amber)]">
-                  Draft policy
-                </span>
-              )}
+          {/* Status Pill */}
+          {isLiveActive ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--spruce-soft)] px-2.5 py-0.5 text-[11.5px] font-semibold text-[var(--spruce)] tabular-nums">
+              <span className="h-2 w-2 rounded-full bg-[var(--spruce)] animate-pulse" />
+              {blockedQueries > 0
+                ? `Protected · Active (${blockedQueries} blocked today)`
+                : 'Protected · Connected'}
+            </span>
+          ) : shield?.isProvisioned ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--canvas-subtle)] border border-[var(--hairline)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--body)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--amber)]" />
+              Profile ready to install
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber-soft)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--amber)]">
+              Draft policy
+            </span>
+          )}
+        </div>
+
+        {/* Title & Explainer */}
+        <div className="space-y-1">
+          <h2 className="font-serif-almanac text-[22px] sm:text-[24px] font-semibold text-[var(--ink)]">
+            Enforced Network Protection
+          </h2>
+          <p className="text-[13.5px] text-[var(--body)] leading-relaxed max-w-[62ch]">
+            Unlike checklists, this shield blocks inappropriate sites and pauses apps
+            directly at the network layer on Wi-Fi and 5G cellular. Zero apps needed on{' '}
+            {childName}&apos;s device.
+          </p>
+        </div>
+
+        {/* Global Shield Enforcement Mode Card */}
+        <div className="rounded-[14px] border border-[var(--hairline)] bg-[var(--canvas-subtle)]/70 p-4 space-y-3.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span className="text-[12.5px] font-semibold text-[var(--ink)] block">
+                Enforcement Mode:
+              </span>
+              <p className="text-[12px] text-[var(--mute)]">
+                {is247Mode
+                  ? 'All selected apps are blocked around the clock with zero daytime access.'
+                  : `Selected apps pause overnight from ${formatDisplayTime(currentStart)} to ${formatDisplayTime(currentEnd)}.`}
+              </p>
             </div>
 
-            <h2 className="font-serif-almanac text-[22px] sm:text-[24px] font-semibold text-[var(--ink)]">
-              Enforced Network Protection
-            </h2>
-            <p className="text-[13.5px] text-[var(--body)] leading-relaxed max-w-[58ch]">
-              Unlike checklists, this shield blocks inappropriate sites and pauses apps
-              directly at the network layer on Wi-Fi and 5G cellular. Zero apps needed on{' '}
-              {childName}&apos;s device.
-            </p>
+            <div
+              role="radiogroup"
+              aria-label="Shield enforcement mode"
+              className="inline-flex rounded-[10px] bg-[var(--elevated)] border border-[var(--hairline)] p-1 gap-1 shrink-0 self-start sm:self-auto"
+            >
+              <button
+                type="button"
+                role="radio"
+                aria-checked={!is247Mode}
+                onClick={() => setEnforcementMode('scheduled')}
+                className={cn(
+                  'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] font-semibold transition-all cursor-pointer',
+                  !is247Mode
+                    ? 'bg-[var(--spruce)] text-white shadow-xs'
+                    : 'text-[var(--body)] hover:text-[var(--ink)]'
+                )}
+              >
+                <Moon className="h-3.5 w-3.5" />
+                <span>Scheduled Window</span>
+              </button>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={is247Mode}
+                onClick={() => setEnforcementMode('247')}
+                className={cn(
+                  'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] font-semibold transition-all cursor-pointer',
+                  is247Mode
+                    ? 'bg-[var(--spruce)] text-white shadow-xs'
+                    : 'text-[var(--body)] hover:text-[var(--ink)]'
+                )}
+              >
+                <ShieldAlert className="h-3.5 w-3.5" />
+                <span>Block Completely (24/7)</span>
+              </button>
+            </div>
+          </div>
 
-            {/* 1. Global Shield Enforcement Mode */}
-            <div className="pt-2 space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
-                <span className="text-[12px] font-semibold uppercase tracking-wider text-[var(--mute)] shrink-0">
-                  Enforcement Mode:
-                </span>
-                <div
-                  role="radiogroup"
-                  aria-label="Shield enforcement mode"
-                  className="inline-flex rounded-[10px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 self-start"
-                >
-                  <button
-                    type="button"
-                    role="radio"
-                    aria-checked={!is247Mode}
-                    onClick={() => setEnforcementMode('scheduled')}
-                    className={cn(
-                      'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3 text-[12.5px] font-semibold transition-all cursor-pointer',
-                      !is247Mode
-                        ? 'bg-[var(--elevated)] text-[var(--spruce)] shadow-xs'
-                        : 'text-[var(--mute)] hover:text-[var(--ink)]'
-                    )}
+          {/* Scheduled Window Picker (shown when Scheduled Window is active) */}
+          {!is247Mode && (
+            <div className="pt-3 border-t border-[var(--hairline-soft)] space-y-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Evening Pause Time */}
+                <div className="rounded-[10px] bg-[var(--elevated)] border border-[var(--hairline)] p-3 space-y-1.5 shadow-2xs">
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span className="font-medium text-[var(--mute)] flex items-center gap-1.5">
+                      <Moon className="h-3.5 w-3.5 text-[var(--spruce)]" />
+                      Pause starts at (Evening):
+                    </span>
+                    <span className="font-bold text-[var(--spruce)]">
+                      {formatDisplayTime(currentStart)}
+                    </span>
+                  </div>
+                  <select
+                    aria-label="Pause starts at (Evening)"
+                    value={currentStart}
+                    onChange={(e) =>
+                      setBedtimeSchedule(
+                        true,
+                        e.target.value,
+                        currentEnd === '00:00' ? '06:30' : currentEnd
+                      )
+                    }
+                    className="w-full min-h-[38px] rounded-[7px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-2.5 text-[13px] font-semibold text-[var(--ink)] focus:border-[var(--spruce)] focus:outline-none cursor-pointer"
                   >
-                    <Moon className="h-3.5 w-3.5" />
-                    <span>Scheduled Window</span>
-                  </button>
-                  <button
-                    type="button"
-                    role="radio"
-                    aria-checked={is247Mode}
-                    onClick={() => setEnforcementMode('247')}
-                    className={cn(
-                      'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3 text-[12.5px] font-semibold transition-all cursor-pointer',
-                      is247Mode
-                        ? 'bg-[var(--elevated)] text-[var(--spruce)] shadow-xs'
-                        : 'text-[var(--mute)] hover:text-[var(--ink)]'
-                    )}
+                    {scheduleStartOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Morning Resume Time */}
+                <div className="rounded-[10px] bg-[var(--elevated)] border border-[var(--hairline)] p-3 space-y-1.5 shadow-2xs">
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span className="font-medium text-[var(--mute)] flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5 text-[var(--spruce)]" />
+                      Internet resumes at (Morning):
+                    </span>
+                    <span className="font-bold text-[var(--spruce)]">
+                      {formatDisplayTime(currentEnd)}
+                    </span>
+                  </div>
+                  <select
+                    aria-label="Internet resumes at (Morning)"
+                    value={currentEnd}
+                    onChange={(e) =>
+                      setBedtimeSchedule(
+                        true,
+                        currentStart === '00:00' ? '20:30' : currentStart,
+                        e.target.value
+                      )
+                    }
+                    className="w-full min-h-[38px] rounded-[7px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-2.5 text-[13px] font-semibold text-[var(--ink)] focus:border-[var(--spruce)] focus:outline-none cursor-pointer"
                   >
-                    <ShieldAlert className="h-3.5 w-3.5" />
-                    <span>Block Completely (24/7)</span>
-                  </button>
+                    {scheduleResumeOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              {/* Scheduled Window Picker (shown directly below mode selection) */}
-              {!is247Mode && (
-                <div className="rounded-[12px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] p-4 space-y-3 max-w-xl">
-                  {/* Start Time Presets */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[12px]">
-                      <span className="font-medium text-[var(--mute)]">Pause starts at (Evening):</span>
-                      <span className="font-semibold text-[var(--spruce)]">{formatDisplayTime(currentStart)}</span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {BEDTIME_START_PRESETS.map((preset) => {
-                        const isSelected = currentStart === preset.value;
-                        return (
-                          <button
-                            key={preset.value}
-                            type="button"
-                            onClick={() =>
-                              setBedtimeSchedule(
-                                true,
-                                preset.value,
-                                currentEnd === '00:00' ? '06:30' : currentEnd
-                              )
-                            }
-                            className={cn(
-                              'min-h-[32px] px-2.5 rounded-[7px] border text-[11.5px] font-semibold transition-colors cursor-pointer',
-                              isSelected
-                                ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
-                                : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
-                            )}
-                          >
-                            {preset.label}
-                          </button>
-                        );
-                      })}
-                      <input
-                        type="time"
-                        aria-label="Custom pause start time"
-                        value={currentStart}
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            setBedtimeSchedule(
-                              true,
-                              e.target.value,
-                              currentEnd === '00:00' ? '06:30' : currentEnd
-                            );
-                          }
-                        }}
-                        className="min-h-[32px] px-2 rounded-[7px] border border-[var(--hairline)] bg-[var(--elevated)] text-[11.5px] text-[var(--body)] focus:border-[var(--spruce)] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Resume Time Presets */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[12px]">
-                      <span className="font-medium text-[var(--mute)]">Internet resumes at (Morning):</span>
-                      <span className="font-semibold text-[var(--spruce)]">{formatDisplayTime(currentEnd)}</span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {BEDTIME_RESUME_PRESETS.map((preset) => {
-                        const isSelected = currentEnd === preset.value;
-                        return (
-                          <button
-                            key={preset.value}
-                            type="button"
-                            onClick={() =>
-                              setBedtimeSchedule(
-                                true,
-                                currentStart === '00:00' ? '20:30' : currentStart,
-                                preset.value
-                              )
-                            }
-                            className={cn(
-                              'min-h-[32px] px-2.5 rounded-[7px] border text-[11.5px] font-semibold transition-colors cursor-pointer',
-                              isSelected
-                                ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
-                                : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
-                            )}
-                          >
-                            {preset.label}
-                          </button>
-                        );
-                      })}
-                      <input
-                        type="time"
-                        aria-label="Custom resume time"
-                        value={currentEnd}
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            setBedtimeSchedule(
-                              true,
-                              currentStart === '00:00' ? '20:30' : currentStart,
-                              e.target.value
-                            );
-                          }
-                        }}
-                        className="min-h-[32px] px-2 rounded-[7px] border border-[var(--hairline)] bg-[var(--elevated)] text-[11.5px] text-[var(--body)] focus:border-[var(--spruce)] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Summary badge */}
-                  <div className="text-[11.5px] text-[var(--mute)] inline-flex items-center gap-1.5 pt-0.5">
-                    <Clock className="h-3.5 w-3.5 text-[var(--spruce)] shrink-0" />
-                    <span>
-                      Quiet hours window: {formatDisplayTime(currentStart)} to {formatDisplayTime(currentEnd)}
-                    </span>
-                  </div>
-                </div>
-              )}
+              {/* Quiet hours helper note */}
+              <div className="text-[11.5px] text-[var(--mute)] flex items-center gap-1.5 px-0.5">
+                <Clock className="h-3.5 w-3.5 text-[var(--spruce)] shrink-0" />
+                <span>
+                  Quiet hours window: <strong>{formatDisplayTime(currentStart)} to {formatDisplayTime(currentEnd)}</strong>. Selected apps pause overnight so {childName} sleeps.
+                </span>
+              </div>
             </div>
-          </div>
-
-          {/* 2-Way OS Switcher */}
-          <div
-            role="group"
-            aria-label="Choose child's device OS for DNS shield"
-            className="inline-flex items-center rounded-[11px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 self-start sm:self-center shrink-0"
-          >
-            <button
-              type="button"
-              aria-pressed={isApple}
-              onClick={() => setPlatform(ShieldPlatform.APPLE_IOS)}
-              className={cn(
-                'inline-flex min-h-[38px] items-center gap-1.5 rounded-[8px] px-3.5 text-[13px] transition-colors cursor-pointer',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
-                isApple
-                  ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
-                  : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
-              )}
-            >
-              <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>iPhone / iPad</span>
-            </button>
-
-            <button
-              type="button"
-              aria-pressed={!isApple}
-              onClick={() => setPlatform(ShieldPlatform.ANDROID)}
-              className={cn(
-                'inline-flex min-h-[38px] items-center gap-1.5 rounded-[8px] px-3.5 text-[13px] transition-colors cursor-pointer',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
-                !isApple
-                  ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
-                  : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
-              )}
-            >
-              <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>Android</span>
-            </button>
-          </div>
+          )}
         </div>
 
         {isSaving && (
@@ -553,16 +515,57 @@ export function LiveDnsShieldCard({
       {/* 4. INSTALL ON CHILD'S DEVICE PANEL (OS-ADAPTIVE)                    */}
       {/* =================================================================== */}
       <div className="p-5 sm:p-6 space-y-4 bg-[var(--elevated)]">
-        <div>
-          <h3 className="font-serif-almanac text-[19px] font-semibold text-[var(--ink)]">
-            {isApple
-              ? `Install Profile on ${childName}'s iPhone or iPad`
-              : `Configure Private DNS on ${childName}'s Android`}
-          </h3>
-          <p className="text-[13px] text-[var(--body)]">
-            Follow the 2 simple steps below. It takes under 30 seconds and requires no
-            app download.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="font-serif-almanac text-[19px] font-semibold text-[var(--ink)]">
+              {isApple
+                ? `Install Profile on ${childName}'s iPhone or iPad`
+                : `Configure Private DNS on ${childName}'s Android`}
+            </h3>
+            <p className="text-[13px] text-[var(--body)]">
+              Follow the 2 simple steps below. It takes under 30 seconds and requires no
+              app download.
+            </p>
+          </div>
+
+          {/* 2-Way OS Switcher */}
+          <div
+            role="group"
+            aria-label="Choose child's device OS for DNS shield"
+            className="inline-flex items-center rounded-[10px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 shrink-0 self-start sm:self-center"
+          >
+            <button
+              type="button"
+              aria-pressed={isApple}
+              onClick={() => setPlatform(ShieldPlatform.APPLE_IOS)}
+              className={cn(
+                'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] transition-colors cursor-pointer',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
+                isApple
+                  ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
+                  : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
+              )}
+            >
+              <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>iPhone / iPad</span>
+            </button>
+
+            <button
+              type="button"
+              aria-pressed={!isApple}
+              onClick={() => setPlatform(ShieldPlatform.ANDROID)}
+              className={cn(
+                'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] transition-colors cursor-pointer',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]',
+                !isApple
+                  ? 'bg-[var(--elevated)] text-[var(--spruce)] font-semibold shadow-xs'
+                  : 'text-[var(--body)] font-medium hover:text-[var(--ink)]'
+              )}
+            >
+              <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Android</span>
+            </button>
+          </div>
         </div>
 
         {isApple ? (
