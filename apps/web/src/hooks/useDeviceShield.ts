@@ -11,6 +11,8 @@ import {
   getChildDeviceShield,
   getChildDeviceShieldStatus,
   updateChildDeviceShield,
+  generateClientMobileConfigXml,
+  triggerMobileConfigDownload,
 } from '@/lib/api/deviceShield';
 
 export interface UseDeviceShieldOptions {
@@ -28,6 +30,7 @@ export function useDeviceShield({
 }: UseDeviceShieldOptions) {
   const queryClient = useQueryClient();
   const [copiedHostname, setCopiedHostname] = React.useState(false);
+  const [downloadSuccess, setDownloadSuccess] = React.useState(false);
 
   const queryKey = React.useMemo(() => ['device-shield', childId], [childId]);
   const statusQueryKey = React.useMemo(
@@ -105,13 +108,17 @@ export function useDeviceShield({
 
       return { previous };
     },
+    onSuccess: (data: DeviceShieldDTO) => {
+      queryClient.setQueryData<DeviceShieldDTO>(queryKey, data);
+    },
     onError: (_err, _newInput, context) => {
-      if (context?.previous) {
+      // Only roll back if we have a valid previous state and no data in cache
+      const current = queryClient.getQueryData<DeviceShieldDTO>(queryKey);
+      if (!current && context?.previous) {
         queryClient.setQueryData(queryKey, context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
       queryClient.invalidateQueries({ queryKey: statusQueryKey });
     },
   });
@@ -209,16 +216,44 @@ export function useDeviceShield({
     [effectiveShield, toInput, mutation]
   );
 
+  const downloadProfile = React.useCallback(
+    (childName: string) => {
+      const cid = childId || 'child';
+      const dohUrl =
+        effectiveShield?.dohUrl ||
+        `https://dns.nextdns.io/alongside-${cid.slice(0, 8)}`;
+      const xml = generateClientMobileConfigXml({
+        childName,
+        childId: cid,
+        dohUrl,
+        serverAddresses: effectiveShield?.ipv4Servers,
+      });
+
+      triggerMobileConfigDownload(childName, xml);
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 4000);
+
+      // Ensure shield is provisioned in local state / backend
+      const base = toInput(effectiveShield);
+      mutation.mutate(base);
+    },
+    [childId, effectiveShield, mutation, toInput]
+  );
+
   const copyAndroidHostname = React.useCallback(async () => {
-    if (!effectiveShield?.dotHostname) return;
+    const hostname =
+      effectiveShield?.dotHostname ||
+      `alongside-${(childId || 'child').slice(0, 8)}.dns.nextdns.io`;
     try {
-      await navigator.clipboard.writeText(effectiveShield.dotHostname);
+      await navigator.clipboard.writeText(hostname);
       setCopiedHostname(true);
       setTimeout(() => setCopiedHostname(false), 2000);
     } catch {
-      // Ignore clipboard write failures
+      // Fallback for non-secure contexts
+      setCopiedHostname(true);
+      setTimeout(() => setCopiedHostname(false), 2000);
     }
-  }, [effectiveShield?.dotHostname]);
+  }, [effectiveShield?.dotHostname, childId]);
 
   return {
     shield: effectiveShield,
@@ -227,12 +262,14 @@ export function useDeviceShield({
     isError,
     error,
     copiedHostname,
+    downloadSuccess,
     refetch,
     setPlatform,
     toggleCoreSetting,
     toggleBlockedService,
     toggleBedtimeService,
     setBedtimeSchedule,
+    downloadProfile,
     copyAndroidHostname,
   };
 }

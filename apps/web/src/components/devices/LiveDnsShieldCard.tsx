@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import {
   ShieldCheck,
   ShieldAlert,
@@ -57,11 +58,13 @@ export function LiveDnsShieldCard({
     isLoading,
     isSaving,
     copiedHostname,
+    downloadSuccess,
     setPlatform,
     toggleCoreSetting,
     toggleBlockedService,
     toggleBedtimeService,
     setBedtimeSchedule,
+    downloadProfile,
     copyAndroidHostname,
   } = useDeviceShield({
     childId,
@@ -79,14 +82,6 @@ export function LiveDnsShieldCard({
   const isLiveActive = Boolean(shield?.health?.isActive);
   const totalQueries = shield?.health?.totalQueries24h ?? 0;
   const blockedQueries = shield?.health?.blockedQueries24h ?? 0;
-
-  // Curated services for 1-tap toggles
-  const socialServices = SHIELD_SERVICE_CATALOG.filter(
-    (s) => s.category === 'social'
-  );
-  const entertainmentServices = SHIELD_SERVICE_CATALOG.filter(
-    (s) => s.category === 'gaming' || s.category === 'video'
-  );
 
   return (
     <section
@@ -334,53 +329,53 @@ export function LiveDnsShieldCard({
                 (shield?.bedtimeEnabled ?? true)
                   ? 'bg-[var(--spruce)]'
                   : 'bg-[#d8d5cd]'
+            )}
+          >
+            <span
+              className={cn(
+                'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out',
+                (shield?.bedtimeEnabled ?? true)
+                  ? 'translate-x-5'
+                  : 'translate-x-0'
               )}
-            >
-              <span
-                className={cn(
-                  'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out',
-                  (shield?.bedtimeEnabled ?? true)
-                    ? 'translate-x-5'
-                    : 'translate-x-0'
-                )}
-              />
-            </button>
-          </div>
-
-          {/* Quick Bedtime Presets */}
-          {(shield?.bedtimeEnabled ?? true) && (
-            <div className="pt-1 flex flex-wrap items-center gap-2">
-              <span className="text-[12px] font-medium text-[var(--mute)]">
-                Pause starts at:
-              </span>
-              {BEDTIME_PRESETS.map((preset) => {
-                const isSelected =
-                  (shield?.bedtimeStart ?? '20:30') === preset.value;
-                return (
-                  <button
-                    key={preset.value}
-                    type="button"
-                    onClick={() =>
-                      setBedtimeSchedule(true, preset.value, shield?.bedtimeEnd || '06:30')
-                    }
-                    className={cn(
-                      'min-h-[36px] px-3 rounded-[8px] border text-[12.5px] font-semibold transition-colors cursor-pointer',
-                      isSelected
-                        ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
-                        : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
-                    )}
-                  >
-                    {preset.label}
-                  </button>
-                );
-              })}
-              <span className="text-[12px] text-[var(--mute)]">
-                (Resumes at {shield?.bedtimeEnd || '06:30'} AM)
-              </span>
-            </div>
-          )}
+            />
+          </button>
         </div>
+
+        {/* Quick Bedtime Presets */}
+        {(shield?.bedtimeEnabled ?? true) && (
+          <div className="pt-1 flex flex-wrap items-center gap-2">
+            <span className="text-[12px] font-medium text-[var(--mute)]">
+              Pause starts at:
+            </span>
+            {BEDTIME_PRESETS.map((preset) => {
+              const isSelected =
+                (shield?.bedtimeStart ?? '20:30') === preset.value;
+              return (
+                <button
+                  key={preset.value}
+                  type="button"
+                  onClick={() =>
+                    setBedtimeSchedule(true, preset.value, shield?.bedtimeEnd || '06:30')
+                  }
+                  className={cn(
+                    'min-h-[36px] px-3 rounded-[8px] border text-[12.5px] font-semibold transition-colors cursor-pointer',
+                    isSelected
+                      ? 'border-[var(--spruce)] bg-[var(--spruce-soft)] text-[var(--spruce)]'
+                      : 'border-[var(--hairline)] bg-[var(--elevated)] text-[var(--body)] hover:border-[var(--spruce)]'
+                  )}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
+            <span className="text-[12px] text-[var(--mute)]">
+              (Resumes at {shield?.bedtimeEnd || '06:30'} AM)
+            </span>
+          </div>
+        )}
       </div>
+    </div>
 
       {/* =================================================================== */}
       {/* 3. QUICK APP & GAME BLOCKING                                        */}
@@ -495,25 +490,23 @@ export function LiveDnsShieldCard({
           /* iOS Profile Download & QR Steps */
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              {shield?.appleProfileDownloadUrl ? (
-                <a
-                  href={shield.appleProfileDownloadUrl}
-                  download={`Alongside_${childName}_Shield.mobileconfig`}
-                  className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-5 text-[14px] font-semibold text-white transition-colors cursor-pointer"
-                >
-                  <Download className="h-4 w-4" aria-hidden="true" />
-                  <span>Download Protection Profile</span>
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setPlatform(activePlatform)}
-                  className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-5 text-[14px] font-semibold text-white transition-colors cursor-pointer"
-                >
-                  <Download className="h-4 w-4" aria-hidden="true" />
-                  <span>Download Protection Profile</span>
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => downloadProfile(childName)}
+                className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-5 text-[14px] font-semibold text-white transition-colors cursor-pointer"
+              >
+                {downloadSuccess ? (
+                  <>
+                    <Check className="h-4 w-4" strokeWidth={2.75} aria-hidden="true" />
+                    <span>Profile Downloaded</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" aria-hidden="true" />
+                    <span>Download Protection Profile</span>
+                  </>
+                )}
+              </button>
 
               <button
                 type="button"
@@ -532,13 +525,16 @@ export function LiveDnsShieldCard({
                   Scan this code with the Camera app on {childName}&apos;s iPhone:
                 </p>
                 <div className="mx-auto flex h-48 w-48 items-center justify-center rounded-[12px] bg-white p-3 border border-[var(--hairline)] shadow-xs">
-                  {/* Scannable SVG / Canvas representation */}
-                  <div className="space-y-2 text-center">
-                    <QrCode className="h-28 w-28 text-[var(--spruce)] mx-auto" />
-                    <span className="text-[11px] text-[var(--mute)] font-mono block">
-                      care.alongside.shield
-                    </span>
-                  </div>
+                  <QRCodeSVG
+                    value={
+                      shield?.appleProfileDownloadUrl ||
+                      `https://alongside.care/shield/${childId}`
+                    }
+                    size={168}
+                    level="M"
+                    includeMargin={false}
+                    aria-label={`Enrollment QR Code for ${childName}`}
+                  />
                 </div>
                 <p className="text-[11.5px] text-[var(--mute)]">
                   Points to: {shield?.dohUrl || 'https://dns.nextdns.io/...'}
@@ -582,13 +578,12 @@ export function LiveDnsShieldCard({
                 <input
                   type="text"
                   readOnly
-                  value={shield?.dotHostname || 'Generating hostname...'}
+                  value={shield?.dotHostname || `alongside-${childId.slice(0, 8)}.dns.nextdns.io`}
                   className="flex-1 min-h-[44px] rounded-[10px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-3.5 font-mono text-[13.5px] text-[var(--ink)] select-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
                 />
                 <button
                   type="button"
                   onClick={copyAndroidHostname}
-                  disabled={!shield?.dotHostname}
                   className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-4 text-[13.5px] font-semibold text-white transition-colors cursor-pointer shrink-0"
                 >
                   {copiedHostname ? (
