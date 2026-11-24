@@ -44,7 +44,10 @@ export class AcademyController {
 
     if (!userId) {
       reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    } else {
+      reply.header('Cache-Control', 'private, no-store');
     }
+    reply.header('Vary', 'Cookie');
     return reply.status(200).send({
       success: true,
       data: {
@@ -66,7 +69,10 @@ export class AcademyController {
 
     if (!userId) {
       reply.header('Cache-Control', PUBLIC_CATALOG_CACHE_CONTROL);
+    } else {
+      reply.header('Cache-Control', 'private, no-store');
     }
+    reply.header('Vary', 'Cookie');
     return reply.status(200).send({
       success: true,
       data: {
@@ -86,6 +92,10 @@ export class AcademyController {
 
     const lesson = await this.service.getLessonById(id, userId);
 
+    if (userId) {
+      reply.header('Cache-Control', 'private, no-store');
+      reply.header('Vary', 'Cookie');
+    }
     return reply.status(200).send({
       success: true,
       data: {
@@ -105,6 +115,10 @@ export class AcademyController {
 
     const lesson = await this.service.getLessonBySlug(slug, userId);
 
+    if (userId) {
+      reply.header('Cache-Control', 'private, no-store');
+      reply.header('Vary', 'Cookie');
+    }
     return reply.status(200).send({
       success: true,
       data: {

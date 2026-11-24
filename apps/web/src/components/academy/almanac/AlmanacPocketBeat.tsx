@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Bookmark, Check, Share2 } from 'lucide-react';
 import type {
   AcademyLessonSummaryDTO,
@@ -21,6 +22,7 @@ export interface AlmanacPocketBeatProps {
   isSaving: boolean;
   saveError: string | null;
   onSealAndSave: () => void;
+  onCompleteBeforeNavigate?: () => Promise<void> | void;
   onOpenShareModal: () => void;
   videoLecture?: MasterVideoLectureDTO | null;
   nextLesson?: AcademyLessonSummaryDTO | null;
@@ -40,6 +42,7 @@ export function AlmanacPocketBeat({
   isSaving,
   saveError,
   onSealAndSave,
+  onCompleteBeforeNavigate,
   onOpenShareModal,
   videoLecture,
   nextLesson,
@@ -48,6 +51,10 @@ export function AlmanacPocketBeat({
   isNarrating,
   t,
 }: AlmanacPocketBeatProps) {
+  const router = useRouter();
+  const [isCompletingAndAdvancing, setIsCompletingAndAdvancing] =
+    React.useState(false);
+
   const chosenMove =
     payload.moves.find((m) => m.id === chosenMoveId) ?? null;
 
@@ -56,6 +63,31 @@ export function AlmanacPocketBeat({
   );
 
   const playbookOwner = childPossessive ? `${childPossessive} Playbook` : 'Your Playbook';
+
+  const handleAdvanceWithCompletion = async (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (!onCompleteBeforeNavigate || isCompleted) {
+      return;
+    }
+
+    // For modified clicks (cmd/ctrl/shift/alt), complete in background and let browser open normally
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+      void onCompleteBeforeNavigate();
+      return;
+    }
+
+    event.preventDefault();
+    if (isCompletingAndAdvancing) return;
+    setIsCompletingAndAdvancing(true);
+    try {
+      await onCompleteBeforeNavigate();
+    } finally {
+      setIsCompletingAndAdvancing(false);
+      router.push(href);
+    }
+  };
 
   return (
     <section
@@ -102,7 +134,7 @@ export function AlmanacPocketBeat({
               )}
             >
               {isCompleted && <Check className="h-3.5 w-3.5" aria-hidden="true" />}
-              <span>{isCompleted ? 'SAVED · ALMANAC' : 'LIVE DRAFT'}</span>
+              <span>{isCompleted ? 'COMPLETED · SAVED' : 'LIVE DRAFT'}</span>
             </span>
           </div>
 
@@ -207,12 +239,15 @@ export function AlmanacPocketBeat({
               {isCompleted ? (
                 <>
                   <Check className="h-4 w-4" aria-hidden="true" />
-                  <span>Saved to {playbookOwner}</span>
+                  <span>Lesson Completed · Saved to {playbookOwner}</span>
                 </>
               ) : isSaving ? (
-                <span>Sealing Pocket Card…</span>
+                <span>Saving &amp; Completing…</span>
               ) : (
-                <span>Seal &amp; Save to {playbookOwner}</span>
+                <>
+                  <Check className="h-4 w-4" aria-hidden="true" />
+                  <span>Complete Lesson &amp; Save to {playbookOwner}</span>
+                </>
               )}
             </button>
 
@@ -241,6 +276,12 @@ export function AlmanacPocketBeat({
         {nextLesson ? (
           <Link
             href={`/academy/${moduleSlug}/${nextLesson.slug}`}
+            onClick={(e) =>
+              handleAdvanceWithCompletion(
+                e,
+                `/academy/${moduleSlug}/${nextLesson.slug}`
+              )
+            }
             data-testid="almanac-next-episode-card"
             className="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 rounded-[16px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-6 py-6 sm:px-7 transition-all duration-200 hover:border-[var(--spruce)] hover:bg-[var(--elevated)] hover:-translate-y-0.5 hover:shadow-md no-underline"
           >
@@ -258,6 +299,16 @@ export function AlmanacPocketBeat({
               <p className="text-[14px] font-semibold text-[var(--body)] m-0">
                 {t(payload.nextEpisodeHook?.title || nextLesson.title)}
               </p>
+              <span className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-medium text-[var(--spruce)]">
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>
+                  {isCompletingAndAdvancing
+                    ? 'Marking complete & opening next episode…'
+                    : isCompleted
+                      ? 'Completed · Continue to next episode'
+                      : 'Completes this lesson & continues'}
+                </span>
+              </span>
             </div>
 
             <span className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-[var(--hairline)] bg-[var(--elevated)] text-[var(--spruce)] transition-all duration-200 group-hover:translate-x-1 group-hover:border-[var(--spruce)] group-hover:bg-[var(--spruce)] group-hover:text-[var(--elevated)]">
@@ -267,6 +318,9 @@ export function AlmanacPocketBeat({
         ) : (
           <Link
             href={`/academy/${moduleSlug}`}
+            onClick={(e) =>
+              handleAdvanceWithCompletion(e, `/academy/${moduleSlug}`)
+            }
             data-testid="almanac-course-complete-card"
             className="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 rounded-[16px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-6 py-6 sm:px-7 transition-all duration-200 hover:border-[var(--spruce)] hover:bg-[var(--elevated)] hover:-translate-y-0.5 hover:shadow-md no-underline"
           >
@@ -275,10 +329,14 @@ export function AlmanacPocketBeat({
                 Final Episode Reached
               </span>
               <p className="font-serif-almanac italic text-[19px] sm:text-[20px] leading-[1.38] text-[var(--ink)] mb-1.5">
-                Every Pocket Card you sealed stays waiting inside this course whenever you need a calm refresher.
+                Every Pocket Card you save stays waiting inside this course whenever you need a calm refresher.
               </p>
               <p className="text-[14px] font-semibold text-[var(--body)] m-0">
-                Return to Course Episode Arc
+                {isCompletingAndAdvancing
+                  ? 'Completing final episode…'
+                  : isCompleted
+                    ? 'Course Complete · Return to Course Episode Arc'
+                    : 'Complete Final Episode & Return to Course Arc'}
               </p>
             </div>
 

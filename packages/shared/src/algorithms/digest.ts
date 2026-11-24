@@ -119,7 +119,7 @@ function parseTimestampToSeconds(raw: string): number | null {
 }
 
 const CHAPTER_LINE_REGEX =
-  /^\s*(?:[-*•]\s*)?[\[(]?(\d{1,2}:\d{2}(?::\d{2})?)[\])]?\s*(?:[-–—:|·•]+\s*|\s+)(.+?)\s*$/;
+  /^\s*(?:[-*•]\s*)?[\[(]?(\d{1,2}:\d{2}(?::\d{2})?)[\])]?\s*(?:[-\u2013\u2014:|·•]+\s*|\s+)(.+?)\s*$/;
 
 const CLOCK_SUFFIX_REGEX = /^(?:a\.?m\.?|p\.?m\.?)(?:\b|$)/i;
 
@@ -174,8 +174,8 @@ export function parseYouTubeDescriptionChapters(
     }
 
     const cleanedTitle = rawTitle
-      .replace(/^[-–—:|·•\s]+/, '')
-      .replace(/[-–—:|·•\s]+$/, '')
+      .replace(/^[-\u2013\u2014:|·•\s]+/, '')
+      .replace(/[-\u2013\u2014:|·•\s]+$/, '')
       .replace(/\s+/g, ' ')
       .trim();
 

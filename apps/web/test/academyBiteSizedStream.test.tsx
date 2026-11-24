@@ -107,7 +107,7 @@ describe('PLAN-48: Parent Academy Course Detail - Interactive Almanac v2 Episode
 
       // Interactive highlight tags & status badges
       expect(html).toContain('Brain Bridge Toggle');
-      expect(html).toContain('Saved');
+      expect(html).toContain('Completed');
       expect(html).toContain('Up Next');
       expect(html).toContain('Start Episode');
       expect(html).toContain('Review');

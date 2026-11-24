@@ -44,16 +44,16 @@ export function AudioMemoPlayer({
   className,
   textToSpeak,
 }: AudioMemoPlayerProps) {
-  // Compute duration from text word count at ~135 words per minute if not provided
+  // Compute real duration from text word count at ~142 words per minute (ignore static placeholders)
   const effectiveDuration = React.useMemo(() => {
-    if (audioDurationSeconds && audioDurationSeconds > 0) {
-      return audioDurationSeconds;
-    }
     if (textToSpeak) {
       const words = textToSpeak.split(/\s+/).filter(Boolean).length;
       if (words > 0) {
-        return Math.max(30, Math.round((words / 135) * 60));
+        return Math.max(15, Math.round((words / 142) * 60));
       }
+    }
+    if (audioDurationSeconds && audioDurationSeconds > 0) {
+      return audioDurationSeconds;
     }
     return 92;
   }, [audioDurationSeconds, textToSpeak]);
@@ -129,7 +129,7 @@ export function AudioMemoPlayer({
       utterance.rate = Math.max(0.6, Math.min(2.0, 0.93 * playbackRate));
       utterance.pitch = 0.97;
 
-      const naturalVoice = getBestNaturalVoice('warm');
+      const naturalVoice = getBestNaturalVoice('clear');
       if (naturalVoice) utterance.voice = naturalVoice;
 
       utterance.onboundary = (e) => {
@@ -386,25 +386,25 @@ export function AudioMemoPlayer({
           ))}
         </div>
 
-        {/* Skip Back 15s */}
+        {/* Skip Back 10s */}
         <button
           type="button"
-          onClick={() => skipSeconds(-15)}
+          onClick={() => skipSeconds(-10)}
           data-testid="audio-skip-back"
-          title="Skip back 15 seconds"
-          aria-label="Skip back 15 seconds"
+          title="Skip back 10 seconds"
+          aria-label="Skip back 10 seconds"
           className="p-1.5 rounded-full transition-colors hover:bg-stone-200/70 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 active:scale-95 cursor-pointer"
         >
           <RotateCcw className="h-3.5 w-3.5" />
         </button>
 
-        {/* Skip Forward 15s */}
+        {/* Skip Forward 10s */}
         <button
           type="button"
-          onClick={() => skipSeconds(15)}
+          onClick={() => skipSeconds(10)}
           data-testid="audio-skip-forward"
-          title="Skip forward 15 seconds"
-          aria-label="Skip forward 15 seconds"
+          title="Skip forward 10 seconds"
+          aria-label="Skip forward 10 seconds"
           className="p-1.5 rounded-full transition-colors hover:bg-stone-200/70 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 active:scale-95 cursor-pointer"
         >
           <RotateCw className="h-3.5 w-3.5" />

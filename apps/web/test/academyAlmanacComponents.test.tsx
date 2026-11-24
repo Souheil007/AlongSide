@@ -199,6 +199,7 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
       <AlmanacListenDock
         visible={true}
         isPlaying={true}
+        hasStartedAudio={true}
         playbackSpeed={1.25}
         audioSeconds={45}
         totalAudioSeconds={165}
@@ -206,18 +207,54 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
         audioRef={{ current: null }}
         onAudioError={vi.fn()}
         onTogglePlay={vi.fn()}
+        onSkipSeconds={vi.fn()}
+        onSeekToSeconds={vi.fn()}
         onCycleSpeed={vi.fn()}
-        voicePersona="warm"
+        voicePersona="clear"
+        onSetVoicePersona={vi.fn()}
         onCycleVoicePersona={vi.fn()}
       />
     );
 
     expect(dockHtml).toContain('data-testid="almanac-listen-dock"');
-    expect(dockHtml).toContain('0:45 / 2:45');
+    expect(dockHtml).toContain('data-pinned="false"');
+    expect(dockHtml).not.toContain('almanac-dock-glass');
+    expect(dockHtml).toContain('0:45');
+    expect(dockHtml).toContain('2:45');
     expect(dockHtml).toContain('1.25x');
     expect(dockHtml).toContain('Now reading: 02 Inside Mind');
+    expect(dockHtml).toContain('data-testid="almanac-listen-back-10-btn"');
+    expect(dockHtml).toContain('data-testid="almanac-listen-forward-10-btn"');
+    expect(dockHtml).toContain('data-testid="almanac-listen-scrubber"');
+    expect(dockHtml).toContain('data-testid="almanac-voice-ribbon"');
+    expect(dockHtml).toContain('data-state="playing"');
     expect(dockHtml).toContain('data-testid="almanac-listen-voice-btn"');
+    expect(dockHtml).toContain('Clear');
     expect(dockHtml).toContain('Warm');
+
+    // Paused mid-way state displays resume prompt cleanly
+    const pausedDockHtml = renderToStaticMarkup(
+      <AlmanacListenDock
+        visible={true}
+        isPlaying={false}
+        hasStartedAudio={true}
+        playbackSpeed={1}
+        audioSeconds={32}
+        totalAudioSeconds={140}
+        speakingBeat={1}
+        audioRef={{ current: null }}
+        onAudioError={vi.fn()}
+        onTogglePlay={vi.fn()}
+        onSkipSeconds={vi.fn()}
+        onSeekToSeconds={vi.fn()}
+        onCycleSpeed={vi.fn()}
+        voicePersona="clear"
+        onSetVoicePersona={vi.fn()}
+      />
+    );
+    expect(pausedDockHtml).toContain('Paused');
+    expect(pausedDockHtml).toContain('Press play to resume');
+    expect(pausedDockHtml).toContain('aria-label="Resume narrated lesson"');
   });
 
   it('builds a clean spoken narration script with zero asterisk or raw token leakage', () => {

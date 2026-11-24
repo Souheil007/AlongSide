@@ -4,6 +4,8 @@ import {
   DevelopmentalTier,
   EpisodeRole,
   LessonArchetype,
+  estimateLessonReadingMinutes,
+  estimateSpokenDurationSeconds,
   type AlmanacLessonPayload,
   type MasterVideoLectureDTO,
 } from '@alongside/shared';
@@ -118,16 +120,37 @@ export function buildBespokeCourse(
       deliveryTip,
     }));
 
+    const contentMarkdown = buildBackupMarkdown(ep.title, p);
+    const spokenPreviewText = [
+      p.headline,
+      p.deck,
+      p.sceneBody,
+      p.beat2Title,
+      p.beat2Lead,
+      p.almanacTruth,
+      p.calmScriptPlain,
+      p.beat4Title,
+      p.moves[0]?.title ?? '',
+      p.moves[0]?.desc ?? '',
+      p.closingNote,
+    ]
+      .filter(Boolean)
+      .join('. ');
+
     return {
       slug: ep.slug,
       title: ep.title,
       archetype: ep.archetype ?? LessonArchetype.EVERYDAY_BEHAVIOR,
       episodeRole: p.episodeRole,
-      contentMarkdown: buildBackupMarkdown(ep.title, p),
-      readingMinutes: ep.readingMinutes ?? 3,
+      contentMarkdown,
+      readingMinutes: estimateLessonReadingMinutes({
+        almanacPayload: p,
+        contentMarkdown,
+        title: ep.title,
+      }),
       sortOrder,
       audioUrl: `https://assets.alongside.care/academy/audio/${ep.slug}.mp3`,
-      audioDurationSeconds: ep.audioDurationSeconds ?? 165,
+      audioDurationSeconds: estimateSpokenDurationSeconds(spokenPreviewText),
       reliefTagline: p.deck,
       whatNotToSay: dialogueCards[0]?.instinctiveMistake ?? null,
       deliveryTip,

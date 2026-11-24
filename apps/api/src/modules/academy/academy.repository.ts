@@ -37,6 +37,7 @@ import {
   parseDialogueCards,
   parseThirtySecondGlance,
   parseActionProtocolItems,
+  sanitizeEmDashesDeep,
 } from '@alongside/shared';
 
 export interface AcademyRepository {
@@ -320,7 +321,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         lessonsSummary.find((l) => l.videoLecture)?.videoLecture ??
         undefined;
 
-      return {
+      return sanitizeEmDashesDeep({
         id: m.id,
         category: m.category as AcademyCategory,
         slug: m.slug,
@@ -338,7 +339,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
         hasMasterLecture: Boolean(featuredVideoLecture),
         featuredVideoLecture,
         lessons: lessonsSummary,
-      };
+      });
     });
   }
 
@@ -468,7 +469,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       flatLessons.find((l) => l.videoLecture)?.videoLecture ??
       undefined;
 
-    return {
+    return sanitizeEmDashesDeep({
       id: moduleRecord.id,
       category: moduleRecord.category as AcademyCategory,
       slug: slug === targetSlug ? moduleRecord.slug : slug,
@@ -486,7 +487,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       featuredVideoLecture,
       chapters,
       lessons: flatLessons,
-    };
+    });
   }
 
   async findLessonById(
@@ -613,7 +614,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
       almanacPayload?.episodeRole ||
       resolveEpisodeRoleFromSortOrder(lesson.sortOrder);
 
-    return {
+    return sanitizeEmDashesDeep({
       id: lesson.id,
       moduleId: lesson.moduleId,
       chapterId: lesson.chapterId,
@@ -655,7 +656,7 @@ export class PrismaAcademyRepository implements AcademyRepository {
             priority: lesson.chapter.priority,
           }
         : null,
-    };
+    });
   }
 
   async markLessonComplete(

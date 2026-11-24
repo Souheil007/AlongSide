@@ -391,9 +391,17 @@ export function BiteSizedCourseDetailView({
   );
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') return;
+    const syncLocalCompleted = () => {
       setLocalCompletedSet(getLocalCompletedLessonIds());
-    }
+    };
+    syncLocalCompleted();
+    window.addEventListener('alongside-learning-activity-updated', syncLocalCompleted);
+    window.addEventListener('storage', syncLocalCompleted);
+    return () => {
+      window.removeEventListener('alongside-learning-activity-updated', syncLocalCompleted);
+      window.removeEventListener('storage', syncLocalCompleted);
+    };
   }, []);
 
   const t = React.useCallback(
@@ -412,7 +420,10 @@ export function BiteSizedCourseDetailView({
     return list
       .map((l) => ({
         ...l,
-        isCompleted: l.isCompleted || localCompletedSet.has(l.id),
+        isCompleted:
+          l.isCompleted ||
+          localCompletedSet.has(l.id) ||
+          localCompletedSet.has(l.slug),
       }))
       .sort((a, b) => a.sortOrder - b.sortOrder);
   }, [module.lessons, module.chapters, localCompletedSet]);
@@ -546,7 +557,7 @@ export function BiteSizedCourseDetailView({
                       {isCompleted && (
                         <span className="inline-flex items-center gap-1 rounded-full border border-[var(--spruce-border)] bg-[var(--spruce-soft)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--spruce)]">
                           <Check className="h-3 w-3" aria-hidden="true" />
-                          <span>Saved</span>
+                          <span>Completed</span>
                         </span>
                       )}
                     </div>

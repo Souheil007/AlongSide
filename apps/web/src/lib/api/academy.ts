@@ -242,13 +242,20 @@ export function recordActiveReadingTime(lessonId: string, minutesToAdd: number =
   }
 }
 
-export function saveLocalCompletedLessonId(lessonId: string, readingMinutes: number = 4): void {
+export function saveLocalCompletedLessonId(
+  lessonId: string,
+  readingMinutes: number = 4,
+  lessonSlug?: string
+): void {
   if (typeof window === 'undefined' || !window.localStorage) {
     return;
   }
   try {
     const set = getLocalCompletedLessonIds();
     set.add(lessonId);
+    if (lessonSlug) {
+      set.add(lessonSlug);
+    }
     window.localStorage.setItem(LOCAL_STORAGE_COMPLETED_KEY, JSON.stringify(Array.from(set)));
     recordLearningActivity(lessonId, readingMinutes);
     if (typeof window.dispatchEvent === 'function') {
@@ -412,7 +419,10 @@ export async function getAcademyModules(params?: {
       if (!m.lessons || m.lessons.length === 0) return m;
       const updatedLessons = m.lessons.map((l) => ({
         ...l,
-        isCompleted: l.isCompleted || localCompleted.has(l.id),
+        isCompleted:
+          l.isCompleted ||
+          localCompleted.has(l.id) ||
+          localCompleted.has(l.slug),
       }));
       const completedCount = updatedLessons.filter((l) => l.isCompleted).length;
       return {
@@ -510,7 +520,10 @@ export async function getAcademyModuleBySlug(
   if (localCompleted.size > 0 && mod.lessons) {
     mod.lessons = mod.lessons.map((l) => ({
       ...l,
-      isCompleted: l.isCompleted || localCompleted.has(l.id),
+      isCompleted:
+        l.isCompleted ||
+        localCompleted.has(l.id) ||
+        localCompleted.has(l.slug),
     }));
     mod.completedLessonCount = mod.lessons.filter((l) => l.isCompleted).length;
     mod.isCompleted = mod.lessonCount > 0 && mod.completedLessonCount === mod.lessonCount;
@@ -518,7 +531,10 @@ export async function getAcademyModuleBySlug(
       mod.chapters = mod.chapters.map((ch) => {
         const chLessons = (ch.lessons || []).map((l) => ({
           ...l,
-          isCompleted: l.isCompleted || localCompleted.has(l.id),
+          isCompleted:
+            l.isCompleted ||
+            localCompleted.has(l.id) ||
+            localCompleted.has(l.slug),
         }));
         const chCompleted = chLessons.filter((l) => l.isCompleted).length;
         return {
@@ -559,7 +575,7 @@ function mergeLocalLessonProgress(
 ): LessonDetailResponse {
   const localCompleted = getLocalCompletedLessonIds();
   const localPlaybook = getLocalLessonPlaybook(res.lesson.id);
-  if (localCompleted.has(res.lesson.id)) {
+  if (localCompleted.has(res.lesson.id) || localCompleted.has(res.lesson.slug)) {
     res.lesson.isCompleted = true;
   }
   if (localPlaybook) {
@@ -670,10 +686,11 @@ export async function updateLessonPlaybook(
 export async function markLessonComplete(
   id: string,
   readingMinutes?: number,
-  playbookInput?: LessonPlaybookInputDTO
+  playbookInput?: LessonPlaybookInputDTO,
+  lessonSlug?: string
 ): Promise<AcademyLessonCompletionResponseDTO> {
   // Always mark completed in local storage for instant optimistic persistence
-  saveLocalCompletedLessonId(id, readingMinutes || 4);
+  saveLocalCompletedLessonId(id, readingMinutes || 4, lessonSlug);
   const localPlaybook = saveLocalLessonPlaybook(id, {
     isCompleted: true,
     completedAt: new Date().toISOString(),
@@ -688,6 +705,7 @@ export async function markLessonComplete(
       {
         method: 'POST',
         body: JSON.stringify(playbookInput ?? {}),
+        keepalive: true,
       }
     );
   } catch {

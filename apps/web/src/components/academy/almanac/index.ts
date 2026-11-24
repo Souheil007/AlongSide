@@ -1,6 +1,7 @@
 export { AlmanacReaderNav } from './AlmanacReaderNav';
 export { AlmanacMarginRail } from './AlmanacMarginRail';
 export { AlmanacListenDock } from './AlmanacListenDock';
+export { AlmanacVoiceRibbon } from './AlmanacVoiceRibbon';
 export { AlmanacMirrorBeat } from './AlmanacMirrorBeat';
 export { AlmanacBrainBeat } from './AlmanacBrainBeat';
 export { AlmanacRehearsalBeat } from './AlmanacRehearsalBeat';
