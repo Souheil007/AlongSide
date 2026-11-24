@@ -1175,7 +1175,7 @@
     }
     .v3-drawer-banner {
       position: relative;
-      height: clamp(132px, 24vh, 206px);
+      height: clamp(120px, 18vh, 175px);
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -1188,7 +1188,7 @@
     .v3-drawer-banner-content {
       position: absolute;
       inset: 0;
-      padding: 18px 28px 18px;
+      padding: clamp(12px, 2vh, 18px) 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1196,16 +1196,28 @@
     }
     .v3-drawer-body {
       flex: 1;
-      padding: clamp(18px, 3vh, 32px) 30px;
+      padding: clamp(16px, 2.6vh, 28px) 30px;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
     .v3-drawer-form {
-      margin: auto 0;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: clamp(14px, 2.3vh, 22px);
+      justify-content: space-between;
+      gap: clamp(12px, 2vh, 22px);
+      min-height: 0;
+    }
+    .v3-drawer-form .al-input,
+    .v3-drawer-form .al-select {
+      height: clamp(44px, 5.2vh, 52px);
+      font-size: 14.5px;
+      border-radius: 12px;
+    }
+    .v3-drawer-form .gender-seg {
+      height: clamp(44px, 5.2vh, 52px);
+      border-radius: 12px;
     }
     .v3-drawer-foot {
       padding: 16px 30px;
@@ -1221,31 +1233,43 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 9px 13px;
-      border-radius: 9px;
-      background: var(--sand);
+      padding: clamp(10px, 1.8vh, 16px) 16px;
+      border-radius: 14px;
+      background: #F4F4F0;
       border: 1px solid var(--hairline);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--ink);
     }
-    .v3-stage-pill strong { font-weight: 600; color: var(--spruce); }
-    .v3-stage-pill span { font-size: 12.5px; color: var(--mute); font-variant-numeric: tabular-nums; }
+    .v3-stage-pill strong { font-weight: 600; color: var(--spruce); font-size: 14.5px; }
+    .v3-stage-pill span {
+      font-size: 13px;
+      color: var(--body);
+      font-variant-numeric: tabular-nums;
+      background: #FFF;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+    }
     .v3-phone-inline {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 9px 13px;
-      border-radius: 9px;
-      background: var(--spruce-soft);
-      border: 1px solid var(--spruce-border);
-      font-size: 13px;
-      color: var(--spruce);
+      padding: clamp(10px, 1.8vh, 16px) 16px;
+      border-radius: 14px;
+      background: #F4F4F0;
+      border: 1px solid var(--hairline);
+      font-size: 13.5px;
+      color: var(--body);
     }
+    .v3-phone-inline strong { color: var(--spruce); font-weight: 600; }
     .v3-phone-inline button {
-      font-size: 12px;
-      font-weight: 600;
+      background: none;
+      border: none;
       color: var(--spruce);
+      font-weight: 600;
+      font-size: 12.5px;
+      cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
       white-space: nowrap;
