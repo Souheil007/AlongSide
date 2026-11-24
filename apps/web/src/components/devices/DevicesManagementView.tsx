@@ -265,43 +265,12 @@ export function DevicesManagementView({
           </p>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-          {children.length > 1 ? (
-            <div
-              role="tablist"
-              aria-label="Select child profile"
-              className="inline-flex rounded-full border border-[var(--hairline)] bg-[var(--elevated)] p-1 gap-1"
-            >
-              {children.map((c) => {
-                const isSelected = c.id === activeChild.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    onClick={() => useChildContextStore.getState().setActiveChild(c.id)}
-                    className={cn(
-                      'px-3.5 py-1.5 text-[12.5px] font-semibold rounded-full transition-all cursor-pointer',
-                      isSelected
-                        ? 'bg-[var(--spruce)] text-white shadow-xs'
-                        : 'text-[var(--body)] hover:text-[var(--ink)]'
-                    )}
-                  >
-                    {c.name} · Age {c.age}
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--elevated)] px-3.5 py-1.5 text-[13px] text-[var(--body)] tabular-nums">
-              <span className="font-semibold text-[var(--spruce)]">{activeChild.name}</span>
-              <span className="text-[var(--hairline)]" aria-hidden="true">
-                ·
-              </span>
-              <span>Age {activeAge}</span>
-            </div>
-          )}
+        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--elevated)] px-3.5 py-1.5 text-[13px] text-[var(--body)] tabular-nums self-start sm:self-center shrink-0">
+          <span className="font-semibold text-[var(--spruce)]">{activeChild.name}</span>
+          <span className="text-[var(--hairline)]" aria-hidden="true">
+            ·
+          </span>
+          <span>Age {activeAge}</span>
         </div>
       </header>
 
