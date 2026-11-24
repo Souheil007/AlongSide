@@ -125,4 +125,17 @@ export class DeviceShieldController {
       data: qr,
     });
   }
+
+  async provisionGuestShield(
+    request: FastifyRequest<{ Body: { childName?: string; age?: number } }>,
+    reply: FastifyReply
+  ) {
+    const childName = request.body?.childName || 'Child';
+    const age = request.body?.age || 10;
+    const shield = await this.service.provisionInstantGuestProfile(childName, age);
+    return reply.status(200).send({
+      success: true,
+      data: { shield },
+    });
+  }
 }

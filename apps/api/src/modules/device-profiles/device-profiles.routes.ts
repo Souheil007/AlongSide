@@ -160,6 +160,23 @@ export const deviceProfilesRoutes: FastifyPluginAsync<DeviceProfilesRoutesOption
     shieldController.getQrInfo.bind(shieldController)
   );
 
+  // POST /api/v1/devices/shield/guest-provision (Instant dynamic provisioning without authentication)
+  fastify.post<{ Body: { childName?: string; age?: number } }>(
+    '/shield/guest-provision',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          properties: {
+            childName: { type: 'string' },
+            age: { type: 'number' },
+          },
+        },
+      },
+    },
+    shieldController.provisionGuestShield.bind(shieldController)
+  );
+
   // =========================================================================
   // LEGACY OTA PROFILE & HEARTBEAT ROUTES (BACKWARDS COMPATIBLE)
   // =========================================================================

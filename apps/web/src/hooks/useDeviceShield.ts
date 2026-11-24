@@ -18,6 +18,7 @@ import {
 
 export interface UseDeviceShieldOptions {
   childId?: string | null;
+  childName?: string;
   childAge?: number;
   initialPlatform?: ShieldPlatform;
   initialData?: DeviceShieldDTO;
@@ -25,6 +26,7 @@ export interface UseDeviceShieldOptions {
 
 export function useDeviceShield({
   childId,
+  childName = 'Child',
   childAge = 10,
   initialPlatform = ShieldPlatform.APPLE_IOS,
   initialData,
@@ -51,7 +53,7 @@ export function useDeviceShield({
       if (!childId) {
         return Promise.reject(new Error('No child specified'));
       }
-      return getChildDeviceShield(childId, childAge);
+      return getChildDeviceShield(childId, childAge, childName);
     },
     enabled: Boolean(childId),
     initialData,

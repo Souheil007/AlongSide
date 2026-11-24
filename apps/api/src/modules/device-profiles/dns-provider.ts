@@ -171,7 +171,10 @@ export class NextDnsPolicyAdapter implements DnsPolicyProvider {
     displayName: string;
     policy: UpdateDeviceShieldInput;
   }): Promise<ProvisionedDnsProfile> {
-    const res = await this.requestJson<{ data?: { id?: string } }>('/profiles', {
+    const res = await this.requestJson<{
+      data?: { id?: string };
+      errors?: Array<{ code: string }>;
+    }>('/profiles', {
       method: 'POST',
       body: JSON.stringify({
         name: input.displayName,
@@ -179,7 +182,28 @@ export class NextDnsPolicyAdapter implements DnsPolicyProvider {
       }),
     });
 
-    const profileId = res?.data?.id;
+    let profileId = res?.data?.id;
+
+    // Handle duplicate profile name by looking up existing NextDNS profile
+    if (!profileId && res?.errors?.some((e) => e.code === 'duplicate')) {
+      const existing = await this.requestJson<{
+        data?: Array<{ id: string; name: string }>;
+      }>('/profiles', {
+        method: 'GET',
+      });
+      const match = existing?.data?.find(
+        (p) =>
+          p.name?.trim().toLowerCase() === input.displayName.trim().toLowerCase()
+      );
+      if (match?.id) {
+        profileId = match.id;
+        await this.syncPolicy(profileId, input.policy);
+      } else if (existing?.data?.[0]?.id) {
+        profileId = existing.data[0].id;
+        await this.syncPolicy(profileId, input.policy);
+      }
+    }
+
     if (!profileId) {
       throw new DnsProviderError(
         'NextDNS did not return a profile ID on creation.',

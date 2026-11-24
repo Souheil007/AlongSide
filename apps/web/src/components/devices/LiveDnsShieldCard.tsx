@@ -69,6 +69,7 @@ export function LiveDnsShieldCard({
     setCustomProfileId,
   } = useDeviceShield({
     childId,
+    childName,
     childAge,
     initialPlatform,
     initialData: initialShield,
@@ -76,8 +77,6 @@ export function LiveDnsShieldCard({
 
   const [showQrModal, setShowQrModal] = React.useState(false);
   const [showRouterHelp, setShowRouterHelp] = React.useState(false);
-  const [showEditProfileId, setShowEditProfileId] = React.useState(false);
-  const [customProfileInput, setCustomProfileInput] = React.useState('');
 
   const activePlatform = shield?.platform ?? initialPlatform;
   const isApple = activePlatform === ShieldPlatform.APPLE_IOS;
@@ -574,86 +573,34 @@ export function LiveDnsShieldCard({
           /* Android Private DNS Copy Box & Steps */
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] font-medium text-[var(--body)]">
-                  {childName}&apos;s Dedicated Private DNS Hostname:
-                </span>
+              <span className="text-[12px] font-medium text-[var(--body)]">
+                {childName}&apos;s Dedicated Private DNS Hostname:
+              </span>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-lg">
+                <input
+                  type="text"
+                  readOnly
+                  value={shield?.dotHostname || 'Connecting live shield...'}
+                  className="flex-1 min-h-[44px] rounded-[10px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-3.5 font-mono text-[13.5px] text-[var(--ink)] select-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
+                />
                 <button
                   type="button"
-                  onClick={() => {
-                    setCustomProfileInput(
-                      shield?.enrollmentToken && !shield.enrollmentToken.startsWith('local_')
-                        ? shield.enrollmentToken
-                        : ''
-                    );
-                    setShowEditProfileId(!showEditProfileId);
-                  }}
-                  className="text-[11.5px] font-semibold text-[var(--spruce)] hover:underline cursor-pointer"
+                  onClick={copyAndroidHostname}
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-4 text-[13.5px] font-semibold text-white transition-colors cursor-pointer shrink-0"
                 >
-                  {showEditProfileId ? 'Cancel' : 'Link / Enter NextDNS ID'}
+                  {copiedHostname ? (
+                    <>
+                      <Check className="h-4 w-4" strokeWidth={2.75} aria-hidden="true" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4" aria-hidden="true" />
+                      <span>Copy Hostname</span>
+                    </>
+                  )}
                 </button>
               </div>
-
-              {showEditProfileId ? (
-                <div className="p-3 rounded-[12px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] space-y-2 max-w-lg">
-                  <p className="text-[12px] text-[var(--body)]">
-                    Enter the 6-character profile ID from your NextDNS account (e.g. <strong>2a1ee7</strong>):
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      placeholder="e.g. 2a1ee7"
-                      value={customProfileInput}
-                      onChange={(e) => setCustomProfileInput(e.target.value)}
-                      className="flex-1 min-h-[40px] rounded-[8px] border border-[var(--hairline)] bg-white px-3 font-mono text-[13.5px] text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (customProfileInput.trim()) {
-                          setCustomProfileId(customProfileInput.trim());
-                          setShowEditProfileId(false);
-                        }
-                      }}
-                      className="min-h-[40px] px-4 rounded-[8px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] text-white text-[13px] font-semibold cursor-pointer transition-colors"
-                    >
-                      Save &amp; Link
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-lg">
-                  <input
-                    type="text"
-                    readOnly
-                    value={shield?.dotHostname || `${childId.slice(0, 8)}.dns.nextdns.io`}
-                    className="flex-1 min-h-[44px] rounded-[10px] border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-3.5 font-mono text-[13.5px] text-[var(--ink)] select-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--spruce)]"
-                  />
-                  <button
-                    type="button"
-                    onClick={copyAndroidHostname}
-                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-[10px] bg-[var(--spruce)] hover:bg-[var(--spruce-hover)] px-4 text-[13.5px] font-semibold text-white transition-colors cursor-pointer shrink-0"
-                  >
-                    {copiedHostname ? (
-                      <>
-                        <Check className="h-4 w-4" strokeWidth={2.75} aria-hidden="true" />
-                        <span>Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4" aria-hidden="true" />
-                        <span>Copy Hostname</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {shield?.dotHostname?.includes('local_') && !showEditProfileId && (
-                <p className="text-[11.5px] text-[var(--amber)]">
-                  Tip: For real phone testing, click <strong>&quot;Link / Enter NextDNS ID&quot;</strong> above to link your live 6-character profile ID (e.g. <code>2a1ee7</code>).
-                </p>
-              )}
             </div>
 
             {/* 3 Step Instruction Guide */}

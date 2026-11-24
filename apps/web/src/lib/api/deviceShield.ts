@@ -252,37 +252,89 @@ export function setCustomNextDnsProfileId(
 
 /**
  * Retrieves the child's live DNS shield configuration.
- * First checks the backend API; falls back gracefully to persisted localStorage
- * and age-calibrated defaults if unauthenticated or offline.
+ * Automatically provisions a real, working NextDNS profile dynamically.
  */
 export async function getChildDeviceShield(
   childId: string,
-  age = 10
+  age = 10,
+  childName = 'Child'
 ): Promise<DeviceShieldDTO> {
+  // 1. Try authenticated backend route first
   try {
     const res = await apiClient<{ shield: DeviceShieldDTO }>(
       `/api/v1/devices/shield/${childId}`
     );
-    if (res.shield) {
+    if (res.shield && res.shield.dotHostname && !res.shield.dotHostname.includes('local_')) {
       setStoredShield(childId, JSON.stringify(res.shield));
+      return res.shield;
     }
-    return res.shield;
-  } catch (err) {
-    const cached = getStoredShield(childId);
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached) as DeviceShieldDTO;
-        if (parsed && typeof parsed === 'object') {
+  } catch {
+    // Fall through to guest / cached path
+  }
+
+  // 2. Check localStorage: if it already has a saved profile, use it
+  const cached = getStoredShield(childId);
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached) as DeviceShieldDTO;
+      if (parsed && typeof parsed === 'object') {
+        // If already has a real live profile, return immediately
+        if (parsed.dotHostname && !parsed.dotHostname.includes('local_')) {
           return parsed;
         }
-      } catch {
-        // Ignore parse errors and fall through
+
+        // If it has a local_ placeholder, attempt to upgrade to a genuine live NextDNS profile
+        try {
+          const guestRes = await apiClient<{ shield: DeviceShieldDTO }>(
+            '/api/v1/devices/shield/guest-provision',
+            {
+              method: 'POST',
+              body: JSON.stringify({ childName, age }),
+            }
+          );
+          if (guestRes.shield && guestRes.shield.dotHostname) {
+            const merged: DeviceShieldDTO = {
+              ...parsed,
+              dotHostname: guestRes.shield.dotHostname,
+              dohUrl: guestRes.shield.dohUrl,
+              enrollmentToken: guestRes.shield.enrollmentToken,
+              appleProfileDownloadUrl: guestRes.shield.appleProfileDownloadUrl,
+              enrollmentQrUrl: guestRes.shield.enrollmentQrUrl,
+              isProvisioned: true,
+            };
+            setStoredShield(childId, JSON.stringify(merged));
+            return merged;
+          }
+        } catch {
+          // If guest provision fails, return the cached state
+          return parsed;
+        }
       }
+    } catch {
+      // Ignore parse error
     }
-    const fallback = buildFallbackShield(childId, age);
-    setStoredShield(childId, JSON.stringify(fallback));
-    return fallback;
   }
+
+  // 3. Request dynamic guest provisioning from backend to get a real live NextDNS profile
+  try {
+    const guestRes = await apiClient<{ shield: DeviceShieldDTO }>(
+      '/api/v1/devices/shield/guest-provision',
+      {
+        method: 'POST',
+        body: JSON.stringify({ childName, age }),
+      }
+    );
+    if (guestRes.shield && guestRes.shield.dotHostname) {
+      setStoredShield(childId, JSON.stringify(guestRes.shield));
+      return guestRes.shield;
+    }
+  } catch {
+    // If backend or NextDNS network is completely offline, fall back to offline preset
+  }
+
+  const fallback = buildFallbackShield(childId, age);
+  setStoredShield(childId, JSON.stringify(fallback));
+  return fallback;
 }
 
 /**

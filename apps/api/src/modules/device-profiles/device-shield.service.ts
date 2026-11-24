@@ -255,6 +255,49 @@ export class DeviceShieldService {
     };
   }
 
+  async provisionInstantGuestProfile(
+    childName = 'Child',
+    age = 10
+  ): Promise<DeviceShieldDTO> {
+    const recommended = buildRecommendedShieldPolicy(age);
+    const created = await this.dnsProvider.createProfile({
+      displayName: `Alongside - ${childName}`,
+      policy: recommended,
+    });
+
+    const endpoints = this.dnsProvider.resolveEndpoints(created.providerProfileId);
+    return {
+      id: `guest_${created.providerProfileId}`,
+      childId: 'guest',
+      platform: recommended.platform,
+      providerType: this.dnsProvider.providerType,
+      isProvisioned: true,
+      dohUrl: endpoints.dohUrl,
+      dotHostname: endpoints.dotHostname,
+      ipv4Servers: endpoints.ipv4Servers,
+      enrollmentToken: created.providerProfileId,
+      appleProfileDownloadUrl: `/api/v1/devices/shield/profile/${created.providerProfileId}`,
+      enrollmentQrUrl: `/api/v1/devices/shield/qr/${created.providerProfileId}`,
+      blockAdultContent: recommended.blockAdultContent,
+      safeSearch: recommended.safeSearch,
+      youtubeRestrictedMode: recommended.youtubeRestrictedMode,
+      blockBypass: recommended.blockBypass,
+      blockedServices: recommended.blockedServices,
+      bedtimeServices: recommended.bedtimeServices,
+      bedtimeEnabled: recommended.bedtimeEnabled,
+      bedtimeStart: recommended.bedtimeStart,
+      bedtimeEnd: recommended.bedtimeEnd,
+      timezone: recommended.timezone,
+      lastSyncedAt: new Date().toISOString(),
+      health: {
+        isActive: true,
+        totalQueries24h: 0,
+        blockedQueries24h: 0,
+        checkedAt: new Date().toISOString(),
+      },
+    };
+  }
+
   private mapToDTO(
     record: DeviceShieldRecord,
     health: DeviceShieldHealthDTO
