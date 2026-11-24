@@ -16,8 +16,8 @@ export const SCREEN_PACT_POINTS = [
     detail: 'iPhone, Android, game & video apps, or Home Wi-Fi.',
   },
   {
-    term: '3. Flip the locks',
-    detail: 'Exact taps for app approvals, stranger blocks, and bedtime lock.',
+    term: '3. Control apps & content',
+    detail: 'Cap screen time, filter sensitive content, and pause or disable specific apps.',
   },
 ];
 
@@ -164,13 +164,12 @@ export function ScreenPactSection() {
 
           {/* Right Column: Direct, Hooking Editorial Narrative */}
           <div className="flex flex-col gap-7 order-1 lg:order-2">
-            <h2 className="font-serif font-normal text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.06] tracking-[-0.024em] text-[#FAF9F5] max-w-[14ch] [text-wrap:balance]">
-              Lock down their phone in 5&nbsp;minutes
+            <h2 className="font-serif font-normal text-[34px] sm:text-[44px] lg:text-[50px] leading-[1.06] tracking-[-0.024em] text-[#FAF9F5] max-w-[18ch] [text-wrap:balance]">
+              Safer devices, zero guesswork
             </h2>
 
             <p className="text-[17px] leading-[1.55] text-[#FAF9F5]/80 max-w-[42ch]">
-              We walk you through the exact built-in Apple and Google switches, plus a 2-minute
-              phone readiness check.
+              Everything you need to protect your child&apos;s digital world.
             </p>
 
             <dl className="border-t border-[rgba(250,249,245,0.13)]">
