@@ -305,6 +305,20 @@ export async function getChildDeviceShield(
           }
         }
 
+        // Ensure Leo uses his dedicated NextDNS profile ('f49a3f') instead of the root account's generic profile ('2a1ee7')
+        if (
+          (parsed.enrollmentToken === '2a1ee7' || parsed.dotHostname?.includes('2a1ee7')) &&
+          childName.toLowerCase() === 'leo'
+        ) {
+          parsed.enrollmentToken = 'f49a3f';
+          parsed.dotHostname = 'f49a3f.dns.nextdns.io';
+          parsed.dohUrl = 'https://dns.nextdns.io/f49a3f';
+          parsed.appleProfileDownloadUrl = getAppleProfileDownloadUrl('f49a3f');
+          parsed.enrollmentQrUrl = getShieldQrEndpointUrl('f49a3f');
+          setStoredShield(childId, JSON.stringify(parsed));
+          return parsed;
+        }
+
         // If already has a real live profile, return immediately
         if (parsed.dotHostname && !parsed.dotHostname.includes('local_') && !parsed.dotHostname.includes('dnsnextdnsio')) {
           return parsed;

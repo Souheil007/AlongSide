@@ -139,6 +139,14 @@ export function LiveDnsShieldCard({
                   Draft policy
                 </span>
               )}
+
+              {/* Dedicated Child Profile Badge */}
+              {shield?.enrollmentToken && !shield.enrollmentToken.startsWith('local_') && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--canvas-subtle)] border border-[var(--hairline)] px-2.5 py-0.5 text-[11px] font-mono text-[var(--mute)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--spruce)]" />
+                  Profile: {shield.enrollmentToken} ({childName})
+                </span>
+              )}
             </div>
 
             <h2 className="font-serif-almanac text-[22px] sm:text-[24px] font-semibold text-[var(--ink)]">
