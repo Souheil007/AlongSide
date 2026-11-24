@@ -3,6 +3,7 @@ import {
   cleanTextForSpeech,
   buildHookingNarrationScript,
   getBestNaturalVoice,
+  resolveVoices,
 } from '../src/lib/audio/narratorEngine';
 import { MOCK_LESSON_DETAIL_ADRENARCHE } from '../src/lib/api/mocks';
 import { interpolateChildCopy, Gender, DevelopmentalTier } from '@alongside/shared';
@@ -103,17 +104,51 @@ describe('NarratorEngine: Natural Audio Reader Voice & Script', () => {
       expect(clearVoice?.name).toBe('Microsoft Guy Online (Natural)');
     });
 
-    it('falls back gracefully to any English voice when neural voices are absent', () => {
+    it('strictly excludes robotic David voice from warm persona and selects warm voice instead', () => {
       const mockVoices = [
-        { name: 'Generic Robotic EN', lang: 'en-US' },
+        { name: 'Microsoft David Desktop', lang: 'en-US' },
+        { name: 'Microsoft Zira Desktop', lang: 'en-US' },
       ] as SpeechSynthesisVoice[];
 
       vi.stubGlobal('speechSynthesis', {
         getVoices: () => mockVoices,
       });
 
-      const voice = getBestNaturalVoice('warm');
-      expect(voice?.name).toBe('Generic Robotic EN');
+      // Warm persona must NEVER choose David
+      const warmVoice = getBestNaturalVoice('warm', mockVoices);
+      expect(warmVoice?.name).toBe('Microsoft Zira Desktop');
+
+      // Clear persona can choose David when Guy is unavailable
+      const clearVoice = getBestNaturalVoice('clear', mockVoices);
+      expect(clearVoice?.name).toBe('Microsoft David Desktop');
+    });
+
+    it('falls back gracefully to non-robotic English voice when neural voices are absent', () => {
+      const mockVoices = [
+        { name: 'Microsoft David Desktop', lang: 'en-US' },
+        { name: 'Calm English Speaker', lang: 'en-US' },
+      ] as SpeechSynthesisVoice[];
+
+      vi.stubGlobal('speechSynthesis', {
+        getVoices: () => mockVoices,
+      });
+
+      const voice = getBestNaturalVoice('warm', mockVoices);
+      expect(voice?.name).toBe('Calm English Speaker');
+    });
+
+    it('resolves voices asynchronously when window.speechSynthesis is available', async () => {
+      const mockVoices = [
+        { name: 'Microsoft Jenny Online (Natural)', lang: 'en-US' },
+      ] as SpeechSynthesisVoice[];
+
+      vi.stubGlobal('speechSynthesis', {
+        getVoices: () => mockVoices,
+      });
+
+      const voices = await resolveVoices();
+      expect(voices).toHaveLength(1);
+      expect(voices[0]?.name).toBe('Microsoft Jenny Online (Natural)');
     });
   });
 });

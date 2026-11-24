@@ -32,12 +32,18 @@ const WARM_NEURAL_VOICES = [
   // Apple Premium / Enhanced (macOS / iOS / iPadOS)
   'Ava (Premium)',
   'Ava (Enhanced)',
+  'Ava',
   'Zoe (Premium)',
+  'Zoe',
   'Samantha (Enhanced)',
   'Samantha',
   // Google Chrome Natural
   'Google US English',
   'Google UK English Female',
+  // Windows Standard Warm Female fallback (never David)
+  'Microsoft Zira Desktop',
+  'Microsoft Zira',
+  'Zira',
 ];
 
 const CLEAR_NEURAL_VOICES = [
@@ -51,7 +57,16 @@ const CLEAR_NEURAL_VOICES = [
   'Alex',
   // Google Chrome
   'Google UK English Male',
+  // Windows Standard Clear Articulate Male
+  'Microsoft David Desktop',
+  'Microsoft David',
+  'David',
 ];
+
+/**
+ * Harsh or archaic robotic voices excluded from Warm voice selection.
+ */
+const ROBOTIC_VOICE_NAMES = ['david', 'mark', 'george', 'hazel'];
 
 /**
  * Normalizes text for fluid, natural human speech synthesis:
@@ -170,6 +185,8 @@ export function buildHookingNarrationScript(
   return { fullText, estimatedSeconds, beats };
 }
 
+let cachedVoices: SpeechSynthesisVoice[] = [];
+
 /**
  * Returns available browser speech synthesis voices.
  */
@@ -182,13 +199,65 @@ export function getAvailableVoices(): SpeechSynthesisVoice[] {
       : null;
 
   if (!synth || typeof synth.getVoices !== 'function') {
-    return [];
+    return cachedVoices;
   }
-  return synth.getVoices() || [];
+  const voices = synth.getVoices() || [];
+  if (voices.length > 0) {
+    cachedVoices = voices;
+  }
+  return voices.length > 0 ? voices : cachedVoices;
+}
+
+/**
+ * Ensures voices are retrieved asynchronously before speech synthesis starts.
+ * Chromium and WebKit load voices asynchronously; this guarantees speech is never
+ * started with an uninitialized or robotic fallback voice.
+ */
+export function resolveVoices(): Promise<SpeechSynthesisVoice[]> {
+  const synth =
+    typeof window !== 'undefined' && 'speechSynthesis' in window
+      ? window.speechSynthesis
+      : typeof globalThis !== 'undefined' && 'speechSynthesis' in globalThis
+      ? (globalThis as unknown as { speechSynthesis: SpeechSynthesis }).speechSynthesis
+      : null;
+
+  if (!synth || typeof synth.getVoices !== 'function') {
+    return Promise.resolve(cachedVoices);
+  }
+
+  const immediate = synth.getVoices();
+  if (immediate && immediate.length > 0) {
+    cachedVoices = immediate;
+    return Promise.resolve(immediate);
+  }
+
+  return new Promise((resolve) => {
+    let resolved = false;
+    const finish = () => {
+      if (resolved) return;
+      resolved = true;
+      if (synth && typeof synth.removeEventListener === 'function') {
+        synth.removeEventListener('voiceschanged', onVoices);
+      }
+      const loaded = getAvailableVoices();
+      if (loaded.length > 0) {
+        cachedVoices = loaded;
+      }
+      resolve(cachedVoices);
+    };
+
+    const onVoices = () => finish();
+
+    if (synth && typeof synth.addEventListener === 'function') {
+      synth.addEventListener('voiceschanged', onVoices);
+    }
+    setTimeout(finish, 350);
+  });
 }
 
 /**
  * Selects the highest quality natural/neural voice available in the current browser.
+ * For the warm persona, harsh robotic voices (such as Microsoft David) are strictly excluded.
  */
 export function getBestNaturalVoice(
   persona: VoicePersona = 'warm',
@@ -215,15 +284,37 @@ export function getBestNaturalVoice(
     if (match) return match;
   }
 
-  // 2. Try generic "Natural" or "Neural" in voice name
-  const naturalMatch = englishVoices.find(
-    (v) =>
-      v.name.includes('Natural') ||
-      v.name.includes('Neural') ||
-      v.name.includes('Premium') ||
-      v.name.includes('Enhanced')
-  );
-  if (naturalMatch) return naturalMatch;
+  // 2. Try generic "Natural", "Neural", "Premium", or "Enhanced" in voice name
+  if (persona === 'warm') {
+    const naturalMatch = englishVoices.find(
+      (v) =>
+        (v.name.includes('Natural') ||
+          v.name.includes('Neural') ||
+          v.name.includes('Premium') ||
+          v.name.includes('Enhanced')) &&
+        !ROBOTIC_VOICE_NAMES.some((robotic) => v.name.toLowerCase().includes(robotic))
+    );
+    if (naturalMatch) return naturalMatch;
+
+    // Fallback for warm: pick a female or non-robotic English voice (e.g. Zira), never David!
+    const warmFallback =
+      englishVoices.find(
+        (v) =>
+          !ROBOTIC_VOICE_NAMES.some((robotic) => v.name.toLowerCase().includes(robotic))
+      ) || englishVoices.find((v) => v.name.toLowerCase().includes('zira'));
+
+    if (warmFallback) return warmFallback;
+  } else {
+    // For clear persona
+    const naturalMatch = englishVoices.find(
+      (v) =>
+        v.name.includes('Natural') ||
+        v.name.includes('Neural') ||
+        v.name.includes('Premium') ||
+        v.name.includes('Enhanced')
+    );
+    if (naturalMatch) return naturalMatch;
+  }
 
   // 3. Fallback to any English voice
   return englishVoices[0] || null;
@@ -241,7 +332,8 @@ export interface PlayNarratorOptions {
 
 /**
  * Plays speech synthesis with warm, human prosody and Chrome 15s keep-alive.
- * Returns a cancel function.
+ * Guarantees voices are resolved before audio starts, ensuring the first voice heard
+ * is always the warm neural companion. Returns a cancel function.
  */
 export function playNaturalNarrator({
   text,
@@ -257,38 +349,8 @@ export function playNaturalNarrator({
     return () => {};
   }
 
-  // Cancel prior speech
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  // Calibrated human prosody:
-  // - 0.93 baseline rate (unhurried, thoughtful pacing)
-  // - 0.97 pitch (slightly deeper, grounded, warm resonance)
-  const baseRate = 0.93;
-  utterance.rate = Math.max(0.6, Math.min(2.0, baseRate * rateMultiplier));
-  utterance.pitch = 0.97;
-
-  const voice = getBestNaturalVoice(persona);
-  if (voice) {
-    utterance.voice = voice;
-  }
-
-  // Chrome 15-second speech silence keep-alive guard
+  let canceled = false;
   let keepAliveTimer: number | null = null;
-  const startKeepAlive = () => {
-    keepAliveTimer = window.setInterval(() => {
-      if (
-        typeof window !== 'undefined' &&
-        'speechSynthesis' in window &&
-        window.speechSynthesis.speaking &&
-        !window.speechSynthesis.paused
-      ) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }
-    }, 10000);
-  };
 
   const stopKeepAlive = () => {
     if (keepAliveTimer !== null) {
@@ -297,35 +359,78 @@ export function playNaturalNarrator({
     }
   };
 
-  utterance.onstart = () => {
-    startKeepAlive();
-    onStart?.();
-  };
-
-  utterance.onboundary = (e) => {
-    if (e.charIndex != null) {
-      onBoundary?.(e.charIndex);
-    }
-  };
-
-  utterance.onend = () => {
-    stopKeepAlive();
-    onEnd?.();
-  };
-
-  utterance.onerror = (e) => {
-    stopKeepAlive();
-    if (e.error !== 'canceled' && e.error !== 'interrupted') {
-      onError?.(e);
-    }
-  };
-
-  window.speechSynthesis.speak(utterance);
-
-  return () => {
+  const cancel = () => {
+    canceled = true;
     stopKeepAlive();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
   };
+
+  // Ensure voices are loaded first before speaking so utterance.voice is never unassigned
+  resolveVoices().then((voices) => {
+    if (canceled) return;
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Calibrated human prosody:
+    // - 0.93 baseline rate (unhurried, thoughtful pacing)
+    // - 0.97 pitch (slightly deeper, grounded, warm resonance)
+    const baseRate = 0.93;
+    utterance.rate = Math.max(0.6, Math.min(2.0, baseRate * rateMultiplier));
+    utterance.pitch = 0.97;
+
+    const voice = getBestNaturalVoice(persona, voices);
+    if (voice) {
+      utterance.voice = voice;
+    }
+
+    // Chrome 15-second speech silence keep-alive guard
+    const startKeepAlive = () => {
+      keepAliveTimer = window.setInterval(() => {
+        if (
+          typeof window !== 'undefined' &&
+          'speechSynthesis' in window &&
+          window.speechSynthesis.speaking &&
+          !window.speechSynthesis.paused
+        ) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }, 10000);
+    };
+
+    utterance.onstart = () => {
+      if (canceled) return;
+      startKeepAlive();
+      onStart?.();
+    };
+
+    utterance.onboundary = (e) => {
+      if (canceled) return;
+      if (e.charIndex != null) {
+        onBoundary?.(e.charIndex);
+      }
+    };
+
+    utterance.onend = () => {
+      stopKeepAlive();
+      if (!canceled) {
+        onEnd?.();
+      }
+    };
+
+    utterance.onerror = (e) => {
+      stopKeepAlive();
+      if (!canceled && e.error !== 'canceled' && e.error !== 'interrupted') {
+        onError?.(e);
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  });
+
+  return cancel;
 }
