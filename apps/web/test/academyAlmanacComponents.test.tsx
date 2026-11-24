@@ -207,6 +207,8 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
         onAudioError={vi.fn()}
         onTogglePlay={vi.fn()}
         onCycleSpeed={vi.fn()}
+        voicePersona="warm"
+        onCycleVoicePersona={vi.fn()}
       />
     );
 
@@ -214,6 +216,8 @@ describe('PLAN-48: Interactive Almanac v2 Visuals, Art, Audio & Modal Components
     expect(dockHtml).toContain('0:45 / 2:45');
     expect(dockHtml).toContain('1.25x');
     expect(dockHtml).toContain('Now reading: 02 Inside Mind');
+    expect(dockHtml).toContain('data-testid="almanac-listen-voice-btn"');
+    expect(dockHtml).toContain('Warm');
   });
 
   it('builds a clean spoken narration script with zero asterisk or raw token leakage', () => {
