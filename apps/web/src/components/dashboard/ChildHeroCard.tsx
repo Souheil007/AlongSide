@@ -361,7 +361,7 @@ export function ChildHeroCard({
         <div className="relative min-h-[210px] lg:min-h-[285px] overflow-hidden">
           <img
             src="/images/home/hero-sanctuary.jpg"
-            alt="Warm sunlit family living space"
+            alt="Father and child in a warm sunlit living space"
             className="w-full h-full object-cover object-[center_25%] block"
           />
           <div
