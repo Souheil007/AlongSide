@@ -56,16 +56,6 @@ export function AlmanacListenDock({
       aria-live="polite"
       className="mx-auto max-w-[720px] px-4 sm:px-6 pt-5 almanac-rise-in"
     >
-      {audioUrl && (
-        <audio
-          ref={audioRef}
-          src={audioUrl}
-          preload="none"
-          onError={onAudioError}
-          className="hidden"
-        />
-      )}
-
       <div className="flex flex-wrap items-center justify-between gap-3.5 rounded-[14px] border border-[var(--spruce-border)] bg-[var(--elevated)] px-4 py-3.5 sm:px-5 shadow-sm">
         <div className="flex min-w-0 items-center gap-3.5">
           <button
