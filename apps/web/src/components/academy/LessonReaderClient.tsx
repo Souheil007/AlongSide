@@ -55,10 +55,37 @@ export function LessonReaderClient({
   const lesson = lessonData?.lesson;
 
   const handleLessonComplete = () => {
+    // Optimistically update cached module detail so returning to the course arc reflects completion immediately
+    if (lesson) {
+      queryClient.setQueryData(
+        ['academy-module-detail', moduleSlug],
+        (prev: any) => {
+          if (!prev || !Array.isArray(prev.lessons)) return prev;
+          const updatedLessons = prev.lessons.map((l: any) =>
+            l.id === lesson.id || l.slug === lesson.slug
+              ? { ...l, isCompleted: true }
+              : l
+          );
+          const completedLessonCount = updatedLessons.filter(
+            (l: any) => l.isCompleted
+          ).length;
+          return {
+            ...prev,
+            lessons: updatedLessons,
+            completedLessonCount,
+            isCompleted:
+              updatedLessons.length > 0 &&
+              completedLessonCount === updatedLessons.length,
+          };
+        }
+      );
+    }
+
     queryClient.invalidateQueries({
       queryKey: ['academy-module-detail', moduleSlug],
     });
     queryClient.invalidateQueries({ queryKey: ['academy-modules'] });
+    queryClient.invalidateQueries({ queryKey: ['active-chapter-modules'] });
     queryClient.invalidateQueries({
       queryKey: ['academy-lesson-by-slug', lessonSlug],
     });

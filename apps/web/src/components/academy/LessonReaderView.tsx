@@ -284,16 +284,21 @@ export function LessonReaderView({
         <AlmanacListenDock
           visible={state.listenMode}
           isPlaying={state.isPlaying}
+          hasStartedAudio={state.hasStartedAudio}
           playbackSpeed={state.playbackSpeed}
           audioSeconds={state.audioSeconds}
           totalAudioSeconds={state.totalAudioSeconds}
           speakingBeat={state.speakingBeat}
+          beatRanges={state.beatRanges}
           audioUrl={lesson.audioUrl}
           audioRef={state.audioRef}
           onAudioError={state.onAudioError}
           onTogglePlay={state.togglePlayAudio}
+          onSkipSeconds={state.skipAudioSeconds}
+          onSeekToSeconds={state.seekAudioTo}
           onCycleSpeed={state.cyclePlaybackSpeed}
           voicePersona={state.voicePersona}
+          onSetVoicePersona={state.setVoicePersona}
           onCycleVoicePersona={state.cycleVoicePersona}
         />
 
@@ -302,7 +307,7 @@ export function LessonReaderView({
           payload={payload}
           episodeNumber={resolvedEpisodeNumber}
           totalEpisodes={resolvedTotalEpisodes}
-          readingMinutes={lesson.readingMinutes || 3}
+          readingMinutes={state.realReadingMinutes}
           childBadge={childBadge}
           videoDurationMinutes={lesson.videoLecture?.durationMinutes ?? null}
           selectedPollId={state.selectedPollId}
@@ -365,6 +370,7 @@ export function LessonReaderView({
           isSaving={state.isSaving}
           saveError={state.saveError}
           onSealAndSave={state.sealAndSavePocketCard}
+          onCompleteBeforeNavigate={state.completeBeforeNavigate}
           onOpenShareModal={() => state.setIsShareModalOpen(true)}
           videoLecture={lesson.videoLecture}
           nextLesson={nextLesson}

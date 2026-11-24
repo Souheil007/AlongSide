@@ -146,9 +146,11 @@ Take a breath. You are not failing, and your child is not broken. Your calm pres
 
       // Child personalization interpolated cleanly with zero raw tokens
       expect(html).toContain('For Maya (11 yrs)');
-      expect(html).toContain('Maya’s Playbook');
+      expect(html).toContain('Lesson Completed · Saved to Maya’s Playbook');
+      expect(html).toContain('Completed · Continue to next episode');
       expect(html).toContain('Ask AI Advisor about Maya');
       expect(html).not.toMatch(/\{[a-zA-Z]+\}/);
+      expect(html).not.toContain('\u2014');
 
       // Founder hard constraints: ZERO 30s spoiler drawer, ZERO 6s calm-tone button, ZERO emojis
       expect(html).not.toContain('data-testid="thirty-second-glance"');
@@ -259,6 +261,27 @@ Take a breath. You are not failing, and your child is not broken. Your calm pres
 
       expect(html).toContain('data-testid="editorial-art-plate"');
       expect(html).toContain('data-testid="visual-sensory-ladder"');
+      expect(html).toContain('Course Complete · Return to Course Episode Arc');
+      expect(html).not.toContain('\u2014');
+
+      // Incomplete final episode displays clear completion CTA and auto-complete continuation hint
+      const incompleteHtml = renderToStaticMarkup(
+        <LessonReaderView
+          lesson={{
+            ...feedingLesson,
+            isCompleted: false,
+            playbookState: undefined,
+          }}
+          moduleSlug="nutrition-older-toddler-independence-and-snacking"
+        />
+      );
+      expect(incompleteHtml).toContain(
+        'Complete Lesson &amp; Save to Your Playbook'
+      );
+      expect(incompleteHtml).toContain(
+        'Complete Final Episode &amp; Return to Course Arc'
+      );
+      expect(incompleteHtml).not.toContain('\u2014');
     });
   });
 });

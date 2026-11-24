@@ -3,6 +3,7 @@ import { XMLParser } from 'fast-xml-parser';
 import {
   CANONICAL_DIGEST_TIERS,
   DevelopmentalTier,
+  stripEmDashes,
   type CanonicalDigestTier,
 } from '@alongside/shared';
 import {
@@ -77,7 +78,7 @@ const SAFE_TEXT_HTML_ENTITIES: Record<string, string> = {
   apos: "'",
   nbsp: ' ',
   ndash: '–',
-  mdash: '—',
+  mdash: ', ',
   hellip: '…',
   lsquo: '‘',
   rsquo: '’',
@@ -193,7 +194,7 @@ export function sanitizeRssExcerpt(
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
     .replace(/<[^>]+>/g, ' ');
 
-  const plain = decodeHtmlEntities(stripped, true)
+  const plain = stripEmDashes(decodeHtmlEntities(stripped, true))
     .replace(/\s+/g, ' ')
     .trim();
 

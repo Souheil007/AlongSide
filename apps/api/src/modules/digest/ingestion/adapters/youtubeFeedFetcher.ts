@@ -3,6 +3,7 @@ import {
   CANONICAL_DIGEST_TIERS,
   DevelopmentalTier,
   parseYouTubeDescriptionChapters,
+  stripEmDashes,
   type CanonicalDigestTier,
   type VideoJumpChip,
 } from '@alongside/shared';
@@ -163,7 +164,7 @@ export function parseYouTubeAtomFeedXml(
     const rawVideoId =
       extractString(rec['yt:videoId']) ||
       extractString(rec.id).replace(/^yt:video:/, '');
-    const title = extractString(rec.title);
+    const title = stripEmDashes(extractString(rec.title));
     const publishedRaw = extractString(rec.published);
     const linkHref = extractAtomLinkHref(rec.link);
 
@@ -186,7 +187,9 @@ export function parseYouTubeAtomFeedXml(
     }
 
     const mediaGroup = rec['media:group'] as Record<string, unknown> | undefined;
-    const description = extractString(mediaGroup?.['media:description']);
+    const description = stripEmDashes(
+      extractString(mediaGroup?.['media:description'])
+    );
 
     if (looksLikeShort(title, linkHref, description)) {
       rejectedCount += 1;
@@ -572,8 +575,12 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
             continue;
           }
 
-          const description = item.snippet?.description ?? base.description;
-          const title = item.snippet?.title?.trim() || base.title;
+          const description = stripEmDashes(
+            item.snippet?.description ?? base.description
+          );
+          const title = stripEmDashes(
+            item.snippet?.title?.trim() || base.title
+          );
           const channelName =
             item.snippet?.channelTitle?.trim() || base.channelName;
           const publishedAt = item.snippet?.publishedAt
@@ -687,7 +694,7 @@ export class YouTubeWeeklyFeedAdapter implements YouTubeFeedFetcher {
           const candidate: RawVideoCandidate = {
             youtubeVideoId: item.youtubeVideoId,
             videoUrl: item.videoUrl,
-            title: data.title?.trim() || item.title,
+            title: stripEmDashes(data.title?.trim() || item.title),
             presenter: item.presenter,
             channelName: data.author_name?.trim() || item.channelName,
             channelId: item.channelId,

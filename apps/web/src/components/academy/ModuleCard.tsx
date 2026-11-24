@@ -189,7 +189,10 @@ export function ModuleCard({ module, child, showFormatPills = false, className }
       ? Math.round((module.completedLessonCount / syllabusLessonCount) * 100)
       : 0;
 
-  const estimatedMinutes = syllabusLessonCount * 4;
+  const estimatedMinutes =
+    actualLessons.length > 0
+      ? actualLessons.reduce((sum, l) => sum + (l.readingMinutes || 3), 0)
+      : syllabusLessonCount * 3;
   const tierInfo = getTierBadgeInfo(module.developmentalTier);
   const categoryInfo = getCategoryBadgeInfo(module.category);
 

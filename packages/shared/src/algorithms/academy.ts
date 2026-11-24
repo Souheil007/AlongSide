@@ -1072,3 +1072,99 @@ export function resolveAlmanacLessonPayload(
   };
 }
 
+function countProseWords(text: string): number {
+  if (!text) return 0;
+  return text
+    .replace(/\{[a-zA-Z]+\}/g, 'word')
+    .replace(/[#*_`>|\[\]()]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+}
+
+/**
+ * Estimates real reading duration (in minutes) from a lesson's actual prose
+ * rather than relying on a static placeholder value.
+ * Uses calm adult reading speed (~200 words per minute), minimum 1 minute.
+ */
+export function estimateLessonReadingMinutes(input: {
+  almanacPayload?: AlmanacLessonPayload | null;
+  contentMarkdown?: string | null;
+  title?: string;
+}): number {
+  const p = input.almanacPayload;
+  let totalWords = 0;
+
+  if (p) {
+    const chunks: string[] = [
+      p.headline,
+      p.deck,
+      p.sceneBody,
+      p.pollQuestion,
+      ...p.pollOptions.map((o) => `${o.label} ${o.response}`),
+      p.beat2Title,
+      p.beat2Lead,
+      p.almanacTruth,
+      p.scienceDeepDive,
+      p.beat3Title,
+      p.rehearsalTriggerQuote,
+      p.rehearsalPrompt,
+      ...p.instincts.map((i) => `${i.label} ${i.whyTitle} ${i.whyText}`),
+      p.calmScriptPlain,
+      ...p.pushbacks.map((pb) => `${pb.label} ${pb.setup} ${pb.script}`),
+      p.beat4Title,
+      p.beat4Lead,
+      ...p.moves.map((m) => `${m.title} ${m.desc}`),
+      p.closingNote,
+      p.pocketInsight,
+    ];
+    totalWords = countProseWords(chunks.join(' '));
+  } else if (input.contentMarkdown) {
+    totalWords = countProseWords(`${input.title ?? ''} ${input.contentMarkdown}`);
+  } else if (input.title) {
+    totalWords = countProseWords(input.title);
+  }
+
+  if (totalWords <= 0) {
+    return 1;
+  }
+
+  return Math.max(1, Math.round(totalWords / 200));
+}
+
+/**
+ * Estimates real spoken narration duration (in seconds) from the actual spoken
+ * text, factoring in calm speech synthesis rate (~142 words/min at 0.93 rate)
+ * plus realistic sentence, clause, and breath pauses.
+ */
+export function estimateSpokenDurationSeconds(
+  spokenText: string,
+  wordsPerMinute = 142
+): number {
+  if (!spokenText || !spokenText.trim()) {
+    return 0;
+  }
+
+  const ellipsisCount = (spokenText.match(/\.{3,}/g) ?? []).length;
+  const withoutEllipses = spokenText.replace(/\.{3,}/g, ' ');
+  const sentencePauseCount = (withoutEllipses.match(/[.?!]/g) ?? []).length;
+  const clausePauseCount = (withoutEllipses.match(/[,;:]/g) ?? []).length;
+
+  const words = withoutEllipses
+    .replace(/[^\p{L}\p{N}'-]+/gu, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (words.length === 0) {
+    return 0;
+  }
+
+  const speakingSeconds = (words.length / Math.max(80, wordsPerMinute)) * 60;
+  const pauseSeconds =
+    ellipsisCount * 0.45 + sentencePauseCount * 0.28 + clausePauseCount * 0.14;
+
+  return Math.max(10, Math.round(speakingSeconds + pauseSeconds));
+}
+
+

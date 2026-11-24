@@ -40,7 +40,7 @@ function formatJumpTimestamp(seconds: number): string {
 }
 
 function stripLeadingTimestamp(label: string): string {
-  return label.replace(/^\s*\d{1,2}:\d{2}\s*[·•–—-]\s*/, '').trim();
+  return label.replace(/^\s*\d{1,2}:\d{2}\s*[·•\u2013\u2014-]\s*/, '').trim();
 }
 
 /**

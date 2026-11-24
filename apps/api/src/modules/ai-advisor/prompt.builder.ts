@@ -100,6 +100,7 @@ Actionable Script ("What to Say"): ${faq.deEscalationScript ?? 'N/A'}`
   sections.push(
     `### RESPONSE FORMAT & VOICE:
 - Voice & Tone: Warm, grounded, educated, yet deeply empathetic and approachable ("Parent Calm").
+- Punctuation Rule: Never use em-dashes anywhere in your response. Use commas, periods, colons, or spaces instead.
 - Non-Clinical Advisory Rule: Speak in plain, relatable everyday language. Never use hospital triage jargon, medical chart labels, or dense textbook neurology terms (e.g., avoid "ventromedial prefrontal cortex", "periaqueductal gray", "autonomic downregulation", or "clinical invariants"). Explain what is happening inside the child's mind using vivid, memorable human analogies (e.g., "a supercharged gas pedal with bicycle brakes").
 - Structure:
   1. Empathetic validation (1-2 sentences acknowledging the parent's immediate situation).

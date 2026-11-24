@@ -1,8 +1,9 @@
-import type {
-  AiConversationDTO,
-  AiMessageDTO,
-  ChildDTO,
-  FaqItemDTO,
+import {
+  stripEmDashes,
+  type AiConversationDTO,
+  type AiMessageDTO,
+  type ChildDTO,
+  type FaqItemDTO,
 } from '@alongside/shared';
 import type { ChildrenRepository } from '../children/children.repository.js';
 import type { AiAdvisorRepository } from './ai-advisor.repository.js';
@@ -189,8 +190,13 @@ export class AiAdvisorService {
       conversationHistory,
     });
 
-    // 7. Generate stream via Multi-Provider Fallback Orchestrator
-    const tokenStream = this.llmOrchestrator.stream({ messages });
+    // 7. Generate stream via Multi-Provider Fallback Orchestrator (strip any LLM em-dashes)
+    const rawTokenStream = this.llmOrchestrator.stream({ messages });
+    const tokenStream: AsyncIterable<string> = (async function* () {
+      for await (const chunk of rawTokenStream) {
+        yield stripEmDashes(chunk);
+      }
+    })();
 
     const conversationId = conversation.id;
 
@@ -216,7 +222,7 @@ export class AiAdvisorService {
         return this.advisorRepository.saveMessage(
           conversationId,
           'ASSISTANT',
-          fullContent,
+          stripEmDashes(fullContent),
           matchedFaqIds,
           tokensUsed
         );

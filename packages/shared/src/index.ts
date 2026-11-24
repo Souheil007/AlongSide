@@ -10,3 +10,4 @@ export * from './algorithms/courseTitle.js';
 export * from './algorithms/academy.js';
 export * from './algorithms/digest.js';
 export * from './algorithms/deviceShield.js';
+export * from './algorithms/textSanitizer.js';

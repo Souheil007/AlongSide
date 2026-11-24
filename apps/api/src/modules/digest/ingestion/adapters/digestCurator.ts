@@ -4,6 +4,7 @@ import {
   DevelopmentalTier,
   isSlangEligibleTier,
   resolveDigestTierBucket,
+  stripEmDashes,
   type CanonicalDigestTier,
   type VideoJumpChip,
 } from '@alongside/shared';
@@ -722,7 +723,8 @@ Rules:
 3. Choose topicLabel strictly from:
    "Media & Tech", "Sleep & Routines", "Social & Peers", "Play & Learning", "School & Focus", "Family Communication".
 4. Write original, calm, concise parent takeaways (never copy publisher paragraphs verbatim).
-5. Return ONLY valid JSON matching the requested schema, with no markdown commentary outside the JSON.`;
+5. Never use em-dashes anywhere in your output. Use commas, periods, or spaces instead.
+6. Return ONLY valid JSON matching the requested schema, with no markdown commentary outside the JSON.`;
 
 /**
  * Production LLM-powered editorial curator wrapping `MultiProviderLlmOrchestrator`
@@ -797,11 +799,13 @@ export class LlmDigestCuratorAdapter implements DigestContentCurator {
             targetTiers: decision.targetTiers
               ? Array.from(new Set(decision.targetTiers)).slice(0, 2)
               : fallback.targetTiers,
-            summary: decision.summary ?? fallback.summary,
-            keyShift: decision.keyShift ?? fallback.keyShift,
+            summary: stripEmDashes(decision.summary ?? fallback.summary),
+            keyShift: stripEmDashes(decision.keyShift ?? fallback.keyShift),
             perspectiveNote:
               decision.perspectiveNote !== undefined
-                ? decision.perspectiveNote
+                ? decision.perspectiveNote !== null
+                  ? stripEmDashes(decision.perspectiveNote)
+                  : null
                 : fallback.perspectiveNote,
           });
         }
@@ -876,9 +880,9 @@ export class LlmDigestCuratorAdapter implements DigestContentCurator {
             targetTiers: decision.targetTiers
               ? Array.from(new Set(decision.targetTiers)).slice(0, 2)
               : fallback.targetTiers,
-            takeaway: decision.takeaway ?? fallback.takeaway,
+            takeaway: stripEmDashes(decision.takeaway ?? fallback.takeaway),
             skimBullets: decision.skimBullets
-              ? decision.skimBullets.slice(0, 3)
+              ? decision.skimBullets.slice(0, 3).map(stripEmDashes)
               : fallback.skimBullets,
             // Preserve ONLY real parsed chapters: never allow LLM to overwrite jumpChips
             jumpChips: candidate.jumpChips,
@@ -936,9 +940,9 @@ Return JSON: {"dinnerPrompts":[{"question":"...","parentTip":"...","followUp":".
       const dinnerPrompts: DinnerPromptDraft[] = parsed.dinnerPrompts
         .slice(0, 3)
         .map((p, idx) => ({
-          question: p.question,
-          parentTip: p.parentTip,
-          followUp: p.followUp,
+          question: stripEmDashes(p.question),
+          parentTip: stripEmDashes(p.parentTip),
+          followUp: stripEmDashes(p.followUp),
           targetTiers: [resolvedTier],
           sortOrder: idx + 1,
         }));
@@ -948,12 +952,12 @@ Return JSON: {"dinnerPrompts":[{"question":"...","parentTip":"...","followUp":".
         ? (parsed.phrases.length > 0 ? parsed.phrases : fallback.phrases)
             .slice(0, 3)
             .map((p, idx) => ({
-              word: p.word,
-              shortMeaning: p.shortMeaning,
-              fullMeaning: p.fullMeaning,
+              word: stripEmDashes(p.word),
+              shortMeaning: stripEmDashes(p.shortMeaning),
+              fullMeaning: stripEmDashes(p.fullMeaning),
               cringeLevel: p.cringeLevel,
-              cringeLabel: p.cringeLabel,
-              calmScript: p.calmScript,
+              cringeLabel: stripEmDashes(p.cringeLabel),
+              calmScript: stripEmDashes(p.calmScript),
               targetTiers: [resolvedTier],
               sortOrder: idx + 1,
             }))

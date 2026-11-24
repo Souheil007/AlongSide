@@ -1,35 +1,86 @@
 /**
  * Alongside: Parent Calm Natural Audio Narrator Engine
- * 
- * Provides human-sounding, hooking, unhurried audio narration for lesson readers.
+ *
+ * Provides human-sounding, seekable, unhurried audio narration for lesson readers.
  * Features:
- * - Neural voice discovery & prioritization (Edge Natural, Apple Premium/Enhanced, Google Natural)
- * - Conversational text preprocessing (expands abbreviations, dialogue breaths, acronyms)
- * - Intimate storytelling script construction (hooking audio intro, seamless transitions)
- * - Calibrated acoustic prosody (grounded 0.97 pitch, unhurried 0.93 base cadence)
+ * - Default male clear neural voice discovery & prioritization, with optional warm female voice
+ * - Conversational text preprocessing (expands abbreviations, dialogue breaths, acronyms, strips em-dashes)
+ * - Intimate 5-beat storytelling script construction mapped to exact chapter boundaries
+ * - Real word-and-pause duration calculation (zero static placeholder times)
+ * - Word-aligned character offset seeking for seamless pause/resume, ±10s skip, and scrubbing
+ * - Synchronous speech start when voices are pre-warmed to respect browser gesture policies
  * - Chromium 15-second speech synthesis keep-alive guard
  */
 
-import type { AlmanacLessonPayload } from '@alongside/shared';
+import {
+  estimateSpokenDurationSeconds,
+  stripEmDashes,
+  type AlmanacLessonPayload,
+} from '@alongside/shared';
 
-export type VoicePersona = 'warm' | 'clear';
+export type VoicePersona = 'clear' | 'warm';
+
+export interface NarrationBeatRange {
+  beatIndex: number;
+  startChar: number;
+  endChar: number;
+  startSeconds: number;
+  endSeconds: number;
+}
 
 export interface NarrationScriptResult {
   fullText: string;
   estimatedSeconds: number;
   beats: string[];
+  beatRanges: NarrationBeatRange[];
 }
 
 /**
- * Top-tier natural neural voices ranked by warmth, prosody, and clarity.
+ * Top-tier natural male voices ranked by natural prosody, clarity, and warmth (default persona: 'clear').
+ */
+const CLEAR_NEURAL_VOICES = [
+  // Edge / Microsoft Online Natural Male (Industry-leading human quality)
+  'Microsoft Andrew Online (Natural)',
+  'Microsoft Brian Online (Natural)',
+  'Microsoft Guy Online (Natural)',
+  'Microsoft Christopher Online (Natural)',
+  'Microsoft Eric Online (Natural)',
+  'Microsoft Steffan Online (Natural)',
+  'Microsoft Roger Online (Natural)',
+  'Microsoft Ryan Online (Natural)',
+  // Apple Premium / Enhanced Male (macOS / iOS / iPadOS)
+  'Daniel (Enhanced)',
+  'Daniel',
+  'Alex',
+  'Aaron',
+  'Arthur',
+  'Oliver',
+  'Nathan',
+  // Google Chrome Natural Male
+  'Google UK English Male',
+  // Windows Standard Male fallbacks
+  'Microsoft Mark Desktop',
+  'Microsoft Mark',
+  'Microsoft George Desktop',
+  'Microsoft George',
+  'Microsoft David Desktop',
+  'Microsoft David',
+  'Mark',
+  'David',
+];
+
+/**
+ * Top-tier natural female voices ranked by warmth, prosody, and clarity (optional persona: 'warm').
  */
 const WARM_NEURAL_VOICES = [
-  // Edge / Microsoft Online Natural (Industry-leading human quality)
+  // Edge / Microsoft Online Natural Female
   'Microsoft Jenny Online (Natural)',
   'Microsoft Aria Online (Natural)',
   'Microsoft Emma Online (Natural)',
   'Microsoft Michelle Online (Natural)',
-  // Apple Premium / Enhanced (macOS / iOS / iPadOS)
+  'Microsoft Ava Online (Natural)',
+  'Microsoft Sonia Online (Natural)',
+  // Apple Premium / Enhanced Female (macOS / iOS / iPadOS)
   'Ava (Premium)',
   'Ava (Enhanced)',
   'Ava',
@@ -37,30 +88,68 @@ const WARM_NEURAL_VOICES = [
   'Zoe',
   'Samantha (Enhanced)',
   'Samantha',
-  // Google Chrome Natural
+  // Google Chrome Natural Female
   'Google US English',
   'Google UK English Female',
-  // Windows Standard Warm Female fallback (never David)
+  // Windows Standard Warm Female fallback
   'Microsoft Zira Desktop',
   'Microsoft Zira',
   'Zira',
 ];
 
-const CLEAR_NEURAL_VOICES = [
-  // Edge / Microsoft Online Natural
-  'Microsoft Guy Online (Natural)',
-  'Microsoft Christopher Online (Natural)',
-  'Microsoft Roger Online (Natural)',
-  // Apple Premium / Enhanced
-  'Daniel (Enhanced)',
-  'Daniel',
-  'Alex',
-  // Google Chrome
-  'Google UK English Male',
-  // Windows Standard Clear Articulate Male
-  'Microsoft David Desktop',
-  'Microsoft David',
-  'David',
+const FEMALE_VOICE_HINTS = [
+  'female',
+  'jenny',
+  'aria',
+  'emma',
+  'michelle',
+  'ava',
+  'zoe',
+  'samantha',
+  'zira',
+  'sonia',
+  'libby',
+  'hazel',
+  'susan',
+  'catherine',
+  'karen',
+  'moira',
+  'tessa',
+  'victoria',
+  'allison',
+  'serena',
+  'claire',
+  'natasha',
+  'clara',
+  'neerja',
+  'molly',
+  'ana',
+];
+
+const MALE_VOICE_HINTS = [
+  'male',
+  'andrew',
+  'brian',
+  'guy',
+  'christopher',
+  'eric',
+  'steffan',
+  'roger',
+  'ryan',
+  'daniel',
+  'alex',
+  'aaron',
+  'arthur',
+  'oliver',
+  'nathan',
+  'david',
+  'mark',
+  'george',
+  'james',
+  'william',
+  'liam',
+  'connor',
+  'mitchell',
 ];
 
 /**
@@ -70,6 +159,7 @@ const ROBOTIC_VOICE_NAMES = ['david', 'mark', 'george', 'hazel'];
 
 /**
  * Normalizes text for fluid, natural human speech synthesis:
+ * - Removes LLM em-dashes cleanly
  * - Expands abbreviations that sound robotic
  * - Converts time and age numbers to words
  * - Adds pauses around direct dialogue quotes so the speaker takes an authentic breath
@@ -78,7 +168,7 @@ const ROBOTIC_VOICE_NAMES = ['david', 'mark', 'george', 'hazel'];
 export function cleanTextForSpeech(raw: string): string {
   if (!raw) return '';
 
-  let text = raw;
+  let text = stripEmDashes(raw);
 
   // 1. Strip markdown formatting
   text = text
@@ -127,7 +217,7 @@ export function cleanTextForSpeech(raw: string): string {
     text = text.replace(regex, replacement);
   }
 
-  // 4. Dialogue breathes: insert gentle breath spaces around quotes so direct speech doesn't rush
+  // 4. Dialogue breaths: insert gentle breath spaces around quotes so direct speech doesn't rush
   text = text
     .replace(/“([^”]+)”/g, ' ... "$1" ... ')
     .replace(/"([^"]+)"/g, ' ... "$1" ... ');
@@ -144,9 +234,16 @@ export function cleanTextForSpeech(raw: string): string {
   return text;
 }
 
+function asSentence(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed) return '';
+  return /[.?!]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+}
+
 /**
- * Builds an engaging, warm, podcast-style audio narration script from the lesson payload.
- * Replaces dry metadata titles with conversational, human transitions.
+ * Builds an engaging, grounded 5-beat podcast-style audio narration script from
+ * the lesson payload, with real duration computed from actual words and pauses
+ * and exact beat boundaries for live chapter sync & scrubbing.
  */
 export function buildHookingNarrationScript(
   payload: AlmanacLessonPayload,
@@ -161,28 +258,188 @@ export function buildHookingNarrationScript(
   const beat2Lead = cleanTextForSpeech(t(payload.beat2Lead));
   const almanacTruth = cleanTextForSpeech(t(payload.almanacTruth));
   const calmScript = cleanTextForSpeech(t(payload.calmScriptPlain));
+  const beat4Title = cleanTextForSpeech(t(payload.beat4Title));
+  const beat4Lead = cleanTextForSpeech(t(payload.beat4Lead));
+  const firstMove = payload.moves[0];
+  const firstMoveTitle = firstMove ? cleanTextForSpeech(t(firstMove.title)) : '';
+  const firstMoveDesc = firstMove ? cleanTextForSpeech(t(firstMove.desc)) : '';
   const closingNote = cleanTextForSpeech(t(payload.closingNote));
 
-  // Beat 1: The Hook & Living Scene
-  const beat1 = `Welcome to Alongside. Here is your quick three-minute audio briefing for ${name}. ${headline}. ${deck}. Let's step into what this moment looks like at home. ${sceneBody}`;
+  // Beat 1 (The Mirror): Hook & Living Scene (no hardcoded static duration claim)
+  const beat1 = `Welcome to Alongside. Here is your audio briefing for ${name}. ${asSentence(headline)} ${asSentence(deck)} Let's step into what this moment looks like at home. ${sceneBody}`.replace(/\s+/g, ' ').trim();
 
-  // Beat 2: The Neurobiology Behind It
-  const beat2 = `Why does this happen in their nervous system? ${beat2Title}. ${beat2Lead}. Here is the single truth to hold onto: ${almanacTruth}`;
+  // Beat 2 (Inside Mind): The Neurobiology Behind It
+  const beat2 = `Why does this happen in their nervous system? ${asSentence(beat2Title)} ${asSentence(beat2Lead)} Here is the single truth to hold onto: ${almanacTruth}`.replace(/\s+/g, ' ').trim();
 
-  // Beat 3: The Calibrated Dialogue Script
-  const beat3 = `Now, what do you actually say in that moment? Here are words that help without escalating the friction. Take a breath, and try this: ${calmScript}`;
+  // Beat 3 (Practice): The Calibrated Dialogue Script
+  const beat3 = `Now, what do you actually say in that moment? Here are words that help without escalating the friction. Take a breath, and try this: ${calmScript}`.replace(/\s+/g, ' ').trim();
 
-  // Beat 4: Grounded Closing Note
-  const beat4 = `Before tonight, remember this: ${closingNote}. You've got this.`;
+  // Beat 4 (One Move): Tonight's Smallest Step
+  const beat4 = (
+    firstMoveTitle
+      ? `Tonight, keep it small. ${asSentence(beat4Title)} One easy place to start: ${asSentence(firstMoveTitle)} ${firstMoveDesc}`
+      : `Tonight, keep it small. ${asSentence(beat4Title)} ${beat4Lead}`
+  ).replace(/\s+/g, ' ').trim();
 
-  const beats = [beat1, beat2, beat3, beat4];
-  const fullText = beats.join(' ... ');
+  // Beat 5 (Pocket Card): Grounded Closing Note
+  const beat5 = `Before tonight, remember this: ${asSentence(closingNote)} You've got this.`.replace(/\s+/g, ' ').trim();
 
-  // Paced speaking cadence: ~135 spoken words per minute
-  const wordCount = fullText.split(/\s+/).filter(Boolean).length;
-  const estimatedSeconds = Math.max(45, Math.round((wordCount / 135) * 60));
+  const beats = [beat1, beat2, beat3, beat4, beat5];
+  const separator = ' ... ';
 
-  return { fullText, estimatedSeconds, beats };
+  const beatDurations = beats.map((b) => estimateSpokenDurationSeconds(b));
+  const totalSeconds = Math.max(
+    15,
+    beatDurations.reduce((sum, sec) => sum + sec, 0)
+  );
+
+  const beatRanges: NarrationBeatRange[] = [];
+  let charCursor = 0;
+  let secCursor = 0;
+
+  beats.forEach((beatText, idx) => {
+    const startChar = charCursor;
+    const endChar = startChar + beatText.length;
+    const dur = beatDurations[idx] ?? 0;
+    beatRanges.push({
+      beatIndex: idx,
+      startChar,
+      endChar,
+      startSeconds: secCursor,
+      endSeconds: secCursor + dur,
+    });
+    charCursor = endChar + (idx < beats.length - 1 ? separator.length : 0);
+    secCursor += dur;
+  });
+
+  const fullText = beats.join(separator);
+
+  return {
+    fullText,
+    estimatedSeconds: totalSeconds,
+    beats,
+    beatRanges,
+  };
+}
+
+/**
+ * Aligns a target character offset to the start of a whole word so resuming or
+ * skipping never cuts mid-word.
+ */
+export function findWordAlignedOffset(fullText: string, rawOffset: number): number {
+  if (!fullText) return 0;
+  const clamped = Math.max(0, Math.min(fullText.length, Math.round(rawOffset)));
+  if (clamped === 0 || clamped >= fullText.length) {
+    return clamped;
+  }
+
+  // If we're already right after whitespace, skip any leading spaces or ellipsis separators
+  let pos = clamped;
+  if (!/\s/.test(fullText[pos - 1] ?? '')) {
+    const prevSpace = fullText.lastIndexOf(' ', pos);
+    const nextSpace = fullText.indexOf(' ', pos);
+    if (prevSpace === -1) {
+      pos = 0;
+    } else if (nextSpace === -1) {
+      pos = prevSpace + 1;
+    } else {
+      // Snap to the closer word boundary
+      pos = pos - prevSpace <= nextSpace - pos ? prevSpace + 1 : nextSpace + 1;
+    }
+  }
+
+  // Advance past any whitespace or standalone ellipsis dots ("... ")
+  while (pos < fullText.length && /[\s.]/.test(fullText[pos] ?? '')) {
+    pos += 1;
+  }
+
+  return Math.min(pos, fullText.length);
+}
+
+/**
+ * Translates an elapsed audio timestamp (in seconds) into a word-aligned
+ * character offset in `fullText`, using per-beat timing ranges when provided.
+ */
+export function secondsToCharOffset(
+  fullText: string,
+  seconds: number,
+  totalSeconds: number,
+  beatRanges?: NarrationBeatRange[]
+): number {
+  if (!fullText || totalSeconds <= 0) return 0;
+  const clampedSec = Math.max(0, Math.min(totalSeconds, seconds));
+  if (clampedSec <= 0) return 0;
+  if (clampedSec >= totalSeconds) return fullText.length;
+
+  if (beatRanges && beatRanges.length > 0) {
+    const range =
+      beatRanges.find(
+        (b) => clampedSec >= b.startSeconds && clampedSec <= b.endSeconds
+      ) ?? beatRanges[beatRanges.length - 1]!;
+    const spanSec = Math.max(1, range.endSeconds - range.startSeconds);
+    const localRatio = Math.max(
+      0,
+      Math.min(1, (clampedSec - range.startSeconds) / spanSec)
+    );
+    const rawChar =
+      range.startChar + localRatio * (range.endChar - range.startChar);
+    return findWordAlignedOffset(fullText, rawChar);
+  }
+
+  const ratio = clampedSec / totalSeconds;
+  return findWordAlignedOffset(fullText, ratio * fullText.length);
+}
+
+/**
+ * Translates a character offset in `fullText` into an elapsed timestamp (in seconds).
+ */
+export function charOffsetToSeconds(
+  fullText: string,
+  charOffset: number,
+  totalSeconds: number,
+  beatRanges?: NarrationBeatRange[]
+): number {
+  if (!fullText || totalSeconds <= 0) return 0;
+  const clampedChar = Math.max(0, Math.min(fullText.length, charOffset));
+  if (clampedChar <= 0) return 0;
+  if (clampedChar >= fullText.length) return totalSeconds;
+
+  if (beatRanges && beatRanges.length > 0) {
+    for (let i = 0; i < beatRanges.length; i++) {
+      const range = beatRanges[i]!;
+      const nextRange = beatRanges[i + 1];
+      if (
+        clampedChar <= range.endChar ||
+        !nextRange ||
+        clampedChar < nextRange.startChar
+      ) {
+        const spanChar = Math.max(1, range.endChar - range.startChar);
+        const localRatio = Math.max(
+          0,
+          Math.min(1, (clampedChar - range.startChar) / spanChar)
+        );
+        return range.startSeconds + localRatio * (range.endSeconds - range.startSeconds);
+      }
+    }
+  }
+
+  return (clampedChar / Math.max(1, fullText.length)) * totalSeconds;
+}
+
+/**
+ * Resolves the active Almanac beat index (0..4) for a character offset or timestamp.
+ */
+export function resolveBeatIndexForChar(
+  beatRanges: NarrationBeatRange[],
+  charOffset: number
+): number {
+  if (!beatRanges.length) return 0;
+  for (let i = beatRanges.length - 1; i >= 0; i--) {
+    if (charOffset >= beatRanges[i]!.startChar) {
+      return beatRanges[i]!.beatIndex;
+    }
+  }
+  return beatRanges[0]!.beatIndex;
 }
 
 let cachedVoices: SpeechSynthesisVoice[] = [];
@@ -211,7 +468,7 @@ export function getAvailableVoices(): SpeechSynthesisVoice[] {
 /**
  * Ensures voices are retrieved asynchronously before speech synthesis starts.
  * Chromium and WebKit load voices asynchronously; this guarantees speech is never
- * started with an uninitialized or robotic fallback voice.
+ * started with an uninitialized fallback voice.
  */
 export function resolveVoices(): Promise<SpeechSynthesisVoice[]> {
   const synth =
@@ -255,12 +512,17 @@ export function resolveVoices(): Promise<SpeechSynthesisVoice[]> {
   });
 }
 
+function matchesAnyHint(name: string, hints: string[]): boolean {
+  const lower = name.toLowerCase();
+  return hints.some((hint) => lower.includes(hint));
+}
+
 /**
  * Selects the highest quality natural/neural voice available in the current browser.
- * For the warm persona, harsh robotic voices (such as Microsoft David) are strictly excluded.
+ * Defaults to the male 'clear' voice persona unless the user explicitly switches to 'warm' (female).
  */
 export function getBestNaturalVoice(
-  persona: VoicePersona = 'warm',
+  persona: VoicePersona = 'clear',
   providedVoices?: SpeechSynthesisVoice[]
 ): SpeechSynthesisVoice | null {
   const voices =
@@ -274,7 +536,7 @@ export function getBestNaturalVoice(
   );
   if (englishVoices.length === 0) return voices[0] || null;
 
-  const targetList = persona === 'clear' ? CLEAR_NEURAL_VOICES : WARM_NEURAL_VOICES;
+  const targetList = persona === 'warm' ? WARM_NEURAL_VOICES : CLEAR_NEURAL_VOICES;
 
   // 1. Try exact or partial match from preferred neural list
   for (const preferred of targetList) {
@@ -284,36 +546,49 @@ export function getBestNaturalVoice(
     if (match) return match;
   }
 
-  // 2. Try generic "Natural", "Neural", "Premium", or "Enhanced" in voice name
-  if (persona === 'warm') {
-    const naturalMatch = englishVoices.find(
-      (v) =>
-        (v.name.includes('Natural') ||
-          v.name.includes('Neural') ||
-          v.name.includes('Premium') ||
-          v.name.includes('Enhanced')) &&
-        !ROBOTIC_VOICE_NAMES.some((robotic) => v.name.toLowerCase().includes(robotic))
-    );
-    if (naturalMatch) return naturalMatch;
+  // 2. Try generic "Natural", "Neural", "Premium", or "Enhanced" matching gender preference
+  const isHighQuality = (v: SpeechSynthesisVoice) =>
+    v.name.includes('Natural') ||
+    v.name.includes('Neural') ||
+    v.name.includes('Premium') ||
+    v.name.includes('Enhanced');
 
-    // Fallback for warm: pick a female or non-robotic English voice (e.g. Zira), never David!
+  if (persona === 'clear') {
+    const maleNeural = englishVoices.find(
+      (v) => isHighQuality(v) && !matchesAnyHint(v.name, FEMALE_VOICE_HINTS)
+    );
+    if (maleNeural) return maleNeural;
+
+    const maleFallback = englishVoices.find(
+      (v) => matchesAnyHint(v.name, MALE_VOICE_HINTS)
+    );
+    if (maleFallback) return maleFallback;
+
+    const nonFemaleFallback = englishVoices.find(
+      (v) => !matchesAnyHint(v.name, FEMALE_VOICE_HINTS)
+    );
+    if (nonFemaleFallback) return nonFemaleFallback;
+  } else {
+    const femaleNeural = englishVoices.find(
+      (v) =>
+        isHighQuality(v) &&
+        !matchesAnyHint(v.name, ROBOTIC_VOICE_NAMES) &&
+        !matchesAnyHint(v.name, MALE_VOICE_HINTS)
+    );
+    if (femaleNeural) return femaleNeural;
+
     const warmFallback =
       englishVoices.find(
         (v) =>
-          !ROBOTIC_VOICE_NAMES.some((robotic) => v.name.toLowerCase().includes(robotic))
-      ) || englishVoices.find((v) => v.name.toLowerCase().includes('zira'));
+          !matchesAnyHint(v.name, ROBOTIC_VOICE_NAMES) &&
+          !matchesAnyHint(v.name, MALE_VOICE_HINTS)
+      ) ||
+      englishVoices.find(
+        (v) => !matchesAnyHint(v.name, ROBOTIC_VOICE_NAMES)
+      ) ||
+      englishVoices.find((v) => v.name.toLowerCase().includes('zira'));
 
     if (warmFallback) return warmFallback;
-  } else {
-    // For clear persona
-    const naturalMatch = englishVoices.find(
-      (v) =>
-        v.name.includes('Natural') ||
-        v.name.includes('Neural') ||
-        v.name.includes('Premium') ||
-        v.name.includes('Enhanced')
-    );
-    if (naturalMatch) return naturalMatch;
   }
 
   // 3. Fallback to any English voice
@@ -322,23 +597,25 @@ export function getBestNaturalVoice(
 
 export interface PlayNarratorOptions {
   text: string;
+  startCharOffset?: number;
   rateMultiplier?: number;
   persona?: VoicePersona;
   onStart?: () => void;
   onEnd?: () => void;
   onError?: (err?: unknown) => void;
-  onBoundary?: (charIndex: number) => void;
+  onBoundary?: (globalCharIndex: number) => void;
 }
 
 /**
- * Plays speech synthesis with warm, human prosody and Chrome 15s keep-alive.
- * Guarantees voices are resolved before audio starts, ensuring the first voice heard
- * is always the warm neural companion. Returns a cancel function.
+ * Plays speech synthesis from an optional character offset with calm human prosody
+ * and Chrome 15s keep-alive. Starts synchronously when voices are already cached
+ * so browser user-gesture autoplay rules are always satisfied. Returns a cancel fn.
  */
 export function playNaturalNarrator({
   text,
+  startCharOffset = 0,
   rateMultiplier = 1,
-  persona = 'warm',
+  persona = 'clear',
   onStart,
   onEnd,
   onError,
@@ -349,6 +626,13 @@ export function playNaturalNarrator({
     return () => {};
   }
 
+  const safeOffset = findWordAlignedOffset(text, startCharOffset);
+  if (safeOffset >= text.length) {
+    onEnd?.();
+    return () => {};
+  }
+
+  const sliceText = text.slice(safeOffset);
   let canceled = false;
   let keepAliveTimer: number | null = null;
 
@@ -367,17 +651,16 @@ export function playNaturalNarrator({
     }
   };
 
-  // Ensure voices are loaded first before speaking so utterance.voice is never unassigned
-  resolveVoices().then((voices) => {
+  const speakWithVoices = (voices: SpeechSynthesisVoice[]) => {
     if (canceled) return;
 
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(sliceText);
 
     // Calibrated human prosody:
     // - 0.93 baseline rate (unhurried, thoughtful pacing)
-    // - 0.97 pitch (slightly deeper, grounded, warm resonance)
+    // - 0.97 pitch (grounded resonance)
     const baseRate = 0.93;
     utterance.rate = Math.max(0.6, Math.min(2.0, baseRate * rateMultiplier));
     utterance.pitch = 0.97;
@@ -389,8 +672,10 @@ export function playNaturalNarrator({
 
     // Chrome 15-second speech silence keep-alive guard
     const startKeepAlive = () => {
+      stopKeepAlive();
       keepAliveTimer = window.setInterval(() => {
         if (
+          !canceled &&
           typeof window !== 'undefined' &&
           'speechSynthesis' in window &&
           window.speechSynthesis.speaking &&
@@ -411,7 +696,7 @@ export function playNaturalNarrator({
     utterance.onboundary = (e) => {
       if (canceled) return;
       if (e.charIndex != null) {
-        onBoundary?.(e.charIndex);
+        onBoundary?.(safeOffset + e.charIndex);
       }
     };
 
@@ -430,7 +715,15 @@ export function playNaturalNarrator({
     };
 
     window.speechSynthesis.speak(utterance);
-  });
+  };
+
+  // Speak synchronously when voices are already loaded (preserves browser user-gesture token)
+  const immediateVoices = getAvailableVoices();
+  if (immediateVoices.length > 0) {
+    speakWithVoices(immediateVoices);
+  } else {
+    resolveVoices().then(speakWithVoices);
+  }
 
   return cancel;
 }

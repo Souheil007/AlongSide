@@ -6,7 +6,10 @@ import type {
   AlmanacLessonPayload,
   ChildPersonalizationContext,
 } from '@alongside/shared';
-import { interpolateChildCopy } from '@alongside/shared';
+import {
+  estimateLessonReadingMinutes,
+  interpolateChildCopy,
+} from '@alongside/shared';
 import {
   getLocalLessonPlaybook,
   markLessonComplete,
@@ -15,8 +18,12 @@ import {
 } from '@/lib/api/academy';
 import {
   buildHookingNarrationScript,
+  charOffsetToSeconds,
   playNaturalNarrator,
+  resolveBeatIndexForChar,
   resolveVoices,
+  secondsToCharOffset,
+  type NarrationScriptResult,
   type VoicePersona,
 } from '@/lib/audio/narratorEngine';
 
@@ -37,9 +44,10 @@ export interface UseAlmanacLessonStateOptions {
 
 export function buildAlmanacNarrationScript(
   payload: AlmanacLessonPayload,
-  t: (str: string) => string
-): { fullText: string; estimatedSeconds: number } {
-  return buildHookingNarrationScript(payload, t);
+  t: (str: string) => string,
+  childName?: string
+): NarrationScriptResult {
+  return buildHookingNarrationScript(payload, t, childName);
 }
 
 export function useAlmanacLessonState({
@@ -60,17 +68,25 @@ export function useAlmanacLessonState({
   const [isNightstandMode, setIsNightstandMode] = React.useState<boolean>(false);
 
   // Read | Listen Companion Narrator state
+  // Default voicePersona is 'clear' (male voice) unless user switches to 'warm'
   const [listenMode, setListenMode] = React.useState<boolean>(false);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
+  const [hasStartedAudio, setHasStartedAudio] = React.useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = React.useState<1 | 1.25 | 1.5>(1);
   const [audioSeconds, setAudioSeconds] = React.useState<number>(0);
   const [speakingBeat, setSpeakingBeat] = React.useState<number | null>(null);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const [audioFileFailed, setAudioFileFailed] = React.useState<boolean>(false);
-  const [voicePersona, setVoicePersona] = React.useState<VoicePersona>('warm');
-  const speechCancelRef = React.useRef<(() => void) | null>(null);
+  const [, setAudioFileFailed] = React.useState<boolean>(false);
+  const [voicePersona, setVoicePersonaState] = React.useState<VoicePersona>('clear');
 
-  // Interactive Beat 1–5 state
+  const speechCancelRef = React.useRef<(() => void) | null>(null);
+  const charOffsetRef = React.useRef<number>(0);
+  const audioSecondsRef = React.useRef<number>(0);
+  const lastBoundaryAtRef = React.useRef<number>(0);
+  const isPlayingRef = React.useRef<boolean>(false);
+  isPlayingRef.current = isPlaying;
+
+  // Interactive Beat 1-5 state
   const [selectedPollId, setSelectedPollId] = React.useState<string | null>(null);
   const [selectedInstinctId, setSelectedInstinctId] = React.useState<string | null>(null);
   const [skippedInstinct, setSkippedInstinct] = React.useState<boolean>(false);
@@ -94,15 +110,24 @@ export function useAlmanacLessonState({
   const [saveError, setSaveError] = React.useState<string | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = React.useState<boolean>(false);
 
+  // Real spoken narration script & real duration (never static DB placeholder)
   const narration = React.useMemo(
-    () => buildAlmanacNarrationScript(payload, t),
-    [payload, t]
+    () => buildAlmanacNarrationScript(payload, t, child?.name?.trim() || undefined),
+    [payload, t, child?.name]
   );
 
-  const totalAudioSeconds =
-    lesson.audioDurationSeconds && lesson.audioDurationSeconds > 30
-      ? lesson.audioDurationSeconds
-      : narration.estimatedSeconds;
+  const totalAudioSeconds = narration.estimatedSeconds;
+
+  // Real reading minutes calculated from actual lesson prose
+  const realReadingMinutes = React.useMemo(
+    () =>
+      estimateLessonReadingMinutes({
+        almanacPayload: payload,
+        contentMarkdown: lesson.contentMarkdown,
+        title: lesson.title,
+      }),
+    [payload, lesson.contentMarkdown, lesson.title]
+  );
 
   // Hydrate persisted Nightstand preference on mount
   React.useEffect(() => {
@@ -116,8 +141,22 @@ export function useAlmanacLessonState({
     }
   }, []);
 
+  // Cancel any active speech synthesis cleanly
+  const cancelActiveSpeech = React.useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    if (speechCancelRef.current) {
+      speechCancelRef.current();
+      speechCancelRef.current = null;
+    } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+  }, []);
+
   // Reset per-lesson ephemeral state & hydrate playbook state whenever lesson changes
   React.useEffect(() => {
+    cancelActiveSpeech();
     const local = getLocalLessonPlaybook(lesson.id);
     setSelectedPollId(null);
     setSelectedInstinctId(null);
@@ -144,10 +183,14 @@ export function useAlmanacLessonState({
     );
     setSaveError(null);
     setAudioSeconds(0);
+    audioSecondsRef.current = 0;
+    charOffsetRef.current = 0;
+    lastBoundaryAtRef.current = 0;
     setIsPlaying(false);
+    setHasStartedAudio(false);
     setSpeakingBeat(null);
     setAudioFileFailed(false);
-  }, [lesson.id, lesson.isCompleted, lesson.playbookState]);
+  }, [lesson.id, lesson.isCompleted, lesson.playbookState, cancelActiveSpeech]);
 
   // Live 2px scroll-progress hairline + active beat IntersectionObserver
   React.useEffect(() => {
@@ -209,75 +252,161 @@ export function useAlmanacLessonState({
     return () => window.clearInterval(interval);
   }, [lesson.id]);
 
-  // Companion narrator timer + beat sync + cleanup
-  const stopAudio = React.useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    if (speechCancelRef.current) {
-      speechCancelRef.current();
-      speechCancelRef.current = null;
-    } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
+  // Pause audio while preserving exact char offset & timestamp so user can resume
+  const pauseAudio = React.useCallback(() => {
+    cancelActiveSpeech();
+    // Sync char offset from current elapsed seconds in case browser didn't fire onboundary
+    const syncedChar = secondsToCharOffset(
+      narration.fullText,
+      audioSecondsRef.current,
+      totalAudioSeconds,
+      narration.beatRanges
+    );
+    if (Date.now() - lastBoundaryAtRef.current > 1500) {
+      charOffsetRef.current = syncedChar;
     }
     setIsPlaying(false);
-    setSpeakingBeat(null);
-  }, []);
+  }, [cancelActiveSpeech, narration.fullText, narration.beatRanges, totalAudioSeconds]);
 
+  // Backward-compatible alias that pauses without discarding position
+  const stopAudio = pauseAudio;
+
+  // Cleanup speech on unmount
   React.useEffect(() => {
     return () => {
-      if (speechCancelRef.current) {
-        speechCancelRef.current();
-        speechCancelRef.current = null;
-      } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      cancelActiveSpeech();
     };
-  }, []);
+  }, [cancelActiveSpeech]);
 
+  // Smooth playhead ticker while playing (never kills active speech synthesis prematurely)
   React.useEffect(() => {
     if (!isPlaying) return;
+    const tickMs = 250;
     const timer = window.setInterval(() => {
-      setAudioSeconds((prev) => {
-        const next = prev + playbackSpeed;
-        if (next >= totalAudioSeconds) {
-          stopAudio();
-          return 0;
-        }
-        const ratio = next / Math.max(1, totalAudioSeconds);
-        const computedBeat = Math.min(4, Math.floor(ratio * 5));
-        setSpeakingBeat(computedBeat);
-        return next;
-      });
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, [isPlaying, playbackSpeed, totalAudioSeconds, stopAudio]);
-
-  const startSpeechFallback = React.useCallback(
-    (rateMultiplier: number) => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-        setIsPlaying(true);
-        setSpeakingBeat(0);
+      const now = Date.now();
+      const boundaryFresh = now - lastBoundaryAtRef.current < 1200;
+      if (boundaryFresh) {
         return;
       }
-      if (speechCancelRef.current) {
-        speechCancelRef.current();
-        speechCancelRef.current = null;
+
+      const speechActive =
+        typeof window !== 'undefined' &&
+        'speechSynthesis' in window &&
+        window.speechSynthesis.speaking;
+
+      setAudioSeconds((prev) => {
+        const step = (tickMs / 1000) * playbackSpeed;
+        const candidate = prev + step;
+        if (candidate >= totalAudioSeconds) {
+          // If speech synthesis is still finishing the last sentence, hold near end until onend fires
+          if (speechActive) {
+            const held = Math.max(0, totalAudioSeconds - 0.5);
+            audioSecondsRef.current = held;
+            return held;
+          }
+          cancelActiveSpeech();
+          setIsPlaying(false);
+          setHasStartedAudio(false);
+          setSpeakingBeat(null);
+          charOffsetRef.current = 0;
+          audioSecondsRef.current = 0;
+          return 0;
+        }
+        audioSecondsRef.current = candidate;
+        const estimatedChar = secondsToCharOffset(
+          narration.fullText,
+          candidate,
+          totalAudioSeconds,
+          narration.beatRanges
+        );
+        charOffsetRef.current = estimatedChar;
+        setSpeakingBeat(
+          resolveBeatIndexForChar(narration.beatRanges, estimatedChar)
+        );
+        return candidate;
+      });
+    }, tickMs);
+
+    return () => window.clearInterval(timer);
+  }, [
+    isPlaying,
+    playbackSpeed,
+    totalAudioSeconds,
+    narration.fullText,
+    narration.beatRanges,
+    cancelActiveSpeech,
+  ]);
+
+  const startSpeechFromOffset = React.useCallback(
+    (
+      startCharOffset: number,
+      rateMultiplier: number,
+      persona: VoicePersona
+    ) => {
+      const safeStartChar = Math.max(
+        0,
+        Math.min(narration.fullText.length, startCharOffset)
+      );
+      const startSec = charOffsetToSeconds(
+        narration.fullText,
+        safeStartChar,
+        totalAudioSeconds,
+        narration.beatRanges
+      );
+
+      charOffsetRef.current = safeStartChar;
+      audioSecondsRef.current = startSec;
+      setAudioSeconds(startSec);
+      setHasStartedAudio(true);
+
+      const initialBeat = resolveBeatIndexForChar(
+        narration.beatRanges,
+        safeStartChar
+      );
+      setSpeakingBeat(initialBeat);
+
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        setIsPlaying(true);
+        return;
       }
+
+      cancelActiveSpeech();
+      lastBoundaryAtRef.current = 0;
+
       const cancel = playNaturalNarrator({
         text: narration.fullText,
+        startCharOffset: safeStartChar,
         rateMultiplier,
-        persona: voicePersona,
+        persona,
         onStart: () => {
           setIsPlaying(true);
           setSpeakingBeat(
-            Math.min(4, Math.floor((audioSeconds / Math.max(1, totalAudioSeconds)) * 5))
+            resolveBeatIndexForChar(narration.beatRanges, charOffsetRef.current)
+          );
+        },
+        onBoundary: (globalCharIndex) => {
+          lastBoundaryAtRef.current = Date.now();
+          charOffsetRef.current = globalCharIndex;
+          const mappedSec = charOffsetToSeconds(
+            narration.fullText,
+            globalCharIndex,
+            totalAudioSeconds,
+            narration.beatRanges
+          );
+          audioSecondsRef.current = mappedSec;
+          setAudioSeconds(mappedSec);
+          setSpeakingBeat(
+            resolveBeatIndexForChar(narration.beatRanges, globalCharIndex)
           );
         },
         onEnd: () => {
           setIsPlaying(false);
+          setHasStartedAudio(false);
           setSpeakingBeat(null);
           setAudioSeconds(0);
+          audioSecondsRef.current = 0;
+          charOffsetRef.current = 0;
+          lastBoundaryAtRef.current = 0;
           speechCancelRef.current = null;
         },
         onError: () => {
@@ -285,16 +414,19 @@ export function useAlmanacLessonState({
           speechCancelRef.current = null;
         },
       });
+
       speechCancelRef.current = cancel;
       setIsPlaying(true);
-      setSpeakingBeat(
-        Math.min(4, Math.floor((audioSeconds / Math.max(1, totalAudioSeconds)) * 5))
-      );
     },
-    [narration.fullText, audioSeconds, totalAudioSeconds, voicePersona]
+    [
+      narration.fullText,
+      narration.beatRanges,
+      totalAudioSeconds,
+      cancelActiveSpeech,
+    ]
   );
 
-  // Pre-warm browser speech synthesis voices so initial audio start is instantaneous
+  // Pre-warm browser speech synthesis voices so first Play click starts synchronously
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       resolveVoices();
@@ -302,66 +434,113 @@ export function useAlmanacLessonState({
   }, []);
 
   const togglePlayAudio = React.useCallback(() => {
-    if (isPlaying) {
-      stopAudio();
+    if (isPlayingRef.current) {
+      pauseAudio();
       return;
     }
 
-    startSpeechFallback(playbackSpeed);
-  }, [isPlaying, stopAudio, playbackSpeed, startSpeechFallback]);
+    const resumeChar =
+      audioSecondsRef.current >= totalAudioSeconds - 1
+        ? 0
+        : charOffsetRef.current;
+
+    startSpeechFromOffset(resumeChar, playbackSpeed, voicePersona);
+  }, [
+    pauseAudio,
+    totalAudioSeconds,
+    startSpeechFromOffset,
+    playbackSpeed,
+    voicePersona,
+  ]);
+
+  const seekAudioTo = React.useCallback(
+    (targetSeconds: number) => {
+      const clampedSec = Math.max(0, Math.min(totalAudioSeconds, targetSeconds));
+      const targetChar = secondsToCharOffset(
+        narration.fullText,
+        clampedSec,
+        totalAudioSeconds,
+        narration.beatRanges
+      );
+
+      audioSecondsRef.current = clampedSec;
+      charOffsetRef.current = targetChar;
+      setAudioSeconds(clampedSec);
+
+      const beatIdx = resolveBeatIndexForChar(narration.beatRanges, targetChar);
+      setSpeakingBeat(clampedSec > 0 || isPlayingRef.current ? beatIdx : null);
+      setHasStartedAudio(clampedSec > 0);
+
+      if (isPlayingRef.current) {
+        if (clampedSec >= totalAudioSeconds) {
+          cancelActiveSpeech();
+          setIsPlaying(false);
+          setHasStartedAudio(false);
+          setSpeakingBeat(null);
+          setAudioSeconds(0);
+          audioSecondsRef.current = 0;
+          charOffsetRef.current = 0;
+        } else {
+          startSpeechFromOffset(targetChar, playbackSpeed, voicePersona);
+        }
+      }
+    },
+    [
+      totalAudioSeconds,
+      narration.fullText,
+      narration.beatRanges,
+      cancelActiveSpeech,
+      startSpeechFromOffset,
+      playbackSpeed,
+      voicePersona,
+    ]
+  );
+
+  const skipAudioSeconds = React.useCallback(
+    (deltaSeconds: number) => {
+      seekAudioTo(audioSecondsRef.current + deltaSeconds);
+    },
+    [seekAudioTo]
+  );
 
   const cyclePlaybackSpeed = React.useCallback(() => {
     const next: 1 | 1.25 | 1.5 =
       playbackSpeed === 1 ? 1.25 : playbackSpeed === 1.25 ? 1.5 : 1;
     setPlaybackSpeed(next);
-    if (isPlaying) {
-      startSpeechFallback(next);
+    if (isPlayingRef.current) {
+      startSpeechFromOffset(charOffsetRef.current, next, voicePersona);
     }
-  }, [playbackSpeed, isPlaying, startSpeechFallback]);
+  }, [playbackSpeed, startSpeechFromOffset, voicePersona]);
+
+  const setVoicePersona = React.useCallback(
+    (nextPersona: VoicePersona) => {
+      setVoicePersonaState(nextPersona);
+      if (isPlayingRef.current) {
+        startSpeechFromOffset(charOffsetRef.current, playbackSpeed, nextPersona);
+      }
+    },
+    [startSpeechFromOffset, playbackSpeed]
+  );
 
   const cycleVoicePersona = React.useCallback(() => {
-    const nextPersona: VoicePersona = voicePersona === 'warm' ? 'clear' : 'warm';
+    const nextPersona: VoicePersona = voicePersona === 'clear' ? 'warm' : 'clear';
     setVoicePersona(nextPersona);
-    if (isPlaying) {
-      if (speechCancelRef.current) {
-        speechCancelRef.current();
-        speechCancelRef.current = null;
-      }
-      const cancel = playNaturalNarrator({
-        text: narration.fullText,
-        rateMultiplier: playbackSpeed,
-        persona: nextPersona,
-        onStart: () => {
-          setIsPlaying(true);
-        },
-        onEnd: () => {
-          setIsPlaying(false);
-          setSpeakingBeat(null);
-          setAudioSeconds(0);
-          speechCancelRef.current = null;
-        },
-        onError: () => {
-          setIsPlaying(false);
-          speechCancelRef.current = null;
-        },
-      });
-      speechCancelRef.current = cancel;
-    }
-  }, [voicePersona, isPlaying, narration.fullText, playbackSpeed]);
+  }, [voicePersona, setVoicePersona]);
 
+  // Clicking "Listen" reveals the Audio Companion WITHOUT auto-playing.
+  // Playback only begins when the user explicitly clicks Play/Start.
   const setReadingMode = React.useCallback(
     (mode: 'read' | 'listen') => {
       if (mode === 'read') {
-        stopAudio();
+        if (isPlayingRef.current) {
+          pauseAudio();
+        }
         setListenMode(false);
       } else {
         setListenMode(true);
-        if (!isPlaying) {
-          startSpeechFallback(playbackSpeed);
-        }
       }
     },
-    [stopAudio, isPlaying, startSpeechFallback, playbackSpeed]
+    [pauseAudio]
   );
 
   const toggleNightstandMode = React.useCallback(() => {
@@ -395,7 +574,7 @@ export function useAlmanacLessonState({
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  // Interactive Beat 3 & 4→5 Playbook persistence handlers
+  // Interactive Beat 3 & 4->5 Playbook persistence handlers
   const toggleAnnotation = React.useCallback((id: string) => {
     setActiveAnnotationId((prev) => (prev === id ? null : id));
   }, []);
@@ -439,11 +618,16 @@ export function useAlmanacLessonState({
     try {
       setIsSaving(true);
       setSaveError(null);
-      await markLessonComplete(lesson.id, lesson.readingMinutes || 3, {
-        chosenMoveId: effectiveMoveId,
-        bookmarkedTruth,
-        savedPushbackIds,
-      });
+      await markLessonComplete(
+        lesson.id,
+        realReadingMinutes,
+        {
+          chosenMoveId: effectiveMoveId,
+          bookmarkedTruth,
+          savedPushbackIds,
+        },
+        lesson.slug
+      );
       setIsCompleted(true);
       onLessonComplete?.();
     } catch (err) {
@@ -460,7 +644,43 @@ export function useAlmanacLessonState({
     chosenMoveId,
     payload.moves,
     lesson.id,
-    lesson.readingMinutes,
+    lesson.slug,
+    realReadingMinutes,
+    bookmarkedTruth,
+    savedPushbackIds,
+    onLessonComplete,
+  ]);
+
+  /**
+   * Automatically completes the current lesson when the parent advances to
+   * the next episode or finishes the final episode of a course.
+   */
+  const completeBeforeNavigate = React.useCallback(async () => {
+    if (isCompleted) return;
+    const effectiveMoveId = chosenMoveId ?? payload.moves[0]?.id ?? null;
+    try {
+      await markLessonComplete(
+        lesson.id,
+        realReadingMinutes,
+        {
+          chosenMoveId: effectiveMoveId,
+          bookmarkedTruth,
+          savedPushbackIds,
+        },
+        lesson.slug
+      );
+      setIsCompleted(true);
+      onLessonComplete?.();
+    } catch {
+      // Never block navigation on network failure
+    }
+  }, [
+    isCompleted,
+    chosenMoveId,
+    payload.moves,
+    lesson.id,
+    lesson.slug,
+    realReadingMinutes,
     bookmarkedTruth,
     savedPushbackIds,
     onLessonComplete,
@@ -486,16 +706,23 @@ export function useAlmanacLessonState({
     listenMode,
     setReadingMode,
     isPlaying,
+    hasStartedAudio,
     playbackSpeed,
     voicePersona,
+    setVoicePersona,
     cycleVoicePersona,
     audioSeconds,
     totalAudioSeconds,
+    beatRanges: narration.beatRanges,
+    realReadingMinutes,
     speakingBeat,
     audioRef,
     onAudioError: () => setAudioFileFailed(true),
     togglePlayAudio,
+    skipAudioSeconds,
+    seekAudioTo,
     cyclePlaybackSpeed,
+    pauseAudio,
     stopAudio,
     scrollToBeat,
     scrollToVideoShelf,
@@ -519,6 +746,7 @@ export function useAlmanacLessonState({
     isSaving,
     saveError,
     sealAndSavePocketCard,
+    completeBeforeNavigate,
     isShareModalOpen,
     setIsShareModalOpen,
     openAdvisorWithLessonContext,
