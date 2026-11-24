@@ -37,17 +37,17 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.cup,
           illustrationCaption: '5:40 PM · Naming the storm before it spills',
           headline: 'Putting Words to Big Feelings Before They Explode',
-          deck: 'Why asking “Why are you acting like this?!” escalates a four-year-old—and the four-word calm reflection that helps the emotional wave crest faster.',
+          deck: 'Why asking “Why are you acting like this?!” escalates a four-year-old, and the four-word calm reflection that helps the emotional wave crest faster.',
           sceneTime: '5:40 PM · LIVING ROOM RUG',
           sceneBody:
-            'The Lego tower tips over by one brick. Instantly {name} hurls a plastic wheel across the rug and screams that you ruined {poss} whole afternoon. *You didn’t even touch the tower—how did a three-inch block turn into a five-alarm fire?*',
+            'The Lego tower tips over by one brick. Instantly {name} hurls a plastic wheel across the rug and screams that you ruined {poss} whole afternoon. *You didn’t even touch the tower, how did a three-inch block turn into a five-alarm fire?*',
           pollQuestion: 'How fast do small frustrations turn into big outbursts lately?',
           pollOptions: [
             {
               id: 'instant',
               label: 'Zero to sixty in two seconds',
               response:
-                'Classic preschool wiring: between ages 4 and 6, imagination and ambition outpace frustration tolerance by miles—so a fallen tower genuinely feels catastrophic.',
+                'Classic preschool wiring: between ages 4 and 6, imagination and ambition outpace frustration tolerance by miles, so a fallen tower genuinely feels catastrophic.',
             },
             {
               id: 'tired',
@@ -73,7 +73,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 name: 'Left-Brain Language Bridge',
                 value: 'Reconnecting',
                 tone: 'spruce',
-                desc: 'Hearing “You worked so hard and it broke—you’re mad!” links raw panic to concrete language.',
+                desc: 'Hearing “You worked so hard and it broke, you’re mad!” links raw panic to concrete language.',
               },
               {
                 name: 'Body Tension',
@@ -87,7 +87,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 name: 'Emotional Alarm',
                 value: 'Full Siren',
                 tone: 'amber',
-                desc: 'A broken tower triggers genuine overwhelm—not calculated drama.',
+                desc: 'A broken tower triggers genuine overwhelm, not calculated drama.',
               },
               {
                 name: 'Reasoning & Manners',
@@ -98,7 +98,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Naming the feeling calmly (“You’re frustrated that it crashed”) doesn’t reward throwing—it lowers the alarm fast enough for {name} to actually hear your boundary.',
+            'Naming the feeling calmly (“You’re frustrated that it crashed”) doesn’t reward throwing, it lowers the alarm fast enough for {name} to actually hear your boundary.',
           scienceDeepDive:
             'Neuroimaging work on affect labeling (Lieberman et al., UCLA) demonstrates that translating raw emotional states into simple verbal labels increases right ventrolateral prefrontal cortex activation while directly dampening amygdala firing.',
           beat3Kicker: 'Practice before the next tower falls',
@@ -110,25 +110,25 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'scold',
               label: '“Hey! We do NOT throw blocks! Go sit on the stairs right now!”',
-              whyTitle: 'Why that’s so tempting—and what happens next',
+              whyTitle: 'Why that’s so tempting, and what happens next',
               whyText:
                 'Protecting the room and setting limits is vital! Yet barked consequences mid-surge add shame on top of overwhelm, turning a 2-minute storm into a 25-minute standoff.',
             },
             {
               id: 'fix',
               label: 'Rush in and quickly snap the blocks back together so {pronoun} stops crying.',
-              whyTitle: 'Why that’s so tempting—and why it backfires',
+              whyTitle: 'Why that’s so tempting, and why it backfires',
               whyText:
-                'Fixing it instantly feels kind, yet preschoolers often get angrier because they wanted mastery—and they miss practicing how to survive frustration.',
+                'Fixing it instantly feels kind, yet preschoolers often get angrier because they wanted mastery, and they miss practicing how to survive frustration.',
             },
           ],
           calmScriptPlain:
-            '“Whoa—that tower crashed right when you almost finished. You’re really frustrated. Blocks stay on the rug; I’m right here while your body cools down.”',
+            '“Whoa, that tower crashed right when you almost finished. You’re really frustrated. Blocks stay on the rug; I’m right here while your body cools down.”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'label',
-              text: 'Whoa—that tower crashed right when you almost finished. You’re really frustrated.',
+              text: 'Whoa, that tower crashed right when you almost finished. You’re really frustrated.',
               tag: 'Names the Emotion',
               note: 'Shows {name} you see the real disappointment underneath the yell, dropping defensiveness fast.',
             },
@@ -150,7 +150,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'notmad',
               label: '“I’M NOT FRUSTRATED! GO AWAY!”',
-              setup: 'Don’t debate the label—keep your voice light and give two feet of breathing room:',
+              setup: 'Don’t debate the label, keep your voice light and give two feet of breathing room:',
               script:
                 '“Got it, you want space right now. I’ll sit right here by the couch until you’re ready.”',
             },
@@ -163,7 +163,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) gets explosive when small crafts or puzzles go wrong—how can I coach frustration tolerance without walking on eggshells?”',
+            '“{Name} ({age}) gets explosive when small crafts or puzzles go wrong, how can I coach frustration tolerance without walking on eggshells?”',
           beat4Kicker: 'This week’s calm habit',
           beat4Title: 'Pick one simple way to practice naming feelings',
           beat4Lead: 'Emotional vocabulary grows fastest during calm daylight moments.',
@@ -171,7 +171,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'narrateown',
               title: 'Narrate one of your own mild frustrations aloud today',
-              desc: '“Ugh, I spilled coffee on my shirt—I’m annoyed, so I’m taking one big breath before wiping it up.”',
+              desc: '“Ugh, I spilled coffee on my shirt. I’m annoyed, so I’m taking one big breath before wiping it up.”',
             },
             {
               id: 'twostep',
@@ -181,13 +181,13 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'storybook',
               title: 'Spot character feelings during bedtime storytime',
-              desc: 'Pause on one illustration and ask casually: “Look at that bear’s eyebrows—how do you think he feels?”',
+              desc: 'Pause on one illustration and ask casually: “Look at that bear’s eyebrows, how do you think he feels?”',
             },
           ],
           closingNote:
             'Every time you stay steady and give {name} real words for a storm too big for {poss} chest, you hand {obj} the inner voice {pronoun} will use for life.',
           pocketInsight:
-            'Pair a short feeling label (“You’re really frustrated”) with a calm 5-word safety limit—skip lectures until the wave passes.',
+            'Pair a short feeling label (“You’re really frustrated”) with a calm 5-word safety limit, skip lectures until the wave passes.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 2 · 3 min',
             mystery: '“Why does a sweet, generous 4-year-old suddenly guard every single toy on a playdate?”',
@@ -208,15 +208,15 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Playdate rug · Seeing another mind for the first time',
           headline: 'Why Sharing Feels Impossible at Age Four',
-          deck: 'Why forced “give it to your friend right now!” breeds resentment—and how turn-taking builds true generosity as perspective-taking switches on.',
+          deck: 'Why forced “give it to your friend right now!” breeds resentment, and how turn-taking builds true generosity as perspective-taking switches on.',
           sceneTime: '10:30 AM · SATURDAY PLAYDATE',
           sceneBody:
-            'Another parent watches while {name} clutches the favorite fire truck to {poss} chest, refusing to hand it over to a visiting friend. *You feel heat creep up your neck—why does {pronoun} look so selfish right in front of company?*',
+            'Another parent watches while {name} clutches the favorite fire truck to {poss} chest, refusing to hand it over to a visiting friend. *You feel heat creep up your neck, why does {pronoun} look so selfish right in front of company?*',
           pollQuestion: 'Does playdate toy-guarding trigger instant parent embarrassment?',
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—I feel judged by other parents',
+              label: 'Yes, I feel judged by other parents',
               response:
                 'Almost every parent feels that spotlight! Yet developmentally, genuine perspective-taking is just beginning to wake up between ages 4 and 5.',
             },
@@ -239,7 +239,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             adultQuote: '“If I don’t force {obj} to hand that truck over, {pronoun} will grow up selfish!”',
             adultSub: 'Adults feel social pressure to keep guests happy immediately, so snatching toys away looks like good manners.',
             childLabel: '{Possessive} 4-year-old lens',
-            childQuote: '“I’m in the middle of my rescue story—if I hand it away, it’s gone forever!”',
+            childQuote: '“I’m in the middle of my rescue story, if I hand it away, it’s gone forever!”',
             childSub: 'Forced sharing interrupts real concentration and actually makes young kids guard toys MORE tightly next time.',
             exposureHeading: 'From guarding to joyful turn-taking',
             exposureSub: 'Tap reps 1–12 to watch trust build',
@@ -250,7 +250,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             midMax: 8,
             lowMsg: 'Playdates 1–4: Tucking away 2 “special” toys before guests arrive lowers panic right away.',
             midMsg: 'Playdates 5–8: Hearing “You can hand it over when you’re done with this turn” proves toys come back safely.',
-            highMsg: 'Playdates 9–12: Spontaneous offers—“Want a turn when I finish?”—emerge straight from genuine confidence.',
+            highMsg: 'Playdates 9–12: Spontaneous offers, “Want a turn when I finish?”, emerge straight from genuine confidence.',
           },
           almanacTruth:
             'Forced instant sharing teaches kids to hide what they love; trusting long turns teaches them that generosity feels safe.',
@@ -265,20 +265,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'snatch',
               label: 'Pry the truck from {possessive} hands: “Be nice! Share with our guest right now!”',
-              whyTitle: 'Why that’s so tempting—and what it teaches',
+              whyTitle: 'Why that’s so tempting, and what it teaches',
               whyText:
-                'You want to be a gracious host! Yet prying a toy mid-game teaches {name} that friends equal losing control—sparking tears and tighter hoarding.',
+                'You want to be a gracious host! Yet prying a toy mid-game teaches {name} that friends equal losing control, sparking tears and tighter hoarding.',
             },
             {
               id: 'bribe',
               label: 'Promise a sticker or treat if {pronoun} hands the truck over.',
-              whyTitle: 'Why that’s so tempting—and what happens next',
+              whyTitle: 'Why that’s so tempting, and what happens next',
               whyText:
                 'Bribes work once, then turn every generous act into a transaction instead of authentic joy in playing together.',
             },
           ],
           calmScriptPlain:
-            '“{Name} is still driving that truck to the fire station. When you’re all done with your turn, Maya would love a turn next—want to tell her when you’re ready?”',
+            '“{Name} is still driving that truck to the fire station. When you’re all done with your turn, Maya would love a turn next, want to tell her when you’re ready?”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -290,9 +290,9 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'agency',
-              text: 'When you’re all done with your turn, Maya would love a turn next—want to tell her when you’re ready?',
+              text: 'When you’re all done with your turn, Maya would love a turn next, want to tell her when you’re ready?',
               tag: 'Hands Back Generosity',
-              note: 'Turns sharing into a proud choice {name} initiates—usually within two minutes once panic drops!',
+              note: 'Turns sharing into a proud choice {name} initiates, usually within two minutes once panic drops!',
             },
             { text: '”' },
           ],
@@ -314,11 +314,11 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} holds the toy for 20 minutes just to block the guest”',
               setup: 'Use a gentle sand timer to keep turns joyful and fair:',
               script:
-                '“Let’s flip the 3-minute sand timer—when the sand runs out, it’s your friend’s turn and then straight back to you.”',
+                '“Let’s flip the 3-minute sand timer, when the sand runs out, it’s your friend’s turn and then straight back to you.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) has a playdate coming up and gets super territorial over favorite toys—how do I prep {obj} calmly ahead of time?”',
+            '“{Name} ({age}) has a playdate coming up and gets super territorial over favorite toys, how do I prep {obj} calmly ahead of time?”',
           beat4Kicker: 'Before the next playdate',
           beat4Title: 'Pick one easy generosity habit this week',
           beat4Lead: 'Setting the stage ahead of time prevents 80% of toy battles.',
@@ -326,7 +326,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'specialbox',
               title: 'Create a “Special Toys Closet” before guests arrive',
-              desc: 'Let {name} pick 2–3 treasured items to tuck away safely—everything left out is open for turns.',
+              desc: 'Let {name} pick 2–3 treasured items to tuck away safely, everything left out is open for turns.',
             },
             {
               id: 'turnlanguage',
@@ -336,11 +336,11 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'spotempathy',
               title: 'Name one kind moment you notice at dinner',
-              desc: '“I saw you hand your friend the blue marker when she needed it—her face lit right up!”',
+              desc: '“I saw you hand your friend the blue marker when she needed it, her face lit right up!”',
             },
           ],
           closingNote:
-            'True generosity never grows out of forced handoffs—it blossoms when {name} feels secure enough to watch someone else smile.',
+            'True generosity never grows out of forced handoffs, it blossoms when {name} feels secure enough to watch someone else smile.',
           pocketInsight:
             'Protect turns instead of prying toys away; tuck 2 prized toys out of sight before playdates and invite {name} to announce when {pronoun} {is} ready to pass it.',
           nextEpisodeHook: {
@@ -363,10 +363,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.moon_bed,
           illustrationCaption: '8:12 PM · Closing the bedtime negotiation loop',
           headline: 'Ending the 10-Excuse Bedtime Stall',
-          deck: 'Why preschoolers suddenly need water, another hug, and a sock check at lights-out—and the 4-step visual bedtime pass that brings back your evenings.',
+          deck: 'Why preschoolers suddenly need water, another hug, and a sock check at lights-out, and the 4-step visual bedtime pass that brings back your evenings.',
           sceneTime: '8:12 PM · HALLWAY DOORWAY',
           sceneBody:
-            'You already read two books, tucked in four stuffed animals, and kissed {name} goodnight. Three minutes later tiny footsteps patter into the kitchen: “I forgot to tell you about a squirrel! Also I need two sips of water!” *Your shoulders drop—this is curtain call number four.*',
+            'You already read two books, tucked in four stuffed animals, and kissed {name} goodnight. Three minutes later tiny footsteps patter into the kitchen: “I forgot to tell you about a squirrel! Also I need two sips of water!” *Your shoulders drop, this is curtain call number four.*',
           pollQuestion: 'How many curtain calls usually happen after “goodnight”?',
           pollOptions: [
             {
@@ -395,7 +395,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Step 1 · 7:30 PM',
                 label: 'Checklist Boss',
                 title: 'Let a picture chart call the steps (not your voice)',
-                desc: 'Pajamas, brush teeth, potty, water cup on nightstand—{name} flips each card down with zero nagging.',
+                desc: 'Pajamas, brush teeth, potty, water cup on nightstand, {name} flips each card down with zero nagging.',
                 why: 'Kids resist constant parental commands far more than a playful visual checklist they control.',
               },
               {
@@ -409,20 +409,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Step 3 · 7:55 PM',
                 label: 'One Bedtime Pass',
                 title: 'Hand over 1 physical “Night Pass” card',
-                desc: '{Name} gets one calm 60-second pass for water or a hug—once used, it goes on the dresser until morning.',
+                desc: '{Name} gets one calm 60-second pass for water or a hug, once used, it goes on the dresser until morning.',
                 why: 'Respects autonomy while drawing a crystal-clear, drama-free boundary.',
               },
               {
                 timeOrCue: 'Step 4 · 8:00 PM',
                 label: '2-Min Check-In',
                 title: 'Promise one calm silent peek in 3 minutes',
-                desc: '“I’ll peek in once you’re lying cozy in 3 minutes—no talking, just a quick thumbs-up.”',
+                desc: '“I’ll peek in once you’re lying cozy in 3 minutes, no talking, just a quick thumbs-up.”',
                 why: 'Keeping your word builds deep nighttime trust so {name} stays peacefully in bed.',
               },
             ],
           },
           almanacTruth:
-            'Preschoolers stall at bedtime to stretch connection, not to ruin your evening—giving five unhurried minutes upfront buys back an hour of peace afterward.',
+            'Preschoolers stall at bedtime to stretch connection, not to ruin your evening, giving five unhurried minutes upfront buys back an hour of peace afterward.',
           scienceDeepDive:
             'Pediatric behavioral sleep studies on the “Bedtime Pass” method (Moore et al., Archives of Pediatrics & Adolescent Medicine) showed rapid, tear-free reductions in crying and curtain calls when children received a single predictable pass combined with calm, brief returns.',
           beat3Kicker: 'Practice before lights-out',
@@ -434,25 +434,25 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'snap',
               label: '“GET BACK IN BED RIGHT NOW! I am DONE talking tonight!”',
-              whyTitle: 'Why that’s so tempting—and what happens next',
+              whyTitle: 'Why that’s so tempting, and what happens next',
               whyText:
-                'By 8:20 PM your battery is at 2%! Yet raising your voice spikes {possessive} adrenaline—guaranteeing wide-awake tears for another thirty minutes.',
+                'By 8:20 PM your battery is at 2%! Yet raising your voice spikes {possessive} adrenaline, guaranteeing wide-awake tears for another thirty minutes.',
             },
             {
               id: 'negotiate',
               label: 'Give in to “just one tiny 2-minute story” to hurry sleep along.',
-              whyTitle: 'Why that’s so tempting—and why stalls double tomorrow',
+              whyTitle: 'Why that’s so tempting, and why stalls double tomorrow',
               whyText:
-                'Occasional variable payoffs wire persistence like a slot machine—teaching {name} that four asks might unlock a bonus story tomorrow.',
+                'Occasional variable payoffs wire persistence like a slot machine, teaching {name} that four asks might unlock a bonus story tomorrow.',
             },
           ],
           calmScriptPlain:
-            '“(Warm sleepy whisper, walk hand-in-hand back to bed) I love your stories—save that squirrel tale for breakfast! Right now it’s sleep time. I’ll peek in silently in three minutes.”',
+            '“(Warm sleepy whisper, walk hand-in-hand back to bed) I love your stories, save that squirrel tale for breakfast! Right now it’s sleep time. I’ll peek in silently in three minutes.”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'park',
-              text: 'I love your stories—save that squirrel tale for breakfast!',
+              text: 'I love your stories, save that squirrel tale for breakfast!',
               tag: 'Parks Without Rejecting',
               note: 'Honors {possessive} thought warmly while signaling conversation is closed until morning.',
             },
@@ -481,21 +481,21 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'keepcoming',
               label: '“{Pronoun} comes out a third time after using the pass”',
-              setup: 'Switch to calm, loving, boring escort—zero fresh conversation:',
+              setup: 'Switch to calm, loving, boring escort, zero fresh conversation:',
               script:
-                '“(Gentle hand on back, walking straight to bed) Bedtime now, sweetie. I love you—goodnight.”',
+                '“(Gentle hand on back, walking straight to bed) Bedtime now, sweetie. I love you, goodnight.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) keeps getting out of bed five times every night asking for water and hugs—help me set up a simple Bedtime Pass tonight.”',
+            '“{Name} ({age}) keeps getting out of bed five times every night asking for water and hugs, help me set up a simple Bedtime Pass tonight.”',
           beat4Kicker: 'Tonight’s bedtime upgrade',
           beat4Title: 'Pick one stall-breaker to try tonight',
-          beat4Lead: 'Introduce it cheerfully at dinner—never mid-standoff at 8:15 PM.',
+          beat4Lead: 'Introduce it cheerfully at dinner, never mid-standoff at 8:15 PM.',
           moves: [
             {
               id: 'bedpass',
               title: 'Make one colorful index-card “Bedtime Pass” together',
-              desc: 'Let {name} draw a moon on it—good for one calm 60-second visit after lights-out.',
+              desc: 'Let {name} draw a moon on it, good for one calm 60-second visit after lights-out.',
             },
             {
               id: 'chat5',
@@ -532,7 +532,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.heart_bridge,
           illustrationCaption: 'Hallway referee swap · Sportscaster, never judge',
           headline: 'Coaching Siblings Through Fights Without Playing Judge',
-          deck: 'Why asking “Who started it?!” guarantees finger-pointing—and the neutral sportscaster script that turns sibling scraps into real repair skills.',
+          deck: 'Why asking “Who started it?!” guarantees finger-pointing, and the neutral sportscaster script that turns sibling scraps into real repair skills.',
           sceneTime: '4:35 PM · PLAYROOM FLOOR',
           sceneBody:
             'A shriek erupts from the next room over the single purple marker. Both kids race toward you shouting competing versions of history at top volume. *Every instinct wants to solve the mystery, assign blame, and get back to making pasta.*',
@@ -554,7 +554,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Building lifelong connection',
           beat2Title: 'The 3-step sportscaster loop beats “Who started it?”',
           beat2Lead:
-            'When you investigate who hit first, kids learn to prosecute each other instead of fixing the problem. Describing what both kids want—then handing the solution back—wires real social negotiation. Tap the 3 beats below.',
+            'When you investigate who hit first, kids learn to prosecute each other instead of fixing the problem. Describing what both kids want, then handing the solution back, wires real social negotiation. Tap the 3 beats below.',
           visualType: AlmanacVisualType.SERVE_RETURN_LOOP,
           visualStageTitle: 'The 3-beat sibling sportscaster loop',
           visualStageHint: 'Tap each step to coach conflict cleanly',
@@ -564,7 +564,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '01',
                 actor: 'Stop the storm',
                 label: 'Safety First',
-                quote: '“Hands down, bodies safe—I won’t let anyone get hurt.”',
+                quote: '“Hands down, bodies safe. I won’t let anyone get hurt.”',
                 desc: 'Step between grabbing hands gently with zero blame in your voice.',
                 brainNote: 'De-escalates physical threat so both kids can start hearing words again.',
               },
@@ -580,7 +580,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '03',
                 actor: 'Hand back repair',
                 label: 'Invite a Plan',
-                quote: '“What’s a fair way to solve this—timer turns or drawing side by side?”',
+                quote: '“What’s a fair way to solve this, timer turns or drawing side by side?”',
                 desc: 'Stay close as a quiet consultant while they pick a plan and check on hurt feelings.',
                 brainNote: 'Builds real lifelong negotiation and repair muscle.',
               },
@@ -589,7 +589,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           almanacTruth:
             'When you stop casting one child as the villain and one as the victim, siblings lose their audience for tattling and start practicing real problem-solving.',
           scienceDeepDive:
-            'Longitudinal family research by Dr. Laurie Kramer shows that parents who act as neutral emotion coaches—labeling both perspectives and scaffolding collaborative solutions rather than issuing top-down verdicts—foster measurably warmer sibling relationships and stronger peer conflict skills.',
+            'Longitudinal family research by Dr. Laurie Kramer shows that parents who act as neutral emotion coaches, labeling both perspectives and scaffolding collaborative solutions rather than issuing top-down verdicts, foster measurably warmer sibling relationships and stronger peer conflict skills.',
           beat3Kicker: 'Practice before the next scream',
           beat3Title: 'Trade courtroom verdicts for calm sportscasting',
           rehearsalTriggerSpeaker: 'Two kids tugging on one purple marker',
@@ -599,27 +599,27 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'interrogate',
               label: '“WHO HAD IT FIRST?! Tell me the truth right now or nobody gets markers!”',
-              whyTitle: 'Why that’s so tempting—and why it backfires',
+              whyTitle: 'Why that’s so tempting, and why it backfires',
               whyText:
                 'You want instant justice! Yet taking the markers away teaches zero repair skills and leaves both kids resenting each other even more.',
             },
             {
               id: 'olderblame',
-              label: '“You’re the older one—just be nice and give it to your little sibling!”',
-              whyTitle: 'Why that’s so tempting—and what it quietly fuels',
+              label: '“You’re the older one, just be nice and give it to your little sibling!”',
+              whyTitle: 'Why that’s so tempting, and what it quietly fuels',
               whyText:
                 'Always expecting the older child to surrender builds deep hidden resentment toward the younger sibling.',
             },
           ],
           calmScriptPlain:
-            '“Pause—safe hands. I see a tricky problem: two artists both want the one purple marker right now. Do you two want to flip the 2-minute timer or trade colors?”',
+            '“Pause, safe hands. I see a tricky problem: two artists both want the one purple marker right now. Do you two want to flip the 2-minute timer or trade colors?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'sportscast',
-              text: 'Pause—safe hands. I see a tricky problem: two artists both want the one purple marker right now.',
+              text: 'Pause, safe hands. I see a tricky problem: two artists both want the one purple marker right now.',
               tag: 'Zero-Villain Summary',
-              note: 'Frames the marker—not each other—as the shared problem to solve together.',
+              note: 'Frames the marker, not each other, as the shared problem to solve together.',
             },
             { text: ' ' },
             {
@@ -641,7 +641,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} refuses to say ‘sorry’ after pushing”',
               setup: 'Skip robotic forced apologies and guide one genuine action repair once calm:',
               script:
-                '“Look at your brother’s face—he looks startled. When you’re ready, let’s check if he needs a cold cloth or help picking up his blocks.”',
+                '“Look at your brother’s face, he looks startled. When you’re ready, let’s check if he needs a cold cloth or help picking up his blocks.”',
             },
             {
               id: 'keepfighting',
@@ -652,7 +652,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) and {poss} sibling clash constantly over toys—can you help me coach repair without forcing fake apologies?”',
+            '“{Name} ({age}) and {poss} sibling clash constantly over toys, can you help me coach repair without forcing fake apologies?”',
           beat4Kicker: 'This week’s peace experiment',
           beat4Title: 'Pick one small sibling shift to test this week',
           beat4Lead: 'Notice how much lighter you feel when you retire from courtroom duty.',
@@ -674,7 +674,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Sibling squabbles aren’t proof your home is failing—they are the safest practice gym {name} has for learning to love, disagree, and make up.',
+            'Sibling squabbles aren’t proof your home is failing, they are the safest practice gym {name} has for learning to love, disagree, and make up.',
           pocketInsight:
             'Step in as a calm sportscaster, never a judge: protect bodies, mirror both wishes neutrally, and invite a real action repair.',
           nextEpisodeHook: null,
@@ -711,10 +711,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.clock_rhythm,
           illustrationCaption: '1:30 PM · Protected afternoon brain recharge',
           headline: 'Dropping the Final Nap: Installing a Daily Quiet Hour',
-          deck: 'Why quitting naps cold turkey creates 5 PM witching hours—and how a cozy 45-minute Quiet Hour saves both {possessive} mood and your sanity.',
+          deck: 'Why quitting naps cold turkey creates 5 PM witching hours, and how a cozy 45-minute Quiet Hour saves both {possessive} mood and your sanity.',
           sceneTime: '4:45 PM · KITCHEN FLOOR',
           sceneBody:
-            '{Name} refused to nap at 1:00 PM—and if {pronoun} DOES nap, {pronoun} bounces off the walls until 9:30 PM. Without one, {pronoun} dissolves into sobs over a cracked pretzel at 4:45 PM. *How do you survive the no-nap limbo months?*',
+            '{Name} refused to nap at 1:00 PM, and if {pronoun} DOES nap, {pronoun} bounces off the walls until 9:30 PM. Without one, {pronoun} dissolves into sobs over a cracked pretzel at 4:45 PM. *How do you survive the no-nap limbo months?*',
           pollQuestion: 'Where are you in the final nap drop?',
           pollOptions: [
             {
@@ -733,7 +733,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Inside {possessive} energy rhythm',
           beat2Title: 'Watch how sleep pressure climbs when midday naps fade',
           beat2Lead:
-            'Dropping the nap doesn’t mean {possessive} brain needs zero rest—it shifts recovery into a quiet afternoon pause and an earlier nighttime anchor. Tap each timepoint below.',
+            'Dropping the nap doesn’t mean {possessive} brain needs zero rest, it shifts recovery into a quiet afternoon pause and an earlier nighttime anchor. Tap each timepoint below.',
           visualType: AlmanacVisualType.CIRCADIAN_CURVE,
           visualStageTitle: 'The no-nap preschool energy curve',
           visualStageHint: 'Tap each time of day to see the calm reset point',
@@ -753,7 +753,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 level: 58,
                 title: 'Low-stimulation recharge (sleep optional!)',
                 desc: 'Dim room, audiobooks, or quiet puzzle bin let an overstimulated brain cool down without forcing sleep.',
-                tip: 'Remove all nap pressure: “You don’t have to sleep—just rest your body.”',
+                tip: 'Remove all nap pressure: “You don’t have to sleep, just rest your body.”',
               },
               {
                 time: '4:45 PM',
@@ -774,7 +774,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Taking the word “sleep” off the afternoon door (“You don’t have to sleep—just hang out with your Quiet Bin”) ends power struggles and lets tired bodies rest.',
+            'Taking the word “sleep” off the afternoon door (“You don’t have to sleep, just hang out with your Quiet Bin”) ends power struggles and lets tired bodies rest.',
           scienceDeepDive:
             'Pediatric sleep studies (Kurdziel et al., PNAS) confirm that as preschoolers transition from biphasic to monophasic sleep between ages 3.5 and 5, homeostatic sleep pressure temporarily peaks in late afternoon. Compensatory earlier bedtimes and low-arousal quiet rest prevent cortisol-driven evening hyperactivity.',
           beat3Kicker: 'Practice before 1:15 PM',
@@ -786,25 +786,25 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'argue',
               label: '“Yes you ARE tired! You’re going to melt down at dinner if you don’t lie down!”',
-              whyTitle: 'Why that’s so tempting—and why it backfires',
+              whyTitle: 'Why that’s so tempting, and why it backfires',
               whyText:
-                'You can practically see the 5 PM meltdown coming! Yet insisting {pronoun} {is} tired turns rest into a tug-of-war—and nobody can force another human to fall asleep.',
+                'You can practically see the 5 PM meltdown coming! Yet insisting {pronoun} {is} tired turns rest into a tug-of-war, and nobody can force another human to fall asleep.',
             },
             {
               id: 'giveup',
               label: 'Skip rest altogether and turn on cartoons to get 30 minutes of peace.',
-              whyTitle: 'Why that’s so tempting—and what happens at 5 PM',
+              whyTitle: 'Why that’s so tempting, and what happens at 5 PM',
               whyText:
                 'Screens buy quiet in the moment, yet bright visual input keeps the brain humming rather than genuinely resting.',
             },
           ],
           calmScriptPlain:
-            '“You’re right—you are a big kid, and you don’t have to sleep at all! Everyone in our house takes Quiet Recharge Time. Want audiobooks or your special Quiet Bin until the clock turns green?”',
+            '“You’re right, you are a big kid, and you don’t have to sleep at all! Everyone in our house takes Quiet Recharge Time. Want audiobooks or your special Quiet Bin until the clock turns green?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'agree',
-              text: 'You’re right—you are a big kid, and you don’t have to sleep at all!',
+              text: 'You’re right, you are a big kid, and you don’t have to sleep at all!',
               tag: 'Honors Big-Kid Pride',
               note: 'Instantly disarms the “baby nap” protest so cooperation stays warm.',
             },
@@ -828,18 +828,18 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} comes out after five minutes saying ‘I’m done!’”',
               setup: 'Point calmly to the visual clock with zero frustration:',
               script:
-                '“Oops, the light is still yellow! Let’s walk back to your cozy fort—ten more minutes until green, then we’ll have snack.”',
+                '“Oops, the light is still yellow! Let’s walk back to your cozy fort, ten more minutes until green, then we’ll have snack.”',
             },
             {
               id: 'fallsasleep',
               label: '“{Pronoun} actually falls asleep at 3 PM!”',
               setup: 'Wake gently after 30–40 minutes with a soft hug and bright room so bedtime stays protected:',
               script:
-                '“Good morning, sleepyhead! Your body really needed a quick power nap—let’s step onto the porch for some sunshine and a snack.”',
+                '“Good morning, sleepyhead! Your body really needed a quick power nap, let’s step onto the porch for some sunshine and a snack.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) is dropping {poss} nap and melting down by 5 PM—give me 5 screen-free ideas for a special Quiet Hour bin.”',
+            '“{Name} ({age}) is dropping {poss} nap and melting down by 5 PM, give me 5 screen-free ideas for a special Quiet Hour bin.”',
           beat4Kicker: 'Tomorrow’s afternoon anchor',
           beat4Title: 'Pick one easy step to launch Quiet Hour',
           beat4Lead: 'Keep the first three days short and cozy so {name} actually looks forward to it.',
@@ -861,12 +861,12 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Teaching {name} how to pause and recharge in the middle of a busy day isn’t just surviving the nap drop—it’s gifting {obj} a lifelong rhythm of rest.',
+            'Teaching {name} how to pause and recharge in the middle of a busy day isn’t just surviving the nap drop, it’s gifting {obj} a lifelong rhythm of rest.',
           pocketInsight:
             'Replace nap battles with a screen-free Quiet Recharge Hour (“No sleep required!”), exclusive Quiet Bin toys, and a 30-minute earlier bedtime on no-nap days.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 2 · 3 min',
-            mystery: '“Wait—is it really normal for a healthy preschooler to catch another sniffle every single month?”',
+            mystery: '“Wait, is it really normal for a healthy preschooler to catch another sniffle every single month?”',
             title: 'Why 8–10 Daycare Colds a Year Is Normal (And How to Keep Calm)',
             targetSlug: 'preschool-immune-system-education',
           },
@@ -884,17 +884,17 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.heart_bridge,
           illustrationCaption: 'Immune library · Building lifelong memory',
           headline: 'Why 8–10 Daycare Colds a Year Is Normal (And How to Keep Calm)',
-          deck: 'Why back-to-back preschool sniffles feel endless—and why they usually mean {possessive} adaptive immune library is doing its exact training job.',
+          deck: 'Why back-to-back preschool sniffles feel endless, and why they usually mean {possessive} adaptive immune library is doing its exact training job.',
           sceneTime: '7:20 AM · TUESDAY MORNING',
           sceneBody:
-            'You literally JUST finished washing the last pile of tissues from two weeks ago, and now {name} wakes up with a brand-new runny nose. *A weary dread sinks into your stomach—is something wrong with {poss} immune system, or are we doing something wrong?*',
+            'You literally JUST finished washing the last pile of tissues from two weeks ago, and now {name} wakes up with a brand-new runny nose. *A weary dread sinks into your stomach, is something wrong with {poss} immune system, or are we doing something wrong?*',
           pollQuestion: 'Have back-to-back preschool sniffles ever made you wonder “Why ALWAYS us?”',
           pollOptions: [
             {
               id: 'constantly',
-              label: 'Yes—it feels like every other week all winter',
+              label: 'Yes, it feels like every other week all winter',
               response:
-                'Take a deep breath: pediatricians routinely see healthy preschoolers catch 8 to 12 mild viral colds per year—often clustered tightly between October and March.',
+                'Take a deep breath: pediatricians routinely see healthy preschoolers catch 8 to 12 mild viral colds per year, often clustered tightly between October and March.',
             },
             {
               id: 'guilt',
@@ -916,7 +916,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             adultSub: 'When mild colds stack every three weeks across winter, it naturally feels like one endless illness.',
             childLabel: 'Immune-training lens',
             childQuote: '“I’m cataloging common colds now so elementary school is much smoother!”',
-            childSub: 'Each mild recovery adds brand-new antibody memory cards—meaning noticeably fewer colds by ages 6–7.',
+            childSub: 'Each mild recovery adds brand-new antibody memory cards, meaning noticeably fewer colds by ages 6–7.',
             exposureHeading: 'The typical preschool immune-library year',
             exposureSub: 'Tap typical annual classroom colds (1–10)',
             totalDots: 10,
@@ -924,12 +924,12 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             unitLabel: 'cold',
             lowMax: 3,
             midMax: 7,
-            lowMsg: 'Colds 1–3 (Fall): Classroom doors open and new viruses circulate fast—normal handwashing habits help trim the peak.',
-            midMsg: 'Colds 4–7 (Winter Peak): Still squarely inside normal healthy pediatric ranges—focus on rest, fluids, and calling your pediatrician whenever anything feels unusual.',
-            highMsg: 'Colds 8–10 (Spring Lightening): Your child’s memory library is visibly stronger—most families see a big drop in sick days next school year!',
+            lowMsg: 'Colds 1–3 (Fall): Classroom doors open and new viruses circulate fast, normal handwashing habits help trim the peak.',
+            midMsg: 'Colds 4–7 (Winter Peak): Still squarely inside normal healthy pediatric ranges, focus on rest, fluids, and calling your pediatrician whenever anything feels unusual.',
+            highMsg: 'Colds 8–10 (Spring Lightening): Your child’s memory library is visibly stronger, most families see a big drop in sick days next school year!',
           },
           almanacTruth:
-            'Frequent mild colds in ages 4–6 usually mean a brand-new immune system is busy learning—not failing. Real sleep, cozy meals, handwashing, and routine checkups with your pediatrician do the real heavy lifting.',
+            'Frequent mild colds in ages 4–6 usually mean a brand-new immune system is busy learning, not failing. Real sleep, cozy meals, handwashing, and routine checkups with your pediatrician do the real heavy lifting.',
           scienceDeepDive:
             'Pediatric epidemiology data published by the American Academy of Pediatrics confirm that healthy young children in group settings average 8–10 (up to 12) self-limited upper respiratory viral infections annually as adaptive B- and T-cell memory develops. Persistent worry, breathing effort, or unusual patterns should always be evaluated directly by your child’s pediatrician.',
           beat3Kicker: 'Staying grounded & supported',
@@ -941,20 +941,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'lecture',
               label: 'Launch into a stressful speech about invisible germs and getting sick again.',
-              whyTitle: 'Why that’s so tempting—and what can happen',
+              whyTitle: 'Why that’s so tempting, and what can happen',
               whyText:
                 'Protecting health matters! Yet scary germ lectures can spark unnecessary anxiety in imaginative 4-to-6-year-olds.',
             },
             {
               id: 'skip',
               label: 'Let it slide because everyone is tired and hungry.',
-              whyTitle: 'Why that’s so tempting—and the easier alternative',
+              whyTitle: 'Why that’s so tempting, and the easier alternative',
               whyText:
                 'Making the “shoes off → soapy bubbles → snack” sequence playful takes 30 seconds and builds a lifelong habit effortlessly.',
             },
           ],
           calmScriptPlain:
-            '“Crackers are waiting right on the counter! First let’s wash the playground adventures off our hands—want to make giant soap mittens or sing the fast alphabet?”',
+            '“Crackers are waiting right on the counter! First let’s wash the playground adventures off our hands, want to make giant soap mittens or sing the fast alphabet?”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -966,7 +966,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'playful',
-              text: 'First let’s wash the playground adventures off our hands—want to make giant soap mittens or sing the fast alphabet?',
+              text: 'First let’s wash the playground adventures off our hands, want to make giant soap mittens or sing the fast alphabet?',
               tag: 'Playful Routine, Zero Fear',
               note: 'Builds rock-solid hygiene through fun rather than germ fear.',
             },
@@ -981,7 +981,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'toomany',
               label: '“How do I know when frequent illness deserves a pediatrician chat?”',
-              setup: 'Always trust your parental instinct—bring a quick calendar note to your doctor anytime you want reassurance:',
+              setup: 'Always trust your parental instinct, bring a quick calendar note to your doctor anytime you want reassurance:',
               script:
                 '“Mild colds that clear up between waves are common, and whenever a cough lingers, energy stays low, or my gut feels uneasy, a quick visit with our pediatrician gives clear answers.”',
             },
@@ -990,11 +990,11 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} hates having {poss} runny nose wiped”',
               setup: 'Hand over agency with soft lotion tissues and a mirror:',
               script:
-                '“Scratchy tissues feel awful! Here’s a super-soft puff—want to do a big bunny-blow yourself in the mirror or have me gently dab?”',
+                '“Scratchy tissues feel awful! Here’s a super-soft puff, want to do a big bunny-blow yourself in the mirror or have me gently dab?”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) just started preschool and seems to catch every cold—what simple daily routines help keep our whole family steadier?”',
+            '“{Name} ({age}) just started preschool and seems to catch every cold, what simple daily routines help keep our whole family steadier?”',
           beat4Kicker: 'This week’s simple rhythm',
           beat4Title: 'Pick one easy everyday resilience habit',
           beat4Lead: 'Boring basics beat expensive miracle gimmicks every single time.',
@@ -1021,7 +1021,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             '8–10 mild colds a year is normal preschool immune-library building; lean on playful handwashing, deep sleep, and calm check-ins with your pediatrician.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 3 · 3 min',
-            mystery: '“How do you keep a sick-day preschooler cozy—and make teeth & doctor visits calm all year?”',
+            mystery: '“How do you keep a sick-day preschooler cozy, and make teeth & doctor visits calm all year?”',
             title: 'Sick-Day Comfort & Easy Daily Habits (Teeth, Eyes, Sleep)',
             targetSlug: 'preschool-daycare-viral-comfort',
           },
@@ -1039,7 +1039,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.moon_bed,
           illustrationCaption: 'Cozy sick-day nest · Comfort + calm care habits',
           headline: 'Sick-Day Comfort & Easy Daily Habits (Teeth, Eyes, Sleep)',
-          deck: 'Simple non-clinical ways to make sniffle days gentler at home—plus how to keep teeth brushing, annual eye checks, and pediatric visits calm and fear-free.',
+          deck: 'Simple non-clinical ways to make sniffle days gentler at home, plus how to keep teeth brushing, annual eye checks, and pediatric visits calm and fear-free.',
           sceneTime: '10:00 AM · LIVING ROOM COUCH FORT',
           sceneBody:
             'School called for pickup and {name} is curled up under a quilt, cranky, rejecting plain water, and dreading the idea of even a regular checkup later this month. *How do you keep comfort high without turning every sick day or doctor visit into tears?*',
@@ -1071,13 +1071,13 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Sick Days',
                 label: 'Cozy Fluids',
                 title: 'Gentle sips + low-pressure rest nest',
-                desc: 'Offer tiny frequent sips through a silly straw, warm soup, or fruit popsicles—never force big meals while under the weather.',
+                desc: 'Offer tiny frequent sips through a silly straw, warm soup, or fruit popsicles, never force big meals while under the weather.',
                 why: 'Small cozy sips keep comfort steady without power struggles.',
               },
               {
                 timeOrCue: 'Medical Care',
                 label: 'Call Your Team',
-                title: 'Zero guessing—lean on your pediatrician early',
+                title: 'Zero guessing, lean on your pediatrician early',
                 desc: 'Keep your clinic nurse line saved in Favorites; always follow your doctor’s guidance for symptoms, fevers, or any medication dosing.',
                 why: 'Clear guidance from your own doctor replaces late-night worry immediately.',
               },
@@ -1098,7 +1098,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Great home care isn’t playing doctor—it’s offering cozy rest, gentle sips, joyful daily brushing, and calling your pediatric team promptly whenever medical clarity is needed.',
+            'Great home care isn’t playing doctor, it’s offering cozy rest, gentle sips, joyful daily brushing, and calling your pediatric team promptly whenever medical clarity is needed.',
           scienceDeepDive:
             'Pediatric preventive care guidelines emphasize two high-leverage non-clinical pillars in ages 4–6: daily outdoor daylight exposure (associated with lower childhood myopia risk in randomized school trials) and playful medical-play preparation, which significantly reduces procedural anxiety during routine pediatric and dental checkups.',
           beat3Kicker: 'Practice before the next sick day or checkup',
@@ -1109,17 +1109,17 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           instincts: [
             {
               id: 'dismiss',
-              label: '“Stop crying—it doesn’t hurt at all! Don’t be a baby!”',
-              whyTitle: 'Why that’s so tempting—and why kids cling harder',
+              label: '“Stop crying, it doesn’t hurt at all! Don’t be a baby!”',
+              whyTitle: 'Why that’s so tempting, and why kids cling harder',
               whyText:
-                'You know the ear light doesn’t hurt! Yet brushing off fear makes a 5-year-old feel unseen—and ramps up resistance.',
+                'You know the ear light doesn’t hurt! Yet brushing off fear makes a 5-year-old feel unseen, and ramps up resistance.',
             },
             {
               id: 'sneak',
               label: 'Wait until pulling into the parking lot to mention the appointment.',
-              whyTitle: 'Why that’s so tempting—and why surprises backfire',
+              whyTitle: 'Why that’s so tempting, and why surprises backfire',
               whyText:
-                'Surprises erode trust—while a calm honest preview the morning of lets {name} bring a comfort buddy and feel prepared.',
+                'Surprises erode trust, while a calm honest preview the morning of lets {name} bring a comfort buddy and feel prepared.',
             },
           ],
           calmScriptPlain:
@@ -1150,7 +1150,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'nofluid',
               label: '“{Name} refuses plain water when feeling crummy”',
-              setup: 'Keep it playful and tiny—sips add up fast:',
+              setup: 'Keep it playful and tiny, sips add up fast:',
               script:
                 '“Plain cups feel boring when you’re cozy on the couch! Want three tiny dinosaur sips through the bendy straw or a cold fruit popsicle?”',
             },
@@ -1163,7 +1163,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) gets really nervous before routine pediatric and dental checkups—give me a 3-minute pretend-play game to prep {obj} calmly.”',
+            '“{Name} ({age}) gets really nervous before routine pediatric and dental checkups, give me a 3-minute pretend-play game to prep {obj} calmly.”',
           beat4Kicker: 'This week’s calm setup',
           beat4Title: 'Pick one easy comfort or habit anchor',
           beat4Lead: 'Setting up calm basics in daylight makes sick days and visits feel effortless.',
@@ -1187,7 +1187,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'When {name} grows up associating health care with your warm lap, honest previews, and cozy recovery nests, {pronoun} learns to care for {poss} body with calm confidence.',
           pocketInsight:
-            'Focus home sick days on cozy rest, playful sips, and prompt calls to your pediatrician—and make checkups and brushing calm through honest previews and play.',
+            'Focus home sick days on cozy rest, playful sips, and prompt calls to your pediatrician, and make checkups and brushing calm through honest previews and play.',
           nextEpisodeHook: null,
           interactiveHighlights: ['4-Part Comfort Map', 'Checkup Prep Script'],
         },
@@ -1222,7 +1222,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.plate,
           illustrationCaption: 'Neutral dessert · Taking sugar off the pedestal',
           headline: 'Serving Dessert Without Turning Sweets Into an Obsession',
-          deck: 'Why trading “three bites of peas for a cookie” accidentally makes kids love cookies more and peas less—and the calm neutral shift that cools sugar fixation.',
+          deck: 'Why trading “three bites of peas for a cookie” accidentally makes kids love cookies more and peas less, and the calm neutral shift that cools sugar fixation.',
           sceneTime: '6:20 PM · DINNER TABLE',
           sceneBody:
             '{Name} barely glances at the pasta before pointing straight at the kitchen counter: “If I eat two peas can I have a cookie? Can I have TWO?” *Every dinner lately has turned into a dessert courtroom negotiation.*',
@@ -1230,7 +1230,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'daily',
-              label: 'Yes—every bite gets traded for a treat',
+              label: 'Yes, every bite gets traded for a treat',
               response:
                 'Almost every parent tries the “eat your veggies to earn dessert” deal because it sounds so logical! Seeing how it accidentally elevates sweets is a huge lightbulb moment.',
             },
@@ -1238,7 +1238,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               id: 'obsessed',
               label: 'Restricting sweets just makes {obj} fixate harder',
               response:
-                'That forbidden-fruit effect is real psychology—putting a small predictable portion right beside dinner takes the electric charge off sugar surprisingly fast.',
+                'That forbidden-fruit effect is real psychology, putting a small predictable portion right beside dinner takes the electric charge off sugar surprisingly fast.',
             },
           ],
           beat2Kicker: 'Why policing sugar backfires',
@@ -1255,18 +1255,18 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               'Making sweets conditional teaches kids to ignore fullness cues, rush past dinner, and view nutrient-dense food as punishment.',
             willpowerOutcome: 'Higher sugar obsession and nightly table negotiations.',
             guardrailLabel: 'Neutral Pairing',
-            guardrailTitle: 'Small sweet served neutrally—no bites required',
+            guardrailTitle: 'Small sweet served neutrally, no bites required',
             guardrailDesc:
               'On nights you choose to serve dessert, place one small portion right alongside dinner with zero fanfare or performance conditions.',
-            guardrailOutcome: 'Novelty fades fast—many kids eat half the cookie, then return calmly to dinner.',
+            guardrailOutcome: 'Novelty fades fast, many kids eat half the cookie, then return calmly to dinner.',
             environmentShifts: [
               'Parents still decide WHICH nights include dessert and the portion size.',
-              'Never label foods “good/bad” or “healthy vs. junk”—just “foods that help us run, grow, and enjoy.”',
+              'Never label foods “good/bad” or “healthy vs. junk”, just “foods that help us run, grow, and enjoy.”',
               'Once the small served portion is finished, keep the boundary matter-of-fact: “That’s all the cookies for tonight; more pasta or berries are on the table.”',
             ],
           },
           almanacTruth:
-            'When you stop using dessert as a bribe for vegetables, sweets shrink from forbidden treasure back into ordinary food—and vegetables stop feeling like a punishment.',
+            'When you stop using dessert as a bribe for vegetables, sweets shrink from forbidden treasure back into ordinary food, and vegetables stop feeling like a punishment.',
           scienceDeepDive:
             'Controlled pediatric feeding studies (Birch et al., Child Development) found that children rewarded with sweets for eating vegetables subsequently rated the target vegetables significantly lower in preference and craved the sweet reward more intensely compared to children offered foods neutrally.',
           beat3Kicker: 'Practice before dinner',
@@ -1278,14 +1278,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'scold',
               label: '“See?! You didn’t even touch your chicken! No more cookies all week!”',
-              whyTitle: 'Why that’s so tempting—and why it intensifies craving',
+              whyTitle: 'Why that’s so tempting, and why it intensifies craving',
               whyText:
-                'Watching the cookie vanish first feels alarming! Yet taking sweets away in frustration reinforces scarcity—making {name} inhale treats twice as fast next time.',
+                'Watching the cookie vanish first feels alarming! Yet taking sweets away in frustration reinforces scarcity, making {name} inhale treats twice as fast next time.',
             },
             {
               id: 'cave',
               label: 'Hand over a second cookie if {pronoun} promises to take four bites of chicken.',
-              whyTitle: 'Why that’s so tempting—and what restarts',
+              whyTitle: 'Why that’s so tempting, and what restarts',
               whyText:
                 'Re-opening the bite-for-cookie market immediately brings back nightly courtroom haggling.',
             },
@@ -1312,7 +1312,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           deliveryCues: [
             'Serve dessert neutrally 2–3 nights a week, not necessarily every night',
             'Resist watching which food {pronoun} {eats} first',
-            'Hold the 1-portion boundary like weather—warm and final',
+            'Hold the 1-portion boundary like weather, warm and final',
           ],
           pushbacks: [
             {
@@ -1320,26 +1320,26 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“What about nights we aren’t serving dessert at all?”',
               setup: 'Keep it breezy and matter-of-fact without mentioning sugar rules:',
               script:
-                '“Cookies aren’t on the menu tonight—we’re having tacos and watermelon! We’ll have cookies again on Friday.”',
+                '“Cookies aren’t on the menu tonight, we’re having tacos and watermelon! We’ll have cookies again on Friday.”',
             },
             {
               id: 'grandma',
               label: '“What if relatives still say ‘Finish your plate for ice cream’?”',
               setup: 'Give a light one-liner beforehand so everyone stays relaxed:',
               script:
-                '“We’re trying a fun experiment where dessert isn’t tied to finishing dinner—it’s cut our mealtime battles in half!”',
+                '“We’re trying a fun experiment where dessert isn’t tied to finishing dinner, it’s cut our mealtime battles in half!”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) asks for sweets constantly—how do I transition to neutral dessert pairing without chaos the first week?”',
+            '“{Name} ({age}) asks for sweets constantly, how do I transition to neutral dessert pairing without chaos the first week?”',
           beat4Kicker: 'This week’s calm table shift',
           beat4Title: 'Pick one easy move to cool sugar battles',
-          beat4Lead: 'Expect two nights of novelty—then watch the obsession noticeably soften.',
+          beat4Lead: 'Expect two nights of novelty, then watch the obsession noticeably soften.',
           moves: [
             {
               id: 'servewith',
               title: 'Try serving one small sweet right alongside dinner twice this week',
-              desc: 'Place it on the plate with zero commentary—resist policing the order {name} eats in.',
+              desc: 'Place it on the plate with zero commentary, resist policing the order {name} eats in.',
             },
             {
               id: 'retirebribe',
@@ -1349,7 +1349,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'dropmoral',
               title: 'Drop “junk food” labels in favor of neutral food names',
-              desc: 'Call it “a cookie” or “ice cream”—ordinary words keep food calm and uncharged.',
+              desc: 'Call it “a cookie” or “ice cream”, ordinary words keep food calm and uncharged.',
             },
           ],
           closingNote:
@@ -1376,17 +1376,17 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.leaf,
           illustrationCaption: 'Super-taster tongue · Why mixed textures feel loud',
           headline: 'Why Textures & Mixed Foods Feel Overwhelming at Age Five',
-          deck: 'Why your preschooler happily eats plain chicken, plain rice, and raw peppers—yet refuses the exact same ingredients stirred into one casserole.',
+          deck: 'Why your preschooler happily eats plain chicken, plain rice, and raw peppers, yet refuses the exact same ingredients stirred into one casserole.',
           sceneTime: '6:05 PM · FAMILY DINNER',
           sceneBody:
-            'You made a cozy stir-fry with foods {name} normally likes. One glance at the glossy sauce touching the rice and {pronoun} recoils: “The foods are TOUCHING! It’s slimy!” *You sigh—it’s literally the exact same ingredients as Tuesday!*',
+            'You made a cozy stir-fry with foods {name} normally likes. One glance at the glossy sauce touching the rice and {pronoun} recoils: “The foods are TOUCHING! It’s slimy!” *You sigh, it’s literally the exact same ingredients as Tuesday!*',
           pollQuestion: 'Does your preschooler strongly prefer “deconstructed” or crunchy foods?',
           pollOptions: [
             {
               id: 'separate',
-              label: 'Yes—nothing can touch or have mystery sauce',
+              label: 'Yes, nothing can touch or have mystery sauce',
               response:
-                'Totally biological! Young children have denser taste-bud papillae and hyper-alert texture detectors—unpredictable mixed bowls trigger genuine sensory overload.',
+                'Totally biological! Young children have denser taste-bud papillae and hyper-alert texture detectors, unpredictable mixed bowls trigger genuine sensory overload.',
             },
             {
               id: 'mushy',
@@ -1398,7 +1398,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Inside {possessive} sensory world',
           beat2Title: 'Deconstructing the family meal builds texture bravery step by step',
           beat2Lead:
-            'You never need to cook a separate kid meal—simply serving a few ingredients side-by-side before saucing lets {possessive} mouth learn textures safely. Tap the 5 texture steps below.',
+            'You never need to cook a separate kid meal, simply serving a few ingredients side-by-side before saucing lets {possessive} mouth learn textures safely. Tap the 5 texture steps below.',
           visualType: AlmanacVisualType.SENSORY_LADDER,
           visualStageTitle: '5 steps from separate crunch to mixed family dishes',
           visualStageHint: 'Tap each rung to see texture confidence grow',
@@ -1437,7 +1437,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Serving the same family dinner deconstructed—plain ingredients set aside with sauce in a dip cup—honors preschool sensory biology with zero extra cooking.',
+            'Serving the same family dinner deconstructed, plain ingredients set aside with sauce in a dip cup, honors preschool sensory biology with zero extra cooking.',
           scienceDeepDive:
             'Pediatric sensory-feeding research (Mennella et al., Monell Chemical Senses Center) demonstrates that children exhibit higher fungiform papillae density and stronger bitter/textural sensitivity than adults, making unpredictable mixed consistencies genuinely intense rather than merely willful.',
           beat3Kicker: 'Practice at the table',
@@ -1449,32 +1449,32 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'force',
               label: '“That’s just basil! Stop being dramatic and eat it!”',
-              whyTitle: 'Why that’s so tempting—and what happens in {poss} mouth',
+              whyTitle: 'Why that’s so tempting, and what happens in {poss} mouth',
               whyText:
-                'To an adult eye it’s a speck of herb; to a sensitive 5-year-old it feels like an unexpected bug on dinner—pushing harder spikes gagging and refusal.',
+                'To an adult eye it’s a speck of herb; to a sensitive 5-year-old it feels like an unexpected bug on dinner, pushing harder spikes gagging and refusal.',
             },
             {
               id: 'shortorder',
               label: 'Sigh, stand up, and boil a brand-new pot of plain butter noodles.',
-              whyTitle: 'Why that’s so tempting—and why it traps you',
+              whyTitle: 'Why that’s so tempting, and why it traps you',
               whyText:
                 'Cooking a second meal ends tonight’s tears, yet teaches {name} that protesting loud enough unlocks custom chef service.',
             },
           ],
           calmScriptPlain:
-            '“Good eye—that green speck is basil, and you don’t like surprises mixed into sauce! I set aside a scoop of plain noodles and sauce in a dip cup before I mixed ours—want to dip or keep them separate?”',
+            '“Good eye, that green speck is basil, and you don’t like surprises mixed into sauce! I set aside a scoop of plain noodles and sauce in a dip cup before I mixed ours, want to dip or keep them separate?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'validate',
-              text: 'Good eye—that green speck is basil, and you don’t like surprises mixed into sauce!',
+              text: 'Good eye, that green speck is basil, and you don’t like surprises mixed into sauce!',
               tag: 'Validates Sensory Reality',
               note: 'Replaces “dramatic” shame with calm understanding of why surprises feel big.',
             },
             { text: ' ' },
             {
               id: 'deconstruct',
-              text: 'I set aside a scoop of plain noodles and sauce in a dip cup before I mixed ours—want to dip or keep them separate?',
+              text: 'I set aside a scoop of plain noodles and sauce in a dip cup before I mixed ours, want to dip or keep them separate?',
               tag: 'Smart Deconstruction',
               note: 'Same dinner, zero extra pots, and instant calm control for {name}.',
             },
@@ -1491,7 +1491,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“What if I already mixed everything together tonight?”',
               setup: 'Lean on your one safe side anchor (bread, fruit, yogurt) calmly without cooking a second entree:',
               script:
-                '“Tonight’s soup is already mixed, so you don’t have to eat it—we have warm toast and sliced apples right on the table to fill your belly!”',
+                '“Tonight’s soup is already mixed, so you don’t have to eat it, we have warm toast and sliced apples right on the table to fill your belly!”',
             },
             {
               id: 'texturestuck',
@@ -1502,7 +1502,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) hates foods touching or anything saucy—give me 5 easy family dinners I can deconstruct in 30 seconds without extra cooking.”',
+            '“{Name} ({age}) hates foods touching or anything saucy, give me 5 easy family dinners I can deconstruct in 30 seconds without extra cooking.”',
           beat4Kicker: 'This week’s kitchen shortcut',
           beat4Title: 'Pick one zero-extra-work texture bridge',
           beat4Lead: 'Save your cooking energy while honoring how {possessive} palate is wired.',
@@ -1524,7 +1524,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Honoring {possessive} sensitive palate with simple deconstructed plates isn’t spoiling {obj}—it’s giving {poss} taste buds a calm runway to grow up.',
+            'Honoring {possessive} sensitive palate with simple deconstructed plates isn’t spoiling {obj}, it’s giving {poss} taste buds a calm runway to grow up.',
           pocketInsight:
             'Serve the same family dinner deconstructed (scoop plain ingredients before saucing + offer sauce in a dip cup) to beat texture overload with zero extra cooking.',
           nextEpisodeHook: {
@@ -1547,7 +1547,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.plate,
           illustrationCaption: 'Shared table bowls · Passing autonomy around',
           headline: 'Family-Style Bowls: Ending Short-Order Cooking for Good',
-          deck: 'Why pre-plated dinners spark instant “I didn’t ask for THAT!” protests—and how putting bowls in the center of the table turns reluctant eaters into proud choosers.',
+          deck: 'Why pre-plated dinners spark instant “I didn’t ask for THAT!” protests, and how putting bowls in the center of the table turns reluctant eaters into proud choosers.',
           sceneTime: '6:00 PM · DINING TABLE',
           sceneBody:
             'You set down a beautifully balanced plate you portioned yourself. Instantly {name} crosses {poss} arms: “That’s TOO MUCH chicken! Take the peas OFF!” *You haven’t even sat down yet and you’re already editing plates.*',
@@ -1555,21 +1555,21 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—one unwanted scoop ruins the whole plate',
+              label: 'Yes, one unwanted scoop ruins the whole plate',
               response:
-                'Handing {name} the serving spoon from shared table bowls flips the script instantly—suddenly {pronoun} feels like a grown-up building {poss} own plate.',
+                'Handing {name} the serving spoon from shared table bowls flips the script instantly, suddenly {pronoun} feels like a grown-up building {poss} own plate.',
             },
             {
               id: 'mess',
               label: 'I’m worried self-serving will be messy or only bread',
               response:
-                'Using kid-sized tongs and keeping one calm “learning bowl” on the table keeps spills tiny—and watching you scoop veggies builds natural curiosity.',
+                'Using kid-sized tongs and keeping one calm “learning bowl” on the table keeps spills tiny, and watching you scoop veggies builds natural curiosity.',
             },
           ],
           beat2Kicker: 'The table rhythm reset',
           beat2Title: 'Four easy steps to effortless family-style meals',
           beat2Lead:
-            'When food lives in shared bowls in the center of the table, you still choose the menu—while {name} builds real agency and portion awareness. Tap each beat below.',
+            'When food lives in shared bowls in the center of the table, you still choose the menu, while {name} builds real agency and portion awareness. Tap each beat below.',
           visualType: AlmanacVisualType.ROUTINE_TIMELINE,
           visualStageTitle: 'The 4-step family-style table routine',
           visualStageHint: 'Tap each step to hand back mealtime ownership',
@@ -1579,14 +1579,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Step 1 · Setup',
                 label: 'Center Bowls',
                 title: 'Put 3–4 simple components in the middle of the table',
-                desc: 'One protein, one carb/safe anchor, one veggie or fruit—served in bowls instead of pre-loaded in the kitchen.',
+                desc: 'One protein, one carb/safe anchor, one veggie or fruit, served in bowls instead of pre-loaded in the kitchen.',
                 why: 'Seeing everything calmly in the center removes surprise-plate panic.',
               },
               {
                 timeOrCue: 'Step 2 · Tools',
                 label: 'Kid Tongs',
                 title: 'Give {name} mini tongs or a small ladle',
-                desc: 'Let {name} scoop {poss} own portion—even if it’s just one tiny pea or zero peas tonight.',
+                desc: 'Let {name} scoop {poss} own portion, even if it’s just one tiny pea or zero peas tonight.',
                 why: 'Motor pride makes serving feel like an exciting big-kid job.',
               },
               {
@@ -1600,7 +1600,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Step 4 · Seconds',
                 label: 'Calm Refills',
                 title: 'Refill any bowl neutrally while food lasts',
-                desc: 'If the bread runs out, say calmly: “The bread bowl is empty—there’s plenty of chicken and berries left.”',
+                desc: 'If the bread runs out, say calmly: “The bread bowl is empty, there’s plenty of chicken and berries left.”',
                 why: 'Neutral limits teach real household sharing without food policing.',
               },
             ],
@@ -1618,20 +1618,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'gatekeep',
               label: '“Put two pieces back! You can’t have more bread until you eat five bites of chili!”',
-              whyTitle: 'Why that’s so tempting—and what happens next',
+              whyTitle: 'Why that’s so tempting, and what happens next',
               whyText:
-                'Wanting balanced nutrition is caring! Yet gatekeeping bread makes bread feel scarce and exciting—locking both of you into a battle.',
+                'Wanting balanced nutrition is caring! Yet gatekeeping bread makes bread feel scarce and exciting, locking both of you into a battle.',
             },
             {
               id: 'hover',
               label: 'Keep offering “Just try ONE spoon of chili for mommy!” every two minutes.',
-              whyTitle: 'Why that’s so tempting—and why kids shut down',
+              whyTitle: 'Why that’s so tempting, and why kids shut down',
               whyText:
                 'Repeated gentle nudges still register as spotlight pressure, shutting down genuine appetite curiosity.',
             },
           ],
           calmScriptPlain:
-            '“Looks like garlic bread sounds super cozy tonight! Take two pieces to start so everyone gets some first—once we’ve all passed the basket, you’re welcome to more if there’s extra.”',
+            '“Looks like garlic bread sounds super cozy tonight! Take two pieces to start so everyone gets some first, once we’ve all passed the basket, you’re welcome to more if there’s extra.”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -1643,14 +1643,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'family',
-              text: 'Take two pieces to start so everyone gets some first—once we’ve all passed the basket, you’re welcome to more if there’s extra.',
+              text: 'Take two pieces to start so everyone gets some first, once we’ve all passed the basket, you’re welcome to more if there’s extra.',
               tag: 'Fair Family Norm',
               note: 'Holds considerate family-table etiquette cleanly without tying bread to eating chili.',
             },
             { text: '”' },
           ],
           deliveryCues: [
-            'Pass every bowl to {name}—even ones {pronoun} usually skips',
+            'Pass every bowl to {name}, even ones {pronoun} usually skips',
             'Accept a polite “No thank you” warmly',
             'Keep mealtime talk off food and onto fun stories',
           ],
@@ -1658,23 +1658,23 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'skipsall',
               label: '“{Name} says ‘No thank you’ to every single bowl”',
-              setup: 'Stay totally relaxed—missing one meal won’t harm a healthy preschooler:',
+              setup: 'Stay totally relaxed, missing one meal won’t harm a healthy preschooler:',
               script:
-                '“Sounds like your belly isn’t hungry right now! You don’t have to eat—just hang out and tell us about your painting while we finish.”',
+                '“Sounds like your belly isn’t hungry right now! You don’t have to eat, just hang out and tell us about your painting while we finish.”',
             },
             {
               id: 'spills',
               label: '“{Pronoun} spills soup trying to ladle it”',
               setup: 'Hand over a towel matter-of-factly and guide the ladle together next time:',
               script:
-                '“Oops, slippery soup! Let’s wipe it together—next scoop I’ll steady the bowl while you steer the ladle.”',
+                '“Oops, slippery soup! Let’s wipe it together, next scoop I’ll steady the bowl while you steer the ladle.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) only takes bread when we try family-style bowls—how do I stay calm and know {pronoun} {is} getting enough over a whole week?”',
+            '“{Name} ({age}) only takes bread when we try family-style bowls, how do I stay calm and know {pronoun} {is} getting enough over a whole week?”',
           beat4Kicker: 'Tonight’s easy swap',
           beat4Title: 'Pick one small family-style experiment',
-          beat4Lead: 'You don’t need fancy platters—regular pots on trivets work great.',
+          beat4Lead: 'You don’t need fancy platters, regular pots on trivets work great.',
           moves: [
             {
               id: 'tongs',
@@ -1695,7 +1695,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'When dinner shifts from policing plates to passing bowls and sharing laughs, {name} learns that the family table is the warmest place in the house.',
           pocketInsight:
-            'Serve dinner in shared center bowls with kid-sized tongs—pass everything neutrally, model enjoying your own meal, and keep conversation warm.',
+            'Serve dinner in shared center bowls with kid-sized tongs, pass everything neutrally, model enjoying your own meal, and keep conversation warm.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 4 · 3 min',
             mystery: '“How can playful food games away from dinner help a cautious 5-year-old try new foods?”',
@@ -1716,15 +1716,15 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.leaf,
           illustrationCaption: 'Food scientist play · Curiosity beats coercion',
           headline: 'Playful Taste Adventures Without Dinner Pressure',
-          deck: 'Why cautious preschoolers rarely fall in love with a new food under 6 PM spotlight pressure—and how low-stakes “food scientist” games unlock genuine curiosity.',
+          deck: 'Why cautious preschoolers rarely fall in love with a new food under 6 PM spotlight pressure, and how low-stakes “food scientist” games unlock genuine curiosity.',
           sceneTime: '3:30 PM · SUNNY AFTERNOON SNACK',
           sceneBody:
-            'You hand {name} a tiny wedge of snap pea on a fun snack tray with zero dinner expectations. Instead of saying “Eat it,” you ask if {pronoun} thinks it makes a louder crunch than a pretzel. *Eyes widen—suddenly {pronoun} bites the tip just to test the sound.*',
+            'You hand {name} a tiny wedge of snap pea on a fun snack tray with zero dinner expectations. Instead of saying “Eat it,” you ask if {pronoun} thinks it makes a louder crunch than a pretzel. *Eyes widen, suddenly {pronoun} bites the tip just to test the sound.*',
           pollQuestion: 'Does {name} seem braver around new foods when nobody is watching?',
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—{pronoun} tries way more at preschool or snack time!',
+              label: 'Yes, {pronoun} tries way more at preschool or snack time!',
               response:
                 'Because 6 PM is tired time AND spotlight time! Playful afternoon curiosity bypasses defensive caution completely.',
             },
@@ -1732,11 +1732,11 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               id: 'stuck',
               label: 'Still super cautious even at snack time',
               response:
-                'Every tiny sensory rep—sniffing, snapping, comparing crunch—banks real familiarity even when zero bites happen yet.',
+                'Every tiny sensory rep, sniffing, snapping, comparing crunch, banks real familiarity even when zero bites happen yet.',
             },
           ],
           beat2Kicker: 'Growing adventurous palates',
-          beat2Title: 'Curiosity grows over 10–15 relaxed exposures—not 1 tense night',
+          beat2Title: 'Curiosity grows over 10–15 relaxed exposures, not 1 tense night',
           beat2Lead:
             'Flip the lens from “testing if {pronoun} likes it” to “playing food scientist,” then tap through relaxed exposures below.',
           visualType: AlmanacVisualType.LENS_EXPOSURE_MATRIX,
@@ -1744,10 +1744,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           visualStageHint: 'Flip lenses, then tap relaxed exposures 1–12',
           visualConfig: {
             adultLabel: 'Pass/Fail dinner lens',
-            adultQuote: '“{Pronoun} spit it out once—I guess {pronoun} hates snap peas forever!”',
+            adultQuote: '“{Pronoun} spit it out once. I guess {pronoun} hates snap peas forever!”',
             adultSub: 'Treating a single hesitant nibble as a permanent verdict stops us from casually offering the food again.',
             childLabel: 'Food-scientist lens',
-            childQuote: '“Let’s hear how loud it crunches—and I’m allowed to spit it in a napkin if it’s too strong!”',
+            childQuote: '“Let’s hear how loud it crunches, and I’m allowed to spit it in a napkin if it’s too strong!”',
             childSub: 'Knowing a “polite napkin exit” is always allowed removes fear and invites brave little licks and nibbles.',
             exposureHeading: 'The 12-adventure curiosity map',
             exposureSub: 'Tap exposures 1–12 to watch caution melt',
@@ -1758,10 +1758,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             midMax: 8,
             lowMsg: 'Adventures 1–4: Exploring color, snap sound, and smell at snack time builds total comfort.',
             midMsg: 'Adventures 5–8: Playful “crunch tests” and licking the tip happen spontaneously when spitting into a napkin is allowed.',
-            highMsg: 'Adventures 9–12: One ordinary afternoon {name} pops the whole piece in calmly—genuine new favorite unlocked!',
+            highMsg: 'Adventures 9–12: One ordinary afternoon {name} pops the whole piece in calmly, genuine new favorite unlocked!',
           },
           almanacTruth:
-            'Giving {name} explicit permission to spit an unfamiliar taste politely into a napkin removes the trap—and paradoxically makes kids twice as willing to try.',
+            'Giving {name} explicit permission to spit an unfamiliar taste politely into a napkin removes the trap, and paradoxically makes kids twice as willing to try.',
           scienceDeepDive:
             'Sensory play interventions in preschool populations (Nekitsing et al.; Coulthard & Sealy) demonstrate that non-taste sensory engagement (touching, snapping, smelling, and rating crunch) significantly increases subsequent vegetable intake compared to verbal encouragement alone.',
           beat3Kicker: 'Practice at snack time',
@@ -1773,20 +1773,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'promise',
               label: '“I promise it’s delicious! You’re going to LOVE it, just swallow it!”',
-              whyTitle: 'Why that’s so tempting—and why kids pull back',
+              whyTitle: 'Why that’s so tempting, and why kids pull back',
               whyText:
                 'If it tastes weird to {poss} super-taster tongue after you promised “delicious,” {pronoun} feels tricked and refuses future experiments.',
             },
             {
               id: 'disappointed',
               label: 'Look visibly deflated when {pronoun} puts it right back down.',
-              whyTitle: 'Why that’s so tempting—and what kids read',
+              whyTitle: 'Why that’s so tempting, and what kids read',
               whyText:
-                'Preschoolers are radar dishes for parental disappointment—keeping your energy breezy keeps curiosity alive.',
+                'Preschoolers are radar dishes for parental disappointment, keeping your energy breezy keeps curiosity alive.',
             },
           ],
           calmScriptPlain:
-            '“Totally fair question! Yellow peppers are crisp and a tiny bit sweet. If you want to test the crunch, here’s a napkin right beside you—you can always spit it out if your mouth says ‘not today!’”',
+            '“Totally fair question! Yellow peppers are crisp and a tiny bit sweet. If you want to test the crunch, here’s a napkin right beside you, you can always spit it out if your mouth says ‘not today!’”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -1798,7 +1798,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'exitramp',
-              text: 'If you want to test the crunch, here’s a napkin right beside you—you can always spit it out if your mouth says ‘not today!’',
+              text: 'If you want to test the crunch, here’s a napkin right beside you, you can always spit it out if your mouth says ‘not today!’',
               tag: 'Safe Exit Ramp',
               note: 'Knowing {pronoun} isn’t trapped swallowing a strange flavor unlocks brave first nibbles.',
             },
@@ -1807,7 +1807,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           deliveryCues: [
             'Run taste games at relaxed snack time, not tired 6 PM dinners',
             'Teach the calm “polite napkin spit” early',
-            'Never cheer excessively—keep reactions warmly matter-of-fact',
+            'Never cheer excessively, keep reactions warmly matter-of-fact',
           ],
           pushbacks: [
             {
@@ -1815,14 +1815,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} licks it, makes a face, and puts it in the napkin”',
               setup: 'Celebrate the brave scientist curiosity without pushing for a second bite:',
               script:
-                '“Nice experimenting! Your tongue met yellow pepper today—maybe it’ll taste different next month when your taste buds grow.”',
+                '“Nice experimenting! Your tongue met yellow pepper today, maybe it’ll taste different next month when your taste buds grow.”',
             },
             {
               id: 'noplay',
               label: '“{Pronoun} doesn’t even want to touch it today”',
               setup: 'Move on lightly with zero disappointment:',
               script:
-                '“No problem at all! I’ll crunch mine—tell me if you think it sounds louder than a cracker!”',
+                '“No problem at all! I’ll crunch mine, tell me if you think it sounds louder than a cracker!”',
             },
           ],
           advisorPrompt:
@@ -1848,7 +1848,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'An adventurous eater isn’t built by forcing clean plates—it’s built by raising a child who trusts {poss} own mouth and feels safe being curious.',
+            'An adventurous eater isn’t built by forcing clean plates, it’s built by raising a child who trusts {poss} own mouth and feels safe being curious.',
           pocketInsight:
             'Move taste experiments to relaxed snack time, describe honest textures (“crisp, juicy”), and offer a polite napkin exit ramp.',
           nextEpisodeHook: null,
@@ -1885,7 +1885,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Stop-go games · Joyful brain-brake workouts',
           headline: 'Freeze Dance & Stop-Go Games That Build Real Self-Control',
-          deck: 'Why lecturing a 5-year-old to “sit still and listen!” rarely works—and how five silly minutes of Freeze Dance literally trains the brain’s stop-signal muscles.',
+          deck: 'Why lecturing a 5-year-old to “sit still and listen!” rarely works, and how five silly minutes of Freeze Dance literally trains the brain’s stop-signal muscles.',
           sceneTime: '4:00 PM · LIVING ROOM FLOOR',
           sceneBody:
             'You asked {name} to wait two seconds while you buckled {poss} shoes, yet {poss} feet are already bouncing off the couch like springs. *Sometimes you wonder: how will {pronoun} ever sit in kindergarten circle time?*',
@@ -1893,21 +1893,21 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'fastgo',
-              label: 'Yes—pure turbo energy all day long!',
+              label: 'Yes, pure turbo energy all day long!',
               response:
-                'You’re watching normal preschool motor drive! Self-control isn’t trained by scolding kids to sit still—it’s built like a muscle through playful stop-and-go games.',
+                'You’re watching normal preschool motor drive! Self-control isn’t trained by scolding kids to sit still, it’s built like a muscle through playful stop-and-go games.',
             },
             {
               id: 'impulse',
               label: 'Struggles mostly with blurting out or waiting turns',
               response:
-                'Waiting and stopping are executive-function workouts—practicing them while giggling makes real-life pauses way easier.',
+                'Waiting and stopping are executive-function workouts, practicing them while giggling makes real-life pauses way easier.',
             },
           ],
           beat2Kicker: 'Inside {possessive} growing brain',
           beat2Title: 'Playful “stop” signals build the exact brakes school needs',
           beat2Lead:
-            'Every time {name} freezes mid-leap when the music stops, {poss} prefrontal cortex fires an active “override” signal—strengthening real impulse brakes while laughing. Toggle both states below.',
+            'Every time {name} freezes mid-leap when the music stops, {poss} prefrontal cortex fires an active “override” signal, strengthening real impulse brakes while laughing. Toggle both states below.',
           visualType: AlmanacVisualType.BRAIN_BRIDGE,
           visualStageTitle: 'Pure momentum vs. practicing the stop brake',
           visualStageHint: 'Toggle full-speed go vs. playful freeze brake',
@@ -1921,7 +1921,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 name: 'Prefrontal Stop Switch',
                 value: 'Flexing & Wiring',
                 tone: 'spruce',
-                desc: 'Freezing on cue practices holding an impulse back—the exact skill needed for waiting in line and keeping hands safe.',
+                desc: 'Freezing on cue practices holding an impulse back, the exact skill needed for waiting in line and keeping hands safe.',
               },
               {
                 name: 'Emotional Fuel',
@@ -1935,7 +1935,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 name: 'Motor Energy',
                 value: 'Full Throttle',
                 tone: 'amber',
-                desc: 'Preschool bodies are biologically built to move—demanding stillness without practice drains everyone.',
+                desc: 'Preschool bodies are biologically built to move, demanding stillness without practice drains everyone.',
               },
               {
                 name: 'Verbal Reminders',
@@ -1953,30 +1953,30 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           beat3Title: 'Turn waiting moments into quick brake-building games',
           rehearsalTriggerSpeaker: '{Name} darting toward the parking lot curb ahead of you',
           rehearsalTriggerQuote: '“Watch how FAST I can run! You can’t catch me!”',
-          rehearsalPrompt: 'Which frantic reflex kicks in—and how do we build a reflex that actually stops feet?',
+          rehearsalPrompt: 'Which frantic reflex kicks in, and how do we build a reflex that actually stops feet?',
           instincts: [
             {
               id: 'nag',
               label: '“How many times have I told you to WALK?! You NEVER listen!”',
-              whyTitle: 'Why that’s so tempting—and what happens next',
+              whyTitle: 'Why that’s so tempting, and what happens next',
               whyText:
                 'Parking lot fear spikes parent adrenaline instantly! Yet shaming “you never listen” doesn’t build a fast physical stopping reflex.',
             },
             {
               id: 'lecture',
               label: 'Deliver a long roadside lecture about cars while {name} squirms.',
-              whyTitle: 'Why that’s so tempting—and what works faster',
+              whyTitle: 'Why that’s so tempting, and what works faster',
               whyText:
                 'Practicing a joyful physical “FREEZE!” game in the yard wires an instant automatic foot-brake you can actually use in public.',
             },
           ],
           calmScriptPlain:
-            '“(Warm clear game voice) FREEZE statue! Whoa, look at those awesome brakes—your feet stopped right on the sidewalk crack! Now slow-motion astronaut walk to the car door together.”',
+            '“(Warm clear game voice) FREEZE statue! Whoa, look at those awesome brakes, your feet stopped right on the sidewalk crack! Now slow-motion astronaut walk to the car door together.”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'cue',
-              text: 'FREEZE statue! Whoa, look at those awesome brakes—your feet stopped right on the sidewalk crack!',
+              text: 'FREEZE statue! Whoa, look at those awesome brakes, your feet stopped right on the sidewalk crack!',
               tag: 'Activates Practiced Brake',
               note: 'Taps straight into a joyful muscle-memory game so {name} stops with pride instead of defiance.',
             },
@@ -2000,14 +2000,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“{Name} giggles and keeps running past ‘Freeze’”',
               setup: 'Catch {obj} gently with a smile and hold hands cleanly:',
               script:
-                '“Oops, turbo rockets won that round! In parking lots hands always hold mine—we’ll practice Freeze Brakes again on the grass.”',
+                '“Oops, turbo rockets won that round! In parking lots hands always hold mine, we’ll practice Freeze Brakes again on the grass.”',
             },
             {
               id: 'frustrated',
               label: '“{Pronoun} gets upset when {pronoun} wobbles during the game”',
-              setup: 'Model growth mindset cheerfully—wobbling IS how brains grow:',
+              setup: 'Model growth mindset cheerfully, wobbling IS how brains grow:',
               script:
-                '“Whoa, I wobbled too! Every time you catch a wobble, your brain’s brake muscles get a tiny bit stronger—you just haven’t mastered it YET!”',
+                '“Whoa, I wobbled too! Every time you catch a wobble, your brain’s brake muscles get a tiny bit stronger, you just haven’t mastered it YET!”',
             },
           ],
           advisorPrompt:
@@ -2029,16 +2029,16 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'yetword',
               title: 'Add the word “yet” once when something feels tricky',
-              desc: '“You haven’t nailed tying that knot YET—watch how close your fingers just got!”',
+              desc: '“You haven’t nailed tying that knot YET, watch how close your fingers just got!”',
             },
           ],
           closingNote:
-            'Self-control doesn’t grow from sitting stiffly in silence—it grows inside joyful movement, silly statues, and celebrating every wobble along the way.',
+            'Self-control doesn’t grow from sitting stiffly in silence, it grows inside joyful movement, silly statues, and celebrating every wobble along the way.',
           pocketInsight:
             'Play 5-minute stop-go games (Freeze Dance, Red-Light-Green-Light, Silly Opposites) to wire real impulse brakes joyfully.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 2 · 3 min',
-            mystery: '“Wait—why do kindergarten teachers prefer kids who played pretend over kids drilled on flashcards?”',
+            mystery: '“Wait, why do kindergarten teachers prefer kids who played pretend over kids drilled on flashcards?”',
             title: 'Why Pretend Play Beats Worksheets for Kindergarten Readiness',
             targetSlug: 'preschool-executive-function-circuitry',
           },
@@ -2059,20 +2059,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           deck: 'Why running a make-believe bakery or vet clinic wires deeper focus, planning, and reading readiness than tracing letter sheets ever could.',
           sceneTime: '11:15 AM · LIVING ROOM CAFÉ',
           sceneBody:
-            'You bought a shiny preschool workbook to make sure {name} stays “on track.” Ten minutes in, both of you are tense—yet when you step away, {name} spends forty rapt minutes setting up a pretend pizza shop, taking orders, and counting couch-cushion “dollars.” *Wait—is that real learning?*',
+            'You bought a shiny preschool workbook to make sure {name} stays “on track.” Ten minutes in, both of you are tense, yet when you step away, {name} spends forty rapt minutes setting up a pretend pizza shop, taking orders, and counting couch-cushion “dollars.” *Wait, is that real learning?*',
           pollQuestion: 'Do you ever feel quiet pressure to do more academic drills before kindergarten?',
           pollOptions: [
             {
               id: 'pressure',
-              label: 'Yes—everyone talks about early reading & math apps',
+              label: 'Yes, everyone talks about early reading & math apps',
               response:
                 'Modern kindergarten pressure is real! Yet neuroscience consistently shows self-regulation, curiosity, and rich pretend play predict third-grade reading and math far better than early flashcards.',
             },
             {
               id: 'pretend',
-              label: 'My kid LOVES pretend play—I’m glad it counts!',
+              label: 'My kid LOVES pretend play. I’m glad it counts!',
               response:
-                'Not only does it count—pretend play is literally the heavyweight gym of early executive function!',
+                'Not only does it count, pretend play is literally the heavyweight gym of early executive function!',
             },
           ],
           beat2Kicker: 'Inside imaginative play',
@@ -2088,7 +2088,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '01',
                 actor: '{Name} directs',
                 label: 'Let {Name} Be Boss',
-                quote: '“Welcome to my pizza shop! Sit right there—you’re the customer!”',
+                quote: '“Welcome to my pizza shop! Sit right there, you’re the customer!”',
                 desc: 'Accept the sidekick role (hungry customer, patient, or assistant) while {name} runs the whole plan.',
                 brainNote: 'Activates planning, sequencing, and joyful leadership.',
               },
@@ -2097,7 +2097,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 actor: 'You nudge gently',
                 label: 'Add One Twist',
                 quote: '“Oh no, Chef! Do you have a written menu or a sign so I know how much pizza costs?”',
-                desc: 'Weave natural literacy and counting into the game organically—zero worksheet tears.',
+                desc: 'Weave natural literacy and counting into the game organically, zero worksheet tears.',
                 brainNote: 'Links letters and numbers directly to real-world meaning.',
               },
               {
@@ -2111,9 +2111,9 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Pretend play isn’t a break from kindergarten readiness—it IS kindergarten readiness: sustaining a 30-minute roleplay exercises focus, planning, vocabulary, and self-control simultaneously.',
+            'Pretend play isn’t a break from kindergarten readiness, it IS kindergarten readiness: sustaining a 30-minute roleplay exercises focus, planning, vocabulary, and self-control simultaneously.',
           scienceDeepDive:
-            'Developmental research by Dr. Adele Diamond and Elena Bodrova (Tools of the Mind) confirms that mature sociodramatic play builds working memory, cognitive flexibility, and inhibitory control—stronger predictors of elementary school success than early rote memorization.',
+            'Developmental research by Dr. Adele Diamond and Elena Bodrova (Tools of the Mind) confirms that mature sociodramatic play builds working memory, cognitive flexibility, and inhibitory control, stronger predictors of elementary school success than early rote memorization.',
           beat3Kicker: 'Practice during play',
           beat3Title: 'Join pretend play for 10 minutes without hijacking the plot',
           rehearsalTriggerSpeaker: '{Name} handing you a cardboard box “pizza”',
@@ -2122,21 +2122,21 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           instincts: [
             {
               id: 'quiz',
-              label: '“Wait—what letter does Pizza start with? And fifty-hundred isn’t a real number!”',
-              whyTitle: 'Why that’s so tempting—and why kids walk away',
+              label: '“Wait, what letter does Pizza start with? And fifty-hundred isn’t a real number!”',
+              whyTitle: 'Why that’s so tempting, and why kids walk away',
               whyText:
                 'Sneaking a quiz into playtime feels productive, yet turning a joyful game into a pop test shuts down imagination fast.',
             },
             {
               id: 'direct',
               label: 'Take over designing the shop so it looks neater and more realistic.',
-              whyTitle: 'Why that’s so tempting—and what {name} loses',
+              whyTitle: 'Why that’s so tempting, and what {name} loses',
               whyText:
                 'When adults become the director, the child’s planning brain powers down.',
             },
           ],
           calmScriptPlain:
-            '“(Gasps delightedly) Rainbow dragon pizza?! Best café in town! Let me count out five pretend coins—Chef, could you scribble ‘PIZZA’ on a paper sign so more customers find us?”',
+            '“(Gasps delightedly) Rainbow dragon pizza?! Best café in town! Let me count out five pretend coins. Chef, could you scribble ‘PIZZA’ on a paper sign so more customers find us?”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -2148,9 +2148,9 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'embed',
-              text: 'Let me count out five pretend coins—Chef, could you scribble ‘PIZZA’ on a paper sign so more customers find us?',
+              text: 'Let me count out five pretend coins. Chef, could you scribble ‘PIZZA’ on a paper sign so more customers find us?',
               tag: 'Playful Literacy Spark',
-              note: 'Invites authentic counting and writing inside the story—zero flashcard resistance.',
+              note: 'Invites authentic counting and writing inside the story, zero flashcard resistance.',
             },
             { text: '”' },
           ],
@@ -2165,18 +2165,18 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“Honestly, playing pretend bores me to tears!”',
               setup: 'Totally normal for grown-up brains! Pick a tiny 8-minute timer or be the sleepy customer:',
               script:
-                '“I’d love to be your sleepy café guest for ten minutes while I sip my real tea—then you keep running the kitchen while I fold laundry nearby!”',
+                '“I’d love to be your sleepy café guest for ten minutes while I sip my real tea, then you keep running the kitchen while I fold laundry nearby!”',
             },
             {
               id: 'bossy',
               label: '“{Name} gets super bossy telling me every exact line to say”',
-              setup: 'Smile—scripting you is {poss} brain practicing storytelling! Gently model flexible collaboration:',
+              setup: 'Smile, scripting you is {poss} brain practicing storytelling! Gently model flexible collaboration:',
               script:
                 '“Whoa, you’ve got a big movie in your head! Let’s do your line first, then my character gets one surprise twist too.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) resists letter worksheets—how can I weave early reading and counting playfully into pretend games {pronoun} already loves?”',
+            '“{Name} ({age}) resists letter worksheets, how can I weave early reading and counting playfully into pretend games {pronoun} already loves?”',
           beat4Kicker: 'This week’s play spark',
           beat4Title: 'Pick one simple prop boost for pretend play',
           beat4Lead: 'Household scraps beat pricey plastic playsets every time.',
@@ -2198,7 +2198,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'When you see a living room full of pillow forts and scribbled pizza menus, you aren’t looking at wasted time—you are watching a brilliant young mind wire itself for life.',
+            'When you see a living room full of pillow forts and scribbled pizza menus, you aren’t looking at wasted time, you are watching a brilliant young mind wire itself for life.',
           pocketInsight:
             'Play the sidekick for 10 minutes while {name} directs pretend play, sneaking natural counting and signs into the story instead of drilling worksheets.',
           nextEpisodeHook: {
@@ -2224,12 +2224,12 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           deck: 'Why hauling sticks, squishing clay, and coloring with short broken crayons build stronger writing hands and bolder confidence than pencil-grip drills.',
           sceneTime: '3:45 PM · BACKYARD TRAIL',
           sceneBody:
-            'Five minutes into a park walk, {name} ignores the shiny slide completely to build an elaborate leaf-and-stick bridge across a puddle. Back home, {pronoun} hates tracing letters because {poss} little hand gets tired fast. *Wait—are those two things connected?*',
-          pollQuestion: 'Does {name} love digging, building, or squishing—yet tire fast with pencils?',
+            'Five minutes into a park walk, {name} ignores the shiny slide completely to build an elaborate leaf-and-stick bridge across a puddle. Back home, {pronoun} hates tracing letters because {poss} little hand gets tired fast. *Wait, are those two things connected?*',
+          pollQuestion: 'Does {name} love digging, building, or squishing, yet tire fast with pencils?',
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—big outdoor energy, quick pencil fatigue',
+              label: 'Yes, big outdoor energy, quick pencil fatigue',
               response:
                 'Huge insight: preschool hand bones are still mostly cartilage! Climbing, kneading dough, and building with sticks build the exact shoulder and finger muscles writing needs later.',
             },
@@ -2253,7 +2253,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Outdoors',
                 label: 'Loose Parts',
                 title: 'Sticks, pebbles, water & zero instructions',
-                desc: 'Hauling branches, balancing rocks, and digging channels strengthen shoulder stability—the anchor for steady handwriting.',
+                desc: 'Hauling branches, balancing rocks, and digging channels strengthen shoulder stability, the anchor for steady handwriting.',
                 why: 'Whole-arm strength develops BEFORE fine fingertip precision.',
               },
               {
@@ -2268,7 +2268,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 label: 'Broken Crayons',
                 title: 'Snap regular crayons in half (1-inch nubs)',
                 desc: 'Tiny crayons physically prevent a full-fist grab, gently guiding little fingers into a natural tripod grip automatically.',
-                why: 'Environment shapes grip cleanly—zero nagging “Hold your pencil right!”',
+                why: 'Environment shapes grip cleanly, zero nagging “Hold your pencil right!”',
               },
               {
                 timeOrCue: 'Confidence',
@@ -2280,7 +2280,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Little hands learn to write by climbing trees, squishing clay, snipping paper, and drawing with short broken crayons—long before neat alphabet lines.',
+            'Little hands learn to write by climbing trees, squishing clay, snipping paper, and drawing with short broken crayons, long before neat alphabet lines.',
           scienceDeepDive:
             'Pediatric occupational therapy frameworks emphasize proximal-to-distal motor development: core and shoulder girdle stability built through climbing and carrying heavy outdoor loose parts precedes refined intrinsic hand arch strength needed for comfortable pencil control around ages 5–6.',
           beat3Kicker: 'Practice in the backyard & at the craft table',
@@ -2292,20 +2292,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'grabhand',
               label: 'Grab {possessive} hand and reposition every finger: “No, hold it like THIS!”',
-              whyTitle: 'Why that’s so tempting—and why kids drop the crayon',
+              whyTitle: 'Why that’s so tempting, and why kids drop the crayon',
               whyText:
-                'Wanting tidy habits is natural! Yet repeated grip corrections turn joyful art into a test—while snapping the crayon in half solves it silently.',
+                'Wanting tidy habits is natural! Yet repeated grip corrections turn joyful art into a test, while snapping the crayon in half solves it silently.',
             },
             {
               id: 'clean',
               label: 'Stop muddy stick-play early so {poss} sleeves stay spotless.',
-              whyTitle: 'Why that’s so tempting—and the easy fix',
+              whyTitle: 'Why that’s so tempting, and the easy fix',
               whyText:
                 'Designating one “play outfit” removes your stress completely so {name} can invent freely.',
             },
           ],
           calmScriptPlain:
-            '“Tricky angles make hands tired fast! Let’s try these short superhero crayon nubs—they’re magic for fingers—and draw a giant road on the big cardboard box instead.”',
+            '“Tricky angles make hands tired fast! Let’s try these short superhero crayon nubs, they’re magic for fingers, and draw a giant road on the big cardboard box instead.”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -2317,7 +2317,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'swap',
-              text: 'Let’s try these short superhero crayon nubs—they’re magic for fingers—and draw a giant road on the big cardboard box instead.',
+              text: 'Let’s try these short superhero crayon nubs, they’re magic for fingers, and draw a giant road on the big cardboard box instead.',
               tag: 'Effortless Tool Shift',
               note: 'Short crayons + vertical or big-surface drawing naturally align wrist and fingers with zero scolding.',
             },
@@ -2334,7 +2334,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“What about safety when {name} plays with big sticks?”',
               setup: 'Set one simple, clear outdoor rule that keeps adventure safe:',
               script:
-                '“Sticks stay low below your waist and away from friends’ faces—show me how you can drag that big log to your fort!”',
+                '“Sticks stay low below your waist and away from friends’ faces, show me how you can drag that big log to your fort!”',
             },
             {
               id: 'hatecraft',
@@ -2345,10 +2345,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) avoids drawing and gets frustrated with scissors—give me 5 sneaky playful ways to strengthen {poss} hands without table drills.”',
+            '“{Name} ({age}) avoids drawing and gets frustrated with scissors, give me 5 sneaky playful ways to strengthen {poss} hands without table drills.”',
           beat4Kicker: 'This week’s gardener experiment',
           beat4Title: 'Pick one easy outdoor or fine-motor setup',
-          beat4Lead: 'Rich soil beats micromanaging—set out the tools and enjoy watching.',
+          beat4Lead: 'Rich soil beats micromanaging, set out the tools and enjoy watching.',
           moves: [
             {
               id: 'snapcrayons',
@@ -2369,7 +2369,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'Muddy boots, taped-up stick forts, and tiny broken crayons are the quiet workshops where resilient thinkers and confident kindergarten hands are made.',
           pocketInsight:
-            'Build school-ready hands through outdoor loose parts, clay pinching, and 1-inch broken crayons—gardener curiosity beats worksheet drills.',
+            'Build school-ready hands through outdoor loose parts, clay pinching, and 1-inch broken crayons, gardener curiosity beats worksheet drills.',
           nextEpisodeHook: null,
           interactiveHighlights: ['4-Step Fine-Motor Map', 'Broken-Crayon Trick'],
         },
@@ -2404,7 +2404,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.clock_rhythm,
           illustrationCaption: 'Neutral kitchen timer · The clock holds the limit',
           headline: 'The Timer Pact That Ends “Just One More Episode!”',
-          deck: 'Why announcing “Screen time is over!” out of the blue sparks instant meltdowns—and the neutral timer + episode agreement that makes you the teammate, not the villain.',
+          deck: 'Why announcing “Screen time is over!” out of the blue sparks instant meltdowns, and the neutral timer + episode agreement that makes you the teammate, not the villain.',
           sceneTime: '5:30 PM · LIVING ROOM COUCH',
           sceneBody:
             'You click pause to call {name} for dinner. Instantly {pronoun} flings back onto the cushions wailing: “You ALWAYS turn it off right at the good part! JUST ONE MORE!” *Every single afternoon screen session ends in a twenty-minute negotiation.*',
@@ -2412,7 +2412,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'hardest',
-              label: 'Yes—almost every single time',
+              label: 'Yes, almost every single time',
               response:
                 'You’re watching a classic dopamine drop plus zero warning! Turning off autoplay and letting {name} press the stop button at an agreed natural ending changes the entire mood.',
             },
@@ -2442,13 +2442,13 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               'Decide “One episode” BEFORE pressing play, disable autoplay permanently, and hand {name} the remote to press off when credits roll.',
             guardrailOutcome: 'Predictable endings, proud autonomy, and zero bargaining.',
             environmentShifts: [
-              'Turn OFF autoplay across YouTube Kids, Netflix, and Disney+ tonight—no automatic next-episode hooks.',
+              'Turn OFF autoplay across YouTube Kids, Netflix, and Disney+ tonight, no automatic next-episode hooks.',
               'Agree on an exact finish BEFORE starting (“When this episode ends, we press off and set the table”).',
-              'Let {name} physically press the power button—ownership shrinks resistance dramatically.',
+              'Let {name} physically press the power button, ownership shrinks resistance dramatically.',
             ],
           },
           almanacTruth:
-            'Agreeing on the exact stopping point BEFORE pressing play—and turning autoplay permanently off—turns you from the screen police into a calm teammate.',
+            'Agreeing on the exact stopping point BEFORE pressing play, and turning autoplay permanently off, turns you from the screen police into a calm teammate.',
           scienceDeepDive:
             'Research from the University of Michigan C.S. Mott Children’s Hospital (Hiniker et al.) showed that preschool screen-transition tantrums drop sharply when transitions align with natural content endpoints (credits rolling) paired with predictable routines rather than sudden arbitrary parental interruptions.',
           beat3Kicker: 'Practice before pressing play',
@@ -2459,15 +2459,15 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           instincts: [
             {
               id: 'cave',
-              label: '“Fine, ONE more—but NO complaining when it ends!”',
-              whyTitle: 'Why that’s so tempting—and why tomorrow gets louder',
+              label: '“Fine, ONE more, but NO complaining when it ends!”',
+              whyTitle: 'Why that’s so tempting, and why tomorrow gets louder',
               whyText:
                 'Buying 10 quiet minutes to finish dinner feels tempting! Yet giving in teaches {name} that loud begging moves the boundary.',
             },
             {
               id: 'threat',
               label: '“Since you’re whining, ZERO TV for the whole rest of the week!”',
-              whyTitle: 'Why that’s so tempting—and why big threats backfire',
+              whyTitle: 'Why that’s so tempting, and why big threats backfire',
               whyText:
                 'Big reactive bans escalate tears immediately and are almost impossible to hold calmly for seven days.',
             },
@@ -2480,7 +2480,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               id: 'empathy',
               text: 'It’s so hard to stop right when a show is awesome!',
               tag: 'Empathizes First',
-              note: 'Shows you genuinely get how fun the show was—even adults hate pausing a cliffhanger!',
+              note: 'Shows you genuinely get how fun the show was, even adults hate pausing a cliffhanger!',
             },
             { text: ' ' },
             {
@@ -2500,9 +2500,9 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'meltdown',
               label: '“{Name} drops to the floor crying after clicking off”',
-              setup: 'Stay calm and empathetic—crying doesn’t mean the rule was wrong:',
+              setup: 'Stay calm and empathetic, crying doesn’t mean the rule was wrong:',
               script:
-                '“I know, stopping feels super crummy in your belly. You can feel mad for a minute right here—our shows are resting until tomorrow.”',
+                '“I know, stopping feels super crummy in your belly. You can feel mad for a minute right here, our shows are resting until tomorrow.”',
             },
             {
               id: 'grabsremote',
@@ -2513,7 +2513,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) melts down every time screen time ends—help me build a calm 2-minute closing ritual that sticks.”',
+            '“{Name} ({age}) melts down every time screen time ends, help me build a calm 2-minute closing ritual that sticks.”',
           beat4Kicker: 'Before the very next episode',
           beat4Title: 'Pick one guardrail to install today',
           beat4Lead: 'Change the setup once and save yourself a hundred arguments.',
@@ -2526,7 +2526,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'preagree',
               title: 'Make a 5-second “Before Play Pact” next time',
-              desc: '“One episode of Bluey, then you press the off button and help stir pasta—deal?”',
+              desc: '“One episode of Bluey, then you press the off button and help stir pasta, deal?”',
             },
             {
               id: 'childclicks',
@@ -2535,7 +2535,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'When the stopping rule is clear, predictable, and backed by your warm presence, {name} learns that fun things can end cleanly—and good things are waiting right after.',
+            'When the stopping rule is clear, predictable, and backed by your warm presence, {name} learns that fun things can end cleanly, and good things are waiting right after.',
           pocketInsight:
             'Turn off autoplay permanently, agree on the exact episode before pressing play, and let {name} press the power button when credits roll.',
           nextEpisodeHook: {
@@ -2558,7 +2558,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.device_dock,
           illustrationCaption: 'Calm vs. sticky media · Spotting design hooks',
           headline: 'How Kids’ Apps Are Engineered to Keep Little Eyes Hooked',
-          deck: 'Why two 20-minute screen sessions can leave {name} in totally opposite moods—and the 4-second check that spots hyper-sticky apps immediately.',
+          deck: 'Why two 20-minute screen sessions can leave {name} in totally opposite moods, and the 4-second check that spots hyper-sticky apps immediately.',
           sceneTime: '10:40 AM · SATURDAY MORNING',
           sceneBody:
             'After twenty minutes of a calm storybook show, {name} hops off the couch happily to build a fort. After twenty minutes of a colorful free kids’ game with pop-up stars and mystery eggs, {pronoun} looks glassy-eyed, whiny, and snaps at everything for an hour. *Why are those two screens night and day?*',
@@ -2566,7 +2566,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'huge',
-              label: 'Yes—a huge mood difference depending on what {pronoun} watched',
+              label: 'Yes, a huge mood difference depending on what {pronoun} watched',
               response:
                 'You spotted it straight away! Not all screen minutes are equal: mystery prizes, rapid cuts, and loud coin chimes flood preschool dopamine circuits far differently than gentle storytelling.',
             },
@@ -2580,7 +2580,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Inside sticky app design',
           beat2Title: 'Flip the lens from “bad behavior” to “engineered reward hooks”',
           beat2Lead:
-            'When a 5-year-old gets cranky after a free tablet game, it isn’t a character flaw—it’s a tiny nervous system coming off rapid slot-machine confetti bursts. Flip lenses and audit the signals below.',
+            'When a 5-year-old gets cranky after a free tablet game, it isn’t a character flaw, it’s a tiny nervous system coming off rapid slot-machine confetti bursts. Flip lenses and audit the signals below.',
           visualType: AlmanacVisualType.LENS_EXPOSURE_MATRIX,
           visualStageTitle: 'Behavior lens vs. persuasive-design lens',
           visualStageHint: 'Flip lenses, then tap the 10-point media calm check',
@@ -2598,14 +2598,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             unitLabel: 'calm score',
             lowMax: 3,
             midMax: 6,
-            lowMsg: 'Score 1–3 (Hyper-Sticky): Autoplay shorts, mystery surprise eggs, flashing pop-up ads, and relentless reward dings—expect intense mood crashes.',
-            midMsg: 'Score 4–6 (Mixed): Entertaining cartoons with fast pacing—watchable occasionally in short doses with clear stopping pacts.',
-            highMsg: 'Score 7–10 (Almanac Calm): Slow 4+ second camera pacing, ad-free creative apps (drawing, music, building), or gentle human-paced stories—kids walk away relaxed!',
+            lowMsg: 'Score 1–3 (Hyper-Sticky): Autoplay shorts, mystery surprise eggs, flashing pop-up ads, and relentless reward dings, expect intense mood crashes.',
+            midMsg: 'Score 4–6 (Mixed): Entertaining cartoons with fast pacing, watchable occasionally in short doses with clear stopping pacts.',
+            highMsg: 'Score 7–10 (Almanac Calm): Slow 4+ second camera pacing, ad-free creative apps (drawing, music, building), or gentle human-paced stories, kids walk away relaxed!',
           },
           almanacTruth:
-            'Post-screen crankiness is usually a design problem, not a kid problem—pruning hyper-stimulating autoplay apps cures half of preschool screen battles overnight.',
+            'Post-screen crankiness is usually a design problem, not a kid problem, pruning hyper-stimulating autoplay apps cures half of preschool screen battles overnight.',
           scienceDeepDive:
-            'Pediatric media audits (Radesky et al., Journal of Developmental & Behavioral Pediatrics) found that the vast majority of top-downloaded “free” preschool apps contain manipulative persuasive-design patterns—loot-box surprise rewards, countdown pressure, and distracting ad prompts—that spike arousal and disrupt self-regulation.',
+            'Pediatric media audits (Radesky et al., Journal of Developmental & Behavioral Pediatrics) found that the vast majority of top-downloaded “free” preschool apps contain manipulative persuasive-design patterns, loot-box surprise rewards, countdown pressure, and distracting ad prompts, that spike arousal and disrupt self-regulation.',
           beat3Kicker: 'Practice a calm app swap',
           beat3Title: 'Retire a hyper-sticky app without triggering a power war',
           rehearsalTriggerSpeaker: '{Name} hunting for the loud surprise-egg game on the tablet',
@@ -2615,32 +2615,32 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'blame',
               label: '“You can’t handle that game! You turn into a monster every time you play it!”',
-              whyTitle: 'Why that’s so tempting—and what {name} hears',
+              whyTitle: 'Why that’s so tempting, and what {name} hears',
               whyText:
                 'Calling {obj} a “monster” makes {name} feel bad inside instead of putting the blame squarely on the app’s loud design.',
             },
             {
               id: 'reinstall',
               label: 'Re-download it quietly so Saturday morning stays peaceful.',
-              whyTitle: 'Why that’s so tempting—and why pruning wins',
+              whyTitle: 'Why that’s so tempting, and why pruning wins',
               whyText:
                 'One calm weekend swap to slower, ad-free options pays you back every single week afterward.',
             },
           ],
           calmScriptPlain:
-            '“I took that egg game off our tablet because it’s designed to keep kids’ brains buzzing way too fast—just like too much frosting makes tummies ache. You still have your drawing studio and train builder—which one looks fun?”',
+            '“I took that egg game off our tablet because it’s designed to keep kids’ brains buzzing way too fast, just like too much frosting makes tummies ache. You still have your drawing studio and train builder, which one looks fun?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'blameapp',
-              text: 'I took that egg game off our tablet because it’s designed to keep kids’ brains buzzing way too fast—just like too much frosting makes tummies ache.',
+              text: 'I took that egg game off our tablet because it’s designed to keep kids’ brains buzzing way too fast, just like too much frosting makes tummies ache.',
               tag: 'Blames the App, Never the Child',
               note: 'Builds early media literacy while keeping {possessive} self-esteem 100% intact.',
             },
             { text: ' ' },
             {
               id: 'offer',
-              text: 'You still have your drawing studio and train builder—which one looks fun?',
+              text: 'You still have your drawing studio and train builder, which one looks fun?',
               tag: 'Pivots to Calm Choices',
               note: 'Redirects straight toward creative, low-crash options.',
             },
@@ -2657,14 +2657,14 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               label: '“All my friends watch those crazy unboxing videos!”',
               setup: 'Validate warmly and hold your calm family standard:',
               script:
-                '“Every family picks different shows for their home—in our house we pick ones that leave our brains feeling good afterward.”',
+                '“Every family picks different shows for their home, in our house we pick ones that leave our brains feeling good afterward.”',
             },
             {
               id: 'boredcalm',
               label: '“Calm shows feel ‘boring’ at first after fast videos!”',
               setup: 'Totally expected for 4–5 days while dopamine resets:',
               script:
-                '“After super-loud cartoons, gentle stories feel quiet for a few days—stick with them for one week and watch {possessive} delight come right back.”',
+                '“After super-loud cartoons, gentle stories feel quiet for a few days, stick with them for one week and watch {possessive} delight come right back.”',
             },
           ],
           advisorPrompt:
@@ -2692,7 +2692,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'When you teach a five-year-old to notice “how my brain feels after this show,” you plant the very first seed of lifelong digital wisdom.',
           pocketInsight:
-            'Post-screen crankiness is engineered app design—blame the app, delete loud ad/autoplay hooks, and curate slow-paced or creative options.',
+            'Post-screen crankiness is engineered app design, blame the app, delete loud ad/autoplay hooks, and curate slow-paced or creative options.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 3 · 3 min',
             mystery: '“How do you keep tablets off dinner tables and out of bedrooms without feeling like the strict parent?”',
@@ -2713,10 +2713,10 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.device_dock,
           illustrationCaption: 'Kitchen basket · One rule for every human',
           headline: 'Screen-Free Meals & Bedrooms (Without Feeling Like the Bad Guy)',
-          deck: 'Why two simple household zones—the dinner table and the bedroom—protect preschool sleep, appetite, and conversation effortlessly when grown-ups join in too.',
+          deck: 'Why two simple household zones, the dinner table and the bedroom, protect preschool sleep, appetite, and conversation effortlessly when grown-ups join in too.',
           sceneTime: '6:10 PM · DINNER TABLE',
           sceneBody:
-            'Restaurants, busy Tuesdays, tired evenings—somewhere along the line the tablet started sneaking next to the pasta plate, and your own phone sits face-up beside your fork. *You want warm family dinners back without starting a huge protest.*',
+            'Restaurants, busy Tuesdays, tired evenings, somewhere along the line the tablet started sneaking next to the pasta plate, and your own phone sits face-up beside your fork. *You want warm family dinners back without starting a huge protest.*',
           pollQuestion: 'Which screen-free zone feels hardest to protect right now?',
           pollOptions: [
             {
@@ -2729,7 +2729,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
               id: 'bedtime',
               label: 'The final hour before bed',
               response:
-                'Protecting the last 60 minutes before sleep lets natural melatonin rise cleanly—and putting every device in a kitchen “sleep basket” makes it a joyful house ritual.',
+                'Protecting the last 60 minutes before sleep lets natural melatonin rise cleanly, and putting every device in a kitchen “sleep basket” makes it a joyful house ritual.',
             },
           ],
           beat2Kicker: 'Installing effortless house zones',
@@ -2745,7 +2745,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Zone 1 · Kitchen',
                 label: 'Sleep Basket',
                 title: 'One cozy basket where ALL screens nap',
-                desc: 'Place a small woven basket on the kitchen counter with chargers inside—tablets AND adult phones rest there during dinner and overnight.',
+                desc: 'Place a small woven basket on the kitchen counter with chargers inside, tablets AND adult phones rest there during dinner and overnight.',
                 why: 'Kids follow what we model 10x faster than what we lecture.',
               },
               {
@@ -2772,7 +2772,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Protecting just two sacred zones—screen-free meals and screen-free bedrooms—gives preschoolers better sleep, healthier eating cues, and a lifetime blueprint for healthy tech habits.',
+            'Protecting just two sacred zones, screen-free meals and screen-free bedrooms, gives preschoolers better sleep, healthier eating cues, and a lifetime blueprint for healthy tech habits.',
           scienceDeepDive:
             'American Academy of Pediatrics Family Media Plan guidelines highlight screen-free meal tables and device-free bedrooms (with 60-minute pre-sleep buffers) as the highest-impact household norms for protecting pediatric sleep duration, BMI regulation, and language-rich parent-child conversation.',
           beat3Kicker: 'Practice introducing the reset',
@@ -2784,25 +2784,25 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'strict',
               label: '“Because I said so! Put it down or you’re losing dessert!”',
-              whyTitle: 'Why that’s so tempting—and what it turns dinner into',
+              whyTitle: 'Why that’s so tempting, and what it turns dinner into',
               whyText:
-                'Power-based demands make kids fight for control—whereas letting {name} tuck BOTH your phone and the tablet into bed together feels playful and fair.',
+                'Power-based demands make kids fight for control, whereas letting {name} tuck BOTH your phone and the tablet into bed together feels playful and fair.',
             },
             {
               id: 'hypocrite',
               label: 'Take {possessive} tablet away while still glancing at your own phone notifications.',
-              whyTitle: 'Why that’s so tempting—and what kids notice immediately',
+              whyTitle: 'Why that’s so tempting, and what kids notice immediately',
               whyText:
-                'Five-year-olds are eagle-eyed fairness detectors—putting your own phone in the basket FIRST makes the rule instantly respected.',
+                'Five-year-olds are eagle-eyed fairness detectors, putting your own phone in the basket FIRST makes the rule instantly respected.',
             },
           ],
           calmScriptPlain:
-            '“New fun house rule for ALL of us—even Mom and Dad! Our screens get hungry for a nap while we eat. Want to be the one who tucks my phone AND your tablet into the kitchen basket?”',
+            '“New fun house rule for ALL of us, even Mom and Dad! Our screens get hungry for a nap while we eat. Want to be the one who tucks my phone AND your tablet into the kitchen basket?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'allofus',
-              text: 'New fun house rule for ALL of us—even Mom and Dad!',
+              text: 'New fun house rule for ALL of us, even Mom and Dad!',
               tag: 'Shared Fairness',
               note: 'Eliminates “strict parent vs. little kid” tension in one warm sentence.',
             },
@@ -2824,9 +2824,9 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'restaurant',
               label: '“What about loud nights waiting 30 minutes at a restaurant?”',
-              setup: 'Pull out the surprise Busy Pouch or play tabletop games first—zero guilt if an occasional long flight needs flexibility:',
+              setup: 'Pull out the surprise Busy Pouch or play tabletop games first, zero guilt if an occasional long flight needs flexibility:',
               script:
-                '“Let’s open the special restaurant pouch while our food cooks—want to draw a monster on the paper placemat or play I-Spy?”',
+                '“Let’s open the special restaurant pouch while our food cooks, want to draw a monster on the paper placemat or play I-Spy?”',
             },
             {
               id: 'travel',
@@ -2845,7 +2845,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'basket',
               title: 'Set out one “Device Sleep Basket” in the kitchen before dinner',
-              desc: 'Let {name} tuck your phone in beside the tablet—celebrate being a screen-free dinner team.',
+              desc: 'Let {name} tuck your phone in beside the tablet, celebrate being a screen-free dinner team.',
             },
             {
               id: 'busypouch',
@@ -2861,7 +2861,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'Putting your own phone into the basket beside {possessive} tablet sends the clearest message a child can ever receive: “Right now, nothing in the world is more important than sitting here with you.”',
           pocketInsight:
-            'Anchor two sacred house zones—screen-free meals and bedrooms—using one kitchen Device Sleep Basket that holds adult phones too.',
+            'Anchor two sacred house zones, screen-free meals and bedrooms, using one kitchen Device Sleep Basket that holds adult phones too.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 4 · 3 min',
             mystery: '“What is the simple 5-minute bridge that helps {name} leap joyfully from a screen straight back into real play?”',
@@ -2882,29 +2882,29 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Post-screen bridge · Landing softly in real play',
           headline: 'The 5-Minute Bridge: Moving From Screens Back to Real Play',
-          deck: 'Why saying “Go play with your toys!” right after shutting off a screen falls flat—and the 5-minute warm bridge that reignites real-world imagination.',
+          deck: 'Why saying “Go play with your toys!” right after shutting off a screen falls flat, and the 5-minute warm bridge that reignites real-world imagination.',
           sceneTime: '4:40 PM · RIGHT AFTER TV ENDS',
           sceneBody:
-            'The TV is off—victory! Except for the next fifteen minutes {name} flops dramatically across the rug groaning “I’m SO BORED! There’s NOTHING to do!” right beside two full shelves of toys. *Why does real life suddenly feel dull right after a show?*',
+            'The TV is off, victory! Except for the next fifteen minutes {name} flops dramatically across the rug groaning “I’m SO BORED! There’s NOTHING to do!” right beside two full shelves of toys. *Why does real life suddenly feel dull right after a show?*',
           pollQuestion: 'Does the “I’m bored!” slump hit right after screens turn off?',
           pollOptions: [
             {
               id: 'always',
-              label: 'Every time—takes 20 minutes to get playing again',
+              label: 'Every time, takes 20 minutes to get playing again',
               response:
-                'Totally biological! Dropping from bright, effortless stimulation straight into an empty room feels like stepping out of a sunny beach into a dark hallway—eyes and brains need a brief bridge.',
+                'Totally biological! Dropping from bright, effortless stimulation straight into an empty room feels like stepping out of a sunny beach into a dark hallway, eyes and brains need a brief bridge.',
             },
             {
               id: 'whiny',
               label: 'Gets clingy and follows me whining right after',
               response:
-                'A 3-minute playful bridge using the show’s own theme—or a simple sensory spark—gets {possessive} imagination flying solo fast!',
+                'A 3-minute playful bridge using the show’s own theme, or a simple sensory spark, gets {possessive} imagination flying solo fast!',
             },
           ],
           beat2Kicker: 'Re-igniting real-world flow',
           beat2Title: 'Bridge from the story ON screen straight into hands-on play',
           beat2Lead:
-            'Joining for just two warm minutes—connecting what {name} just watched to a real-world prop or movement—gently hands the steering wheel back to {poss} own imagination. Tap the 3 bridge beats below.',
+            'Joining for just two warm minutes, connecting what {name} just watched to a real-world prop or movement, gently hands the steering wheel back to {poss} own imagination. Tap the 3 bridge beats below.',
           visualType: AlmanacVisualType.SERVE_RETURN_LOOP,
           visualStageTitle: 'The 3-step post-screen landing bridge',
           visualStageHint: 'Tap each step to turn post-TV slumps into real play',
@@ -2914,7 +2914,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '01',
                 actor: 'Connect first',
                 label: 'Ask One Warm Question',
-                quote: '“Whoa—how did that puppy build such a giant blanket fort?!”',
+                quote: '“Whoa, how did that puppy build such a giant blanket fort?!”',
                 desc: 'Sit beside {name} for the final 60 seconds and enter the story world warmly.',
                 brainNote: 'Bridges passive screen absorption back into social human connection.',
               },
@@ -2922,7 +2922,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '02',
                 actor: 'Spark hands',
                 label: 'Offer One Physical Bridge',
-                quote: '“Bet we can drape this sheet over two chairs—want to be the puppy or the builder?”',
+                quote: '“Bet we can drape this sheet over two chairs, want to be the puppy or the builder?”',
                 desc: 'Hand over one concrete sensory trigger: bubbles, a snack, chalk, playdough, or a blanket fort.',
                 brainNote: 'Hands-on movement resets dopamine cleanly without whining.',
               },
@@ -2931,15 +2931,15 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
                 actor: 'Fade out',
                 label: 'Step Back Into Flow',
                 quote: 'Stay 3 minutes until {poss} story catches fire, then step away warmly',
-                desc: 'Once {name} starts inventing rules, say “Awesome fort—I’ll be at the counter chopping carrots!”',
+                desc: 'Once {name} starts inventing rules, say “Awesome fort. I’ll be at the counter chopping carrots!”',
                 brainNote: 'Rebuilds independent creative momentum effortlessly.',
               },
             ],
           },
           almanacTruth:
-            'Right after a screen turns off, {name} doesn’t need a lecture about all the toys in the room—{pronoun} needs a 3-minute warm landing strip back into real-world play.',
+            'Right after a screen turns off, {name} doesn’t need a lecture about all the toys in the room, {pronoun} needs a 3-minute warm landing strip back into real-world play.',
           scienceDeepDive:
-            'Pediatric attention-restoration studies highlight that passive screen consumption suppresses endogenous imaginative initiation temporarily. Brief caregiver-scaffolded transitional bridges—especially tactile or story-linked prompts—accelerate return to self-directed play and reduce post-media irritability.',
+            'Pediatric attention-restoration studies highlight that passive screen consumption suppresses endogenous imaginative initiation temporarily. Brief caregiver-scaffolded transitional bridges, especially tactile or story-linked prompts, accelerate return to self-directed play and reduce post-media irritability.',
           beat3Kicker: 'Practice right at credits',
           beat3Title: 'Pivot smoothly out of “I’m bored!” without turning on another show',
           rehearsalTriggerSpeaker: '{Name} flopping face-down on the rug after TV ends',
@@ -2949,20 +2949,20 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'listtoys',
               label: '“Look at all these toys you have! Go play in your room, you’re not bored!”',
-              whyTitle: 'Why that’s so tempting—and why kids slump harder',
+              whyTitle: 'Why that’s so tempting, and why kids slump harder',
               whyText:
-                'Pointing at a cluttered shelf overwhelms a post-screen brain—making it even harder to pick a starting spark.',
+                'Pointing at a cluttered shelf overwhelms a post-screen brain, making it even harder to pick a starting spark.',
             },
             {
               id: 'entertain',
               label: 'Drop dinner prep completely for 40 minutes to act as full-time cruise director.',
-              whyTitle: 'Why that’s so tempting—and the 3-minute shortcut',
+              whyTitle: 'Why that’s so tempting, and the 3-minute shortcut',
               whyText:
-                'You only need 3 focused minutes to light the match—then step back cleanly while {name} carries the flame.',
+                'You only need 3 focused minutes to light the match, then step back cleanly while {name} carries the flame.',
             },
           ],
           calmScriptPlain:
-            '“Oof, landing back in the living room feels slow for a minute! I’ve got three minutes before I start dinner—should we launch a giant pillow-fort rescue like in the show, or grab the chalk outside?”',
+            '“Oof, landing back in the living room feels slow for a minute! I’ve got three minutes before I start dinner, should we launch a giant pillow-fort rescue like in the show, or grab the chalk outside?”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -2974,7 +2974,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'bridge',
-              text: 'I’ve got three minutes before I start dinner—should we launch a giant pillow-fort rescue like in the show, or grab the chalk outside?',
+              text: 'I’ve got three minutes before I start dinner, should we launch a giant pillow-fort rescue like in the show, or grab the chalk outside?',
               tag: '3-Min Story Bridge',
               note: 'Connects the show’s theme straight into hands-on action while setting a clear 3-minute parent boundary.',
             },
@@ -2988,15 +2988,15 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
           pushbacks: [
             {
               id: 'staylonger',
-              label: '“No! Don’t go make dinner—stay and play forever!”',
+              label: '“No! Don’t go make dinner, stay and play forever!”',
               setup: 'Validate warmly and invite {obj} right alongside you if {pronoun} wants closeness:',
               script:
-                '“Playing with you is my favorite! My hands need to cook pasta now—you can keep building the fort OR bring two dinosaurs onto the kitchen rug beside me.”',
+                '“Playing with you is my favorite! My hands need to cook pasta now, you can keep building the fort OR bring two dinosaurs onto the kitchen rug beside me.”',
             },
             {
               id: 'refuseboth',
               label: '“I don’t want forts OR chalk!”',
-              setup: 'Trust healthy boredom calmly—it usually sparks a brand-new idea within 4 minutes:',
+              setup: 'Trust healthy boredom calmly, it usually sparks a brand-new idea within 4 minutes:',
               script:
                 '“Totally okay to feel bored for a few minutes! Your clever brain always cooks up something awesome when we give it quiet space.”',
             },
@@ -3024,7 +3024,7 @@ export const TIER_1_EARLY_CHILDHOOD_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Screens don’t have to end in tears or boredom—with a warm three-minute landing bridge, {name} discovers that real-world play is even better than watching.',
+            'Screens don’t have to end in tears or boredom, with a warm three-minute landing bridge, {name} discovers that real-world play is even better than watching.',
           pocketInsight:
             'Prepare one tactile or story-linked 3-minute bridge before credits roll so {name} lands softly from screens back into real play.',
           nextEpisodeHook: null,

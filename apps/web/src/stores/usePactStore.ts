@@ -51,7 +51,7 @@ export function getDefaultClausesForTierAndRoad(
       category: ClauseCategory.DEVICE_CURFEW,
       party: CommitmentParty.CHILD,
       title: `${formattedCurfew} Bedtime Kitchen Docking`,
-      description: `Every night at ${formattedCurfew}, my device plugs in at the kitchen charging spot—never in the bedroom—so my brain gets deep, uninterrupted sleep.`,
+      description: `Every night at ${formattedCurfew}, my device plugs in at the kitchen charging spot (never in the bedroom) so my brain gets deep, uninterrupted sleep.`,
       isStandard: true,
       isCustom: false,
       sortOrder: 1,
@@ -61,7 +61,7 @@ export function getDefaultClausesForTierAndRoad(
       party: CommitmentParty.CHILD,
       title: 'Open-Door Safety & Uncomfortable Encounters',
       description:
-        'If I see something weird, scary, or mean online—or make a mistake—I will bring it straight to my parents, knowing I will get calm help instead of getting yelled at.',
+        'If I see something weird, scary, or mean online, or make a mistake, I will bring it straight to my parents, knowing I will get calm help instead of getting yelled at.',
       isStandard: true,
       isCustom: false,
       sortOrder: 2,
@@ -101,7 +101,7 @@ export function getDefaultClausesForTierAndRoad(
       party: CommitmentParty.PARENT,
       title: 'Screen-Free Family Meals & Modeling Presence',
       description:
-        'We will silence and park our own phones during family dinners, car chats, and bedtime wind-down—because the house rules apply to grown-ups too.',
+        'We will silence and park our own phones during family dinners, car chats, and bedtime wind-down, because the house rules apply to grown-ups too.',
       isStandard: true,
       isCustom: false,
       sortOrder: 6,
@@ -211,7 +211,7 @@ function syncCurfewInClauseList(
       return {
         ...c,
         title: `${formattedCurfew} Bedtime Kitchen Docking`,
-        description: `Every night at ${formattedCurfew}, my device plugs in at the kitchen charging spot—never in the bedroom—so my brain gets deep, uninterrupted sleep.`,
+        description: `Every night at ${formattedCurfew}, my device plugs in at the kitchen charging spot (never in the bedroom) so my brain gets deep, uninterrupted sleep.`,
       };
     }
     return c;

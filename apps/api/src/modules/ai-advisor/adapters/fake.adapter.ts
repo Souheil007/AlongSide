@@ -24,7 +24,7 @@ export class DeterministicAiAdvisorFake implements LlmClientAdapter {
     this.providerName = opts.providerName ?? 'fake-llm';
     this.tokens = opts.tokens ?? [
       'First, take a deep breath. ',
-      'What you just witnessed was not a character failure—it was a neurochemical dopamine crash. ',
+      'What you just witnessed was not a character failure, it was a neurochemical dopamine crash. ',
       'When your child stops a high-reward game abruptly, their brain registers an acute deficit. ',
       'Wait 10 minutes for their nervous system to settle, then use this script: ',
       '"I know shutting down in the middle of a match felt awful. In our Family Pact, the screen docks at 8:30 PM."',

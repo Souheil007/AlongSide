@@ -261,7 +261,7 @@ export function ReadinessWizard({
         </div>
         <p className="text-sm text-[var(--body)] leading-relaxed max-w-[58ch]">
           Pick what happens on an ordinary week with {targetChildName}. Honest answers
-          give you a clearer roadmap—there are no wrong choices here.
+          give you a clearer roadmap. There are no wrong choices here.
         </p>
       </header>
 

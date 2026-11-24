@@ -66,7 +66,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
       },
       {
         "question": "Why must aspirin never be given to children or adolescents under age 19?",
-        "answerMarkdown": "Aspirin (acetylsalicylic acid) given during viral illnesses (influenza, chickenpox) can trigger Reye's Syndrome—a catastrophic, life-threatening condition characterized by acute brain encephalopathy and fatty liver failure with 30–40% mortality. Only acetaminophen and ibuprofen are approved pediatric antipyretics.",
+        "answerMarkdown": "Aspirin (acetylsalicylic acid) given during viral illnesses (influenza, chickenpox) can trigger Reye's Syndrome, a catastrophic, life-threatening condition characterized by acute brain encephalopathy and fatty liver failure with 30–40% mortality. Only acetaminophen and ibuprofen are approved pediatric antipyretics.",
         "deEscalationScript": "\"Under no circumstances should any aspirin product, Pepto-Bismol, or salicylate compounds be given to children. Check medicine labels carefully to ensure only pediatric acetaminophen or ibuprofen is used.\"",
         targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
         targetRoad: RoadType.PRE_DEVICE
@@ -495,7 +495,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
       {
         "question": "Why does my 18-month-old toddler suddenly eat almost nothing compared to infancy?",
         "answerMarkdown": "Between birth and age 1, infants triple their birth weight. After age 1, growth velocity sharply decelerates to 4-5 lbs per year. A toddler's metabolic caloric requirement plummets accordingly. Appetite naturally fluctuates wildly based on daily growth spurts.",
-        "deEscalationScript": "\"Toddler appetites are like rollercoasters—some days they eat three bowls of pasta, and some days they live on air and two blueberries. Look at their intake across an entire week rather than a single meal.\"",
+        "deEscalationScript": "\"Toddler appetites are like rollercoasters, some days they eat three bowls of pasta, and some days they live on air and two blueberries. Look at their intake across an entire week rather than a single meal.\"",
         targetTier: DevelopmentalTier.TIER_0B_TODDLER_1_2,
         targetRoad: RoadType.PRE_DEVICE
       },
@@ -1181,7 +1181,7 @@ export const FAQ_SEED_CATEGORIES: FaqCategorySeedData[] = [
       },
       {
         "question": "How do I de-escalate bedtime stalling and endless curtain calls?",
-        "answerMarkdown": "Toddlers stall at bedtime because separating from parents and entering the dark triggers nighttime vulnerability. Implement a predictable visual schedule (Bath, 2 Books, Song, Lights Out) and a \"Bedtime Pass\"—one physical card the child can trade for one glass of water or one hug. Once surrendered, boundaries remain silent and firm.",
+        "answerMarkdown": "Toddlers stall at bedtime because separating from parents and entering the dark triggers nighttime vulnerability. Implement a predictable visual schedule (Bath, 2 Books, Song, Lights Out) and a \"Bedtime Pass\", one physical card the child can trade for one glass of water or one hug. Once surrendered, boundaries remain silent and firm.",
         "deEscalationScript": "\"You used your Bedtime Pass for water. The pass is asleep now until tomorrow. Your body is safe in your cozy bed, and I will check on you in 10 minutes.\"",
         targetTier: DevelopmentalTier.TIER_1_EARLY_CHILDHOOD_4_6,
         targetRoad: RoadType.PRE_DEVICE

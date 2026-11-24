@@ -45,7 +45,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'daily',
-              label: 'Yes—multiple times a day!',
+              label: 'Yes, multiple times a day!',
               response:
                 'Welcome to 12–24 months: {possessive} desires just grew ten times faster than {poss} vocabulary. Floor-level calm gives {obj} the safety net {poss} words can’t provide yet.',
             },
@@ -98,7 +98,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'In the first ten seconds of a toddler meltdown, drop below eye level, exhale slowly, and keep your words under eight syllables—connection opens ears later.',
+            'In the first ten seconds of a toddler meltdown, drop below eye level, exhale slowly, and keep your words under eight syllables, connection opens ears later.',
           scienceDeepDive:
             'During acute toddler distress, sympathetic activation suppresses ventral vagal social engagement. Lowering caregiver eye level reduces looming visual threat cues, while slow prosodic vocalization under 8 words supports autonomic down-regulation through co-regulated neuroception.',
           beat3Kicker: 'Practice the first 10 seconds',
@@ -110,8 +110,8 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'explain',
               label:
-                '“Keys have germs and sharp edges, sweetie, you can’t put them in your mouth—stop crying!”',
-              whyTitle: 'Why that’s so tempting—and what {name} hears',
+                '“Keys have germs and sharp edges, sweetie, you can’t put them in your mouth, stop crying!”',
+              whyTitle: 'Why that’s so tempting, and what {name} hears',
               whyText:
                 'It’s 100% accurate! Yet sixteen fast words sound like static to a sobbing toddler, and “stop crying” teaches {obj} to cry louder to prove how upset {pronoun} feels.',
             },
@@ -119,9 +119,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'cave',
               label:
                 'Hand the keys right back for five minutes just to make the screaming stop.',
-              whyTitle: 'Why that’s so tempting—and what happens tomorrow',
+              whyTitle: 'Why that’s so tempting, and what happens tomorrow',
               whyText:
-                'Instant quiet is tempting when your ears ring—yet handing back a boundary item teaches {poss} clever brain that floor-screaming unlocks forbidden treasures.',
+                'Instant quiet is tempting when your ears ring, yet handing back a boundary item teaches {poss} clever brain that floor-screaming unlocks forbidden treasures.',
             },
           ],
           calmScriptPlain:
@@ -132,14 +132,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'kneel',
               text: '(Kneel down calmly, open palms) Mad about keys.',
               tag: 'Names Feeling',
-              note: 'Three simple words tell {name} you understood {poss} heart—immediately taking wind out of the protest.',
+              note: 'Three simple words tell {name} you understood {poss} heart, immediately taking wind out of the protest.',
             },
             { text: ' ' },
             {
               id: 'limit',
               text: 'Keys stay up.',
               tag: 'Steady Wall',
-              note: 'Holds the safety limit calmly like gravity—no debate, no anger.',
+              note: 'Holds the safety limit calmly like gravity, no debate, no anger.',
             },
             { text: ' ' },
             {
@@ -174,7 +174,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) collapses crying every time I take away an unsafe object—what calm 2-step swaps work best for a young toddler?”',
+            '“{Name} ({age}) collapses crying every time I take away an unsafe object, what calm 2-step swaps work best for a young toddler?”',
           beat4Kicker: 'Today’s 10-second shift',
           beat4Title: 'Pick one calm anchor for the next big protest',
           beat4Lead:
@@ -197,7 +197,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'A toddler collapsing over car keys isn’t testing your authority—{pronoun} is practicing surviving disappointment for the very first time in {poss} life, with your calm knee right beside {obj}.',
+            'A toddler collapsing over car keys isn’t testing your authority, {pronoun} is practicing surviving disappointment for the very first time in {poss} life, with your calm knee right beside {obj}.',
           pocketInsight:
             'First 10 seconds of a toddler meltdown: drop to one knee, exhale slowly, hold the boundary in 6 calm words, and save swaps for after breathing slows.',
           nextEpisodeHook: {
@@ -221,15 +221,15 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.cup,
           illustrationCaption: 'Age 1–2 · Big gas pedal, tiny early brakes',
           headline: 'Why Logic Doesn’t Work Mid-Tantrum (Gas Pedal vs. Brakes)',
-          deck: 'Why {name} isn’t “ignoring you” when upset—and how seeing the two-part brain architecture permanently melts parental frustration.',
+          deck: 'Why {name} isn’t “ignoring you” when upset, and how seeing the two-part brain architecture permanently melts parental frustration.',
           sceneTime: '4:45 PM · KITCHEN TILE',
           sceneBody:
-            'A banana snaps cleanly in half. {Name} stares at the two pieces in pure heartbreak, sobbing uncontrollably. You calmly explain *“It tastes the exact same!”*—and somehow that makes {obj} cry even harder. *Why can’t simple logic land?*',
+            'A banana snaps cleanly in half. {Name} stares at the two pieces in pure heartbreak, sobbing uncontrollably. You calmly explain *“It tastes the exact same!”*, and somehow that makes {obj} cry even harder. *Why can’t simple logic land?*',
           pollQuestion: 'Have tiny absurd triggers (broken banana, wrong socks) ever baffled you?',
           pollOptions: [
             {
               id: 'allthetime',
-              label: 'Yes—broken bananas are a daily crisis!',
+              label: 'Yes, broken bananas are a daily crisis!',
               response:
                 'To a one-year-old whose brain thrives on predictability, a broken banana genuinely feels like the rules of the universe cracked! Seeing the brain hardware explains everything.',
             },
@@ -237,7 +237,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'wondering',
               label: 'Wondering when reasoning actually starts working',
               response:
-                'Real impulse-braking pathways don’t kick in meaningfully until ages 3.5 to 4—and keep maturing into the twenties. Right now, YOU are the borrowed brake.',
+                'Real impulse-braking pathways don’t kick in meaningfully until ages 3.5 to 4, and keep maturing into the twenties. Right now, YOU are the borrowed brake.',
             },
           ],
           beat2Kicker: 'Inside {possessive} growing mind',
@@ -277,12 +277,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 name: 'Downstairs Alarm Core',
                 value: '100% Full Gas',
                 tone: 'amber',
-                desc: 'Genuinely experiences a snapped banana as overwhelming grief—not manipulation.',
+                desc: 'Genuinely experiences a snapped banana as overwhelming grief, not manipulation.',
               },
             ],
           },
           almanacTruth:
-            'Your toddler isn’t refusing to be reasonable—during a meltdown the reasoning highway is literally unplugged. Warm presence reconnects the bridge; logic waits for calm.',
+            'Your toddler isn’t refusing to be reasonable, during a meltdown the reasoning highway is literally unplugged. Warm presence reconnects the bridge; logic waits for calm.',
           scienceDeepDive:
             'In toddlers aged 12–24 months, subcortical limbic structures (amygdala, hypothalamus) are functionally robust while ventromedial prefrontal inhibitory projections remain largely unmyelinated. Acute norepinephrine release temporarily disconnects nascent cortical processing until sympathetic tone subsides.',
           beat3Kicker: 'Meeting the feeling without fixing reality',
@@ -294,8 +294,8 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'debate',
               label:
-                '“I can’t glue a banana back together! You’re being silly—just eat it!”',
-              whyTitle: 'Why that’s so natural—and what {name} feels',
+                '“I can’t glue a banana back together! You’re being silly, just eat it!”',
+              whyTitle: 'Why that’s so natural, and what {name} feels',
               whyText:
                 'Of course bananas can’t be glued! Calling genuine tiny heartbreak “silly” makes {obj} feel alone inside a big scary wave.',
             },
@@ -303,7 +303,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'newbanana',
               label:
                 'Race to peel three fresh bananas hoping one stays 100% unbroken.',
-              whyTitle: 'Why that’s tempting—and why riding out one tiny grief helps',
+              whyTitle: 'Why that’s tempting, and why riding out one tiny grief helps',
               whyText:
                 'Sometimes grabbing another banana is totally fine! Yet letting {name} safely feel one small disappointment with your warm arm around {obj} builds real emotional muscle.',
             },
@@ -316,7 +316,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'mirror',
               text: 'Aw, it broke! You really wanted one big whole banana.',
               tag: 'Joins Reality',
-              note: 'Matches {possessive} disappointment with gentle sincerity—zero mocking, zero frantic fixing.',
+              note: 'Matches {possessive} disappointment with gentle sincerity, zero mocking, zero frantic fixing.',
             },
             { text: ' ' },
             {
@@ -339,19 +339,19 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Totally human! Just tuck the smile gently until afterward so {name} feels taken seriously:',
               script:
-                '“Big feelings over little bananas are hilarious in hindsight—giving 30 seconds of warm empathy first dissolves it way faster than laughing.”',
+                '“Big feelings over little bananas are hilarious in hindsight, giving 30 seconds of warm empathy first dissolves it way faster than laughing.”',
             },
             {
               id: 'afterwave',
               label: '“What do I do once the crying stops?”',
               setup:
-                'Once {poss} breath catches with a little sigh, move cheerfully forward—zero post-mortem lecture:',
+                'Once {poss} breath catches with a little sigh, move cheerfully forward, zero post-mortem lecture:',
               script:
                 '“Deep breath… all better. Want to dip one half in yogurt or hold both pieces like drumsticks?”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) melts down intensely over tiny daily changes—how can I validate feelings without giving in to unreasonable demands?”',
+            '“{Name} ({age}) melts down intensely over tiny daily changes, how can I validate feelings without giving in to unreasonable demands?”',
           beat4Kicker: 'Today’s perspective shift',
           beat4Title: 'Pick one “borrowed brakes” habit to try next',
           beat4Lead:
@@ -360,12 +360,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'holdhand',
               title: 'Picture Dr. Siegel’s “flipped lid” before reacting',
-              desc: 'When tears explode over something tiny, remind yourself silently: “Lid is flipped—warmth now, words later.”',
+              desc: 'When tears explode over something tiny, remind yourself silently: “Lid is flipped, warmth now, words later.”',
             },
             {
               id: 'ninetysec',
               title: 'Ride out one small disappointment without fixing it',
-              desc: 'Hold {name} warmly for 90 seconds over a snapped cracker instead of grabbing a fresh one—watch resilience grow.',
+              desc: 'Hold {name} warmly for 90 seconds over a snapped cracker instead of grabbing a fresh one, watch resilience grow.',
             },
             {
               id: 'nolecture',
@@ -380,7 +380,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 3 · 3 min',
             mystery:
-              '“Why do 70% of toddler meltdowns cluster right around 11:15 AM and 5:15 PM—and how can you dodge them?”',
+              '“Why do 70% of toddler meltdowns cluster right around 11:15 AM and 5:15 PM, and how can you dodge them?”',
             title: 'Catching Meltdowns Early: Hunger, Tiredness & Overload',
             targetSlug: 'toddler-halt-metabolic-audit',
           },
@@ -401,12 +401,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           deck: 'How checking four biological batteries (Hungry, Angry/Overstimulated, Lonely, Tired) prevents half of daily toddler storms before they start.',
           sceneTime: '5:15 PM · WHILE COOKING DINNER',
           sceneBody:
-            'Dinner is twenty minutes away and {name} suddenly melts down clinging to your jeans, throwing wooden blocks, and weeping over nothing. *It looks like sudden defiance—until you realize lunch was four hours ago and blood sugar just hit the floor.*',
+            'Dinner is twenty minutes away and {name} suddenly melts down clinging to your jeans, throwing wooden blocks, and weeping over nothing. *It looks like sudden defiance, until you realize lunch was four hours ago and blood sugar just hit the floor.*',
           pollQuestion: 'Do your hardest toddler hours cluster at the exact same times every day?',
           pollOptions: [
             {
               id: 'witching',
-              label: 'Yes—late afternoon is rough almost daily',
+              label: 'Yes, late afternoon is rough almost daily',
               response:
                 'Tiny toddler livers store far less glucose than adults, so blood sugar and sensory stamina plummet right between 4:30 and 5:30 PM.',
             },
@@ -437,14 +437,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: '12:30 PM',
                 label: 'Sleep Battery (T)',
                 title: 'Protect the midday nap anchor',
-                desc: 'Notice clumsy stumbling, whining, or ear-pulling—those are early physical signs sleep pressure just peaked.',
+                desc: 'Notice clumsy stumbling, whining, or ear-pulling, those are early physical signs sleep pressure just peaked.',
                 why: 'Catching the nap prevents evening cortisol overload.',
               },
               {
                 timeOrCue: '4:45 PM',
                 label: 'Sensory Reset (A)',
                 title: 'Step outside or dim lights for 10 minutes',
-                desc: 'Late afternoon brings peak sensory static from daycare or loud rooms—fresh air, bath play, or dim soft music clears the bucket.',
+                desc: 'Late afternoon brings peak sensory static from daycare or loud rooms, fresh air, bath play, or dim soft music clears the bucket.',
                 why: 'Lowers nervous-system load right before dinner prep.',
               },
               {
@@ -459,7 +459,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           almanacTruth:
             'Before correcting sudden toddler crankiness, check the body batteries: a protein snack, a sip of water, five minutes of quiet connection, or dimmer lights solves half of daily tears upstream.',
           scienceDeepDive:
-            'Toddlers have high cerebral metabolic rates relative to hepatic glycogen storage, causing blood glucose dips every 2.5–3.5 hours that trigger counter-regulatory adrenaline and cortisol release—manifesting behaviorally as sudden irritability, weeping, and impulsivity.',
+            'Toddlers have high cerebral metabolic rates relative to hepatic glycogen storage, causing blood glucose dips every 2.5–3.5 hours that trigger counter-regulatory adrenaline and cortisol release, manifesting behaviorally as sudden irritability, weeping, and impulsivity.',
           beat3Kicker: 'Reframing 5:15 PM crankiness',
           beat3Title: 'Feeding the body first instead of debating behavior',
           rehearsalTriggerSpeaker: '{Name} tugging your pants whimpering at 5:15 PM',
@@ -469,8 +469,8 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'waitdinner',
               label:
-                '“Dinner is in 20 minutes—don’t spoil your appetite! Go play with your toys!”',
-              whyTitle: 'Why that’s so reasonable—and why it backfires at age 1',
+                '“Dinner is in 20 minutes, don’t spoil your appetite! Go play with your toys!”',
+              whyTitle: 'Why that’s so reasonable, and why it backfires at age 1',
               whyText:
                 'Twenty minutes feels like eternity to a hungry 18-month-old. Serving a small plate of dinner veggies right now actually boosts nutrition AND calms the kitchen!',
             },
@@ -491,7 +491,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'spot',
               text: 'Your belly and cuddle cup both hit empty right at 5:15!',
               tag: 'Decodes Body Need',
-              note: 'Turns annoying whining into understandable biology—dropping your irritation instantly.',
+              note: 'Turns annoying whining into understandable biology, dropping your irritation instantly.',
             },
             { text: ' ' },
             {
@@ -512,7 +512,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'spoil',
               label: '“Won’t a 5:15 PM snack ruin dinner?”',
               setup:
-                'Serve parts of dinner itself (avocado slices, steamed peas, shredded chicken)—it IS dinner, just started calmly!',
+                'Serve parts of dinner itself (avocado slices, steamed peas, shredded chicken), it IS dinner, just started calmly!',
               script:
                 '“If {name} eats {poss} veggies and protein at 5:15 PM while hungry, dinner is already a win!”',
             },
@@ -522,11 +522,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Pull a safe learning tower or highchair away from heat with a bowl of water + whisk or dinner veggies:',
               script:
-                '“Climb up safe right here beside me—you can wash these big celery sticks while I stir!”',
+                '“Climb up safe right here beside me, you can wash these big celery sticks while I stir!”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) melts down every afternoon between 4:30 and 6:00 PM while I make dinner—can you help me design a calm 3-step afternoon rhythm?”',
+            '“{Name} ({age}) melts down every afternoon between 4:30 and 6:00 PM while I make dinner, can you help me design a calm 3-step afternoon rhythm?”',
           beat4Kicker: 'Tomorrow’s upstream rescue',
           beat4Title: 'Pick one battery-refill habit for tomorrow',
           beat4Lead:
@@ -549,13 +549,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Half of parenting wisdom isn’t clever discipline—it’s noticing that a tiny human is simply hungry, overstimulated, or missing your lap, and feeding that need five minutes sooner.',
+            'Half of parenting wisdom isn’t clever discipline, it’s noticing that a tiny human is simply hungry, overstimulated, or missing your lap, and feeding that need five minutes sooner.',
           pocketInsight:
             'Run the HALT check upstream: serve dinner veggies at 5:15 PM, offer 5 undivided floor minutes before cooking, and use fresh air or bath water to clear afternoon static.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 4 · 3 min',
             mystery:
-              '“Why does a sweet, loving 18-month-old suddenly chomp your shoulder or swat a friend—and what stops it fast?”',
+              '“Why does a sweet, loving 18-month-old suddenly chomp your shoulder or swat a friend, and what stops it fast?”',
             title: 'Staying Calm and Firm When {Name} Hits or Bites',
             targetSlug: 'toddler-biting-hitting-redirect',
           },
@@ -573,23 +573,23 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.heart_bridge,
           illustrationCaption: 'Boring block · Big calm boundary',
           headline: 'Staying Calm and Firm When {Name} Hits or Bites',
-          deck: 'Why huge shocked reactions accidentally make hitting and biting repeat—and the calm, firm “boring block + clear redirect” that ends the phase.',
+          deck: 'Why huge shocked reactions accidentally make hitting and biting repeat, and the calm, firm “boring block + clear redirect” that ends the phase.',
           sceneTime: '10:30 AM · PLAYDATE RUG',
           sceneBody:
-            'Another toddler reaches for {possessive} truck. Before you can blink, {name} leans in and chomps their arm—or swings a fast palm straight at your cheek. *A flush of embarrassment and worry rushes through you: “Is my child aggressive?!”*',
+            'Another toddler reaches for {possessive} truck. Before you can blink, {name} leans in and chomps their arm, or swings a fast palm straight at your cheek. *A flush of embarrassment and worry rushes through you: “Is my child aggressive?!”*',
           pollQuestion: 'Have hitting, hair-pulling, or biting popped up in your home?',
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—and it feels awful and embarrassing',
+              label: 'Yes, and it feels awful and embarrassing',
               response:
                 'Take a steady breath: hitting and biting at ages 1–2 are pre-verbal distress signals, NOT character flaws or future aggression. Calm, boring blocking extinguishes them fast.',
             },
             {
               id: 'smiling',
-              label: 'Yes—and {pronoun} laughs or smirks right after!',
+              label: 'Yes, and {pronoun} laughs or smirks right after!',
               response:
-                'That smirk isn’t cruelty—it’s either nervous tension or delight at our giant theatrical “OWWW! NO BITING!” reaction. Keeping your response calm and utterly boring stops the experiment.',
+                'That smirk isn’t cruelty, it’s either nervous tension or delight at our giant theatrical “OWWW! NO BITING!” reaction. Keeping your response calm and utterly boring stops the experiment.',
             },
           ],
           beat2Kicker: 'Inside {possessive} pre-verbal brain',
@@ -606,7 +606,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: 'Calm body block',
                 label: 'Block Smoothly',
                 quote: 'Gently catch the hand or step calmly between bodies',
-                desc: 'Keep your face neutral and voice low—zero dramatic gasping, shouting, or grabbing harshly.',
+                desc: 'Keep your face neutral and voice low, zero dramatic gasping, shouting, or grabbing harshly.',
                 brainNote: 'Removes the theatrical firework reaction that accidentally reinforces testing.',
               },
               {
@@ -614,7 +614,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: 'Clear 5-word wall',
                 label: 'State the Limit',
                 quote: '“I won’t let you bite. Biting hurts.”',
-                desc: 'Short, firm, matter-of-fact—never ask “Why did you do that?” or demand forced apologies at age one.',
+                desc: 'Short, firm, matter-of-fact, never ask “Why did you do that?” or demand forced apologies at age one.',
                 brainNote: 'Clear calm limits feel safe and predictable to an impulsive toddler.',
               },
               {
@@ -628,7 +628,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Toddler hitting and biting aren’t malice—they are pre-verbal urgency. A calm, boring block plus one clear replacement phrase stops the phase far faster than yelling or dramatic scolding.',
+            'Toddler hitting and biting aren’t malice, they are pre-verbal urgency. A calm, boring block plus one clear replacement phrase stops the phase far faster than yelling or dramatic scolding.',
           scienceDeepDive:
             'Between 12 and 30 months, expressive language lags well behind limbic urgency and territorial impulse. High-arousal parental reactions (“NO! BAD!”) inadvertently deliver intense social reinforcement (dopaminergic salience), whereas neutral physical blocking paired with immediate replacement scripting accelerates inhibitory learning.',
           beat3Kicker: 'Practice the calm block',
@@ -640,8 +640,8 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'yell',
               label:
-                'Shout startled: “OW! NO HITTING! That makes Mommy so sad—look what you did!”',
-              whyTitle: 'Why that’s so natural—and what {poss} brain learns',
+                'Shout startled: “OW! NO HITTING! That makes Mommy so sad, look what you did!”',
+              whyTitle: 'Why that’s so natural, and what {poss} brain learns',
               whyText:
                 'Being smacked genuinely stings! Yet huge emotional theatrics fascinate a 1-year-old’s cause-and-effect brain (“Whoa, one tiny swat makes giant fireworks!”) and can make {obj} try it again to see the show.',
             },
@@ -651,23 +651,23 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Tap {poss} hand back or lecture for three minutes demanding “Say you’re sorry!”',
               whyTitle: 'Why that backfires',
               whyText:
-                'Hitting back models using hands when upset, and a 1-year-old cannot grasp forced apologies yet—modeling gentle care for the hurt person teaches real empathy instead.',
+                'Hitting back models using hands when upset, and a 1-year-old cannot grasp forced apologies yet, modeling gentle care for the hurt person teaches real empathy instead.',
             },
           ],
           calmScriptPlain:
-            '“(Catch wrist gently, completely calm low voice) Ouch. I won’t let you hit. Hands are gentle—you can stomp your feet or push this pillow if you’re mad.”',
+            '“(Catch wrist gently, completely calm low voice) Ouch. I won’t let you hit. Hands are gentle, you can stomp your feet or push this pillow if you’re mad.”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'block',
               text: '(Catch wrist gently, completely calm low voice) Ouch. I won’t let you hit.',
               tag: 'Boring Firm Wall',
-              note: 'Zero drama, zero shame—protects your body with total steadiness.',
+              note: 'Zero drama, zero shame, protects your body with total steadiness.',
             },
             { text: ' ' },
             {
               id: 'redirect',
-              text: 'Hands are gentle—you can stomp your feet or push this pillow if you’re mad.',
+              text: 'Hands are gentle, you can stomp your feet or push this pillow if you’re mad.',
               tag: 'Safe Outlet',
               note: 'Channels physical energy straight into an acceptable movement instead of leaving {obj} stuck.',
             },
@@ -685,19 +685,19 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Give big warm attention to the injured child FIRST (making biting boring for {name}), then shadow {name} calmly:',
               script:
-                '“(To hurt child) Oh, are you okay? Let’s get a cool cloth. (Calmly to {name}) Teeth are not for people. You wanted space—say ‘BACK UP’.”',
+                '“(To hurt child) Oh, are you okay? Let’s get a cool cloth. (Calmly to {name}) Teeth are not for people. You wanted space, say ‘BACK UP’.”',
             },
             {
               id: 'keepsdoing',
               label: '“{Pronoun} hits again three seconds later smiling”',
               setup:
-                'Calmly set {name} down safely on the rug and step two feet back—zero anger, clear consequence:',
+                'Calmly set {name} down safely on the rug and step two feet back, zero anger, clear consequence:',
               script:
                 '“I won’t let you hit my face. I’m putting you down on the rug to keep my body safe. Ready for gentle hands in a minute.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) has started hitting or biting when excited or frustrated—how do I figure out the exact trigger and coach {obj} calmly?”',
+            '“{Name} ({age}) has started hitting or biting when excited or frustrated, how do I figure out the exact trigger and coach {obj} calmly?”',
           beat4Kicker: 'Your calm boundary tool',
           beat4Title: 'Pick one steady response to keep ready this week',
           beat4Lead:
@@ -731,7 +731,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
   }),
 
   // ===========================================================================
-  // COURSE 7: Toddler Nap Drops & Peaceful Bedtimes (3 Episodes — Clinical Triage Cut)
+  // COURSE 7: Toddler Nap Drops & Peaceful Bedtimes (3 Episodes: Clinical Triage Cut)
   // ===========================================================================
   buildBespokeCourse({
     slug: 'health-toddler-sleep-and-nap-transitions',
@@ -757,21 +757,21 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.moon_bed,
           illustrationCaption: '13–18 months · Shifting morning nap slowly',
           headline: 'Moving From Two Naps to One Without 5 PM Crashes',
-          deck: 'How nudging naptime forward by 15 minutes every few days—and using an earlier bedtime bridge—keeps this bumpy transition tear-free.',
+          deck: 'How nudging naptime forward by 15 minutes every few days, and using an earlier bedtime bridge, keeps this bumpy transition tear-free.',
           sceneTime: '2:45 PM · REFUSING NAP #2 AGAIN',
           sceneBody:
-            'For the fifth afternoon straight, {name} stood up in the crib singing happily through nap #2—yet if you skip the morning nap entirely, {pronoun} falls asleep in {poss} pasta bowl at 5:30 PM. *You feel trapped in nap-transition limbo.*',
+            'For the fifth afternoon straight, {name} stood up in the crib singing happily through nap #2, yet if you skip the morning nap entirely, {pronoun} falls asleep in {poss} pasta bowl at 5:30 PM. *You feel trapped in nap-transition limbo.*',
           pollQuestion: 'Are you seeing bumpy two-nap vs. one-nap days right now?',
           pollOptions: [
             {
               id: 'limbo',
-              label: 'Yes—two naps is too much, one isn’t quite enough!',
+              label: 'Yes, two naps is too much, one isn’t quite enough!',
               response:
                 'That exact 4-week limbo is completely normal between 13 and 18 months. Shifting lunch earlier and using a temporary 6:30 PM bedtime bridges it cleanly.',
             },
             {
               id: 'soon',
-              label: 'Not yet—getting ready ahead of time',
+              label: 'Not yet, getting ready ahead of time',
               response:
                 'Wait until {name} refuses the second nap consistently for 10–14 days (not just a 2-day teething blip!) before making the switch.',
             },
@@ -779,7 +779,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'The sleep-pressure shift',
           beat2Title: 'Watch how one midday nap resets the whole day',
           beat2Lead:
-            'Around 14–18 months, toddler sleep pressure builds more slowly—so morning sleep steals momentum from the afternoon. Tap each timepoint on the 1-nap curve below.',
+            'Around 14–18 months, toddler sleep pressure builds more slowly, so morning sleep steals momentum from the afternoon. Tap each timepoint on the 1-nap curve below.',
           visualType: AlmanacVisualType.CIRCADIAN_CURVE,
           visualStageTitle: 'The smooth 1-nap toddler daily curve',
           visualStageHint: 'Tap each timepoint from wake to early bridge bedtime',
@@ -805,7 +805,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 label: 'One Big Nap',
                 title: 'Gradually walk nap from 11:30 → 12:30 PM',
                 desc: 'Start the first week at 11:30 AM and nudge 15 minutes later every 3–4 days until landing around 12:15–12:30 PM.',
-                tip: 'If {name} wakes after 45 minutes early on, stay quiet and dim—longer naps consolidate in 2–3 weeks.',
+                tip: 'If {name} wakes after 45 minutes early on, stay quiet and dim, longer naps consolidate in 2–3 weeks.',
               },
               {
                 time: '6:30 PM',
@@ -817,7 +817,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Don’t jump cold turkey to a 1:00 PM nap—walk naptime forward 15 minutes every few days, serve an early lunch first, and use a temporary early bedtime for three weeks.',
+            'Don’t jump cold turkey to a 1:00 PM nap, walk naptime forward 15 minutes every few days, serve an early lunch first, and use a temporary early bedtime for three weeks.',
           scienceDeepDive:
             'Between 12 and 18 months, the homeostatic sleep-pressure accumulation curve flattens, allowing wake stretches of 4.5–5.5 hours. Gradual phase shifting of the morning nap toward solar midday aligns homeostatic pressure with the natural circadian post-lunch dip, consolidating REM and slow-wave sleep into a single 90–150 minute block.',
           beat3Kicker: 'Surviving the 10:30 AM yawn',
@@ -829,10 +829,10 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'carnap',
               label:
-                'Buckle {obj} into the car to run a quick errand at 10:30 AM—and {pronoun} falls asleep for 10 minutes.',
+                'Buckle {obj} into the car to run a quick errand at 10:30 AM, and {pronoun} falls asleep for 10 minutes.',
               whyTitle: 'Why that’s a sneaky trap',
               whyText:
-                'A 10-minute car micro-nap empties just enough sleep pressure to ruin the 12:00 PM crib nap completely—leaving you with zero afternoon rest.',
+                'A 10-minute car micro-nap empties just enough sleep pressure to ruin the 12:00 PM crib nap completely, leaving you with zero afternoon rest.',
             },
             {
               id: 'flipflop',
@@ -844,7 +844,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           calmScriptPlain:
-            '“Ooh, morning sleepy wave! Let’s step outside to feel the breeze and crunch an apple slice—then early lunch and our big cozy nap!”',
+            '“Ooh, morning sleepy wave! Let’s step outside to feel the breeze and crunch an apple slice, then early lunch and our big cozy nap!”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -853,7 +853,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               tag: 'Gentle Wake Boost',
               note: 'Outdoor light and crunchy chewing naturally lift a 10:30 AM dip without overstimulation.',
             },
-            { text: '—' },
+            { text: ', ' },
             {
               id: 'preview',
               text: 'then early lunch and our big cozy nap!',
@@ -872,9 +872,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'shortmid',
               label: '“{Pronoun} only slept 50 minutes for the one nap!”',
               setup:
-                'Totally normal in weeks 1–2—protect the evening with a calm quiet rest at 4:00 PM and a 6:15 PM bedtime:',
+                'Totally normal in weeks 1–2, protect the evening with a calm quiet rest at 4:00 PM and a 6:15 PM bedtime:',
               script:
-                '“Short nap today—no stress. We’ll do a cozy book cuddle at 4:00 PM and tuck in 30 minutes early tonight.”',
+                '“Short nap today, no stress. We’ll do a cozy book cuddle at 4:00 PM and tuck in 30 minutes early tonight.”',
             },
             {
               id: 'daycare',
@@ -886,7 +886,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) is halfway between two naps and one nap—can you sketch a gentle 2-week transition schedule starting from our current 7 AM wake time?”',
+            '“{Name} ({age}) is halfway between two naps and one nap, can you sketch a gentle 2-week transition schedule starting from our current 7 AM wake time?”',
           beat4Kicker: 'This week’s sleep bridge',
           beat4Title: 'Pick one transition anchor to try this week',
           beat4Lead:
@@ -909,7 +909,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Once the one-nap rhythm settles in, something wonderful happens: your whole morning opens up for parks, libraries, and unhurried outings—followed by a glorious midday pause for you too.',
+            'Once the one-nap rhythm settles in, something wonderful happens: your whole morning opens up for parks, libraries, and unhurried outings, followed by a glorious midday pause for you too.',
           pocketInsight:
             'Walk nap #1 toward 12:00 PM by 15 minutes every few days, serve early lunch first, guard against 10 AM car snoozes, and use an early bridge bedtime for 2–3 weeks.',
           nextEpisodeHook: {
@@ -933,15 +933,15 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.moon_bed,
           illustrationCaption: '15–18 months · Deepening attachment awareness',
           headline: 'Why Bedtime Suddenly Feels Scary at 15–18 Months',
-          deck: 'Why sudden crib-railing tears aren’t manipulation—they are a big leap in memory and imagination—and how the “Check-Back Promise” restores peaceful nights.',
+          deck: 'Why sudden crib-railing tears aren’t manipulation, they are a big leap in memory and imagination, and how the “Check-Back Promise” restores peaceful nights.',
           sceneTime: '7:25 PM · THE CRIB RAILING',
           sceneBody:
-            'For months bedtime was smooth sailing. Tonight the instant you reach for the doorknob, {name} shoots upright gripping the crib bars with genuine panic: *“MAMA! DADA! DON’T GO!”* *Your heart twists—is {pronoun} stalling, or truly frightened?*',
+            'For months bedtime was smooth sailing. Tonight the instant you reach for the doorknob, {name} shoots upright gripping the crib bars with genuine panic: *“MAMA! DADA! DON’T GO!”* *Your heart twists, is {pronoun} stalling, or truly frightened?*',
           pollQuestion: 'Have sudden bedtime clinging or tearful wake-ups shown up lately?',
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—the second I touch the doorknob!',
+              label: 'Yes, the second I touch the doorknob!',
               response:
                 'Right around 15–18 months, {possessive} brain just realized two huge things: you keep existing in the next room, AND {pronoun} loves being close to you. Predictable check-backs calm this fast.',
             },
@@ -955,19 +955,19 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Inside {possessive} growing mind',
           beat2Title: 'Flip the lens on 18-month bedtime clinging',
           beat2Lead:
-            'Toddlers don’t have a clock in their head yet—when you step behind a closed door, {name} has no idea if you’re gone for two minutes or forever. Flip the lens and tap the trust-building check-ins below.',
+            'Toddlers don’t have a clock in their head yet, when you step behind a closed door, {name} has no idea if you’re gone for two minutes or forever. Flip the lens and tap the trust-building check-ins below.',
           visualType: AlmanacVisualType.LENS_EXPOSURE_MATRIX,
           visualStageTitle: 'Stalling lens vs. attachment-leap lens',
           visualStageHint: 'Compare both lenses, then tap calm check-back reps below',
           visualConfig: {
             adultLabel: 'Frustrated bedtime lens',
-            adultQuote: '“{Pronoun} knows the rules—{pronoun} is just testing me to stay up!”',
+            adultQuote: '“{Pronoun} knows the rules, {pronoun} is just testing me to stay up!”',
             adultSub:
               'When you are desperate for one hour of adult evening, standing at the crib bars feels like deliberate stalling.',
             childLabel: '18-month attachment lens',
             childQuote: '“I know you’re still out there… how do I know you’ll come back?”',
             childSub:
-              'Permanent object awareness plus zero sense of time makes a closed door feel huge—keeping tiny return promises builds rock-solid confidence.',
+              'Permanent object awareness plus zero sense of time makes a closed door feel huge, keeping tiny return promises builds rock-solid confidence.',
             exposureHeading: 'The “I Always Come Back” check-back trust meter',
             exposureSub: 'Tap nights 1 to 10 to see separation confidence grow',
             totalDots: 10,
@@ -983,7 +983,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               'Nights 8–10: {Name} hugs {poss} lovey and settles peacefully knowing your steady bond lasts all night.',
           },
           almanacTruth:
-            'At 15–18 months, bedtime clinging is a developmental leap in attachment—not manipulation. One brief, kept promise (“I’ll peek back in two minutes to check on you”) builds deep nighttime trust.',
+            'At 15–18 months, bedtime clinging is a developmental leap in attachment, not manipulation. One brief, kept promise (“I’ll peek back in two minutes to check on you”) builds deep nighttime trust.',
           scienceDeepDive:
             'Around 15–18 months, maturation of hippocampal object permanence combined with immature prefrontal temporal estimation creates a normative second peak of separation anxiety. Predictable, calm caregiver return protocols (“check-and-console” / bedtime pass) rapidly attenuate nighttime cortisol reactivity.',
           beat3Kicker: 'Warm, confident departures',
@@ -998,7 +998,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Wait until {pronoun} turns away for two seconds and tiptoe silently out the door.',
               whyTitle: 'Why that backfires fast',
               whyText:
-                'If {name} looks up and sees you vanished silently, {poss} alarm locks onto maximum vigilance—refusing to close {poss} eyes tomorrow in case you sneak away again.',
+                'If {name} looks up and sees you vanished silently, {poss} alarm locks onto maximum vigilance, refusing to close {poss} eyes tomorrow in case you sneak away again.',
             },
             {
               id: 'bargain',
@@ -1006,7 +1006,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Say “Okay, one more book… okay, five more minutes rocking…” four times in a row.',
               whyTitle: 'Why shifting goalposts adds anxiety',
               whyText:
-                'When crying keeps moving the boundary, {name} feels unsure who is steering the ship—predictable, warm consistency feels much safer.',
+                'When crying keeps moving the boundary, {name} feels unsure who is steering the ship, predictable, warm consistency feels much safer.',
             },
           ],
           calmScriptPlain:
@@ -1031,7 +1031,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'promise',
               text: 'and I’ll peek my head right back in two minutes to blow you a kiss.',
               tag: 'Kept Promise',
-              note: 'Actually popping back in at 2 minutes—even if {pronoun}’s quiet—proves your word is rock solid!',
+              note: 'Actually popping back in at 2 minutes, even if {pronoun}’s quiet, proves your word is rock solid!',
             },
             { text: '”' },
           ],
@@ -1045,9 +1045,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'criescheck',
               label: '“{Pronoun} cries harder when I leave after the 2-minute check”',
               setup:
-                'Keep the check short (10 seconds), warm, and identical—don’t linger or restart the whole routine:',
+                'Keep the check short (10 seconds), warm, and identical, don’t linger or restart the whole routine:',
               script:
-                '“Just like I promised—I’m here, you’re safe, I love you. Checking back again in four minutes.”',
+                '“Just like I promised. I’m here, you’re safe, I love you. Checking back again in four minutes.”',
             },
             {
               id: 'lovey',
@@ -1055,11 +1055,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'For safe toddlers over 12 months, sleep with a small breathable cotton lovey tucked in your shirt for one night so it smells like you:',
               script:
-                '“Give Bunny a kiss with me—Bunny keeps our cuddle smell right here in your crib all night.”',
+                '“Give Bunny a kiss with me. Bunny keeps our cuddle smell right here in your crib all night.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) suddenly started crying intensely at bedtime separation after months of sleeping great—how do I do the calm check-back method step by step?”',
+            '“{Name} ({age}) suddenly started crying intensely at bedtime separation after months of sleeping great, how do I do the calm check-back method step by step?”',
           beat4Kicker: 'Tonight’s trust builder',
           beat4Title: 'Pick one gentle separation bridge tonight',
           beat4Lead:
@@ -1082,9 +1082,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'When {name} reaches for you through the crib rails, it isn’t a sleep failure—it’s proof of how deeply safe you are in {poss} world. Keep your goodbye warm, keep your 2-minute promise, and watch nighttime trust bloom right back.',
+            'When {name} reaches for you through the crib rails, it isn’t a sleep failure, it’s proof of how deeply safe you are in {poss} world. Keep your goodbye warm, keep your 2-minute promise, and watch nighttime trust bloom right back.',
           pocketInsight:
-            '15–18 month bedtime clinging is an attachment leap. Never sneak out—offer one calm, kept 2-minute check-back promise and a familiar lovey.',
+            '15–18 month bedtime clinging is an attachment leap. Never sneak out, offer one calm, kept 2-minute check-back promise and a familiar lovey.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 3 · 3 min',
             mystery:
@@ -1106,10 +1106,10 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.moon_bed,
           illustrationCaption: 'Same 4 beats · Bath · Pajamas · 2 Books · Song',
           headline: 'A Predictable 15-Minute Bedtime Rhythm That Sticks',
-          deck: 'Why keeping the crib safe longer—and running the exact same 4 calm beats every evening—lets the routine cue sleep instead of your voice.',
+          deck: 'Why keeping the crib safe longer, and running the exact same 4 calm beats every evening, lets the routine cue sleep instead of your voice.',
           sceneTime: '7:10 PM · CHASING A NAKED TODDLER',
           sceneBody:
-            'Bath ended fine, yet somehow getting pajamas on turned into giggling sprints down the hallway, three water requests, and an overtired burst of tears by 8:00 PM. *Wait—why does bedtime take nearly an hour every night?*',
+            'Bath ended fine, yet somehow getting pajamas on turned into giggling sprints down the hallway, three water requests, and an overtired burst of tears by 8:00 PM. *Wait, why does bedtime take nearly an hour every night?*',
           pollQuestion: 'Where does your toddler bedtime routine usually stretch out or derail?',
           pollOptions: [
             {
@@ -1159,13 +1159,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: 'Min 13–15',
                 label: 'One Song & Crib',
                 title: 'One slow lullaby + consistent crib safety',
-                desc: 'Keep toddlers in a safe crib (with lowest mattress setting & sleep sack) as long as safe—usually closer to age 2.5–3—before rushing a big bed.',
+                desc: 'Keep toddlers in a safe crib (with lowest mattress setting & sleep sack) as long as safe, usually closer to age 2.5–3, before rushing a big bed.',
                 why: 'Crib walls give a 1-year-old cozy physical clarity so {pronoun} doesn’t have to self-police staying in bed.',
               },
             ],
           },
           almanacTruth:
-            'A short, predictable 15-minute sequence in dim light triggers biological sleepiness far better than an elaborate 60-minute production—and waiting on a big-kid bed keeps nights dramatically calmer.',
+            'A short, predictable 15-minute sequence in dim light triggers biological sleepiness far better than an elaborate 60-minute production, and waiting on a big-kid bed keeps nights dramatically calmer.',
           scienceDeepDive:
             'Controlled pediatric sleep trials (Mindell et al., Sleep) demonstrate that installing a brief, consistent 3-to-4-step bedtime routine reduces sleep-onset latency and nighttime awakenings within just three nights by pairing conditioned environmental cues with post-bath peripheral vasodilation.',
           beat3Kicker: 'Holding the 2-book line warmly',
@@ -1177,10 +1177,10 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'onemore',
               label:
-                '“Okay, JUST one more fast one—then seriously sleep!” (Repeated three times)',
+                '“Okay, JUST one more fast one, then seriously sleep!” (Repeated three times)',
               whyTitle: 'Why that teaches tomorrow’s stall',
               whyText:
-                'Every extra negotiated book teaches {poss} clever brain that protesting louder extends bedtime—pushing {obj} straight past the sleepy window.',
+                'Every extra negotiated book teaches {poss} clever brain that protesting louder extends bedtime, pushing {obj} straight past the sleepy window.',
             },
             {
               id: 'rushsharp',
@@ -1248,7 +1248,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'lampjob',
               title: 'Make {name} the official “Lamp Switcher” after Book #2',
-              desc: 'Lift {obj} up to click the light off {obj}self—instant toddler pride instead of a power struggle.',
+              desc: 'Lift {obj} up to click the light off {obj}self, instant toddler pride instead of a power struggle.',
             },
             {
               id: 'savestack',
@@ -1257,7 +1257,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Bedtime doesn’t have to feel like a nightly marathon. Fifteen warm, predictable minutes in dim light give {name} the safety to let go—and hand you back your quiet evening.',
+            'Bedtime doesn’t have to feel like a nightly marathon. Fifteen warm, predictable minutes in dim light give {name} the safety to let go, and hand you back your quiet evening.',
           pocketInsight:
             'Run 4 identical dim-light beats in 15 minutes (Bath → 2-Choice PJs → 2 Books → Lamp Click + Song) and keep the crib safely until closer to age 2.5–3.',
           nextEpisodeHook: null,
@@ -1294,7 +1294,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.plate,
           illustrationCaption: 'Clear lanes · Parent sets the menu, child listens to belly',
           headline: 'Who Decides What (and How Much): Ending Highchair Battles',
-          deck: 'The two-lane rule that instantly lowers your stress at dinner—and raises a child who trusts their own hunger cues for life.',
+          deck: 'The two-lane rule that instantly lowers your stress at dinner, and raises a child who trusts their own hunger cues for life.',
           sceneTime: '5:50 PM · HIGHCHAIR STANDOFF',
           sceneBody:
             'You load a colorful plate of soft meatballs, steamed broccoli, and sweet potato. {Name} eats two raspberries, ignores the rest, and seals {poss} lips shut. *You feel the urge to sing songs, beg “just two more bites,” or chase {obj} around the living room with a loaded fork.*',
@@ -1302,7 +1302,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'counting',
-              label: 'Yes—I track every single bite nervously!',
+              label: 'Yes, I track every single bite nervously!',
               response:
                 'Every loving parent wants their child nourished! Surprisingly, stepping out of the “bite-counter” job actually makes toddlers eat MORE calmly over the course of a week.',
             },
@@ -1324,7 +1324,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             willpowerLabel: 'Coaxing & cheering bites',
             willpowerTitle: 'Parent tries to manage intake',
             willpowerDesc:
-              'Begging “one more bite for Mommy!” or cheering loudly over broccoli makes eating about pleasing you—triggering toddler autonomy pushback.',
+              'Begging “one more bite for Mommy!” or cheering loudly over broccoli makes eating about pleasing you, triggering toddler autonomy pushback.',
             willpowerOutcome: 'Sealed lips, stressed parents, and slower curiosity.',
             guardrailLabel: 'Two Clear Lanes',
             guardrailTitle: 'Parent sets the table · {Name} listens to {poss} belly',
@@ -1334,7 +1334,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             environmentShifts: [
               'Always include 1–2 reliable foods {name} likes alongside the family meal.',
               'Sit down and eat your own warm dinner instead of hovering over {poss} fork.',
-              'Keep commentary about bites at zero—chat about the day, dogs outside, or colors instead!',
+              'Keep commentary about bites at zero, chat about the day, dogs outside, or colors instead!',
             ],
           },
           almanacTruth:
@@ -1351,7 +1351,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'bribe',
               label:
                 '“Just three more bites of chicken and then you can get down and have puffs!”',
-              whyTitle: 'Why that’s so tempting—and what {poss} brain learns',
+              whyTitle: 'Why that’s so tempting, and what {poss} brain learns',
               whyText:
                 'Worrying about a hungry toddler at 2 AM is real! Yet turning chicken into the tollbooth to leave the chair makes dinner feel like a trap.',
             },
@@ -1361,25 +1361,25 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Follow {obj} onto the living room rug sneaking spoonfuls while {pronoun} plays.',
               whyTitle: 'Why wandering bites backfire',
               whyText:
-                'Grazing on the move blurs hunger signals and increases choking risk—keeping seated meals cozy and offering a simple bedtime snack later works much better.',
+                'Grazing on the move blurs hunger signals and increases choking risk, keeping seated meals cozy and offering a simple bedtime snack later works much better.',
             },
           ],
           calmScriptPlain:
-            '“Your belly is telling you all done for now—got it! Dinner stays on the table, and we’ll have our cozy cup of milk or yogurt snack before bedtime if you’re hungry later.”',
+            '“Your belly is telling you all done for now, got it! Dinner stays on the table, and we’ll have our cozy cup of milk or yogurt snack before bedtime if you’re hungry later.”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'trust',
-              text: 'Your belly is telling you all done for now—got it!',
+              text: 'Your belly is telling you all done for now, got it!',
               tag: 'Honors Lane',
-              note: 'Shows {name} you trust {poss} fullness gauge—zero panic, zero power struggle.',
+              note: 'Shows {name} you trust {poss} fullness gauge, zero panic, zero power struggle.',
             },
             { text: ' ' },
             {
               id: 'next',
               text: 'Dinner stays on the table, and we’ll have our cozy cup of milk or yogurt snack before bedtime if you’re hungry later.',
               tag: 'Predictable Safety Net',
-              note: 'Reassures YOUR nervous system that {name} won’t go to bed starving—without short-order cooking.',
+              note: 'Reassures YOUR nervous system that {name} won’t go to bed starving, without short-order cooking.',
             },
             { text: '”' },
           ],
@@ -1393,9 +1393,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'hungry15',
               label: '“Ten minutes later {pronoun} begs for crackers!”',
               setup:
-                'Keep the kitchen boundary warm and steady—offer the saved dinner plate calmly or wait for the scheduled bedtime snack:',
+                'Keep the kitchen boundary warm and steady, offer the saved dinner plate calmly or wait for the scheduled bedtime snack:',
               script:
-                '“Oh, belly has a little more room! Your dinner plate is right here at the table—or we’ll have banana and milk at 6:45 before bath.”',
+                '“Oh, belly has a little more room! Your dinner plate is right here at the table, or we’ll have banana and milk at 6:45 before bath.”',
             },
             {
               id: 'milkfill',
@@ -1403,11 +1403,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'After 12 months, capping cow’s milk around 12–16 oz/day in open/straw cups (served WITH or AFTER meals) opens real appetite for solid iron-rich foods:',
               script:
-                '“Water between meals, and milk in a small cup right alongside dinner—watch {poss} solid appetite jump within 4 days!”',
+                '“Water between meals, and milk in a small cup right alongside dinner, watch {poss} solid appetite jump within 4 days!”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) eats huge breakfasts and almost zero dinner—how do I follow Division of Responsibility without worrying {pronoun} will wake up hungry?”',
+            '“{Name} ({age}) eats huge breakfasts and almost zero dinner, how do I follow Division of Responsibility without worrying {pronoun} will wake up hungry?”',
           beat4Kicker: 'Tonight’s highchair exhale',
           beat4Title: 'Pick one pressure-dropping move for dinner tonight',
           beat4Lead:
@@ -1416,7 +1416,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'sitandeat',
               title: 'Eat your own warm plate without commenting on {possessive} bites',
-              desc: 'Talk about the weather, dogs, or funny faces—not a single “take one bite” all meal.',
+              desc: 'Talk about the weather, dogs, or funny faces, not a single “take one bite” all meal.',
             },
             {
               id: 'waterfirst',
@@ -1430,7 +1430,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Take a deep breath and hand back the bite-counting job tonight. You set a loving, steady table—and {name} gets to grow up listening peacefully to {poss} own body.',
+            'Take a deep breath and hand back the bite-counting job tonight. You set a loving, steady table, and {name} gets to grow up listening peacefully to {poss} own body.',
           pocketInsight:
             'Parent decides WHAT/WHEN/WHERE; {name} decides WHETHER/HOW MUCH. Drop all bite coaxing, sit down to eat yourself, and keep milk modest beside meals.',
           nextEpisodeHook: {
@@ -1454,21 +1454,21 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.leaf,
           illustrationCaption: 'Year 2 · Growth slows naturally by two-thirds',
           headline: 'Why {Name} Suddenly Lives on Air and Three Berries',
-          deck: 'Why the dramatic second-year appetite dip is totally normal growth biology—and why zooming out from one meal to one full week brings instant relief.',
+          deck: 'Why the dramatic second-year appetite dip is totally normal growth biology, and why zooming out from one meal to one full week brings instant relief.',
           sceneTime: '6:15 PM · AN UNTOUCHED DINNER PLATE',
           sceneBody:
-            'At ten months {name} devoured full bowls of oatmeal, avocado, and salmon. Today {pronoun} ate a big breakfast, half a cheese stick at lunch, and exactly three blueberries for dinner—yet still has enough energy to sprint laps around the coffee table. *How is {pronoun} even running?!*',
+            'At ten months {name} devoured full bowls of oatmeal, avocado, and salmon. Today {pronoun} ate a big breakfast, half a cheese stick at lunch, and exactly three blueberries for dinner, yet still has enough energy to sprint laps around the coffee table. *How is {pronoun} even running?!*',
           pollQuestion: 'Has your toddler’s appetite seemed weirdly small or erratic lately?',
           pollOptions: [
             {
               id: 'erratic',
-              label: 'Yes—huge breakfast, zero dinner!',
+              label: 'Yes, huge breakfast, zero dinner!',
               response:
                 'That exact pattern (big breakfast, tiny dinner) is textbook healthy toddler biology! Their growth speed literally drops to one-third of infancy right after birthday #1.',
             },
             {
               id: 'worried',
-              label: 'Yes—it honestly makes me anxious',
+              label: 'Yes, it honestly makes me anxious',
               response:
                 'Seeing the growth-velocity math below (tripling birth weight in Year 1 vs. gaining just 4–6 lbs in Year 2) replaces worry with huge relief.',
             },
@@ -1476,19 +1476,19 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'The brain & growth decoder',
           beat2Title: 'Zoom out from one meal to one whole week',
           beat2Lead:
-            'In year one, babies TRIPLE their birth weight—needing huge constant fuel. In year two, growth slows dramatically to ~4–6 pounds all year, so calorie needs per pound drop sharply! Flip the lens and inspect a real 7-day toddler week below.',
+            'In year one, babies TRIPLE their birth weight, needing huge constant fuel. In year two, growth slows dramatically to ~4–6 pounds all year, so calorie needs per pound drop sharply! Flip the lens and inspect a real 7-day toddler week below.',
           visualType: AlmanacVisualType.LENS_EXPOSURE_MATRIX,
           visualStageTitle: 'Single-meal panic vs. 7-day toddler reality',
           visualStageHint: 'Flip lenses, then tap meals across a normal week',
           visualConfig: {
             adultLabel: 'One-dinner worry lens',
-            adultQuote: '“{Name} only ate three berries tonight—{pronoun} isn’t getting enough nutrition!”',
+            adultQuote: '“{Name} only ate three berries tonight, {pronoun} isn’t getting enough nutrition!”',
             adultSub:
               'Judged by a single 6 PM plate (when toddlers are most tired), almost every 1-year-old looks underfed.',
             childLabel: '7-day growth lens',
-            childQuote: '“My growth curve slowed right on schedule—look at my whole week!”',
+            childQuote: '“My growth curve slowed right on schedule, look at my whole week!”',
             childSub:
-              'Pediatricians evaluate toddler nutrition across a FULL WEEK—big Tuesday breakfast + solid Thursday lunch naturally balance light dinners.',
+              'Pediatricians evaluate toddler nutrition across a FULL WEEK, big Tuesday breakfast + solid Thursday lunch naturally balance light dinners.',
             exposureHeading: 'A normal toddler’s 14-meal energy rhythm',
             exposureSub: 'Tap meals 1 to 14 to see how weekly totals balance',
             totalDots: 14,
@@ -1497,14 +1497,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             lowMax: 4,
             midMax: 9,
             lowMsg:
-              'Light meals (3 berries, 2 crackers): Totally normal—especially at 6 PM when fatigue peaks. Never panic over one plate.',
+              'Light meals (3 berries, 2 crackers): Totally normal, especially at 6 PM when fatigue peaks. Never panic over one plate.',
             midMsg:
               'Steady meals (oatmeal, eggs, avocado toast): Toddlers front-load ~65% of calories before 2:00 PM!',
             highMsg:
-              'Growth-spurt feast days: Out of nowhere {name} eats two full adult portions—balancing the whole week naturally!',
+              'Growth-spurt feast days: Out of nowhere {name} eats two full adult portions, balancing the whole week naturally!',
           },
           almanacTruth:
-            'After birthday #1, growth velocity drops to a third of infancy. Judge toddler nutrition across a full week—not a single tired Tuesday dinner—and front-load nutrient-rich foods at breakfast and lunch.',
+            'After birthday #1, growth velocity drops to a third of infancy. Judge toddler nutrition across a full week, not a single tired Tuesday dinner, and front-load nutrient-rich foods at breakfast and lunch.',
           scienceDeepDive:
             'Infants typically triple birth weight in the first 12 months (~15 lb gain), whereas toddlers aged 12–24 months gain roughly 4–6 lb across the entire year. Classic pediatric feeding studies (Clara Davis; Birch et al.) confirm that healthy toddlers self-regulate total energy intake accurately across 48-to-72-hour windows despite dramatic meal-to-meal variance.',
           beat3Kicker: 'Relaxing around tiny portions',
@@ -1519,7 +1519,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Pile adult-sized scoops onto the plate hoping {pronoun} will eat more.',
               whyTitle: 'Why giant portions actually lower intake',
               whyText:
-                'A mountain of food looks intimidating to a toddler with a fist-sized stomach—starting with tiny 1-tablespoon portions triggers way more curious tasting (and proud requests for “MORE!”).',
+                'A mountain of food looks intimidating to a toddler with a fist-sized stomach, starting with tiny 1-tablespoon portions triggers way more curious tasting (and proud requests for “MORE!”).',
             },
             {
               id: 'pouches',
@@ -1531,12 +1531,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           calmScriptPlain:
-            '“Here’s a tiny tasting plate—two spoonfuls of lentils, three soft berries, and a strip of toast. If your belly wants seconds, just point and ask for more!”',
+            '“Here’s a tiny tasting plate, two spoonfuls of lentils, three soft berries, and a strip of toast. If your belly wants seconds, just point and ask for more!”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'tiny',
-              text: 'Here’s a tiny tasting plate—two spoonfuls of lentils, three soft berries, and a strip of toast.',
+              text: 'Here’s a tiny tasting plate, two spoonfuls of lentils, three soft berries, and a strip of toast.',
               tag: 'Right-Sized',
               note: 'Rule of thumb: ~1 tablespoon per food per year of age keeps the plate approachable.',
             },
@@ -1565,15 +1565,15 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
             {
               id: 'bigbreakfast',
-              label: '“{Name} loves breakfast and ignores dinner—should I change dinner?”',
+              label: '“{Name} loves breakfast and ignores dinner, should I change dinner?”',
               setup:
                 'Lean right into that natural rhythm! Make breakfast and morning snack your nutrient superstars:',
               script:
-                '“Serve eggs, nut butter, iron-rich oats, avocado, or leftovers at breakfast when {poss} appetite is widest—then let dinner be relaxed family connection!”',
+                '“Serve eggs, nut butter, iron-rich oats, avocado, or leftovers at breakfast when {poss} appetite is widest, then let dinner be relaxed family connection!”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) barely eats at dinner—can you give me 5 quick, nutrient-dense breakfast and lunch ideas to front-load healthy fats and iron?”',
+            '“{Name} ({age}) barely eats at dinner, can you give me 5 quick, nutrient-dense breakfast and lunch ideas to front-load healthy fats and iron?”',
           beat4Kicker: 'This week’s calm nutrition lens',
           beat4Title: 'Pick one easy perspective shift this week',
           beat4Lead:
@@ -1582,7 +1582,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'tablespoon',
               title: 'Serve tiny 1-tablespoon starting portions tonight',
-              desc: 'Leave lots of calm empty space on the plate—let {name} feel proud asking for seconds.',
+              desc: 'Leave lots of calm empty space on the plate, let {name} feel proud asking for seconds.',
             },
             {
               id: 'powerbreakfast',
@@ -1596,7 +1596,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'You are not imagining it—your baby’s huge infant appetite really did slow down overnight, right on biological cue. Zoom out to the week, serve approachable little scoops, and let dinner feel joyful again.',
+            'You are not imagining it, your baby’s huge infant appetite really did slow down overnight, right on biological cue. Zoom out to the week, serve approachable little scoops, and let dinner feel joyful again.',
           pocketInsight:
             'Year-2 growth naturally slows by two-thirds. Judge intake over a full week, front-load nutrition at breakfast/lunch, and serve tiny 1-tablespoon starting portions.',
           nextEpisodeHook: {
@@ -1620,23 +1620,23 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.plate,
           illustrationCaption: 'No-thank-you bowl · Calm zero-drama reset',
           headline: 'Stopping Food Throwing Without Turning Dinner Into a Show',
-          deck: 'Why big gasps turn pea-tossing into dinner theater—and how one tiny “all-done bowl” ends highchair launches cleanly.',
+          deck: 'Why big gasps turn pea-tossing into dinner theater, and how one tiny “all-done bowl” ends highchair launches cleanly.',
           sceneTime: '6:08 PM · FLYING PASTA',
           sceneBody:
-            '{Name} finishes {poss} favorite berries, locks eyes directly with yours, holds one piece of broccoli over the edge of the tray… and drops it straight onto the floor with a bright grin. *Your patience snaps—especially when you just swept the floor.*',
+            '{Name} finishes {poss} favorite berries, locks eyes directly with yours, holds one piece of broccoli over the edge of the tray… and drops it straight onto the floor with a bright grin. *Your patience snaps, especially when you just swept the floor.*',
           pollQuestion: 'Is highchair food dropping or throwing testing your nerves this week?',
           pollOptions: [
             {
               id: 'daily',
-              label: 'Every single meal—and the dog loves it!',
+              label: 'Every single meal, and the dog loves it!',
               response:
-                'Haha—if there’s a happy dog under the chair, {name} discovered the world’s funniest arcade game! Moving the pet out and adding a “no-thank-you bowl” breaks the loop fast.',
+                'Haha, if there’s a happy dog under the chair, {name} discovered the world’s funniest arcade game! Moving the pet out and adding a “no-thank-you bowl” breaks the loop fast.',
             },
             {
               id: 'alldone',
               label: 'Mostly right at the end of the meal',
               response:
-                'Bingo—for young toddlers, tossing food over the cliff is literally how they say “my belly is full and I want out!”',
+                'Bingo, for young toddlers, tossing food over the cliff is literally how they say “my belly is full and I want out!”',
             },
           ],
           beat2Kicker: 'Decoding the launch',
@@ -1653,7 +1653,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: '1st drop · Boring cue',
                 label: 'Redirect to Bowl',
                 quote: '“Food stays on the tray or goes in this little bowl.”',
-                desc: 'Keep your face totally calm and neutral—do NOT rush to pick the piece up off the floor while {name} watches.',
+                desc: 'Keep your face totally calm and neutral, do NOT rush to pick the piece up off the floor while {name} watches.',
                 brainNote: 'Eliminates the joyful “drop it → watch Mom dive” fetch loop.',
               },
               {
@@ -1661,7 +1661,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: '2nd drop · Read fullness',
                 label: 'Translate the Signal',
                 quote: '“Throwing tells me your belly is all done! Let’s wipe hands.”',
-                desc: 'Calmly interpret repeated throwing as “finished”—zero anger, zero punishment, just smoothly ending the meal.',
+                desc: 'Calmly interpret repeated throwing as “finished”, zero anger, zero punishment, just smoothly ending the meal.',
                 brainNote: 'Links throwing directly to the boring end of highchair time.',
               },
               {
@@ -1675,7 +1675,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'A toddler staring you in the eye while dropping broccoli isn’t being defiant—they are testing gravity, testing your reaction, or signaling “I’m full.” Keep reactions boring and install a “no-thank-you” bowl.',
+            'A toddler staring you in the eye while dropping broccoli isn’t being defiant, they are testing gravity, testing your reaction, or signaling “I’m full.” Keep reactions boring and install a “no-thank-you” bowl.',
           scienceDeepDive:
             'At 12–24 months, repetitive dropping explores object permanence and social contingency. High-affect adult reprimands or immediate retrieval inadvertently reinforce the dropping loop via social salience, whereas neutral extinction paired with an explicit replacement container (“all-done bowl”) redirects motor intent cleanly.',
           beat3Kicker: 'Keeping your poker face',
@@ -1698,11 +1698,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Keep {name} strapped in the chair lecturing until {pronoun} stops throwing.',
               whyTitle: 'Why staying stuck escalates tossing',
               whyText:
-                'When a toddler is full and restless, staying strapped beside a tray of food guarantees more launching—calmly translating throwing as “all done” ends it peacefully.',
+                'When a toddler is full and restless, staying strapped beside a tray of food guarantees more launching, calmly translating throwing as “all done” ends it peacefully.',
             },
           ],
           calmScriptPlain:
-            '“(Totally calm neutral face) Food stays on the tray. You can drop extra pieces right in your little blue bowl—or throwing tells me you’re all done.”',
+            '“(Totally calm neutral face) Food stays on the tray. You can drop extra pieces right in your little blue bowl, or throwing tells me you’re all done.”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -1718,12 +1718,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               tag: 'Clear Target',
               note: 'Gives {poss} busy hands a real place to put unwanted food without launching it.',
             },
-            { text: '—' },
+            { text: ', ' },
             {
               id: 'done',
               text: 'or throwing tells me you’re all done.',
               tag: 'Natural End',
-              note: 'On the next throw, calmly lift {name} down without anger—consistent cause-and-effect works in days.',
+              note: 'On the next throw, calmly lift {name} down without anger, consistent cause-and-effect works in days.',
             },
             { text: '”' },
           ],
@@ -1737,9 +1737,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'bowlthrown',
               label: '“{Pronoun} picked up the whole suction bowl and threw THAT too!”',
               setup:
-                'Skip bowls for a month and place 3 pieces directly on the clean tray—zero bowls to catapult:',
+                'Skip bowls for a month and place 3 pieces directly on the clean tray, zero bowls to catapult:',
               script:
-                '“Bowls rest on the counter for a bit—three pieces right on the tray, and you can hand me any piece you don’t want!”',
+                '“Bowls rest on the counter for a bit, three pieces right on the tray, and you can hand me any piece you don’t want!”',
             },
             {
               id: 'dog',
@@ -1751,7 +1751,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) throws food off the highchair tray at nearly every meal—how do I teach the ‘no-thank-you’ bowl or ‘all done’ sign consistently?”',
+            '“{Name} ({age}) throws food off the highchair tray at nearly every meal, how do I teach the ‘no-thank-you’ bowl or ‘all done’ sign consistently?”',
           beat4Kicker: 'Tonight’s cleanup saver',
           beat4Title: 'Pick one throwing-stopper for tonight’s meal',
           beat4Lead:
@@ -1770,11 +1770,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'threepieces',
               title: 'Serve 3 pieces at a time and gate pets out for 15 minutes',
-              desc: 'Refill calmly as {name} finishes—way less overwhelm and zero dog-feeding comedy.',
+              desc: 'Refill calmly as {name} finishes, way less overwhelm and zero dog-feeding comedy.',
             },
           ],
           closingNote:
-            'Wiping mashed sweet potato off the baseboard tests every parent’s zen—yet keeping your face peacefully boring for just a few nights teaches {name} faster than a hundred lectures ever could.',
+            'Wiping mashed sweet potato off the baseboard tests every parent’s zen, yet keeping your face peacefully boring for just a few nights teaches {name} faster than a hundred lectures ever could.',
           pocketInsight:
             'Make food throwing utterly boring: don’t pick up drops while {name} watches, serve 3 pieces at a time, add a “no-thank-you” bowl, and calmly end the meal on repeat throws.',
           nextEpisodeHook: {
@@ -1798,23 +1798,23 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.plate,
           illustrationCaption: 'Iron + Vitamin C · Healthy fats on favorite foods',
           headline: 'Simple Brain-Fuel Pairings for Tiny Toddler Tummies',
-          deck: 'Because toddler bellies are tiny, every bite counts—here is how to effortlessly pair iron, vitamin C, and healthy fats onto foods {name} already loves.',
+          deck: 'Because toddler bellies are tiny, every bite counts, here is how to effortlessly pair iron, vitamin C, and healthy fats onto foods {name} already loves.',
           sceneTime: '8:15 AM · QUICK BREAKFAST PREP',
           sceneBody:
-            'You want {possessive} fast-growing brain to get plenty of iron and omega-3 fats—without spending an hour cooking elaborate toddler muffins nobody eats. *Good news: the highest-leverage brain boosters take ten seconds to stir into toast, oatmeal, or berries.*',
+            'You want {possessive} fast-growing brain to get plenty of iron and omega-3 fats, without spending an hour cooking elaborate toddler muffins nobody eats. *Good news: the highest-leverage brain boosters take ten seconds to stir into toast, oatmeal, or berries.*',
           pollQuestion: 'Which nutrition worry crosses your mind most at ages 1–2?',
           pollOptions: [
             {
               id: 'iron',
               label: 'Getting enough iron & protein without battles',
               response:
-                'Smart focus! Iron fuels myelin and attention—and pairing plant iron (beans, oats, nut butter) with one strawberry or orange slice multiplies absorption up to 3x.',
+                'Smart focus! Iron fuels myelin and attention, and pairing plant iron (beans, oats, nut butter) with one strawberry or orange slice multiplies absorption up to 3x.',
             },
             {
               id: 'fats',
               label: 'Easy, realistic ideas for busy weekdays',
               response:
-                'Zero fancy recipes here—just five effortless “booster pairings” you can sprinkle or spread right onto familiar staples.',
+                'Zero fancy recipes here, just five effortless “booster pairings” you can sprinkle or spread right onto familiar staples.',
             },
           ],
           beat2Kicker: 'Smart effortless pairings',
@@ -1835,7 +1835,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               {
                 label: 'Sprinkle',
                 title: '2. Hemp hearts & chia “sprinkles”',
-                desc: 'Dust 1 tsp soft hemp hearts or ground flax onto banana strips, yogurt, or avocado—instant omega-3s and protein with zero prep.',
+                desc: 'Dust 1 tsp soft hemp hearts or ground flax onto banana strips, yogurt, or avocado, instant omega-3s and protein with zero prep.',
                 tag: '10-Sec Boost · Kids love “sprinkles”',
               },
               {
@@ -1853,20 +1853,20 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               {
                 label: 'Calm Milk',
                 title: '5. Keep cow’s milk under ~16 oz/day',
-                desc: 'Large amounts of calcium-rich cow’s milk can crowd out solid iron foods and slightly block iron uptake—water stays the thirst drink!',
+                desc: 'Large amounts of calcium-rich cow’s milk can crowd out solid iron foods and slightly block iron uptake, water stays the thirst drink!',
                 tag: 'Balance · Protects iron stores',
               },
             ],
           },
           almanacTruth:
-            'You don’t need gourmet toddler recipes—just spread healthy fats onto toast, dust hemp hearts onto fruit, pair iron with berries for vitamin C, and keep daily milk modest.',
+            'You don’t need gourmet toddler recipes, just spread healthy fats onto toast, dust hemp hearts onto fruit, pair iron with berries for vitamin C, and keep daily milk modest.',
           scienceDeepDive:
             'During ages 12–24 months, rapid oligodendrocyte myelination requires abundant dietary fatty acids (DHA/ALA), choline, and bioavailable iron. Ascorbic acid (vitamin C) reduces non-heme ferric iron to the absorbable ferrous state in the gut, while excessive cow’s milk intake (>16–20 oz/day) is a leading modifiable risk factor for toddler iron deficiency.',
           beat3Kicker: 'Zero sneaking required',
           beat3Title: 'Boosting familiar favorites openly and joyfully',
           rehearsalTriggerSpeaker: 'Adding hemp hearts or avocado onto toast',
           rehearsalTriggerQuote:
-            '“Wait—should I hide pureed spinach inside brownies so {name} doesn’t notice?”',
+            '“Wait, should I hide pureed spinach inside brownies so {name} doesn’t notice?”',
           rehearsalPrompt: 'Which nutrition shortcut backfires on long-term trust?',
           instincts: [
             {
@@ -1875,7 +1875,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Secretly hide vegetables inside foods while pretending they aren’t there.',
               whyTitle: 'Why honesty builds stronger eaters',
               whyText:
-                'Blending spinach into smoothies is awesome—just name it cheerfully (“Look, green superhero smoothie!”). Secretly hiding foods can break trust if {name} spots a green speck later.',
+                'Blending spinach into smoothies is awesome, just name it cheerfully (“Look, green superhero smoothie!”). Secretly hiding foods can break trust if {name} spots a green speck later.',
             },
             {
               id: 'lowfat',
@@ -1923,17 +1923,17 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'pickydip',
               label: '“{Pronoun} just licks the dip off the carrot and leaves the carrot”',
               setup:
-                'Celebrate silently—licking hummus or yogurt off a veggie gives both healthy fat AND step-4 sensory contact!',
+                'Celebrate silently, licking hummus or yogurt off a veggie gives both healthy fat AND step-4 sensory contact!',
               script:
                 '“Dip is doing double duty tonight: getting healthy fat in AND helping {poss} tongue make friends with carrots.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) dislikes chewing meat right now—can you give me 5 easy 5-minute toddler meals packed with iron, vitamin C, and healthy fats?”',
+            '“{Name} ({age}) dislikes chewing meat right now, can you give me 5 easy 5-minute toddler meals packed with iron, vitamin C, and healthy fats?”',
           beat4Kicker: 'This week’s 10-second upgrade',
           beat4Title: 'Pick one effortless nutrition pairing to try tomorrow',
           beat4Lead:
-            'Zero extra cooking—just smart, playful add-ons to meals you already serve.',
+            'Zero extra cooking, just smart, playful add-ons to meals you already serve.',
           moves: [
             {
               id: 'hempshaker',
@@ -1943,7 +1943,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'ironberry',
               title: 'Pair one iron food + one berry/citrus slice at lunch',
-              desc: 'Oatmeal + strawberries, black beans + mandarin segments, or egg + kiwi—easy 3x iron boost.',
+              desc: 'Oatmeal + strawberries, black beans + mandarin segments, or egg + kiwi, easy 3x iron boost.',
             },
             {
               id: 'dipbowl',
@@ -1989,17 +1989,17 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Cushion climb zone · One clear “Yes” beats 50 “No’s”',
           headline: 'Channeling Constant Climbing Safely (Without Saying “No” All Day)',
-          deck: 'Why repeating “GET DOWN!” fifty times a day never stops a climbing toddler—and how creating one safe “Yes Zone” saves your voice and their shins.',
+          deck: 'Why repeating “GET DOWN!” fifty times a day never stops a climbing toddler, and how creating one safe “Yes Zone” saves your voice and their shins.',
           sceneTime: '9:45 AM · DINING TABLE AGAIN',
           sceneBody:
-            'You turn around for four seconds to rinse a mug—and {name} is proudly standing on top of the dining chair reaching for the fruit bowl. You lift {obj} down saying “No climbing!”—and ten seconds later {pronoun} is scaling the armrest of the sofa. *You feel like a broken security alarm.*',
+            'You turn around for four seconds to rinse a mug, and {name} is proudly standing on top of the dining chair reaching for the fruit bowl. You lift {obj} down saying “No climbing!”, and ten seconds later {pronoun} is scaling the armrest of the sofa. *You feel like a broken security alarm.*',
           pollQuestion: 'Do you feel like you say “Get down!” twenty times before noon?',
           pollOptions: [
             {
               id: 'nonstop',
-              label: 'Yes—my toddler is basically a mountain goat!',
+              label: 'Yes, my toddler is basically a mountain goat!',
               response:
-                'Climbing at ages 1–2 isn’t disobedience—it’s a wired biological urge to build core balance and spatial judgment. Give that urge one safe legal mountain!',
+                'Climbing at ages 1–2 isn’t disobedience, it’s a wired biological urge to build core balance and spatial judgment. Give that urge one safe legal mountain!',
             },
             {
               id: 'starting',
@@ -2033,7 +2033,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'You can’t lecture a 1-year-old out of climbing—it’s how their motor brain grows. Secure tall furniture, give them one loud “YES” cushion mountain, and teach “belly-and-feet-first” dismounting.',
+            'You can’t lecture a 1-year-old out of climbing, it’s how their motor brain grows. Secure tall furniture, give them one loud “YES” cushion mountain, and teach “belly-and-feet-first” dismounting.',
           scienceDeepDive:
             'Gross-motor climbing engages bilateral cross-lateral coordination, cerebellar balance calibration, and spatial depth mapping. Environmental modification (“yes-spaces”) preserves exploratory competence while minimizing negative caregiver-child verbal friction.',
           beat3Kicker: 'Firm safety + joyful “Yes”',
@@ -2048,7 +2048,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Scream across the room “NO! GET DOWN!” and run over wide-eyed.',
               whyTitle: 'Why that turns dining chairs into a tag game',
               whyText:
-                'Giant startled energy looks like an exciting chase to an 18-month-old—stepping over calmly, lifting smoothly, and redirecting to cushions keeps safety totally clear.',
+                'Giant startled energy looks like an exciting chase to an 18-month-old, stepping over calmly, lifting smoothly, and redirecting to cushions keeps safety totally clear.',
             },
             {
               id: 'lecture',
@@ -2056,18 +2056,18 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Explain calmly from the couch: “You could crack your head if that chair tips over!”',
               whyTitle: 'Why distant warnings don’t register at age 1',
               whyText:
-                'Toddlers can’t picture hypothetical future falls yet—warm physical guidance + an immediate legal place to climb does the real teaching.',
+                'Toddlers can’t picture hypothetical future falls yet, warm physical guidance + an immediate legal place to climb does the real teaching.',
             },
           ],
           calmScriptPlain:
-            '“(Lift down smoothly) Chairs are for bottoms. Your body wants to climb! Let’s climb our big cushion mountain right here—belly first coming down!”',
+            '“(Lift down smoothly) Chairs are for bottoms. Your body wants to climb! Let’s climb our big cushion mountain right here, belly first coming down!”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'fact',
               text: '(Lift down smoothly) Chairs are for bottoms.',
               tag: 'Short Neutral Rule',
-              note: 'Tells {name} what chairs ARE for—clear, brief, and zero yelling.',
+              note: 'Tells {name} what chairs ARE for, clear, brief, and zero yelling.',
             },
             { text: ' ' },
             {
@@ -2076,7 +2076,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               tag: 'Immediate YES',
               note: 'Honors the real motor need right away instead of leaving {obj} stuck.',
             },
-            { text: '—' },
+            { text: ', ' },
             {
               id: 'feet',
               text: 'belly first coming down!',
@@ -2097,7 +2097,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Make “Turn around, feet first!” a joyful physical game five times in a row on low cushions:',
               script:
-                '“Turn around on your belly—slide, slide, toes touch the floor! Yay! Let’s practice one more time!”',
+                '“Turn around on your belly, slide, slide, toes touch the floor! Yay! Let’s practice one more time!”',
             },
             {
               id: 'stairs',
@@ -2105,11 +2105,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Keep hardware-mounted gates closed when unsupervised, AND schedule 5 supervised “stair-practice minutes” daily:',
               script:
-                '“Gate stays closed when we’re cooking—right now I’m right behind you while you practice crawling up three safe steps and sliding down belly-first!”',
+                '“Gate stays closed when we’re cooking, right now I’m right behind you while you practice crawling up three safe steps and sliding down belly-first!”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) climbs onto every table and couch in the house—what 3 safe indoor ‘yes-climb’ setups can I build with cushions or simple household items?”',
+            '“{Name} ({age}) climbs onto every table and couch in the house, what 3 safe indoor ‘yes-climb’ setups can I build with cushions or simple household items?”',
           beat4Kicker: 'Today’s 3-minute living-room tweak',
           beat4Title: 'Pick one “Yes-Zone” move today',
           beat4Lead:
@@ -2134,7 +2134,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'Every safe climb builds balance, body confidence, and real risk awareness. Set up one legal cushion mountain, teach feet-first dismounts, and enjoy watching your fearless little explorer grow steady.',
           pocketInsight:
-            'Climbing is healthy motor wiring—not defiance. Build a cushion “Yes Mountain,” state short rules (“Chairs are for bottoms”), and teach belly-and-feet-first sliding down.',
+            'Climbing is healthy motor wiring, not defiance. Build a cushion “Yes Mountain,” state short rules (“Chairs are for bottoms”), and teach belly-and-feet-first sliding down.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 2 · 3 min',
             mystery:
@@ -2156,29 +2156,29 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Heavy work · Calm through muscles & joints',
           headline: 'Why Toddlers Crave Pushing, Lifting & Spinning (“Heavy Work”)',
-          deck: 'Why crashing into pillows and pushing heavy boxes isn’t “wild behavior”—it’s literally how toddler joints tell their brain to calm down.',
+          deck: 'Why crashing into pillows and pushing heavy boxes isn’t “wild behavior”, it’s literally how toddler joints tell their brain to calm down.',
           sceneTime: '4:30 PM · RAINY-DAY ZOOMIES',
           sceneBody:
-            'Stuck indoors all afternoon, {name} is sprinting full-tilt into couch cushions, slamming cabinet doors, and trying to drag a full gallon milk jug across the kitchen. *Before you say “calm down!”—watch what happens when you give {obj} a heavy laundry basket to push down the hall.*',
+            'Stuck indoors all afternoon, {name} is sprinting full-tilt into couch cushions, slamming cabinet doors, and trying to drag a full gallon milk jug across the kitchen. *Before you say “calm down!”, watch what happens when you give {obj} a heavy laundry basket to push down the hall.*',
           pollQuestion: 'Does your toddler get intense bursts of crashing, spinning, or pushing energy?',
           pollOptions: [
             {
               id: 'zoomies',
-              label: 'Yes—pure full-body indoor zoomies!',
+              label: 'Yes, pure full-body indoor zoomies!',
               response:
-                'Occupational therapists call this seeking “heavy work” (proprioceptive input)—deep pressure on muscles and joints flips the nervous system straight from wired to calm!',
+                'Occupational therapists call this seeking “heavy work” (proprioceptive input), deep pressure on muscles and joints flips the nervous system straight from wired to calm!',
             },
             {
               id: 'curious',
               label: 'Curious how to use “heavy work” on purpose',
               response:
-                'Wait until you try handing a cranky toddler two canned goods to carry or a loaded laundry basket to push—it works like a biological reset button.',
+                'Wait until you try handing a cranky toddler two canned goods to carry or a loaded laundry basket to push, it works like a biological reset button.',
             },
           ],
           beat2Kicker: 'Inside {possessive} sensory brain',
           beat2Title: 'Deep muscle pressure flips the calm switch',
           beat2Lead:
-            'Toddlers have two hidden sixth senses: balance (spinning/swinging) and joint pressure (“heavy work”—pushing, pulling, carrying). Toggle below to see how 5 minutes of heavy work settles a wired nervous system.',
+            'Toddlers have two hidden sixth senses: balance (spinning/swinging) and joint pressure (“heavy work”, pushing, pulling, carrying). Toggle below to see how 5 minutes of heavy work settles a wired nervous system.',
           visualType: AlmanacVisualType.BRAIN_BRIDGE,
           visualStageTitle: 'Wired zoomies vs. “heavy work” muscle reset',
           visualStageHint: 'Toggle to compare bottled energy vs. heavy-work calm',
@@ -2217,7 +2217,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Deep muscle resistance (“heavy work”—pushing a laundry basket, carrying a small watering can, squishing playdough) calms a wired toddler nervous system faster than telling them to “calm down.”',
+            'Deep muscle resistance (“heavy work”, pushing a laundry basket, carrying a small watering can, squishing playdough) calms a wired toddler nervous system faster than telling them to “calm down.”',
           scienceDeepDive:
             'Proprioceptive mechanoreceptors in muscle spindles and Golgi tendon organs project directly to the cerebellum and reticular activating system, modulating autonomic arousal and serotonin release. Pediatric occupational therapy uses heavy work to organize sensory-seeking behavior before calm transitions like meals or sleep.',
           beat3Kicker: 'Turning wild energy into helpful jobs',
@@ -2244,7 +2244,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           calmScriptPlain:
-            '“Door stays gentle—those strong arms want a BIG job! Can you push this heavy laundry basket all the way down the hallway to the bedroom?”',
+            '“Door stays gentle, those strong arms want a BIG job! Can you push this heavy laundry basket all the way down the hallway to the bedroom?”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -2253,7 +2253,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               tag: 'Quick Boundary',
               note: 'Clear, brief limit with zero shaming.',
             },
-            { text: '—' },
+            { text: ', ' },
             {
               id: 'job',
               text: 'those strong arms want a BIG job! Can you push this heavy laundry basket all the way down the hallway to the bedroom?',
@@ -2272,7 +2272,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'bedtime',
               label: '“Will active play right before bedtime hype {obj} up?”',
               setup:
-                'Fast spinning and tickling hype toddlers up—slow heavy pushing, pillow squishes (“make a toddler sandwich!”), and big bear hugs actually CALM them down:',
+                'Fast spinning and tickling hype toddlers up, slow heavy pushing, pillow squishes (“make a toddler sandwich!”), and big bear hugs actually CALM them down:',
               script:
                 '“Skip wild tickles after dinner; try 2 minutes of slow ‘pillow-burrito squishes’ before pajamas to settle wiggly legs!”',
             },
@@ -2295,7 +2295,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'laundrypush',
               title: 'Make {name} the official Laundry Basket Pusher',
-              desc: 'Load a smooth basket with towels and let {obj} shove it across the floor—pure calming muscle magic.',
+              desc: 'Load a smooth basket with towels and let {obj} shove it across the floor, pure calming muscle magic.',
             },
             {
               id: 'grocerycarry',
@@ -2309,7 +2309,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'The next time {name} looks “wild,” remember {poss} body isn’t misbehaving—it’s asking for work. Hand {obj} a laundry basket or watering can and watch a cranky tornado turn into your proudest little helper.',
+            'The next time {name} looks “wild,” remember {poss} body isn’t misbehaving, it’s asking for work. Hand {obj} a laundry basket or watering can and watch a cranky tornado turn into your proudest little helper.',
           pocketInsight:
             'Wired toddler zoomies crave “heavy work.” Give 5 minutes of pushing a laundry basket, carrying sturdy groceries, or firm towel squeezes to flip the calm switch.',
           nextEpisodeHook: {
@@ -2333,7 +2333,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'Shallow warm water + big towel · 15 calm minutes',
           headline: 'Easy 10-Minute Water & Kitchen Play That Buys You Dinner Prep Time',
-          deck: 'Skip Pinterest dyed-rice messes—here is the 60-second warm-water kitchen setup that deeply absorbs 1-year-olds while you make dinner right beside them.',
+          deck: 'Skip Pinterest dyed-rice messes, here is the 60-second warm-water kitchen setup that deeply absorbs 1-year-olds while you make dinner right beside them.',
           sceneTime: '5:25 PM · DINNER PREP CRUNCH',
           sceneBody:
             'You have ten minutes to chop vegetables and get pasta boiling, and {name} is pulling frantically at your knees begging to be held. *You don’t want to switch on cartoons, yet you only have two hands!* Enter one large bath towel, a baking pan, and an inch of warm soapy water.',
@@ -2341,7 +2341,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'mess',
-              label: 'Yes—I do NOT want to vacuum rice for three days!',
+              label: 'Yes, I do NOT want to vacuum rice for three days!',
               response:
                 'Same! Water play on a big beach towel wipes dry in 15 seconds, never goes stale, and holds a 1-year-old’s attention longer than almost any toy.',
             },
@@ -2365,14 +2365,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: '15 sec',
                 label: 'Towel Base',
                 title: 'Spread one thick beach towel on the kitchen floor (or sink tower)',
-                desc: 'Keep it well away from the hot stove—the towel catches 95% of splashes automatically.',
+                desc: 'Keep it well away from the hot stove, the towel catches 95% of splashes automatically.',
                 why: 'Eliminates slippery floors and makes cleanup literally picking up one towel.',
               },
               {
                 timeOrCue: '15 sec',
                 label: '1 Inch of Water',
                 title: 'Shallow baking dish or mixing bowl + warm water',
-                desc: 'Never fill deep—just one shallow inch of warm water (with one tiny drop of tear-free baby wash if you want bubbles!) under active supervision.',
+                desc: 'Never fill deep, just one shallow inch of warm water (with one tiny drop of tear-free baby wash if you want bubbles!) under active supervision.',
                 why: 'Always supervise 100% of water play within sight; shallow bowls make pouring joyful and manageable.',
               },
               {
@@ -2386,13 +2386,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: '15 sec',
                 label: 'Warm Finish',
                 title: '2-minute warning + “Help wipe the floor!”',
-                desc: 'Give {name} a second dry cloth to “help” blot spills—turning cleanup into part of the game!',
+                desc: 'Give {name} a second dry cloth to “help” blot spills, turning cleanup into part of the game!',
                 why: 'Smooth transition straight to dinner with clean hands already washed.',
               },
             ],
           },
           almanacTruth:
-            'Water + two measuring cups on a thick bath towel buys more calm, joyful concentration than almost any store-bought toy—and wipes clean in thirty seconds.',
+            'Water + two measuring cups on a thick bath towel buys more calm, joyful concentration than almost any store-bought toy, and wipes clean in thirty seconds.',
           scienceDeepDive:
             'Tactile water transfer exercises radial-ulnar wrist pronation/supination, depth judgment, and sustained joint attention. Warm thermal hand immersion also stimulates parasympathetic calming right during the late-afternoon cortisol trough.',
           beat3Kicker: 'Holding one easy water boundary',
@@ -2407,7 +2407,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Shout “OH NO, LOOK AT THIS GIANT MESS!” and cancel water play forever.',
               whyTitle: 'Why keeping water shallow fixes this effortlessly',
               whyText:
-                'With just half an inch of water on a big bath towel, even a full dump takes 10 seconds to soak up—no disaster at all!',
+                'With just half an inch of water on a big bath towel, even a full dump takes 10 seconds to soak up, no disaster at all!',
             },
             {
               id: 'silent',
@@ -2415,7 +2415,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Keep refilling giant bowls over and over until the kitchen floods.',
               whyTitle: 'Why one clear boundary keeps it fun',
               whyText:
-                '“Water stays in the tub—if it dumps, water time is all done and we wipe up together!” teaches real cause-and-effect calmly.',
+                '“Water stays in the tub, if it dumps, water time is all done and we wipe up together!” teaches real cause-and-effect calmly.',
             },
           ],
           calmScriptPlain:
@@ -2426,14 +2426,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'calm',
               text: 'Whoa, big splash! Water stays inside the pan so our floor stays safe.',
               tag: 'Calm Clear Limit',
-              note: 'Zero yelling—states the boundary neutrally so {name} learns control without shame.',
+              note: 'Zero yelling, states the boundary neutrally so {name} learns control without shame.',
             },
             { text: ' ' },
             {
               id: 'choice',
               text: 'Want to keep scooping gently, or grab the towel to wipe up together?',
               tag: 'Hands Ownership',
-              note: 'Invites {obj} to regulate {poss} own pour—and makes wiping up feel like a proud game if it spills again.',
+              note: 'Invites {obj} to regulate {poss} own pour, and makes wiping up feel like a proud game if it spills again.',
             },
             { text: '”' },
           ],
@@ -2447,9 +2447,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'dryoption',
               label: '“What if I want a totally dry zero-mess kitchen backup?”',
               setup:
-                'Try painter’s tape strips on the fridge or muffin-tin ball sorting—zero water, 100% toddler magnet:',
+                'Try painter’s tape strips on the fridge or muffin-tin ball sorting, zero water, 100% toddler magnet:',
               script:
-                '“Stick 5 strips of blue painter’s tape on the fridge or floor—peeling tape off works tiny pincer fingers for 10 focused minutes!”',
+                '“Stick 5 strips of blue painter’s tape on the fridge or floor, peeling tape off works tiny pincer fingers for 10 focused minutes!”',
             },
             {
               id: 'wetclothes',
@@ -2484,13 +2484,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'The best toddler play setups never come in fancy boxes—they live right in your kitchen drawer. Ten calm minutes of scooping warm water beside you gives {name} deep joy and gives you room to breathe.',
+            'The best toddler play setups never come in fancy boxes, they live right in your kitchen drawer. Ten calm minutes of scooping warm water beside you gives {name} deep joy and gives you room to breathe.',
           pocketInsight:
-            'Spread a thick bath towel away from the stove with 1 shallow inch of warm water, 2 measuring cups, and active supervision—15 absorbed minutes, 30-second cleanup.',
+            'Spread a thick bath towel away from the stove with 1 shallow inch of warm water, 2 measuring cups, and active supervision, 15 absorbed minutes, 30-second cleanup.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 4 · 3 min',
             mystery:
-              '“Why does repeating ‘Say apple! Say apple!’ slow speech down—and which effortless 1-word expansion unlocks the 50-word burst?”',
+              '“Why does repeating ‘Say apple! Say apple!’ slow speech down, and which effortless 1-word expansion unlocks the 50-word burst?”',
             title: 'Sparking First Words Naturally (Without Quizzing “Say Apple!”)',
             targetSlug: 'toddler-first-words-language-burst',
           },
@@ -2508,21 +2508,21 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.blocks_play,
           illustrationCaption: 'The +1 Rule · “Car!” → “Fast red car!”',
           headline: 'Sparking First Words Naturally (Without Quizzing “Say Apple!”)',
-          deck: 'Why speech therapists trade “Say X!” quizzing for the effortless “Echo + Add One Word” habit—and remember that animal sounds and signs count as real words!',
+          deck: 'Why speech therapists trade “Say X!” quizzing for the effortless “Echo + Add One Word” habit, and remember that animal sounds and signs count as real words!',
           sceneTime: '10:00 AM · READING A BOARD BOOK',
           sceneBody:
-            'You point to a bright red apple and ask eagerly: *“What’s that? Say apple! Ap-ple!”* {Name} stares silently, closes the book, and walks away. Five minutes later, while you simply murmur *“Crunch, crunch—sweet red apple!”* without asking, {pronoun} grins and chimes: *“Apa!”*',
+            'You point to a bright red apple and ask eagerly: *“What’s that? Say apple! Ap-ple!”* {Name} stares silently, closes the book, and walks away. Five minutes later, while you simply murmur *“Crunch, crunch, sweet red apple!”* without asking, {pronoun} grins and chimes: *“Apa!”*',
           pollQuestion: 'Do you sometimes worry whether {name} is saying enough words yet?',
           pollOptions: [
             {
               id: 'comparing',
-              label: 'Yes—hard not to compare with other toddlers!',
+              label: 'Yes, hard not to compare with other toddlers!',
               response:
                 'Here’s a huge relief most parents don’t hear: consistent animal sounds (“moo”), word approximations (“ba” for ball), and baby signs (“more”) ALL count as real expressive words at ages 1–2!',
             },
             {
               id: 'burst',
-              label: 'Words are popping up—want to nurture them well',
+              label: 'Words are popping up, want to nurture them well',
               response:
                 'Using the “Echo + Add One” rule turns every snack and stroller walk into effortless vocabulary rocket fuel.',
             },
@@ -2541,15 +2541,15 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: '{Name} points or says 1 sound',
                 label: 'Wait & Notice',
                 quote: '“Duh!” (Pointing excitedly at a passing dog)',
-                desc: 'Pause three warm seconds and let {name} initiate—even a point, grunt, or sign is {poss} turn in the conversation.',
+                desc: 'Pause three warm seconds and let {name} initiate, even a point, grunt, or sign is {poss} turn in the conversation.',
                 brainNote: 'Spontaneous initiation activates expressive retrieval circuits.',
               },
               {
                 stepNum: '02',
                 actor: 'You validate clearly',
                 label: 'Confirm Without Correcting',
-                quote: '“Yes—DOG! Big brown dog!”',
-                desc: 'Never say “No, not ‘duh’, say D-O-G!”—simply model the crisp word warmly so {name} feels 100% successful.',
+                quote: '“Yes, DOG! Big brown dog!”',
+                desc: 'Never say “No, not ‘duh’, say D-O-G!”, simply model the crisp word warmly so {name} feels 100% successful.',
                 brainNote: 'Zero-shame modeling keeps {name} eager to keep trying new words.',
               },
               {
@@ -2557,7 +2557,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 actor: 'Add ONE new word',
                 label: 'The +1 Expansion',
                 quote: 'Point → “Dog!” · “Dog!” → “Big dog!” · “Big dog!” → “Big dog runs!”',
-                desc: 'Always step just ONE word ahead of where {name} is—adding action words (go, open, push, jump) builds early sentences fast!',
+                desc: 'Always step just ONE word ahead of where {name} is, adding action words (go, open, push, jump) builds early sentences fast!',
                 brainNote: 'Action verbs unlock 2-word combinations around 18–24 months.',
               },
             ],
@@ -2578,7 +2578,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Anticipate every single need instantly in silence before {name} even points.',
               whyTitle: 'Why adding a 3-second cheerful pause helps',
               whyText:
-                'Mind-reading comes from pure love! Just pausing 3 warm seconds holding the jar up (“Ooh—OPEN? Open please!”) gives {name} a joyful reason to try a sound or sign.',
+                'Mind-reading comes from pure love! Just pausing 3 warm seconds holding the jar up (“Ooh. OPEN? Open please!”) gives {name} a joyful reason to try a sound or sign.',
             },
             {
               id: 'withhold',
@@ -2586,11 +2586,11 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Refuse to hand over the cracker until {pronoun} pronounces “cracker” clearly.',
               whyTitle: 'Why holding food hostage triggers tears',
               whyText:
-                'Never withhold snacks as a speech test—just pause 3 seconds, model “Open! Cracker!” once brightly, and hand it right over with a smile.',
+                'Never withhold snacks as a speech test, just pause 3 seconds, model “Open! Cracker!” once brightly, and hand it right over with a smile.',
             },
           ],
           calmScriptPlain:
-            '“(Hold jar near your smiling mouth, pause 3 seconds) Open! You want it OPEN! Pop—open goes the lid!”',
+            '“(Hold jar near your smiling mouth, pause 3 seconds) Open! You want it OPEN! Pop, open goes the lid!”',
           calmScriptSegments: [
             { text: '“' },
             {
@@ -2602,7 +2602,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             { text: ' ' },
             {
               id: 'verb',
-              text: 'Open! You want it OPEN! Pop—open goes the lid!',
+              text: 'Open! You want it OPEN! Pop, open goes the lid!',
               tag: 'Power Verb',
               note: 'High-power words like open, more, go, up, help, and all done unlock real daily communication way faster than memorizing colors or shapes.',
             },
@@ -2611,12 +2611,12 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           deliveryCues: [
             'Comment 3x more than you quiz',
             'Repeat fun action words (go, open, pop, splash)',
-            'Ask your pediatrician early if ever concerned—early support is wonderful!',
+            'Ask your pediatrician early if ever concerned, early support is wonderful!',
           ],
           pushbacks: [
             {
               id: 'whatcounts',
-              label: '“Wait—what actually counts toward {possessive} word count?”',
+              label: '“Wait, what actually counts toward {possessive} word count?”',
               setup:
                 'Any consistent sound, approximation, animal sound, or sign used intentionally for the same thing counts as a true word:',
               script:
@@ -2626,27 +2626,27 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'checkspeech',
               label: '“When should I bring up speech questions with our pediatrician?”',
               setup:
-                'Trust your gut—mentioning any questions at 15- or 18-month well-child visits opens free or simple early-support evaluations with zero downside:',
+                'Trust your gut, mentioning any questions at 15- or 18-month well-child visits opens free or simple early-support evaluations with zero downside:',
               script:
-                '“Checking in early with our pediatrician or a speech therapist is a proactive gift, never a label—always bring your questions warmly to your doctor.”',
+                '“Checking in early with our pediatrician or a speech therapist is a proactive gift, never a label, always bring your questions warmly to your doctor.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) currently uses gestures and a handful of sounds—what 5 playful power-word games (like ‘ready, set… GO!’) can we play this week?”',
+            '“{Name} ({age}) currently uses gestures and a handful of sounds, what 5 playful power-word games (like ‘ready, set… GO!’) can we play this week?”',
           beat4Kicker: 'Today’s joyful speech game',
           beat4Title: 'Pick one zero-pressure word habit today',
           beat4Lead:
-            'Less quizzing, more playful sound effects—watch {possessive} face light up.',
+            'Less quizzing, more playful sound effects, watch {possessive} face light up.',
           moves: [
             {
               id: 'readyset',
               title: 'Play “Ready, set… [3-second pause]… GO!” on the swing or ball roll',
-              desc: 'Pause with raised eyebrows right before “GO!”—watch {name} giggle, squeal, or try the word {obj}self!',
+              desc: 'Pause with raised eyebrows right before “GO!”, watch {name} giggle, squeal, or try the word {obj}self!',
             },
             {
               id: 'plusone',
               title: 'Use the “Echo + 1 Word” reply five times today',
-              desc: 'When {name} says “car,” cheer back “FAST car!” or “BLUE car!”—never correcting, always expanding.',
+              desc: 'When {name} says “car,” cheer back “FAST car!” or “BLUE car!”, never correcting, always expanding.',
             },
             {
               id: 'dropquiz',
@@ -2655,9 +2655,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Language blooms in warmth, laughter, and unhurried pauses—never under a quiz spotlight. Every silly “pop!”, every patient three-second wait, and every echoed babble is building {possessive} voice.',
+            'Language blooms in warmth, laughter, and unhurried pauses, never under a quiz spotlight. Every silly “pop!”, every patient three-second wait, and every echoed babble is building {possessive} voice.',
           pocketInsight:
-            'Drop “Say X!” quizzing—comment warmly, use the “Echo + 1 Word” rule, play “Ready, set… [pause]… GO!”, and celebrate animal sounds and signs as real words.',
+            'Drop “Say X!” quizzing, comment warmly, use the “Echo + 1 Word” rule, play “Ready, set… [pause]… GO!”, and celebrate animal sounds and signs as real words.',
           nextEpisodeHook: null,
           interactiveHighlights: ['Echo + 1 Speech Loop', 'Power-Word Play'],
         },
@@ -2692,7 +2692,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.device_dock,
           illustrationCaption: 'Join · Say bye-bye · Hand {name} the off-button',
           headline: 'Turning Off the Screen Without a Meltdown',
-          deck: 'Why grabbing the remote abruptly sparks instant toddler rage—and the 90-second “Join, Wave Bye-Bye, Bridge” sequence that ends screens calmly.',
+          deck: 'Why grabbing the remote abruptly sparks instant toddler rage, and the 90-second “Join, Wave Bye-Bye, Bridge” sequence that ends screens calmly.',
           sceneTime: '5:10 PM · END OF ONE SHORT VIDEO',
           sceneBody:
             'You let {name} watch ten minutes of a gentle show while you finished a phone call. The second you click the screen black, {pronoun} arches backward howling as if you snatched away {poss} favorite blanket. *Why does turning off a screen hit harder than ending any other toy?*',
@@ -2700,13 +2700,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'everytime',
-              label: 'Yes—almost every single time!',
+              label: 'Yes, almost every single time!',
               response:
                 'It isn’t bad behavior: rapid bright screens trigger an abrupt dopamine drop when snapped off cold. A 60-second warm bridge softens that drop dramatically.',
             },
             {
               id: 'avoid',
-              label: 'We rarely use screens yet—want good habits upfront',
+              label: 'We rarely use screens yet, want good habits upfront',
               response:
                 'Installing the “Join → Wave Bye → Bridge” routine from the very first show prevents years of screen tug-of-war.',
             },
@@ -2731,7 +2731,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 timeOrCue: '30 sec left',
                 label: 'Kill Autoplay',
                 title: 'Turn Autoplay OFF & end on a natural song/episode finish',
-                desc: 'Never cut off mid-song if you can wait 20 seconds—and keep YouTube/Netflix autoplay permanently disabled.',
+                desc: 'Never cut off mid-song if you can wait 20 seconds, and keep YouTube/Netflix autoplay permanently disabled.',
                 why: 'Eliminates the painful cliffhanger of watching the next thumbnail start rolling.',
               },
               {
@@ -2751,7 +2751,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Never yank a screen off cold—sit beside {name} for 30 seconds first, disable autoplay, wave bye-bye to the show, and step straight onto a waiting real-world bridge.',
+            'Never yank a screen off cold, sit beside {name} for 30 seconds first, disable autoplay, wave bye-bye to the show, and step straight onto a waiting real-world bridge.',
           scienceDeepDive:
             'Abrupt termination of high-salience audiovisual media triggers an acute drop in striatal reward signaling paired with a jarring attentional shift. Co-attentive connection before transition (“joining”) plus predictable endpoint cues and immediate tactile bridging significantly reduce transition distress.',
           beat3Kicker: 'Holding the off-switch calmly',
@@ -2774,23 +2774,23 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Say angrily: “Since you’re crying, NO shows for the rest of the week!”',
               whyTitle: 'Why future threats don’t land at age 1',
               whyText:
-                'A 1-year-old cannot connect Tuesday’s tears to Friday’s ban—calm empathy plus moving gently to the snack table is all {pronoun} needs.',
+                'A 1-year-old cannot connect Tuesday’s tears to Friday’s ban, calm empathy plus moving gently to the snack table is all {pronoun} needs.',
             },
           ],
           calmScriptPlain:
-            '“Aw, it’s hard to say bye-bye to the bus! Bus is sleeping now. Let’s take a deep breath—want to roll the big red truck or crunch your apple slices?”',
+            '“Aw, it’s hard to say bye-bye to the bus! Bus is sleeping now. Let’s take a deep breath, want to roll the big red truck or crunch your apple slices?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'empathy',
               text: 'Aw, it’s hard to say bye-bye to the bus! Bus is sleeping now.',
               tag: 'Validates + Holds Line',
-              note: 'Warm empathy with zero wobbling—never turns the screen back on.',
+              note: 'Warm empathy with zero wobbling, never turns the screen back on.',
             },
             { text: ' ' },
             {
               id: 'bridge',
-              text: 'Let’s take a deep breath—want to roll the big red truck or crunch your apple slices?',
+              text: 'Let’s take a deep breath, want to roll the big red truck or crunch your apple slices?',
               tag: 'Two-Choice Bridge',
               note: 'Gently pulls {possessive} brain out of grief and straight into real-world motion.',
             },
@@ -2798,7 +2798,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           ],
           deliveryCues: [
             'Disable Autoplay on every app today',
-            'Use TV across the room—avoid hand-held tablets',
+            'Use TV across the room, avoid hand-held tablets',
             'Once screen is off, it stays warmly off',
           ],
           pushbacks: [
@@ -2814,13 +2814,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'cries2min',
               label: '“{Pronoun} still cries for two minutes even when I do the whole routine”',
               setup:
-                'Two minutes of supported tears is totally okay—it means the routine is working and {pronoun} is learning to handle disappointment:',
+                'Two minutes of supported tears is totally okay, it means the routine is working and {pronoun} is learning to handle disappointment:',
               script:
                 '“Your tears are totally welcome while the show rests. I’m holding you right here until your body feels ready to play.”',
             },
           ],
           advisorPrompt:
-            '“{Name} ({age}) melts down intensely whenever screens turn off—what 3 calm, slow-paced shows and transition bridges work best if we use occasional screen time?”',
+            '“{Name} ({age}) melts down intensely whenever screens turn off, what 3 calm, slow-paced shows and transition bridges work best if we use occasional screen time?”',
           beat4Kicker: 'Your calm screen habit',
           beat4Title: 'Pick one transition smoother today',
           beat4Lead:
@@ -2845,7 +2845,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           closingNote:
             'Screen transitions don’t have to end in guilt or tears. Join {name} briefly, turn off autoplay, wave bye-bye to the show, and step calmly back into the bright real world together.',
           pocketInsight:
-            'Kill Autoplay, sit beside {name} for 30 seconds before turning off, wave bye-bye together, and land straight on a waiting snack or toy—never turn it back on for tears.',
+            'Kill Autoplay, sit beside {name} for 30 seconds before turning off, wave bye-bye together, and land straight on a waiting snack or toy, never turn it back on for tears.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 2 · 3 min',
             mystery:
@@ -2867,7 +2867,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.device_dock,
           illustrationCaption: '2D flat glass vs. 3D live human warmth',
           headline: 'Why Toddlers Learn Words From Faces, Not Tablets',
-          deck: 'Why developmental scientists call it the “Video Deficit”—and how simply talking along beside any screen unlocks real learning when screens are on.',
+          deck: 'Why developmental scientists call it the “Video Deficit”, and how simply talking along beside any screen unlocks real learning when screens are on.',
           sceneTime: '11:20 AM · READING AN APP AD',
           sceneBody:
             'An ad pops up promising a “toddler speech-accelerator tablet app for 15-month-olds!” *A quiet worry tugs at you: “Am I holding {name} back if I don’t buy educational apps?”* Wait until you see what laboratory tests actually found.',
@@ -2875,13 +2875,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'yes',
-              label: 'Yes—the marketing is super convincing!',
+              label: 'Yes, the marketing is super convincing!',
               response:
                 'Relax completely: every major pediatric study shows toddlers under age two learn dramatically MORE words from real 3D play and live faces than from any app ever built.',
             },
             {
               id: 'coview',
-              label: 'We watch a little together—want to make it healthy',
+              label: 'We watch a little together, want to make it healthy',
               response:
                 'When a screen IS on, simply sitting nearby and naming one real-life tie-in (“Look, a yellow bus just like ours!”) bridges the 2D-to-3D gap immediately!',
             },
@@ -2899,17 +2899,17 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 stepNum: '01',
                 actor: 'The 2D gap',
                 label: 'Flat Glass Limit',
-                quote: 'A video character says “Ball!”—even when {name} looks away',
-                desc: 'Under 24 months, a toddler’s brain expects objects to have real weight, depth, and responsive timing—flat pre-recorded clips miss those cues.',
+                quote: 'A video character says “Ball!”, even when {name} looks away',
+                desc: 'Under 24 months, a toddler’s brain expects objects to have real weight, depth, and responsive timing, flat pre-recorded clips miss those cues.',
                 brainNote: 'Called the “Video Deficit Effect” across decades of developmental studies.',
               },
               {
                 stepNum: '02',
                 actor: 'Your live voice',
                 label: 'The Human Bridge',
-                quote: '“Ooh, look! Red ball bouncing—just like your squishy ball on the rug!”',
+                quote: '“Ooh, look! Red ball bouncing, just like your squishy ball on the rug!”',
                 desc: 'When you occasionally co-view and connect what’s on screen to a real toy in the room, learning switches right back on!',
-                brainNote: 'Social contingency tells the hippocampus “this matters—save it!”',
+                brainNote: 'Social contingency tells the hippocampus “this matters, save it!”',
               },
               {
                 stepNum: '03',
@@ -2922,14 +2922,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'No 1-year-old has ever fallen behind from skipping “educational” apps. Real 3D objects and your responsive voice teach words faster—and whenever a show IS on, a single warm comment from you bridges the gap.',
+            'No 1-year-old has ever fallen behind from skipping “educational” apps. Real 3D objects and your responsive voice teach words faster, and whenever a show IS on, a single warm comment from you bridges the gap.',
           scienceDeepDive:
             'Landmark experiments by Dr. Patricia Kuhl (Mandarin phonetic learning) and Dr. Georgene Troseth (video deficit trials) demonstrated that infants and young toddlers show robust language and imitation learning from live interactive humans, whereas identical content delivered via non-interactive video yields near-baseline retention unless scaffolded by live caregiver co-viewing.',
           beat3Kicker: 'Drop the app-guilt forever',
           beat3Title: 'Making peace with zero educational apps (and smart co-viewing)',
           rehearsalTriggerSpeaker: 'Comparing toddler “learning” tablets with friends',
           rehearsalTriggerQuote:
-            '“My friend’s 18-month-old taps animal shapes on an iPad—should we get one so {name} doesn’t fall behind?”',
+            '“My friend’s 18-month-old taps animal shapes on an iPad, should we get one so {name} doesn’t fall behind?”',
           rehearsalPrompt: 'Which marketing myth steals parent peace most easily?',
           instincts: [
             {
@@ -2938,7 +2938,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Download five bright “toddler genius” apps so {name} gets a head start on ABCs.',
               whyTitle: 'Why real play gives the true head start',
               whyText:
-                'Tapping glowing glass teaches finger swiping—stacking real wooden blocks, turning board-book pages, and chatting at the grocery store build far deeper executive function.',
+                'Tapping glowing glass teaches finger swiping, stacking real wooden blocks, turning board-book pages, and chatting at the grocery store build far deeper executive function.',
             },
             {
               id: 'shame',
@@ -2964,7 +2964,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'realworld',
               text: 'Remember when you jumped in that puddle in your yellow boots this morning? Splash, splash!',
               tag: 'Bridges to 3D Life',
-              note: 'Connects 2D imagery straight to {possessive} real memories—actually unlocking vocabulary retention.',
+              note: 'Connects 2D imagery straight to {possessive} real memories, actually unlocking vocabulary retention.',
             },
             { text: '”' },
           ],
@@ -2976,9 +2976,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pushbacks: [
             {
               id: 'singers',
-              label: '“Wait—what about slow human-face speech videos where a real teacher sings?”',
+              label: '“Wait, what about slow human-face speech videos where a real teacher sings?”',
               setup:
-                'Slow, real-face human pacing is vastly calmer than frantic cartoons—and singing the exact same song live with {name} afterward doubles the magic:',
+                'Slow, real-face human pacing is vastly calmer than frantic cartoons, and singing the exact same song live with {name} afterward doubles the magic:',
               script:
                 '“If we watch a slow sing-along, let’s sing ‘Wheels on the Bus’ face-to-face during diaper changes too so it jumps off the screen into real life!”',
             },
@@ -2996,7 +2996,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           beat4Kicker: 'Today’s effortless brain builder',
           beat4Title: 'Pick one real-world swap today',
           beat4Lead:
-            'Zero apps to install—just real toys and your voice.',
+            'Zero apps to install, just real toys and your voice.',
           moves: [
             {
               id: 'bridgeone',
@@ -3011,7 +3011,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             {
               id: 'nosub',
               title: 'Give yourself full permission to skip toddler “learning apps”',
-              desc: 'Save the subscription fee—your kitchen spoons and park walks are the real Ivy League preschool.',
+              desc: 'Save the subscription fee, your kitchen spoons and park walks are the real Ivy League preschool.',
             },
           ],
           closingNote:
@@ -3042,7 +3042,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           deck: 'Why setting two clear “screen-free rooms” (the bedroom and dinner table) protects toddler sleep and ends evening bargaining automatically.',
           sceneTime: '6:40 PM · PRE-BEDTIME COUCH',
           sceneBody:
-            'A bright cartoon plays right before bath time. Suddenly {name} seems weirdly wired—tossing around the crib for 40 minutes after lights out and waking restless at 1 AM. *Why did a calm-looking show steal {poss} sleep?*',
+            'A bright cartoon plays right before bath time. Suddenly {name} seems weirdly wired, tossing around the crib for 40 minutes after lights out and waking restless at 1 AM. *Why did a calm-looking show steal {poss} sleep?*',
           pollQuestion: 'Do screens ever creep into the hour before bedtime or dinner?',
           pollOptions: [
             {
@@ -3061,7 +3061,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           beat2Kicker: 'Zones beat daily debates',
           beat2Title: 'Negotiating every evening vs. two sacred screen-free zones',
           beat2Lead:
-            'Toddler eyes have crystal-clear lenses that absorb evening blue light at nearly twice the adult rate—suppressing melatonin fast. Toggle below to compare daily arguing vs. clean house zones.',
+            'Toddler eyes have crystal-clear lenses that absorb evening blue light at nearly twice the adult rate, suppressing melatonin fast. Toggle below to compare daily arguing vs. clean house zones.',
           visualType: AlmanacVisualType.HABIT_GUARDRAIL,
           visualStageTitle: 'Evening screen debates vs. screen-free zones',
           visualStageHint: 'Toggle to compare both household approaches',
@@ -3074,10 +3074,10 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             guardrailLabel: 'Two Calm House Zones',
             guardrailTitle: 'Table & Bedroom = 100% Screen-Free for ALL',
             guardrailDesc:
-              'Screens power down at least 60 minutes before bedtime and never enter bedrooms or the dining table—making the house itself hold the boundary.',
+              'Screens power down at least 60 minutes before bedtime and never enter bedrooms or the dining table, making the house itself hold the boundary.',
             guardrailOutcome: 'Faster sleep onset, calmer dinners, and zero personal arguments.',
             environmentShifts: [
-              'Close screens at least 60 minutes before bedtime—switch to warm lamps, music, or bath play.',
+              'Close screens at least 60 minutes before bedtime, switch to warm lamps, music, or bath play.',
               'Keep bedrooms 100% screen-free (including parent phones docked in the hall or face-down!).',
               'Keep the dinner table screen-free so mealtimes stay focused on hunger cues and family chatter.',
             ],
@@ -3098,7 +3098,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 '“No, because Mommy said you watched too much earlier and you won’t sleep!”',
               whyTitle: 'Why making it personal sparks pushback',
               whyText:
-                'Making yourself the sole villain invites pleading—letting the warm house rhythm (“The sun is going down, so the TV is already sleeping”) ends debates fast.',
+                'Making yourself the sole villain invites pleading, letting the warm house rhythm (“The sun is going down, so the TV is already sleeping”) ends debates fast.',
             },
             {
               id: 'phonebed',
@@ -3110,14 +3110,14 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           calmScriptPlain:
-            '“Look out the window—it’s evening time, so the TV and phones are sleeping for the night! Want to pick our bath toys or turn on our sleepy music?”',
+            '“Look out the window, it’s evening time, so the TV and phones are sleeping for the night! Want to pick our bath toys or turn on our sleepy music?”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'sun',
-              text: 'Look out the window—it’s evening time, so the TV and phones are sleeping for the night!',
+              text: 'Look out the window, it’s evening time, so the TV and phones are sleeping for the night!',
               tag: 'Neutral House Rhythm',
-              note: 'Frames the limit around evening itself—never feels like arbitrary punishment.',
+              note: 'Frames the limit around evening itself, never feels like arbitrary punishment.',
             },
             { text: ' ' },
             {
@@ -3136,7 +3136,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pushbacks: [
             {
               id: 'restaurants',
-              label: '“What about family restaurants—does dinner-table screen-free apply there?”',
+              label: '“What about family restaurants, does dinner-table screen-free apply there?”',
               setup:
                 'Aim for screen-free meals at home every single night; on rare long restaurant waits, pack stickers/crayons first and skip guilt if you need a tiny emergency backup:',
               script:
@@ -3175,13 +3175,13 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'When the table and the bedroom stay quietly analog, evenings slow down for everyone—not just {name}. You are installing a peaceful family culture that will protect {poss} rest all the way through high school.',
+            'When the table and the bedroom stay quietly analog, evenings slow down for everyone, not just {name}. You are installing a peaceful family culture that will protect {poss} rest all the way through high school.',
           pocketInsight:
             'Protect toddler melatonin: power screens off 60 minutes before bedtime, keep bedrooms and dinner tables 100% screen-free, and let the evening rhythm hold the rule.',
           nextEpisodeHook: {
             kicker: 'Up Next · Episode 4 · 3 min',
             mystery:
-              '“Why is YOUR phone the #1 most fascinating forbidden object on earth to a 1-year-old—and how do you stop constant grabbing?”',
+              '“Why is YOUR phone the #1 most fascinating forbidden object on earth to a 1-year-old, and how do you stop constant grabbing?”',
             title: 'What to Do When {Name} Grabs for Your Phone in Public',
             targetSlug: 'toddler-phone-snatching-response',
           },
@@ -3199,7 +3199,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           illustration: EditorialIllustrationKey.device_dock,
           illustrationCaption: 'Grown-up tool · Not a toddler toy',
           headline: 'What to Do When {Name} Grabs for Your Phone in Public',
-          deck: 'Why {name} lunges for your phone the second you pull it out in line—and the calm “adult tool” boundary that ends public phone-grabbing battles.',
+          deck: 'Why {name} lunges for your phone the second you pull it out in line, and the calm “adult tool” boundary that ends public phone-grabbing battles.',
           sceneTime: '11:40 AM · GROCERY CHECKOUT LINE',
           sceneBody:
             'You pull out your phone for five seconds to scan your grocery loyalty card. Instantly {name} lunges from the cart seat with both chubby hands: *“PHONE! MINE! PHONE!”* When you slip it back into your pocket, a loud checkout-lane protest erupts. *Why does {pronoun} want THIS rectangle more than every toy in the house?*',
@@ -3207,9 +3207,9 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           pollOptions: [
             {
               id: 'magnet',
-              label: 'Yes—{pronoun} spots it from across the room!',
+              label: 'Yes, {pronoun} spots it from across the room!',
               response:
-                'Of course {pronoun} does! Toddlers are wired to mimic whatever WE treasure—and we touch our glowing glass rectangle 80 times a day. Making it a boring “grown-up tool” changes everything.',
+                'Of course {pronoun} does! Toddlers are wired to mimic whatever WE treasure, and we touch our glowing glass rectangle 80 times a day. Making it a boring “grown-up tool” changes everything.',
             },
             {
               id: 'public',
@@ -3235,7 +3235,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 name: 'Phone Association',
                 value: 'Boring adult tool',
                 tone: 'spruce',
-                desc: 'Just like car keys or a wallet—never plays games or cartoons, so {name} loses interest quickly.',
+                desc: 'Just like car keys or a wallet, never plays games or cartoons, so {name} loses interest quickly.',
               },
               {
                 name: 'Waiting-Line Backup',
@@ -3260,7 +3260,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             ],
           },
           almanacTruth:
-            'Keeping your phone strictly a boring “grown-up tool” (never a video toy) extinguishes phone-snatching far faster than hiding it—and gives {name} practice handling short real-world waits.',
+            'Keeping your phone strictly a boring “grown-up tool” (never a video toy) extinguishes phone-snatching far faster than hiding it, and gives {name} practice handling short real-world waits.',
           scienceDeepDive:
             'Intermittent reinforcement schedules produce the highest behavioral persistence in young children: when smartphone grabbing occasionally unlocks high-salience video rewards, grabbing frequency escalates sharply. Consistent classification of the phone as a non-toy adult tool paired with engaging waiting jobs rapidly extinguishes snatching.',
           beat3Kicker: 'Calm checkout-lane mastery',
@@ -3273,7 +3273,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               id: 'handit',
               label:
                 'Hand {obj} your unlocked phone playing a video so the people behind you stop looking.',
-              whyTitle: 'Why that’s so understandable—and what it teaches',
+              whyTitle: 'Why that’s so understandable, and what it teaches',
               whyText:
                 'Public staring feels intense! Yet trading your phone for silence in line trains {name} to escalate right at checkout every single grocery trip.',
             },
@@ -3283,18 +3283,18 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
                 'Snap “NO! DON’T TOUCH MY PHONE!” and shove it hastily away looking tense.',
               whyTitle: 'Why calm warmth works better',
               whyText:
-                'Tense secrecy makes the phone look even MORE mysterious and precious—matter-of-fact boredom takes the sparkle right off.',
+                'Tense secrecy makes the phone look even MORE mysterious and precious, matter-of-fact boredom takes the sparkle right off.',
             },
           ],
           calmScriptPlain:
-            '“Phones are grown-up tools for lists and paying—mine goes right back in my pocket. Here’s YOUR job: hold this heavy box of pasta and find something yellow!”',
+            '“Phones are grown-up tools for lists and paying, mine goes right back in my pocket. Here’s YOUR job: hold this heavy box of pasta and find something yellow!”',
           calmScriptSegments: [
             { text: '“' },
             {
               id: 'tool',
-              text: 'Phones are grown-up tools for lists and paying—mine goes right back in my pocket.',
+              text: 'Phones are grown-up tools for lists and paying, mine goes right back in my pocket.',
               tag: 'Boring Tool Rule',
-              note: 'Clear, unemotional classification—puts the phone in the exact same category as your wallet.',
+              note: 'Clear, unemotional classification, puts the phone in the exact same category as your wallet.',
             },
             { text: ' ' },
             {
@@ -3308,16 +3308,16 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
           deliveryCues: [
             'Keep phones off-limits as video players',
             'Give {name} a real cart-helper item to hold',
-            'Stay calm if strangers glance—toddlers are allowed to have feelings!',
+            'Stay calm if strangers glance, toddlers are allowed to have feelings!',
           ],
           pushbacks: [
             {
               id: 'photos',
               label: '“What about looking at family photos of {name} or Grandma on my phone?”',
               setup:
-                'A 60-second slow look at 3 real family photos together (while YOU hold the phone) is calm and sweet—just set a clear ending:',
+                'A 60-second slow look at 3 real family photos together (while YOU hold the phone) is calm and sweet, just set a clear ending:',
               script:
-                '“Let’s look at three photos of Grandma’s dog while Mommy holds it: one, two, three—all done, phone goes back to sleep in my pocket!”',
+                '“Let’s look at three photos of Grandma’s dog while Mommy holds it: one, two, three, all done, phone goes back to sleep in my pocket!”',
             },
             {
               id: 'doctorwait',
@@ -3325,7 +3325,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
               setup:
                 'Keep one tiny “Wait-Kit” zippered pouch in the diaper bag (mini board book, reusable sticker pad, 2 figurines, snack cup):',
               script:
-                '“Pull out the special ‘Waiting-Room Pouch’ that ONLY appears outside the house—brand-new novelty beats a phone every time!”',
+                '“Pull out the special ‘Waiting-Room Pouch’ that ONLY appears outside the house, brand-new novelty beats a phone every time!”',
             },
           ],
           advisorPrompt:
@@ -3352,7 +3352,7 @@ export const TIER_0B_TODDLER_MODULES: AcademyModuleSeedData[] = [
             },
           ],
           closingNote:
-            'Letting a 1-year-old learn how to look around a grocery store, wave at the cashier, and wait three whole minutes without a glowing screen is a superpower in our modern world—and you’re building it right now.',
+            'Letting a 1-year-old learn how to look around a grocery store, wave at the cashier, and wait three whole minutes without a glowing screen is a superpower in our modern world, and you’re building it right now.',
           pocketInsight:
             'Keep your phone strictly a boring “grown-up tool” (never a video toy), give {name} a real Cart-Helper item to hold, and pack a tiny Outing-Only pouch for long waits.',
           nextEpisodeHook: null,

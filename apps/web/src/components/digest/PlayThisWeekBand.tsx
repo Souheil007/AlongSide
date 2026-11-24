@@ -103,7 +103,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         title: 'Soft Fabric Texture Basket',
         meta: 'CALM BEFORE BED · 10 MIN · NO MESS',
         tags: ['calm', 'nomess'],
-        summary: 'Offer 3 clean household fabrics—cotton, knit, and silk—for gentle palmar grasping and touch.',
+        summary: 'Offer 3 clean household fabrics (cotton, knit, and silk) for gentle palmar grasping and touch.',
         steps: [
           'Place 3 clean fabrics (washcloth, soft scarf, knit burp cloth) within easy reach.',
           'Brush one gently across baby’s palms and toes while speaking slowly.',
@@ -152,7 +152,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         title: 'Texture Trail: Carpet, Tile & Soft Blankets',
         meta: 'CALM BEFORE BED · 15 MIN · NO MESS',
         tags: ['calm', 'nomess'],
-        summary: 'Lay a towel, soft blanket, and rug in a short path—walk barefoot together and name each feeling.',
+        summary: 'Lay a towel, soft blanket, and rug in a short path. Walk barefoot together and name each feeling.',
         steps: [
           'Lay 3 different textures in a short line across the hallway or living room.',
           'Take off socks together and step slowly from one square to the next.',
@@ -194,7 +194,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         title: 'Kitchen Scent Sniff & Match',
         meta: 'CALM BEFORE BED · 10 MIN · NO MESS',
         tags: ['calm', 'nomess'],
-        summary: 'Put orange peel, cinnamon, and mint in small bowls—take slow sniffs together with eyes closed.',
+        summary: 'Put orange peel, cinnamon, and mint in small bowls. Take slow sniffs together with eyes closed.',
         steps: [
           'Place 3 gentle kitchen scents (orange peel, cinnamon, mint) into small cups.',
           'Take slow belly sniffs together with eyes closed and guess each scent.',
@@ -232,7 +232,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         summary: 'Dim the room and shine a lamp at a blank wall to act out a 2-minute shadow story together.',
         steps: [
           'Prop a flashlight or bedside lamp aimed at an open wall in a dim room.',
-          'Make animals with hands—or tape cardboard cutouts onto wooden spoons.',
+          'Make animals with hands, or tape cardboard cutouts onto wooden spoons.',
           'Ask: “What problem is the shadow creature trying to solve tonight?”',
         ],
         materials: ['Flashlight or lamp', 'Blank wall', 'Optional cardboard scraps'],
@@ -282,7 +282,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         steps: [
           'Cut 3 paper towel tubes lengthwise into open tracks and grab painter’s tape.',
           'Tape them zigzagging down a wall or cabinet so the marble rolls slowly into a cup.',
-          'Use a stopwatch together—if it’s too fast, ask “How can we add a gentler slope?”',
+          'Use a stopwatch together. If it’s too fast, ask “How can we add a gentler slope?”',
         ],
         materials: ['Paper towel tubes', 'Painter’s tape', '1 marble', 'Plastic cup'],
         why: 'Iterative trial-and-error builds frustration tolerance and sustained offline focus after gaming or TV.',
@@ -306,7 +306,7 @@ export const PLAY_STAGE_BUNDLES: Record<PlayStageKey, PlayStageBundle> = {
         title: 'Floating Paperclip Water Lab',
         meta: 'QUIET SCIENCE · 15 MIN · TABLETOP',
         tags: ['calm'],
-        summary: 'Float a metal paperclip on water using surface tension—then break it with one drop of soap.',
+        summary: 'Float a metal paperclip on water using surface tension, then break it with one drop of soap.',
         steps: [
           'Fill a clean bowl with still water and lay a postage-stamp square of tissue gently on top.',
           'Rest a dry metal paperclip on the tissue, then nudge the paper down so the clip floats.',

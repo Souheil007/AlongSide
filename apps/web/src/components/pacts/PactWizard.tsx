@@ -459,7 +459,7 @@ export function PactWizard({ initialChildId, initialPreset }: PactWizardProps) {
       {/* ================================================================= */}
       {activeStep === 3 && (
         <div className="space-y-6">
-          {/* Complete Treaty Summary (Full Promises — Never Truncated!) */}
+          {/* Complete Treaty Summary (Full Promises: Never Truncated!) */}
           <section className="overflow-hidden rounded-[18px] border border-[#E6DEC9] bg-[#FAF7F2]">
             <div className="border-b border-[#E6DEC9] px-5 py-5 sm:px-7 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1">
@@ -649,7 +649,7 @@ export function PactWizard({ initialChildId, initialPreset }: PactWizardProps) {
                     Turn on {formattedCurfew} auto-lock
                   </h3>
                   <p className="text-[13.5px] leading-relaxed text-[var(--body)]">
-                    Scan one QR code to pause recreational apps at {formattedCurfew} nightly—zero
+                    Scan one QR code to pause recreational apps at {formattedCurfew} nightly, with zero
                     spyware, and emergency calls stay open 24/7.
                   </p>
                 </div>

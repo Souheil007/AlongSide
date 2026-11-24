@@ -724,7 +724,7 @@ export class DigestIngestionOrchestrator {
     const summary = `Curated weekly roundup of ${editionArticles.length} evidence-backed parenting briefings and ${editionVideos.length} verified expert talks published ${rangeLabel}, organized by developmental stage.`;
     const conversationStarter =
       allDinnerPrompts[0]?.question ??
-      'What was one moment this week that felt surprisingly good—and one moment that felt a little tricky?';
+      'What was one moment this week that felt surprisingly good, and one moment that felt a little tricky?';
 
     const totalFeedFailure =
       editionArticles.length === 0 && editionVideos.length === 0;

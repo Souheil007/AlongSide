@@ -119,7 +119,7 @@ export function EnrollmentModal({
             <span>Pauses apps at {formattedCurfew} nightly</span>
           </div>
           <p className="text-[12.5px] text-[var(--body)] max-w-sm">
-            Point {childName}&apos;s camera at this code—emergency calls and parents stay open 24/7.
+            Point {childName}&apos;s camera at this code: emergency calls and parents stay open 24/7.
           </p>
         </div>
 

@@ -49,7 +49,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
       'No Flashcards Required: Warm, ordinary interaction beats expensive baby gadgets every time.',
     ],
     actionPrompt:
-      'Catch three tiny "serves" from your baby today—pause, smile, and echo their sound back warmly.',
+      'Catch three tiny "serves" from your baby today, pause, smile, and echo their sound back warmly.',
     jumpChips: [
       { seconds: 15, label: '0:15 · What a baby serve looks like' },
       { seconds: 55, label: '0:55 · How warm returns wire neural circuits' },
@@ -62,7 +62,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'PedsDocTalk',
     durationMinutes: 10,
     parentHook:
-      'A board-certified pediatrician breaks down five realistic, gentle foundations—day-night light cues, sleepy signals, safe sleep setup, and calm bedtime rhythms.',
+      'A board-certified pediatrician breaks down five realistic, gentle foundations, day-night light cues, sleepy signals, safe sleep setup, and calm bedtime rhythms.',
     keyTakeaways: [
       'Day-Night Light Anchors: Bright daytime rooms and dim, quiet night feeds help newborn circadian clocks mature naturally.',
       'Catching Early Sleepy Cues: Watching for zoning out and gentle yawns avoids overtired crying spirals.',
@@ -90,7 +90,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
       'Play Is Real Learning: Short, joyful sensory exploration builds flexible curiosity far better than rigid drills.',
     ],
     actionPrompt:
-      'Watch your baby investigate one simple wooden spoon or cloth for 60 silent seconds today—you are watching real science.',
+      'Watch your baby investigate one simple wooden spoon or cloth for 60 silent seconds today, you are watching real science.',
     jumpChips: [
       { seconds: 150, label: '2:30 · Babies as natural everyday scientists' },
       { seconds: 540, label: '9:00 · How infants test cause and effect' },
@@ -104,10 +104,10 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Dr. Dan Siegel',
     durationMinutes: 8,
     parentHook:
-      "Watch Dr. Siegel hold up his own hand—in under three minutes you'll permanently see what 'flipping the lid' looks like during a toddler storm.",
+      "Watch Dr. Siegel hold up his own hand, in under three minutes you'll permanently see what 'flipping the lid' looks like during a toddler storm.",
     keyTakeaways: [
-      'Upstairs vs. Downstairs Brain: Fold your thumb inside your fingers—the thumb is the emotional alarm; the fingers are the calm braking cortex.',
-      'Flipping the Lid: During acute frustration, the fingers lift open—reasoning physically disconnects until the alarm cools.',
+      'Upstairs vs. Downstairs Brain: Fold your thumb inside your fingers, the thumb is the emotional alarm; the fingers are the calm braking cortex.',
+      'Flipping the Lid: During acute frustration, the fingers lift open, reasoning physically disconnects until the alarm cools.',
       'Connect Before Correcting: Kneeling low with warm presence helps the upstairs bridge reconnect first.',
     ],
     actionPrompt:
@@ -127,12 +127,12 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     parentHook:
       'Lost your patience in a tough toddler moment? Discover the two-step repair tool that rewrites tense memories and deepens attachment security.',
     keyTakeaways: [
-      'Repair Beats Perfection: Secure attachment grows from returning warmly after hard moments—not never losing your temper.',
+      'Repair Beats Perfection: Secure attachment grows from returning warmly after hard moments, not never losing your temper.',
       'Two-Step Repair: 1) Name what happened cleanly without blame, and 2) Re-anchor safety and unconditional love.',
       'Rewrites Memory: Returning within minutes (or even the next morning) transforms startled fear into deep relational trust.',
     ],
     actionPrompt:
-      'If tempers flare today, return calmly with: "I used a loud voice earlier. That was on me—you are a good kid and I love you."',
+      'If tempers flare today, return calmly with: "I used a loud voice earlier. That was on me, you are a good kid and I love you."',
     jumpChips: [
       { seconds: 185, label: "3:05 · Why perfection isn't the goal" },
       { seconds: 430, label: '7:10 · The two-step repair phrase' },
@@ -146,7 +146,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'DrRossGreene',
     durationMinutes: 5,
     parentHook:
-      'In under five minutes, see why challenging toddler behavior is not willful defiance—it signals a lagging skill or an unmet physical need waiting for a better setup.',
+      'In under five minutes, see why challenging toddler behavior is not willful defiance, it signals a lagging skill or an unmet physical need waiting for a better setup.',
     keyTakeaways: [
       'Kids Do Well If They Can: Behind repetitive climbing or resistance is an unsolved motor or flexibility hurdle.',
       'Skills Over Attitudes: Replacing "bad attitude" labels with curiosity about the unmet need lowers friction immediately.',
@@ -167,14 +167,14 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TEDx Talks',
     durationMinutes: 16,
     parentHook:
-      'Pediatric researcher Dr. Dimitri Christakis shows how rapid cartoon cuts overstimulate young brains—and why calm pacing and screen-free zones protect early focus.',
+      'Pediatric researcher Dr. Dimitri Christakis shows how rapid cartoon cuts overstimulate young brains, and why calm pacing and screen-free zones protect early focus.',
     keyTakeaways: [
       'The Pacing Trap: High-speed scene cuts repeatedly hijack the toddler orienting reflex.',
       'Protecting Focus: Early overstimulation makes slower real-world play feel frustrating by comparison.',
       'Calm Swap: Choosing slow narrative pacing and protecting screen-free rooms preserves natural curiosity.',
     ],
     actionPrompt:
-      'Count seconds between camera cuts on your child’s current show—swap anything faster than 4 seconds for slower storytelling.',
+      'Count seconds between camera cuts on your child’s current show, swap anything faster than 4 seconds for slower storytelling.',
     jumpChips: [
       { seconds: 120, label: '2:00 · Why fast cuts hijack infant/toddler focus' },
       { seconds: 450, label: '7:30 · Real-world vs. screen pacing' },
@@ -212,11 +212,11 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
       'Bribes, pressure, and rushing readiness spark the worst toddler potty battles. Watch a pediatrician break down genuine readiness signs and low-pressure body trust.',
     keyTakeaways: [
       'True Readiness Signs: Physical, communication, and emotional readiness matter far more than an arbitrary birthday.',
-      'Zero Power Struggles: Elimination is the one domain toddlers control 100%—pressure tightens pelvic muscles.',
+      'Zero Power Struggles: Elimination is the one domain toddlers control 100%, pressure tightens pelvic muscles.',
       'Neutral Misses: Treating accidents calmly like spilled water eliminates shame and speeds learning.',
     ],
     actionPrompt:
-      'Skip constant "Do you have to pee?" nagging today—use calm, matter-of-fact transition sits instead.',
+      'Skip constant "Do you have to pee?" nagging today, use calm, matter-of-fact transition sits instead.',
     jumpChips: [
       { seconds: 110, label: '1:50 · Spotting true readiness signals' },
       { seconds: 420, label: '7:00 · Avoiding pressure & power struggles' },
@@ -237,7 +237,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
       'One Safe Food Rule: Always pairing one familiar anchor beside family foods keeps dinners peaceful.',
     ],
     actionPrompt:
-      'Place one familiar safe food calmly beside tonight’s family meal—and say zero words about how many bites your toddler takes.',
+      'Place one familiar safe food calmly beside tonight’s family meal, and say zero words about how many bites your toddler takes.',
     jumpChips: [
       { seconds: 45, label: '0:45 · Parent job vs. child job at the table' },
       { seconds: 195, label: '3:15 · Why dinner pressure deepens picky eating' },
@@ -251,7 +251,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Harvard University',
     durationMinutes: 6,
     parentHook:
-      'Self-control is built like muscle—watch Harvard’s crisp 6-minute guide to how open-ended play and warm scaffolding wire the brain’s air-traffic control system.',
+      'Self-control is built like muscle, watch Harvard’s crisp 6-minute guide to how open-ended play and warm scaffolding wire the brain’s air-traffic control system.',
     keyTakeaways: [
       'Brain Air-Traffic Control: Executive function combines working memory, mental flexibility, and self-control.',
       'Warm Scaffolding: Adults provide just enough support so toddlers can lead and solve play problems themselves.',
@@ -297,7 +297,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Talks at Google',
     durationMinutes: 52,
     parentHook:
-      'Are you parenting like a carpenter carving a fixed shape—or a gardener creating rich, safe soil? Jump straight to three crisp highlights on play and curiosity.',
+      'Are you parenting like a carpenter carving a fixed shape, or a gardener creating rich, safe soil? Jump straight to three crisp highlights on play and curiosity.',
     keyTakeaways: [
       'The Carpenter Trap: Trying to micromanage outcomes increases parent anxiety and brittle performance.',
       'The Gardener Stance: Rich, unstructured play soil lets unexpected strengths blossom.',
@@ -313,12 +313,12 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
   },
   'preschool-physical-timer-protocol': {
     videoUrl: 'https://www.youtube.com/watch?v=DH9L7vJ03DE',
-    title: 'How Screens Stole Childhood — and How to Get It Back',
+    title: 'How Screens Stole Childhood and How to Get It Back',
     presenter: 'Jonathan Haidt, PhD',
     channel: 'TED',
     durationMinutes: 18,
     parentHook:
-      'How the shift from a play-based childhood to a screen-based childhood rewired young habits—and clear, calm family norms you can start right in the preschool years.',
+      'How the shift from a play-based childhood to a screen-based childhood rewired young habits, and clear, calm family norms you can start right in the preschool years.',
     keyTakeaways: [
       'Play-Based Foundations: Young children need rich physical, self-directed play for healthy emotional regulation.',
       'Clear Neutral Limits: External timers and shared family zones beat willpower negotiations.',
@@ -339,10 +339,10 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Huberman Lab',
     durationMinutes: 174,
     parentHook:
-      'Skip the 3-hour marathon—jump straight to three high-impact segments on sturdy leadership, staying calm during elementary meltdowns, and holding boundaries with warmth.',
+      'Skip the 3-hour marathon, jump straight to three high-impact segments on sturdy leadership, staying calm during elementary meltdowns, and holding boundaries with warmth.',
     keyTakeaways: [
       'Sturdy Leadership: Kids feel safest when parents stay grounded and hold boundaries without matching their storm.',
-      'Behavior as Signal: After-school explosions reflect drained self-control reserves—not bad character.',
+      'Behavior as Signal: After-school explosions reflect drained self-control reserves, not bad character.',
       'Repair & Connection: Calm validation followed by clear structure builds lasting emotional regulation.',
     ],
     actionPrompt:
@@ -402,7 +402,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TED',
     durationMinutes: 38,
     parentHook:
-      'Why clear family guardrails and cooperative real-world play outperform solo infinite feeds—jump straight to three crisp segments on building calm household agreements.',
+      'Why clear family guardrails and cooperative real-world play outperform solo infinite feeds, jump straight to three crisp segments on building calm household agreements.',
     keyTakeaways: [
       'Synchronous vs. Solitary: Playing cooperatively with friends differs dramatically from solitary infinite feeds.',
       'Four Clear Guardrails: Delaying smartphones and social media protects sleep and social confidence.',
@@ -427,7 +427,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TED',
     durationMinutes: 14,
     parentHook:
-      'Your tween’s sudden eye-rolling and hypersensitivity to peer status aren’t personal attacks—they reflect huge synaptic pruning in the social brain.',
+      'Your tween’s sudden eye-rolling and hypersensitivity to peer status aren’t personal attacks, they reflect huge synaptic pruning in the social brain.',
     keyTakeaways: [
       'Social Brain Remodeling: The medial prefrontal cortex undergoes massive rewiring starting around age 10.',
       'Synaptic Pruning: Unused pathways clear out while active habits myelinate rapidly.',
@@ -448,7 +448,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Nemours',
     durationMinutes: 32,
     parentHook:
-      'Mental health isn’t feeling cheerful 24/7—jump directly to three crisp highlights on acting as your tween’s calm emotional shock absorber.',
+      'Mental health isn’t feeling cheerful 24/7, jump directly to three crisp highlights on acting as your tween’s calm emotional shock absorber.',
     keyTakeaways: [
       'Healthy Distress: Big ups and downs at ages 10–14 are normal emotional workouts, not brokenness.',
       'Emotional Shock Absorber: Parents stay steady so tweens can vent safely without escalating.',
@@ -490,7 +490,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Politics and Prose',
     durationMinutes: 67,
     parentHook:
-      'Jump straight to three crisp segments showing why a 14-year-old’s brain is wired back-to-front—and how staying their calm frontal-lobe coach defuses blowups.',
+      'Jump straight to three crisp segments showing why a 14-year-old’s brain is wired back-to-front, and how staying their calm frontal-lobe coach defuses blowups.',
     keyTakeaways: [
       'Back-to-Front Wiring: Frontal braking cables keep insulating steadily into the mid-twenties.',
       'Sleep & Stress Vulnerability: Tired adolescent brains misread neutral feedback as hostility much faster.',
@@ -511,7 +511,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'Laurence Steinberg',
     durationMinutes: 11,
     parentHook:
-      'In eleven gripping minutes, watch Dr. Laurence Steinberg demonstrate how peer presence doubles teen risk-taking—and why warmth paired with clear structure protects teens.',
+      'In eleven gripping minutes, watch Dr. Laurence Steinberg demonstrate how peer presence doubles teen risk-taking, and why warmth paired with clear structure protects teens.',
     keyTakeaways: [
       'The Peer Multiplier: Having two peers nearby activates reward centers and lowers risk perception.',
       'Warmth + Firmness: Authoritative boundaries paired with deep warmth outperform harsh policing across studies.',
@@ -532,7 +532,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TED',
     durationMinutes: 19,
     parentHook:
-      'Sleep scientist Dr. Matthew Walker reveals how losing even an hour of nightly sleep slashes memory consolidation by 40%—and why protecting teen bedrooms from glowing screens changes mood fast.',
+      'Sleep scientist Dr. Matthew Walker reveals how losing even an hour of nightly sleep slashes memory consolidation by 40%, and why protecting teen bedrooms from glowing screens changes mood fast.',
     keyTakeaways: [
       'Memory Save Button: Deep sleep transfers everything studied today into long-term memory.',
       'Emotional Reset: REM sleep acts like overnight emotional first aid for anxious teen brains.',
@@ -548,7 +548,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
   },
   'teen-consultant-shift-protocol': {
     videoUrl: 'https://www.youtube.com/watch?v=CyElHdaqkjo',
-    title: 'How to Raise Successful Kids — Without Over-Parenting',
+    title: 'How to Raise Successful Kids: Without Over-Parenting',
     presenter: 'Julie Lythcott-Haims, JD',
     channel: 'TED',
     durationMinutes: 14,
@@ -557,7 +557,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     keyTakeaways: [
       'Over-Parenting Cost: Rescuing every bump deprives teens of real-world problem-solving confidence.',
       'Real Chores Matter: Contributing meaningfully to household logistics predicts young-adult thriving.',
-      'Warmth Before Checklists: Greet your teen with love first—not a quiz about grades or applications.',
+      'Warmth Before Checklists: Greet your teen with love first, not a quiz about grades or applications.',
     ],
     actionPrompt:
       'Greet your teen warmly today for five full minutes before mentioning school, deadlines, or chores.',
@@ -574,7 +574,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TEDx Talks',
     durationMinutes: 11,
     parentHook:
-      'Psychologist Jeffrey Arnett—who coined "emerging adulthood"—explains why ages 18–25 are a healthy developmental runway, and how your role evolves into an enduring adult friendship.',
+      'Psychologist Jeffrey Arnett, who coined "emerging adulthood", explains why ages 18–25 are a healthy developmental runway, and how your role evolves into an enduring adult friendship.',
     keyTakeaways: [
       'A Distinct Developmental Stage: Ages 18–25 are naturally built for identity exploration and gradual launching.',
       'Longer Launch Runway: Steady mentorship beats impatient comparisons to past generations.',
@@ -595,7 +595,7 @@ export const MASTER_VIDEO_LECTURES_BY_LESSON_SLUG: Record<string, MasterVideoLec
     channel: 'TEDx Talks',
     durationMinutes: 14,
     parentHook:
-      'Computer science professor Cal Newport unpacks why constant notification switching fractures deep thinking—and how protecting focused study blocks buys back genuine calm and creativity.',
+      'Computer science professor Cal Newport unpacks why constant notification switching fractures deep thinking, and how protecting focused study blocks buys back genuine calm and creativity.',
     keyTakeaways: [
       'Attention Is Your Edge: Constant phone switching leaves "attention residue" that slows hard work dramatically.',
       'Deep Work Blocks: Short 45-minute phone-in-another-room study blocks finish homework faster and free up evening rest.',

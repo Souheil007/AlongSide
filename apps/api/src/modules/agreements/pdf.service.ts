@@ -34,7 +34,7 @@ export class StandardVectorPdfRenderer implements PdfDocumentRenderer {
     // Header Title
     streamCommands.push('1 1 1 rg'); // White text
     streamCommands.push('BT /F2 20 Tf 50 735 Td (' + escapePdfText('ALONGSIDE BILATERAL FAMILY PACT') + ') Tj ET');
-    streamCommands.push('BT /F1 10 Tf 50 715 Td (' + escapePdfText('Pact-as-Code — Mutual Family Tech Treaty & Safe Harbor Guarantee') + ') Tj ET');
+    streamCommands.push('BT /F1 10 Tf 50 715 Td (' + escapePdfText('Pact-as-Code: Mutual Family Tech Treaty & Safe Harbor Guarantee') + ') Tj ET');
 
     // Metadata Bar
     streamCommands.push('0.95 0.96 0.96 rg');

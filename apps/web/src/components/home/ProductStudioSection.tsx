@@ -226,7 +226,7 @@ export function ProductStudioSection() {
             </div>
 
             <div className="p-5 sm:p-7 grid flex-1">
-              {/* Tab Panel 1: Parent Academy (Default — Universal High-Hook Course) */}
+              {/* Tab Panel 1: Parent Academy (Default: Universal High-Hook Course) */}
               <div
                 id="studio-panel-academy"
                 role={activeTab === 'academy' ? 'tabpanel' : undefined}
@@ -314,7 +314,7 @@ export function ProductStudioSection() {
                 </div>
               </div>
 
-              {/* Tab Panel 2: Culture & Trends (Editorial Weekly Issue — Video, Article & Trend Watch) */}
+              {/* Tab Panel 2: Culture & Trends (Editorial Weekly Issue: Video, Article & Trend Watch) */}
               <div
                 id="studio-panel-digest"
                 role={activeTab === 'digest' ? 'tabpanel' : undefined}
