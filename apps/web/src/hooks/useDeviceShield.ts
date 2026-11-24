@@ -219,6 +219,37 @@ export function useDeviceShield({
     [effectiveShield, toInput, mutation]
   );
 
+  const setEnforcementMode = React.useCallback(
+    (mode: 'scheduled' | '247') => {
+      const base = toInput(effectiveShield);
+      if (mode === '247') {
+        const allBlocked = Array.from(
+          new Set([...base.blockedServices, ...base.bedtimeServices])
+        );
+        mutation.mutate({
+          ...base,
+          blockedServices: allBlocked,
+          bedtimeServices: [],
+          bedtimeEnabled: true,
+          bedtimeStart: '00:00',
+          bedtimeEnd: '00:00',
+        });
+      } else {
+        const fallbackStart =
+          base.bedtimeStart === '00:00' ? '20:30' : base.bedtimeStart || '20:30';
+        const fallbackEnd =
+          base.bedtimeEnd === '00:00' ? '06:30' : base.bedtimeEnd || '06:30';
+        mutation.mutate({
+          ...base,
+          bedtimeEnabled: true,
+          bedtimeStart: fallbackStart,
+          bedtimeEnd: fallbackEnd,
+        });
+      }
+    },
+    [effectiveShield, toInput, mutation]
+  );
+
   const downloadProfile = React.useCallback(
     (childName: string) => {
       const cid = childId || 'child';
@@ -281,6 +312,7 @@ export function useDeviceShield({
     toggleBlockedService,
     toggleBedtimeService,
     setBedtimeSchedule,
+    setEnforcementMode,
     downloadProfile,
     copyAndroidHostname,
     setCustomProfileId,
