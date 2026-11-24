@@ -167,7 +167,9 @@ export function DigestDashboardClient({ className }: DigestDashboardClientProps)
                 shortAges={digest.tierMeta.shortAges}
                 weekRange={weekRange}
                 isAllWeeks={digest.isAllWeeks}
-                onOpenVideo={(video) => digest.openVideoTheater(video, 0)}
+                onOpenVideo={(video, startSeconds = 0) =>
+                  digest.openVideoTheater(video, startSeconds)
+                }
                 onToggleSaveVideo={digest.toggleSaveVideo}
                 onViewAllVideos={() => handleSwitchTabAndScrollTop('videos')}
               />

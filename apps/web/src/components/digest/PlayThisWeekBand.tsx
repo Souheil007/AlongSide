@@ -452,7 +452,7 @@ export function PlayThisWeekBand({
         <div className="min-w-0">
           <h2
             id="play-this-week-heading"
-            className="font-serif text-[23px] sm:text-[27px] font-normal tracking-[-0.02em] text-[#131715]"
+            className="font-serif text-[24px] sm:text-[28px] font-normal tracking-[-0.024em] text-[#0E1311]"
           >
             Play this week
           </h2>
@@ -475,10 +475,10 @@ export function PlayThisWeekBand({
                 aria-pressed={isSelected}
                 onClick={() => setFilter(opt.id)}
                 className={cn(
-                  'min-h-[36px] rounded-full px-3.5 text-[12.5px] font-semibold border transition-colors cursor-pointer',
+                  'min-h-[36px] rounded-full px-3.5 text-[12.5px] font-semibold border transition-all cursor-pointer',
                   isSelected
-                    ? 'bg-[#143D2B] border-[#143D2B] text-white'
-                    : 'bg-white border-[#131715]/14 text-[#494F4C] hover:border-[#143D2B] hover:text-[#143D2B]'
+                    ? 'bg-[#143D2B] border-[#143D2B] text-white shadow-xs'
+                    : 'bg-white border-[#131715]/12 text-[#494F4C] hover:border-[#143D2B] hover:text-[#143D2B]'
                 )}
               >
                 {opt.label}
@@ -488,10 +488,10 @@ export function PlayThisWeekBand({
         </div>
       </div>
 
-      {/* Hero Featured Screen-Free Activity Card */}
+      {/* Hero Featured Screen-Free Activity Card - Direction D Paper Sanctuary */}
       <article
         data-testid={`play-spotlight-${activeIdea.id}`}
-        className="rounded-[14px] border border-[#131715]/10 bg-white p-6 sm:p-8"
+        className="rounded-[20px] border border-[#131715]/8 bg-white p-6 sm:p-8 shadow-[0_16px_40px_rgba(19,23,21,0.05)]"
       >
         <div className="grid grid-cols-1 lg:grid-cols-[1.18fr_0.82fr] gap-7 lg:gap-10 items-stretch">
           {/* Left: 3-Step How-To + Actions */}
@@ -500,7 +500,7 @@ export function PlayThisWeekBand({
               <span className="block font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[#B45309]">
                 {activeIdea.meta}
               </span>
-              <h3 className="font-serif text-[26px] sm:text-[30px] font-normal leading-[1.16] tracking-[-0.015em] text-[#131715] mt-2">
+              <h3 className="font-serif text-[26px] sm:text-[30px] font-normal leading-[1.16] tracking-[-0.015em] text-[#0E1311] mt-2">
                 {activeIdea.title}
               </h3>
 
@@ -524,7 +524,7 @@ export function PlayThisWeekBand({
                 type="button"
                 data-testid="play-shuffle-btn"
                 onClick={handleShuffle}
-                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-semibold transition-colors shadow-xs cursor-pointer"
               >
                 <span>Shuffle another idea</span>
                 <RotateCw className="h-3.5 w-3.5" aria-hidden="true" />
@@ -539,7 +539,7 @@ export function PlayThisWeekBand({
                   'inline-flex items-center justify-center gap-1.5 min-h-[44px] px-4 rounded-full border text-[13px] font-semibold transition-colors cursor-pointer',
                   isPlayed
                     ? 'bg-[#EAF3EE] border-[#143D2B] text-[#143D2B]'
-                    : 'bg-white border-[#131715]/16 text-[#131715] hover:border-[#143D2B] hover:text-[#143D2B]'
+                    : 'bg-white border-[#131715]/14 text-[#131715] hover:border-[#143D2B] hover:text-[#143D2B]'
                 )}
               >
                 {isPlayed ? (
@@ -555,7 +555,7 @@ export function PlayThisWeekBand({
           </div>
 
           {/* Right: Warm Parchment Materials + Why It Helps */}
-          <div className="rounded-[12px] bg-[#FAF8F3] p-5 sm:p-6 flex flex-col justify-between gap-5">
+          <div className="rounded-[16px] bg-[#FAF8F3] border border-[#EAE5DA] p-5 sm:p-6 flex flex-col justify-between gap-5">
             <div>
               <span className="block font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[#143D2B]">
                 What you need (already at home)
@@ -591,12 +591,12 @@ export function PlayThisWeekBand({
             key={idea.id}
             type="button"
             onClick={() => setActiveId(idea.id)}
-            className="text-left rounded-[12px] border border-[#131715]/10 bg-white hover:border-[#143D2B]/40 p-4 sm:p-5 flex flex-col justify-between gap-2 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+            className="text-left rounded-[16px] border border-[#131715]/8 bg-white shadow-[0_6px_20px_rgba(19,23,21,0.03)] hover:shadow-[0_14px_32px_rgba(19,23,21,0.07)] hover:border-[#143D2B]/35 hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between gap-2 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
           >
             <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.06em] text-[#6C7570]">
               {idea.meta}
             </span>
-            <span className="font-serif text-[18px] font-normal leading-[1.25] text-[#131715]">
+            <span className="font-serif text-[18px] font-normal leading-[1.25] text-[#0E1311]">
               {idea.title}
             </span>
             <span className="text-[12.5px] leading-[1.45] text-[#59625D]">

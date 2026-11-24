@@ -40,11 +40,11 @@ export function WeeklyPhrasesStrip({
   return (
     <div
       data-testid="weekly-phrases-strip"
-      className="flex flex-col gap-3.5 rounded-[12px] bg-[#F3F1EA] p-5 sm:p-6"
+      className="flex flex-col gap-4 rounded-[20px] border border-[#131715]/7 bg-white p-6 sm:p-7 shadow-[0_12px_32px_rgba(19,23,21,0.045)]"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-          <h3 className="text-[14px] font-semibold text-[#131715]">
+          <h3 className="text-[14.5px] font-semibold text-[#0E1311]">
             3 phrases going around this week
           </h3>
           <span className="text-[12.5px] text-[#59625D]">
@@ -78,13 +78,13 @@ export function WeeklyPhrasesStrip({
               data-testid={`phrase-tile-${idx}`}
               onClick={() => onTogglePhrase(idx)}
               className={cn(
-                'flex min-h-[68px] flex-col justify-center gap-0.5 rounded-[9px] border px-4 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                'flex min-h-[72px] flex-col justify-center gap-0.5 rounded-[14px] border px-4 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
                 isExpanded
-                  ? 'border-[#143D2B] bg-[#E6F0EB]'
-                  : 'border-[#131715]/10 bg-white hover:border-[#131715]/25'
+                  ? 'border-[#143D2B] bg-[#EDF5F0] shadow-xs'
+                  : 'border-[#131715]/8 bg-[#F8F7F3] hover:border-[#131715]/20 hover:bg-[#F2EFE8]'
               )}
             >
-              <span className="font-serif text-[18px] font-medium text-[#131715]">
+              <span className="font-serif text-[18px] font-medium text-[#0E1311]">
                 {phrase.word}
               </span>
               <span className="text-[13px] text-[#3E4642]">{phrase.shortMeaning}</span>
@@ -96,7 +96,7 @@ export function WeeklyPhrasesStrip({
       {activePhrase && (
         <div
           data-testid="phrase-expanded-panel"
-          className="grid rounded-[9px] border border-[#131715]/10 bg-white p-4 sm:px-5"
+          className="grid rounded-[14px] border border-[#131715]/8 bg-[#FAF9F5] p-5 sm:px-6 shadow-xs"
         >
           {visiblePhrases.map((phrase, idx) => {
             const isCurrent = idx === expandedIndex;
@@ -136,7 +136,7 @@ export function WeeklyPhrasesStrip({
                   </div>
                 </div>
 
-                <div className="rounded-[8px] bg-[#E6F0EB] px-3.5 py-3 text-[13.5px] font-medium leading-[1.5] text-[#10251C]">
+                <div className="rounded-[10px] bg-[#E6F0EB] px-4 py-3.5 text-[13.5px] font-medium leading-[1.5] text-[#10251C]">
                   {phrase.calmScript}
                 </div>
               </div>

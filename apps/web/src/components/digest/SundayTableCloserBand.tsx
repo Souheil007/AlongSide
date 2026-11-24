@@ -67,19 +67,37 @@ export function SundayTableCloserBand({
       {activePrompt && (
         <div
           data-testid="dinner-closer-card"
-          className="flex flex-col gap-4 rounded-[14px] bg-[#10251C] p-6 sm:p-9 text-[#FAF9F5]"
+          className="flex flex-col gap-5 rounded-[22px] bg-[#10251C] bg-[radial-gradient(ellipse_65%_80%_at_88%_12%,rgba(232,174,73,0.16),transparent_55%)] p-7 sm:p-10 text-[#FAF9F5] shadow-[0_24px_54px_rgba(14,34,25,0.22)] border border-[#FAF9F5]/10"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-[#FAF9F5]/75 tabular-nums">
-            <span>
-              Tonight&apos;s dinner question
-              {issueNumber !== null ? ` · Issue #${issueNumber}` : ''}
-            </span>
+          <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-[#FAF9F5]/80 tabular-nums">
+            <div className="flex items-center gap-2.5">
+              <span>
+                Tonight&apos;s dinner question
+                {issueNumber !== null ? ` · Issue #${issueNumber}` : ''}
+              </span>
+              {dinnerPrompts.length > 1 && (
+                <div className="inline-flex items-center gap-1.5 ml-1" aria-hidden="true">
+                  {dinnerPrompts.map((_, dotIdx) => {
+                    const isActive = dotIdx === (dinnerPromptIndex % dinnerPrompts.length);
+                    return (
+                      <span
+                        key={dotIdx}
+                        className={cn(
+                          'h-1.5 rounded-full transition-all duration-200',
+                          isActive ? 'w-5 bg-[#FAF9F5]' : 'w-1.5 bg-white/25'
+                        )}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <span>
               {(dinnerPromptIndex % dinnerPrompts.length) + 1} of {dinnerPrompts.length}
             </span>
           </div>
 
-          <div className="grid max-w-[38ch]">
+          <div className="grid max-w-[42ch]">
             {dinnerPrompts.map((prompt, idx) => {
               const isCurrent = idx === dinnerPromptIndex % dinnerPrompts.length;
               return (
@@ -88,7 +106,7 @@ export function SundayTableCloserBand({
                   data-testid={isCurrent ? 'dinner-closer-question' : undefined}
                   aria-hidden={!isCurrent || undefined}
                   className={cn(
-                    'col-start-1 row-start-1 font-serif text-[23px] sm:text-[30px] font-normal leading-[1.28] tracking-[-0.015em] text-[#FAF9F5]',
+                    'col-start-1 row-start-1 font-serif text-[24px] sm:text-[32px] font-normal leading-[1.28] tracking-[-0.016em] text-[#FAF9F5]',
                     !isCurrent && 'invisible pointer-events-none select-none'
                   )}
                 >
@@ -119,7 +137,7 @@ export function SundayTableCloserBand({
             {dinnerNotesOpen && (
               <div
                 data-testid="dinner-notes-panel"
-                className="mt-2 grid max-w-[68ch] rounded-[9px] border border-[#FAF9F5]/15 bg-[#173327] px-4 py-3.5 text-[13.5px] leading-[1.55] text-[#FAF9F5]/90"
+                className="mt-2 grid max-w-[68ch] rounded-[12px] border border-[#FAF9F5]/15 bg-[#173327]/90 px-4 py-3.5 text-[13.5px] leading-[1.55] text-[#FAF9F5]/90"
               >
                 {dinnerPrompts.map((prompt, idx) => {
                   const isCurrent = idx === dinnerPromptIndex % dinnerPrompts.length;
@@ -153,7 +171,7 @@ export function SundayTableCloserBand({
                 type="button"
                 data-testid="dinner-copy-btn"
                 onClick={() => onCopyQuestion(activePrompt.question)}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[8px] bg-[#FAF9F5] px-4 text-[13.5px] font-semibold text-[#10251C] transition-colors hover:bg-[#ECEAE2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5] focus-visible:ring-offset-2 focus-visible:ring-offset-[#10251C]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[#FAF9F5] px-5 text-[13.5px] font-semibold text-[#10251C] transition-colors hover:bg-white shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5] focus-visible:ring-offset-2 focus-visible:ring-offset-[#10251C]"
               >
                 Copy question
               </button>
@@ -163,7 +181,7 @@ export function SundayTableCloserBand({
                   type="button"
                   data-testid="dinner-next-btn"
                   onClick={onNextPrompt}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-[8px] border border-[#FAF9F5]/20 px-3.5 text-[13.5px] font-medium text-[#FAF9F5]/95 transition-colors hover:bg-[#173327] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[#FAF9F5]/25 px-4 text-[13.5px] font-medium text-[#FAF9F5]/95 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]"
                 >
                   Next prompt
                 </button>
@@ -173,7 +191,7 @@ export function SundayTableCloserBand({
                 type="button"
                 data-testid="dinner-share-btn"
                 onClick={() => onShareWithPartner(activePrompt.question)}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[8px] border border-[#FAF9F5]/20 px-3.5 text-[13.5px] font-medium text-[#FAF9F5]/95 transition-colors hover:bg-[#173327] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[#FAF9F5]/25 px-4 text-[13.5px] font-medium text-[#FAF9F5]/95 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]"
               >
                 Text partner
               </button>
@@ -191,10 +209,10 @@ export function SundayTableCloserBand({
               }
               title={activePrompt.isSaved ? 'Saved for Sunday' : 'Save for Sunday'}
               className={cn(
-                'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]',
+                'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FAF9F5]',
                 activePrompt.isSaved
                   ? 'border-[#E6F0EB]/50 bg-[#E6F0EB]/20 text-[#FAF9F5]'
-                  : 'border-[#FAF9F5]/20 text-[#FAF9F5]/80 hover:bg-[#173327] hover:text-[#FAF9F5]'
+                  : 'border-[#FAF9F5]/25 text-[#FAF9F5]/85 hover:bg-white/10 hover:text-[#FAF9F5]'
               )}
             >
               <Bookmark

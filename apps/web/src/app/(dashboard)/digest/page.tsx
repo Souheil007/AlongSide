@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function DigestPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#F8F7F3] bg-[radial-gradient(ellipse_70%_38%_at_50%_0%,rgba(236,231,220,0.65),transparent_60%)]">
       <Suspense
         fallback={
           <div className="mx-auto w-full max-w-[1180px] space-y-6 pt-4 animate-pulse">

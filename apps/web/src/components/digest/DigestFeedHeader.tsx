@@ -124,7 +124,7 @@ export function DigestFeedHeader({
       {/* Editorial Nameplate + Weekly Issue Selector */}
       <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 pb-5">
         <div className="flex min-w-0 flex-col gap-1.5">
-          <h1 className="font-serif text-[32px] sm:text-[40px] font-normal leading-[1.06] tracking-[-0.025em] text-[#131715]">
+          <h1 className="font-serif text-[34px] sm:text-[44px] lg:text-[48px] font-normal leading-[1.04] tracking-[-0.032em] text-[#0E1311]">
             Culture &amp; Trends
           </h1>
           <p
@@ -175,7 +175,7 @@ export function DigestFeedHeader({
                 onSelectIssue(next);
               }
             }}
-            className="min-h-[44px] w-full sm:w-auto appearance-none rounded-[8px] border border-[#131715]/20 bg-white pl-3.5 pr-9 text-[13.5px] font-medium text-[#131715] tabular-nums transition-colors hover:border-[#131715]/35 hover:bg-[#F6F4EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2 cursor-pointer disabled:cursor-default disabled:opacity-70"
+            className="min-h-[44px] w-full sm:w-auto appearance-none rounded-[10px] border border-[#131715]/14 bg-white pl-3.5 pr-9 text-[13.5px] font-medium text-[#131715] tabular-nums shadow-[0_2px_10px_rgba(19,23,21,0.04)] transition-all hover:border-[#131715]/30 hover:shadow-[0_4px_14px_rgba(19,23,21,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2 cursor-pointer disabled:cursor-default disabled:opacity-70"
           >
             {issues.length > 0 ? (
               <>
@@ -211,7 +211,7 @@ export function DigestFeedHeader({
         latestIssueNumber !== null && (
           <div
             data-testid="digest-archive-banner"
-            className="mb-3.5 flex flex-wrap items-center justify-between gap-3 rounded-[8px] bg-[#F3F1EA] px-4 py-2.5 text-[13px] text-[#3E4642]"
+            className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[10px] bg-[#EFECE3] border border-[#131715]/6 px-4 py-2.5 text-[13px] text-[#3E4642]"
           >
             <span>
               {isAllWeeks
@@ -230,13 +230,13 @@ export function DigestFeedHeader({
           </div>
         )}
 
-      {/* Quiet 4-Tab Editorial Underline Bar */}
+      {/* Direction D: Pill-Segmented Sanctuary Tab Bar */}
       <nav
         role="tablist"
         aria-label="Culture and Trends sections"
-        className="flex items-center gap-2 sm:gap-3 border-b border-[#131715]/18 overflow-x-auto [scrollbar-width:none]"
+        className="inline-flex items-center bg-[#ECE9E0] p-1 rounded-[12px] gap-1 overflow-x-auto max-w-full [scrollbar-width:none]"
       >
-        {tabs.map((tab, index) => {
+        {tabs.map((tab) => {
           const isSelected = activeTab === tab.id;
           return (
             <button
@@ -249,11 +249,10 @@ export function DigestFeedHeader({
               data-testid={`digest-tab-${tab.id}`}
               onClick={() => onSelectTab(tab.id)}
               className={cn(
-                'relative -mb-px inline-flex min-h-[44px] shrink-0 items-center gap-1.5 border-b-2 px-3 pb-2.5 text-[14px] whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-inset rounded-t-[6px]',
-                index === 0 && 'pl-0.5',
+                'relative inline-flex min-h-[38px] shrink-0 items-center gap-1.5 px-4 text-[13.5px] whitespace-nowrap rounded-[9px] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
                 isSelected
-                  ? 'border-[#143D2B] font-semibold text-[#143D2B]'
-                  : 'border-transparent font-medium text-[#59625D] hover:text-[#131715]'
+                  ? 'bg-white font-semibold text-[#111413] shadow-[0_2px_8px_rgba(19,23,21,0.08)]'
+                  : 'font-medium text-[#555D58] hover:text-[#111413] hover:bg-white/50'
               )}
             >
               <span>{tab.label}</span>
@@ -261,8 +260,10 @@ export function DigestFeedHeader({
                 <span
                   data-testid={`digest-tab-count-${tab.id}`}
                   className={cn(
-                    'text-[12px] font-medium tabular-nums',
-                    isSelected ? 'text-[#143D2B]' : 'text-[#59625D]'
+                    'text-[11.5px] font-semibold tabular-nums rounded-full px-2 py-0.5 transition-colors',
+                    isSelected
+                      ? 'bg-[#EAF3EE] text-[#143D2B]'
+                      : 'bg-[#DFDAD0] text-[#555D58]'
                   )}
                 >
                   {tab.count}
