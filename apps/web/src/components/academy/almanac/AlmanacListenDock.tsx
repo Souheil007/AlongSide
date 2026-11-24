@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Pause, Play } from 'lucide-react';
+import { Pause, Play, Sparkles } from 'lucide-react';
 import { BEAT_CHAPTER_LABELS } from '@/hooks/useAlmanacLessonState';
 import { cn } from '@/lib/utils';
 
@@ -17,6 +17,8 @@ export interface AlmanacListenDockProps {
   onAudioError: () => void;
   onTogglePlay: () => void;
   onCycleSpeed: () => void;
+  voicePersona?: 'warm' | 'clear';
+  onCycleVoicePersona?: () => void;
 }
 
 function formatAudioTime(seconds: number): string {
@@ -38,6 +40,8 @@ export function AlmanacListenDock({
   onAudioError,
   onTogglePlay,
   onCycleSpeed,
+  voicePersona = 'warm',
+  onCycleVoicePersona,
 }: AlmanacListenDockProps) {
   if (!visible) return null;
 
@@ -113,6 +117,20 @@ export function AlmanacListenDock({
           <span className="font-mono text-[12px] text-[var(--mute)] tabular-nums">
             {formatAudioTime(audioSeconds)} / {formatAudioTime(totalAudioSeconds)}
           </span>
+
+          {onCycleVoicePersona && (
+            <button
+              type="button"
+              onClick={onCycleVoicePersona}
+              aria-label={`Voice tone: ${voicePersona === 'clear' ? 'Clear Guidance' : 'Calm Warmth'}`}
+              data-testid="almanac-listen-voice-btn"
+              title="Toggle voice: Warm or Clear"
+              className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-[var(--canvas-subtle)] px-3 text-[11px] font-medium text-[var(--ink)] transition-colors hover:border-[var(--spruce-border)] cursor-pointer"
+            >
+              <Sparkles className="h-3 w-3 text-[var(--spruce)]" aria-hidden="true" />
+              <span>{voicePersona === 'clear' ? 'Clear' : 'Warm'}</span>
+            </button>
+          )}
 
           <button
             type="button"

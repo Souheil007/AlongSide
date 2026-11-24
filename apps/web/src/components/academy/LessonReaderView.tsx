@@ -293,6 +293,8 @@ export function LessonReaderView({
           onAudioError={state.onAudioError}
           onTogglePlay={state.togglePlayAudio}
           onCycleSpeed={state.cyclePlaybackSpeed}
+          voicePersona={state.voicePersona}
+          onCycleVoicePersona={state.cycleVoicePersona}
         />
 
         {/* Beat 1 (Canvas): The Mirror */}

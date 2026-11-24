@@ -8,6 +8,7 @@ import {
   RotateCw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { cleanTextForSpeech, getBestNaturalVoice } from '@/lib/audio/narratorEngine';
 
 export interface AudioMemoPlayerProps {
   audioUrl?: string | null;
@@ -123,21 +124,12 @@ export function AudioMemoPlayer({
         return;
       }
 
-      const sliceText = fullText.slice(offset);
+      const sliceText = cleanTextForSpeech(fullText.slice(offset));
       const utterance = new SpeechSynthesisUtterance(sliceText);
-      utterance.rate = playbackRate;
-      utterance.pitch = 1.0;
+      utterance.rate = Math.max(0.6, Math.min(2.0, 0.93 * playbackRate));
+      utterance.pitch = 0.97;
 
-      const voices = window.speechSynthesis.getVoices();
-      const naturalVoice =
-        voices.find(
-          (v) =>
-            v.lang.startsWith('en') &&
-            (v.name.includes('Natural') ||
-              v.name.includes('Samantha') ||
-              v.name.includes('Google') ||
-              v.name.includes('Karen'))
-        ) || voices.find((v) => v.lang.startsWith('en'));
+      const naturalVoice = getBestNaturalVoice('warm');
       if (naturalVoice) utterance.voice = naturalVoice;
 
       utterance.onboundary = (e) => {

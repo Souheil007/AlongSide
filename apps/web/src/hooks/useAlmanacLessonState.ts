@@ -13,6 +13,11 @@ import {
   recordActiveReadingTime,
   updateLessonPlaybook,
 } from '@/lib/api/academy';
+import {
+  buildHookingNarrationScript,
+  playNaturalNarrator,
+  type VoicePersona,
+} from '@/lib/audio/narratorEngine';
 
 export const BEAT_CHAPTER_LABELS = [
   'The Mirror',
@@ -33,17 +38,7 @@ export function buildAlmanacNarrationScript(
   payload: AlmanacLessonPayload,
   t: (str: string) => string
 ): { fullText: string; estimatedSeconds: number } {
-  const parts = [
-    `${t(payload.headline)}. ${t(payload.deck)}`,
-    `${t(payload.sceneBody).replace(/\*([^*]+)\*/g, '$1')}`,
-    `${t(payload.beat2Title)}. ${t(payload.beat2Lead)} Key idea to keep: ${t(payload.almanacTruth)}`,
-    `${t(payload.beat3Title)}. Words that help: ${t(payload.calmScriptPlain)}`,
-    `Tonight's closing note: ${t(payload.closingNote)}`,
-  ];
-  const fullText = parts.join(' ');
-  const wordCount = fullText.split(/\s+/).filter(Boolean).length;
-  const estimatedSeconds = Math.max(45, Math.round((wordCount / 140) * 60));
-  return { fullText, estimatedSeconds };
+  return buildHookingNarrationScript(payload, t);
 }
 
 export function useAlmanacLessonState({
@@ -71,6 +66,8 @@ export function useAlmanacLessonState({
   const [speakingBeat, setSpeakingBeat] = React.useState<number | null>(null);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const [audioFileFailed, setAudioFileFailed] = React.useState<boolean>(false);
+  const [voicePersona, setVoicePersona] = React.useState<VoicePersona>('warm');
+  const speechCancelRef = React.useRef<(() => void) | null>(null);
 
   // Interactive Beat 1–5 state
   const [selectedPollId, setSelectedPollId] = React.useState<string | null>(null);
@@ -216,7 +213,10 @@ export function useAlmanacLessonState({
     if (audioRef.current) {
       audioRef.current.pause();
     }
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (speechCancelRef.current) {
+      speechCancelRef.current();
+      speechCancelRef.current = null;
+    } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
     setIsPlaying(false);
@@ -225,7 +225,10 @@ export function useAlmanacLessonState({
 
   React.useEffect(() => {
     return () => {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      if (speechCancelRef.current) {
+        speechCancelRef.current();
+        speechCancelRef.current = null;
+      } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
     };
@@ -250,30 +253,44 @@ export function useAlmanacLessonState({
   }, [isPlaying, playbackSpeed, totalAudioSeconds, stopAudio]);
 
   const startSpeechFallback = React.useCallback(
-    (rate: number) => {
+    (rateMultiplier: number) => {
       if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
         setIsPlaying(true);
         setSpeakingBeat(0);
         return;
       }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(narration.fullText);
-      utterance.rate = rate;
-      utterance.onend = () => {
-        setIsPlaying(false);
-        setSpeakingBeat(null);
-        setAudioSeconds(0);
-      };
-      utterance.onerror = (ev) => {
-        if (ev.error !== 'canceled' && ev.error !== 'interrupted') {
+      if (speechCancelRef.current) {
+        speechCancelRef.current();
+        speechCancelRef.current = null;
+      }
+      const cancel = playNaturalNarrator({
+        text: narration.fullText,
+        rateMultiplier,
+        persona: voicePersona,
+        onStart: () => {
+          setIsPlaying(true);
+          setSpeakingBeat(
+            Math.min(4, Math.floor((audioSeconds / Math.max(1, totalAudioSeconds)) * 5))
+          );
+        },
+        onEnd: () => {
           setIsPlaying(false);
-        }
-      };
-      window.speechSynthesis.speak(utterance);
+          setSpeakingBeat(null);
+          setAudioSeconds(0);
+          speechCancelRef.current = null;
+        },
+        onError: () => {
+          setIsPlaying(false);
+          speechCancelRef.current = null;
+        },
+      });
+      speechCancelRef.current = cancel;
       setIsPlaying(true);
-      setSpeakingBeat(Math.min(4, Math.floor((audioSeconds / Math.max(1, totalAudioSeconds)) * 5)));
+      setSpeakingBeat(
+        Math.min(4, Math.floor((audioSeconds / Math.max(1, totalAudioSeconds)) * 5))
+      );
     },
-    [narration.fullText, audioSeconds, totalAudioSeconds]
+    [narration.fullText, audioSeconds, totalAudioSeconds, voicePersona]
   );
 
   const togglePlayAudio = React.useCallback(() => {
@@ -318,6 +335,36 @@ export function useAlmanacLessonState({
       startSpeechFallback(next);
     }
   }, [playbackSpeed, isPlaying, lesson.audioUrl, audioFileFailed, startSpeechFallback]);
+
+  const cycleVoicePersona = React.useCallback(() => {
+    const nextPersona: VoicePersona = voicePersona === 'warm' ? 'clear' : 'warm';
+    setVoicePersona(nextPersona);
+    if (isPlaying && (!lesson.audioUrl || audioFileFailed)) {
+      if (speechCancelRef.current) {
+        speechCancelRef.current();
+        speechCancelRef.current = null;
+      }
+      const cancel = playNaturalNarrator({
+        text: narration.fullText,
+        rateMultiplier: playbackSpeed,
+        persona: nextPersona,
+        onStart: () => {
+          setIsPlaying(true);
+        },
+        onEnd: () => {
+          setIsPlaying(false);
+          setSpeakingBeat(null);
+          setAudioSeconds(0);
+          speechCancelRef.current = null;
+        },
+        onError: () => {
+          setIsPlaying(false);
+          speechCancelRef.current = null;
+        },
+      });
+      speechCancelRef.current = cancel;
+    }
+  }, [voicePersona, isPlaying, lesson.audioUrl, audioFileFailed, narration.fullText, playbackSpeed]);
 
   const setReadingMode = React.useCallback(
     (mode: 'read' | 'listen') => {
@@ -454,6 +501,8 @@ export function useAlmanacLessonState({
     setReadingMode,
     isPlaying,
     playbackSpeed,
+    voicePersona,
+    cycleVoicePersona,
     audioSeconds,
     totalAudioSeconds,
     speakingBeat,
