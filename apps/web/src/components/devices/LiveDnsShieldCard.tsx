@@ -203,16 +203,16 @@ export function LiveDnsShieldCard({
       className={cn('space-y-6', className)}
     >
       {/* 2-Column Split: Controls on Left, Sticky Live Phone Mirror on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_316px] gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_316px] gap-6 items-start">
         {/* =============================================================== */}
         {/* LEFT COLUMN: CONTROLS, SAND INSTALL FINALE & GUARDRAILS          */}
         {/* =============================================================== */}
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           {/* 1. ENFORCEMENT SCHEDULE CARD (NIGHT BRIDGE + APPS) */}
           <div className="rounded-[20px] border border-[rgba(20,61,43,0.14)] bg-white/85 backdrop-blur-md p-5 sm:p-6 shadow-sm space-y-4">
             {/* Header + Mode Switcher */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-0.5">
+            <div className="space-y-3.5">
+              <div className="min-w-0 space-y-0.5">
                 <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--spruce)] block">
                   Step 2 · Live Network Shield
                 </span>
@@ -227,14 +227,14 @@ export function LiveDnsShieldCard({
               </div>
 
               {/* Enforcement Mode Segmented Switch */}
-              <div className="flex items-center gap-2 self-start sm:self-auto">
-                <span className="text-[12px] font-semibold text-[var(--ink)]">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="text-[12px] font-semibold text-[var(--ink)] shrink-0">
                   Enforcement Mode:
                 </span>
                 <div
                   role="radiogroup"
                   aria-label="Enforcement Mode"
-                  className="inline-flex rounded-[10px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1 shrink-0"
+                  className="grid w-full grid-cols-2 sm:inline-flex sm:w-auto max-w-full rounded-[10px] bg-[var(--canvas-subtle)] border border-[var(--hairline)] p-1 gap-1"
                 >
                   <button
                     type="button"
@@ -242,13 +242,13 @@ export function LiveDnsShieldCard({
                     aria-checked={!is247Mode}
                     onClick={() => setEnforcementMode('scheduled')}
                     className={cn(
-                      'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] font-semibold transition-all cursor-pointer',
+                      'inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-[7px] px-3 text-[12.5px] font-semibold text-center leading-tight transition-all cursor-pointer',
                       !is247Mode
                         ? 'bg-[var(--spruce)] text-white shadow-xs'
                         : 'text-[var(--body)] hover:text-[var(--ink)]'
                     )}
                   >
-                    <Moon className="h-3.5 w-3.5" aria-hidden="true" />
+                    <Moon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     <span>Scheduled Window</span>
                   </button>
                   <button
@@ -257,13 +257,13 @@ export function LiveDnsShieldCard({
                     aria-checked={is247Mode}
                     onClick={() => setEnforcementMode('247')}
                     className={cn(
-                      'inline-flex min-h-[36px] items-center gap-1.5 rounded-[7px] px-3.5 text-[12.5px] font-semibold transition-all cursor-pointer',
+                      'inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-[7px] px-3 text-[12.5px] font-semibold text-center leading-tight transition-all cursor-pointer',
                       is247Mode
                         ? 'bg-[var(--spruce)] text-white shadow-xs'
                         : 'text-[var(--body)] hover:text-[var(--ink)]'
                     )}
                   >
-                    <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" />
+                    <ShieldAlert className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     <span>Block Completely (24/7)</span>
                   </button>
                 </div>
@@ -354,7 +354,7 @@ export function LiveDnsShieldCard({
             ) : (
               /* Block 24/7 Dark Amber Banner */
               <div className="rounded-[14px] bg-gradient-to-br from-[#241F14] to-[#302614] p-4 text-[#F5E6C8] border border-[#E8A64E]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="space-y-0.5">
+                <div className="min-w-0 space-y-0.5">
                   <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.08em] text-[#F5C276] block">
                     ALL-DAY ENFORCEMENT ACTIVE
                   </span>
@@ -365,7 +365,7 @@ export function LiveDnsShieldCard({
                 <Button
                   variant="outline"
                   onClick={() => setEnforcementMode('scheduled')}
-                  className="min-h-[34px] px-3 text-[12px] bg-white/10 border-white/20 text-white hover:bg-white/20 self-start sm:self-auto rounded-[8px]"
+                  className="shrink-0 min-h-[34px] px-3 text-[12px] bg-white/10 border-white/20 text-white hover:bg-white/20 self-start sm:self-auto rounded-[8px]"
                 >
                   Switch to Custom Window
                 </Button>
