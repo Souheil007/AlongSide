@@ -6,6 +6,8 @@ import {
   ChatFeed,
   DeEscalationScriptCallout,
   EmergencyDirectiveBanner,
+  computeStreamingScrollTop,
+  isScrollNearBottom,
 } from '../src/components/advisor/ChatFeed';
 import { AdvisorComposer } from '../src/components/advisor/AdvisorComposer';
 import { QuickPrompts } from '../src/components/advisor/QuickPrompts';
@@ -121,5 +123,79 @@ describe('Parent Advisor Unified Editorial Redesign UI', () => {
     expect(html).toContain('10yo wants Snapchat');
     expect(html).not.toContain('INSTANT CONFLICT STARTERS');
     expect(html).not.toContain('bg-teal-50');
+  });
+
+  describe('Streaming scroll anchoring (computeStreamingScrollTop & isScrollNearBottom)', () => {
+    it('keeps fresh conversation anchored near user question instead of pushing top of long streaming answer off-screen', () => {
+      const target = computeStreamingScrollTop({
+        scrollHeight: 1400,
+        clientHeight: 500,
+        currentScrollTop: 0,
+        latestUserMessageTop: 24,
+        activeResponseTop: 120,
+      });
+      expect(target).toBe(8);
+    });
+
+    it('advances scroll in multi-turn chat until latest question reaches top padding, then holds steady while answer grows', () => {
+      const initialTarget = computeStreamingScrollTop({
+        scrollHeight: 1600,
+        clientHeight: 500,
+        currentScrollTop: 600,
+        latestUserMessageTop: 950,
+        activeResponseTop: 1030,
+      });
+      expect(initialTarget).toBe(934);
+
+      // More tokens stream in, increasing scrollHeight without shifting the anchor
+      const midStreamTarget = computeStreamingScrollTop({
+        scrollHeight: 2100,
+        clientHeight: 500,
+        currentScrollTop: initialTarget,
+        latestUserMessageTop: 950,
+        activeResponseTop: 1030,
+      });
+      expect(midStreamTarget).toBe(934);
+    });
+
+    it('adjusts anchor for very tall user prompts so opening of AI response stays visible', () => {
+      const target = computeStreamingScrollTop({
+        scrollHeight: 1800,
+        clientHeight: 500,
+        currentScrollTop: 400,
+        latestUserMessageTop: 500,
+        activeResponseTop: 900,
+      });
+      // responseAnchorTop = 900 - floor(500 * 0.35) = 900 - 175 = 725 > 484
+      expect(target).toBe(725);
+    });
+
+    it('never scrolls backwards when currentScrollTop is already past the anchor', () => {
+      const target = computeStreamingScrollTop({
+        scrollHeight: 2000,
+        clientHeight: 500,
+        currentScrollTop: 1200,
+        latestUserMessageTop: 950,
+        activeResponseTop: 1030,
+      });
+      expect(target).toBe(1200);
+    });
+
+    it('returns 0 for short conversations that fit within the viewport', () => {
+      const target = computeStreamingScrollTop({
+        scrollHeight: 420,
+        clientHeight: 500,
+        currentScrollTop: 0,
+        latestUserMessageTop: 20,
+        activeResponseTop: 90,
+      });
+      expect(target).toBe(0);
+    });
+
+    it('detects whether scroll position is near bottom for jump button visibility', () => {
+      expect(isScrollNearBottom(850, 1400, 500)).toBe(true); // 50px remaining <= 72px
+      expect(isScrollNearBottom(828, 1400, 500)).toBe(true); // exact 72px boundary
+      expect(isScrollNearBottom(700, 1400, 500)).toBe(false); // 200px remaining > 72px
+    });
   });
 });

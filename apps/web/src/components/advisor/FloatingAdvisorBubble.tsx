@@ -65,6 +65,7 @@ export function FloatingAdvisorBubble() {
   });
 
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   // Hide the floating launcher on dedicated full-screen advisor routes
   const isAdvisorRoute = pathname?.startsWith('/advisor');
@@ -238,7 +239,7 @@ export function FloatingAdvisorBubble() {
             </div>
 
             {/* Body: Calm Opening State or Unified Conversation Feed */}
-            <div className="flex-1 overflow-y-auto px-5 py-5">
+            <div ref={scrollContainerRef} className="flex-1 overflow-y-auto px-5 py-5">
               {!hasConversation ? (
                 <div className="flex min-h-full flex-col justify-between gap-6">
                   <div className="pt-2">
@@ -299,6 +300,7 @@ export function FloatingAdvisorBubble() {
                     isLoading={isLoading}
                     childName={activeChild?.name}
                     onNavigateAway={() => setIsOpen(false)}
+                    scrollContainerRef={scrollContainerRef}
                   />
 
                   {error && (

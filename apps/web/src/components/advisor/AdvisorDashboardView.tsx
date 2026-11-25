@@ -46,6 +46,7 @@ export function AdvisorDashboardView() {
 
   const [inputMessage, setInputMessage] = React.useState('');
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
   const autoSentRef = React.useRef(false);
 
   // If page was loaded with ?prompt=..., auto-send on a fresh chat or pre-fill an active chat
@@ -143,7 +144,10 @@ export function AdvisorDashboardView() {
         className="flex min-h-[480px] h-[calc(100vh-15.5rem)] max-h-[780px] flex-col overflow-hidden rounded-[16px] border border-[rgba(19,23,21,0.1)] bg-white"
       >
         {/* Scrollable Stage */}
-        <div className="flex-1 overflow-y-auto bg-[#FAF9F5] px-4 py-6 sm:px-8 sm:py-8">
+        <div
+          ref={scrollContainerRef}
+          className="flex-1 overflow-y-auto bg-[#FAF9F5] px-4 py-6 sm:px-8 sm:py-8"
+        >
           <div className="mx-auto w-full max-w-[720px]">
             {!hasConversation ? (
               <div className="py-4 sm:py-8 space-y-8">
@@ -175,6 +179,7 @@ export function AdvisorDashboardView() {
                 isStreaming={isStreaming}
                 isLoading={isLoading}
                 childName={activeChild?.name}
+                scrollContainerRef={scrollContainerRef}
               />
             )}
 

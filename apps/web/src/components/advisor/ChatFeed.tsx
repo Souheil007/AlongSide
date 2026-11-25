@@ -6,6 +6,7 @@ import {
   Copy,
   Check,
   ArrowUpRight,
+  ArrowDown,
   AlertTriangle,
   PhoneCall,
 } from 'lucide-react';
@@ -13,6 +14,89 @@ import type { AiMessageDTO } from '@alongside/shared';
 import type { SseEmergencyEvent } from '@/lib/api/advisor';
 import { cn } from '@/lib/utils';
 import { MarkdownMessage } from '@/components/shared/MarkdownMessage';
+
+export interface StreamingScrollMetrics {
+  scrollHeight: number;
+  clientHeight: number;
+  currentScrollTop: number;
+  latestUserMessageTop: number | null;
+  activeResponseTop: number | null;
+  topPaddingPx?: number;
+}
+
+/**
+ * Compute target scrollTop during streaming so the parent's question and
+ * the opening of the AI response stay anchored in view rather than forcing
+ * the viewport down with every streamed token.
+ */
+export function computeStreamingScrollTop({
+  scrollHeight,
+  clientHeight,
+  currentScrollTop,
+  latestUserMessageTop,
+  activeResponseTop,
+  topPaddingPx = 16,
+}: StreamingScrollMetrics): number {
+  const maxScrollTop = Math.max(0, scrollHeight - clientHeight);
+  if (maxScrollTop === 0) return 0;
+
+  let anchorTop: number | null = null;
+  if (latestUserMessageTop !== null) {
+    anchorTop = Math.max(0, latestUserMessageTop - topPaddingPx);
+    if (activeResponseTop !== null) {
+      const responseAnchorTop = Math.max(
+        0,
+        activeResponseTop - Math.floor(clientHeight * 0.35)
+      );
+      anchorTop = Math.max(anchorTop, responseAnchorTop);
+    }
+  } else if (activeResponseTop !== null) {
+    anchorTop = Math.max(0, activeResponseTop - topPaddingPx);
+  }
+
+  const desiredTop =
+    anchorTop !== null ? Math.min(maxScrollTop, anchorTop) : maxScrollTop;
+  return Math.max(currentScrollTop, desiredTop);
+}
+
+export function isScrollNearBottom(
+  scrollTop: number,
+  scrollHeight: number,
+  clientHeight: number,
+  thresholdPx = 72
+): boolean {
+  return scrollHeight - scrollTop - clientHeight <= thresholdPx;
+}
+
+function resolveScrollContainer(
+  feedEl: HTMLDivElement | null,
+  scrollContainerRef?: React.RefObject<HTMLDivElement | null>
+): HTMLElement | null {
+  if (scrollContainerRef?.current) return scrollContainerRef.current;
+  if (typeof window === 'undefined') return null;
+
+  let node = feedEl?.parentElement ?? null;
+  while (node) {
+    const overflowY = window.getComputedStyle(node).overflowY;
+    if (overflowY === 'auto' || overflowY === 'scroll') {
+      return node;
+    }
+    node = node.parentElement;
+  }
+  return null;
+}
+
+function getOffsetWithinContainer(
+  targetEl: HTMLElement | null,
+  containerEl: HTMLElement
+): number | null {
+  if (!targetEl) return null;
+  return (
+    targetEl.getBoundingClientRect().top -
+    containerEl.getBoundingClientRect().top +
+    containerEl.scrollTop
+  );
+}
 
 export interface ChatFeedProps {
   messages: AiMessageDTO[];
@@ -24,6 +108,7 @@ export interface ChatFeedProps {
   variant?: 'studio' | 'drawer';
   childName?: string | null;
   onNavigateAway?: () => void;
+  scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
   className?: string;
 }
 
@@ -37,18 +122,178 @@ export function ChatFeed({
   variant = 'studio',
   childName,
   onNavigateAway,
+  scrollContainerRef,
   className,
 }: ChatFeedProps) {
-  const bottomRef = React.useRef<HTMLDivElement>(null);
+  const feedRef = React.useRef<HTMLDivElement>(null);
+  const latestUserMessageRef = React.useRef<HTMLDivElement>(null);
+  const activeResponseRef = React.useRef<HTMLDivElement>(null);
+  const userDetachedRef = React.useRef(false);
+  const didInitialScrollRef = React.useRef(false);
+  const prevUserCountRef = React.useRef(
+    messages.filter((m) => m.role === 'USER').length
+  );
+  const prevEmergencyRef = React.useRef<SseEmergencyEvent | null>(activeEmergency);
+  const lastProgrammaticTopRef = React.useRef<number | null>(null);
+  const [showJumpToBottom, setShowJumpToBottom] = React.useState(false);
+
+  const syncJumpButton = React.useCallback((container: HTMLElement) => {
+    setShowJumpToBottom(
+      !isScrollNearBottom(
+        container.scrollTop,
+        container.scrollHeight,
+        container.clientHeight
+      )
+    );
+  }, []);
 
   React.useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages.length, activeStreamingText, isLoading, activeEmergency]);
+    const container = resolveScrollContainer(feedRef.current, scrollContainerRef);
+    if (!container) return;
+
+    const markUserDetached = () => {
+      userDetachedRef.current = true;
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown' ||
+        e.key === 'PageUp' ||
+        e.key === 'PageDown' ||
+        e.key === 'Home' ||
+        e.key === 'End' ||
+        e.key === ' '
+      ) {
+        userDetachedRef.current = true;
+      }
+    };
+
+    const handleScroll = () => {
+      if (
+        lastProgrammaticTopRef.current !== null &&
+        Math.abs(container.scrollTop - lastProgrammaticTopRef.current) > 12
+      ) {
+        userDetachedRef.current = true;
+      }
+      syncJumpButton(container);
+    };
+
+    container.addEventListener('wheel', markUserDetached, { passive: true });
+    container.addEventListener('touchstart', markUserDetached, { passive: true });
+    container.addEventListener('pointerdown', markUserDetached, { passive: true });
+    container.addEventListener('keydown', handleKeyDown);
+    container.addEventListener('scroll', handleScroll, { passive: true });
+
+    syncJumpButton(container);
+
+    return () => {
+      container.removeEventListener('wheel', markUserDetached);
+      container.removeEventListener('touchstart', markUserDetached);
+      container.removeEventListener('pointerdown', markUserDetached);
+      container.removeEventListener('keydown', handleKeyDown);
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollContainerRef, syncJumpButton]);
+
+  React.useEffect(() => {
+    if (didInitialScrollRef.current) return;
+    didInitialScrollRef.current = true;
+
+    const container = resolveScrollContainer(feedRef.current, scrollContainerRef);
+    if (!container) return;
+
+    if (messages.length > 0 && !isStreaming && !isLoading) {
+      container.scrollTop = container.scrollHeight;
+      lastProgrammaticTopRef.current = container.scrollTop;
+      syncJumpButton(container);
+    }
+    // Run once on initial mount for pre-existing conversation history
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (activeEmergency && activeEmergency !== prevEmergencyRef.current) {
+      const container = resolveScrollContainer(feedRef.current, scrollContainerRef);
+      if (container) {
+        lastProgrammaticTopRef.current = 0;
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+    prevEmergencyRef.current = activeEmergency;
+  }, [activeEmergency, scrollContainerRef]);
+
+  React.useEffect(() => {
+    const container = resolveScrollContainer(feedRef.current, scrollContainerRef);
+    const userMessageCount = messages.filter((m) => m.role === 'USER').length;
+    const isNewUserTurn = userMessageCount > prevUserCountRef.current;
+    prevUserCountRef.current = userMessageCount;
+
+    if (!container) return;
+
+    const latestUserMessageTop = getOffsetWithinContainer(
+      latestUserMessageRef.current,
+      container
+    );
+    const activeResponseTop = getOffsetWithinContainer(
+      activeResponseRef.current,
+      container
+    );
+
+    if (isNewUserTurn) {
+      userDetachedRef.current = false;
+      const target = computeStreamingScrollTop({
+        scrollHeight: container.scrollHeight,
+        clientHeight: container.clientHeight,
+        currentScrollTop: 0,
+        latestUserMessageTop,
+        activeResponseTop,
+      });
+      lastProgrammaticTopRef.current = target;
+      container.scrollTop = target;
+      syncJumpButton(container);
+      return;
+    }
+
+    if ((isStreaming || isLoading) && !userDetachedRef.current) {
+      const target = computeStreamingScrollTop({
+        scrollHeight: container.scrollHeight,
+        clientHeight: container.clientHeight,
+        currentScrollTop: container.scrollTop,
+        latestUserMessageTop,
+        activeResponseTop,
+      });
+      if (target > container.scrollTop + 1) {
+        lastProgrammaticTopRef.current = target;
+        container.scrollTop = target;
+      }
+    }
+
+    syncJumpButton(container);
+  }, [messages, activeStreamingText, isStreaming, isLoading, scrollContainerRef, syncJumpButton]);
+
+  const handleJumpToBottom = React.useCallback(() => {
+    const container = resolveScrollContainer(feedRef.current, scrollContainerRef);
+    if (!container) return;
+    userDetachedRef.current = true;
+    const maxScroll = Math.max(0, container.scrollHeight - container.clientHeight);
+    lastProgrammaticTopRef.current = maxScroll;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+  }, [scrollContainerRef]);
 
   const isDrawer = variant === 'drawer';
 
+  let latestUserIndex = -1;
+  for (let i = messages.length - 1; i >= 0; i -= 1) {
+    if (messages[i]?.role === 'USER') {
+      latestUserIndex = i;
+      break;
+    }
+  }
+
   return (
     <div
+      ref={feedRef}
       className={cn(
         'flex flex-col',
         isDrawer ? 'space-y-4' : 'space-y-6',
@@ -59,12 +304,13 @@ export function ChatFeed({
         <EmergencyDirectiveBanner emergency={activeEmergency} compact={isDrawer} />
       )}
 
-      {messages.map((message) => (
+      {messages.map((message, index) => (
         <MessageItem
           key={message.id}
           message={message}
           variant={variant}
           onNavigateAway={onNavigateAway}
+          containerRef={index === latestUserIndex ? latestUserMessageRef : undefined}
         />
       ))}
 
@@ -74,11 +320,15 @@ export function ChatFeed({
           matchedFaqIds={activeMatchedFaqs}
           variant={variant}
           onNavigateAway={onNavigateAway}
+          containerRef={activeResponseRef}
         />
       )}
 
       {isLoading && !activeStreamingText && (
-        <div className="almanac-rise-in flex flex-col items-start gap-1.5">
+        <div
+          ref={activeResponseRef}
+          className="almanac-rise-in flex flex-col items-start gap-1.5"
+        >
           <div className="flex items-center gap-2 text-[12px] font-medium text-[#143D2B]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#143D2B]" aria-hidden="true" />
             <span>Parent Advisor</span>
@@ -103,7 +353,19 @@ export function ChatFeed({
         </div>
       )}
 
-      <div ref={bottomRef} className="h-1" />
+      {showJumpToBottom && (
+        <div className="sticky bottom-3 z-10 flex h-0 items-end justify-center pointer-events-none">
+          <button
+            type="button"
+            onClick={handleJumpToBottom}
+            aria-label="Scroll to latest message"
+            className="pointer-events-auto inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-[rgba(19,23,21,0.14)] bg-white/95 px-3.5 py-1.5 text-[12.5px] font-medium text-[#143D2B] shadow-[0_4px_14px_rgba(19,23,21,0.12)] backdrop-blur-sm transition-colors hover:bg-[#E8F1EC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]"
+          >
+            <ArrowDown className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>{isStreaming ? 'Follow response' : 'Jump to bottom'}</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -156,10 +418,12 @@ function MessageItem({
   message,
   variant,
   onNavigateAway,
+  containerRef,
 }: {
   message: AiMessageDTO;
   variant: 'studio' | 'drawer';
   onNavigateAway?: () => void;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   const isParent = message.role === 'USER';
   const isDrawer = variant === 'drawer';
@@ -171,6 +435,7 @@ function MessageItem({
   if (isEmergency) {
     return (
       <div
+        ref={containerRef}
         role="alert"
         className={cn(
           'almanac-rise-in rounded-[12px] border border-[#DC2626]/30 bg-[#FEF2F2] text-[#7F1D1D]',
@@ -207,7 +472,7 @@ function MessageItem({
 
   if (isParent) {
     return (
-      <div className="almanac-rise-in flex flex-col items-end gap-1">
+      <div ref={containerRef} className="almanac-rise-in flex flex-col items-end gap-1">
         <div
           className={cn(
             'rounded-[12px] rounded-br-[3px] bg-[#143D2B] text-[#FAF9F5]',
@@ -228,7 +493,7 @@ function MessageItem({
   const matchedFaqs = message.matchedFaqIds ?? [];
 
   return (
-    <div className="almanac-rise-in flex flex-col items-start gap-1.5">
+    <div ref={containerRef} className="almanac-rise-in flex flex-col items-start gap-1.5">
       <div className="flex items-center gap-2 px-0.5 text-[12px]">
         <span className="font-medium text-[#143D2B]">Parent Advisor</span>
         <span className="text-[#131715]/20" aria-hidden="true">
@@ -273,16 +538,18 @@ function StreamingMessageItem({
   matchedFaqIds = [],
   variant,
   onNavigateAway,
+  containerRef,
 }: {
   content: string;
   matchedFaqIds?: string[];
   variant: 'studio' | 'drawer';
   onNavigateAway?: () => void;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   const isDrawer = variant === 'drawer';
 
   return (
-    <div className="almanac-rise-in flex flex-col items-start gap-1.5">
+    <div ref={containerRef} className="almanac-rise-in flex flex-col items-start gap-1.5">
       <div className="flex items-center gap-2 px-0.5 text-[12px]">
         <span className="h-1.5 w-1.5 rounded-full bg-[#143D2B]" aria-hidden="true" />
         <span className="font-medium text-[#143D2B]">Parent Advisor</span>
