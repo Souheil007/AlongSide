@@ -1,9 +1,30 @@
 import type {
+  AuthProvidersDTO,
   LoginUserInput,
   RegisterUserInput,
   UserDTO,
 } from "@alongside/shared";
 import { apiClient, ApiClientError } from "./client";
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+export async function getAuthProviders(): Promise<AuthProvidersDTO> {
+  return apiClient<AuthProvidersDTO>("/api/v1/auth/providers", {
+    method: "GET",
+  });
+}
+
+export async function enterDemoSession(): Promise<UserDTO> {
+  const res = await apiClient<{ user: UserDTO }>("/api/v1/auth/demo", {
+    method: "POST",
+  });
+  return res.user;
+}
+
+export function getGoogleAuthUrl(): string {
+  return `${API_BASE_URL.replace(/\/$/, "")}/api/v1/auth/google`;
+}
 
 export async function registerParent(data: RegisterUserInput): Promise<UserDTO> {
   const res = await apiClient<{ user: UserDTO }>("/api/v1/auth/register", {
@@ -45,6 +66,9 @@ export async function getCurrentParent(): Promise<UserDTO | null> {
 }
 
 export const authApi = {
+  getProviders: getAuthProviders,
+  enterDemo: enterDemoSession,
+  getGoogleAuthUrl,
   register: async (input: RegisterUserInput) => {
     const user = await registerParent(input);
     return { user };

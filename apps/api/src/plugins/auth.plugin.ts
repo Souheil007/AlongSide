@@ -34,6 +34,7 @@ export interface AuthUserPayload {
   userId: string;
   email: string;
   role: string;
+  isDemo?: boolean;
 }
 
 declare module '@fastify/jwt' {
@@ -98,6 +99,7 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
       userId: payload.userId || payload.id,
       email: payload.email,
       role: payload.role,
+      isDemo: Boolean(payload.isDemo),
     }),
   });
 
@@ -129,6 +131,27 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
           error: {
             code: 'UNAUTHORIZED',
             message: 'Authentication required to access this resource.',
+          },
+        });
+      }
+
+      const pathOnly = request.url.split('?')[0] || '';
+      const isReadMethod =
+        request.method === 'GET' ||
+        request.method === 'HEAD' ||
+        request.method === 'OPTIONS';
+      const isDemoAllowedWrite =
+        pathOnly === '/api/v1/auth/logout' ||
+        pathOnly === '/api/v1/auth/demo' ||
+        pathOnly === '/api/v1/ai-advisor/chat';
+
+      if (request.user?.isDemo && !isReadMethod && !isDemoAllowedWrite) {
+        return reply.status(403).send({
+          success: false,
+          error: {
+            code: 'DEMO_MODE_READ_ONLY',
+            message:
+              'You are exploring the sample family. Sign in for free to save changes for your own child.',
           },
         });
       }

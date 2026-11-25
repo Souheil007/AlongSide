@@ -90,6 +90,13 @@ export interface UserDTO {
   createdAt: string;
   subscription?: UserSubscriptionDTO | null;
   childrenCount?: number;
+  isDemo?: boolean;
+}
+
+export interface AuthProvidersDTO {
+  google: boolean;
+  demo: boolean;
+  emailPassword: boolean;
 }
 
 export interface ChildDTO {

@@ -3,6 +3,8 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
+import { enterDemoSession } from '@/lib/api/auth';
 import { cn } from '@/lib/utils';
 
 export type AgeBandId = '0-3' | '4-6' | '7-9' | '10-12' | '13-18';
@@ -90,6 +92,8 @@ export const HERO_AGE_MOMENTS: AgeMomentPreview[] = [
 export function HeroSection() {
   const [selectedAge, setSelectedAge] = React.useState<AgeBandId>('4-6');
   const [copied, setCopied] = React.useState(false);
+  const [isEnteringDemo, setIsEnteringDemo] = React.useState(false);
+  const [demoError, setDemoError] = React.useState<string | null>(null);
   const copyTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   React.useEffect(() => {
@@ -131,6 +135,18 @@ export function HeroSection() {
     if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
     setCopied(true);
     copyTimerRef.current = setTimeout(() => setCopied(false), 1600);
+  };
+
+  const handleEnterDemo = async () => {
+    setDemoError(null);
+    setIsEnteringDemo(true);
+    try {
+      await enterDemoSession();
+      window.location.replace('/dashboard');
+    } catch {
+      setIsEnteringDemo(false);
+      setDemoError('Could not open the live demo right now. Please try again.');
+    }
   };
 
   return (
@@ -185,14 +201,23 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Primary CTA + Quiet Secondary Link */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
+            {/* Primary CTA + 1-Click Live Demo + Quiet Secondary Link */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
               <Link
                 href="/register"
                 className="inline-flex items-center justify-center min-h-[46px] px-5 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors duration-150 active:scale-[0.98] w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
               >
                 Get free early access
               </Link>
+              <button
+                type="button"
+                onClick={handleEnterDemo}
+                disabled={isEnteringDemo}
+                className="inline-flex items-center justify-center gap-2 min-h-[46px] px-4 rounded-[8px] border border-[rgba(19,23,21,0.16)] bg-white hover:bg-[#F2F0E9] text-[#131715] text-[14px] font-medium transition-colors duration-150 w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2 disabled:opacity-60"
+              >
+                {isEnteringDemo && <Loader2 className="h-4 w-4 animate-spin text-[#143D2B]" />}
+                <span>{isEnteringDemo ? 'Opening demo...' : 'Explore live demo'}</span>
+              </button>
               <a
                 href="#studio"
                 className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-medium text-[#131715] border-b border-[rgba(19,23,21,0.18)] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors duration-150"
@@ -200,6 +225,11 @@ export function HeroSection() {
                 See what&apos;s inside
               </a>
             </div>
+            {demoError && (
+              <p role="alert" className="text-xs text-red-700">
+                {demoError}
+              </p>
+            )}
 
             {/* Single Quiet Metadata Line */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[#69726D]">
