@@ -153,60 +153,72 @@ export function HeroSection() {
     }
   };
 
+  const renderAgeSelector = (labelId: string, layout: 'desktop' | 'mobile') => (
+    <>
+      <span id={labelId} className="text-[13px] font-medium text-[#69726D]">
+        Pick your child&apos;s age to preview tonight&apos;s guidance
+      </span>
+      <div
+        role="tablist"
+        aria-labelledby={labelId}
+        className={cn(
+          'p-1 bg-[#F2F0E9] rounded-[10px]',
+          layout === 'mobile'
+            ? 'grid grid-cols-5 gap-1 w-full'
+            : 'inline-flex flex-wrap gap-1.5 w-fit max-w-full'
+        )}
+      >
+        {HERO_AGE_MOMENTS.map((item, idx) => {
+          const isSelected = item.id === selectedAge;
+          return (
+            <button
+              key={`${layout}-${item.id}`}
+              type="button"
+              role="tab"
+              aria-selected={isSelected}
+              onClick={() => handleSelectAge(item.id)}
+              onKeyDown={(e) => handleAgeKeyDown(e, idx)}
+              className={cn(
+                'min-h-[40px] rounded-[7px] font-medium tabular-nums transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
+                layout === 'mobile' ? 'px-1 text-[13px]' : 'px-3.5 text-[13.5px]',
+                isSelected
+                  ? 'bg-white text-[#143D2B] shadow-[0_1px_2px_rgba(19,23,21,0.08)]'
+                  : 'text-[#454D49] hover:text-[#131715]'
+              )}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </>
+  );
+
   return (
     <section
       id="top"
-      className="bg-[#FAF9F5] pt-11 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28"
+      className="bg-[#FAF9F5] pt-6 pb-14 sm:pt-14 sm:pb-24 lg:pt-20 lg:pb-28"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] gap-6 sm:gap-8 lg:gap-16 items-center">
           {/* Left Column: Editorial Headline + Interactive Age Lens */}
-          <div className="flex flex-col gap-6">
-            <h1 className="font-serif font-normal text-[40px] sm:text-[54px] lg:text-[64px] leading-[1.04] tracking-[-0.028em] text-[#131715] max-w-[15.5ch] [text-wrap:balance]">
+          <div className="flex flex-col gap-4 sm:gap-6">
+            <h1 className="font-serif font-normal text-[34px] sm:text-[54px] lg:text-[64px] leading-[1.06] sm:leading-[1.04] tracking-[-0.028em] text-[#131715] max-w-[15.5ch] [text-wrap:balance]">
               Calm guidance for every&nbsp;age,&nbsp;0–18
             </h1>
 
-            <p className="text-base sm:text-[18px] leading-[1.55] text-[#454D49] max-w-[44ch]">
+            <p className="text-[15.5px] sm:text-[18px] leading-[1.5] sm:leading-[1.55] text-[#454D49] max-w-[44ch]">
               Bite-sized parenting courses, weekly videos &amp; articles, an on-demand advisor, and
               step-by-step parental control setups for every age.
             </p>
 
-            {/* Interactive Age Selector */}
-            <div className="flex flex-col gap-2.5 pt-1">
-              <span id="hero-age-label" className="text-[13px] font-medium text-[#69726D]">
-                Pick your child&apos;s age to preview tonight&apos;s guidance
-              </span>
-              <div
-                role="tablist"
-                aria-labelledby="hero-age-label"
-                className="inline-flex flex-wrap gap-1.5 p-1 bg-[#F2F0E9] rounded-[10px] w-fit max-w-full"
-              >
-                {HERO_AGE_MOMENTS.map((item, idx) => {
-                  const isSelected = item.id === selectedAge;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={isSelected}
-                      onClick={() => handleSelectAge(item.id)}
-                      onKeyDown={(e) => handleAgeKeyDown(e, idx)}
-                      className={cn(
-                        'min-h-[40px] px-3.5 rounded-[7px] text-[13.5px] font-medium tabular-nums transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B]',
-                        isSelected
-                          ? 'bg-white text-[#143D2B] shadow-[0_1px_2px_rgba(19,23,21,0.08)]'
-                          : 'text-[#454D49] hover:text-[#131715]'
-                      )}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Interactive Age Selector (Desktop Left Column) */}
+            <div className="hidden lg:flex flex-col gap-2.5 pt-1">
+              {renderAgeSelector('hero-age-label-desktop', 'desktop')}
             </div>
 
             {/* Primary CTA + 1-Click Live Demo + Quiet Secondary Link */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 sm:gap-x-4 sm:gap-y-3 pt-0.5 sm:pt-1">
               <Link
                 href="/register"
                 className="inline-flex items-center justify-center min-h-[46px] px-5 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors duration-150 active:scale-[0.98] w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
@@ -224,7 +236,7 @@ export function HeroSection() {
               </button>
               <a
                 href="#studio"
-                className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-medium text-[#131715] border-b border-[rgba(19,23,21,0.18)] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors duration-150"
+                className="self-start sm:self-auto inline-flex items-center min-h-[38px] sm:min-h-[44px] px-1 text-[14px] font-medium text-[#131715] border-b border-[rgba(19,23,21,0.18)] hover:border-[#143D2B] hover:text-[#143D2B] transition-colors duration-150"
               >
                 See what&apos;s inside
               </a>
@@ -250,8 +262,13 @@ export function HeroSection() {
           </div>
 
           {/* Right Column: Editorial Photography + Tactile Live Product Card */}
-          <div className="relative pb-3">
-            <div className="rounded-[14px] overflow-hidden bg-[#F2F0E9] aspect-[4/3] relative">
+          <div className="relative pb-3 flex flex-col gap-3 lg:block">
+            {/* Mobile & Tablet Age Selector attached directly above live card */}
+            <div className="flex flex-col gap-2 order-1 lg:hidden">
+              {renderAgeSelector('hero-age-label-mobile', 'mobile')}
+            </div>
+
+            <div className="order-3 lg:order-1 mt-1 lg:mt-0 rounded-[14px] overflow-hidden bg-[#F2F0E9] aspect-[4/3] relative">
               <Image
                 src="/images/home/hero-sanctuary.jpg"
                 alt="Father and child sitting side by side at a sunlit oak table sketching together"
@@ -267,7 +284,7 @@ export function HeroSection() {
             <div
               data-ui
               aria-live="polite"
-              className="relative -mt-8 sm:-mt-10 sm:mx-5 bg-white border border-[rgba(19,23,21,0.09)] rounded-[14px] p-4 sm:p-5 shadow-[0_16px_40px_rgba(19,23,21,0.09)] grid"
+              className="order-2 lg:order-2 relative lg:-mt-10 lg:mx-5 bg-white border border-[rgba(19,23,21,0.09)] rounded-[14px] p-4 sm:p-5 shadow-[0_16px_40px_rgba(19,23,21,0.09)] grid"
             >
               {HERO_AGE_MOMENTS.map((moment) => {
                 const isActive = moment.id === activeMoment.id;

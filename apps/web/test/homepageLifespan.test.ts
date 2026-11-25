@@ -38,9 +38,13 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
 
       expect(html).toContain('Calm guidance for');
       expect(html).toContain('role="tablist"');
+      expect(html).toContain('hero-age-label-desktop');
+      expect(html).toContain('hero-age-label-mobile');
+      expect(html).toContain('grid-cols-5');
       expect(html).toContain('Chloe, age 5');
       expect(html).toContain('hero-sanctuary.jpg');
       expect(html).toContain('Get free early access');
+      expect(html).toContain('Explore live demo');
     });
   });
 
