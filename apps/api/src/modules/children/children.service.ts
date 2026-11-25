@@ -67,9 +67,23 @@ export class ChildrenService {
     return this.mapToDTO(record);
   }
 
-  async getChildrenByUserId(userId: string): Promise<ChildDTO[]> {
+  async getChildrenByUserId(
+    userId: string,
+    options?: { isDemo?: boolean }
+  ): Promise<ChildDTO[]> {
     const children = await this.repository.findByUserId(userId);
-    return children.map((c) => this.mapToDTO(c));
+    const dtos = children.map((c) => this.mapToDTO(c));
+
+    if (!options?.isDemo) {
+      return dtos;
+    }
+
+    return [...dtos].sort((a, b) => {
+      const aIsMaya = a.name.toLowerCase() === 'maya';
+      const bIsMaya = b.name.toLowerCase() === 'maya';
+      if (aIsMaya === bIsMaya) return 0;
+      return aIsMaya ? -1 : 1;
+    });
   }
 
   async getChildById(userId: string, childId: string): Promise<ChildDTO> {

@@ -61,7 +61,9 @@ export class ChildrenController {
       });
     }
 
-    const children = await this.childrenService.getChildrenByUserId(userId);
+    const children = await this.childrenService.getChildrenByUserId(userId, {
+      isDemo: Boolean(request.user?.isDemo),
+    });
     return reply.status(200).send({
       success: true,
       data: {

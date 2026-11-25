@@ -259,18 +259,8 @@ export class AuthService {
       if (existingChildren.length === 0) {
         const now = new Date();
         const birthMonth = now.getMonth() + 1;
-        const leoBirthYear = now.getFullYear() - 3;
         const mayaBirthYear = now.getFullYear() - 11;
-
-        await childrenRepo.create(user.id, {
-          name: 'Leo',
-          gender: Gender.MALE,
-          birthYear: leoBirthYear,
-          birthMonth,
-          roadType: RoadType.PRE_DEVICE,
-          developmentalTier: calculateLifespanTier(leoBirthYear, birthMonth, now),
-          schoolGrade: 'Preschool',
-        });
+        const leoBirthYear = now.getFullYear() - 3;
 
         await childrenRepo.create(user.id, {
           name: 'Maya',
@@ -280,6 +270,16 @@ export class AuthService {
           roadType: RoadType.ACTIVE_DEVICE,
           developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
           schoolGrade: '6th Grade',
+        });
+
+        await childrenRepo.create(user.id, {
+          name: 'Leo',
+          gender: Gender.MALE,
+          birthYear: leoBirthYear,
+          birthMonth,
+          roadType: RoadType.PRE_DEVICE,
+          developmentalTier: calculateLifespanTier(leoBirthYear, birthMonth, now),
+          schoolGrade: 'Preschool',
         });
 
         existingChildren = await childrenRepo.findByUserId(user.id);

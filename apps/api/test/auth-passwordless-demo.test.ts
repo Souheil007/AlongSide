@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import type { FastifyInstance } from 'fastify';
+import { DevelopmentalTier, Gender, RoadType } from '@alongside/shared';
 import { buildApp } from '../src/app.js';
 import { InMemoryAuthRepository } from '../src/modules/auth/auth.repository.js';
 import { FakeGoogleOAuthAdapter } from '../src/modules/auth/google.oauth.js';
@@ -217,7 +218,7 @@ describe('Google OAuth & Live Demo Session Auth', () => {
   });
 
   describe('POST /api/v1/auth/demo & Read-Only Demo Guard', () => {
-    it('lazily seeds Leo & Maya idempotently, allows reads, blocks writes, and permits logout', async () => {
+    it('lazily seeds Maya & Leo idempotently with Maya first, allows reads, blocks writes, and permits logout', async () => {
       const demoRes1 = await app.inject({
         method: 'POST',
         url: '/api/v1/auth/demo',
@@ -246,7 +247,7 @@ describe('Google OAuth & Live Demo Session Auth', () => {
       expect(meRes.statusCode).toBe(200);
       expect(meRes.json().data.user.isDemo).toBe(true);
 
-      // Reads work
+      // Reads work and return Maya first so she is selected by default
       const childrenRes = await app.inject({
         method: 'GET',
         url: '/api/v1/children',
@@ -254,7 +255,7 @@ describe('Google OAuth & Live Demo Session Auth', () => {
       });
       expect(childrenRes.statusCode).toBe(200);
       const names = childrenRes.json().data.children.map((c: { name: string }) => c.name);
-      expect(names).toEqual(['Leo', 'Maya']);
+      expect(names).toEqual(['Maya', 'Leo']);
 
       // Mutating writes are blocked centrally
       const writeRes = await app.inject({
@@ -273,13 +274,13 @@ describe('Google OAuth & Live Demo Session Auth', () => {
       expect(writeRes.json().error.code).toBe('DEMO_MODE_READ_ONLY');
 
       // Live Ask Advisor SSE chat works ephemerally without persisting to shared demo history
-      const leoId = childrenRes.json().data.children[0].id as string;
+      const mayaId = childrenRes.json().data.children[0].id as string;
       const chatRes = await app.inject({
         method: 'POST',
         url: '/api/v1/ai-advisor/chat',
         headers: { cookie: sessionCookie },
         payload: {
-          childId: leoId,
+          childId: mayaId,
           message: 'How do I handle bedtime refusal?',
         },
       });
@@ -303,6 +304,50 @@ describe('Google OAuth & Live Demo Session Auth', () => {
         headers: { cookie: sessionCookie },
       });
       expect(logoutRes.statusCode).toBe(200);
+    });
+
+    it('returns Maya before Leo in demo sessions even when pre-existing DB rows have Leo created first', async () => {
+      const existingDemoUser = await authRepo.create({
+        email: 'demo@alongside.app',
+        passwordHash: 'placeholder-hash',
+        fullName: 'Alex Rivera',
+      });
+
+      await childrenRepo.create(existingDemoUser.id, {
+        name: 'Leo',
+        gender: Gender.MALE,
+        birthYear: 2023,
+        birthMonth: 6,
+        roadType: RoadType.PRE_DEVICE,
+        developmentalTier: DevelopmentalTier.TIER_0C_OLDER_TODDLER_2_3,
+        schoolGrade: 'Preschool',
+      });
+
+      await childrenRepo.create(existingDemoUser.id, {
+        name: 'Maya',
+        gender: Gender.FEMALE,
+        birthYear: 2015,
+        birthMonth: 6,
+        roadType: RoadType.ACTIVE_DEVICE,
+        developmentalTier: DevelopmentalTier.TIER_3_PRE_TEEN_10_12,
+        schoolGrade: '6th Grade',
+      });
+
+      const demoRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/auth/demo',
+      });
+      expect(demoRes.statusCode).toBe(200);
+
+      const sessionCookie = extractCookieValue(demoRes.headers['set-cookie'], 'alongside_session');
+      const childrenRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/children',
+        headers: { cookie: sessionCookie },
+      });
+      expect(childrenRes.statusCode).toBe(200);
+      const names = childrenRes.json().data.children.map((c: { name: string }) => c.name);
+      expect(names).toEqual(['Maya', 'Leo']);
     });
   });
 });
