@@ -66,7 +66,17 @@ export function Header() {
 
   const pathname = usePathname();
   const queryClient = useQueryClient();
-  const { user, isAuthenticated, logout, isLoggingOut } = useAuth();
+  const { user, isAuthenticated, isDemo, enterDemo, isEnteringDemo, logout, isLoggingOut } = useAuth();
+
+  const handleEnterDemo = async () => {
+    setMobileMenuOpen(false);
+    try {
+      await enterDemo();
+      window.location.replace('/dashboard');
+    } catch {
+      window.location.href = '/login';
+    }
+  };
 
   const userMenuRef = React.useRef<HTMLDivElement>(null);
 
@@ -245,10 +255,10 @@ export function Header() {
                     </div>
                     <div className="mt-1 flex items-center justify-between">
                       <span className="rounded-full bg-[#EAF3EE] px-2 py-0.5 text-[10px] font-semibold text-[#143D2B] border border-[#143D2B]/20 font-mono uppercase tracking-wider">
-                        VOL. XXIV // ADVISORY
+                        {isDemo ? 'DEMO PREVIEW' : 'VOL. XXIV // ADVISORY'}
                       </span>
                       <span className="text-[10px] text-[#858C88] font-medium font-mono">
-                        Active
+                        {isDemo ? 'Read-only' : 'Active'}
                       </span>
                     </div>
                   </div>
@@ -304,10 +314,18 @@ export function Header() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleEnterDemo}
+                disabled={isEnteringDemo}
+                className="inline-flex items-center justify-center min-h-[38px] px-3.5 rounded-[8px] border border-[rgba(19,23,21,0.14)] text-[#131715] hover:bg-[#F2F0E9] text-[13.5px] font-medium transition-colors disabled:opacity-60"
+              >
+                {isEnteringDemo ? 'Opening...' : 'Explore demo'}
+              </button>
               <Link
                 href="/login"
-                className="text-[14px] font-medium text-[#454D49] hover:text-[#131715] px-1 py-2 transition-colors"
+                className="text-[14px] font-medium text-[#454D49] hover:text-[#131715] px-2 py-2 transition-colors"
               >
                 Log in
               </Link>
@@ -458,6 +476,14 @@ export function Header() {
               </div>
             ) : (
               <>
+                <button
+                  type="button"
+                  onClick={handleEnterDemo}
+                  disabled={isEnteringDemo}
+                  className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] border border-[rgba(19,23,21,0.14)] bg-white text-[14px] font-medium text-[#131715] hover:bg-[#F2F0E9] transition-colors disabled:opacity-60"
+                >
+                  {isEnteringDemo ? 'Opening live demo...' : 'Explore live demo'}
+                </button>
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}

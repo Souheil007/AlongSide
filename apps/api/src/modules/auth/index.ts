@@ -3,3 +3,4 @@ export * from './auth.security.js';
 export * from './auth.service.js';
 export * from './auth.controller.js';
 export * from './auth.routes.js';
+export * from './google.oauth.js';

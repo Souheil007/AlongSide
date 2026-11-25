@@ -1,12 +1,26 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { LoginUserInput, RegisterUserInput, UserDTO } from '@alongside/shared';
+import type {
+  LoginUserInput,
+  RegisterUserInput,
+  UserDTO,
+} from '@alongside/shared';
 import { authApi } from '@/lib/api/auth';
 import { ApiClientError } from '@/lib/api/client';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 
 export const AUTH_QUERY_KEY = ['auth', 'me'] as const;
+export const AUTH_PROVIDERS_QUERY_KEY = ['auth', 'providers'] as const;
+
+export function useAuthProviders() {
+  return useQuery({
+    queryKey: AUTH_PROVIDERS_QUERY_KEY,
+    queryFn: async () => await authApi.getProviders(),
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
+  });
+}
 
 export function useAuth() {
   const queryClient = useQueryClient();
@@ -43,21 +57,18 @@ export function useAuth() {
     retry: false,
   });
 
+  const applyAuthenticatedUser = (user: UserDTO) => {
+    useChildContextStore.getState().reset();
+    queryClient.removeQueries({ queryKey: ['children'] });
+    queryClient.setQueryData(AUTH_QUERY_KEY, user);
+  };
+
   const registerMutation = useMutation({
     mutationFn: async (input: RegisterUserInput) => {
       const response = await authApi.register(input);
-      // Immediately revoke any server session cookie so user is NOT logged in directly on signup
-      try {
-        await authApi.logout();
-      } catch {
-        // Safe fallback
-      }
       return response.user;
     },
-    onSuccess: () => {
-      // Ensure auth query cache does NOT store active session on registration
-      queryClient.setQueryData(AUTH_QUERY_KEY, null);
-    },
+    onSuccess: applyAuthenticatedUser,
   });
 
   const loginMutation = useMutation({
@@ -65,9 +76,14 @@ export function useAuth() {
       const response = await authApi.login(input);
       return response.user;
     },
-    onSuccess: (user: UserDTO) => {
-      queryClient.setQueryData(AUTH_QUERY_KEY, user);
+    onSuccess: applyAuthenticatedUser,
+  });
+
+  const enterDemoMutation = useMutation({
+    mutationFn: async () => {
+      return await authApi.enterDemo();
     },
+    onSuccess: applyAuthenticatedUser,
   });
 
   const logoutMutation = useMutation({
@@ -95,10 +111,13 @@ export function useAuth() {
     },
   });
 
+  const resolvedUser = isLoggedOutParam && !data ? null : (data ?? null);
+
   return {
-    user: isLoggedOutParam && !data ? null : (data ?? null),
+    user: resolvedUser,
     isLoading: isLoggedOutParam && !data ? false : isLoading,
-    isAuthenticated: isLoggedOutParam && !data ? false : Boolean(data),
+    isAuthenticated: Boolean(resolvedUser),
+    isDemo: Boolean(resolvedUser?.isDemo),
     isError,
     error,
     refetchUser: refetch,
@@ -108,6 +127,8 @@ export function useAuth() {
     login: loginMutation.mutateAsync,
     isLoggingIn: loginMutation.isPending,
     loginError: loginMutation.error,
+    enterDemo: enterDemoMutation.mutateAsync,
+    isEnteringDemo: enterDemoMutation.isPending,
     logout: logoutMutation.mutateAsync,
     isLoggingOut: logoutMutation.isPending,
   };

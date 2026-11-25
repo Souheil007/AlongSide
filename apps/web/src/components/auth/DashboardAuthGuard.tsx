@@ -12,7 +12,7 @@ export interface DashboardAuthGuardProps {
 export function DashboardAuthGuard({ children }: DashboardAuthGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const { isAuthenticated, isDemo, isLoading: isAuthLoading } = useAuth();
   const { children: childList, isLoading: isChildrenLoading } = useChildren();
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ export function DashboardAuthGuard({ children }: DashboardAuthGuardProps) {
       return;
     }
 
-    if (!isAuthLoading && isAuthenticated && !isChildrenLoading) {
+    if (!isAuthLoading && isAuthenticated && !isDemo && !isChildrenLoading) {
       const hasNoChildren = !childList || childList.length === 0;
       const isAllowedRouteWithoutChildren =
         pathname === '/children/new' ||
@@ -31,7 +31,7 @@ export function DashboardAuthGuard({ children }: DashboardAuthGuardProps) {
         router.push('/children/new');
       }
     }
-  }, [isAuthLoading, isAuthenticated, isChildrenLoading, childList, pathname, router]);
+  }, [isAuthLoading, isAuthenticated, isDemo, isChildrenLoading, childList, pathname, router]);
 
   if (isAuthLoading || (isAuthenticated && isChildrenLoading)) {
     return (

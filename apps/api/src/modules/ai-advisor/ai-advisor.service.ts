@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import {
   stripEmDashes,
   type AiConversationDTO,
@@ -48,33 +49,39 @@ export class AiAdvisorService {
       childId?: string;
       conversationId?: string;
       message: string;
+      ephemeral?: boolean;
     }
   ): Promise<ChatSessionResult> {
-    const { message } = input;
+    const { message, ephemeral = false } = input;
 
-    // 1. Resolve or create conversation
+    // 1. Resolve or create conversation (skip persistence for ephemeral demo sessions)
     let conversation: AiConversationDTO | null = null;
-    if (input.conversationId) {
-      conversation = await this.advisorRepository.getConversation(
-        input.conversationId,
-        userId
-      );
+    if (!ephemeral) {
+      if (input.conversationId) {
+        conversation = await this.advisorRepository.getConversation(
+          input.conversationId,
+          userId
+        );
+      }
+
+      if (!conversation) {
+        const title =
+          message.length > 50
+            ? `${message.slice(0, 47).trim()}...`
+            : message.trim();
+        conversation = await this.advisorRepository.createConversation(
+          userId,
+          input.childId,
+          title
+        );
+      }
     }
 
-    if (!conversation) {
-      const title =
-        message.length > 50
-          ? `${message.slice(0, 47).trim()}...`
-          : message.trim();
-      conversation = await this.advisorRepository.createConversation(
-        userId,
-        input.childId,
-        title
-      );
-    }
+    const conversationId =
+      conversation?.id || input.conversationId || `demo-${randomUUID()}`;
 
     // 2. Resolve child profile if childId exists
-    const effectiveChildId = input.childId || conversation.childId || undefined;
+    const effectiveChildId = input.childId || conversation?.childId || undefined;
     let childProfile: ChildDTO | null = null;
 
     if (effectiveChildId && this.childrenRepository) {
@@ -115,15 +122,16 @@ export class AiAdvisorService {
     // 3. Clinical Safe Harbor Emergency Override Filter
     const emergencyAlert = ClinicalSafeHarborFilter.evaluate(message, childProfile);
     if (emergencyAlert) {
-      // Save parent's user message
-      await this.advisorRepository.saveMessage(
-        conversation.id,
-        'USER',
-        message,
-        []
-      );
+      if (!ephemeral) {
+        // Save parent's user message
+        await this.advisorRepository.saveMessage(
+          conversationId,
+          'USER',
+          message,
+          []
+        );
+      }
 
-      const conversationId = conversation.id;
       const emergencyDirectiveText = `🚨 **EMERGENCY MEDICAL DIRECTIVE (${emergencyAlert.category})**\n\n**${emergencyAlert.headline}**\n\n${emergencyAlert.directive}\n\n📞 **Immediate Action:** Call ${emergencyAlert.phoneDial} or proceed to the nearest Pediatric Emergency Department.\n\n${emergencyAlert.nearestFacilityGuidance}`;
 
       return {
@@ -147,6 +155,17 @@ export class AiAdvisorService {
         isEmergency: true,
         emergencyAlert,
         saveAssistantResponse: async (fullContent: string, tokensUsed = 25) => {
+          if (ephemeral) {
+            return {
+              id: `demo-msg-${randomUUID()}`,
+              conversationId,
+              role: 'ASSISTANT',
+              content: fullContent,
+              matchedFaqIds: [],
+              tokensUsed,
+              createdAt: new Date().toISOString(),
+            };
+          }
           return this.advisorRepository.saveMessage(
             conversationId,
             'ASSISTANT',
@@ -170,16 +189,18 @@ export class AiAdvisorService {
 
     const matchedFaqIds = matchedFaqs.map((f) => f.id);
 
-    // 5. Save parent's user message
-    await this.advisorRepository.saveMessage(
-      conversation.id,
-      'USER',
-      message,
-      matchedFaqIds
-    );
+    if (!ephemeral) {
+      // 5. Save parent's user message
+      await this.advisorRepository.saveMessage(
+        conversationId,
+        'USER',
+        message,
+        matchedFaqIds
+      );
+    }
 
     // 6. Build prompt with Alongside's 4 pillars & context
-    const conversationHistory = (conversation.messages || []).map((m) => ({
+    const conversationHistory = (conversation?.messages || []).map((m) => ({
       role: m.role === 'ASSISTANT' ? ('assistant' as const) : ('user' as const),
       content: m.content,
     }));
@@ -197,8 +218,6 @@ export class AiAdvisorService {
         yield stripEmDashes(chunk);
       }
     })();
-
-    const conversationId = conversation.id;
 
     return {
       conversationId,
@@ -219,10 +238,22 @@ export class AiAdvisorService {
       isEmergency: false,
       emergencyAlert: null,
       saveAssistantResponse: async (fullContent: string, tokensUsed = 0) => {
+        const sanitized = stripEmDashes(fullContent);
+        if (ephemeral) {
+          return {
+            id: `demo-msg-${randomUUID()}`,
+            conversationId,
+            role: 'ASSISTANT',
+            content: sanitized,
+            matchedFaqIds,
+            tokensUsed,
+            createdAt: new Date().toISOString(),
+          };
+        }
         return this.advisorRepository.saveMessage(
           conversationId,
           'ASSISTANT',
-          stripEmDashes(fullContent),
+          sanitized,
           matchedFaqIds,
           tokensUsed
         );

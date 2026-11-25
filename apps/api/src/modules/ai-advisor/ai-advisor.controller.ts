@@ -29,6 +29,7 @@ export class AiAdvisorController {
         childId,
         conversationId,
         message,
+        ephemeral: Boolean(request.user?.isDemo),
       });
 
       // Clinical Safe Harbor Emergency Override: Halt LLM generation immediately

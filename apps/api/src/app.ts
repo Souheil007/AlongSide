@@ -17,6 +17,7 @@ import {
   type AuthRepository,
   PrismaAuthRepository,
 } from './modules/auth/auth.repository.js';
+import type { GoogleOAuthAdapter } from './modules/auth/google.oauth.js';
 import { childrenRoutes } from './modules/children/children.routes.js';
 import {
   type ChildrenRepository,
@@ -119,6 +120,9 @@ export interface AppOptions extends FastifyServerOptions {
   cookieSecret?: string;
   jwtSecret?: string;
   authRepository?: AuthRepository;
+  googleOAuthAdapter?: GoogleOAuthAdapter;
+  apiPublicUrl?: string;
+  appPublicUrl?: string;
   childrenRepository?: ChildrenRepository;
   childrenService?: ChildrenService;
   agreementsRepository?: AgreementsRepository;
@@ -532,6 +536,11 @@ export async function buildApp(opts: AppOptions = {}): Promise<FastifyInstance> 
   await app.register(authRoutes, {
     prefix: '/api/v1/auth',
     authRepository: resolvedAuthRepository,
+    googleOAuthAdapter: opts.googleOAuthAdapter,
+    childrenRepository: resolvedChildrenRepository,
+    stateSecret: jwtSecret,
+    apiPublicUrl: opts.apiPublicUrl,
+    appPublicUrl: opts.appPublicUrl,
   });
   await app.register(childrenRoutes, {
     prefix: '/api/v1/children',
