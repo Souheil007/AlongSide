@@ -37,7 +37,7 @@ export function DemoModeBanner() {
         <div className="flex items-center gap-2 font-medium">
           <Sparkles className="h-4 w-4 shrink-0 text-[#143D2B]" aria-hidden="true" />
           <span>
-            Sample family preview (Leo, 3 &amp; Maya, 11). Read-only mode.
+            Sample family preview (Maya, 11 &amp; Leo, 3). Read-only mode.
           </span>
         </div>
 
