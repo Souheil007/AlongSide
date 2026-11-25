@@ -326,16 +326,10 @@ export function Header() {
                 {isEnteringDemo ? 'Opening...' : 'Explore demo'}
               </button>
               <Link
-                href="/login"
-                className="text-[14px] font-medium text-[#454D49] hover:text-[#131715] px-2 py-2 transition-colors"
-              >
-                Log in
-              </Link>
-              <Link
                 href="/register"
                 className="inline-flex items-center justify-center min-h-[38px] px-4 rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[13.5px] font-medium transition-colors"
               >
-                Get free access
+                Get started
               </Link>
             </div>
           )}
@@ -487,18 +481,11 @@ export function Header() {
                   {isEnteringDemo ? 'Opening live demo...' : 'Explore live demo'}
                 </button>
                 <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] border border-[rgba(19,23,21,0.14)] text-[14px] font-medium text-[#131715] hover:bg-[#F2F0E9] transition-colors"
-                >
-                  Log in
-                </Link>
-                <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
                   className="inline-flex items-center justify-center w-full min-h-[44px] rounded-[8px] bg-[#143D2B] hover:bg-[#0E2B1E] text-white text-[14px] font-medium transition-colors"
                 >
-                  Get free early access
+                  Get started
                 </Link>
               </>
             )}
