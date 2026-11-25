@@ -163,4 +163,35 @@ describe('LiveDnsShieldCard (PLAN-53 Live Network Shield UI)', () => {
     const retrieved = await getChildDeviceShield(childId, 10);
     expect(retrieved.dotHostname).toBe('2a1ee7.dns.nextdns.io');
   });
+
+  it('keeps the enforcement mode toggle bounded within its grid column in both Scheduled and 24/7 states', async () => {
+    const baseShield = await getChildDeviceShield('child-maya-11', 11, 'Maya');
+    const mock247Shield: DeviceShieldDTO = {
+      ...baseShield,
+      blockedServices: [
+        ShieldBlockableService.TIKTOK,
+        ShieldBlockableService.SNAPCHAT,
+      ],
+      bedtimeServices: [],
+      bedtimeEnabled: true,
+      bedtimeStart: '00:00',
+      bedtimeEnd: '00:00',
+    };
+
+    const html = renderWithProviders(
+      React.createElement(LiveDnsShieldCard, {
+        childId: 'child-maya-11',
+        childName: 'Maya',
+        childAge: 11,
+        initialPlatform: ShieldPlatform.APPLE_IOS,
+        initialShield: mock247Shield,
+      })
+    );
+
+    expect(html).toContain('lg:grid-cols-[minmax(0,1fr)_316px]');
+    expect(html).toContain('grid w-full grid-cols-2 sm:inline-flex sm:w-auto max-w-full');
+    expect(html).toContain('ALL-DAY ENFORCEMENT ACTIVE');
+    expect(html).toContain('2 selected apps are blocked 24 hours a day');
+    expect(html).toContain('Switch to Custom Window');
+  });
 });
