@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
+import { trackEvent } from '@/lib/analytics/posthog';
 import { ChildSelector } from '@/components/shared/ChildSelector';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
@@ -72,6 +73,7 @@ export function Header() {
     setMobileMenuOpen(false);
     try {
       await enterDemo();
+      trackEvent('demo_started', { source: 'header' });
       window.location.replace('/dashboard');
     } catch {
       window.location.href = '/login';

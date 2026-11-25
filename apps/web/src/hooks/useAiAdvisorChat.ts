@@ -8,6 +8,7 @@ import {
   type SseContextEvent,
   type SseEmergencyEvent,
 } from '@/lib/api/advisor';
+import { trackEvent } from '@/lib/analytics/posthog';
 
 export interface UseAiAdvisorChatOptions {
   initialConversationId?: string;
@@ -165,6 +166,13 @@ export function useAiAdvisorChat(options: UseAiAdvisorChatOptions = {}): UseAiAd
         createdAt: new Date().toISOString(),
       };
       store.addMessage(userMessage);
+
+      const messageLengthBucket =
+        trimmed.length < 40 ? 'short' : trimmed.length < 140 ? 'medium' : 'long';
+      trackEvent('advisor_question_sent', {
+        has_child_context: Boolean(sendOptions?.childId || options.defaultChildId),
+        message_length_bucket: messageLengthBucket,
+      });
 
       const controller = new AbortController();
       activeAbortController = controller;

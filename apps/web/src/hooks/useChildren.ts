@@ -17,6 +17,7 @@ import {
   type ReadinessAssessmentAttemptDTO,
   type DeleteChildResponse,
 } from '@/lib/api/children';
+import { trackEvent } from '@/lib/analytics/posthog';
 
 export const CHILDREN_QUERY_KEY = ['children'] as const;
 export const childQueryKey = (id: string) => ['children', id] as const;
@@ -34,6 +35,10 @@ export function useCreateChild() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: CHILDREN_QUERY_KEY });
       queryClient.setQueryData(childQueryKey(data.child.id), data);
+      trackEvent('child_profile_created', {
+        road_type: data.child.roadType,
+        developmental_tier: data.child.developmentalTier,
+      });
     },
   });
 }
@@ -90,9 +95,13 @@ export function useSubmitReadinessAssessment() {
     mutationFn: async ({ childId, data }) => {
       return await submitReadinessAssessment(childId, data);
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: childQueryKey(variables.childId) });
       queryClient.invalidateQueries({ queryKey: CHILDREN_QUERY_KEY });
+      trackEvent('readiness_assessment_completed', {
+        score: data.attempt.overallScore,
+        is_ready: data.attempt.overallScore >= 75,
+      });
     },
   });
 }

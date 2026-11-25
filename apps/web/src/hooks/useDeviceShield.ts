@@ -15,6 +15,7 @@ import {
   triggerMobileConfigDownload,
   setCustomNextDnsProfileId,
 } from '@/lib/api/deviceShield';
+import { trackEvent } from '@/lib/analytics/posthog';
 
 export interface UseDeviceShieldOptions {
   childId?: string | null;
@@ -113,6 +114,12 @@ export function useDeviceShield({
     },
     onSuccess: (data: DeviceShieldDTO) => {
       queryClient.setQueryData<DeviceShieldDTO>(queryKey, data);
+      trackEvent('dns_shield_updated', {
+        platform: data.platform,
+        bedtime_enabled: data.bedtimeEnabled,
+        blocked_service_count:
+          data.blockedServices.length + data.bedtimeServices.length,
+      });
     },
     onError: (_err, _newInput, context) => {
       // Only roll back if we have a valid previous state and no data in cache
@@ -309,6 +316,7 @@ export function useDeviceShield({
       });
 
       triggerMobileConfigDownload(childName, xml);
+      trackEvent('dns_profile_downloaded', { platform: 'apple_ios' });
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 4000);
 
@@ -325,10 +333,12 @@ export function useDeviceShield({
       `alongside-${(childId || 'child').slice(0, 8)}.dns.nextdns.io`;
     try {
       await navigator.clipboard.writeText(hostname);
+      trackEvent('dns_hostname_copied', { platform: 'android' });
       setCopiedHostname(true);
       setTimeout(() => setCopiedHostname(false), 2000);
     } catch {
       // Fallback for non-secure contexts
+      trackEvent('dns_hostname_copied', { platform: 'android' });
       setCopiedHostname(true);
       setTimeout(() => setCopiedHostname(false), 2000);
     }
