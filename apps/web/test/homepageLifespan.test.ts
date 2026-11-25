@@ -60,6 +60,8 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
       expect(html).toContain('Culture &amp; Trends');
       expect(html).toContain('Parent Advisor');
       expect(html).toContain('Getting them to listen without yelling');
+      expect(html).toContain('Audio narration included');
+      expect(html).not.toContain('Play audio summary');
       expect(html).toContain('Video · 8 min');
       expect(html).toContain('Article · 4 min');
       expect(html).not.toContain('40 ');
