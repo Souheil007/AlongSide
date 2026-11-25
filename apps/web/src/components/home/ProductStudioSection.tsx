@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { BookOpen, Play } from 'lucide-react';
+import { BookOpen, Headphones, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type StudioTabId = 'academy' | 'digest' | 'advisor';
@@ -137,7 +137,6 @@ const STUDIO_TABS: Array<{ id: StudioTabId; title: string; description: string }
 export function ProductStudioSection() {
   const [activeTab, setActiveTab] = React.useState<StudioTabId>('academy');
   const [scenarioId, setScenarioId] = React.useState<string>('tv');
-  const [audioPlaying, setAudioPlaying] = React.useState(false);
   const [slangId, setSlangId] = React.useState<string>('crashout');
 
   const activeScenario =
@@ -246,43 +245,15 @@ export function ProductStudioSection() {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3.5 px-4 py-3 rounded-[10px] bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)]">
-                    <button
-                      type="button"
-                      tabIndex={activeTab === 'academy' ? 0 : -1}
-                      onClick={() => setAudioPlaying((prev) => !prev)}
-                      aria-pressed={audioPlaying}
-                      aria-label={audioPlaying ? 'Pause audio summary' : 'Play audio summary'}
-                      className="w-9 h-9 rounded-full bg-[#143D2B] hover:bg-[#0E2B1E] text-white inline-flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
-                    >
-                      {audioPlaying ? (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <rect x="6" y="4" width="4" height="16" />
-                          <rect x="14" y="4" width="4" height="16" />
-                        </svg>
-                      ) : (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <polygon points="6,4 20,12 6,20" />
-                        </svg>
-                      )}
-                    </button>
-
-                    <div className="flex-1 flex flex-col gap-1.5 min-w-0">
-                      <div className="flex items-center justify-between gap-2 text-[12.5px] text-[#454D49]">
-                        <span className="truncate">Audio summary · Listen hands-free</span>
-                        <span className="tabular-nums shrink-0">
-                          {audioPlaying ? '2:34 / 4:00' : '1:32 / 4:00'}
-                        </span>
-                      </div>
-                      <div className="h-1 bg-[rgba(19,23,21,0.14)] rounded-full overflow-hidden">
-                        <div
-                          className={cn(
-                            'h-full bg-[#143D2B] rounded-full transition-all duration-300',
-                            audioPlaying ? 'w-[64%]' : 'w-[38%]'
-                          )}
-                        />
-                      </div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 rounded-[10px] bg-[#F6F5F0] border border-[rgba(19,23,21,0.09)] text-[13px] text-[#454D49]">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Headphones className="h-4 w-4 text-[#143D2B] shrink-0" aria-hidden="true" />
+                      <span className="font-medium text-[#131715]">Audio narration included</span>
+                      <span className="text-[#69726D] hidden sm:inline">· Listen hands-free</span>
                     </div>
+                    <span className="text-[12.5px] text-[#69726D] tabular-nums shrink-0">
+                      4 min summary
+                    </span>
                   </div>
 
                   <ul className="divide-y divide-[rgba(19,23,21,0.09)]">
