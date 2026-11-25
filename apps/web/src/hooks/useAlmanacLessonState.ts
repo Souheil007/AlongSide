@@ -16,6 +16,7 @@ import {
   recordActiveReadingTime,
   updateLessonPlaybook,
 } from '@/lib/api/academy';
+import { trackEvent } from '@/lib/analytics/posthog';
 import {
   buildHookingNarrationScript,
   charOffsetToSeconds,
@@ -629,6 +630,10 @@ export function useAlmanacLessonState({
         lesson.slug
       );
       setIsCompleted(true);
+      trackEvent('academy_lesson_completed', {
+        module_slug: lesson.module?.slug,
+        lesson_slug: lesson.slug,
+      });
       onLessonComplete?.();
     } catch (err) {
       setSaveError(
@@ -670,6 +675,10 @@ export function useAlmanacLessonState({
         lesson.slug
       );
       setIsCompleted(true);
+      trackEvent('academy_lesson_completed', {
+        module_slug: lesson.module?.slug,
+        lesson_slug: lesson.slug,
+      });
       onLessonComplete?.();
     } catch {
       // Never block navigation on network failure

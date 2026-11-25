@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/Card';
 import { useAuth, useAuthProviders } from '@/hooks/useAuth';
 import { authApi } from '@/lib/api/auth';
+import { trackEvent } from '@/lib/analytics/posthog';
 import { ApiClientError } from '@/lib/api/client';
 import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Sparkles } from 'lucide-react';
 import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
@@ -120,6 +121,7 @@ export function PasswordlessAuthCard({ mode = 'login' }: PasswordlessAuthCardPro
     setServerError(null);
     try {
       await enterDemo();
+      trackEvent('demo_started', { source: 'auth_card' });
       window.location.replace('/dashboard');
     } catch (err) {
       if (err instanceof ApiClientError) {
@@ -225,6 +227,7 @@ export function PasswordlessAuthCard({ mode = 'login' }: PasswordlessAuthCardPro
           {providers?.google && (
             <a
               href={authApi.getGoogleAuthUrl()}
+              onClick={() => trackEvent('auth_google_clicked', { source: 'auth_card' })}
               className="inline-flex w-full min-h-[46px] items-center justify-center gap-2.5 rounded-[8px] bg-[#143D2B] px-4 text-sm font-medium text-white hover:bg-[#0E2B1E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2"
             >
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white">

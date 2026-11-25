@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Sparkles, Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { trackEvent } from '@/lib/analytics/posthog';
 
 export function DemoModeBanner() {
   const { isDemo, logout, isLoggingOut } = useAuth();
@@ -14,6 +15,9 @@ export function DemoModeBanner() {
 
   const handleExitDemo = async (destination: '/register' | '/') => {
     setTargetPath(destination);
+    trackEvent('demo_exited', {
+      destination: destination === '/register' ? 'register' : 'home',
+    });
     try {
       await logout();
     } catch {

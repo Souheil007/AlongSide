@@ -8,6 +8,7 @@ import type {
 } from '@alongside/shared';
 import { authApi } from '@/lib/api/auth';
 import { ApiClientError } from '@/lib/api/client';
+import { resetAnalytics, trackEvent } from '@/lib/analytics/posthog';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 
 export const AUTH_QUERY_KEY = ['auth', 'me'] as const;
@@ -68,7 +69,10 @@ export function useAuth() {
       const response = await authApi.register(input);
       return response.user;
     },
-    onSuccess: applyAuthenticatedUser,
+    onSuccess: (user: UserDTO) => {
+      applyAuthenticatedUser(user);
+      trackEvent('auth_signed_up', { method: 'email' });
+    },
   });
 
   const loginMutation = useMutation({
@@ -76,7 +80,10 @@ export function useAuth() {
       const response = await authApi.login(input);
       return response.user;
     },
-    onSuccess: applyAuthenticatedUser,
+    onSuccess: (user: UserDTO) => {
+      applyAuthenticatedUser(user);
+      trackEvent('auth_logged_in', { method: 'email' });
+    },
   });
 
   const enterDemoMutation = useMutation({
@@ -91,6 +98,9 @@ export function useAuth() {
       return await authApi.logout();
     },
     onSuccess: () => {
+      const wasDemo = Boolean(queryClient.getQueryData<UserDTO | null>(AUTH_QUERY_KEY)?.isDemo);
+      trackEvent('auth_logged_out', { was_demo: wasDemo });
+      resetAnalytics();
       queryClient.setQueryData(AUTH_QUERY_KEY, null);
       queryClient.removeQueries({ queryKey: AUTH_QUERY_KEY });
       queryClient.clear();

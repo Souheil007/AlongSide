@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import { enterDemoSession } from '@/lib/api/auth';
+import { trackEvent } from '@/lib/analytics/posthog';
 import { cn } from '@/lib/utils';
 
 export type AgeBandId = '0-3' | '4-6' | '7-9' | '10-12' | '13-18';
@@ -109,6 +110,7 @@ export function HeroSection() {
     if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
     setSelectedAge(id);
     setCopied(false);
+    trackEvent('hero_age_preview_selected', { age_band: id });
   };
 
   const handleAgeKeyDown = (e: React.KeyboardEvent, idx: number) => {
@@ -134,6 +136,7 @@ export function HeroSection() {
     }
     if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
     setCopied(true);
+    trackEvent('hero_script_copied', { age_band: activeMoment.id });
     copyTimerRef.current = setTimeout(() => setCopied(false), 1600);
   };
 
@@ -142,6 +145,7 @@ export function HeroSection() {
     setIsEnteringDemo(true);
     try {
       await enterDemoSession();
+      trackEvent('demo_started', { source: 'hero' });
       window.location.replace('/dashboard');
     } catch {
       setIsEnteringDemo(false);

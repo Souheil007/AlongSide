@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter, JetBrains_Mono, Newsreader } from 'next/font/google';
 import './globals.css';
 import { QueryProvider } from '@/components/providers/QueryProvider';
+import { PostHogProvider } from '@/components/providers/PostHogProvider';
 import { Header } from '@/components/shared/Header';
 import { Footer } from '@/components/shared/Footer';
 import { OfflineBanner } from '@/components/shared/OfflineBanner';
@@ -83,10 +84,12 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col bg-[#FBFBF9] text-[#111413] font-sans antialiased selection:bg-[#EAF3EE] selection:text-[#143D2B]">
         <QueryProvider>
-          <OfflineBanner />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <PostHogProvider>
+            <OfflineBanner />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </PostHogProvider>
         </QueryProvider>
         <Analytics />
         <SpeedInsights />
