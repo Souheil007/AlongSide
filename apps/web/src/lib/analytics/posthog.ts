@@ -11,7 +11,7 @@ export interface PostHogClientLike {
 export interface AnalyticsEventMap {
   hero_age_preview_selected: { age_band: string };
   hero_script_copied: { age_band: string };
-  demo_started: { source: 'hero' | 'header' | 'auth_card' };
+  demo_started: { source: 'hero' | 'header' | 'auth_card' | 'pricing' };
   demo_exited: { destination: 'register' | 'home' };
   auth_google_clicked: { source: 'auth_card' };
   auth_signed_up: { method: 'email' };

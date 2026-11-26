@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Check, Plus } from 'lucide-react';
+import { Check, Loader2, Plus } from 'lucide-react';
+import { enterDemoSession } from '@/lib/api/auth';
+import { trackEvent } from '@/lib/analytics/posthog';
 import { cn } from '@/lib/utils';
 
 export interface FamilyPassBillingOption {
@@ -82,8 +84,23 @@ export const HOME_FAQS: HomeFaqItem[] = [
 export function PricingAndFaqSection() {
   const [billing, setBilling] = React.useState<'annual' | 'monthly'>('annual');
   const [openFaqId, setOpenFaqId] = React.useState<string | null>(HOME_FAQS[0]!.id);
+  const [isEnteringDemo, setIsEnteringDemo] = React.useState(false);
+  const [demoError, setDemoError] = React.useState<string | null>(null);
 
   const plan = FAMILY_PASS_OPTIONS[billing];
+
+  const handleEnterDemo = async () => {
+    setDemoError(null);
+    setIsEnteringDemo(true);
+    try {
+      await enterDemoSession();
+      trackEvent('demo_started', { source: 'pricing' });
+      window.location.replace('/dashboard');
+    } catch {
+      setIsEnteringDemo(false);
+      setDemoError('Could not open the live demo right now. Please try again.');
+    }
+  };
 
   return (
     <section id="pricing" className="bg-[#F2F0E9] py-20 sm:py-28 lg:py-32 scroll-mt-16">
@@ -176,6 +193,20 @@ export function PricingAndFaqSection() {
               >
                 Get free early access
               </Link>
+              <button
+                type="button"
+                onClick={handleEnterDemo}
+                disabled={isEnteringDemo}
+                className="inline-flex items-center justify-center gap-2 w-full min-h-[46px] px-5 rounded-[8px] border border-[rgba(19,23,21,0.16)] bg-white hover:bg-[#F2F0E9] text-[#131715] text-[14.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#143D2B] focus-visible:ring-offset-2 disabled:opacity-60"
+              >
+                {isEnteringDemo && <Loader2 className="h-4 w-4 animate-spin text-[#143D2B]" />}
+                <span>{isEnteringDemo ? 'Opening demo...' : 'Explore live demo (no signup)'}</span>
+              </button>
+              {demoError && (
+                <p role="alert" className="text-xs text-red-700 text-center">
+                  {demoError}
+                </p>
+              )}
               <p className="text-[13px] text-[#69726D] text-center">
                 $0 during early access · No credit card required
               </p>
