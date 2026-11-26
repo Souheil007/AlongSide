@@ -105,6 +105,7 @@ export class AuthController {
       success: true,
       data: {
         user: result.user,
+        token,
       },
     });
   }
@@ -137,6 +138,7 @@ export class AuthController {
       success: true,
       data: {
         user: result.user,
+        token,
       },
     });
   }
@@ -230,7 +232,7 @@ export class AuthController {
         !result.user.childrenCount || result.user.childrenCount === 0
           ? '/children/new'
           : '/dashboard';
-      return reply.redirect(`${appUrl}${destination}`);
+      return reply.redirect(`${appUrl}${destination}#session=${encodeURIComponent(sessionToken)}`);
     } catch {
       return failRedirect();
     }
@@ -249,19 +251,22 @@ export class AuthController {
       success: true,
       data: {
         user: result.user,
+        token,
       },
     });
   }
 
   async logout(request: FastifyRequest, reply: FastifyReply): Promise<void> {
-    // Extract token from cookie or Authorization header and add to server revocation registry
+    // Extract tokens from cookie and Authorization header and add to server revocation registry
     const cookieToken = request.cookies[SESSION_COOKIE_NAME];
     const authHeader = request.headers.authorization;
     const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-    const token = cookieToken || bearerToken;
 
-    if (token) {
-      revokeToken(token);
+    if (cookieToken) {
+      revokeToken(cookieToken);
+    }
+    if (bearerToken && bearerToken !== cookieToken) {
+      revokeToken(bearerToken);
     }
 
     reply.clearSessionCookie();

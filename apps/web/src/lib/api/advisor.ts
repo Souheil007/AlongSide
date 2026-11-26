@@ -5,6 +5,7 @@ import type {
 } from '@alongside/shared';
 import { DevelopmentalTier, RoadType, MessageRole } from '@alongside/shared';
 import { apiClient, ApiClientError } from './client';
+import { getStoredSessionToken } from './sessionToken';
 
 export interface SseContextEvent {
   type: 'context';
@@ -598,11 +599,13 @@ export async function streamAiAdvisorChat(
   let usedLiveStream = false;
 
   try {
+    const sessionToken = getStoredSessionToken();
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'text/event-stream',
+        ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}),
       },
       credentials: 'include',
       body: JSON.stringify(input),

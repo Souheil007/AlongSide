@@ -107,11 +107,11 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
   fastify.decorate(
     'authenticate',
     async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
-      // Check for token revocation before proceeding
+      // Check for token revocation before proceeding (Bearer takes precedence over cookie, matching jwtVerify)
       const cookieToken = request.cookies[SESSION_COOKIE_NAME];
       const authHeader = request.headers.authorization;
       const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-      const rawToken = cookieToken || bearerToken;
+      const rawToken = bearerToken || cookieToken;
 
       if (rawToken && isTokenRevoked(rawToken)) {
         return reply.status(401).send({
@@ -166,7 +166,7 @@ const authPluginCallback: FastifyPluginAsync<AuthPluginOptions> = async (
       const cookieToken = request.cookies[SESSION_COOKIE_NAME];
       const authHeader = request.headers.authorization;
       const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-      const rawToken = cookieToken || bearerToken;
+      const rawToken = bearerToken || cookieToken;
 
       if (!rawToken || isTokenRevoked(rawToken)) {
         return;
