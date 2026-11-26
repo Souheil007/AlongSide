@@ -57,14 +57,13 @@ graph TD
   - Implement the "Parent Calm" design system utilizing Tailwind CSS v3.4 and accessible Radix UI / `shadcn/ui` components.
   - Build interactive features:
     - **Contextual Road Fork UI:** Pre-Device (Road 1) vs. Active-Device (Road 2) dashboard personalization.
-    - **Parent Intelligence Academy:** Course viewer, lesson reader, progress tracker.
+    - **Parent Intelligence Academy:** Course viewer, audio companion, lesson reader, progress tracker.
     - **Interactive Quiz Runner:** "Do You Speak Tween?", Parenting Style Profiler, First-Phone Readiness (Score 0-100).
-    - **24/7 AI Child Advisor Interface:** Streaming conversational chat, quick-prompts, and clinical FAQ vault.
-    - **Bilateral Family Pact Wizard:** Zustand-powered co-negotiation wizard and digital canvas signatures.
-    - **Pact-as-Code Device Enrollment:** Single-scan QR code screen, bedtime curfew status (8:30 PM lock), and neutral enforcement card.
-    - **Sunday Youth Culture Digest:** Slang tags, exploit alerts, and Sunday dinner conversation starters.
+    - **24/7 AI Parent Advisor Interface:** Streaming conversational chat, quick-prompts, and living FAQ vault.
+    - **Device Safety & Parental Controls (`/devices`):** Priority-ranked OS & App Control Blueprints (Apple Screen Time, Google Family Link, Roblox, YouTube, Home Safe DNS), Live Encrypted DNS Shield management + QR/profile enrollment, and standalone Phone Readiness Check (`?tab=readiness`)—legacy `/pacts/*` routes redirect here cleanly.
+    - **Culture & Trends (`/digest`) + Play This Week:** Weekly curated videos, articles, slang/trend explainers, dinner conversation starters, and screen-free play deck (`#play-this-week`, ages 0–8; legacy `/brain-games` redirects here).
   - Manage client-side application state via TanStack Query (React Query v5) and Zustand.
-  - Design **deep client modules**: encapsulate multi-step state machines, form validation, and optimistic mutation rollbacks inside custom hooks (`usePactWizard`, `useAdvisorChat`, `useQuizRunner`) so presentational UI components remain declarative and decoupled from raw side effects.
+  - Design **deep client modules**: encapsulate multi-step state machines, form validation, and optimistic mutation rollbacks inside custom hooks (`useDeviceShield`, `useAdvisorChat`, `useQuizRunner`) so presentational UI components remain declarative and decoupled from raw side effects.
   - Implement form validations using `react-hook-form` connected to `@alongside/shared` Zod schemas via `@hookform/resolvers/zod`.
   - Configure Progressive Web App (PWA) offline caching for conversation scripts and decoders via `@ducanh2912/next-pwa` (Serwist).
   - Implement in-browser `@media print` CSS layouts and vector PDF export triggers.
@@ -104,14 +103,13 @@ See canonical specification: [`docs/engineering-standards/frontend-skill-matrix.
   - Maintain and evolve the canonical database schema in `packages/database/prisma/schema.prisma` (PostgreSQL 16 with `pgvector`) and generate reliable migrations.
   - Author and maintain data seed scripts for Academy modules, 100+ Modern Parenting FAQs, slang catalog, and exploit alerts.
   - Implement high-performance Fastify routes, controllers, and domain services in `apps/api/src/modules/`:
-    - `auth`: Authentication, password hashing (`argon2id`), JWT cookie sessions, CSRF protection.
-    - `children`: Child profile CRUD, Contextual Road Fork (`PRE_DEVICE` vs `ACTIVE_DEVICE`), 4 developmental tiers.
+    - `auth`: Authentication, password hashing (`argon2id`), Google OAuth 2.0 PKCE, read-safe Live Demo, JWT cookie/bearer sessions, CSRF protection.
+    - `children`: Child profile CRUD, Contextual Road Fork (`PRE_DEVICE` vs `ACTIVE_DEVICE`), 8 developmental tiers.
     - `quizzes`: Dynamic assessment engine, multi-dimensional scoring algorithms (0-100).
     - `academy`: Structured developmental neurobiology modules & completion tracking.
-    - `ai-advisor`: 24/7 contextual AI chat, streaming SSE responses, RAG with cosine similarity over FAQ vectors.
-    - `agreements`: Bilateral Family Pact generator, PDF export service.
-    - `device-profiles`: Apple `.mobileconfig` compiler, PKCS#7 cryptographic signing (`node-forge`), Android Enterprise policy generator, QR enrollment endpoint.
-    - `digest`: Sunday culture digest, slang decoders, exploit early warnings.
+    - `ai-advisor`: 24/7 contextual AI chat, streaming SSE responses, RAG with cosine similarity over FAQ vectors (strictly non-clinical per SOU-86).
+    - `device-profiles`: Live Encrypted DNS Shield (`device-shield.service.ts` + `DnsPolicyProvider` seam), PKCS#7-signed Apple `.mobileconfig` (`com.apple.dnsSettings.managed` DoH) compiler (`node-forge`), Android Private DNS (DoT) resolution, QR enrollment, and legacy profile/agreement backward compatibility (`agreements`).
+    - `digest`: Weekly Culture & Trends briefings, videos, articles, and slang/trend explainers.
     - `billing`: Stripe subscription billing (7-day upfront trial, $79/yr Annual Hero Pass, $9.99/mo flex pass).
   - Author comprehensive integration and unit tests using Vitest and Fastify inject.
   - Design **deep backend domain modules** conforming to [`docs/engineering-standards/codebase-design.md`](docs/engineering-standards/codebase-design.md):

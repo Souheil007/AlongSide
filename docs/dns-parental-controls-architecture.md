@@ -8,9 +8,9 @@
 
 ## 1. Executive Summary
 
-Parents told us clearly that static checklists and honor-system pacts are not enough: when a parent flips a control in Alongside (block adult sites, block TikTok/Snapchat/Discord/Roblox, enforce SafeSearch, block VPN bypasses, or pause entertainment at 8:30 PM), **it should actually take effect on the child's device**.
+Parents told us clearly that static checklists alone are not enough: when a parent flips a control in Alongside (block adult sites, block TikTok/Snapchat/Discord/Roblox, enforce SafeSearch, block VPN bypasses, or pause entertainment at 8:30 PM), **it should actually take effect on the child's device**—working hand-in-hand with our priority-ranked **Built-in OS & App Parental Controls Blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube, and Home Safe DNS).
 
-Rather than forcing families to install invasive spyware apps or fighting Apple's closed MDM entitlements on unsupervised consumer phones, Alongside delivers **zero-app, OS-native Encrypted DNS enforcement** that works across **Wi-Fi and 5G cellular**:
+Rather than forcing families to install battery-draining VPN proxies or fighting Apple's closed MDM entitlements on unsupervised consumer phones, Alongside pairs native OS app/download/time-limit blueprints with **zero-app, OS-native Encrypted DNS enforcement** that works across **Wi-Fi and 5G cellular**:
 
 - **iPhone & iPad:** One-tap downloadable, PKCS#7-signed Apple `.mobileconfig` using Apple's official **`com.apple.dnsSettings.managed`** DNS-over-HTTPS (DoH) payload. Works natively on every unsupervised consumer iPhone/iPad (iOS 14+).
 - **Android Phones & Tablets:** Copy-paste one unique **Private DNS (DoT)** hostname into `Settings → Network → Private DNS`. Works globally across Wi-Fi and cellular with zero APK required.
@@ -26,7 +26,7 @@ To validate fast with zero DNS infrastructure ops while keeping a 1-file migrati
 
 ```mermaid
 flowchart LR
-    UI["/devices Live Shield UI\n(Next.js apps/web)"] -->|PATCH /api/v1/children/:id/shield| API["Fastify Device Shield Service\n(apps/api)"]
+    UI["/devices Live Shield UI\n(Next.js apps/web)"] -->|PUT /api/v1/devices/shield/:childId| API["Fastify Device Shield Service\n(apps/api)"]
     API --> DB[(PostgreSQL\nDeviceShieldConfig)]
     API --> Seam{"DnsPolicyProvider Seam"}
     Seam -->|Phase 1 MVP| NextDNS["NextDnsPolicyAdapter\napi.nextdns.io"]
@@ -35,7 +35,7 @@ flowchart LR
     Seam -->|Unit/Integration Tests| Fake["InMemoryDnsPolicyFake"]
 
     API --> Compiler["Apple DoH .mobileconfig Compiler\n+ PKCS#7 node-forge Signer"]
-    Compiler -->|GET /enroll/:token| iOS["Child iPhone / iPad\nEncrypted DoH (Wi-Fi + 5G)"]
+    Compiler -->|GET /shield/profile/:token| iOS["Child iPhone / iPad\nEncrypted DoH (Wi-Fi + 5G)"]
     NextDNS -->|DoT Hostname| Android["Child Android\nPrivate DNS (Wi-Fi + 5G)"]
     NextDNS -->|Linked IP / DoH| Router["Home Router\nConsoles & Smart TVs"]
 ```

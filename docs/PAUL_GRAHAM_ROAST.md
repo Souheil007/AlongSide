@@ -1,5 +1,8 @@
 # Paul Graham Idea Roast & Evaluation Report: Alongside (ParentPath)
 
+> [!NOTE]
+> **Historical Document Context:** This November 2026 evaluation critiqued an earlier "Bilateral Family Pact / zero-spyware" MVP scope. Alongside has since evolved in [`PROJECT_SCOPE.md`](../PROJECT_SCOPE.md) (v2.5.0) and [`docs/dns-parental-controls-architecture.md`](dns-parental-controls-architecture.md): legacy phone pacts were retired in favor of **Built-in OS & App Parental Controls Blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube, Home Safe DNS) paired with the **Live Encrypted DNS Shield** (signed iOS `.mobileconfig` DoH + Android Private DNS DoT) for direct app, download, content, and screen-time control. The historical evaluation below is preserved intact for reference.
+
 **Evaluator Persona:** Paul Graham (Founder, Y Combinator)  
 **Subject:** Alongside (Working Title: ParentPath) — D2C Digital Parenting Companion  
 **Source Material:** `PROJECT_SCOPE.md`  

@@ -1,7 +1,7 @@
 # Alongside (ParentPath) — Product Scope & Strategic Specification
-## The Holistic Child Upbringing, Health & Lifespan Family Operating System (Ages 0–18): Pediatric Health & Wellness, Nutrition & Feeding, Developmental Milestones, Brain Games & Play, Behavioral Psychology, Cultural Mentorship, and Balanced Modern Living & Device Pacts
+## The Holistic Child Upbringing, Developmental Science & Family Operating System (Ages 0–18): Restorative Wellness, Nutrition & Feeding, Developmental Milestones, Screen-Free Brain Play, Behavioral Psychology, Weekly Culture & Trends, and Built-in OS & DNS Parental Controls
 **Author:** Chief Executive Officer (CEO) & Product Visionary  
-**Document Version:** 2.4.1 (Canonical Product Scope & Competitive Landscape Upgrade)  
+**Document Version:** 2.5.0 (Canonical Product Scope — OS & Live DNS Parental Controls Pivot)  
 **Target Audience:** CTO, Product Design, Engineering Team, Stakeholders, Board of Directors  
 **Status:** Approved Canonical Product Scope  
 
@@ -10,7 +10,7 @@
 ## 1. Executive Summary & Positioning Horizon
 
 ### 1.1 One-Line Positioning
-> **Alongside is the comprehensive lifespan child upbringing, development, and family operating system (Ages 0–18): empowering parents to deeply understand and nurture their child’s restorative wellness, pediatric nutrition, motor and speech milestones, cognitive brain play, and emotional behavior, while providing modern cultural mentorship, 24/7 AI parenting guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
+> **Alongside is the holistic lifespan child upbringing, developmental science, and family operating system (Ages 0–18): empowering parents to understand and nurture their child’s sleep and wellness, nutrition, motor and speech milestones, screen-free play, and emotional behavior, while providing weekly culture and trend briefings, 24/7 AI parenting scripts, and step-by-step OS parental controls plus Live Encrypted DNS filtering for apps, downloads, content, and daily screen-time limits.**
 
 ### 1.1.1 Strategic Platform Boundary: Non-Clinical Mandate (SOU-86)
 > [!IMPORTANT]
@@ -28,19 +28,19 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
    - Panic-Googling pediatric fevers, earaches, and rashes at 2:00 AM on WebMD.
    - Scrolling through conflicting Mommy blogs for baby-led weaning and toddler picky eating tips.
    - Comparing their child against toxic, unscientific milestone reels on social media.
-   - Buying authoritarian surveillance tools (Bark, Qustodio) that destroy family trust.
+   - Paying for fragile, third-party surveillance subscriptions without knowing how to lock down the built-in Apple Screen Time, Google Family Link, Roblox, and YouTube controls already on their child's devices.
    - Reading abstract child psychology books that provide zero real-time situational guidance.
 
-**Alongside v2.4 establishes the Universal Family Operating System by uniting the 4 Core Pillars of Childhood into one seamless, trusted companion:**
-- **Physical Health & Wellness:** Pediatric symptom guidance, fever protocols, emergency vs. home care triage, sleep architecture, and preventative wellness.
+**Alongside v2.5 establishes the Universal Family Operating System by uniting the Core Pillars of Childhood into one seamless, trusted companion:**
+- **Sleep, Wellness & Developmental Foundations:** Educational guidance on sleep architecture, circadian rhythms, developmental checkups, and routine wellness (non-clinical per SOU-86).
 - **Nutrition, Feeding & Growth:** From infant solids and allergen introduction to toddler picky eating, balanced school lunchboxes, and adolescent growth spurts.
-- **Developmental Milestones & Brain Play:** Motor skills (when he moves), speech & language (when he talks), cognitive benchmarks, early puppets, sensory exploration, and logic brain games.
+- **Developmental Milestones & Screen-Free Play:** Motor skills (when he moves), speech & language (when he talks), cognitive benchmarks, and weekly zero-prep screen-free play decks integrated directly into Culture & Trends for ages 0–8.
 - **Behavior, Emotion & Cultural Mentorship:** Understanding tantrums, defiance, and emotional language, practicing calm authoritative parenting, and mentoring children to thrive in a complex modern world.
-- **Modern Living & Balanced Technology:** Navigating screens, gaming, and social media without paranoia, featuring the **"Thinking About Buying a Device?" Action Hub**, **Bilateral Family Pacts ("Pact-as-Code")**, and **Automated 8:30 PM Bedtime Curfews** with zero spyware.
+- **Device Safety & Parental Controls:** Standalone **Phone Readiness Check (0–100)**, priority-ranked **Built-in OS & App Parental Controls Blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube, Home Safe DNS) covering app download approvals, purchase locks, adult content filtering, daily time/Shorts caps, and bedtime/school locks, plus **Live Encrypted DNS Shield** (signed iOS `.mobileconfig` DoH + Android Private DNS DoT + Router DNS) to block specific apps, enforce SafeSearch, and schedule bedtime lockouts across Wi-Fi and 5G.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   THE ALONGSIDE v2.4 ECOSYSTEM                                   │
+│                                   THE ALONGSIDE v2.5 ECOSYSTEM                                   │
 │                        The Holistic Lifespan Family Operating System (Ages 0–18)                 │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
@@ -52,9 +52,9 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
 │                                            │                                                     │
 │                                            ▼                                                     │
 │   ┌──────────────────────────────────────────────────────────────────────────────────────────┐   │
-│   │              2. PEDIATRIC HEALTH, WELLNESS & ACUTE SYMPTOM COMPANION                     │   │
-│   │   • Fever & Illness Protocols       • Symptom Triage (Home vs ER) • Sleep Regressions    │   │
-│   │   • Medication Dosing Calculators   • Well-Child Preparation   • Physical Growth Curves  │   │
+│   │              2. RESTORATIVE SLEEP, WELLNESS & PARENT ACADEMY (NON-CLINICAL)              │   │
+│   │   • Sleep Architecture & Regressions• Circadian Rhythm Science  • Audio-First Guides    │   │
+│   │   • Well-Child Visit Prep Notes     • Physical Growth Context   • Pediatrician Allies   │   │
 │   └────────────────────────────────────────┬─────────────────────────────────────────────────┘   │
 │                                            │                                                     │
 │                                            ▼                                                     │
@@ -66,9 +66,9 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
 │                                            │                                                     │
 │                                            ▼                                                     │
 │   ┌──────────────────────────────────────────────────────────────────────────────────────────┐   │
-│   │              4. BRAIN GAMES, SENSORY TOYS & COGNITIVE PLAY ENRICHMENT                    │   │
+│   │              4. SCREEN-FREE PLAY THIS WEEK & COGNITIVE ENRICHMENT (AGES 0–8)             │   │
 │   │   • Early Puppets & Sensory Cards   • Symbolic Roleplay & Blocks• Logic Riddles & Chess  │   │
-│   │   • Spatial Puzzles & Memory Games  • Boredom Tolerance Rituals • Real-World Creativity  │   │
+│   │   • Calm Before Bed / Burn Energy   • Boredom Tolerance Rituals • In Culture & Trends    │   │
 │   └────────────────────────────────────────┬─────────────────────────────────────────────────┘   │
 │                                            │                                                     │
 │                                            ▼                                                     │
@@ -80,16 +80,16 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
 │                                            │                                                     │
 │                                            ▼                                                     │
 │   ┌──────────────────────────────────────────────────────────────────────────────────────────┐   │
-│   │              6. 24/7 CLINICAL AI ADVISOR & 250+ SCENARIO FAQ VAULT                       │   │
-│   │   • "Ask Alongside Anything" (24/7) • Pediatric & Clinical RAG  • Living FAQ Vault       │   │
-│   │   • Word-for-Word Dialogue Scripts  • Acute Crisis Guidance    • Multi-Child Memory      │   │
+│   │              6. 24/7 AI PARENT ADVISOR & 250+ SCENARIO FAQ VAULT                         │   │
+│   │   • "Ask Alongside Anything" (24/7) • Developmental RAG Engine • Living FAQ Vault       │   │
+│   │   • Word-for-Word Dialogue Scripts  • De-escalation Coaching    • Multi-Child Memory      │   │
 │   └────────────────────────────────────────┬─────────────────────────────────────────────────┘   │
 │                                            │                                                     │
 │                                            ▼                                                     │
 │   ┌──────────────────────────────────────────────────────────────────────────────────────────┐   │
-│   │         7. MODERN CULTURE, MULTI-DEVICE ECOLOGY & "THINKING ABOUT A DEVICE?" HUB         │   │
-│   │   • Sunday Culture & Slang Decoder  • Multi-Device Demands     • Readiness Diagnostic    │   │
-│   │   • Bilateral Family Pact Engine    • Automated 8:30 PM Lock   • Zero-Spyware Guarantee  │   │
+│   │         7. WEEKLY CULTURE & TRENDS + DEVICE SAFETY & PARENTAL CONTROLS HUB               │   │
+│   │   • Weekly Videos, Articles & Slang • OS Control Blueprints (iOS, Android, Roblox, YT)  │   │
+│   │   • Live Encrypted DNS Shield       • App/Download/Time Caps    • 8:30 PM Bedtime Lock   │   │
 │   └──────────────────────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -102,38 +102,38 @@ In early product discussions, digital parenting tools make a fatal mistake: **re
 Alongside replaces fragmented parenting panic with a calm, authoritative, scientifically grounded operating system:
 
 1. **Developmental Milestones & Growth ("When He Moves, When He Talks"):**
-   - Precise, pediatrician-backed milestone guidance across gross motor, fine motor, speech, and cognitive stages from 0 to 18.
+   - Precise, science-backed milestone guidance across gross motor, fine motor, speech, and cognitive stages from 0 to 18.
    - Clarifies what a child *should be able to do* at each month and year, answering the acute anxiety: *"Is my child developing normally?"*
-2. **Pediatric Health & Symptom Guidance (The Safe Resort):**
-   - A calm, evidence-based triage resource for childhood illnesses, fevers, earaches, and rashes.
-   - Clear protocols detailing **when to monitor at home**, **when to call the pediatrician**, and **when to seek immediate emergency care**, stopping late-night panic Googling.
+2. **Parent Academy & Restorative Wellness (Educational, Non-Clinical):**
+   - Short, science-backed guides (readable or audio-narrated) covering sleep architecture, regressions, circadian delays, emotional regulation, and developmental stages.
+   - Prepares parents with organized questions for licensed pediatricians without performing clinical diagnosis, medical triage, or dosing calculations (SOU-86).
 3. **Pediatric Nutrition, Feeding & Dietary Safety:**
    - Detailed age-by-age nutritional guidance: introducing solids, safe allergen exposure, choking hazard prevention, conquering toddler picky eating without battles, and fueling teenage athletic growth.
-4. **Brain Games, Sensory Toys & Cognitive Play:**
-   - Age-tailored developmental play: from high-contrast sensory toys and animal puppets in infancy to symbolic imaginative building blocks in toddlerhood, and logic riddles, chess, and spatial brain games in childhood.
+4. **Screen-Free Play This Week (Integrated in Culture & Trends for Ages 0–8):**
+   - Zero-prep developmental play decks integrated into `/digest#play-this-week`: from high-contrast sensory toys and animal puppets in infancy to symbolic imaginative building blocks in toddlerhood, and logic riddles, chess, and calm-before-bed rituals in early elementary.
 5. **Behavioral Psychology & The Modern Cultural Advisor:**
    - Translates confusing or challenging behaviors (tantrums, hitting, defiance, lying, withdrawal) into underlying neurological and emotional needs.
    - Serves as a cultural advisor teaching parents how to raise resilient, empathetic, confident children in today's fast-moving world.
-6. **24/7 AI Child Advisor & Clinical FAQ Vault:**
-   - Real-time text guidance personalized by the child's exact age, developmental history, health notes, and temperament.
-   - Living FAQ Vault (250+ scenarios) and guided dialogue scripts allowing parents to practice tough, emotionally charged conversations before facing them in real life.
-7. **Modern Culture & The "Thinking About Buying a Device?" Solution Hub:**
-   - Integrates technology into modern family life with healthy boundaries: Sunday slang decoders, multi-device management (TVs, tablets, consoles, smartwatches, phones), and an actionable milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown**.
+6. **24/7 AI Parent Advisor & Living FAQ Vault:**
+   - Real-time text guidance personalized by the child's exact age, developmental history, feeding stage, and temperament.
+   - Living FAQ Vault (250+ scenarios) and word-for-word dialogue scripts allowing parents to handle high-heat everyday situations calmly.
+7. **Weekly Culture & Trends + Device Safety & Parental Controls Hub:**
+   - Weekly curated videos, articles, slang decoders, and dinner table conversation starters paired with a unified `/devices` hub featuring a standalone **Phone Readiness Check (0–100)**, priority-ranked **Built-in OS & App Parental Controls Blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube, Home Safe DNS), and **Live Encrypted DNS Shield** (`.mobileconfig` DoH for iOS, Private DNS DoT for Android, and Home Router DNS) to control apps, downloads, purchases, adult content, and daily/bedtime screen limits.
 
 ---
 
-## 2. Core Philosophy: "Nurture the Whole Child: Health, Mind, Heart & Environment"
+## 2. Core Philosophy: "Nurture the Whole Child: Wellness, Mind, Heart & Digital Guardrails"
 
-Modern parenting culture is broken. Parents oscillate between hyper-permissive passivity and anxious authoritarian surveillance. Alongside restores equilibrium through a holistic philosophy:
+Modern parenting culture is broken. Parents oscillate between hyper-permissive passivity and disconnected digital policing. Alongside restores equilibrium through a holistic philosophy:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                 THE ALONGSIDE OPERATING PHILOSOPHY                               │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
-│   1. THE FOUNDATION: Pediatric Health, Nourishment & Restful Sleep                               │
-│      • A child whose nervous system is dysregulated by illness, poor nutrition, or chronic       │
-│        sleep deprivation cannot learn, self-regulate, or thrive. Health comes first.             │
+│   1. THE FOUNDATION: Restorative Sleep, Nourishment & Developmental Literacy                     │
+│      • A child whose nervous system is dysregulated by poor nutrition or chronic sleep           │
+│        deprivation cannot learn, self-regulate, or thrive. Foundations come first.               │
 │                                                                                                  │
 │   2. THE MIND: Brain Stimulation, Motor Play & Intellectual Curiosity                            │
 │      • Human intelligence is cultivated through physical movement, tactile sensory play,         │
@@ -141,20 +141,20 @@ Modern parenting culture is broken. Parents oscillate between hyper-permissive p
 │                                                                                                  │
 │   3. THE HEART: Behavioral Translation, Emotional Safety & Empathy                               │
 │      • Behavior is communication. When parents decode the underlying emotional need behind       │
-│        a tantrum or outburst, discipline transforms from reactive punishment into loving guidance.│
+│        a tantrum or outburst, discipline transforms from reactive yelling into calm guidance.    │
 │                                                                                                  │
-│   4. THE ENVIRONMENT: Cultural Fluency & Balanced Modern Technology                              │
-│      • Technology is an integrated reality of the modern world. We introduce it intentionally,   │
-│        protect natural sleep curfews through neutral automation, and foster bilateral trust.     │
+│   4. THE ENVIRONMENT: Cultural Fluency & Real OS + Network Guardrails                            │
+│      • Technology requires real technical guardrails alongside open conversation. We give        │
+│        parents clear OS controls (apps, downloads, purchases, time caps) and Live DNS filtering. │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 1. **Education transforms frustration into empathy:** When parents understand that a 3-year-old’s tantrum over an iPad is a physiological dopamine drop, or that a 12-year-old’s late-night wakefulness is a pubertal circadian delay, anger turns into calm authority.
-2. **Awareness bridges the cultural chasm:** When parents understand Roblox economies, Discord servers, and trending slang, they communicate with relevance rather than paranoia.
-3. **Multi-device clarity ends the guesswork:** Parents learn how to introduce screens gradually—starting with co-viewing in early childhood, structured gaming in elementary school, smartwatches as bridge devices, and personal phones with clear ground rules.
-4. **Bilateral agreements build intrinsic ownership:** When children co-design their boundaries, they are partners in their digital health rather than rebellious subjects.
-5. **Neutral OS enforcement preserves the parent-child bond:** The parent remains the loving mentor; the smartphone or tablet operating system neutrally enforces the bedtime curfew.
+2. **Awareness bridges the cultural chasm:** When parents understand Roblox economies, Discord servers, YouTube Shorts loops, and trending slang, they communicate with relevance rather than panic.
+3. **Priority-ranked OS controls end the guesswork:** Parents learn exactly which Apple Screen Time, Google Family Link, Roblox, and YouTube switches matter most—locking anti-tamper passcodes, requiring app download approvals, capping Shorts and daily usage, and setting bedtime downtime.
+4. **Live Encrypted DNS enforces boundaries across Wi-Fi & 5G:** Alongside's Live DNS Shield lets parents block adult sites, pause specific apps/services (TikTok, Roblox, YouTube, Instagram, Snapchat, Discord), enforce SafeSearch, and schedule bedtime quiet hours in under 30 seconds.
+5. **Neutral automation protects the parent-child relationship:** Because OS downtime and DNS schedules run automatically, parents spend less evening energy arguing over clocks and more energy connecting.
 
 ---
 
@@ -226,48 +226,29 @@ Parents need clarity on what their child should be able to do at each developmen
 
 ---
 
-### Pillar 2: Pediatric Health, Wellness & Acute Symptom Companion
+### Pillar 2: Restorative Sleep, Wellness & Well-Child Prep (Non-Clinical)
 
-Parents need a trusted, calming sanctuary when health concerns arise, eliminating late-night panic and unnecessary emergency room visits.
+> *Note (SOU-86 Non-Clinical Mandate): Alongside does not provide medical symptom triage, diagnostic claims, or medication dosing calculators. All clinical assessment and dosing decisions remain strictly with licensed pediatricians.*
+
+Parents need calm, science-backed education on everyday sleep rhythms, circadian shifts, and preparing thoughtful questions for routine pediatric visits:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                             PEDIATRIC HEALTH & SYMPTOM CARE MATRIX                               │
+│                             RESTORATIVE SLEEP & WELLNESS EDUCATION                               │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
-│ 1. EVIDENCE-BASED FEVER TRIAGE PROTOCOL                                                          │
-│    • Understanding Fever: A fever is a healthy immune response, not an illness itself.           │
-│    • Age-Based Action Thresholds:                                                                │
-│      - Infants < 3 Months: ANY rectal temp ≥ 100.4°F (38.0°C) is an IMMEDIATE MEDICAL EMERGENCY. │
-│      - 3 to 6 Months: Temp ≥ 101°F: Contact pediatrician for evaluation.                         │
-│      - 6 Months+: Focus on child's BEHAVIOR, hydration, and comfort rather than the thermometer. │
-│    • Safe Comfort Measures: Lightweight clothing, lukewarm sponge, ample fluids, weight-based    │
-│      acetaminophen or ibuprofen (ibuprofen only for infants 6+ months; NEVER aspirin).           │
-│                                                                                                  │
-│ 2. COMMON CHILDHOOD ILLNESSES DECODED                                                            │
-│    • Croup: Stridor and "barking seal" cough. Remedy: Cool night air, bathroom steam, hydration. │
-│    • RSV & Bronchiolitis: Wheezing, rapid breathing, belly sucking under ribs (retractions).     │
-│    • Ear Infections (Otitis Media): Ear pulling, fever, crying during feeding (pressure change). │
-│    • Hand, Foot, and Mouth (HFMD): Painful mouth sores, red spots on palms/soles; soft cold diet.│
-│    • Stomach Bugs: Oral rehydration therapy (small sips of electrolyte solution every 5 mins).   │
-│                                                                                                  │
-│ 3. THE 3-ZONE ACTION TRIAGE (STOP LATE-NIGHT PANIC GOOGLING)                                    │
-│    • RED ZONE (Call 911 / Go to ER Immediately):                                                 │
-│      - Struggling to breathe (nasal flaring, grunting, chest retractions, blue lips/face).       │
-│      - Inconsolable lethargy (cannot wake child up, unresponsive, glassy-eyed).                  │
-│      - Stiff neck paired with high fever and purple non-blanching petechial rash.                │
-│      - Severe dehydration (no wet diapers in 8+ hours, no tears when crying, sunken fontanelle).  │
-│    • YELLOW ZONE (Contact Pediatrician within 24 Hours):                                         │
-│      - Fever lasting more than 3 consecutive days.                                               │
-│      - Ear pain, persistent cough, refusal to drink fluids, mild wheezing.                       │
-│    • GREEN ZONE (Home Supportive Care):                                                          │
-│      - Child is active, playful between fever spikes, drinking fluids, urinating normally.       │
-│                                                                                                  │
-│ 4. SLEEP ARCHITECTURE & RESTORATION                                                              │
-│    • Newborn Circadian Calibration (Day/Night confusion, swaddling, white noise).                │
+│ 1. SLEEP ARCHITECTURE & RESTORATION                                                              │
+│    • Newborn Circadian Calibration (Day/Night rhythm, safe sleep environment, white noise).      │
 │    • Surviving Regressions: The 4-month (sleep cycle maturation), 8-month, and 18-month shifts.  │
 │    • Nap Transition Schedules: Dropping from 3 naps to 2 (~7-9mo), 2 to 1 (~14-18mo), no naps (3-5y).│
-│    • Night Terrors vs. Nightmares: Deciphering partial-arousal confusions vs REM dreams.         │
+│    • Night Terrors vs. Nightmares: Understanding partial-arousal confusions vs REM dreams.       │
+│    • Pubertal Circadian Delay: Why teens' melatonin shifts ~2 hours later and how curfews help.  │
+│                                                                                                  │
+│ 2. WELL-CHILD VISIT PREPARATION                                                                  │
+│    • Developmental observation checklists (speech, motor, sleep, feeding notes) to share with    │
+│      your pediatrician during regular checkups.                                                  │
+│    • Clear guidance to always contact licensed healthcare providers or emergency services for      │
+│      fevers, acute illness, or medical questions.                                                │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -413,76 +394,78 @@ Children do not misbehave because they are malicious; they act out when their in
 
 ---
 
-### Pillar 6: 24/7 AI Child Advisor & Clinical FAQ Vault
+### Pillar 6: 24/7 AI Parent Advisor & Living FAQ Vault
 
-When a parenting crisis strikes—whether a 102°F fever at 2:00 AM, a biting phase at daycare, or a middle-school social meltdown—Alongside provides immediate, personalized clinical guidance.
+When a tough parenting moment hits—whether a toddler biting phase, dinner refusal, or a middle-school social meltdown—Alongside provides immediate, personalized educational guidance and word-for-word communication scripts.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                       24/7 CLINICAL AI ADVISOR & FAQ VAULT                                       │
+│                       24/7 AI PARENT ADVISOR & FAQ VAULT                                         │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
-│ 1. "ASK ALONGSIDE ANYTHING" (24/7 CLINICAL AI CONCIERGE)                                         │
-│    • Personalized by child's exact profile: age, developmental tier, health history, dietary     │
-│      stage, temperament, and family routines.                                                    │
-│    • Contextualized with pediatric and psychological clinical evidence.                          │
+│ 1. "ASK ALONGSIDE ANYTHING" (24/7 PARENTING ADVISOR)                                             │
+│    • Personalized by child's exact profile: age, developmental tier, dietary stage, temperament, │
+│      and family routines.                                                                        │
+│    • Grounded in developmental neurobiology and authoritative parenting science (non-clinical).    │
 │    • Real-Time Dilemma Answers:                                                                  │
-│      - *"Leo has a 101.5°F fever and pulling his right ear, what are the exact steps tonight?"*   │
-│      - *"My 8-month-old gagged on a steamed broccoli floret—how do I know if he is choking?"*   │
-│      - *"What are 3 brain games I can play with my 4-year-old today to stimulate speech clarity?"*│
-│      - *"My 11-year-old came home crying that she has no friends at lunch. What do I say?"*      │
+│      - *"My 3-year-old explodes every time we turn off the TV before dinner—what do I say?"*     │
+│      - *"My 4-year-old refuses everything except bread and nuggets—how do I stop dinner battles?"*│
+│      - *"What are 3 zero-prep play ideas I can do with my 4-year-old today for speech clarity?"* │
+│      - *"My 11-year-old came home crying that everyone in 5th grade has an iPhone. What do I say?"*│
 │                                                                                                  │
 │ 2. GUIDED DIALOGUE & EMPATHETIC SCRIPT VAULT                                                     │
 │    • Word-for-word response blueprints across high-heat parenting moments:                       │
 │      - Scenario 1: Toddler Public Tantrum (de-escalating kicking and screaming in a grocery store)│
 │      - Scenario 2: Dinner Plate Resistance (*"This dinner is gross, make me chicken nuggets!"*) │
 │      - Scenario 3: Biting / Hitting Sibling Confrontation                                        │
-│      - Scenario 4: Middle School Group Chat Exclusion                                            │
+│      - Scenario 4: Middle School Group Chat & Phone Pressure                                     │
 │      - Scenario 5: Bedtime Device Cutoff Resistance                                              │
-│    • Clinical Coaching: Evaluates parental tone, calmness, empathy validation, and firmness.     │
 │                                                                                                  │
-│ 3. LIVING CLINICAL FAQ VAULT (250+ CURATED SCENARIOS)                                            │
-│    • Categorized across 5 clinical domains:                                                      │
-│      1. Pediatric Health, Symptoms & Sleep                                                       │
+│ 3. LIVING PARENTING FAQ VAULT (250+ CURATED SCENARIOS)                                           │
+│    • Categorized across 5 developmental domains:                                                 │
+│      1. Restorative Sleep & Everyday Wellness                                                    │
 │      2. Nutrition, Feeding & Picky Eating                                                        │
 │      3. Physical & Speech Milestones                                                             │
 │      4. Behavioral Psychology, Tantrums & Discipline                                             │
-│      5. Modern World, Cultural Pressure & Balanced Screens                                       │
+│      5. Modern World, Cultural Pressure & Device Safety Controls                                 │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### Pillar 7: Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub
+### Pillar 7: Weekly Culture & Trends + Device Safety & Parental Controls Hub
 
-Technology is an integrated element of modern child development, not an isolated obsession. Alongside provides balanced ecological guidance and a concrete operational transition toolset.
+Parents need both cultural literacy and real technical control over the apps, downloads, content, and time limits on their children's devices. Alongside pairs weekly culture briefings with priority-ranked OS parental control blueprints and a Live Encrypted DNS Shield.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                    MODERN CULTURE, DEVICES & THE "THINKING ABOUT A DEVICE?" HUB                  │
+│                 CULTURE & TRENDS + DEVICE SAFETY & PARENTAL CONTROLS HUB (/devices)              │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
-│ 1. SUNDAY YOUTH CULTURE & SLANG INTELLIGENCE                                                     │
-│    • Weekly decoder translating trending terms (*skibidi, crashout, looksmaxing, rizz, cooked*). │
-│    • Exploit alerts: Decoy calculator vault apps, proxy search workarounds, secret chat tools.   │
-│    • Sunday Family Dinner Prompt: Engaging questions that prompt authentic, laughing discussions.│
+│ 1. WEEKLY CULTURE & TRENDS (/digest) + PLAY THIS WEEK (AGES 0–8)                                 │
+│    • Curated weekly videos, research-backed articles, and plain-English trend/slang explainers.  │
+│    • Exploit & platform awareness: decoy vault apps, browser bypasses, Roblox/YouTube risks.     │
+│    • Sunday Table Closer questions that spark authentic dinner conversations without interrogation.│
+│    • Play This Week (#play-this-week): zero-prep screen-free play deck integrated for ages 0–8. │
 │                                                                                                  │
-│ 2. MULTI-DEVICE ECOLOGY GUIDANCE                                                                 │
-│    • Smart TVs: Co-viewing frameworks, avoiding overstimulating hyper-fast animated video.       │
-│    • Family Tablets: Designated shared room zones, 30-minute creative time limits.               │
-│    • Gaming Consoles & Roblox: Navigating in-game currencies, microtransactions, and online chat.│
-│    • Smartwatches: The ideal bridge communication device (calling/GPS) prior to smartphones.     │
+│ 2. BUILT-IN OS & APP PARENTAL CONTROLS BLUEPRINTS (5 PLATFORMS · 6 GOALS)                        │
+│    • Priority-ranked, age-calibrated step-by-step setup across Apple Screen Time (iOS/iPadOS),  │
+│      Google Family Link (Android), Roblox, YouTube, and Home Safe DNS:                           │
+│      1. Anti-bypass & tamper lock (Screen Time passcode, block app deletion & APK sideloading).  │
+│      2. Adult & explicit content filters (block adult sites, disable Private/Incognito browsing).│
+│      3. Strangers & explicit media (on-device nudity blur, Contacts Only, lock Roblox chat/DMs). │
+│      4. App download & purchase approvals (Ask to Buy / Play approvals, block Robux/IAPs).       │
+│      5. Daily screen-time & YouTube Shorts limits (app budgets & Shorts timer down to 0 min).    │
+│      6. Bedtime & school-hours locks (8:30 PM Downtime, Android School Time, emergency calls).   │
+│    • Mixed-OS guidance for iPhone-parent/Android-child and Android-parent/iPhone-child homes.    │
 │                                                                                                  │
-│ 3. "THINKING ABOUT BUYING A DEVICE?" TRANSITION PIPELINE                                         │
-│    • Activated when parents consider introducing a tablet, gaming console, smartwatch, or phone: │
-│      - Step 1: Device Readiness Diagnostic (Score 0–100 evaluating self-regulation and safety).  │
-│      - Step 2: The Earned Autonomy Roadmap (replacing "No" with a 30-day mastery checklist).     │
-│      - Step 3: Bilateral Co-Signed Family Pact (Pact-as-Code created jointly before unboxing).   │
-│      - Step 4: Cryptographic Profile Deployment (.mobileconfig / Android Enterprise).            │
-│      - Step 5: Automated 8:30 PM Bedtime Lockdown (neutral hardware curfew; no parental yelling).│
-│      - Step 6: Zero-Spyware Safe Harbor Guarantee (privacy protected; 24/7 emergency calls open).│
-│      - Step 7: Semi-Annual Milestone Upgrade Ceremonies (turning compliance into self-regulation).│
+│ 3. LIVE ENCRYPTED DNS SHIELD + STANDALONE PHONE READINESS CHECK                                  │
+│    • Live DNS Shield across Wi-Fi & 5G: signed iOS .mobileconfig (DoH), Android Private DNS      │
+│      (DoT), and Home Router DNS—block adult sites, toggle specific apps (TikTok, YouTube,        │
+│      Roblox, Instagram, Snapchat, Discord, Fortnite, Twitch), lock SafeSearch, block VPN bypasses,│
+│      and schedule nightly quiet hours with ~30s sync and zero browsing-history snooping.         │
+│    • Standalone Phone Readiness Check (/devices?tab=readiness): 2-minute 0–100 diagnostic.       │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -493,39 +476,35 @@ Technology is an integrated element of modern child development, not an isolated
 
 ### 4.1 Application Information Architecture & Unified Navigation
 
-The Alongside application organizes the child's life into a clean, child-centered navigation interface:
+The Alongside application organizes the family experience into focused, calm hubs:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                ALONGSIDE NAVIGATION ARCHITECTURE                                 │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                                  │
-│   [Child Selector: Leo (Age 2) | Maya (Age 8) | Julian (Age 15)]                                 │
+│   [Child Selector: Maya (Age 3) | Leo (Age 11)]                                                  │
 │                                                                                                  │
-│   1. TODAY & DEVELOPMENT (Home Feed)                                                             │
-│      • Today's Milestones: What your child is learning to do right now (Speech, Motor, Mind)     │
-│      • Daily Brain Game / Play Activity (e.g., Puppet Theater, Stacking Challenge, Logic Riddle) │
-│      • Today's Nutrition & Feeding Tip (Age-appropriate meals, allergy guidance, snacks)         │
+│   1. HOME DASHBOARD (/dashboard)                                                                 │
+│      • Age-calibrated daily snapshot, active Academy chapter, quick Advisor script & Play link   │
 │                                                                                                  │
-│   2. HEALTH & PEDIATRIC SYMPTOM COMPANION                                                        │
-│      • Triage Symptom Guide (Fever, Colds, Earaches, Rashes, Stomach Bugs)                       │
-│      • Home Care vs. Call Doctor vs. Emergency Room Checklist                                    │
-│      • Sleep Regression & Bedtime Schedule Advisor                                               │
+│   2. PARENT ACADEMY (/academy)                                                                   │
+│      • Structured 0–18 courses & lessons with neural audio reader across milestones, sleep,      │
+│        nutrition, behavioral psychology, and digital maturity                                    │
 │                                                                                                  │
-│   3. BEHAVIOR, EMOTION & PLAY ACADEMY                                                            │
-│      • Behavioral Translation: Decoding Tantrums, Defiance, Biting, and Big Feelings             │
-│      • Play & Brain Toy Catalog: Best puppets, sensory toys, and brain puzzles for this age      │
-│      • Modern Cultural Advice: Raising grounded, resilient kids with loving firm boundaries      │
+│   3. CULTURE & TRENDS (/digest)                                                                  │
+│      • Weekly Videos, Articles, Slang & Platform Trends, Sunday Table Questions                  │
+│      • Play This Week (/digest#play-this-week): screen-free play deck for ages 0–8               │
+│        (legacy /brain-games redirects here cleanly)                                              │
 │                                                                                                  │
-│   4. 24/7 AI CLINICAL ADVISOR & FAQ VAULT                                                        │
-│      • "Ask Alongside Anything" (Instant multi-child contextual chat)                             │
-│      • Guided Dialogue Rehearsal (Navigate difficult conversations calmly)                        │
-│      • 250+ Clinical Parenting FAQ Vault                                                         │
+│   4. CALM ADVISOR (/advisor)                                                                     │
+│      • 24/7 age-aware AI Parent Advisor (streaming SSE) + 250+ Scenario Living FAQ Vault         │
 │                                                                                                  │
-│   5. MODERN WORLD & DEVICE HUB                                                                   │
-│      • Sunday Youth Culture Digest & Slang Decoder                                               │
-│      • "Thinking About Buying a Device?" Action Hub (Readiness Diagnostic & Family Pact)         │
-│      • Active Device Curfew Profiles (Automated 8:30 PM Bedtime Lockdown)                        │
+│   5. DEVICE SAFETY & PARENTAL CONTROLS (/devices)                                                │
+│      • Parental Controls Setup (?tab=controls): OS Blueprints (iOS, Android, Roblox, YouTube,    │
+│        Home DNS) + Live Encrypted DNS Shield (.mobileconfig DoH / Android DoT / Router DNS)      │
+│      • Phone Readiness Check (?tab=readiness): standalone 0–100 readiness diagnostic             │
+│        (legacy /pacts/* routes redirect cleanly to /devices?tab=controls)                        │
 │                                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -535,18 +514,15 @@ The Alongside application organizes the child's life into a clean, child-centere
 ### 4.2 Detailed Real-World Parent Use Cases Across Childhood
 
 #### Use Case 1: The Infant/Toddler Milestones, Teething & First Words (Ages 0–2)
-- **Parent Persona:** Carlos & Maria, new parents of 14-month-old Mateo. Mateo is not walking yet, has only 2 spoken words, and woke up at 2:00 AM feverish, crying, and drooling excessively. Carlos and Maria are terrified he is developmentally delayed and don't know whether to rush to urgent care.
+- **Parent Persona:** Carlos & Maria, new parents of 14-month-old Mateo. Mateo is not walking yet, has only 2 spoken words, and has been waking up fussy and drooling. Carlos and Maria worry he is developmentally delayed and want calm clarity on what to track and what to bring to their pediatrician.
 - **Workflow:**
-  1. *Child Profile:* Carlos opens Alongside and taps Mateo (Age 14mo, Tier 0).
-  2. *Health Triage:* Carlos enters Mateo's symptoms: 101.1°F fever, swollen gums, drooling, tugging ear. The Pediatric Health Companion provides immediate triage:
-     - Normal teething/viral pattern; green zone since Mateo is drinking breastmilk/fluids and breathing comfortably.
-     - Recommends cool washcloth, chilled silicone teether, and exact weight-based acetaminophen dosing.
-     - Outlines red flags that would require urgent care.
-  3. *Developmental Milestones ("When He Moves & Speaks"):* The following morning, Maria opens the Milestone Tracker:
-     - Gross Motor: Explains that the normal window for independent walking extends from 9 to 18 months. Mateo pulling up to cruise along furniture is completely on track.
+  1. *Child Profile:* Carlos opens Alongside and taps Mateo (Age 14mo, Tier 0B).
+  2. *Wellness & Pediatrician Prep:* Alongside clarifies normal teething comfort routines and prompts them to contact their pediatrician promptly if Mateo develops a persistent fever, breathing distress, or dehydration—keeping medical decisions strictly with licensed clinicians (SOU-86).
+  3. *Developmental Milestones ("When He Moves & Speaks"):* Maria opens the Academy milestone guide:
+     - Gross Motor: Explains that the normal window for independent walking extends from 9 to 18 months. Mateo pulling up to cruise along furniture is on track.
      - Speech: Clarifies that 2–6 words at 14 months is healthy; responsive babbling and pointing to desired items demonstrate robust receptive language.
-  4. *Play of the Day:* The app recommends a 5-minute animal puppet game: using a soft dog puppet to practice responsive animal sounds ("Woof woof!"), stimulating vocal turn-taking.
-  5. *Outcome:* Panic is replaced by calm reassurance. Carlos and Maria save an unnecessary $300 ER visit and bond joyfully through developmental puppet play.
+  4. *Play This Week (`/digest#play-this-week`):* The app recommends a 5-minute animal puppet game: using a soft dog puppet to practice responsive animal sounds ("Woof woof!"), stimulating vocal turn-taking.
+  5. *Outcome:* Panic is replaced by calm preparation, and Carlos and Maria bond joyfully through screen-free puppet play.
 
 ---
 
@@ -576,43 +552,39 @@ The Alongside application organizes the child's life into a clean, child-centere
 
 ---
 
-#### Use Case 4: Thinking About Buying a Device & The Smartwatch Bridge (Ages 9–11)
-- **Parent Persona:** Laura & Mark, parents of 10-year-old Sophie. Sophie is starting middle school and begging for an iPhone because "all her friends have group chats." Laura worries about social media algorithms, while Mark wants Sophie to have a phone for emergencies.
+#### Use Case 4: Thinking About Buying a Device & Setting Up Real Guardrails (Ages 9–11)
+- **Parent Persona:** Laura & Mark, parents of 10-year-old Sophie. Sophie is starting middle school and begging for an iPhone because "all her friends have group chats." Laura worries about social media algorithms and adult content, while Mark wants Sophie reachable for pickup logistics.
 - **Workflow:**
-  1. *Action Hub: "Thinking About a Device?":* Laura and Mark tap *"Thinking About Buying a Device for Sophie."*
-  2. *Readiness Diagnostic (Score 0–100):* Sophie and her parents complete the 10-dimension assessment. Sophie scores 65/100 (high on safety rules, but low on morning routines and keeping track of possessions).
-  3. *The Bridge Device Roadmap:* Alongside recommends introducing a **cellular smartwatch (Gabb or Apple Watch Family Setup)** instead of a smartphone:
-     - Allows parent calls, emergency SOS, and GPS location.
-     - Zero social media, zero web browsing algorithms, zero late-night screen addiction.
-  4. *The Day 1 Smartwatch Charter:* Sophie and her parents co-sign the agreement, establishing charging rules and school hours. Sophie is proud to have earned her first communication tool.
-  5. *Outcome:* Parent harmony is achieved, Sophie stays connected safely, and the smartphone transition is delayed until emotional maturity develops.
+  1. *Phone Readiness Check (`/devices?tab=readiness`):* Laura and Mark complete the 2-minute diagnostic. Sophie scores 65/100 (strong on safety rules, still building morning routine consistency).
+  2. *Bridge & OS Blueprints (`/devices?tab=controls`):* Alongside recommends either a starter call/GPS watch or a locked-down hand-me-down phone configured using priority-ranked Apple Screen Time / Google Family Link steps:
+     - Lock Screen Time passcode & disable deleting apps so limits cannot be bypassed.
+     - Enable *Ask to Buy* / Play Store download approvals for every free and paid app.
+     - Lock Contacts Only and turn on on-device Communication Safety / Sensitive Content blurring.
+  3. *Live DNS Shield:* Laura installs the signed `.mobileconfig` profile on Sophie's device in 60 seconds, blocking adult sites, TikTok, Discord, and enforcing SafeSearch across Wi-Fi and 5G.
+  4. *Outcome:* Parent harmony is achieved, Sophie is reachable safely, and hard OS + DNS guardrails are in place before day one.
 
 ---
 
-#### Use Case 5: Acute Bedtime Warfare & Circadian Health (Ages 12–14)
-- **Parent Persona:** Darren, father of 13-year-old Liam. Liam has an iPhone and stays up until 1:30 AM texting and watching YouTube Shorts. Every morning is a shouting match trying to wake Liam for 8:00 AM school. Liam is exhausted, irritable, and failing math.
+#### Use Case 5: Acute Bedtime Screen Battles & Circadian Health (Ages 12–14)
+- **Parent Persona:** Darren, father of 13-year-old Liam. Liam has an iPhone and stays up until 1:30 AM on YouTube Shorts and Discord. Every morning is a shouting match trying to wake Liam for 8:00 AM school.
 - **Workflow:**
   1. *Child Profile:* Darren selects Liam (Age 13, Tier 4).
-  2. *Biological Education (Pubertal Circadian Shift):* Darren learns that Liam's melatonin release is biologically delayed by ~2 hours; he is not staying up to be defiant, but his biological clock has shifted, and blue light is exacerbating insomnia.
-  3. *The Bilateral Peace Treaty ("Pact-as-Code"):* Darren sits down with Liam:
-     - Agrees to an automated 8:30 PM bedtime lockout on non-essential apps.
-     - In exchange, Liam retains complete privacy over his text messages (no parental snooping).
-  4. *Cryptographic Profile Installation:* Liam scans the generated QR code. The native profile installs in 60 seconds.
-  5. *Neutral OS Enforcement:* At 8:30 PM, Liam's apps turn gray and lock. Darren says nothing. The device enforces the treaty neutrally. Liam charges the phone in the kitchen and falls asleep by 10:00 PM.
-  6. *Outcome:* Morning screaming matches end. Liam's sleep restores, and his school grades rebound.
+  2. *Biological Education (Pubertal Circadian Shift):* Darren learns in Parent Academy that Liam's melatonin release is biologically delayed by ~2 hours—and infinite feeds hijack his wind-down.
+  3. *OS Limits + Live DNS Shield (`/devices`):* Darren configures:
+     - Apple Screen Time Downtime (8:30 PM – 6:30 AM) + YouTube Shorts timer cap + App Store purchase lock.
+     - Live Encrypted DNS Shield quiet-hours schedule pausing TikTok, YouTube, Discord, and Roblox from 8:30 PM to 6:30 AM across Wi-Fi and cellular.
+  4. *Calm Conversation Script:* Using the Calm Advisor script, Darren explains plainly why the bedtime lock protects tomorrow morning's sleep without turning evening check-ins into a shouting match.
+  5. *Outcome:* Morning screaming matches end. The phone and network enforce bedtime neutrally while Liam charges his phone outside the bedroom.
 
 ---
 
 #### Use Case 6: Teen Autonomy, Safe Driving & Life Transition (Ages 15–18)
-- **Parent Persona:** Patricia, mother of 16-year-old Ethan. Ethan just received his driver's license and is experiencing intense peer pressure around weekend driving, social media status, and party culture. Patricia is terrified of distracted driving accidents.
+- **Parent Persona:** Patricia, mother of 16-year-old Ethan. Ethan just received his driver's license and is navigating weekend driving, social media status, and late-teen independence. Patricia wants strong safety guardrails without constant interrogation.
 - **Workflow:**
   1. *Child Profile:* Patricia selects Ethan (Age 16, Tier 5).
-  2. *Cultural Mentorship (Mentorship over Monitoring):* Alongside explains that tracking apps create deceit in older teens. The proven approach is clear expectations, legal realities, and mutual trust.
-  3. *Teen Driving & Digital Agreement:* Ethan and Patricia sign the Safe Driving Compact:
-     - Driving Focus automatically activates when connected to the car's Bluetooth.
-     - Any texting while driving means immediate loss of car keys for 3 weeks.
-  4. *Sunday Culture Digest:* Patricia receives the weekly digest explaining modern teen social dynamics, allowing her to have relaxed, non-interrogative conversations with Ethan over Sunday breakfast.
-  5. *Outcome:* Ethan feels trusted and respected as an emerging adult, while Patricia enjoys peace of mind knowing clear safety covenants protect her son.
+  2. *OS Driving & Safety Guardrails:* Patricia uses the OS Blueprints to lock iOS Driving Focus (automatically silencing notifications when connected to car Bluetooth) alongside Find My arrival alerts for peace of mind.
+  3. *Weekly Culture & Trends (`/digest`):* Patricia reads the weekly digest explaining teen social media dynamics and uses the Sunday Table Closer prompts to keep dinner conversations open and grounded.
+  4. *Outcome:* Ethan builds real-world digital self-regulation and driving safety while Patricia has clear technical guardrails and calm communication tools.
 
 ---
 
@@ -642,11 +614,11 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 │   (Deep Retention: Cognitive Development & Friendship Support)                                   │
 │                                           │                                                      │
 │                                           ▼                                                      │
-│   AGE 11–14: Pubertal Health, Thinking About a Device?, Bilateral Pact & 8:30 PM Lock            │
-│   (Operational Anchor: Hardware Neutral Enforcer & Sleep Protection)                             │
+│   AGE 11–14: Pubertal Health, Readiness Check, OS Parental Controls & Live DNS Bedtime Lock     │
+│   (Operational Anchor: App/Download Controls, Daily Limits & Sleep Protection)                   │
 │                                           │                                                      │
 │                                           ▼                                                      │
-│   AGE 15–18: Teen Autonomy, Safe Driving, Digital Reputation & Transition to Adulthood           │
+│   AGE 15–18: Teen Autonomy, Driving Focus, Culture & Trends & Transition to Adulthood            │
 │   (High Trust: Life Mentorship & College/Career Preparedness)                                    │
 │                                                                                                  │
 │   TOTAL CUSTOMER LIFETIME: 10–18 YEARS | LTV: $500 – $1,200+ (vs. $19 for static PDF guides)    │
@@ -662,30 +634,24 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   ALONGSIDE PRICING TIERS                                        │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ 1. 7-DAY RISK-FREE TRIAL (Payment details collected upfront)                                     │
-│    • Complete Developmental Milestone Checkup & Pediatric Symptom Guide                          │
-│    • Full access to Nutrition & Feeding Vault (Infant Solids, Picky Eating)                      │
-│    • Full access to Brain Games & Play Enrichment Catalog                                        │
-│    • 24/7 AI Child Advisor & Clinical FAQ Vault access                                           │
-│    • 1 Signed Native Device Profile deployment                                                   │
+│ 1. EARLY ACCESS & ONE-CLICK LIVE DEMO: $0 / FREE (CURRENT)                                       │
+│    • 100% free during early access — no credit card required                                     │
+│    • One-click read-safe Live Demo (sample family: Maya age 3 and Leo age 11) with zero signup   │
+│    • Full Parent Academy, Weekly Culture & Trends, Calm Advisor, and Device Safety & DNS Shield  │
 │                                                                                                  │
-│ 2. ANNUAL HERO PASS (RECOMMENDED): $79 / year (~$6.58 / mo)                                      │
-│    • Complete Lifespan Family OS access for all child profiles (Ages 0–18)                       │
-│    • Pediatric Symptom Triage, Medication Calculator & Sleep Schedules                           │
-│    • Milestone Tracking across Gross Motor, Fine Motor, Speech & Cognition                       │
-│    • Nutrition Vault, Meal Blueprints & Allergen Introduction Guides                             │
-│    • Complete Brain Games & Sensory Play Catalog (Puppets to Logic Riddles)                      │
-│    • Unlimited 24/7 AI Clinical Advisor & Clinical FAQ Vault                                     │
-│    • Weekly Sunday Youth Culture Digest & Slang Decoders                                         │
-│    • Up to 5 Child Profiles with "Thinking About a Device?" Pacts & 8:30 PM Curfew Profiles      │
-│    • 30-Day Money-Back "Household Peace" Guarantee                                               │
+│ 2. FAMILY PASS — ANNUAL (PLANNED POST-EARLY ACCESS): $79 / year (~$6.58 / mo)                    │
+│    • Unlimited child profiles across the full 0–18 developmental lifespan                        │
+│    • Full Parent Academy courses & neural audio companion                                        │
+│    • Weekly Culture & Trends briefings + Play This Week screen-free deck (ages 0–8)              │
+│    • Unlimited 24/7 AI Parent Advisor & Living FAQ Vault                                         │
+│    • Phone Readiness Check, OS & App Parental Control Blueprints, and Live Encrypted DNS Shield  │
 │                                                                                                  │
-│ 3. MONTHLY FLEX PASS: $9.99 / month                                                              │
+│ 3. FAMILY PASS — MONTHLY FLEX (PLANNED): $9.99 / month                                           │
 │    • Flexible month-to-month access with full feature availability                               │
 │                                                                                                  │
 │ 4. INSTITUTIONAL B2B2C DISTRIBUTION (ZERO CAC STRATEGY)                                          │
-│    • Pediatrician Practice Partnerships: Recommended during 2-week, 6-month, and 1-year checkups │
-│    • Preschools, Daycares & Elementary PTAs: Holistic child development & family wellness packs  │
+│    • Pediatrician Practice Partnerships: Recommended during well-child visits                    │
+│    • Preschools, Daycares & Elementary PTAs: Holistic child development & device safety packs    │
 │    • Corporate Employee Family Benefits: Subsidized parenting benefit for working parents       │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -694,15 +660,15 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 
 ## 6. Success Metrics & Key Performance Indicators (KPIs)
 
-### 1. Daily Developmental & Health Utility (The Heart)
-- **Weekly Active Engagement (WAU/MAU):** > 70% of active subscribers interact weekly with health triage, milestone tracking, brain games, or AI clinical guidance.
-- **Milestone & Play Completion:** > 60% of parents log a milestone checkup or engage with a recommended offline play activity monthly.
-- **24/7 AI Advisor Usage:** > 6 meaningful clinical inquiries per active subscriber per month.
-- **Sunday Culture Digest Open Rate:** > 65% open rate on Sunday morning briefings.
+### 1. Daily Developmental & Educational Utility (The Heart)
+- **Weekly Active Engagement (WAU/MAU):** > 70% of active families engage weekly with Parent Academy lessons, Culture & Trends, Play This Week, or the Calm Advisor.
+- **Academy & Play Completion:** > 60% of parents complete a lesson or engage with a recommended screen-free play activity monthly.
+- **24/7 AI Advisor Usage:** > 6 meaningful inquiries per active family per month.
+- **Weekly Culture & Trends Open Rate:** > 65% open rate on weekly briefings.
 
 ### 2. Operational Household Peace (The Muscle)
-- **Bedtime Compliance:** > 26 nights/month where enrolled devices successfully execute the automated 8:30 PM bedtime lockout.
-- **Conflict Reduction:** > 85% of parents report measurable reduction in household arguments within 14 days of adopting the Alongside framework.
+- **Live DNS Shield & Bedtime Compliance:** > 26 nights/month where enrolled devices stay protected with scheduled bedtime quiet hours.
+- **Conflict Reduction:** > 85% of parents report measurable reduction in household screen/bedtime arguments within 14 days of configuring OS controls and Live DNS Shield.
 
 ### 3. Business & Financial Velocity
 - **Annual Subscription Retention:** > 80% renewal rate at Month 12.
@@ -715,24 +681,22 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ PHASE 1: MVP — The Holistic Lifespan Foundation (CURRENT)                                         │
-│ • Lifespan Multi-Child Dashboard (Ages 0 to 18) with unified profile switcher                     │
-│ • Milestone Engine: Gross/Fine Motor, Speech Bursts, and Cognitive Checkups                       │
-│ • Pediatric Symptom Triage & Fever Guide (Home Care vs. Call Doctor vs. Emergency Room)          │
-│ • Nutrition & Feeding Module: Solids/BLW Safety, Allergen Protocol, Toddler Picky Eating          │
-│ • Brain Games & Play Guide: Puppet Theater, Sensory Bins, Building Blocks & Logic Riddles         │
-│ • 24/7 AI Clinical Child Advisor & Top 100 Pediatric/Behavioral FAQs                              │
-│ • "Thinking About Buying a Device?" Hub: Readiness Assessment, Family Pact & 8:30 PM Curfew Profile│
-│ • Weekly Sunday Youth Culture Digest & Slang Decoders                                             │
-│ • Stripe Billing: 7-Day Trial into $79/yr Annual Hero Pass                                        │
+│ PHASE 1: MVP — The Holistic Lifespan Foundation (SHIPPED)                                         │
+│ • Lifespan Multi-Child Dashboard (Ages 0 to 18) + 1-Click Read-Safe Live Demo (Maya 3, Leo 11)   │
+│ • Parent Academy: Age-calibrated courses & neural audio companion (milestones, sleep, nutrition) │
+│ • Weekly Culture & Trends (/digest) + Play This Week screen-free deck for ages 0–8                │
+│ • 24/7 AI Parent Advisor (Calm Advisor) & Living FAQ Vault                                        │
+│ • Device Safety Hub (/devices): Phone Readiness Check, Priority-Ranked OS & App Control Blueprints│
+│   (Apple Screen Time, Google Family Link, Roblox, YouTube, Home DNS) & Live Encrypted DNS Shield  │
+│ • Auth: Google OAuth + Email/Password + 100% Free Early Access                                    │
 └─────────────────────────────────────┬─────────────────────────────────────────────────────────────┘
                                       │
                                       ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ PHASE 2: Interactive Developmental Diagnostics                                                    │
-│ • Interactive Multi-Dimensional Quizzes (Parenting Style, Co-Parent Harmony, Milestone Audits)    │
-│ • Pediatric Medication Weight-Based Dose Calculator & Immunization Milestone Tracker              │
-│ • Semi-Annual Milestone Upgrade Ceremonies for enrolled devices                                   │
+│ PHASE 2: Interactive Developmental Diagnostics & Deeper Ecosystem                                 │
+│ • Expanded interactive parent assessments and longitudinal milestone progress tracking             │
+│ • Expanded app/service catalog and multi-slot quiet-hour schedules in Live DNS Shield             │
+│ • Stripe Family Pass activation ($79/yr Annual, $9.99/mo Flex) post-early access                  │
 └─────────────────────────────────────┬─────────────────────────────────────────────────────────────┘
                                       │
                                       ▼
@@ -758,15 +722,15 @@ By expanding AlongSide to **the complete 0–18 holistic upbringing operating sy
 
 ### Technical Directives from the CEO:
 1. **Holistic Child Model Evolution:**
-   - Expand the `Child` data model in `packages/database/prisma/schema.prisma` to include health indicators, feeding stage (`BREAST_FORMULA`, `INTRODUCING_SOLIDS`, `TODDLER_TABLE`, `SCHOOL_AGE`, `ADOLESCENT`), milestone progress flags, and an array of enrolled devices (`DeviceType`).
-2. **Clinical & Pediatric Knowledge Architecture:**
-   - Organize domain modules and seed data in `packages/database/prisma/seed/` into distinct clinical domains: Pediatric Health & Symptom Triage, Nutrition & Feeding, Developmental Milestones (Speech/Motor), Brain Play & Sensory Games, and Modern Culture/Devices.
+   - Maintain the `Child` data model in `packages/database/prisma/schema.prisma` with developmental tier derivation across ages 0–18, feeding stage, milestone progress, and live device shield configs.
+2. **Non-Clinical Educational Knowledge Architecture (SOU-86):**
+   - Organize domain modules and seed data in `packages/database/prisma/seed/` into educational domains: Parent Academy (Sleep, Milestones, Nutrition, Behavior), Living FAQ Vault, Weekly Culture & Trends, and Screen-Free Play.
 3. **Multi-LLM Fallback & Contextual RAG Engine:**
-   - Ensure the 24/7 AI Child Advisor system prompt injects the full holistic child profile: exact age, current developmental tier, dietary notes, known allergies, health flags, and active family agreements.
+   - Ensure the 24/7 AI Parent Advisor system prompt injects the child's age, developmental tier, dietary stage, and context while strictly adhering to non-clinical boundaries.
 4. **Adaptive Navigation & UI State:**
-   - Present a unified child-centric navigation in `apps/web`: Today & Milestones, Health & Symptoms, Nutrition & Food, Brain Play & Behavior, 24/7 AI Advisor, and Modern World/Devices.
-5. **Neutral Hardware Curfew Compilation:**
-   - Maintain the PKCS#7 signed Apple `.mobileconfig` and Android Enterprise device policy compiler for automated 8:30 PM curfews with zero spyware.
+   - Present a unified child-centric navigation in `apps/web`: Home Dashboard, Parent Academy (`/academy`), Culture & Trends (`/digest` with `#play-this-week` for ages 0–8), Calm Advisor (`/advisor`), and Device Safety (`/devices` with OS Controls + Live DNS Shield + Readiness Check).
+5. **OS-Native Live DNS Shield & Control Blueprints:**
+   - Maintain the `DnsPolicyProvider` seam (NextDNS MVP), PKCS#7-signed Apple `.mobileconfig` (`com.apple.dnsSettings.managed` DoH) compiler, Android Private DNS (DoT), and priority-ranked OS & app parental control catalog (`parentalControlsCatalog.ts`) so parents can control apps, downloads, purchases, content, and screen-time limits reliably without reading private browsing histories.
 
 ---
 
@@ -781,7 +745,7 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                 THE 6 INCUMBENT PARENTING SILOS                                  │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ 1. Invasive Surveillance MDMs:        Bark ($99/yr), Qustodio ($55-$100/yr), Aura ($120/yr)     │
+│ 1. Third-Party MDM Subscriptions:     Bark ($99/yr), Qustodio ($55-$100/yr), Aura ($120/yr)     │
 │ 2. Infant & Toddler Trackers:         Huckleberry ($120/yr), BabyCenter, Kinedu, Solid Starts   │
 │ 3. Influencer Content Subscriptions:  Good Inside / Dr. Becky ($279/yr), Big Little Feelings     │
 │ 4. Pediatric Telehealth & Triage:     Blueberry Pediatrics ($240/yr), Summer Health, WebMD       │
@@ -789,67 +753,56 @@ The modern digital parenting ecosystem is hyper-fragmented into 6 isolated, non-
 │ 6. Youth Mental Health Chatbots:      Alongside.com (Kiwi the Llama - B2B Public Schools)        │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │                                  ALONGSIDE (PARENTPATH) DIFFERENCE                               │
-│  Unifies Pediatric Health Triage, Nutrition, Milestones (0-18), Brain Play, Psychology,         │
-│  Living Clinical FAQ Vault, and Bilateral Device Pacts ("Pact-as-Code") at $79/year.            │
+│  Unifies Parent Academy (0–18), Weekly Culture & Trends, Screen-Free Play, 24/7 Calm Advisor,    │
+│  Built-in OS Parental Control Blueprints, and Live Encrypted DNS Shield ($0 early access/$79 yr).│
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 9.2 Key Differences Across the 6 Silos
-1. **Vs. Surveillance MDMs (Bark, Qustodio):**
-   - *Difference:* Bark relies on invasive text scraping, secret keyloggers, and battery-draining VPN proxies that destroy family trust. Alongside guarantees **Zero Spyware**, deploying **Bilateral "Pact-as-Code"** with a neutral automated 8:30 PM bedtime curfew co-signed by parent and child.
+1. **Vs. Third-Party Parental Control Subscriptions (Bark, Qustodio):**
+   - *Difference:* Bark and Qustodio charge $55–$140/yr for battery-draining VPN proxies and text-scanning alerts while leaving parents clueless about the built-in OS controls already on their child's phone. Alongside combines **step-by-step OS & app parental control blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube) with a **Live Encrypted DNS Shield** (blocking apps, adult sites, SafeSearch, and bedtime schedules across Wi-Fi & 5G) alongside whole-child education.
 2. **Vs. Baby Trackers (Huckleberry, BabyCenter):**
    - *Difference:* Infant apps focus on diaper ounces and wake windows, suffering a **90% churn cliff at age 2**. Alongside covers the complete 0-to-18 lifespan, expanding customer retention from 18 months to 18 years.
 3. **Vs. Parenting Influencers (Good Inside / Dr. Becky):**
-   - *Difference:* Good Inside charges $279/yr for passive video content and text tips ("content in a trenchcoat"). Alongside delivers **actionable neurobiological scripts** and a **250+ scenario Living FAQ Vault** combined with hardware-level curfew automation for $79/yr.
+   - *Difference:* Good Inside charges $279/yr for passive video content and text tips ("content in a trenchcoat"). Alongside delivers **actionable neurobiological scripts**, audio-narrated Academy guides, a **250+ scenario Living FAQ Vault**, and real OS + DNS device controls for $79/yr (free in early access).
 4. **Vs. Pediatric Telehealth & WebMD (Blueberry Pediatrics, Summer Health):**
-   - *Difference:* WebMD sparks 2:00 AM panic; telehealth charges $240–$540/yr. Alongside delivers instantaneous, pediatrician-backed **Barton Schmitt symptom triage** (Green/Yellow/Red action paths) embedded into the child’s continuous developmental history.
+   - *Difference:* Telehealth charges $240–$540/yr for acute medical messaging and sits idle when kids are healthy. Alongside is **strictly non-clinical** (never replacing pediatricians or diagnosing), focusing instead on daily developmental literacy, sleep, nutrition, behavior, and well-child prep.
 5. **Vs. Kid Dumbphones (Gabb Wireless, Pinwheel):**
-   - *Difference:* Gabb forces parents to buy a stigmatizing $150 proprietary phone that tweens reject by middle school. Alongside works on the standard iPhone or Android the family already owns, fostering progressive digital maturity.
+   - *Difference:* Gabb forces parents to buy a stigmatizing $150 proprietary phone that tweens reject by middle school. Alongside works on the standard iPhone, Android, console, or tablet the family already owns, using native OS controls + Live DNS filtering.
 6. **Vs. School Mental Health Chatbots (`alongside.care` / Kiwi the Llama):**
    - *Difference:* Alongside.care is an institutional B2B tool sold to school districts for student CBT in high school. Our platform—**ParentPath (by Alongside)**—is a consumer D2C operating system empowering parents from birth to adulthood.
 
 ### 9.3 Where They Win vs. Where We Win
 
 #### Where Incumbents Win:
-- **Fear-Driven Retention:** Bark's suicide/grooming text alerts create panic that prevents parents from canceling.
-- **Zero-Cost OS Dominance:** Apple Screen Time and Google Family Link are 100% free and pre-installed on billions of devices.
-- **Medical Prescription Authority:** Human telehealth platforms (Blueberry) employ licensed MDs who can legally write amoxicillin prescriptions.
+- **Fear-Driven Retention:** Bark's text/keyword alerts create urgency that keeps parents subscribed.
+- **Zero-Cost OS Pre-Installation:** Apple Screen Time and Google Family Link are 100% free and built into billions of devices—though buried across dozens of confusing menus.
+- **Medical Prescription Authority:** Human telehealth platforms (Blueberry) employ licensed MDs who can legally diagnose and prescribe medications.
 - **Parasocial Maternal Trust:** Dr. Becky Kennedy possesses 3M+ devoted social followers and bestselling author authority.
 - **Physical Product Touchpoints:** Lovevery delivers physical wooden toys and Gabb provides physical cellular hardware.
 
 #### Where Alongside Wins:
-- **The Anti-Spyware Trust Alliance:** Pediatricians and PTAs actively ban Bark, but eagerly endorse Alongside's collaborative "First-Phone Readiness" roadmap (Road 1), providing a viral, zero-CAC distribution channel.
+- **PTA & School Alignment:** Schools and pediatricians welcome Alongside's Phone Readiness Check, OS control setup blueprints, and developmental education as practical family resources.
 - **Slaying the 24-Month Churn Cliff:** 18-year customer retention unlocks an LTV of $600–$1,000+ per family, crushing the unit economics of legacy baby apps.
-- **The Brain + Muscle Integration:** We are the only platform that connects child neurobiology and parenting scripts directly to signed operating system device curfews.
+- **The Brain + Muscle Integration:** We pair developmental neurobiology and word-for-word scripts with actual technical enforcement (built-in OS controls for app approvals/time limits + Live Encrypted DNS Shield for app/web filtering and bedtime schedules).
 - **Empathetic Guided Dialogue:** Real-time conversational AI and 250+ curated FAQs give parents word-for-word calming dialogue before entering real-life family conflicts.
-- **Unified 360° Child Context:** A single context-aware intelligence engine that understands the child’s age, developmental milestones, health flags, dietary stages, and screen agreements simultaneously.
+- **Unified 360° Child Context:** A single context-aware intelligence engine that understands the child’s age, developmental tier, dietary stage, and device environment simultaneously.
 
 ---
 
 ## 10. Official Product Demo Videos & Higgsfield Seedance 2.5 Launch Campaign (SOU-111)
 
-To visually communicate Alongside's unique position as a whole-child guidance and advisory platform (Ages 0–18), the company deploys two focused 30-second product demo videos generated via **Higgsfield Seedance 2.5 (`seedance_2_5`)** utilizing native audio and fluid UI motion design. Both videos spotlight how parents create child profiles to receive tailored education for their child's specific developmental tier, organized across the **Three Core Pillars**:
+To visually communicate Alongside's position as a whole-child guidance and device safety platform (Ages 0–18), launch demos showcase how parents select child profiles (e.g., Maya age 3 and Leo age 11 in the 1-click Live Demo) to unlock tailored guidance across the **Core Pillars**:
 
-1. **Pillar 1 (Primary Hero): The Platform Academy** — An extensive course catalog tailored to each child age tier across diverse categories (Behavioral Psychology, Developmental Milestones, Pediatric Sleep & Wellness, Emotional Co-Regulation, Healthy Nutrition, and Digital Maturity).
-2. **Pillar 2: The Weekly Youth Culture Digest** — Weekly news, cultural trends, and decoded slang tailored to the child's exact age tier, engineered to close the generational gap between parents and their children, keeping parents up-to-date.
-3. **Pillar 3: Family Devices & Bilateral Pacts** — An interactive Child Device Readiness Assessment evaluating whether a child is ready for a device, followed by a Bilateral Family Pact where parent and child co-sign agreed device usage restrictions (such as an automated 8:30 PM bedtime curfew lock) with zero spyware.
+1. **Parent Academy:** Age-calibrated science-backed guides you can read or listen to across developmental stages (0–18).
+2. **Weekly Culture & Trends (+ Play This Week):** Weekly curated videos, articles, slang/app trend explainers, dinner table starters, and screen-free play for ages 0–8.
+3. **Calm Advisor:** 24/7 age-aware AI guidance and word-for-word communication scripts.
+4. **Device Safety & Parental Controls (`/devices`):** Standalone Phone Readiness Check, priority-ranked OS & App Parental Controls setup (Apple Screen Time, Google Family Link, Roblox, YouTube), and Live Encrypted DNS Shield to control apps, downloads, content filters, and daily/bedtime screen limits.
 
-### 10.1 Demo Video 1: "The 3 Pillars of Alongside — Guided Lifespan Tour" (Platform Experience)
-- **Target Channels:** Website Hero, Product Hunt Launch, Investor Decks.
-- **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
-- **Core Narrative:** Macro tracking shot across an elegant iPad Pro on a sunlit oak desk. Parent creates a child profile across ages 0 to 18, immediately unlocking developmental tier education. Glides into Pillar 1 (Platform Academy) showing course catalog across categories and pulsing green audio wave player; transitions into Pillar 2 (Weekly Culture Digest) with age-tailored news and decoded slang ('No Cap', 'Rizz') to close the generational gap; concludes with Pillar 3 (Family Devices) featuring the child readiness assessment score gauge, co-signed bilateral pact, and automated 8:30 PM bedtime curfew lock.
-- **Emotional Resonance:** "Parenting moves fast. AlongSide is your guidance and advisory for ages zero to eighteen."
-- **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
-
-### 10.2 Demo Video 2: "From Profile to Pact — An Interactive Parent Journey" (Interactive Walkthrough)
-- **Target Channels:** Paid Social (Instagram, TikTok, YouTube Shorts), High-Intent Landing Pages.
-- **Format:** 30 Seconds, 16:9 Widescreen, 480p Free Tier, Native Audio (`--generate_audio true`).
-- **Core Narrative:** Micro interactive walkthrough during an evening family routine. Parent selects 10-year-old daughter's profile, revealing personalized developmental tier insights. Dives into Pillar 1 (Platform Academy), filtering course categories and opening a tween boundary course with wave audio player. Swipes into Pillar 2 (Weekly Culture Digest) to view age-tailored weekly news, slang tags ('Skibidi', 'Bet'), and dinner table bridge question. Concludes with Pillar 3 (Family Devices) as child completes the interactive Readiness Assessment and both co-sign the Bilateral Pact with parent-configured 8:30 PM bedtime curfew restrictions.
-- **Emotional Resonance:** "Every child grows at their own pace. Guidance for real families."
-- **Specification:** [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md).
+*(Historical Seedance 2.5 prompt archives remain in [`docs/higgsfield-seedance-demo-video-prompts.md`](docs/higgsfield-seedance-demo-video-prompts.md) for reference.)*
 
 ---
 *Canonical Specification Approved by:*  
 **Chief Executive Officer (CEO)**  
 **AlongSide Technologies Inc.**  
-*(Version 2.4.3 Canonical Specification)*
+*(Version 2.5.0 Canonical Specification)*

@@ -2,12 +2,13 @@
 
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved Canonical Architectural Specification  
-**Version:** 2.5.0 (The Holistic Lifespan Family OS & Parent Advisory Sanctuary)  
+**Version:** 2.6.0 (The Holistic Lifespan Family OS, Parent Advisory Sanctuary & Live DNS Shield)  
 **Target Scale:** Baseline 100,000 DAU (~500,000 Registered Families, 700,000 Children) | Scalable to 1,000,000+ DAU  
 **Primary SLA:** 99.95% Availability (< 4.38 hours downtime/year)  
 **Latency Targets:** Read P95 < 50ms (P99 < 100ms) | Write P95 < 150ms (P99 < 300ms) | AI Advisor TTFT < 800ms  
 **Target Audience:** Frontend Engineer, Backend Engineer, DevOps, Technical Architects, Security Auditors  
 **Companion Documents:**  
+- [**Live DNS Parental Controls Architecture**](dns-parental-controls-architecture.md) (`docs/dns-parental-controls-architecture.md` — OS-Native DoH/DoT Shield & NextDNS Seam)  
 - [**Codebase Design Specification**](engineering-standards/codebase-design.md) (`docs/engineering-standards/codebase-design.md` — Deep Modules, Seam Catalog & In-Memory Test Fakes)  
 - [**Platform Advisory Rearchitecture Spec**](platform-advisory-rearchitecture-and-academy-chapters-spec.md) (`docs/platform-advisory-rearchitecture-and-academy-chapters-spec.md` — Navigation Streamlining & Prioritized Academy Chapters)  
 - [**Master Design System**](design-system/MASTER.md) (`docs/design-system/MASTER.md` — Taste 2: Editorial Pediatric Almanac)  
@@ -21,16 +22,16 @@
 **Alongside** is a category-defining parent intelligence platform and family operating system engineered for families raising children from birth to adulthood (Ages 0–18).
 
 Historically, parenting technology suffers from two fatal dichotomies:
-1. **The "Device-Only / Invasive MDM" Extreme:** Coercive surveillance tools (Bark, Qustodio) that install covert root certificates, scrape private text messages, log keystrokes, and track stealth GPS. These tools treat children like criminals, destroy household trust, ignite teenage rebellion, and face perpetual regulatory risk.
+1. **The "Device-Only / Heavy VPN MDM" Extreme:** Third-party suites (Bark, Qustodio) that charge $99–$140/yr for battery-draining VPN proxies while parents overlook the built-in OS controls already on their child's iPhone or Android—and miss critical blind spots inside Roblox, YouTube, and mixed-OS households.
 2. **The "Baby App Churn Cliff" / Advice Blog Extreme:** Baby trackers (Huckleberry, BabyCenter) capture infant sleep and feeding, but churn 90% of parents at age 2 when bottles end. Static blogs and printable refrigerator PDFs are consulted only in acute panic and abandoned within 30 days.
 
-**Alongside synthesizes The Mind (Parent Education, Neurobiology & Cultural Mentorship) with The Hand (Operational Peace via Pact-as-Code Device Governance and Pediatric Advisory Hubs):**
-- **Developmental Milestones & Growth ("When He Moves, When He Talks"):** Pediatrician-backed tracking across gross motor, fine motor, speech acquisition, and cognitive stages (Ages 0–18).
-- **Pediatric Nutrition, Feeding & Dietary Safety ("What to Eat"):** Infant solids (BLW vs purees), safe allergen introduction schedules (LEAP trial), choking hazard prevention, and conquering toddler picky eating.
-- **Brain Games, Sensory Play & Cognitive Enrichment:** Purposeful, offline developmental play—from early animal puppets and high-contrast sensory cards to symbolic block play, LEGO building, and strategic logic chess.
-- **Behavioral Psychology & The Modern Cultural Advisor:** Translating confusing behaviors (tantrums, biting, defiance, lying) into unmet nervous system needs, fostering authoritative warmth with firm boundaries.
-- **24/7 AI Child Advisor & Clinical FAQ Vault:** Multi-child contextual AI guidance for acute dilemmas and a living clinical FAQ vault to navigate high-stakes parenting conversations.
-- **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
+**Alongside synthesizes The Mind (Parent Education, Neurobiology & Weekly Culture) with The Hand (Built-in OS Parental Control Blueprints + Live Encrypted DNS Shield):**
+- **Parent Academy (`/academy`, Ages 0–18):** Short, science-backed guides (readable or audio-narrated) across developmental milestones, restorative sleep, nutrition, and behavioral psychology (strictly non-clinical educational content per SOU-86).
+- **Pediatric Nutrition, Feeding & Dietary Safety:** Infant solids (BLW vs purees), safe allergen introduction schedules (LEAP trial), choking hazard prevention, and conquering toddler picky eating.
+- **Play This Week (Ages 0–8 inside `/digest#play-this-week`):** Zero-prep, screen-free developmental play integrated natively into Culture & Trends (legacy `/brain-games` retired).
+- **24/7 Calm Advisor (`/advisor`) & Living FAQ Vault:** Multi-child contextual AI guidance delivering practical, word-for-word communication scripts for everyday parenting challenges.
+- **Weekly Culture & Trends (`/digest`):** Weekly curated videos, articles, slang/app explainers, and dinner table conversation starters.
+- **Device Safety & Parental Controls (`/devices`):** Standalone **Phone Readiness Check (0–100)**, priority-ranked **Built-in OS & App Control Blueprints** (Apple Screen Time, Google Family Link, Roblox, YouTube, Home Safe DNS), and **Live Encrypted DNS Shield** (signed iOS `.mobileconfig` DoH, Android Private DNS DoT, Home Router DNS) controlling apps, downloads, content filters, and bedtime schedules across Wi-Fi and 5G.
 
 ---
 
@@ -44,67 +45,51 @@ graph TD
         Browser["Parent Mobile Browser / Mobile PWA"]
         ServiceWorker["Service Worker (Serwist Offline Cache)"]
         ChildSwitcher["Global Multi-Child Switcher (Zustand Context)"]
-        DashboardHub["Today & Milestones Home Feed"]
-        HealthHub["Pediatric Health & 3-Zone Symptom Triage UI"]
-        NutritionHub["Nutrition, BLW & Allergen Scheduler UI"]
-        PlayHub["Brain Games, Sensory Toys & Puppets Hub"]
-        BehaviorHub["Behavioral Translation & Co-Regulation UI"]
-        AdvisorChat["24/7 Clinical AI Advisor & Sparring Simulator"]
-        DevicesHub["Modern Culture & Device Governance Hub"]
-        AcademyUI["Parent Intelligence Academy Player"]
+        DashboardHub["Home Dashboard (/dashboard)"]
+        AcademyUI["Parent Academy & Audio Reader (/academy)"]
+        DigestHub["Culture & Trends + Play This Week (/digest)"]
+        AdvisorChat["24/7 Calm Advisor & FAQ Vault (/advisor)"]
+        DevicesHub["Device Safety: OS Blueprints, Live DNS Shield & Readiness (/devices)"]
         TanStackCache["TanStack Query Cache (v5)"]
     end
 
     subgraph SharedLayer ["Shared Contract Layer (packages/shared)"]
         ZodSchemas["Zod Request / Response Schemas"]
-        DomainEnums["Domain Enums (8 Macro Tiers, Tranches, Triage Zones)"]
-        ClinicalAlgorithms["Pure Algorithmic Engines (Readiness, Milestones)"]
+        DomainEnums["Domain Enums (8 Macro Tiers, Tranches, Shield Services)"]
+        PureAlgorithms["Pure Algorithmic Engines (Readiness, Age Tiers)"]
         DTOs["TypeScript DTO Interfaces & Contracts"]
     end
 
     subgraph ServiceLayer ["API Service Layer (apps/api - Fastify LTS 22)"]
         FastifyServer["Fastify HTTP Server (TypeScript)"]
-        AuthModule["Auth & Session Guard (Argon2id + JWT Cookie)"]
+        AuthModule["Auth & Guard (Argon2id, Google OAuth, Live Demo, JWT)"]
         ChildrenModule["Child Profiles & 8-Tier Developmental Engine"]
-        MilestonesModule["Milestone Catalog & Achievement Service"]
-        HealthModule["Pediatric Health & Barton Schmitt Triage Engine"]
-        NutritionModule["Nutrition Guides, BLW & Allergen Service"]
-        BrainGamesModule["Purposeful Play & Toy Catalog Service"]
-        BehaviorModule["Behavioral Translation & Script Service"]
-        AcademyModule["Parent Intelligence Academy Controller"]
-        QuizModule["Interactive Assessment & Scoring Controller"]
-        AiAdvisorModule["24/7 Clinical AI Advisor & Streaming RAG Engine"]
-        AgreementModule["Bilateral Family Pact Controller"]
-        DeviceProfileModule["Pact-as-Code Compiler & PKCS#7 Signer"]
-        DigestModule["Weekly Slang & Exploit Alert Controller"]
-        BillingModule["Stripe Billing & 7-Day Trial Controller"]
+        AcademyModule["Parent Academy Controller"]
+        QuizModule["Interactive Assessment & Readiness Controller"]
+        AiAdvisorModule["24/7 AI Parent Advisor & Streaming RAG Engine"]
+        DeviceShieldModule["Live DNS Shield Service & .mobileconfig DoH Signer"]
+        DigestModule["Weekly Culture & Trends Controller"]
+        BillingModule["Billing Controller (Free Early Access / Planned Stripe)"]
     end
 
-    subgraph DataLayer ["Data & Persistence Layer"]
-        PostgresDB[("PostgreSQL 16 + pgvector (Relational & Clinical Embeddings)")]
-        RedisCache[("Redis (Session Revocation, Cache & BullMQ Queue)")]
+    subgraph DataLayer ["Data & External Edge Layer"]
+        PostgresDB[("PostgreSQL 16 + pgvector (Relational & FAQ Embeddings)")]
+        DnsEdge[("DnsPolicyProvider Seam (NextDNS MVP)")]
         AppleSigningCert[("Apple WWDR & Dev Signing Certificates")]
-        ObjectStorage[("Encrypted Object Storage (PDF Agreements & Profiles)")]
     end
 
     Browser --> ServiceWorker
     Browser --> ChildSwitcher
     ChildSwitcher --> DashboardHub
-    ChildSwitcher --> HealthHub
-    ChildSwitcher --> NutritionHub
-    ChildSwitcher --> PlayHub
-    ChildSwitcher --> BehaviorHub
+    ChildSwitcher --> AcademyUI
+    ChildSwitcher --> DigestHub
     ChildSwitcher --> AdvisorChat
     ChildSwitcher --> DevicesHub
-    ChildSwitcher --> AcademyUI
 
     DashboardHub --> TanStackCache
-    HealthHub --> TanStackCache
-    NutritionHub --> TanStackCache
-    PlayHub --> TanStackCache
-    BehaviorHub --> TanStackCache
-    DevicesHub --> TanStackCache
     AcademyUI --> TanStackCache
+    DigestHub --> TanStackCache
+    DevicesHub --> TanStackCache
     AdvisorChat -- "Server-Sent Events (SSE)" --> AiAdvisorModule
 
     TanStackCache -- "HTTPS / JSON API" --> FastifyServer
@@ -113,37 +98,22 @@ graph TD
 
     FastifyServer --> AuthModule
     FastifyServer --> ChildrenModule
-    FastifyServer --> MilestonesModule
-    FastifyServer --> HealthModule
-    FastifyServer --> NutritionModule
-    FastifyServer --> BrainGamesModule
-    FastifyServer --> BehaviorModule
     FastifyServer --> AcademyModule
     FastifyServer --> QuizModule
     FastifyServer --> AiAdvisorModule
-    FastifyServer --> AgreementModule
-    FastifyServer --> DeviceProfileModule
+    FastifyServer --> DeviceShieldModule
     FastifyServer --> DigestModule
     FastifyServer --> BillingModule
 
     ChildrenModule --> PostgresDB
-    MilestonesModule --> PostgresDB
-    HealthModule --> PostgresDB
-    NutritionModule --> PostgresDB
-    BrainGamesModule --> PostgresDB
-    BehaviorModule --> PostgresDB
     AcademyModule --> PostgresDB
     QuizModule --> PostgresDB
     AiAdvisorModule -- "Vector Cosine Similarity (HNSW)" --> PostgresDB
-    AgreementModule --> PostgresDB
-    DeviceProfileModule --> AppleSigningCert
-    DeviceProfileModule --> PostgresDB
+    DeviceShieldModule --> AppleSigningCert
+    DeviceShieldModule --> PostgresDB
+    DeviceShieldModule --> DnsEdge
     DigestModule --> PostgresDB
     BillingModule --> PostgresDB
-
-    FastifyServer --> RedisCache
-    AgreementModule --> ObjectStorage
-    DeviceProfileModule --> ObjectStorage
 ```
 
 ---
@@ -170,9 +140,8 @@ graph TD
 ```
 User Record + Settings:                   ~1.5 KB
 Child Profile + Road State + Tranche:     ~1.2 KB
-Bilateral Pact + Clauses + Signatures:    ~15.0 KB
+Device Shield Config + Policy JSON:       ~2.0 KB
 Compiled Signed .mobileconfig Payload:     ~8.0 KB
-Exported Vector PDF Pact (Object Storage):~120.0 KB (Cloudflare R2 / S3)
 Quiz Attempt + Dimension Breakdown:       ~3.0 KB
 AI Chat Message (Prompt + Response):      ~1.2 KB
 Culture Digest + Slang Terms:             ~25.0 KB (Shared weekly catalog)
@@ -291,8 +260,8 @@ AlongSide resolves this through a **Dual-Resolution Architecture**:
 | **Tier 0C** | `TIER_0C_OLDER_TODDLER_2_3` | **Ages 2–3** (24–36m) | Autonomy vs. Shame (Erikson), 200–500+ words, "Why?" questions, nascent Theory of Mind, parallel to associative play. | Potty training readiness, boundary testing ("No!"), bedtime stalling & night terrors, picky eating & division of responsibility, intentional co-viewing. |
 | **Tier 1** | `TIER_1_EARLY_CHILDHOOD_4_6` | **Ages 4–6** | Rapid language expansion, Theory of Mind emergence, cooperative play, fine motor dexterity (scissors, drawing). | Picky eating solutions, wooden block building, dramatic roleplay, bedtime rituals, co-viewing screen rules. |
 | **Tier 2** | `TIER_2_MIDDLE_CHILDHOOD_7_9` | **Ages 7–9** | Concrete operational thought, peer friendship navigation, rule comprehension, reading fluency, physical sports. | School lunchbox nutrition, logic puzzles, chess, boredom busters, shared family tablet limits. |
-| **Tier 3** | `TIER_3_PRE_TEEN_10_12` | **Ages 10–12** | Adrenarche onset, prepubertal growth, heightened peer sensitivity, early abstract reasoning, dopamine novelty seeking. | "Thinking About a Device?" diagnostic, smartwatch bridge, slang decoders, group chat exclusion coaching. |
-| **Tier 4** | `TIER_4_EARLY_ADOLESCENCE_13_15` | **Ages 13–15** | Peak pubertal transformation, circadian sleep delay (melatonin shifted ~2 hours), identity exploration, social comparison. | Bilateral Family Pact, automated 8:30 PM bedtime lock, body image nutrition, teen clinical advisory guidance. |
+| **Tier 3** | `TIER_3_PRE_TEEN_10_12` | **Ages 10–12** | Adrenarche onset, prepubertal growth, heightened peer sensitivity, early abstract reasoning, dopamine novelty seeking. | Phone Readiness Check, OS & app control blueprints, Live DNS Shield, slang/trend explainers, group chat coaching. |
+| **Tier 4** | `TIER_4_EARLY_ADOLESCENCE_13_15` | **Ages 13–15** | Peak pubertal transformation, circadian sleep delay (melatonin shifted ~2 hours), identity exploration, social comparison. | OS parental controls, Live DNS quiet hours (8:30 PM lock), body image nutrition, Calm Advisor teen scripts. |
 | **Tier 5** | `TIER_5_LATE_ADOLESCENCE_16_18` | **Ages 16–18** | Prefrontal cortex maturation, impulse control calibration, executive autonomy, long-term consequences, future orientation. | Autonomy upgrade ceremonies, athletic nutrition, college/career stress navigation, independent self-regulation. |
 
 *(Note: Legacy alias `TIER_0_INFANCY_TODDLER_0_3` is retained in database enums and shared schemas for zero-downtime backward compatibility, dynamically resolving to `TIER_0A`, `TIER_0B`, or `TIER_0C` based on birthdate).*
@@ -361,29 +330,28 @@ sequenceDiagram
     Web->>Parent: Real-time empathetic coaching with word-for-word calming dialogue script
 ```
 
-### 6.3 Pact-as-Code Mobile Profile Generation & Enrollment
+### 6.3 Live DNS Shield Provisioning & OS Parental Controls Enrollment
 ```mermaid
 sequenceDiagram
     autonumber
     actor Parent as Parent User
     actor Child as Child Device (iOS / Android)
-    participant Web as Next.js Web/PWA
-    participant API as Fastify API (DeviceProfileModule)
-    participant Signer as AppleMobileConfigSigner (Seam 3)
-    participant Storage as Cloudflare R2 / S3
+    participant Web as Next.js Web/PWA (/devices)
+    participant API as Fastify API (DeviceShieldService)
+    participant DNS as DnsPolicyProvider (NextDNS MVP)
+    participant Signer as AppleMobileConfigSigner
 
-    Parent->>Web: Completes Bilateral Pact Wizard (Agrees to 8:30 PM bedtime lock)
-    Web->>API: POST /api/v1/agreements/:id/compile
-    API->>Signer: SignPayload(XML Plist, AppleCert, PrivateKey)
-    Signer-->>API: Return PKCS#7 Signed .mobileconfig binary
-    API->>Storage: Store signed payload with short-lived enrollment token
-    API-->>Web: Return Enrollment QR Code URL
-    
-    Parent->>Child: Scans QR code with Child device camera
-    Child->>API: GET /api/v1/device-profiles/enroll/:token
-    API-->>Child: Return signed .mobileconfig payload
-    Child->>Child: OS prompts: "Install Alongside Bedtime Profile" -> Child taps Install
-    Note over Child: OS activates automated 8:30 PM bedtime lockout
+    Parent->>Web: Configures OS Blueprints + toggles Live DNS Shield rules
+    Web->>API: PUT /api/v1/devices/shield/:childId
+    API->>DNS: createProfile / syncPolicy (adult filter, apps, SafeSearch, bedtime)
+    DNS-->>API: Provisioned DoH URL & DoT hostname
+    API-->>Web: Return DeviceShieldDTO + QR enrollment URL
+
+    Parent->>Child: Scans QR code or opens enrollment link
+    Child->>API: GET /api/v1/devices/shield/profile/:enrollmentToken
+    API->>Signer: Compile com.apple.dnsSettings.managed + PKCS#7 Sign
+    Signer-->>Child: Signed .mobileconfig payload (or Android Private DNS hostname)
+    Note over Child: OS enforces Encrypted DNS policy across Wi-Fi & 5G (~30s live updates)
 ```
 
 ---
@@ -408,14 +376,14 @@ sequenceDiagram
   - *Unidirectional Stream Fit:* AI Advisor token streaming is fundamentally unidirectional (server to client). The parent asks a question via standard `POST`, and the server streams tokens back. WebSockets' full-duplex capability is unnecessary overhead here.
 - **Trade-off Accepted:** Token streaming uses standard text/event-stream over HTTPS with lightweight client consumption.
 
-### 7.3 Device Management Strategy: Transparent "Pact-as-Code" (.mobileconfig) vs. Invasive MDM Agent
-- **Selected:** **Apple Declarative Management / `.mobileconfig` Profiles & Android Enterprise Policies**.
-- **Alternative Considered:** Proprietary background agent / VPN proxy with deep packet inspection (Bark, Qustodio).
+### 7.3 Device Management Strategy: Built-in OS Controls + Live Encrypted DNS Shield vs. Custom MDM Agents
+- **Selected:** **Priority-Ranked Built-in OS & App Control Blueprints (Apple Screen Time, Google Family Link, Roblox, YouTube) paired with OS-Native Encrypted DNS (`com.apple.dnsSettings.managed` DoH + Android Private DNS DoT)**.
+- **Alternative Considered:** Proprietary always-on background VPN agent with deep packet inspection or closed Apple Supervised MDM entitlements.
 - **Architectural Rationale:**
-  - *Zero Spyware Guarantee:* Invasive monitoring tools require installing a root SSL certificate on the child's phone to decrypt private traffic. This breaks child trust, introduces catastrophic security vulnerabilities, and violates AlongSide's foundational brand ethos.
-  - *Zero App Store Rejection Risk:* Apple aggressively terminates third-party apps that abuse screen recording or enterprise MDM certificates for consumer snooping. Standard `.mobileconfig` profiles are native Apple configuration files installed through standard iOS Settings.
-  - *Hardware-Level Bedtime Lock:* At 8:30 PM, the operating system neutrally disables non-whitelisted apps. Parents are not the "bad guys" policing bedroom doors; the OS enforces the pact the child co-signed.
-- **Trade-off Accepted:** Installing an Apple `.mobileconfig` requires the parent to tap "Allow" in Safari and "Install" in iOS Settings (a 30-second multi-step OS prompt). AlongSide mitigates this with an interactive 3-step visual enrollment guide.
+  - *Real Control Across Unsupervised Consumer Phones:* Unsupervised consumer iPhones reject `com.apple.applicationaccess` app-lock payloads, whereas Apple's official `com.apple.dnsSettings.managed` DoH `.mobileconfig` and Android Private DNS (DoT) install cleanly on standard phones and work across both Wi-Fi and 5G cellular.
+  - *Zero Browsing-History Snooping:* Alongside's `DnsPolicyProvider` syncs blocklists, SafeSearch, app toggles, and bedtime recreation schedules and reads only aggregate 24h query/blocked counts—never fetching or storing visited URLs.
+  - *Complete Coverage via Native OS Pairing:* App Store download approvals (*Ask to Buy*), anti-tamper passcode locks, on-device Communication Safety, and YouTube Shorts caps stay in native Apple Screen Time / Google Family Link where the OS enforces them best, guided step-by-step in `/devices`.
+- **Trade-off Accepted:** Installing an iOS `.mobileconfig` takes a quick 3-step confirmation in Settings (`VPN & Device Management`), and preventing child removal requires locking Screen Time settings with a parent passcode as instructed in Step 1 of the OS Blueprints.
 
 ### 7.4 Client Delivery: Progressive Web App (PWA) vs. Pure Native iOS/Android Apps
 - **Selected:** **Next.js 15 PWA (`@ducanh2912/next-pwa` Serwist) + Mobile QR Code Profile Enrollment**.
@@ -469,18 +437,16 @@ sequenceDiagram
 
 ---
 
-## 9. Privacy, Security & Clinical Safe Harbor Architecture
+## 9. Privacy, Security & Non-Clinical Safe Harbor Architecture
 
-1. **The Clinical Safe Harbor Guarantee:**
-   - Alongside is an empowering educational companion and clinical decision-support system, **NOT a direct replacement for emergency medical care**.
-   - **Zero Speculative Diagnosis:** Alongside never asserts absolute diagnoses; it categorizes symptom severity, explains physiological mechanisms, and provides clear triage directives.
-   - **Pediatric Contraindication Shield:** Programmatic validation strictly prohibits contraindicated recommendations (e.g., Aspirin under age 19, Ibuprofen under 6 months, OTC cough medicines under 4–6 years).
-2. **Zero-Spyware Guarantee:**
-   - Alongside **never** logs keystrokes, personal chats, camera feeds, or stealth GPS tracks.
-   - Device governance operates strictly at the OS perimeter (bedtime curfews, App Store age gating).
-   - **Emergency Exemption:** 911 emergency calls and parent communications are never locked.
+1. **The Non-Clinical Safe Harbor Guarantee (SOU-86):**
+   - Alongside is strictly an educational child development and parenting companion—**NOT a clinical symptom triage platform, diagnostic engine, or replacement for licensed healthcare providers**.
+   - **Zero Medical Diagnosis or Dosing:** Alongside never asserts medical diagnoses, performs Barton Schmitt clinical telephone triage, or calculates medication dosages; safety filters direct acute medical questions immediately to pediatricians or emergency care.
+2. **Privacy-Preserving DNS Architecture:**
+   - Alongside **never** fetches or stores individual visited domains or browsing history from `DnsPolicyProvider`; only aggregate 24-hour query health counts (`isActive`, `totalQueries24h`, `blockedQueries24h`) are surfaced.
+   - **Emergency Exemption:** OS Downtime and DNS schedules preserve emergency/parent calls when configured via the OS blueprints.
 3. **Data Protection & Encryption:**
    - Minor data is strictly minimized (first name, birth month/year).
-   - Passwords hashed using `argon2id`.
+   - Passwords hashed using `argon2id`, alongside PKCE Google OAuth 2.0 and read-safe Live Demo tokens.
    - Apple `.mobileconfig` profiles signed via PKCS#7 using strict SHA-256 certificate chains.
    - Multi-tenant data segregation enforced at the ORM layer (`where: { userId: currentParentId }`).
