@@ -1,6 +1,6 @@
 # Alongside (ParentPath)
 
-> **The Holistic Child Upbringing, Development & Lifespan Family Operating System (Ages 0–18): Empowering parents to deeply understand and nurture their child’s restorative wellness, nutrition, speech and motor milestones, brain play, and behavioral psychology, while providing modern cultural mentorship, 24/7 AI parenting guidance, and balanced transition solutions—including bilateral family pacts—when introducing technology.**
+> **The Holistic Child Upbringing, Developmental Science & Family Operating System (Ages 0–18): Empowering parents with age-calibrated Parent Academy guides, Weekly Culture & Trends, 24/7 Calm Advisor scripts, and practical Device Safety combining built-in OS parental controls with Live Encrypted DNS filtering.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15_(App_Router)-black.svg)](https://nextjs.org/)
@@ -14,22 +14,23 @@
 
 ## 🌟 Executive Overview & Product Vision
 
-**Alongside** is a category-defining holistic child upbringing, pediatric health, and family operating system designed for parents raising children from birth to adulthood (Ages 0–18).
+**Alongside** is a category-defining holistic child upbringing, developmental science, and family operating system designed for parents raising children from birth to adulthood (Ages 0–18).
 
 Historically, parenting technology suffers from two fatal blinders:
-1. **The "Device-Only" Trap:** Narrowing the entire journey of parenting to a battle over screens, smartphones, or parental control locks. Parents only open these apps when feeling anxious or guilty about screen time, ignoring that 95% of childhood revolves around physical health, nutrition, developmental milestones, play, emotional regulation, and family connection.
-2. **The "Baby App Churn Cliff":** Baby trackers (Huckleberry, BabyCenter) capture infant sleep and feeding, but churn 90% of parents at age 2 when diapers and bottles end. No unified platform supports parents through toddler tantrums, picky eating, early childhood brain games, school lunchboxes, pre-teen friendship drama, and adolescent independence.
+1. **The "Device-Only" Trap:** Narrowing the entire journey of parenting to a battle over screens, smartphones, or third-party surveillance subscriptions. Parents only open these apps when feeling anxious or guilty about screen time, ignoring that 95% of childhood revolves around sleep, nutrition, developmental milestones, play, emotional regulation, and family connection.
+2. **The "Baby App Churn Cliff":** Baby trackers (Huckleberry, BabyCenter) capture infant sleep and feeding, but churn 90% of parents at age 2 when diapers and bottles end. No unified platform supports parents through toddler tantrums, picky eating, early childhood screen-free play, school-age focus, tween device transitions, and adolescent independence.
 
-**Alongside v2.4 establishes the Universal Family Operating System across 7 Balanced Pillars:**
-- **Developmental Milestones & Growth ("When He Moves, When He Talks"):** Guilt-free, pediatrician-backed tracking across gross motor, fine motor, speech acquisition, and cognitive stages (Ages 0–18).
-- **Restorative Sleep & Child Wellness Companion:** Evidence-based sleep architecture, circadian rhythm regulation, bedtime soothing routines, and family wind-down strategies elevated into the Parent Intelligence Academy.
-- **Pediatric Nutrition, Feeding & Dietary Safety:** Step-by-step guidance on infant solids, safe allergen introduction, choking hazard prevention, conquering toddler picky eating, and fueling teenage athletic growth.
-- **Brain Games, Sensory Play & Cognitive Enrichment:** Purposeful, offline developmental play—from early animal puppets and high-contrast sensory cards to symbolic block play, LEGO building, and strategic logic chess.
-- **Behavioral Psychology & The Modern Cultural Advisor:** Translating confusing behaviors (tantrums, biting, defiance, lying) into unmet nervous system needs, fostering authoritative warmth with firm boundaries, and mentoring kids in a complex modern world.
-- **24/7 AI Child Advisor & Clinical FAQ Vault:** Multi-child contextual AI guidance for acute dilemmas and a living clinical FAQ vault to navigate high-stakes parenting conversations.
-- **Modern Culture, Multi-Device Ecology & The "Thinking About a Device?" Solution Hub:** Sunday slang decoders (*skibidi, crashout, looksmaxing*), exploit alerts, and an intentional milestone transition pipeline featuring the **Bilateral Family Pact ("Pact-as-Code")** and **Automated 8:30 PM Bedtime Lockdown** with zero spyware.
+**Alongside v2.5 establishes the Universal Family Operating System across Core Pillars:**
+- **Parent Academy (`/academy`, Ages 0–18):** Short, science-backed guides (readable or audio-narrated with natural neural voices) across developmental milestones, restorative sleep, pediatric nutrition, emotional regulation, and digital maturity (strictly educational, non-clinical per SOU-86).
+- **Weekly Culture & Trends (`/digest`) + Play This Week:** Curated weekly videos, articles, trending app/slang decoders, Sunday dinner conversation starters, and zero-prep screen-free play decks (`#play-this-week`) for ages 0–8.
+- **Calm Advisor (`/advisor`):** 24/7 age-aware AI parenting advisor and 250+ scenario FAQ vault delivering practical, word-for-word communication scripts.
+- **Device Safety & Parental Controls (`/devices`):**
+  - **Built-in OS & App Control Blueprints:** Priority-ranked, age-calibrated setup steps for Apple Screen Time, Google Family Link, Roblox, YouTube, and Home Safe DNS (app download approvals, purchase blocks, adult content filtering, daily screen-time & Shorts limits, and bedtime/school locks).
+  - **Live Encrypted DNS Shield:** Signed iOS `.mobileconfig` (`com.apple.dnsSettings.managed` DoH), Android Private DNS (DoT), and Home Router DNS backed by a swappable `DnsPolicyProvider` seam to block adult sites, pause specific apps/services (TikTok, YouTube, Roblox, Instagram, Snapchat, Discord, Fortnite, Twitch), enforce SafeSearch, and schedule bedtime lockouts across Wi-Fi and 5G.
+  - **Standalone Phone Readiness Check (`?tab=readiness`):** 2-minute 0–100 diagnostic before buying a first device.
+- **1-Click Live Demo & Free Early Access:** Zero-signup read-safe demo (sample family: Maya age 3 and Leo age 11) plus Google OAuth and email/password authentication.
 
-For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md), the exhaustive [**Competitive Analysis & Strategic Differentiation Specification**](docs/COMPETITIVE_ANALYSIS.md), and the [**Paul Graham Roast & Evaluation Report**](docs/PAUL_GRAHAM_ROAST.md).
+For the canonical product strategy, persona analyses, and market thesis authored by the CEO, see [**`PROJECT_SCOPE.md`**](PROJECT_SCOPE.md), the [**Competitive Analysis & Strategic Differentiation Specification**](docs/COMPETITIVE_ANALYSIS.md), and the [**Live DNS Parental Controls Architecture**](docs/dns-parental-controls-architecture.md).
 
 ---
 
@@ -115,47 +116,43 @@ Alongside is engineered as a type-safe, decoupled monorepo leveraging standard n
 graph TD
     subgraph Client ["Client Layer (apps/web - Next.js 15 PWA)"]
         Browser["Parent Web / Mobile PWA"]
-        AcademyUI["Academy Course Player"]
-        QuizUI["Interactive Quiz Runner"]
-        AdvisorUI["24/7 AI Advisor & Clinical FAQs"]
-        PactUI["Bilateral Pact Wizard (Zustand)"]
-        DeviceUI["One-Tap QR Code Enrollment"]
+        AcademyUI["Parent Academy & Audio Reader"]
+        DigestUI["Culture & Trends + Play This Week"]
+        AdvisorUI["24/7 Calm Advisor & FAQ Vault"]
+        DevicesUI["Device Safety (OS Controls + Live DNS Shield)"]
     end
 
     subgraph Contracts ["Shared Contracts (packages/shared)"]
         Zod["Zod Validation Schemas"]
         Types["TypeScript Domain Types & Enums"]
-        Scoring["Quiz & Readiness Scoring Math"]
+        Scoring["Quiz, Shield & Readiness Math"]
     end
 
     subgraph Server ["API Service (apps/api - Fastify LTS 22)"]
         Fastify["Fastify TypeScript Server"]
-        Auth["Argon2id + JWT Cookie Auth"]
-        AcademyAPI["Academy & Content Service"]
-        QuizAPI["Dynamic Quiz Scoring Engine"]
+        Auth["Argon2id + Google OAuth + Live Demo + JWT"]
+        AcademyAPI["Academy & Audio Service"]
+        QuizAPI["Dynamic Quiz & Readiness Engine"]
         AiAPI["24/7 AI Advisor (SSE + RAG Engine)"]
-        PactAPI["Bilateral Pact Engine & PDF Export"]
-        ProfileAPI["Pact-as-Code Signer (.mobileconfig)"]
-        DigestAPI["Sunday Culture Digest & Exploit Alerts"]
+        ShieldAPI["Live DNS Shield & .mobileconfig DoH Signer"]
+        DigestAPI["Weekly Culture & Trends Service"]
     end
 
-    subgraph Storage ["Persistence Layer"]
+    subgraph Storage ["Persistence & Edge Layer"]
         Prisma["Prisma ORM (packages/database)"]
         Postgres[("PostgreSQL 16 + pgvector Database")]
-        Redis[("Redis (BullMQ & Session Cache)")]
+        DnsEdge[("DnsPolicyProvider (NextDNS MVP)")]
     end
 
     Browser --> AcademyUI
-    Browser --> QuizUI
+    Browser --> DigestUI
     Browser --> AdvisorUI
-    Browser --> PactUI
-    Browser --> DeviceUI
+    Browser --> DevicesUI
 
     AcademyUI --> Fastify
-    QuizUI --> Fastify
+    DigestUI --> Fastify
     AdvisorUI -- "Server-Sent Events (SSE)" --> Fastify
-    PactUI --> Fastify
-    DeviceUI --> Fastify
+    DevicesUI --> Fastify
 
     AcademyUI -. "Type Safety" .-> Zod
     Fastify -. "Input Validation" .-> Zod
@@ -163,13 +160,12 @@ graph TD
     Fastify --> AcademyAPI
     Fastify --> QuizAPI
     Fastify --> AiAPI
-    Fastify --> PactAPI
-    Fastify --> ProfileAPI
+    Fastify --> ShieldAPI
     Fastify --> DigestAPI
 
     Fastify --> Prisma
     Prisma --> Postgres
-    Fastify --> Redis
+    ShieldAPI --> DnsEdge
 ```
 
 ---
@@ -182,17 +178,16 @@ graph TD
 | **Developer Ergonomics** | **Makefile + Node Runner** | Concurrent execution (`make dev`), atomic targets, zero-dependency process manager |
 | **Frontend** | **Next.js 15 (App Router, React 19)** | High performance, Server Components (RSC) for Academy/Digest, PWA offline support |
 | **Styling & UI** | **Tailwind CSS v3.4 + Radix / shadcn/ui** | Empathetic "Parent Calm" design system; accessible, responsive, zero-runtime bloat |
-| **State & Fetching** | **TanStack Query v5 + Zustand** | Optimistic server state caching and multi-step wizard state management |
+| **State & Fetching** | **TanStack Query v5 + Zustand** | Optimistic server state caching and child context / quiz state management |
 | **Offline PWA** | **`@ducanh2912/next-pwa` (Serwist)** | Offline script reading, platform decoders, and mobile home screen launcher |
 | **Backend API** | **Node.js (LTS 22) + Fastify (TypeScript)** | Ultra-fast HTTP throughput, built-in schema serialization, native SSE support |
 | **Database & Vector**| **PostgreSQL 16 + `pgvector`** | Relational integrity + unified vector embeddings for AI FAQ retrieval |
 | **ORM & Migrations** | **Prisma ORM** | Declarative schema modeling, migrations, and seed scripts |
 | **Shared Contracts** | **Zod (Shared via `@alongside/shared`)** | Single source of truth for runtime validation on client and server |
-| **Security & Auth** | **Argon2id + HTTP-Only Secure JWT Cookies** | Zero client-token exposure (immune to XSS token theft), CSRF protection |
-| **AI & RAG Engine** | **Vercel AI SDK / OpenAI Client (`gpt-4o`)** | Streaming text generation over SSE; cosine similarity search over FAQ vectors |
-| **Device Governance**| **`node-forge` + `plist` + `qrcode`** | PKCS#7 signed Apple `.mobileconfig` and Android Enterprise policies; QR enrollment |
-| **Document Export** | **`@react-pdf/renderer` + Print CSS** | Instant refrigerator-ready printouts and vector PDF downloads |
-| **Monetization** | **Stripe Billing** | 7-day upfront trial, $79/year Annual Hero Pass, $9.99/mo flex pass |
+| **Security & Auth** | **Argon2id + Google OAuth + JWT Cookies** | Secure cookie + mobile bearer fallback, PKCE Google OAuth, and read-safe Live Demo |
+| **AI & RAG Engine** | **Multi-LLM Adapter + `pgvector`** | Streaming SSE guidance over curated developmental FAQ & script embeddings |
+| **Device Controls** | **`node-forge` + `plist` + `DnsPolicyProvider`** | Signed iOS DoH `.mobileconfig`, Android Private DNS (DoT), and NextDNS MVP policy sync |
+| **Monetization** | **100% Free Early Access (Planned Stripe)** | Free during early access; planned $79/year Family Pass & $9.99/mo flex tier |
 | **Testing** | **Vitest + Fastify Inject + Playwright** | Fast unit/integration tests and end-to-end critical journey testing |
 
 ---
@@ -205,32 +200,33 @@ AlongSide/
 ├── scripts/
 │   └── dev.mjs                   # Pure Node.js concurrent dev server orchestrator
 ├── apps/
-│   ├── web/                      # Next.js 15 Frontend PWA (App Router, React 19, Tailwind)
-│   │   ├── src/app/              # RSC routes (Landing, Auth, Onboarding, Dashboard)
+│   ├── web/                      # Frontend Application (Next.js 15, React 19, Tailwind)
+│   │   ├── src/app/              # RSC routes (Landing, Auth, Dashboard, Academy, Digest, Advisor, Devices)
 │   │   ├── src/components/       # UI components & Parent Calm design system
-│   │   └── src/hooks/            # Custom hooks (useAuth, useChildren, useReadiness)
+│   │   └── src/hooks/            # Custom hooks (useAuth, useChildren, useDeviceShield, useReadiness)
 │   └── api/                      # Fastify LTS 22 Node.js Backend API
-│       ├── src/modules/auth/     # Argon2id password hashing, JWT cookie session auth
-│       ├── src/modules/children/ # Child profile CRUD, 4 developmental tiers, road forks
-│       ├── src/modules/health/   # Service health check & uptime probe
+│       ├── src/modules/auth/     # Argon2id, Google OAuth, Live Demo, JWT cookie/bearer auth
+│       ├── src/modules/children/ # Child profile CRUD, 8 developmental tiers, road forks
+│       ├── src/modules/device-profiles/ # Live DNS Shield (NextDNS seam) + .mobileconfig DoH signer
 │       └── src/plugins/          # Encapsulated Fastify plugins (auth, error handler)
 ├── packages/
-│   ├── shared/                   # Shared TypeScript Schemas, DTOs, Enums & Quiz Algorithms
-│   │   ├── src/constants/        # Developmental tiers, Road types, Quiz presets
+│   ├── shared/                   # Shared TypeScript contracts and pure algorithmic engines
+│   │   ├── src/constants/        # Developmental tiers, shield service catalog, quiz presets
 │   │   ├── src/schemas/          # Zod validation contracts shared between client & server
-│   │   └── src/algorithms/       # Pure scoring math (Readiness 0-100, tween fluency)
+│   │   └── src/algorithms/       # Pure scoring math (Readiness 0-100, tier derivation)
 │   └── database/                 # Prisma ORM & Database Layer
 │       ├── prisma/schema.prisma  # PostgreSQL 16 schema with pgvector vector support
 │       └── src/client.ts         # PrismaClient singleton with graceful teardown
 ├── docs/                         # Canonical Specifications & Engineering Standards
 │   ├── system-design-specification.md # Quantitative sizing, capacity estimations & blueprints
 │   ├── system-architecture.md         # Monorepo layout, security boundaries & data flows
+│   ├── dns-parental-controls-architecture.md # Live DNS Shield & OS parental controls spec
 │   ├── engineering-standards/         # Deep modules, skill matrices, plan & git standards
 │   └── api-specification.md           # Authoritative REST API contract & DTO catalog
-├── plans/                        # Discrete Agent Execution Plans (Numbered 01–14)
+├── plans/                        # Discrete Agent Execution Plans
 ├── .agents/                      # AI Agent Governance & Machine-Enforceable Rules
 ├── AGENTS.md                     # Engineering team protocols, boundaries & ownership
-├── PROJECT_SCOPE.md              # Canonical Product Scope v2.3.0 (CEO)
+├── PROJECT_SCOPE.md              # Canonical Product Scope v2.5.0 (CEO)
 ├── README.md                     # Repository Overview & Developer Guide
 ├── docker-compose.yml            # PostgreSQL 16 + pgvector container definition
 ├── package.json                  # Root npm workspace definition
@@ -247,16 +243,19 @@ The Fastify API runs on `http://localhost:4000` with versioned `/api/v1` routes:
 - `GET /api/v1/health` — Service status, environment, uptime, and timestamp.
 
 ### Authentication & Sessions (`/api/v1/auth`)
-- `POST /api/v1/auth/register` — Create parent account, starts 7-day trial, sets secure HttpOnly JWT cookie.
+- `GET /api/v1/auth/providers` — List active authentication providers (`google`, `demo`, `emailPassword`).
+- `GET /api/v1/auth/google` & `GET /api/v1/auth/google/callback` — PKCE Google OAuth 2.0 flow.
+- `POST /api/v1/auth/demo` — Start a read-only Live Demo session with a sample family.
+- `POST /api/v1/auth/register` — Create parent account and set secure HttpOnly JWT cookie.
 - `POST /api/v1/auth/login` — Authenticate parent credentials with Argon2id verification.
 - `GET /api/v1/auth/me` — Retrieve active authenticated session and parent profile.
 - `POST /api/v1/auth/logout` — Revoke session cookie.
 
-### Children & Contextual Road Fork (`/api/v1/children`)
-- `POST /api/v1/children` — Register child profile, automatically resolves developmental tier (`TIER_1_AGES_8_9`, `TIER_2_AGES_10_11`, `TIER_3_AGES_12_13`, `TIER_4_AGES_14_PLUS`) and road selection (`PRE_DEVICE` vs `ACTIVE_DEVICE`).
-- `GET /api/v1/children` — List all children associated with authenticated parent.
-- `GET /api/v1/children/:id` — Retrieve detailed child profile and road status.
-- `POST /api/v1/children/:id/road` — Transition or update child road fork selection.
+### Children & Device Safety (`/api/v1/children`, `/api/v1/devices`)
+- `POST /api/v1/children` / `GET /api/v1/children` — Register and manage child profiles across ages 0–18.
+- `GET /api/v1/devices/shield/:childId` / `PUT /api/v1/devices/shield/:childId` — Get and sync a child's Live Encrypted DNS Shield policy.
+- `GET /api/v1/devices/shield/:childId/status` — Retrieve aggregate 24h DNS shield query health.
+- `GET /api/v1/devices/shield/profile/:enrollmentToken` — Download signed Apple `.mobileconfig` (`com.apple.dnsSettings.managed` DoH).
 
 ---
 
@@ -280,39 +279,8 @@ make lint
 
 ### Testing Strategy:
 - **`packages/shared`:** Exhaustive unit tests for pure scoring algorithms (`calculateReadinessScore`), developmental tier resolution, and Zod schema validations.
-- **`apps/api`:** Fastify integration testing via `.inject()`, testing status codes, cookies, error envelopes, and repository layers without spinning up physical TCP ports.
+- **`apps/api`:** Fastify integration testing via `.inject()`, testing status codes, cookies, error envelopes, Live DNS Shield policy adapters, and repository layers without spinning up physical TCP ports.
 - **`apps/web`:** Component, form, and custom hook tests verifying validation logic, accessibility, and client state machines.
-
----
-
-## 🚀 Phased Engineering Roadmap
-
-AlongSide is executed across discrete, sequential engineering plans:
-
-| # | Plan Title | Owner | Status |
-| :-: | :--- | :--- | :-: |
-| **01** | [**Monorepo Workspace Setup, Shared Package & Prisma Database**](plans/01-project-setup-and-db.md) | Backend Agent | ✅ **Complete** |
-| **02** | [**Authentication, Session Cookies & Parent Account API**](plans/02-auth-and-user-profile.md) | Backend Agent | ✅ **Complete** |
-| **03** | [**Next.js 15 PWA Scaffolding, ParentCalm Design System & Auth UI**](plans/03-frontend-scaffolding-and-auth-ui.md) | Frontend Agent | ✅ **Complete** |
-| **04** | [**Child Profile CRUD, Contextual Road Fork & Readiness API**](plans/04-child-profile-and-road-bifurcation-api.md) | Backend Agent | ✅ **Complete** |
-| **05** | [**Child Onboarding, Road Selection & Assessment Wizard UI**](plans/05-child-profile-and-road-selection-ui.md) | Frontend Agent | ✅ **Complete** |
-| **06** | [**Bilateral Family Pact Engine & Device Profile Compiler API**](plans/06-bilateral-pact-and-profile-compiler-api.md) | Backend Agent | ✅ **Complete** |
-| **07** | [**Pact Wizard, Digital Co-Signing & QR Enrollment UI**](plans/07-agreement-builder-and-device-enrollment-ui.md) | Frontend Agent | ✅ **Complete** |
-| **08** | [**Parent Intelligence Academy Modules & Youth Culture Digest API**](plans/08-parent-academy-and-culture-digest-api.md) | Backend Agent | ✅ **Complete** |
-| **09** | [**Academy Course Player, Sunday Culture Digest & Offline PWA**](plans/09-parent-academy-and-culture-digest-ui.md) | Frontend Agent | ✅ **Complete** |
-| **10** | [**24/7 AI Child Advisor & Modern Parenting FAQ Vault API**](plans/10-ai-child-advisor-and-faq-vault-api.md) | Backend Agent | ✅ **Complete* |
-| **11** | [**24/7 AI Advisor Chat & Living FAQ Explorer UI**](plans/11-ai-advisor-and-voice-sparring-ui.md) | Frontend Agent | ✅ **Complete* |
-| **12** | [**Interactive Assessment Suite & Cultural Fluency Quizzes**](plans/12-interactive-quiz-suite-and-fluency-checks.md) | Joint FE & BE | ⏳ Queued |
-| **13** | [**Stripe 7-Day Trial, $79/yr Hero Pass & Webhook Sync**](plans/13-stripe-billing-and-trial-lifecycle.md) | Backend Agent | ⏳ Queued |
-| **14** | [**End-to-End Integration, Playwright Verification & Launch Hardening**](plans/14-e2e-integration-hardening-and-launch.md) | Joint FE & BE | ⏳ Queued |
-| **15** | [**Whole-Child Development Research & Knowledge Base**](plans/15-child-development-research-and-knowledge-base.md) | Research Engineer | ✅ **Complete** (PR #25) |
-| **16** | [**Holistic Domain Schema, Health Triage & Milestone API**](plans/16-holistic-domain-schema-and-seeding-api.md) | Backend Agent | ✅ **Complete** (PR #28) |
-| **17** | [**Holistic Family Dashboard & Unified Navigation UI**](plans/17-holistic-family-dashboard-and-navigation-ui.md) | Frontend Agent | ✅ **Complete** (PR #29) |
-| **18** | [**Pediatric Health Triage & Nutrition Hub UI**](plans/18-pediatric-health-triage-and-nutrition-ui.md) | Frontend Agent | ✅ **Complete** (PR #27) |
-| **19** | [**Brain Games, Puppets & Behavioral Psychology UI**](plans/19-brain-games-puppets-and-behavior-ui.md) | Frontend Agent | ✅ **Complete** (PR #30) |
-| **20** | [**Clinical AI Advisor Lifespan RAG Upgrade**](plans/20-ai-clinical-advisor-lifespan-rag-upgrade.md) | Joint FE & BE | ✅ **Complete** (PR #31) |
-
-For complete plan details, see [**`plans/README.md`**](plans/README.md).
 
 ---
 

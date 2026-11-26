@@ -7,14 +7,15 @@ This directory contains the canonical product, architecture, standards, and eval
 ## Document Index
 
 ### 1. Product & Strategy
-- [**`PROJECT_SCOPE.md`**](../PROJECT_SCOPE.md) — Product vision, customer personas, problem framing, MVP scope, and business model. Authored by the CEO.
-- [**`IDEAL_CUSTOMER_PROFILE.md`**](IDEAL_CUSTOMER_PROFILE.md) — Canonical Ideal Customer Profile (ICP), demographics, psychographics, Jobs-to-be-Done (JTBD), two high-intent acquisition gates, willingness to pay, and anti-ICP specifications.
-- [**`COMPETITIVE_ANALYSIS.md`**](COMPETITIVE_ANALYSIS.md) — Comprehensive competitive intelligence, 6-silo landscape audit, quantitative comparison matrix, where competitors win vs. where we win, and strategic differentiation. Authored by the CEO.
-- [**`PAUL_GRAHAM_ROAST.md`**](PAUL_GRAHAM_ROAST.md) — Paul Graham / YC-style brutal startup evaluation, fatal flaw breakdown, and strategic pivot roadmap.
+- [**`PROJECT_SCOPE.md`**](../PROJECT_SCOPE.md) — Product vision, customer personas, problem framing, MVP scope (v2.5.0), and business model. Authored by the CEO.
+- [**`IDEAL_CUSTOMER_PROFILE.md`**](IDEAL_CUSTOMER_PROFILE.md) — Canonical Ideal Customer Profile (ICP v2.0.0), demographics, psychographics, Jobs-to-be-Done (JTBD), two high-intent acquisition gates, willingness to pay, and anti-ICP specifications.
+- [**`COMPETITIVE_ANALYSIS.md`**](COMPETITIVE_ANALYSIS.md) — Comprehensive competitive intelligence (v2.0.0), 6-silo landscape audit, quantitative comparison matrix, where competitors win vs. where we win, and strategic differentiation. Authored by the CEO.
+- [**`PAUL_GRAHAM_ROAST.md`**](PAUL_GRAHAM_ROAST.md) — Historical Paul Graham / YC-style startup evaluation of the earlier phone-pact MVP scope (preserved for reference).
 
 ### 2. Architecture & Technical Decisions
 - [**`system-design-specification.md`**](system-design-specification.md) — Comprehensive Expert System Design Specification (100k+ DAU capacity sizing, component blueprints, trade-off matrices, failure resiliency protocols).
-- [**`system-architecture.md`**](system-architecture.md) — System boundaries, data flow diagrams, security posture, and deployment topologies (v2.4.0).
+- [**`system-architecture.md`**](system-architecture.md) — System boundaries, data flow diagrams, security posture, and deployment topologies (v2.6.0).
+- [**`dns-parental-controls-architecture.md`**](dns-parental-controls-architecture.md) — Live Network Shield architecture: OS-native Encrypted DNS (`com.apple.dnsSettings.managed` DoH + Android Private DNS DoT), swappable `DnsPolicyProvider` seam, and pairing with built-in OS controls.
 - [**`system-design-tier-0-decomposition.md`**](system-design-tier-0-decomposition.md) — Early Childhood Tier 0 Decomposition and Sub-Tranche Engine Architecture (Ages 0–3).
 - [**`platform-advisory-rearchitecture-and-academy-chapters-spec.md`**](platform-advisory-rearchitecture-and-academy-chapters-spec.md) — Advisory Platform Rearchitecture, Navigation Streamlining, and Prioritized Academy Curriculum Specification.
 - [**`parent-intelligence-academy-course-content-and-format-specification.md`**](parent-intelligence-academy-course-content-and-format-specification.md) — Parent Intelligence Academy: Course Content, Length, Format & Multi-Modal Architecture Specification (SOU-92).
@@ -23,12 +24,12 @@ This directory contains the canonical product, architecture, standards, and eval
 - [**`parent-intelligence-academy-lesson-content-audit-and-architecture.md`**](parent-intelligence-academy-lesson-content-audit-and-architecture.md) — Parent Intelligence Academy: Lesson Content Audit, 3 Archetypes, Unified Blog Reader & Platform-Wide De-Clinicalization Specification (SOU-113 / PLAN-40).
 - [**`tech-stack-decision.md`**](tech-stack-decision.md) — Technology stack choices, rationale, and monorepo structure. Authored by the CTO.
 - [**`deployment-guide.md`**](deployment-guide.md) — Production Deployment & Cloud Architecture Guide (100% Free Hosting on Supabase, Render & Vercel, CI/CD auto-deploy workflows).
-- [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships (v2.4.0).
-- [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.4.0).
+- [**`data-models.md`**](data-models.md) — Canonical Prisma schema and data entity relationships.
+- [**`api-specification.md`**](api-specification.md) — REST API endpoints, schemas, authentication, and HTTP response envelopes (v2.5.0).
 
 ### 3. Design System & Design Explorations (`docs/design-system/` & `docs/design/`)
 - [**`MASTER.md`**](design-system/MASTER.md) — Canonical AlongSide Master Design System (Taste 2: Editorial Pediatric Almanac, 3-layer tokens, typography scales, component rules).
-- [**`culture-digest/`**](design/culture-digest/) — Sunday Youth Culture Digest visual designs, interactive HTML prototypes (Directions A–N), and comparison matrices.
+- [**`culture-digest/`**](design/culture-digest/) — Weekly Culture & Trends visual designs, interactive HTML prototypes (Directions A–N), and comparison matrices.
 - [**`design/academy-lesson-before-after/index.html`**](design/academy-lesson-before-after/index.html) — Interactive Before/After Visual Architecture: Unified Blog Reader, Archetypes, and Friction Purge (SOU-113 / PLAN-40).
 - [**`docs/design/`**](design/) — Visual architecture benchmarks (Subframe, Vercel, Wise, Linear, Stripe).
 
@@ -61,6 +62,7 @@ Machine-enforceable rules automatically discovered and loaded into autonomous ag
 
 ### 7. Whole-Child Research & Knowledge Base (`docs/research/`)
 Authored by the Research Engineer to de-risk engineering and ground Alongside in whole-child developmental psychology, neurobiology, and authentic parent sentiment:
+- [**`apple-and-google-parental-controls-audit.md`**](research/apple-and-google-parental-controls-audit.md) — **18-Item Priority-Ranked Audit of Native Apple Screen Time & Google Family Link Controls** (Anti-tamper, predators/adult content, app gatekeeping, time/Shorts caps, location, and cross-platform blind spots).
 - [**`docs/research/README.md`**](research/README.md) — **Master Index of the 8 Lifespan Developmental Tier Research Vaults** (48 canonical research documents across all ages from 0 to 18).
 - [**`tier-0a-infancy-0-1/`**](research/tier-0a-infancy-0-1/) — Infancy (Ages 0–1 / 0–12m): Somatic Regulation, Sleep Architecture & Feeding Foundations.
 - [**`tier-0b-toddler-1-2/`**](research/tier-0b-toddler-1-2/) — Young Toddler (Ages 1–2 / 12–24m): Locomotion, Receptive/Expressive Gap & Co-Regulation.
@@ -74,8 +76,8 @@ Authored by the Research Engineer to de-risk engineering and ground Alongside in
 - [**`pediatric-nutrition-feeding-science.md`**](research/pediatric-nutrition-feeding-science.md) — Pediatric Nutrition & Feeding Science: infant solids introduction, BLW vs purees, early allergen introduction (LEAP / EAT trials), choking prevention vs gagging reflex, strict infant prohibitions (<1y), and toddler picky eating solutions via Ellyn Satter's Division of Responsibility.
 - [**`brain-games-sensory-play-toys.md`**](research/brain-games-sensory-play-toys.md) — Brain Games, Sensory Play & Early Toys/Puppets: cognitive enrichment, Harvard Serve & Return interaction framework, Montessori sensitive periods, AAP play guidelines, and age-indexed toy/activity matrices from high-contrast puppets to Socratic lateral thinking.
 - [**`age-by-age-neurodevelopment-matrix.md`**](research/age-by-age-neurodevelopment-matrix.md) — Comprehensive Whole-Child Developmental, Biological & Behavioral Matrix across all 6 cohorts with physical growth, endocrine shifts, dACC social pain circuitry, pubertal +2hr circadian delay, and emotional language decoders.
-- [**`modern-parenting-faq-vault-100.md`**](research/modern-parenting-faq-vault-100.md) — Living vault of pediatric-reviewed modern parenting questions, neurobiological rationales, and 3-step connection-first scripts across emotional regulation, puberty, school transitions, screen boundaries, and complex digital culture.
+- [**`modern-parenting-faq-vault-100.md`**](research/modern-parenting-faq-vault-100.md) — Living vault of developmental parenting questions, neurobiological rationales, and 3-step connection-first scripts across emotional regulation, puberty, school transitions, screen boundaries, and modern digital culture.
 - [**`parent-social-sentiment-and-real-voices.md`**](research/parent-social-sentiment-and-real-voices.md) — Deep social mining report of authentic parent distress across Reddit (`r/Parenting`, `r/daddit`, `r/Mommit`, `r/ParentingTeens`), analyzing the 10 acute flashpoints (meltdowns, adrenarche, school anxiety, bedroom withdrawal) and failure modes of legacy tools.
-- [**`youth-slang-and-device-exploit-catalog.md`**](research/youth-slang-and-device-exploit-catalog.md) — Complete 50+ term youth slang lexicon categorized by safety (Green, Yellow, Red) and 15+ real-world device bypass exploits (Calculator Vaults, Apple Notes browsers, time-zone spoofing) with AlongSide zero-spyware MDM countermeasures.
+- [**`youth-slang-and-device-exploit-catalog.md`**](research/youth-slang-and-device-exploit-catalog.md) — Complete 50+ term youth slang lexicon categorized by safety (Green, Yellow, Red) and 15+ real-world device bypass exploits (Calculator Vaults, Apple Notes browsers, time-zone spoofing) with OS parental control & DNS Shield countermeasures.
 - [**`knowledge-base-literature-and-source-ecosystem.md`**](research/knowledge-base-literature-and-source-ecosystem.md) — Canonical Knowledge Base literature, blogs, institutional research authorities, and PostgreSQL 16 `pgvector` RAG schema architecture.
 - [**`PLAN-15: Whole-Child Development Research & Knowledge Base`**](../plans/15-child-development-research-and-knowledge-base.md) — Official engineering execution plan for the whole-child research journey.

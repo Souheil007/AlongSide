@@ -1,7 +1,7 @@
 # Alongside — REST API Specification
 **Author:** Chief Technology Officer (CTO)  
 **Status:** Approved for Engineering Implementation  
-**Version:** 2.4.0 (The Holistic Child Upbringing, Pediatric Health & Lifespan Family OS)  
+**Version:** 2.5.0 (The Holistic Child Upbringing, Parent Advisory & Live DNS Shield API)  
 **Target Audience:** Frontend Engineer, Backend Engineer, QA  
 **Companion Documents:**  
 - [`docs/system-architecture.md`](system-architecture.md)  
@@ -67,7 +67,12 @@
 ```
 - **Response (200 OK):** Sets session cookie and returns user profile.
 
-### 2.3 Current Profile (`GET /api/v1/auth/me`)
+### 2.3 Auth Providers, Google OAuth & Live Demo
+- **List Providers:** `GET /api/v1/auth/providers` — Returns active flags `{ google, demo, emailPassword }`.
+- **Google OAuth 2.0 PKCE:** `GET /api/v1/auth/google` initiates OAuth redirect; `GET /api/v1/auth/google/callback` sets session cookie and redirects to app.
+- **One-Click Read-Safe Live Demo:** `POST /api/v1/auth/demo` — Creates/returns a read-only demo session preloaded with the sample family (Maya age 3, Leo age 11).
+
+### 2.4 Current Profile (`GET /api/v1/auth/me`)
 - **Response (200 OK):**
 ```json
 {
@@ -263,7 +268,9 @@ data: {"type": "done", "conversationId": "conv-123"}
 
 ---
 
-## 7. Bilateral Family Pact & Agreement Engine (`/api/v1/agreements`)
+## 7. Legacy Agreements Engine (`/api/v1/agreements` — Deprecated in UI)
+
+> *Note: In `apps/web`, standalone Phone Pacts (`/pacts/builder`, `/pacts/[id]`) have been retired and server-redirect cleanly to `/devices?tab=controls`. These endpoints remain documented for backward API compatibility.*
 
 ### 7.1 Get Agreement Presets
 - **Endpoint:** `GET /api/v1/agreements/presets?tier=TIER_3_AGES_12_13&roadType=ACTIVE_DEVICE`
@@ -303,38 +310,50 @@ data: {"type": "done", "conversationId": "conv-123"}
 
 ---
 
-## 8. "Pact-as-Code" Device Profiles & Enrollment (`/api/v1/device-profiles`, `/api/v1/devices`)
+## 8. Live Encrypted DNS Shield & Device Enrollment (`/api/v1/devices`)
 
-### 8.1 Compile Agreement into Signed Device Profile
-- **Endpoint:** `POST /api/v1/agreements/:id/compile-profile`
+### 8.1 Get or Initialize Child Device Shield
+- **Endpoint:** `GET /api/v1/devices/shield/:childId`
+- **Authentication:** Required
+- **Response (200 OK):** Returns the child's canonical `DeviceShieldDTO` (DoH URL, Android DoT hostname, IPv4/IPv6 servers, enrollment token, and active block/schedule toggles).
+
+### 8.2 Update & Sync Live DNS Shield Policy
+- **Endpoint:** `PUT /api/v1/devices/shield/:childId`
+- **Authentication:** Required
 - **Request Body:**
 ```json
 {
   "platform": "APPLE_IOS",
-  "bedtimeCurfewTime": "20:30"
+  "blockAdultContent": true,
+  "safeSearch": true,
+  "youtubeRestrictedMode": true,
+  "blockBypass": true,
+  "blockedServices": ["tiktok", "snapchat", "discord"],
+  "bedtimeServices": ["youtube", "roblox"],
+  "bedtimeEnabled": true,
+  "bedtimeStart": "20:30",
+  "bedtimeEnd": "06:30",
+  "timezone": "America/New_York"
 }
 ```
-- **Response (201 Created):**
-```json
-{
-  "success": true,
-  "data": {
-    "profile": {
-      "id": "prof-554",
-      "status": "PENDING_ENROLLMENT",
-      "enrollmentToken": "tok_991823746",
-      "enrollmentQrCodeUrl": "https://api.alongside.care/api/v1/devices/qr/tok_991823746",
-      "otaEnrollmentUrl": "https://api.alongside.care/api/v1/devices/enroll/tok_991823746",
-      "bedtimeCurfewTime": "20:30"
-    }
-  }
-}
-```
+- **Response (200 OK):** Syncs policy via `DnsPolicyProvider` (NextDNS MVP) and returns updated `{ shield }`.
 
-### 8.2 OTA Apple Profile Delivery
-- **Endpoint:** `GET /api/v1/devices/enroll/:token`
-- **Response (200 OK):** Delivers cryptographically signed PKCS#7 Apple `.mobileconfig` with header:
-  `Content-Type: application/x-apple-aspen-config; charset=utf-8`
+### 8.3 Live Shield 24h Aggregate Health Status
+- **Endpoint:** `GET /api/v1/devices/shield/:childId/status`
+- **Authentication:** Required
+- **Response (200 OK):** Returns aggregate counts only (`isActive`, `totalQueries24h`, `blockedQueries24h`, `checkedAt`)—never individual visited domains.
+
+### 8.4 Token-Scoped OTA Apple Profile & QR Info
+- **Download Signed Apple DoH `.mobileconfig`:** `GET /api/v1/devices/shield/profile/:enrollmentToken` — Returns PKCS#7-signed `com.apple.dnsSettings.managed` payload with `Content-Type: application/x-apple-aspen-config; charset=utf-8`.
+- **QR Enrollment Info:** `GET /api/v1/devices/shield/qr/:enrollmentToken`
+
+### 8.5 Guest / Live Demo Instant DNS Shield Provisioning
+- **Provision Guest Shield:** `POST /api/v1/devices/shield/guest-provision` (`{ childName, age }`)
+- **Sync Guest Shield:** `PUT /api/v1/devices/shield/guest-sync/:enrollmentToken`
+- **Guest Shield Status:** `GET /api/v1/devices/shield/guest-status/:enrollmentToken`
+
+### 8.6 Legacy OTA Profile & Heartbeat Routes (Backward Compatible)
+- `GET /api/v1/devices/enroll/:token`, `POST /api/v1/devices/heartbeat/:token`, `GET /api/v1/devices/qr/:token`, and `POST /api/v1/agreements/:id/compile-profile`.
 
 ---
 
@@ -651,7 +670,9 @@ data: {"type": "done", "conversationId": "conv-123"}
 
 ---
 
-## 12. Pediatric Health & Symptom Triage (`/api/v1/health`)
+## 12. Legacy Health Routes (`/api/v1/health` — Retired per SOU-86 Non-Clinical Mandate)
+
+> *Note (SOU-86): Alongside does not provide medical symptom triage, Barton Schmitt clinical algorithms, or medication dosing calculators. These legacy endpoints are retained solely for backward API schema reference and are not surfaced in the UI.*
 
 ### 12.1 Symptom Triage Assessment
 - **Endpoint:** `POST /api/v1/health/triage`
@@ -742,7 +763,9 @@ data: {"type": "done", "conversationId": "conv-123"}
 
 ---
 
-## 14. Brain Games, Sensory Play & Early Toys (`/api/v1/brain-games`)
+## 14. Legacy Brain Games API (`/api/v1/brain-games` — UI Retired to `/digest#play-this-week`)
+
+> *Note: In `apps/web`, standalone `/brain-games` has been retired and redirects to `/digest#play-this-week` (Play This Week screen-free deck for ages 0–8).*
 
 ### 14.1 Daily Purposeful Play Recommendation
 - **Endpoint:** `GET /api/v1/brain-games/daily`
