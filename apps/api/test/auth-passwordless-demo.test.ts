@@ -117,7 +117,12 @@ describe('Google OAuth & Live Demo Session Auth', () => {
         },
       });
       expect(callbackRes.statusCode).toBe(302);
-      expect(callbackRes.headers.location).toBe('http://localhost:3000/children/new');
+      const callbackLocation = new URL(String(callbackRes.headers.location || ''));
+      expect(`${callbackLocation.origin}${callbackLocation.pathname}`).toBe(
+        'http://localhost:3000/children/new'
+      );
+      const hashToken = new URLSearchParams(callbackLocation.hash.replace(/^#/, '')).get('session');
+      expect(hashToken).toBeTruthy();
 
       const sessionCookie = extractCookieValue(callbackRes.headers['set-cookie'], 'alongside_session');
       expect(sessionCookie).toContain('alongside_session=');
@@ -129,6 +134,15 @@ describe('Google OAuth & Live Demo Session Auth', () => {
       });
       expect(meRes.statusCode).toBe(200);
       expect(meRes.json().data.user.email).toBe('google.parent@example.com');
+
+      // Also works via Bearer token alone (mobile browsers blocking third-party cookies)
+      const meBearerRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/auth/me',
+        headers: { authorization: `Bearer ${hashToken}` },
+      });
+      expect(meBearerRes.statusCode).toBe(200);
+      expect(meBearerRes.json().data.user.email).toBe('google.parent@example.com');
     });
 
     it('auto-links an existing email+password account when Google email is verified', async () => {
@@ -348,6 +362,60 @@ describe('Google OAuth & Live Demo Session Auth', () => {
       expect(childrenRes.statusCode).toBe(200);
       const names = childrenRes.json().data.children.map((c: { name: string }) => c.name);
       expect(names).toEqual(['Maya', 'Leo']);
+    });
+
+    it('authenticates and revokes demo sessions via Bearer token alone when third-party cookies are dropped', async () => {
+      const demoRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/auth/demo',
+      });
+      expect(demoRes.statusCode).toBe(200);
+      const token = demoRes.json().data.token as string;
+      expect(token).toBeTruthy();
+
+      // Simulate mobile browser (e.g. Samsung Internet / iOS Safari) dropping Set-Cookie
+      const meRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/auth/me',
+        headers: { authorization: `Bearer ${token}` },
+      });
+      expect(meRes.statusCode).toBe(200);
+      expect(meRes.json().data.user.isDemo).toBe(true);
+
+      const childrenRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/children',
+        headers: { authorization: `Bearer ${token}` },
+      });
+      expect(childrenRes.statusCode).toBe(200);
+      const mayaId = childrenRes.json().data.children[0].id as string;
+
+      const chatRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/ai-advisor/chat',
+        headers: { authorization: `Bearer ${token}` },
+        payload: {
+          childId: mayaId,
+          message: 'Quick test for bedtime limits',
+        },
+      });
+      expect(chatRes.statusCode).toBe(200);
+      expect(chatRes.body).toContain('Demo live ');
+
+      const logoutRes = await app.inject({
+        method: 'POST',
+        url: '/api/v1/auth/logout',
+        headers: { authorization: `Bearer ${token}` },
+      });
+      expect(logoutRes.statusCode).toBe(200);
+
+      // Revoked Bearer token must now be rejected
+      const afterLogoutMeRes = await app.inject({
+        method: 'GET',
+        url: '/api/v1/auth/me',
+        headers: { authorization: `Bearer ${token}` },
+      });
+      expect(afterLogoutMeRes.statusCode).toBe(401);
     });
   });
 });

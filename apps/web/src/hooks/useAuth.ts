@@ -8,6 +8,7 @@ import type {
 } from '@alongside/shared';
 import { authApi } from '@/lib/api/auth';
 import { ApiClientError } from '@/lib/api/client';
+import { clearStoredSessionToken } from '@/lib/api/sessionToken';
 import { resetAnalytics, trackEvent } from '@/lib/analytics/posthog';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 
@@ -101,6 +102,7 @@ export function useAuth() {
       const wasDemo = Boolean(queryClient.getQueryData<UserDTO | null>(AUTH_QUERY_KEY)?.isDemo);
       trackEvent('auth_logged_out', { was_demo: wasDemo });
       resetAnalytics();
+      clearStoredSessionToken();
       queryClient.setQueryData(AUTH_QUERY_KEY, null);
       queryClient.removeQueries({ queryKey: AUTH_QUERY_KEY });
       queryClient.clear();

@@ -5,6 +5,7 @@ import type {
   UserDTO,
 } from "@alongside/shared";
 import { apiClient, ApiClientError } from "./client";
+import { clearStoredSessionToken, storeSessionToken } from "./sessionToken";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -16,9 +17,10 @@ export async function getAuthProviders(): Promise<AuthProvidersDTO> {
 }
 
 export async function enterDemoSession(): Promise<UserDTO> {
-  const res = await apiClient<{ user: UserDTO }>("/api/v1/auth/demo", {
+  const res = await apiClient<{ user: UserDTO; token?: string }>("/api/v1/auth/demo", {
     method: "POST",
   });
+  storeSessionToken(res.token, { persist: false });
   return res.user;
 }
 
@@ -27,25 +29,31 @@ export function getGoogleAuthUrl(): string {
 }
 
 export async function registerParent(data: RegisterUserInput): Promise<UserDTO> {
-  const res = await apiClient<{ user: UserDTO }>("/api/v1/auth/register", {
+  const res = await apiClient<{ user: UserDTO; token?: string }>("/api/v1/auth/register", {
     method: "POST",
     body: JSON.stringify(data),
   });
+  storeSessionToken(res.token, { persist: true });
   return res.user;
 }
 
 export async function loginParent(data: LoginUserInput): Promise<UserDTO> {
-  const res = await apiClient<{ user: UserDTO }>("/api/v1/auth/login", {
+  const res = await apiClient<{ user: UserDTO; token?: string }>("/api/v1/auth/login", {
     method: "POST",
     body: JSON.stringify(data),
   });
+  storeSessionToken(res.token, { persist: true });
   return res.user;
 }
 
 export async function logoutParent(): Promise<void> {
-  await apiClient<{ message: string }>("/api/v1/auth/logout", {
-    method: "POST",
-  });
+  try {
+    await apiClient<{ message: string }>("/api/v1/auth/logout", {
+      method: "POST",
+    });
+  } finally {
+    clearStoredSessionToken();
+  }
 }
 
 export async function getCurrentParent(): Promise<UserDTO | null> {
@@ -59,6 +67,7 @@ export async function getCurrentParent(): Promise<UserDTO | null> {
       error instanceof ApiClientError &&
       (error.status === 401 || error.statusCode === 401 || error.code === "UNAUTHORIZED")
     ) {
+      clearStoredSessionToken();
       return null;
     }
     throw error;

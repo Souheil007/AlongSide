@@ -1,3 +1,5 @@
+import { getStoredSessionToken } from "./sessionToken";
+
 export interface ApiErrorDetail {
   field?: string;
   message: string;
@@ -60,6 +62,24 @@ export async function apiClient<T>(
 
   if (customConfig.body !== undefined) {
     defaultHeaders["Content-Type"] = "application/json";
+  }
+
+  const hasAuthHeader = (() => {
+    if (!headers) return false;
+    if (headers instanceof Headers) {
+      return headers.has("Authorization");
+    }
+    if (Array.isArray(headers)) {
+      return headers.some(([k]) => k.toLowerCase() === "authorization");
+    }
+    return Object.keys(headers).some((k) => k.toLowerCase() === "authorization");
+  })();
+
+  if (!hasAuthHeader) {
+    const sessionToken = getStoredSessionToken();
+    if (sessionToken) {
+      defaultHeaders["Authorization"] = `Bearer ${sessionToken}`;
+    }
   }
 
   const config: RequestInit = {

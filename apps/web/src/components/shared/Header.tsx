@@ -21,6 +21,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
 import { trackEvent } from '@/lib/analytics/posthog';
+import { clearStoredSessionToken } from '@/lib/api/sessionToken';
 import { ChildSelector } from '@/components/shared/ChildSelector';
 import { useChildContextStore, ACTIVE_CHILD_STORAGE_KEY } from '@/stores/useChildContextStore';
 import { AlongsideLogo } from '@/components/shared/AlongsideLogo';
@@ -112,6 +113,7 @@ export function Header() {
       await logout();
     } catch {
       // Safe fallback: force client store and query eviction even if API call fails
+      clearStoredSessionToken();
       queryClient.clear();
       useChildContextStore.getState().reset();
       if (typeof window !== 'undefined') {

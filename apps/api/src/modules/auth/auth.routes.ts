@@ -168,6 +168,7 @@ export const authRoutes: FastifyPluginAsync<AuthRoutesOptions> = async (
                 type: 'object',
                 properties: {
                   user: userDtoSchema,
+                  token: { type: 'string' },
                 },
                 required: ['user'],
               },
@@ -204,6 +205,7 @@ export const authRoutes: FastifyPluginAsync<AuthRoutesOptions> = async (
                 type: 'object',
                 properties: {
                   user: userDtoSchema,
+                  token: { type: 'string' },
                 },
                 required: ['user'],
               },
@@ -241,6 +243,7 @@ export const authRoutes: FastifyPluginAsync<AuthRoutesOptions> = async (
                 type: 'object',
                 properties: {
                   user: userDtoSchema,
+                  token: { type: 'string' },
                 },
                 required: ['user'],
               },
