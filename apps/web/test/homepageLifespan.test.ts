@@ -130,6 +130,7 @@ describe('Logged-Out Homepage Redesign Architecture', () => {
       expect(html).toContain('<del');
       expect(html).toContain('$79');
       expect(html).toContain('Free during early access');
+      expect(html).toContain('Explore live demo (no signup)');
       expect(html).toContain('No credit card required');
       expect(html).toContain('Common questions');
 
